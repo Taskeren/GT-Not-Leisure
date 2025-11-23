@@ -1478,7 +1478,7 @@ public class SmeltingMixingFurnaceRecipes implements IRecipePool {
             .fluidInputs(
                 Materials.Sodium.getFluid(6000),
                 Materials.Lithium.getMolten(144 * 3),
-                Materials.Chocolate.getGas(6000),
+                Materials.Chlorine.getGas(6000),
                 Materials.Oxygen.getGas(59000),
                 Materials.Silicon.getMolten(144 * 22),
                 Materials.Hydrogen.getGas(12000))
