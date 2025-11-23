@@ -9,6 +9,7 @@ import net.minecraft.world.World;
 
 import com.science.gtnl.ScienceNotLeisure;
 import com.science.gtnl.client.GTNLCreativeTabs;
+import com.science.gtnl.common.block.blocks.item.ItemBlockDirePatternEncoder;
 import com.science.gtnl.common.block.blocks.tile.TileEntityDirePatternEncoder;
 import com.science.gtnl.utils.enums.GTNLItemList;
 import com.science.gtnl.utils.enums.GuiType;
@@ -25,7 +26,7 @@ public class BlockDirePatternEncoder extends AEBaseTileBlock {
         setBlockName("DirePatternEncoder");
         setHarvestLevel("pickaxe", 3);
         setCreativeTab(GTNLCreativeTabs.GTNotLeisureBlock);
-        GameRegistry.registerBlock(this, getUnlocalizedName());
+        GameRegistry.registerBlock(this, ItemBlockDirePatternEncoder.class, getUnlocalizedName());
         GTNLItemList.DirePatternEncoder.set(new ItemStack(this, 1));
         setTileEntity(TileEntityDirePatternEncoder.class);
         setBlockTextureName(RESOURCE_ROOT_ID + ":DirePatternEncoder");

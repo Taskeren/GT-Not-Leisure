@@ -247,6 +247,18 @@ public class SteamManufacturerRecipes implements IRecipePool {
             .eut(16)
             .addTo(SMFR);
 
+        RA.stdBuilder()
+            .itemInputs(
+                GTOreDictUnificator.get(OrePrefixes.gearGt, Materials.Brass, 2),
+                GTOreDictUnificator.get(OrePrefixes.gearGtSmall, Materials.Brass, 2),
+                GTOreDictUnificator.get(OrePrefixes.springSmall, Materials.Bronze, 2),
+                GTOreDictUnificator.get(OrePrefixes.stick, Materials.Bronze, 2),
+                GTOreDictUnificator.get(OrePrefixes.springSmall, Materials.Steel, 1))
+            .itemOutputs(GTNLItemList.PrecisionSteamMechanism.get(1))
+            .duration(3 * SECONDS)
+            .eut(16)
+            .addTo(SMFR);
+
         if (StorageDrawers.isModLoaded()) {
             // Drawer template
             GTValues.RA.stdBuilder()

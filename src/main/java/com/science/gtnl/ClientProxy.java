@@ -58,6 +58,7 @@ import com.science.gtnl.utils.gui.portableWorkbench.GuiPortablePortableCompresse
 import com.science.gtnl.utils.gui.portableWorkbench.GuiPortablePortableInfinityChest;
 
 import Forge.NullPointerException;
+import appeng.client.render.ItemRenderer;
 import codechicken.nei.guihook.GuiContainerManager;
 import cpw.mods.fml.client.registry.ClientRegistry;
 import cpw.mods.fml.client.registry.RenderingRegistry;
@@ -83,6 +84,9 @@ public class ClientProxy extends CommonProxy {
         ClientRegistry.bindTileEntitySpecialRenderer(TileEntityWaterCandle.class, new WaterCandleRenderer());
 
         ClientRegistry.bindTileEntitySpecialRenderer(TileEntityLaserBeacon.class, new LaserBeconRenderer());
+
+        MinecraftForgeClient
+            .registerItemRenderer(Item.getItemFromBlock(BlockLoader.direPatternEncoder), ItemRenderer.INSTANCE);
 
         ClientRegistry.bindTileEntitySpecialRenderer(TileEntityPlayerDoll.class, new PlayerDollRenderer());
         MinecraftForgeClient

@@ -286,7 +286,6 @@ public class ItemLoader {
         GTNLItemList.HoneyBucket.set(new ItemStack(honeyBucket, 1));
         GTNLItemList.ShimmerBucket.set(new ItemStack(shimmerBucket, 1));
         GTNLItemList.InfinityCell.set(new ItemStack(infinityCell, 1));
-        GTNLItemList.DireCraftPattern.set(direCraftPattern);
         GTNLItemList.InfinityDyeCell.set(infinityDyeCell);
         GTNLItemList.InfinityDyeFluidCell.set(infinityDyeFluidCell);
         GTNLItemList.InfinityStoneCell.set(infinityCobblestoneCell);

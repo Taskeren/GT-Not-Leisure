@@ -1350,6 +1350,8 @@ item.MetaItem.126.name=Shattered Singularity
 
 item.SuspiciousStew.name=Suspicious Stew
 
+item.DireCraftPattern.name=Dire Craft Pattern
+
 item.SteamRocket.name=Steam Rocket
 Tooltip_SteamRocket_00=Requires Molten Compressed Steam as fuel
 Tooltip_SteamRocket_01=You must be someone who plays Oxygen Not Included!
