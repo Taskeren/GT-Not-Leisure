@@ -8,7 +8,7 @@ import org.lwjgl.opengl.GL11;
 
 import com.science.gtnl.ScienceNotLeisure;
 import com.science.gtnl.common.block.blocks.tile.TileEntityDirePatternEncoder;
-import com.science.gtnl.common.packet.EncodeDirePattern;
+import com.science.gtnl.common.packet.DirePatternHandler;
 
 import appeng.api.config.ActionItems;
 import appeng.api.config.Settings;
@@ -23,6 +23,7 @@ public class GuiDirePatternEncoder extends AEBaseGui {
     private static final ResourceLocation tex = new ResourceLocation("avaritia:textures/gui/dire_crafting_gui.png");
 
     private GuiImgButton encodeBtn;
+    private GuiImgButton clearBtn;
 
     public GuiDirePatternEncoder(InventoryPlayer ip, TileEntityDirePatternEncoder anchor) {
         super(new ContainerDirePatternEncoder(ip, anchor));
@@ -35,6 +36,13 @@ public class GuiDirePatternEncoder extends AEBaseGui {
         super.initGui();
         this.encodeBtn = new GuiImgButton(this.guiLeft + 210, this.guiTop + 130, Settings.ACTIONS, ActionItems.ENCODE);
         this.buttonList.add(this.encodeBtn);
+        this.clearBtn = new GuiImgButton(
+            this.guiLeft + 12 + 9 * 18,
+            this.guiTop + 8,
+            Settings.ACTIONS,
+            ActionItems.CLOSE);
+        this.clearBtn.setHalfSize(true);
+        this.buttonList.add(this.clearBtn);
     }
 
     @Override
@@ -54,7 +62,9 @@ public class GuiDirePatternEncoder extends AEBaseGui {
 
     @Override
     protected void actionPerformed(GuiButton button) {
+        if (button == encodeBtn)
+            ScienceNotLeisure.network.sendToServer(new DirePatternHandler((byte) 0, isShiftKeyDown()));
+        if (button == clearBtn) ScienceNotLeisure.network.sendToServer(new DirePatternHandler((byte) 1));
         super.actionPerformed(button);
-        if (button == encodeBtn) ScienceNotLeisure.network.sendToServer(new EncodeDirePattern());
     }
 }

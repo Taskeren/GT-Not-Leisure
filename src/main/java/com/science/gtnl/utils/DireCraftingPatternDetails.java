@@ -1,11 +1,12 @@
 package com.science.gtnl.utils;
 
-import com.science.gtnl.utils.gui.ContainerDirePatternEncoder;
 import net.minecraft.inventory.InventoryCrafting;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.Constants;
+
+import com.science.gtnl.utils.gui.ContainerDirePatternEncoder;
 
 import appeng.api.networking.crafting.ICraftingPatternDetails;
 import appeng.api.storage.data.IAEItemStack;

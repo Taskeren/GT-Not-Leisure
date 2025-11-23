@@ -1,6 +1,5 @@
 package com.science.gtnl.common.packet;
 
-import com.science.gtnl.utils.DireCraftingPatternDetails;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.Container;
 import net.minecraft.item.ItemStack;
@@ -10,6 +9,7 @@ import com.glodblock.github.client.gui.container.ContainerFluidPatternTerminal;
 import com.science.gtnl.common.machine.multiblock.AssemblerMatrix;
 import com.science.gtnl.mixins.late.AppliedEnergistics.assembler.AccessorContainerPatternTerm;
 import com.science.gtnl.mixins.late.AppliedEnergistics.assembler.AccessorFCContainerEncodeTerminal;
+import com.science.gtnl.utils.DireCraftingPatternDetails;
 import com.science.gtnl.utils.Utils;
 
 import appeng.api.AEApi;

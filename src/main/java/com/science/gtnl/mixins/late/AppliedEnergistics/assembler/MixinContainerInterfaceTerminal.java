@@ -2,7 +2,6 @@ package com.science.gtnl.mixins.late.AppliedEnergistics.assembler;
 
 import java.util.Map;
 
-import com.science.gtnl.utils.DireCraftingPatternDetails;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemStack;
 
@@ -15,6 +14,7 @@ import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import com.llamalad7.mixinextras.sugar.Local;
 import com.science.gtnl.common.machine.multiblock.AssemblerMatrix;
+import com.science.gtnl.utils.DireCraftingPatternDetails;
 
 import appeng.container.implementations.ContainerInterfaceTerminal;
 import appeng.items.misc.ItemEncodedPattern;

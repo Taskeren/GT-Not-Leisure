@@ -11,6 +11,7 @@ import net.minecraft.nbt.NBTTagList;
 
 import com.science.gtnl.common.block.blocks.tile.TileEntityDirePatternEncoder;
 import com.science.gtnl.common.item.ItemDireCraftPattern;
+import com.science.gtnl.utils.Utils;
 import com.science.gtnl.utils.enums.GTNLItemList;
 
 import appeng.container.AEBaseContainer;
@@ -137,7 +138,7 @@ public class ContainerDirePatternEncoder extends AEBaseContainer implements IOpt
         return is;
     }
 
-    public void encode() {
+    public void encode(boolean isShift) {
         ItemStack output = this.patternSlotOUT.getStack();
 
         var out = this.getAndUpdateOutput();
@@ -154,7 +155,7 @@ public class ContainerDirePatternEncoder extends AEBaseContainer implements IOpt
             }
 
             output = GTNLItemList.DireCraftPattern.get(1);
-            this.patternSlotOUT.putStack(output);
+            if (!isShift) this.patternSlotOUT.putStack(output);
         } else if (!this.isPattern(output)) return;
 
         final NBTTagCompound encodedValue = new NBTTagCompound();
@@ -163,7 +164,8 @@ public class ContainerDirePatternEncoder extends AEBaseContainer implements IOpt
         final NBTTagCompound tagOut = Platform.writeItemStackToNBT(out, new NBTTagCompound());
 
         for (final SlotFakeCraftingMatrix i : craftingSlots) {
-            tagIn.appendTag(i.getStack() != null ? Platform.writeItemStackToNBT(i.getStack(), new NBTTagCompound()) : empty);
+            tagIn.appendTag(
+                i.getStack() != null ? Platform.writeItemStackToNBT(i.getStack(), new NBTTagCompound()) : empty);
         }
 
         encodedValue.setTag("in", tagIn);
@@ -172,6 +174,14 @@ public class ContainerDirePatternEncoder extends AEBaseContainer implements IOpt
         encodedValue.setString("author", this.getPlayerInv().player.getCommandSenderName());
 
         output.setTagCompound(encodedValue);
+
+        if (isShift) Utils.placeItemBackInInventory(this.getPlayerInv().player, output);
+    }
+
+    public void clear() {
+        for (var craftingSlot : craftingSlots) {
+            craftingSlot.putStack(null);
+        }
     }
 
     @SuppressWarnings("BooleanMethodIsAlwaysInverted")
