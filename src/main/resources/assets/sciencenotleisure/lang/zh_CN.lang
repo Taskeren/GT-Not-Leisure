@@ -1730,6 +1730,7 @@ Tooltip_AssemblerMatrix_02=无法超频
 Tooltip_AssemblerMatrix_03=必须内部全部填满核心/墙壁才能成型！
 Tooltip_AssemblerMatrix_04=最多只能安装5个加速核心
 Tooltip_AssemblerMatrix_05=安装奇点合成核心且不安装能源仓时自动进入无线模式
+Tooltip_AssemblerMatrix_06=可放置终极合成样板来合成终极合成配方
 Info_AssemblerMatrix_00=§7当前样板数量：%s/%s
 AssemblerMatrix_Mode_0=输入模式
 AssemblerMatrix_Mode_1=输出模式
