@@ -179,8 +179,18 @@ public class ContainerDirePatternEncoder extends AEBaseContainer implements IOpt
     }
 
     public void clear() {
-        for (var craftingSlot : craftingSlots) {
-            craftingSlot.putStack(null);
+        for (var i = 0; i < te.getRecipe()
+            .getSizeInventory(); ++i) {
+            te.getRecipe()
+                .setInventorySlotContents(i, null);
+        }
+    }
+
+    public void writeNEINBT(NBTTagCompound tag) {
+        clear();
+        for (var s : tag.func_150296_c()) {
+            te.getRecipe()
+                .setInventorySlotContents(Integer.parseInt(s), ItemStack.loadItemStackFromNBT(tag.getCompoundTag(s)));
         }
     }
 

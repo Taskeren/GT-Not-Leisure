@@ -4,6 +4,7 @@ import com.science.gtnl.common.material.MaterialPool;
 import com.science.gtnl.common.material.RecipePool;
 import com.science.gtnl.utils.enums.GTNLItemList;
 import com.science.gtnl.utils.enums.ModList;
+import com.science.gtnl.utils.gui.GuiDirePatternEncoder;
 import com.science.gtnl.utils.gui.portableWorkbench.GuiPortableAdvancedWorkbench;
 import com.science.gtnl.utils.gui.portableWorkbench.GuiPortableBasicWorkbench;
 import com.science.gtnl.utils.gui.portableWorkbench.GuiPortableFurnace;
@@ -34,7 +35,9 @@ public class NEIGTNLConfig implements IConfigureNEI {
         API.registerGuiOverlay(GuiPortableBasicWorkbench.class, "crafting");
         API.registerGuiOverlay(GuiPortableFurnace.class, "smelting");
         API.registerGuiOverlay(GuiPortableFurnace.class, "fuel");
+        API.registerGuiOverlay(GuiDirePatternEncoder.class, "extreme");
 
+        API.registerGuiOverlayHandler(GuiDirePatternEncoder.class, new DirePatternOverlayHandler(), "extreme");
         API.registerGuiOverlayHandler(GuiPortableAdvancedWorkbench.class, new DefaultOverlayHandler(), "crafting");
         API.registerGuiOverlayHandler(GuiPortableBasicWorkbench.class, new DefaultOverlayHandler(), "crafting");
 
