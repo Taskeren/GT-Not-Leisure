@@ -943,6 +943,8 @@ tile.MetaCasing02.16.name=量子计算机多线程处理器
 Tooltip_QuantumComputerMultiThreader_00=量子计算机的并行线程数变为 4 倍。每个量子计算机中最多放置 %s 个。
 tile.MetaCasing02.17.name=量子计算机核心
 Tooltip_QuantumComputerCore_00=提供 256M 合成存储空间和 16384 并行处理线程。
+tile.MetaCasing02.18.name=装配矩阵Debug合成核心
+Tooltip_AssemblerMatrixDebugCrafterCore_00=每个提供9,223,372,036,854,775,807并行
 
 tile.MetaBlock.0.name=测试方块
 tile.MetaBlock.1.name=§d新视野线圈

@@ -143,6 +143,7 @@ public class AssemblerMatrix extends MultiMachineBase<AssemblerMatrix>
     public int mCountPatternCasing = -1;
     public int mCountCrafterCasing = -1;
     public int mCountSingularityCrafterCasing = -1;
+    public int mCountDebugCrafterCasing = -1;
     public int mCountSpeedCasing = -1;
     public int mMaxSlots = 0;
     public long usedParallel = 0;
@@ -480,6 +481,8 @@ public class AssemblerMatrix extends MultiMachineBase<AssemblerMatrix>
     public int getMaxParallelRecipes() {
         mMaxParallelLong = (long) eachCraftingCasingParallel * mCountCrafterCasing
             + (long) eachSingularityCraftingCasingParallel * mCountSingularityCrafterCasing;
+        if (mCountDebugCrafterCasing > 0) mMaxParallelLong = Long.MAX_VALUE;
+
         mMaxSlots = eachPatternCasingCapacity * mCountPatternCasing;
 
         return (int) mMaxParallelLong;
@@ -604,6 +607,7 @@ public class AssemblerMatrix extends MultiMachineBase<AssemblerMatrix>
     public void saveNBTData(NBTTagCompound aNBT) {
         super.saveNBTData(aNBT);
         aNBT.setInteger("mCountCrafterCasing", mCountCrafterCasing);
+        aNBT.setInteger("mCountDebugCrafterCasing", mCountDebugCrafterCasing);
         aNBT.setInteger("mCountSingularityCrafterCasing", mCountSingularityCrafterCasing);
         aNBT.setInteger("mCountPatternCasing", mCountPatternCasing);
         aNBT.setInteger("mCountSpeedCasing", mCountSpeedCasing);
@@ -684,6 +688,7 @@ public class AssemblerMatrix extends MultiMachineBase<AssemblerMatrix>
     public void loadNBTData(NBTTagCompound aNBT) {
         super.loadNBTData(aNBT);
         mCountSpeedCasing = aNBT.getInteger("mCountSpeedCasing");
+        mCountDebugCrafterCasing = aNBT.getInteger("mCountDebugCrafterCasing");
         mCountSingularityCrafterCasing = aNBT.getInteger("mCountSingularityCrafterCasing");
         mCountCrafterCasing = aNBT.getInteger("mCountCrafterCasing");
         mCountPatternCasing = aNBT.getInteger("mCountPatternCasing");
@@ -822,6 +827,9 @@ public class AssemblerMatrix extends MultiMachineBase<AssemblerMatrix>
         super.setupParameters();
         mMaxParallelLong = (long) eachCraftingCasingParallel * mCountCrafterCasing
             + (long) eachSingularityCraftingCasingParallel * mCountSingularityCrafterCasing;
+
+        if (mCountDebugCrafterCasing > 0) mMaxParallelLong = Long.MAX_VALUE;
+
         mMaxSlots = eachPatternCasingCapacity * mCountPatternCasing;
         wirelessMode = mExoticEnergyHatches.isEmpty() && mEnergyHatches.isEmpty() && mCountSingularityCrafterCasing > 0;
     }
@@ -832,6 +840,7 @@ public class AssemblerMatrix extends MultiMachineBase<AssemblerMatrix>
         mCountPatternCasing = 0;
         mCountCrafterCasing = 0;
         mCountSingularityCrafterCasing = 0;
+        mCountDebugCrafterCasing = 0;
         mCountSpeedCasing = 0;
         mMaxParallelLong = 0;
         mMaxSlots = 0;
@@ -846,6 +855,7 @@ public class AssemblerMatrix extends MultiMachineBase<AssemblerMatrix>
             && mCountCasing + mCountPatternCasing
                 + mCountCrafterCasing
                 + mCountSingularityCrafterCasing
+                + mCountDebugCrafterCasing
                 + mCountSpeedCasing == 343
             && mCountSpeedCasing <= 5;
     }
@@ -900,6 +910,7 @@ public class AssemblerMatrix extends MultiMachineBase<AssemblerMatrix>
                     onElementPass(t -> t.mCountPatternCasing++, ofBlock(BlockLoader.metaCasing02, 6)),
                     onElementPass(t -> t.mCountCrafterCasing++, ofBlock(BlockLoader.metaCasing02, 7)),
                     onElementPass(t -> t.mCountSingularityCrafterCasing++, ofBlock(BlockLoader.metaCasing02, 8)),
+                    onElementPass(t -> t.mCountDebugCrafterCasing++, ofBlock(BlockLoader.metaCasing02, 18)),
                     onElementPass(t -> t.mCountSpeedCasing++, ofBlock(BlockLoader.metaCasing02, 9))))
             .build();
     }

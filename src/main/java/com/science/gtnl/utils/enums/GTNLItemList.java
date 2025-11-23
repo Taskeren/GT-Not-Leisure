@@ -142,6 +142,7 @@ public enum GTNLItemList implements IItemContainer {
     AssemblerMatrixPatternCore,
     AssemblerMatrixCrafterCore,
     AssemblerMatrixSingularityCrafterCore,
+    AssemblerMatrixDebugCrafterCore,
     AssemblerMatrixSpeedCore,
     QuantumComputerCasing,
     QuantumComputerUnit,
