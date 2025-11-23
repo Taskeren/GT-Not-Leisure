@@ -2001,9 +2001,9 @@ public class AssemblerRecipes implements IRecipePool {
             .addTo(As);
 
         GTValues.RA.stdBuilder()
-            .itemInputs(GTUtility.getIntegratedCircuit(4), new ItemStack(Items.paper, 7))
+            .itemInputs(GTUtility.getIntegratedCircuit(6), new ItemStack(Items.paper, 7))
             .itemOutputs(GTNLItemList.CardboardBox.get(1))
-            .fluidInputs(FluidRegistry.getFluidStack("refinedglue", 200))
+            .fluidInputs(Materials.Glue.getFluid(200))
             .duration(20)
             .eut(16)
             .addTo(As);

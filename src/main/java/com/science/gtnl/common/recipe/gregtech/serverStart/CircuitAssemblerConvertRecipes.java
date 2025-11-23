@@ -4,7 +4,6 @@ import static gregtech.api.enums.Mods.*;
 import static gregtech.api.util.GTRecipeBuilder.*;
 import static gregtech.api.util.GTRecipeConstants.*;
 
-import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
 
 import com.science.gtnl.api.IRecipePool;
@@ -233,7 +232,7 @@ public class CircuitAssemblerConvertRecipes implements IRecipePool {
                 ItemList.Circuit_Primitive.get(0),
                 GTOreDictUnificator.get(OrePrefixes.plate, Materials.Steel, 1),
                 GTModHandler.getModItem(Minecraft.ID, "redstone", 1, 0))
-            .fluidInputs(FluidRegistry.getFluidStack("refinedglue", 20))
+            .fluidInputs(Materials.Glue.getFluid(20))
             .itemOutputs(GTNLItemList.VerySimpleCircuit.get(2))
             .duration(40)
             .eut(7)
@@ -245,7 +244,7 @@ public class CircuitAssemblerConvertRecipes implements IRecipePool {
                 GTNLItemList.VerySimpleCircuit.get(1),
                 GTOreDictUnificator.get(OrePrefixes.plate, Materials.Iron, 1),
                 GTOreDictUnificator.get(OrePrefixes.dust, Materials.RedAlloy, 1))
-            .fluidInputs(FluidRegistry.getFluidStack("refinedglue", 20))
+            .fluidInputs(Materials.Glue.getFluid(20))
             .itemOutputs(GTNLItemList.SimpleCircuit.get(2))
             .duration(80)
             .eut(16)
@@ -258,7 +257,7 @@ public class CircuitAssemblerConvertRecipes implements IRecipePool {
                 GTNLItemList.SimpleCircuit.get(2),
                 GTOreDictUnificator.get(OrePrefixes.plate, Materials.WroughtIron, 1),
                 GTOreDictUnificator.get(OrePrefixes.dustSmall, Materials.Diamond, 1))
-            .fluidInputs(FluidRegistry.getFluidStack("refinedglue", 20))
+            .fluidInputs(Materials.Glue.getFluid(20))
             .itemOutputs(GTNLItemList.BasicCircuit.get(2))
             .duration(160)
             .eut(30)
@@ -272,7 +271,7 @@ public class CircuitAssemblerConvertRecipes implements IRecipePool {
                 GTOreDictUnificator.get(OrePrefixes.plate, Materials.Steel, 1),
                 GTOreDictUnificator.get(OrePrefixes.dustSmall, Materials.Obsidian, 1),
                 GTOreDictUnificator.get(OrePrefixes.screw, Materials.RedAlloy, 1))
-            .fluidInputs(FluidRegistry.getFluidStack("refinedglue", 20))
+            .fluidInputs(Materials.Glue.getFluid(20))
             .itemOutputs(GTNLItemList.AdvancedCircuit.get(1))
             .duration(80)
             .eut(120)

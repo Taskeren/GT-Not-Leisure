@@ -90,7 +90,7 @@ public class MixerRecipes implements IRecipePool {
                 new ItemStack(Items.blaze_powder, 16),
                 new ItemStack(Items.blaze_rod, 8))
             .itemOutputs(GTNLItemList.BlazeCube.get(1))
-            .fluidInputs(FluidRegistry.getFluidStack("pyrotheum", 2000))
+            .fluidInputs(new FluidStack(GTPPFluids.Pyrotheum, 2000))
             .duration(200)
             .eut(TierEU.RECIPE_IV)
             .addTo(MCR)
@@ -139,7 +139,7 @@ public class MixerRecipes implements IRecipePool {
             .addTo(MNCR);
 
         RecipeBuilder.builder()
-            .itemInputs(new ItemStack(Blocks.gravel, 16))
+            .itemInputs(GTUtility.getIntegratedCircuit(1), new ItemStack(Blocks.gravel, 16))
             .fluidInputs(Materials.Water.getFluid(1000))
             .fluidOutputs(MaterialPool.GravelSluice.getFluidOrGas(4000))
             .duration(5 * SECONDS)
@@ -148,7 +148,7 @@ public class MixerRecipes implements IRecipePool {
             .addTo(MNCR);
 
         RecipeBuilder.builder()
-            .itemInputs(new ItemStack(Blocks.sand, 16))
+            .itemInputs(GTUtility.getIntegratedCircuit(1), new ItemStack(Blocks.sand, 16))
             .fluidInputs(Materials.Water.getFluid(1000))
             .fluidOutputs(MaterialPool.SandSluice.getFluidOrGas(4000))
             .duration(5 * SECONDS)
@@ -157,7 +157,7 @@ public class MixerRecipes implements IRecipePool {
             .addTo(MNCR);
 
         RecipeBuilder.builder()
-            .itemInputs(new ItemStack(Blocks.obsidian, 16))
+            .itemInputs(GTUtility.getIntegratedCircuit(1), new ItemStack(Blocks.obsidian, 16))
             .fluidInputs(Materials.Water.getFluid(1000))
             .fluidOutputs(MaterialPool.ObsidianSluice.getFluidOrGas(4000))
             .duration(5 * SECONDS)
@@ -167,6 +167,7 @@ public class MixerRecipes implements IRecipePool {
 
         RecipeBuilder.builder()
             .itemInputs(
+                GTUtility.getIntegratedCircuit(1),
                 GTOreDictUnificator.get(OrePrefixes.dust, Materials.Diamond, 4),
                 GTOreDictUnificator.get(OrePrefixes.dust, Materials.Emerald, 4),
                 GTOreDictUnificator.get(OrePrefixes.dust, Materials.Ruby, 4),
