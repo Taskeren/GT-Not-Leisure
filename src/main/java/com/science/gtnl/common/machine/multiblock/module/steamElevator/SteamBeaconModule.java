@@ -761,7 +761,13 @@ public class SteamBeaconModule extends SteamElevatorModule {
         .fullImage(ModList.ScienceNotLeisure.resourceDomain, "gui/picture/steam_beacon");
 
     @Override
+    public boolean supportsPowerPanel() {
+        return false;
+    }
+
+    @Override
     public void addUIWidgets(ModularWindow.Builder builder, UIBuildContext buildContext) {
+        super.addUIWidgets(builder, buildContext);
         buildContext.addSyncedWindow(CONFIG_WINDOW_ID, this::createBeaconConfigWindow);
         builder.widget(new FakeSyncWidget.BooleanSyncer(this::hasSpeedEffect, val -> hasSpeedEffect = val));
         builder.widget(new FakeSyncWidget.BooleanSyncer(this::hasJumpBoostEffect, val -> hasJumpBoostEffect = val));
@@ -802,8 +808,6 @@ public class SteamBeaconModule extends SteamElevatorModule {
             new FakeSyncWidget.BooleanSyncer(this::enableFeatherFeetEffect, val -> enableFeatherFeetEffect = val));
         builder.widget(new FakeSyncWidget.BooleanSyncer(this::enableVisRegenEffect, val -> enableVisRegenEffect = val));
 
-        super.addUIWidgets(builder, buildContext);
-
         builder.widget(new ButtonWidget().setOnClick((clickData, widget) -> {
             if (!widget.isClient()) {
                 widget.getContext()
@@ -819,7 +823,7 @@ public class SteamBeaconModule extends SteamElevatorModule {
             })
             .addTooltip(StatCollector.translateToLocal("Info_SteamBeaconModule_00"))
             .setTooltipShowUpDelay(TOOLTIP_DELAY)
-            .setPos(174, 94)
+            .setPos(174, 91)
             .setSize(16, 16));
     }
 
