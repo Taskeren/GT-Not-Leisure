@@ -1,5 +1,7 @@
 package com.science.gtnl.common.recipe.gtnl;
 
+import net.minecraft.init.Blocks;
+import net.minecraft.item.ItemStack;
 import net.minecraftforge.fluids.FluidStack;
 
 import com.science.gtnl.api.IRecipePool;
@@ -1313,22 +1315,6 @@ public class SmeltingMixingFurnaceRecipes implements IRecipePool {
 
         GTValues.RA.stdBuilder()
             .itemInputs(
-                GTUtility.getIntegratedCircuit(7),
-                GTOreDictUnificator.get(OrePrefixes.dust, Materials.Carbon, 10))
-            .fluidInputs(
-                Materials.Iron.getMolten(144 * 90),
-                Materials.Redstone.getMolten(144 * 10),
-                Materials.Silicon.getMolten(144 * 10),
-                Materials.Beryllium.getMolten(144 * 3),
-                Materials.Potassium.getMolten(144 * 12),
-                Materials.Nitrogen.getGas(15000))
-            .fluidOutputs(Materials.PulsatingIron.getMolten(144 * 90))
-            .duration(3200 * 90)
-            .eut(120)
-            .addTo(SMFR);
-
-        GTValues.RA.stdBuilder()
-            .itemInputs(
                 GTUtility.getIntegratedCircuit(8),
                 GTOreDictUnificator.get(OrePrefixes.dust, Materials.Carbon, 10),
                 GTUtility.copyAmountUnsafe(90, GTOreDictUnificator.get(OrePrefixes.dust, Materials.Diamond, 1)),
@@ -1408,7 +1394,7 @@ public class SmeltingMixingFurnaceRecipes implements IRecipePool {
                 Materials.Iron.getMolten(144 * 420),
                 Materials.Oxygen.getGas(270000),
                 Materials.Nitrogen.getGas(675000))
-            .fluidOutputs(Materials.BlackSteel.getMolten(144 * 4050))
+            .fluidOutputs(Materials.VividAlloy.getMolten(144 * 4050))
             .duration(6000 * 4050)
             .eut(120)
             .addTo(SMFR);
@@ -1447,6 +1433,58 @@ public class SmeltingMixingFurnaceRecipes implements IRecipePool {
             .fluidOutputs(Materials.EndSteel.getMolten(144 * 27))
             .duration(1200)
             .eut(1920)
+            .addTo(SMFR);
+
+        GTValues.RA.stdBuilder()
+            .itemInputs(
+                GTUtility.getIntegratedCircuit(5),
+                GTOreDictUnificator.get(OrePrefixes.dust, Materials.Carbon, 1))
+            .fluidInputs(
+                Materials.Redstone.getMolten(144),
+                Materials.Silicon.getMolten(144),
+                Materials.Iron.getMolten(144 * 3),
+                Materials.Silver.getMolten(144 * 3))
+            .fluidOutputs(Materials.ConductiveIron.getMolten(144 * 9))
+            .duration(2400)
+            .eut(120)
+            .addTo(SMFR);
+
+        GTValues.RA.stdBuilder()
+            .itemInputs(
+                GTUtility.getIntegratedCircuit(3),
+                GTOreDictUnificator.get(OrePrefixes.dust, Materials.Carbon, 1),
+                new ItemStack(Blocks.soul_sand, 1))
+            .fluidInputs(Materials.Gold.getMolten(144))
+            .fluidOutputs(Materials.Soularium.getMolten(144 * 3))
+            .duration(300)
+            .eut(120)
+            .addTo(SMFR);
+
+        GTValues.RA.stdBuilder()
+            .itemInputs(GTUtility.getIntegratedCircuit(3))
+            .fluidInputs(
+                Materials.Tin.getMolten(144 * 2),
+                Materials.Silver.getMolten(144),
+                Materials.Platinum.getMolten(144))
+            .fluidOutputs(Materials.EnderiumBase.getMolten(144 * 4))
+            .duration(900)
+            .eut(120)
+            .addTo(SMFR);
+
+        GTValues.RA.stdBuilder()
+            .itemInputs(
+                GTUtility.getIntegratedCircuit(7),
+                GTOreDictUnificator.get(OrePrefixes.dust, Materials.Stone, 48))
+            .fluidInputs(
+                Materials.Sodium.getFluid(6000),
+                Materials.Lithium.getMolten(144 * 3),
+                Materials.Chocolate.getGas(6000),
+                Materials.Oxygen.getGas(59000),
+                Materials.Silicon.getMolten(144 * 22),
+                Materials.Hydrogen.getGas(12000))
+            .fluidOutputs(Materials.CrudeSteel.getMolten(144 * 144))
+            .duration(240)
+            .eut(8)
             .addTo(SMFR);
 
         GTValues.RA.stdBuilder()

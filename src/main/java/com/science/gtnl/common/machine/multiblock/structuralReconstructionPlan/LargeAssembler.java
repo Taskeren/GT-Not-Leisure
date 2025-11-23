@@ -179,7 +179,7 @@ public class LargeAssembler extends GTMMultiMachineBase<LargeAssembler> implemen
 
     @Override
     public double getEUtDiscount() {
-        return 0.8 - (mParallelTier / 50.0);
+        return super.getEUtDiscount();
     }
 
     @Override
