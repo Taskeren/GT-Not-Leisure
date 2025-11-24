@@ -2,10 +2,6 @@ package com.science.gtnl.common.item;
 
 import static com.science.gtnl.ScienceNotLeisure.RESOURCE_ROOT_ID;
 
-import java.util.List;
-
-import net.minecraft.creativetab.CreativeTabs;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 
@@ -32,10 +28,5 @@ public class ItemDireCraftPattern extends ItemEncodedPattern {
         } catch (final Throwable t) {
             return null;
         }
-    }
-
-    @Override
-    protected void getCheckedSubItems(Item sameItem, CreativeTabs creativeTab, List<ItemStack> itemStacks) {
-        itemStacks.clear();
     }
 }

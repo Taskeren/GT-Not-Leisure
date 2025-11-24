@@ -1276,6 +1276,14 @@ public class CraftingTableRecipes implements IRecipePool {
                 GTOreDictUnificator.get(OrePrefixes.cableGt02, Materials.Platinum, 1), 'D',
                 ItemList.Machine_IV_RockBreaker.get(1) });
 
+        GTModHandler.addCraftingRecipe(
+            GTNLItemList.DirePatternEncoder.get(1),
+            new Object[] { "ABA", "CDC", "AEA", 'A', GTOreDictUnificator.get(OrePrefixes.plate, Materials.Titanium, 1),
+                'B', GTModHandler.getModItem(AppliedEnergistics2.ID, "item.ItemMultiPart", 1, 500), 'C',
+                GTModHandler.getModItem(AppliedEnergistics2.ID, "item.ItemMultiMaterial", 1, 24), 'D',
+                GTModHandler.getModItem(AvaritiaAddons.ID, "ExtremeAutoCrafter", 1), 'E',
+                GTModHandler.getModItem(AppliedEnergistics2.ID, "tile.BlockCellWorkbench", 1) });
+
         if (MainConfig.enableSomethingRecipe) loadExtraRecipe();
     }
 

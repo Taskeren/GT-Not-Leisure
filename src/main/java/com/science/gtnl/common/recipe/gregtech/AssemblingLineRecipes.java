@@ -950,28 +950,6 @@ public class AssemblingLineRecipes implements IRecipePool {
             .addTo(AL);
 
         TTRecipeAdder.addResearchableAssemblylineRecipe(
-            new ItemStack(ItemRegistry.cal.getItem(), 1),
-            256000,
-            1024,
-            (int) TierEU.RECIPE_UHV,
-            1,
-            new Object[] { new ItemStack(ItemRegistry.cal.getItem(), 4), new ItemStack(ItemRegistry.cal.getItem(), 4),
-                new ItemStack(ItemRegistry.cal.getItem(), 4), new ItemStack(ItemRegistry.cal.getItem(), 4),
-                GTOreDictUnificator.get(OrePrefixes.frameGt, Materials.Infinity, 16),
-                new Object[] { OrePrefixes.circuit.get(Materials.UHV), 32 },
-                GTOreDictUnificator.get(OrePrefixes.wireGt16, Materials.SuperconductorUHV, 64L),
-                ItemList.Field_Generator_UHV.get(16), ItemList.Conveyor_Module_UHV.get(32),
-                ItemList.Robot_Arm_UHV.get(32), GregtechItemList.Laser_Lens_Special.get(1),
-                ItemList.Emitter_ZPM.get(32), GTOreDictUnificator.get(OrePrefixes.nanite, Materials.Neutronium, 32),
-                GTOreDictUnificator.get(OrePrefixes.plateSuperdense, Materials.Naquadria, 5),
-                ItemList.Sensor_UHV.get(32) },
-            new FluidStack[] { Materials.Grade6PurifiedWater.getFluid(64000),
-                MaterialMisc.MUTATED_LIVING_SOLDER.getFluidStack(32000), Materials.CosmicNeutronium.getMolten(2304) },
-            GTNLItemList.CircuitComponentAssemblyLine.get(1),
-            4800,
-            (int) TierEU.RECIPE_UHV);
-
-        TTRecipeAdder.addResearchableAssemblylineRecipe(
             GTNLItemList.ChemicalPlant.get(1),
             12000,
             16,
