@@ -81,8 +81,8 @@ gtnl_config.debug.tooltip=设置调试的配置
 
 config.machine.enableRecipeOutputChance=配方概率产出增加
 config.machine.enableRecipeOutputChance.tooltip=当机器电压大于配方电压时，增加概率物品的产出几率
-config.machine.enableLaserHatch=支持机器使用激光仓
-config.machine.enableLaserHatch.tooltip=启用后部分受限的机器可以使用激光仓
+config.machine.enableLaserHatch=禁用部分机器使用激光仓
+config.machine.enableLaserHatch.tooltip=开启后部分受限的机器无法使用激光仓
 config.machine.recipeOutputChance=配方产物概率
 config.machine.recipeOutputChance.tooltip=修改每高过配方1级电压，增加的产物概率
 config.meteor_miner.meteorMinerMaxBlockPerCycle=单周期最大方块数
@@ -2745,6 +2745,7 @@ Tooltip_VortexMatterCentrifuge_Casing=任意分子机械方块
 NameNanoAssemblerMarkL=纳米组装机Mark-50
 NanoAssemblerMarkLRecipeType=精密组装机
 Tooltip_NanoAssemblerMarkL_00=每级部件装配线外壳等级额外提供10%的加速和耗电减免(乘算叠加)
+Tooltip_NanoAssemblerMarkL_01=部件装配线外壳等级决定了能源仓最大等级 + 3，UIV装配线外壳解锁所有等级
 Tooltip_NanoAssemblerMarkL_Casing=任意镀铱机械方块
 
 NameNanoPhagocytosisPlant=纳米吞噬厂

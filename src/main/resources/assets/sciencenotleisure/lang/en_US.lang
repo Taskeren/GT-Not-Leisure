@@ -81,8 +81,8 @@ gtnl_config.debug.tooltip=Configure debug settings
 
 config.machine.enableRecipeOutputChance=Output Change
 config.machine.enableRecipeOutputChance.tooltip=Enable Output Change Function
-config.machine.enableLaserHatch=Support Machine Laser Hatch
-config.machine.enableLaserHatch.tooltip=Enable Machine Can't Use Laser Hatch
+config.machine.enableLaserHatch=Disable Some Machine Use Laser Hatch
+config.machine.enableLaserHatch.tooltip=Set Machine Can't Use Laser Hatch
 config.machine.recipeOutputChance=Recipe Chance Output
 config.machine.recipeOutputChance.tooltip=Change Recipe Item Output, like QFT
 config.meteor_miner.meteorMinerMaxBlockPerCycle=Max Block Count
@@ -2745,6 +2745,7 @@ Tooltip_VortexMatterCentrifuge_Casing=Any Molecular Casing
 NameNanoAssemblerMarkL=Nano Assembler Mark-50
 NanoAssemblerMarkLRecipeType=Precision Assembler
 Tooltip_NanoAssemblerMarkL_00=Each level of Component Assembly Line Casing grade provides an additional 10% acceleration and power consumption reduction (multiplication and superposition)
+Tooltip_NanoAssemblerMarkL_01=The level of the Component Assembly Line Casing determines the maximum level of the energy warehouse + 3. UIV mechanical blocks unlock all levels.
 Tooltip_NanoAssemblerMarkL_Casing=Ang Advanced Iridium Plated Machine Casing
 
 NameNanoPhagocytosisPlant=Nano Phagocytosis Plant

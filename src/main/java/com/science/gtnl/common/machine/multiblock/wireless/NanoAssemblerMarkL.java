@@ -4,6 +4,7 @@ import static com.gtnewhorizon.structurelib.structure.StructureUtility.*;
 import static com.science.gtnl.ScienceNotLeisure.RESOURCE_ROOT_ID;
 import static com.science.gtnl.common.machine.multiMachineBase.MultiMachineBase.CustomHatchElement.*;
 import static gregtech.api.GregTechAPI.*;
+import static gregtech.api.enums.GTValues.*;
 import static gregtech.api.enums.HatchElement.*;
 import static gregtech.api.enums.Mods.IndustrialCraft2;
 import static gregtech.api.util.GTStructureUtility.buildHatchAdder;
@@ -15,6 +16,7 @@ import java.util.stream.IntStream;
 
 import net.minecraft.block.Block;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.StatCollector;
 import net.minecraftforge.common.util.ForgeDirection;
 
@@ -68,6 +70,8 @@ public class NanoAssemblerMarkL extends WirelessEnergyMultiMachineBase<NanoAssem
     public MultiblockTooltipBuilder createTooltip() {
         MultiblockTooltipBuilder tt = new MultiblockTooltipBuilder();
         tt.addMachineType(StatCollector.translateToLocal("NanoAssemblerMarkLRecipeType"))
+            .addInfo(StatCollector.translateToLocal("Tooltip_IntegratedAssemblyFacility_00"))
+            .addInfo(StatCollector.translateToLocal("Tooltip_IntegratedAssemblyFacility_01"))
             .addInfo(StatCollector.translateToLocal("Tooltip_WirelessEnergyMultiMachine_00"))
             .addInfo(StatCollector.translateToLocal("Tooltip_WirelessEnergyMultiMachine_01"))
             .addInfo(StatCollector.translateToLocal("Tooltip_WirelessEnergyMultiMachine_02"))
@@ -202,6 +206,44 @@ public class NanoAssemblerMarkL extends WirelessEnergyMultiMachineBase<NanoAssem
     public void clearHatches() {
         super.clearHatches();
         mCasingTier = -2;
+    }
+
+    @Override
+    public long getMachineVoltageLimit() {
+        if (mCasingTier < 0) return 0;
+        if (wirelessMode) {
+            if (mCasingTier >= 10) {
+                return V[Math.min(mParallelTier + 1, 14)];
+            } else {
+                return V[Math.min(Math.min(mParallelTier + 1, mCasingTier + 4), 14)];
+            }
+        } else if (mCasingTier >= 10) {
+            return V[mEnergyHatchTier];
+        } else {
+            return V[Math.min(mCasingTier + 4, mEnergyHatchTier)];
+        }
+    }
+
+    @Override
+    public void saveNBTData(NBTTagCompound aNBT) {
+        super.saveNBTData(aNBT);
+        aNBT.setInteger("casingTier", mCasingTier);
+    }
+
+    @Override
+    public void loadNBTData(NBTTagCompound aNBT) {
+        super.loadNBTData(aNBT);
+        mCasingTier = aNBT.getInteger("casingTier");
+    }
+
+    @Override
+    public String[] getInfoData() {
+        String[] origin = super.getInfoData();
+        String[] ret = new String[origin.length + 1];
+        System.arraycopy(origin, 0, ret, 0, origin.length);
+        ret[origin.length] = StatCollector.translateToLocal("scanner.info.CASS.tier")
+            + (mCasingTier >= 0 ? VN[mCasingTier + 1] : "None!");
+        return ret;
     }
 
     @Override

@@ -230,7 +230,7 @@ public class MainConfig {
             "enableLaserHatch",
             CATEGORY_MACHINE,
             enableMachineAmpLimit,
-            "Enable Machine Can't Use Laser Hatch",
+            "Set Machine Can't Use Laser Hatch",
             "config.machine.enableLaserHatch");
 
         recipeOutputChance = config.getFloat(
