@@ -51,6 +51,7 @@ public class NEIGTNLConfig implements IConfigureNEI {
         API.addRecipeCatalyst(GTNLItemList.PortableBasicWorkBench.get(1), "crafting");
         API.addRecipeCatalyst(GTNLItemList.PortableAdvancedWorkBench.get(1), "crafting");
         API.addRecipeCatalyst(GTNLItemList.AssemblerMatrix.get(1), "crafting");
+        API.addRecipeCatalyst(GTNLItemList.DirePatternEncoder.get(1), "extreme");
         API.addRecipeCatalyst(GTNLItemList.SteamOilDrillModuleI.get(1), "GTOrePluginUndergroundFluid");
         API.addRecipeCatalyst(GTNLItemList.SteamOilDrillModuleII.get(1), "GTOrePluginUndergroundFluid");
         API.addRecipeCatalyst(GTNLItemList.SteamOilDrillModuleIII.get(1), "GTOrePluginUndergroundFluid");
