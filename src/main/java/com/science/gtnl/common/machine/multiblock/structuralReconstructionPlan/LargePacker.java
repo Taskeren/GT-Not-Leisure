@@ -65,8 +65,7 @@ public class LargePacker extends GTMMultiMachineBase<LargePacker> implements ISu
     public ITexture[] getTexture(IGregTechTileEntity baseMetaTileEntity, ForgeDirection sideDirection,
         ForgeDirection facingDirection, int colorIndex, boolean active, boolean redstoneLevel) {
         if (sideDirection == facingDirection) {
-            if (active) return new ITexture[] {
-                Textures.BlockIcons.getCasingTextureForId(getCasingTextureID()),
+            if (active) return new ITexture[] { Textures.BlockIcons.getCasingTextureForId(getCasingTextureID()),
                 TextureFactory.builder()
                     .addIcon(TexturesGtBlock.oMCAAmazonPackagerActive)
                     .extFacing()
@@ -76,8 +75,7 @@ public class LargePacker extends GTMMultiMachineBase<LargePacker> implements ISu
                     .extFacing()
                     .glow()
                     .build() };
-            return new ITexture[] {
-                Textures.BlockIcons.getCasingTextureForId(getCasingTextureID()),
+            return new ITexture[] { Textures.BlockIcons.getCasingTextureForId(getCasingTextureID()),
                 TextureFactory.builder()
                     .addIcon(TexturesGtBlock.oMCAAmazonPackager)
                     .extFacing()
@@ -88,8 +86,7 @@ public class LargePacker extends GTMMultiMachineBase<LargePacker> implements ISu
                     .glow()
                     .build() };
         }
-        return new ITexture[] {
-            Textures.BlockIcons.getCasingTextureForId(getCasingTextureID()) };
+        return new ITexture[] { Textures.BlockIcons.getCasingTextureForId(getCasingTextureID()) };
     }
 
     @Override
