@@ -1818,5 +1818,27 @@ public class AssemblingLineRecipes implements IRecipePool {
             GTNLItemList.SingularityDataHub.get(1),
             8000,
             (int) TierEU.RECIPE_UIV);
+
+        TTRecipeAdder.addResearchableAssemblylineRecipe(
+            GTNLItemList.LargeAlloySmelter.get(1),
+            1024000,
+            4096,
+            (int) TierEU.RECIPE_UEV,
+            1,
+            new Object[] { GTNLItemList.LargeAlloySmelter.get(32), GregtechItemList.Industrial_AlloySmelter.get(32),
+                GregtechItemList.Casing_BlastSmelter.get(64),
+                GTOreDictUnificator.get(OrePrefixes.plateSuperdense, Materials.Osmiridium, 1),
+                GTOreDictUnificator.get(OrePrefixes.wireGt04, Materials.SuperconductorUHV, 16),
+                ItemList.Electric_Motor_UHV.get(32), ItemList.Electric_Piston_UHV.get(32), ItemRefer.HiC_T5.get(16),
+                new Object[] { OrePrefixes.circuit.get(Materials.UEV), 16L },
+                com.dreammaster.gthandler.CustomItemList.HighEnergyFlowCircuit.get(64),
+                com.dreammaster.gthandler.CustomItemList.HighEnergyFlowCircuit.get(64),
+                GTOreDictUnificator.get(OrePrefixes.nanite, Materials.Silver, 16) },
+            new FluidStack[] { MaterialMisc.MUTATED_LIVING_SOLDER.getFluidStack(294912),
+                Materials.Lubricant.getFluid(128000), MaterialPool.Polyetheretherketone.getMolten(36864),
+                MaterialsAlloy.PIKYONIUM.getFluidStack(36864) },
+            GTNLItemList.ExtremeElectricFurnace.get(1),
+            8000,
+            (int) TierEU.RECIPE_UEV);
     }
 }

@@ -2236,7 +2236,7 @@ public class ScriptAvaritia implements IScriptLoader {
                 'E',
                 GTOreDictUnificator.get(OrePrefixes.plateSuperdense, Materials.Bedrockium, 1),
                 'F',
-                GTModHandler.getModItem(ExtraUtilities.ID, "cobblestone_compressed", 1, 7),
+                GTModHandler.getModItem(ExtraUtilities.ID, "cobblestone_compressed", 1, 8),
                 'G',
                 ItemList.Field_Generator_UV.get(1),
                 'H',
