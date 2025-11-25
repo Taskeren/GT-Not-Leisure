@@ -11,6 +11,11 @@ import static gtPlusPlus.core.block.ModBlocks.blockCasingsMisc;
 import static tectech.thing.casing.TTCasingsContainer.sBlockCasingsTT;
 import static tectech.util.TTUtility.replaceLetters;
 
+import java.util.Arrays;
+import java.util.Collection;
+
+import javax.annotation.Nonnull;
+
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
@@ -32,12 +37,14 @@ import com.gtnewhorizon.structurelib.structure.StructureDefinition;
 import com.science.gtnl.common.block.blocks.BlockNanoPhagocytosisPlantRender;
 import com.science.gtnl.common.block.blocks.tile.TileEntityNanoPhagocytosisPlant;
 import com.science.gtnl.common.machine.multiMachineBase.WirelessEnergyMultiMachineBase;
+import com.science.gtnl.common.material.RecipePool;
 import com.science.gtnl.loader.BlockLoader;
 import com.science.gtnl.utils.StructureUtils;
 
 import goodgenerator.loader.Loaders;
 import gregtech.api.enums.Materials;
 import gregtech.api.enums.Textures;
+import gregtech.api.gui.modularui.GTUITextures;
 import gregtech.api.interfaces.INEIPreviewModifier;
 import gregtech.api.interfaces.ITexture;
 import gregtech.api.interfaces.metatileentity.IMetaTileEntity;
@@ -86,6 +93,9 @@ public class NanoPhagocytosisPlant extends WirelessEnergyMultiMachineBase<NanoPh
     private static final String[][] shapeRingOneAir = replaceLetters(shapeRingOne, "Z");
     private static final String[][] shapeRingTwoAir = replaceLetters(shapeRingTwo, "Z");
     private static final String[][] shapeRingThreeAir = replaceLetters(shapeRingThree, "Z");
+
+    private static final int MACHINEMODE_MACERATOR = 0;
+    private static final int MACHINEMODE_ISAMILL = 1;
 
     public boolean neiEnableRender;
     public boolean enableRender = true;
@@ -536,7 +546,44 @@ public class NanoPhagocytosisPlant extends WirelessEnergyMultiMachineBase<NanoPh
 
     @Override
     public RecipeMap<?> getRecipeMap() {
-        return RecipeMaps.maceratorRecipes;
+        return machineMode == MACHINEMODE_MACERATOR ? RecipeMaps.maceratorRecipes : RecipePool.IsaMillRecipes;
+    }
+
+    @Nonnull
+    @Override
+    public Collection<RecipeMap<?>> getAvailableRecipeMaps() {
+        return Arrays.asList(RecipeMaps.maceratorRecipes, RecipePool.IsaMillRecipes);
+    }
+
+    @Override
+    public int nextMachineMode() {
+        if (machineMode == MACHINEMODE_MACERATOR) return MACHINEMODE_ISAMILL;
+        else return MACHINEMODE_MACERATOR;
+    }
+
+    @Override
+    public boolean supportsMachineModeSwitch() {
+        return true;
+    }
+
+    @Override
+    public void setMachineModeIcons() {
+        machineModeIcons.add(GTUITextures.OVERLAY_BUTTON_MACHINEMODE_LPF_METAL);
+        machineModeIcons.add(GTUITextures.OVERLAY_BUTTON_MACHINEMODE_PACKAGER);
+    }
+
+    @Override
+    public final void onScrewdriverRightClick(ForgeDirection side, EntityPlayer aPlayer, float aX, float aY, float aZ,
+        ItemStack aTool) {
+        this.machineMode = (this.machineMode + 1) % 2;
+        GTUtility.sendChatToPlayer(
+            aPlayer,
+            StatCollector.translateToLocal("NanoPhagocytosisPlant_Mode_" + this.machineMode));
+    }
+
+    @Override
+    public String getMachineModeName() {
+        return StatCollector.translateToLocal("NanoPhagocytosisPlant_Mode_" + machineMode);
     }
 
     @Override

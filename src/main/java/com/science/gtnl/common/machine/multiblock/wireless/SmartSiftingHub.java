@@ -1,25 +1,20 @@
 package com.science.gtnl.common.machine.multiblock.wireless;
 
 import static com.gtnewhorizon.structurelib.structure.StructureUtility.*;
-import static com.science.gtnl.ScienceNotLeisure.RESOURCE_ROOT_ID;
+import static com.science.gtnl.ScienceNotLeisure.*;
 import static com.science.gtnl.common.machine.multiMachineBase.MultiMachineBase.CustomHatchElement.*;
+import static gregtech.api.GregTechAPI.*;
 import static gregtech.api.enums.HatchElement.*;
-import static gregtech.api.util.GTStructureUtility.buildHatchAdder;
-import static gregtech.api.util.GTStructureUtility.chainAllGlasses;
-import static gtnhlanth.common.register.LanthItemList.ELECTRODE_CASING;
-import static tectech.thing.casing.TTCasingsContainer.sBlockCasingsTT;
+import static gregtech.api.util.GTStructureUtility.*;
+import static gtPlusPlus.core.block.ModBlocks.*;
+import static tectech.thing.casing.TTCasingsContainer.*;
 
-import java.util.Arrays;
-import java.util.Collection;
-
-import javax.annotation.Nonnull;
-
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.block.Block;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.StatCollector;
 import net.minecraftforge.common.util.ForgeDirection;
 
+import com.gtnewhorizon.structurelib.alignment.IAlignmentLimits;
 import com.gtnewhorizon.structurelib.structure.IStructureDefinition;
 import com.gtnewhorizon.structurelib.structure.ISurvivalBuildEnvironment;
 import com.gtnewhorizon.structurelib.structure.StructureDefinition;
@@ -27,50 +22,44 @@ import com.science.gtnl.common.machine.multiMachineBase.WirelessEnergyMultiMachi
 import com.science.gtnl.loader.BlockLoader;
 import com.science.gtnl.utils.StructureUtils;
 
-import goodgenerator.loader.Loaders;
+import gregtech.api.enums.Materials;
 import gregtech.api.enums.Textures;
-import gregtech.api.gui.modularui.GTUITextures;
 import gregtech.api.interfaces.ITexture;
 import gregtech.api.interfaces.metatileentity.IMetaTileEntity;
 import gregtech.api.interfaces.tileentity.IGregTechTileEntity;
 import gregtech.api.recipe.RecipeMap;
 import gregtech.api.recipe.RecipeMaps;
 import gregtech.api.render.TextureFactory;
-import gregtech.api.util.GTUtility;
 import gregtech.api.util.MultiblockTooltipBuilder;
-import gregtech.common.misc.GTStructureChannels;
-import tectech.thing.casing.BlockGTCasingsTT;
+import gtPlusPlus.core.material.MaterialsAlloy;
+import gtnhlanth.common.register.LanthItemList;
 
-public class SuperconductingElectromagnetism extends WirelessEnergyMultiMachineBase<SuperconductingElectromagnetism> {
+public class SmartSiftingHub extends WirelessEnergyMultiMachineBase<SmartSiftingHub> {
 
-    private static final int MACHINEMODE_ELECTROMAGNETIC = 0;
-    private static final int MACHINEMODE_POLARIZER = 1;
     private static final int HORIZONTAL_OFF_SET = 7;
-    private static final int VERTICAL_OFF_SET = 20;
+    private static final int VERTICAL_OFF_SET = 7;
     private static final int DEPTH_OFF_SET = 0;
     private static final String STRUCTURE_PIECE_MAIN = "main";
-    private static final String SE_STRUCTURE_FILE_PATH = RESOURCE_ROOT_ID + ":"
-        + "multiblock/superconducting_electromagnetism";
-    private static final String[][] shape = StructureUtils.readStructureFromFile(SE_STRUCTURE_FILE_PATH);
+    private static final String SSH_STRUCTURE_FILE_PATH = RESOURCE_ROOT_ID + ":" + "multiblock/smart_sifting_hub";
+    private static final String[][] shape = StructureUtils.readStructureFromFile(SSH_STRUCTURE_FILE_PATH);
 
-    public SuperconductingElectromagnetism(String aName) {
+    public SmartSiftingHub(String aName) {
         super(aName);
     }
 
-    public SuperconductingElectromagnetism(int aID, String aName, String aNameRegional) {
+    public SmartSiftingHub(int aID, String aName, String aNameRegional) {
         super(aID, aName, aNameRegional);
     }
 
     @Override
     public IMetaTileEntity newMetaEntity(IGregTechTileEntity aTileEntity) {
-        return new SuperconductingElectromagnetism(this.mName);
+        return new SmartSiftingHub(this.mName);
     }
 
     @Override
     public MultiblockTooltipBuilder createTooltip() {
         MultiblockTooltipBuilder tt = new MultiblockTooltipBuilder();
-        tt.addMachineType(StatCollector.translateToLocal("SuperconductingElectromagnetismRecipeType"))
-            .addInfo(StatCollector.translateToLocal("Tooltip_SuperconductingElectromagnetism_00"))
+        tt.addMachineType(StatCollector.translateToLocal("SmartSiftingHubRecipeType"))
             .addInfo(StatCollector.translateToLocal("Tooltip_WirelessEnergyMultiMachine_00"))
             .addInfo(StatCollector.translateToLocal("Tooltip_WirelessEnergyMultiMachine_01"))
             .addInfo(StatCollector.translateToLocal("Tooltip_WirelessEnergyMultiMachine_02"))
@@ -86,20 +75,19 @@ public class SuperconductingElectromagnetism extends WirelessEnergyMultiMachineB
             .addSeparator()
             .addInfo(StatCollector.translateToLocal("StructureTooComplex"))
             .addInfo(StatCollector.translateToLocal("BLUE_PRINT_INFO"))
-            .beginStructureBlock(15, 21, 15, true)
-            .addInputBus(StatCollector.translateToLocal("Tooltip_SuperconductingElectromagnetism_Casing"), 1)
-            .addOutputBus(StatCollector.translateToLocal("Tooltip_SuperconductingElectromagnetism_Casing"), 1)
-            .addInputHatch(StatCollector.translateToLocal("Tooltip_SuperconductingElectromagnetism_Casing"), 1)
-            .addOutputHatch(StatCollector.translateToLocal("Tooltip_SuperconductingElectromagnetism_Casing"), 1)
-            .addEnergyHatch(StatCollector.translateToLocal("Tooltip_SuperconductingElectromagnetism_Casing"), 1)
-            .addSubChannelUsage(GTStructureChannels.BOROGLASS)
+            .beginStructureBlock(15, 15, 18, true)
+            .addInputBus(StatCollector.translateToLocal("Tooltip_SmartSiftingHub_Casing"), 1)
+            .addOutputBus(StatCollector.translateToLocal("Tooltip_SmartSiftingHub_Casing"), 1)
+            .addInputHatch(StatCollector.translateToLocal("Tooltip_SmartSiftingHub_Casing"), 1)
+            .addOutputHatch(StatCollector.translateToLocal("Tooltip_SmartSiftingHub_Casing"), 1)
+            .addEnergyHatch(StatCollector.translateToLocal("Tooltip_SmartSiftingHub_Casing"), 1)
             .toolTipFinisher();
         return tt;
     }
 
     @Override
     public int getCasingTextureID() {
-        return BlockGTCasingsTT.textureOffset + 4;
+        return StructureUtils.getTextureIndex(sBlockCasings8, 10);
     }
 
     @Override
@@ -121,16 +109,26 @@ public class SuperconductingElectromagnetism extends WirelessEnergyMultiMachineB
     }
 
     @Override
-    public IStructureDefinition<SuperconductingElectromagnetism> getStructureDefinition() {
-        return StructureDefinition.<SuperconductingElectromagnetism>builder()
+    public IStructureDefinition<SmartSiftingHub> getStructureDefinition() {
+        return StructureDefinition.<SmartSiftingHub>builder()
             .addShape(STRUCTURE_PIECE_MAIN, transpose(shape))
-            .addElement('A', ofBlock(Loaders.speedingPipe, 0))
-            .addElement('B', ofBlock(Loaders.compactFusionCoil, 0))
-            .addElement('C', ofBlockAnyMeta(ELECTRODE_CASING))
-            .addElement('D', ofBlock(BlockLoader.metaCasing, 8))
+            .addElement('A', ofFrame(Materials.TungstenSteel))
+            .addElement('B', ofBlock(blockCasings5Misc, 0))
+            .addElement('C', ofFrame(Materials.Quantium))
             .addElement(
-                'E',
-                buildHatchAdder(SuperconductingElectromagnetism.class)
+                'D',
+                ofBlockAnyMeta(
+                    Block.getBlockFromItem(
+                        MaterialsAlloy.HASTELLOY_C276.getFrameBox(1)
+                            .getItem())))
+            .addElement('E', ofBlock(blockCasings2Misc, 2))
+            .addElement('F', ofBlock(BlockLoader.metaCasing, 5))
+            .addElement('G', ofFrame(Materials.Europium))
+            .addElement('H', ofBlock(blockSpecialMultiCasings, 8))
+            .addElement('I', ofBlock(sBlockCasingsTT, 4))
+            .addElement(
+                'J',
+                buildHatchAdder(SmartSiftingHub.class)
                     .atLeast(
                         Maintenance,
                         InputBus,
@@ -141,9 +139,16 @@ public class SuperconductingElectromagnetism extends WirelessEnergyMultiMachineB
                         ParallelCon)
                     .casingIndex(getCasingTextureID())
                     .dot(1)
-                    .buildAndChain(onElementPass(x -> ++x.mCountCasing, ofBlock(sBlockCasingsTT, 4))))
-            .addElement('F', chainAllGlasses(-1, (te, t) -> te.mGlassTier = t, te -> te.mGlassTier))
+                    .buildAndChain(onElementPass(x -> ++x.mCountCasing, ofBlock(sBlockCasings8, 10))))
+            .addElement('K', ofBlock(sBlockCasingsTT, 6))
+            .addElement('L', ofBlock(BlockLoader.metaBlockGlass, 2))
+            .addElement('M', ofBlock(LanthItemList.ELECTRODE_CASING, 0))
             .build();
+    }
+
+    @Override
+    public IAlignmentLimits getInitialAlignmentLimits() {
+        return (d, r, f) -> d == ForgeDirection.UP;
     }
 
     @Override
@@ -177,72 +182,12 @@ public class SuperconductingElectromagnetism extends WirelessEnergyMultiMachineB
         if (!checkPiece(STRUCTURE_PIECE_MAIN, HORIZONTAL_OFF_SET, VERTICAL_OFF_SET, DEPTH_OFF_SET) || !checkHatch())
             return false;
         setupParameters();
-        return mCountCasing > 700;
-    }
-
-    @Override
-    public double getEUtDiscount() {
-        return super.getEUtDiscount() * Math.pow(0.95, mGlassTier);
-    }
-
-    @Override
-    public double getDurationModifier() {
-        return super.getDurationModifier() * Math.pow(0.95, mGlassTier);
-    }
-
-    @Override
-    public void saveNBTData(NBTTagCompound aNBT) {
-        super.saveNBTData(aNBT);
-        aNBT.setInteger("mGlassTier", mGlassTier);
-    }
-
-    @Override
-    public void loadNBTData(NBTTagCompound aNBT) {
-        super.loadNBTData(aNBT);
-        mGlassTier = aNBT.getInteger("mGlassTier");
+        return mCountCasing > 200;
     }
 
     @Override
     public RecipeMap<?> getRecipeMap() {
-        return machineMode == MACHINEMODE_ELECTROMAGNETIC ? RecipeMaps.electroMagneticSeparatorRecipes
-            : RecipeMaps.polarizerRecipes;
-    }
-
-    @Nonnull
-    @Override
-    public Collection<RecipeMap<?>> getAvailableRecipeMaps() {
-        return Arrays.asList(RecipeMaps.electroMagneticSeparatorRecipes, RecipeMaps.polarizerRecipes);
-    }
-
-    @Override
-    public int nextMachineMode() {
-        if (machineMode == MACHINEMODE_ELECTROMAGNETIC) return MACHINEMODE_POLARIZER;
-        else return MACHINEMODE_ELECTROMAGNETIC;
-    }
-
-    @Override
-    public boolean supportsMachineModeSwitch() {
-        return true;
-    }
-
-    @Override
-    public void setMachineModeIcons() {
-        machineModeIcons.add(GTUITextures.OVERLAY_BUTTON_MACHINEMODE_LPF_METAL);
-        machineModeIcons.add(GTUITextures.OVERLAY_BUTTON_MACHINEMODE_PACKAGER);
-    }
-
-    @Override
-    public final void onScrewdriverRightClick(ForgeDirection side, EntityPlayer aPlayer, float aX, float aY, float aZ,
-        ItemStack aTool) {
-        this.machineMode = (this.machineMode + 1) % 2;
-        GTUtility.sendChatToPlayer(
-            aPlayer,
-            StatCollector.translateToLocal("SuperconductingElectromagnetism_Mode_" + this.machineMode));
-    }
-
-    @Override
-    public String getMachineModeName() {
-        return StatCollector.translateToLocal("SuperconductingElectromagnetism_Mode_" + machineMode);
+        return RecipeMaps.sifterRecipes;
     }
 
 }

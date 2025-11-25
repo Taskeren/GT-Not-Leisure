@@ -2710,10 +2710,9 @@ Tooltip_HighEnergyLaserLathe_00=每级玻璃等级额外提供5%的加速和耗�
 Tooltip_HighEnergyLaserLathe_Casing=任意分子机械方块
 
 NameSuperconductingElectromagnetism=超导电磁工厂
-SuperconductingElectromagnetismRecipeType=电解机 / 电磁离析机 / 两级磁化机
-SuperconductingElectromagnetism_Mode_0=电解机
-SuperconductingElectromagnetism_Mode_1=电磁离析机
-SuperconductingElectromagnetism_Mode_2=两级磁化机
+SuperconductingElectromagnetismRecipeType=电磁离析机 / 两级磁化机
+SuperconductingElectromagnetism_Mode_0=电磁离析机
+SuperconductingElectromagnetism_Mode_1=两级磁化机
 Tooltip_SuperconductingElectromagnetism_00=每级玻璃等级额外提供5%的加速和耗电减免(乘算叠加)
 Tooltip_SuperconductingElectromagnetism_Casing=任意分子机械方块
 
@@ -2749,7 +2748,9 @@ Tooltip_NanoAssemblerMarkL_01=部件装配线外壳等级决定了能源仓最�
 Tooltip_NanoAssemblerMarkL_Casing=任意镀铱机械方块
 
 NameNanoPhagocytosisPlant=纳米吞噬厂
-NanoPhagocytosisPlantRecipeType=粉碎机
+NanoPhagocytosisPlantRecipeType=粉碎机 / 湿法碾磨
+NanoPhagocytosisPlant_Mode_0=粉碎机
+NanoPhagocytosisPlant_Mode_1=湿法碾磨
 Tooltip_NanoPhagocytosisPlant_00=使用纳米蜂群无情的撕碎一切
 Tooltip_NanoPhagocytosisPlant_01=每级电压等级额外提供25%的加速和耗电减免(乘算叠加)
 Tooltip_NanoPhagocytosisPlant_Casing=任意超能硅岩强化无菌净水厂机械方块
@@ -3081,6 +3082,35 @@ Tooltip_MicroorganismMaster_00=每级玻璃等级额外提供5%的加速和耗�
 Tooltip_MicroorganismMaster_01=不再需要保持输出仓半满
 Tooltip_MicroorganismMaster_02=无视玻璃等级要求和剂量要求
 Tooltip_MicroorganismMaster_Casing=任意化学惰性机械方块
+
+NameMantleCrusher=地层撕裂者
+MantleCrusherRecipeType=工业碎岩机
+Tooltip_MantleCrusher_00=需要在输入仓中放入水和岩浆
+Tooltip_MantleCrusher_Casing=任意放射硅岩合金机械方块
+
+NameSmartSiftingHub=智能筛选中枢
+SmartSiftingHubRecipeType=筛选机
+Tooltip_SmartSiftingHub_Casing=任意放射硅岩合金机械方块
+
+NameGiantElectrochemicalWorkstation=巨型电化学工作站
+GiantElectrochemicalWorkstationRecipeType=电解机
+Tooltip_GiantElectrochemicalWorkstation_00=每级线圈等级额外提供15%的加速(乘算叠加)
+Tooltip_GiantElectrochemicalWorkstation_Casing=任意放射硅岩合金机械方块
+
+NameExtremeElectricFurnace=极限电炉
+ExtremeElectricFurnaceRecipeType=合金炉
+Tooltip_ExtremeElectricFurnace_00=每级线圈等级额外提供15%的加速(乘算叠加)
+Tooltip_ExtremeElectricFurnace_Casing=任意超能硅岩强化无菌净水厂机械方块
+
+NameGeminiContainmentSystem=双子星封装系统
+GeminiContainmentSystemRecipeType=打包机 / 解包器
+GeminiContainmentSystem_Mode_0=打包机
+GeminiContainmentSystem_Mode_1=解包器
+Tooltip_GeminiContainmentSystem_Casing=任意强化镀铱机械方块
+
+NameExtremeCompressor=极限压缩装置
+ExtremeCompressorRecipeType=电动聚爆压缩机
+Tooltip_ExtremeCompressor_Casing=任意强化镀铱机械方块
 
 NameAlloyBlastSmelter=合金冶炼炉
 AlloyBlastSmelterRecipeType=合金冶炼炉

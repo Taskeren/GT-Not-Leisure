@@ -1,13 +1,13 @@
 package com.science.gtnl.common.machine.multiblock.wireless;
 
 import static com.gtnewhorizon.structurelib.structure.StructureUtility.*;
-import static com.science.gtnl.ScienceNotLeisure.RESOURCE_ROOT_ID;
+import static com.science.gtnl.ScienceNotLeisure.*;
 import static com.science.gtnl.common.machine.multiMachineBase.MultiMachineBase.CustomHatchElement.*;
+import static gregtech.api.GregTechAPI.*;
 import static gregtech.api.enums.HatchElement.*;
-import static gregtech.api.util.GTStructureUtility.buildHatchAdder;
-import static gregtech.api.util.GTStructureUtility.chainAllGlasses;
-import static gtnhlanth.common.register.LanthItemList.ELECTRODE_CASING;
-import static tectech.thing.casing.TTCasingsContainer.sBlockCasingsTT;
+import static gregtech.api.util.GTStructureUtility.*;
+import static gtPlusPlus.core.block.ModBlocks.*;
+import static tectech.thing.casing.TTCasingsContainer.*;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -16,7 +16,6 @@ import javax.annotation.Nonnull;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.StatCollector;
 import net.minecraftforge.common.util.ForgeDirection;
 
@@ -27,7 +26,8 @@ import com.science.gtnl.common.machine.multiMachineBase.WirelessEnergyMultiMachi
 import com.science.gtnl.loader.BlockLoader;
 import com.science.gtnl.utils.StructureUtils;
 
-import goodgenerator.loader.Loaders;
+import gregtech.api.enums.HeatingCoilLevel;
+import gregtech.api.enums.Materials;
 import gregtech.api.enums.Textures;
 import gregtech.api.gui.modularui.GTUITextures;
 import gregtech.api.interfaces.ITexture;
@@ -39,38 +39,37 @@ import gregtech.api.render.TextureFactory;
 import gregtech.api.util.GTUtility;
 import gregtech.api.util.MultiblockTooltipBuilder;
 import gregtech.common.misc.GTStructureChannels;
-import tectech.thing.casing.BlockGTCasingsTT;
+import gtPlusPlus.xmod.gregtech.common.blocks.textures.TexturesGtBlock;
 
-public class SuperconductingElectromagnetism extends WirelessEnergyMultiMachineBase<SuperconductingElectromagnetism> {
+public class GeminiContainmentSystem extends WirelessEnergyMultiMachineBase<GeminiContainmentSystem> {
 
-    private static final int MACHINEMODE_ELECTROMAGNETIC = 0;
-    private static final int MACHINEMODE_POLARIZER = 1;
     private static final int HORIZONTAL_OFF_SET = 7;
-    private static final int VERTICAL_OFF_SET = 20;
+    private static final int VERTICAL_OFF_SET = 27;
     private static final int DEPTH_OFF_SET = 0;
     private static final String STRUCTURE_PIECE_MAIN = "main";
-    private static final String SE_STRUCTURE_FILE_PATH = RESOURCE_ROOT_ID + ":"
-        + "multiblock/superconducting_electromagnetism";
-    private static final String[][] shape = StructureUtils.readStructureFromFile(SE_STRUCTURE_FILE_PATH);
+    private static final String GCS_STRUCTURE_FILE_PATH = RESOURCE_ROOT_ID + ":"
+        + "multiblock/gemini_containment_system";
+    private static final String[][] shape = StructureUtils.readStructureFromFile(GCS_STRUCTURE_FILE_PATH);
+    public static final int MACHINEMODE_PACKAGER = 0;
+    public static final int MACHINEMODE_UNPACKAGER = 1;
 
-    public SuperconductingElectromagnetism(String aName) {
+    public GeminiContainmentSystem(String aName) {
         super(aName);
     }
 
-    public SuperconductingElectromagnetism(int aID, String aName, String aNameRegional) {
+    public GeminiContainmentSystem(int aID, String aName, String aNameRegional) {
         super(aID, aName, aNameRegional);
     }
 
     @Override
     public IMetaTileEntity newMetaEntity(IGregTechTileEntity aTileEntity) {
-        return new SuperconductingElectromagnetism(this.mName);
+        return new GeminiContainmentSystem(this.mName);
     }
 
     @Override
     public MultiblockTooltipBuilder createTooltip() {
         MultiblockTooltipBuilder tt = new MultiblockTooltipBuilder();
-        tt.addMachineType(StatCollector.translateToLocal("SuperconductingElectromagnetismRecipeType"))
-            .addInfo(StatCollector.translateToLocal("Tooltip_SuperconductingElectromagnetism_00"))
+        tt.addMachineType(StatCollector.translateToLocal("GeminiContainmentSystemRecipeType"))
             .addInfo(StatCollector.translateToLocal("Tooltip_WirelessEnergyMultiMachine_00"))
             .addInfo(StatCollector.translateToLocal("Tooltip_WirelessEnergyMultiMachine_01"))
             .addInfo(StatCollector.translateToLocal("Tooltip_WirelessEnergyMultiMachine_02"))
@@ -86,63 +85,89 @@ public class SuperconductingElectromagnetism extends WirelessEnergyMultiMachineB
             .addSeparator()
             .addInfo(StatCollector.translateToLocal("StructureTooComplex"))
             .addInfo(StatCollector.translateToLocal("BLUE_PRINT_INFO"))
-            .beginStructureBlock(15, 21, 15, true)
-            .addInputBus(StatCollector.translateToLocal("Tooltip_SuperconductingElectromagnetism_Casing"), 1)
-            .addOutputBus(StatCollector.translateToLocal("Tooltip_SuperconductingElectromagnetism_Casing"), 1)
-            .addInputHatch(StatCollector.translateToLocal("Tooltip_SuperconductingElectromagnetism_Casing"), 1)
-            .addOutputHatch(StatCollector.translateToLocal("Tooltip_SuperconductingElectromagnetism_Casing"), 1)
-            .addEnergyHatch(StatCollector.translateToLocal("Tooltip_SuperconductingElectromagnetism_Casing"), 1)
-            .addSubChannelUsage(GTStructureChannels.BOROGLASS)
+            .beginStructureBlock(15, 29, 31, true)
+            .addInputBus(StatCollector.translateToLocal("Tooltip_GeminiContainmentSystem_Casing"), 1)
+            .addOutputBus(StatCollector.translateToLocal("Tooltip_GeminiContainmentSystem_Casing"), 1)
+            .addInputHatch(StatCollector.translateToLocal("Tooltip_GeminiContainmentSystem_Casing"), 1)
+            .addOutputHatch(StatCollector.translateToLocal("Tooltip_GeminiContainmentSystem_Casing"), 1)
+            .addEnergyHatch(StatCollector.translateToLocal("Tooltip_GeminiContainmentSystem_Casing"), 1)
+            .addSubChannelUsage(GTStructureChannels.HEATING_COIL)
             .toolTipFinisher();
         return tt;
     }
 
     @Override
     public int getCasingTextureID() {
-        return BlockGTCasingsTT.textureOffset + 4;
+        return StructureUtils.getTextureIndex(sBlockCasings8, 7);
     }
 
     @Override
-    public ITexture[] getTexture(IGregTechTileEntity aBaseMetaTileEntity, ForgeDirection side, ForgeDirection aFacing,
-        int colorIndex, boolean aActive, boolean redstoneLevel) {
-        if (side == aFacing) {
-            if (aActive) return new ITexture[] { Textures.BlockIcons.getCasingTextureForId(getCasingTextureID()),
+    public ITexture[] getTexture(IGregTechTileEntity baseMetaTileEntity, ForgeDirection sideDirection,
+        ForgeDirection facingDirection, int colorIndex, boolean active, boolean redstoneLevel) {
+        if (sideDirection == facingDirection) {
+            if (active) return new ITexture[] { Textures.BlockIcons.getCasingTextureForId(getCasingTextureID()),
                 TextureFactory.builder()
-                    .addIcon(Textures.BlockIcons.OVERLAY_DTPF_ON)
+                    .addIcon(TexturesGtBlock.oMCAAmazonPackagerActive)
                     .extFacing()
+                    .build(),
+                TextureFactory.builder()
+                    .addIcon(TexturesGtBlock.oMCAAmazonPackagerActiveGlow)
+                    .extFacing()
+                    .glow()
                     .build() };
             return new ITexture[] { Textures.BlockIcons.getCasingTextureForId(getCasingTextureID()),
                 TextureFactory.builder()
-                    .addIcon(Textures.BlockIcons.OVERLAY_DTPF_OFF)
+                    .addIcon(TexturesGtBlock.oMCAAmazonPackager)
                     .extFacing()
+                    .build(),
+                TextureFactory.builder()
+                    .addIcon(TexturesGtBlock.oMCAAmazonPackagerGlow)
+                    .extFacing()
+                    .glow()
                     .build() };
         }
         return new ITexture[] { Textures.BlockIcons.getCasingTextureForId(getCasingTextureID()) };
     }
 
     @Override
-    public IStructureDefinition<SuperconductingElectromagnetism> getStructureDefinition() {
-        return StructureDefinition.<SuperconductingElectromagnetism>builder()
+    public IStructureDefinition<GeminiContainmentSystem> getStructureDefinition() {
+        return StructureDefinition.<GeminiContainmentSystem>builder()
             .addShape(STRUCTURE_PIECE_MAIN, transpose(shape))
-            .addElement('A', ofBlock(Loaders.speedingPipe, 0))
-            .addElement('B', ofBlock(Loaders.compactFusionCoil, 0))
-            .addElement('C', ofBlockAnyMeta(ELECTRODE_CASING))
-            .addElement('D', ofBlock(BlockLoader.metaCasing, 8))
+            .addElement('A', ofBlock(blockCasingsMisc, 0))
+            .addElement('B', ofBlock(BlockLoader.metaBlockGlow, 31))
+            .addElement('C', ofBlock(BlockLoader.metaCasing, 12))
+            .addElement('D', ofBlock(blockCasings5Misc, 0))
+            .addElement('E', ofBlock(sBlockCasings10, 8))
+            .addElement('F', ofBlock(sBlockCasings2, 4))
+            .addElement('G', ofBlock(sBlockCasings2, 5))
             .addElement(
-                'E',
-                buildHatchAdder(SuperconductingElectromagnetism.class)
+                'H',
+                buildHatchAdder(GeminiContainmentSystem.class)
                     .atLeast(
                         Maintenance,
-                        InputBus,
-                        OutputBus,
                         InputHatch,
                         OutputHatch,
+                        InputBus,
+                        OutputBus,
                         Energy.or(ExoticEnergy),
                         ParallelCon)
                     .casingIndex(getCasingTextureID())
                     .dot(1)
-                    .buildAndChain(onElementPass(x -> ++x.mCountCasing, ofBlock(sBlockCasingsTT, 4))))
-            .addElement('F', chainAllGlasses(-1, (te, t) -> te.mGlassTier = t, te -> te.mGlassTier))
+                    .buildAndChain(onElementPass(x -> ++x.mCountCasing, ofBlock(sBlockCasings8, 7))))
+            .addElement(
+                'I',
+                GTStructureChannels.HEATING_COIL.use(
+                    activeCoils(
+                        ofCoil(GeminiContainmentSystem::setMCoilLevel, GeminiContainmentSystem::getMCoilLevel))))
+            .addElement('J', ofBlock(blockCasings2Misc, 2))
+            .addElement('K', ofBlock(BlockLoader.metaCasing, 5))
+            .addElement('L', ofBlock(blockSpecialMultiCasings, 8))
+            .addElement('M', ofBlock(sBlockCasings2, 7))
+            .addElement('N', ofBlock(sBlockTintedGlass, 1))
+            .addElement('O', ofBlock(sBlockCasingsTT, 6))
+            .addElement('P', ofBlock(sBlockCasings10, 1))
+            .addElement('Q', ofBlock(blockSpecialMultiCasings, 11))
+            .addElement('R', ofFrame(Materials.Naquadah))
             .build();
     }
 
@@ -177,58 +202,29 @@ public class SuperconductingElectromagnetism extends WirelessEnergyMultiMachineB
         if (!checkPiece(STRUCTURE_PIECE_MAIN, HORIZONTAL_OFF_SET, VERTICAL_OFF_SET, DEPTH_OFF_SET) || !checkHatch())
             return false;
         setupParameters();
-        return mCountCasing > 700;
+        return mCountCasing > 100;
     }
 
     @Override
-    public double getEUtDiscount() {
-        return super.getEUtDiscount() * Math.pow(0.95, mGlassTier);
-    }
-
-    @Override
-    public double getDurationModifier() {
-        return super.getDurationModifier() * Math.pow(0.95, mGlassTier);
-    }
-
-    @Override
-    public void saveNBTData(NBTTagCompound aNBT) {
-        super.saveNBTData(aNBT);
-        aNBT.setInteger("mGlassTier", mGlassTier);
-    }
-
-    @Override
-    public void loadNBTData(NBTTagCompound aNBT) {
-        super.loadNBTData(aNBT);
-        mGlassTier = aNBT.getInteger("mGlassTier");
+    public boolean checkHatch() {
+        return super.checkHatch() && getMCoilLevel() != HeatingCoilLevel.None;
     }
 
     @Override
     public RecipeMap<?> getRecipeMap() {
-        return machineMode == MACHINEMODE_ELECTROMAGNETIC ? RecipeMaps.electroMagneticSeparatorRecipes
-            : RecipeMaps.polarizerRecipes;
+        return (machineMode == MACHINEMODE_PACKAGER) ? RecipeMaps.packagerRecipes : RecipeMaps.unpackagerRecipes;
     }
 
     @Nonnull
     @Override
     public Collection<RecipeMap<?>> getAvailableRecipeMaps() {
-        return Arrays.asList(RecipeMaps.electroMagneticSeparatorRecipes, RecipeMaps.polarizerRecipes);
-    }
-
-    @Override
-    public int nextMachineMode() {
-        if (machineMode == MACHINEMODE_ELECTROMAGNETIC) return MACHINEMODE_POLARIZER;
-        else return MACHINEMODE_ELECTROMAGNETIC;
-    }
-
-    @Override
-    public boolean supportsMachineModeSwitch() {
-        return true;
+        return Arrays.asList(RecipeMaps.packagerRecipes, RecipeMaps.unpackagerRecipes);
     }
 
     @Override
     public void setMachineModeIcons() {
-        machineModeIcons.add(GTUITextures.OVERLAY_BUTTON_MACHINEMODE_LPF_METAL);
         machineModeIcons.add(GTUITextures.OVERLAY_BUTTON_MACHINEMODE_PACKAGER);
+        machineModeIcons.add(GTUITextures.OVERLAY_BUTTON_MACHINEMODE_UNPACKAGER);
     }
 
     @Override
@@ -237,12 +233,27 @@ public class SuperconductingElectromagnetism extends WirelessEnergyMultiMachineB
         this.machineMode = (this.machineMode + 1) % 2;
         GTUtility.sendChatToPlayer(
             aPlayer,
-            StatCollector.translateToLocal("SuperconductingElectromagnetism_Mode_" + this.machineMode));
+            StatCollector.translateToLocal("GeminiContainmentSystem_Mode_" + this.machineMode));
     }
 
     @Override
     public String getMachineModeName() {
-        return StatCollector.translateToLocal("SuperconductingElectromagnetism_Mode_" + machineMode);
+        return StatCollector.translateToLocal("GeminiContainmentSystem_Mode_" + machineMode);
+    }
+
+    @Override
+    public boolean supportsMachineModeSwitch() {
+        return true;
+    }
+
+    @Override
+    public double getEUtDiscount() {
+        return super.getEUtDiscount();
+    }
+
+    @Override
+    public double getDurationModifier() {
+        return super.getDurationModifier() * Math.pow(0.85, getMCoilLevel().getTier());
     }
 
 }

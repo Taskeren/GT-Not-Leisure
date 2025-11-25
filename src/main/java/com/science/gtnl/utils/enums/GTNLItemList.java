@@ -609,6 +609,12 @@ public enum GTNLItemList implements IItemContainer {
     CrystalBuilder,
     LargeRockCrusher,
     PhaseChangeCube,
+    MantleCrusher,
+    SmartSiftingHub,
+    GiantElectrochemicalWorkstation,
+    GeminiContainmentSystem,
+    ExtremeCompressor,
+    ExtremeElectricFurnace,
 
     EnergyHatchLV,
     EnergyHatchLV4A,

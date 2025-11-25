@@ -2710,10 +2710,9 @@ Tooltip_HighEnergyLaserLathe_00=Each glass tier provides an additional 5% speed 
 Tooltip_HighEnergyLaserLathe_Casing=Any Molecular Casing
 
 NameSuperconductingElectromagnetism=Superconducting Electromagnetism
-SuperconductingElectromagnetismRecipeType=Electrolyzer / Electromagnetic Separator / Two-stage Magnetizer
-SuperconductingElectromagnetism_Mode_0=Electrolyzer
-SuperconductingElectromagnetism_Mode_1=Electromagnetic Separator
-SuperconductingElectromagnetism_Mode_2=Two-stage Magnetizer
+SuperconductingElectromagnetismRecipeType=Electromagnetic Separator / Two-stage Magnetizer
+SuperconductingElectromagnetism_Mode_0=Electromagnetic Separator
+SuperconductingElectromagnetism_Mode_1=Two-stage Magnetizer
 Tooltip_SuperconductingElectromagnetism_00=Each glass tier provides an additional 5% speed and power reduction (multiplicative).
 Tooltip_SuperconductingElectromagnetism_Casing=Any Molecular Casing
 
@@ -2749,7 +2748,9 @@ Tooltip_NanoAssemblerMarkL_01=The level of the Component Assembly Line Casing de
 Tooltip_NanoAssemblerMarkL_Casing=Ang Advanced Iridium Plated Machine Casing
 
 NameNanoPhagocytosisPlant=Nano Phagocytosis Plant
-NanoPhagocytosisPlantRecipeType=Macerator
+NanoPhagocytosisPlantRecipeType=Macerator / Wet Grinding
+NanoPhagocytosisPlant_Mode_0=Macerator
+NanoPhagocytosisPlant_Mode_1=Wet Grinding
 Tooltip_NanoPhagocytosisPlant_00=Ruthlessly shred everything with a swarm of Nanites
 Tooltip_NanoPhagocytosisPlant_01=Each voltage tier provides an additional 5% speed and power reduction (multiplicative).
 Tooltip_NanoPhagocytosisPlant_Casing=Any Superconductor Reinforced Sterile Water Purifier Machine Block
@@ -3081,6 +3082,35 @@ Tooltip_MicroorganismMaster_00=Each glass tier provides an additional 5% speed a
 Tooltip_MicroorganismMaster_01=No longer needs to keep the output bus half full.
 Tooltip_MicroorganismMaster_02=Ignores glass tier requirements and dosage requirements.
 Tooltip_MicroorganismMaster_Casing=Any Chemically Inert Machine Block
+
+NameMantleCrusher=Mantle Crusher
+MantleCrusherRecipeType=Industrial Rock Crusher
+Tooltip_MantleCrusher_00=Need put water and lava into input hatch
+Tooltip_MantleCrusher_Casing=Any radioactive Naquadah alloy machine block
+
+NameSmartSiftingHub=Smart Sifting Hub
+SmartSiftingHubRecipeType=Sifter
+Tooltip_SmartSiftingHub_Casing=Any radioactive Naquadah alloy machine block
+
+NameGiantElectrochemicalWorkstation=Giant Electrochemical Workstation
+GiantElectrochemicalWorkstationRecipeType=Electrolyzer
+Tooltip_GiantElectrochemicalWorkstation_00=Each coil tier provides an additional 15% speed (multiplicative).
+Tooltip_GiantElectrochemicalWorkstation_Casing=Any radioactive Naquadah alloy machine block
+
+NameExtremeElectricFurnace=Extreme Electric Furnace
+ExtremeElectricFurnaceRecipeType=Alloy Smelter
+Tooltip_ExtremeElectricFurnace_00=Each coil tier provides an additional 15% speed (multiplicative).
+Tooltip_ExtremeElectricFurnace_Casing=Any Naquadria-Reinforced Water Plant Casing
+
+NameGeminiContainmentSystem=Gemini Containment System
+GeminiContainmentSystemRecipeType=Packer / Unpacker
+GeminiContainmentSystem_Mode_0=Packer
+GeminiContainmentSystem_Mode_1=Unpacker
+Tooltip_GeminiContainmentSystem_Casing=Any Reinforced Iridium Machine Block
+
+NameExtremeCompressor=Extreme Compressor
+ExtremeCompressorRecipeType=Electric Implosion Compressor
+Tooltip_ExtremeCompressor_Casing=Any Reinforced Iridium Machine Block
 
 NameAlloyBlastSmelter=Alloy Blast Smelter
 AlloyBlastSmelterRecipeType=Alloy Blast Smelter

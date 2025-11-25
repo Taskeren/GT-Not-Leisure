@@ -35,6 +35,7 @@ import gregtech.api.recipe.RecipeMaps;
 import gregtech.api.render.TextureFactory;
 import gregtech.api.util.GTUtility;
 import gregtech.api.util.MultiblockTooltipBuilder;
+import gtPlusPlus.xmod.gregtech.common.blocks.textures.TexturesGtBlock;
 
 public class LargePacker extends GTMMultiMachineBase<LargePacker> implements ISurvivalConstructable {
 
@@ -61,21 +62,34 @@ public class LargePacker extends GTMMultiMachineBase<LargePacker> implements ISu
     }
 
     @Override
-    public ITexture[] getTexture(IGregTechTileEntity aBaseMetaTileEntity, ForgeDirection side, ForgeDirection aFacing,
-        int colorIndex, boolean aActive, boolean redstoneLevel) {
-        if (side == aFacing) {
-            if (aActive) return new ITexture[] { Textures.BlockIcons.getCasingTextureForId(getCasingTextureID()),
+    public ITexture[] getTexture(IGregTechTileEntity baseMetaTileEntity, ForgeDirection sideDirection,
+        ForgeDirection facingDirection, int colorIndex, boolean active, boolean redstoneLevel) {
+        if (sideDirection == facingDirection) {
+            if (active) return new ITexture[] {
+                Textures.BlockIcons.getCasingTextureForId(StructureUtils.getTextureIndex(sBlockCasingsSE, 0)),
                 TextureFactory.builder()
-                    .addIcon(oMCAAmazonPackagerActive)
+                    .addIcon(TexturesGtBlock.oMCAAmazonPackagerActive)
                     .extFacing()
+                    .build(),
+                TextureFactory.builder()
+                    .addIcon(TexturesGtBlock.oMCAAmazonPackagerActiveGlow)
+                    .extFacing()
+                    .glow()
                     .build() };
-            return new ITexture[] { Textures.BlockIcons.getCasingTextureForId(getCasingTextureID()),
+            return new ITexture[] {
+                Textures.BlockIcons.getCasingTextureForId(StructureUtils.getTextureIndex(sBlockCasingsSE, 0)),
                 TextureFactory.builder()
-                    .addIcon(oMCAAmazonPackager)
+                    .addIcon(TexturesGtBlock.oMCAAmazonPackager)
                     .extFacing()
+                    .build(),
+                TextureFactory.builder()
+                    .addIcon(TexturesGtBlock.oMCAAmazonPackagerGlow)
+                    .extFacing()
+                    .glow()
                     .build() };
         }
-        return new ITexture[] { Textures.BlockIcons.getCasingTextureForId(getCasingTextureID()) };
+        return new ITexture[] {
+            Textures.BlockIcons.getCasingTextureForId(StructureUtils.getTextureIndex(sBlockCasingsSE, 0)) };
     }
 
     @Override

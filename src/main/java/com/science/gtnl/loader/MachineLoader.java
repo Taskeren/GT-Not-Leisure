@@ -219,13 +219,18 @@ import com.science.gtnl.common.machine.multiblock.wireless.CompoundExtremeCoolin
 import com.science.gtnl.common.machine.multiblock.wireless.CrackerHub;
 import com.science.gtnl.common.machine.multiblock.wireless.CrystalBuilder;
 import com.science.gtnl.common.machine.multiblock.wireless.EngravingLaserPlant;
+import com.science.gtnl.common.machine.multiblock.wireless.ExtremeCompressor;
+import com.science.gtnl.common.machine.multiblock.wireless.ExtremeElectricFurnace;
 import com.science.gtnl.common.machine.multiblock.wireless.FieldForgePress;
+import com.science.gtnl.common.machine.multiblock.wireless.GeminiContainmentSystem;
+import com.science.gtnl.common.machine.multiblock.wireless.GiantElectrochemicalWorkstation;
 import com.science.gtnl.common.machine.multiblock.wireless.HandOfJohnDavisonRockefeller;
 import com.science.gtnl.common.machine.multiblock.wireless.HeavyRolling;
 import com.science.gtnl.common.machine.multiblock.wireless.HighEnergyLaserLathe;
 import com.science.gtnl.common.machine.multiblock.wireless.HorizontalCompressor;
 import com.science.gtnl.common.machine.multiblock.wireless.IntegratedAssemblyFacility;
 import com.science.gtnl.common.machine.multiblock.wireless.MagneticEnergyReactionFurnace;
+import com.science.gtnl.common.machine.multiblock.wireless.MantleCrusher;
 import com.science.gtnl.common.machine.multiblock.wireless.MegaBathTank;
 import com.science.gtnl.common.machine.multiblock.wireless.MegaBrewer;
 import com.science.gtnl.common.machine.multiblock.wireless.MegaCanner;
@@ -238,6 +243,7 @@ import com.science.gtnl.common.machine.multiblock.wireless.NanoPhagocytosisPlant
 import com.science.gtnl.common.machine.multiblock.wireless.NeutroniumWireCutting;
 import com.science.gtnl.common.machine.multiblock.wireless.NineIndustrialMultiMachine;
 import com.science.gtnl.common.machine.multiblock.wireless.PhaseChangeCube;
+import com.science.gtnl.common.machine.multiblock.wireless.SmartSiftingHub;
 import com.science.gtnl.common.machine.multiblock.wireless.SmeltingMixingFurnace;
 import com.science.gtnl.common.machine.multiblock.wireless.SuperconductingElectromagnetism;
 import com.science.gtnl.common.machine.multiblock.wireless.SuperconductingMagneticPresser;
@@ -1561,6 +1567,45 @@ public class MachineLoader {
                 "PhaseChangeCube",
                 StatCollector.translateToLocal("NamePhaseChangeCube")));
         addItemTooltip(GTNLItemList.PhaseChangeCube.get(1), AnimatedText.SNL_QYZG);
+
+        GTNLItemList.MantleCrusher.set(
+            new MantleCrusher(MANTLE_CRUSHER.ID, "MantleCrusher", StatCollector.translateToLocal("NameMantleCrusher")));
+        addItemTooltip(GTNLItemList.MantleCrusher.get(1), AnimatedText.SNL_QYZG);
+
+        GTNLItemList.SmartSiftingHub.set(
+            new SmartSiftingHub(
+                SMART_SIFTING_HUB.ID,
+                "SmartSiftingHub",
+                StatCollector.translateToLocal("NameSmartSiftingHub")));
+        addItemTooltip(GTNLItemList.SmartSiftingHub.get(1), AnimatedText.SNL_QYZG);
+
+        GTNLItemList.GiantElectrochemicalWorkstation.set(
+            new GiantElectrochemicalWorkstation(
+                GIANT_ELECTROCHEMICAL_WORKSTATION.ID,
+                "GiantElectrochemicalWorkstation",
+                StatCollector.translateToLocal("NameGiantElectrochemicalWorkstation")));
+        addItemTooltip(GTNLItemList.GiantElectrochemicalWorkstation.get(1), AnimatedText.SNL_QYZG);
+
+        GTNLItemList.GeminiContainmentSystem.set(
+            new GeminiContainmentSystem(
+                GEMINI_CONTAINMENT_SYSTEM.ID,
+                "GeminiContainmentSystem",
+                StatCollector.translateToLocal("NameGeminiContainmentSystem")));
+        addItemTooltip(GTNLItemList.GeminiContainmentSystem.get(1), AnimatedText.SNL_QYZG);
+
+        GTNLItemList.ExtremeCompressor.set(
+            new ExtremeCompressor(
+                EXTREME_COMPRESSOR.ID,
+                "ExtremeCompressor",
+                StatCollector.translateToLocal("NameExtremeCompressor")));
+        addItemTooltip(GTNLItemList.ExtremeCompressor.get(1), AnimatedText.SNL_QYZG);
+
+        GTNLItemList.ExtremeElectricFurnace.set(
+            new ExtremeElectricFurnace(
+                EXTREME_ELECTRIC_FURNACE.ID,
+                "ExtremeElectricFurnace",
+                StatCollector.translateToLocal("NameExtremeElectricFurnace")));
+        addItemTooltip(GTNLItemList.ExtremeElectricFurnace.get(1), AnimatedText.SNL_QYZG);
 
         // Special Machine
         GTNLItemList.CheatOreProcessingFactory.set(
