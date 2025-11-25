@@ -2566,6 +2566,13 @@ Tooltip_LargeSteamExtruder_01=Only consumes 95% of the normal steam requirement.
 Tooltip_LargeSteamExtruder_02=Can process up to 8 items at once.
 Tooltip_LargeSteamExtruder_Casing=Any Copper Plated Bricks or Deoxidized Steel Machine Block
 
+NameLargeSteamBending=Large Steam Bender
+LargeSteamBendingRecipeType=Bender
+Tooltip_LargeSteamBending_00=5% faster than single-block bender of the same tier.
+Tooltip_LargeSteamBending_01=Only consumes 95% of the normal steam requirement.
+Tooltip_LargeSteamBending_02=Can process up to 8 items at once.
+Tooltip_LargeSteamBending_Casing=Any Copper Plated Bricks or Deoxidized Steel Machine Block
+
 NameLargeSteamCutting=Large Steam Cutting
 LargeSteamCuttingRecipeType=Cutting
 Tooltip_LargeSteamCutting_00=11% faster than single-block cutting of the same tier.
@@ -3102,6 +3109,10 @@ ExtremeElectricFurnaceRecipeType=Alloy Smelter
 Tooltip_ExtremeElectricFurnace_00=Each coil tier provides an additional 15% speed (multiplicative).
 Tooltip_ExtremeElectricFurnace_Casing=Any Naquadria-Reinforced Water Plant Casing
 
+NameKerrNewmanHomogenizer=Kerr Newman Homogenizer
+KerrNewmanHomogenizerRecipeType=Mixer
+Tooltip_KerrNewmanHomogenizer_Casing=Any Reinforced Iridium Machine Block
+
 NameGeminiContainmentSystem=Gemini Containment System
 GeminiContainmentSystemRecipeType=Packer / Unpacker
 GeminiContainmentSystem_Mode_0=Packer
@@ -3111,6 +3122,14 @@ Tooltip_GeminiContainmentSystem_Casing=Any Reinforced Iridium Machine Block
 NameExtremeCompressor=Extreme Compressor
 ExtremeCompressorRecipeType=Electric Implosion Compressor
 Tooltip_ExtremeCompressor_Casing=Any Reinforced Iridium Machine Block
+
+NameDataCenter=Data Center
+DataCenterRecipeType=Data Bank
+Tooltip_DataCenter_00=Your personal network storage
+Tooltip_DataCenter_01=Each Data Access Hatch consumes 1,024 EU/t
+Tooltip_DataCenter_02=Each Transmission Connector consumes 30,720 EU/t
+Tooltip_DataCenter_03=Use screwdriver to toggle wireless mode
+Tooltip_DataCenter_Casing=Any Computer Casing
 
 NameAlloyBlastSmelter=Alloy Blast Smelter
 AlloyBlastSmelterRecipeType=Alloy Blast Smelter

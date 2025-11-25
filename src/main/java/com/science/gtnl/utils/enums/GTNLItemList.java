@@ -615,6 +615,9 @@ public enum GTNLItemList implements IItemContainer {
     GeminiContainmentSystem,
     ExtremeCompressor,
     ExtremeElectricFurnace,
+    DataCenter,
+    KerrNewmanHomogenizer,
+    LargeSteamBending,
 
     EnergyHatchLV,
     EnergyHatchLV4A,

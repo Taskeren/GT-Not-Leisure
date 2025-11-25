@@ -2566,6 +2566,13 @@ Tooltip_LargeSteamExtruder_01=仅消耗正常需求95%的蒸汽
 Tooltip_LargeSteamExtruder_02=一次可处理多达8个物品
 Tooltip_LargeSteamExtruder_Casing=任意镀铜砖块或脱氧钢机械方块
 
+NameLargeSteamBending=大型蒸汽卷板机
+LargeSteamBendingRecipeType=卷板机
+Tooltip_LargeSteamBending_00=比同等级的单方块卷板机快5%
+Tooltip_LargeSteamBending_01=仅消耗正常需求95%的蒸汽
+Tooltip_LargeSteamBending_02=一次可处理多达8个物品
+Tooltip_LargeSteamBending_Casing=任意镀铜砖块或脱氧钢机械方块
+
 NameLargeSteamCutting=大型蒸汽切割机
 LargeSteamCuttingRecipeType=切割机
 Tooltip_LargeSteamCutting_00=比同等级的单方块切割机快11%
@@ -3102,6 +3109,10 @@ ExtremeElectricFurnaceRecipeType=合金炉
 Tooltip_ExtremeElectricFurnace_00=每级线圈等级额外提供15%的加速(乘算叠加)
 Tooltip_ExtremeElectricFurnace_Casing=任意超能硅岩强化无菌净水厂机械方块
 
+NameKerrNewmanHomogenizer=克尔·纽曼均质仪
+KerrNewmanHomogenizerRecipeType=搅拌机
+Tooltip_KerrNewmanHomogenizer_Casing=任意强化镀铱机械方块
+
 NameGeminiContainmentSystem=双子星封装系统
 GeminiContainmentSystemRecipeType=打包机 / 解包器
 GeminiContainmentSystem_Mode_0=打包机
@@ -3111,6 +3122,14 @@ Tooltip_GeminiContainmentSystem_Casing=任意强化镀铱机械方块
 NameExtremeCompressor=极限压缩装置
 ExtremeCompressorRecipeType=电动聚爆压缩机
 Tooltip_ExtremeCompressor_Casing=任意强化镀铱机械方块
+
+NameDataCenter=数据中心
+DataCenterRecipeType=数据库
+Tooltip_DataCenter_00=你的个人网络存储器
+Tooltip_DataCenter_01=每个数据访问仓耗电1,024EU/t
+Tooltip_DataCenter_02=每个发送接口耗电30,720EU/t
+Tooltip_DataCenter_03=使用螺丝刀切换无线模式
+Tooltip_DataCenter_Casing=任意电子计算机械方块
 
 NameAlloyBlastSmelter=合金冶炼炉
 AlloyBlastSmelterRecipeType=合金冶炼炉

@@ -67,6 +67,7 @@ import com.science.gtnl.common.machine.multiblock.BloodSoulSacrificialArray;
 import com.science.gtnl.common.machine.multiblock.BrickedBlastFurnace;
 import com.science.gtnl.common.machine.multiblock.CheatOreProcessingFactory;
 import com.science.gtnl.common.machine.multiblock.ComponentAssembler;
+import com.science.gtnl.common.machine.multiblock.DataCenter;
 import com.science.gtnl.common.machine.multiblock.DecayHastener;
 import com.science.gtnl.common.machine.multiblock.Desulfurizer;
 import com.science.gtnl.common.machine.multiblock.DraconicFusionCrafting;
@@ -129,6 +130,7 @@ import com.science.gtnl.common.machine.multiblock.module.steamElevator.SteamOreP
 import com.science.gtnl.common.machine.multiblock.module.steamElevator.SteamWeatherModule;
 import com.science.gtnl.common.machine.multiblock.steam.HighPressureSteamFusionReactor;
 import com.science.gtnl.common.machine.multiblock.steam.LargeSteamAlloySmelter;
+import com.science.gtnl.common.machine.multiblock.steam.LargeSteamBending;
 import com.science.gtnl.common.machine.multiblock.steam.LargeSteamCentrifuge;
 import com.science.gtnl.common.machine.multiblock.steam.LargeSteamChemicalBath;
 import com.science.gtnl.common.machine.multiblock.steam.LargeSteamCircuitAssembler;
@@ -229,6 +231,7 @@ import com.science.gtnl.common.machine.multiblock.wireless.HeavyRolling;
 import com.science.gtnl.common.machine.multiblock.wireless.HighEnergyLaserLathe;
 import com.science.gtnl.common.machine.multiblock.wireless.HorizontalCompressor;
 import com.science.gtnl.common.machine.multiblock.wireless.IntegratedAssemblyFacility;
+import com.science.gtnl.common.machine.multiblock.wireless.KerrNewmanHomogenizer;
 import com.science.gtnl.common.machine.multiblock.wireless.MagneticEnergyReactionFurnace;
 import com.science.gtnl.common.machine.multiblock.wireless.MantleCrusher;
 import com.science.gtnl.common.machine.multiblock.wireless.MegaBathTank;
@@ -1606,6 +1609,24 @@ public class MachineLoader {
                 "ExtremeElectricFurnace",
                 StatCollector.translateToLocal("NameExtremeElectricFurnace")));
         addItemTooltip(GTNLItemList.ExtremeElectricFurnace.get(1), AnimatedText.SNL_QYZG);
+
+        GTNLItemList.DataCenter
+            .set(new DataCenter(DATA_CENTER.ID, "DataCenter", StatCollector.translateToLocal("NameDataCenter")));
+        addItemTooltip(GTNLItemList.DataCenter.get(1), AnimatedText.SNL_QYZG);
+
+        GTNLItemList.KerrNewmanHomogenizer.set(
+            new KerrNewmanHomogenizer(
+                KERR_NEWMAN_HOMOGENIZER.ID,
+                "KerrNewmanHomogenizer",
+                StatCollector.translateToLocal("NameKerrNewmanHomogenizer")));
+        addItemTooltip(GTNLItemList.KerrNewmanHomogenizer.get(1), AnimatedText.SNL_QYZG);
+
+        GTNLItemList.LargeSteamBending.set(
+            new LargeSteamBending(
+                LARGE_STEAM_BENDING.ID,
+                "LargeSteamBending",
+                StatCollector.translateToLocal("NameLargeSteamBending")));
+        addItemTooltip(GTNLItemList.LargeSteamBending.get(1), AnimatedText.SCIENCE_NOT_LEISURE);
 
         // Special Machine
         GTNLItemList.CheatOreProcessingFactory.set(

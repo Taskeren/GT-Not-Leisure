@@ -1,29 +1,15 @@
 结构方块映射表:
 
 字母对应关系:
-A -> ofBlock...(tile.blockLapis, 0, ...)
-B -> ofBlock...(tile.bookshelf, 0, ...)
-C -> ofBlock...(tile.clay, 0, ...)
-D -> ofBlock...(tile.clayHardenedStained, 1, ...)
-E -> ofBlock...(tile.clayHardenedStained, 3, ...)
-F -> ofBlock...(tile.clayHardenedStained, 8, ...)
-G -> ofBlock...(tile.clayHardenedStained, 9, ...)
-H -> ofBlock...(tile.cloth, 1, ...)
-I -> ofBlock...(tile.cloth, 8, ...)
-J -> ofBlock...(tile.cloth, 11, ...)
-K -> ofBlock...(tile.cloth, 13, ...)
-L -> ofBlock...(tile.glass, 0, ...)
-M -> ofBlock...(tile.hellrock, 0, ...)
-N -> ofBlock...(tile.lightgem, 0, ...)
-O -> ofBlock...(tile.log, 0, ...)
-P -> ofBlock...(tile.oreCoal, 0, ...)
-Q -> ofBlock...(tile.stainedGlass, 15, ...)
-R -> ofBlock...(tile.stone, 0, ...)
-S -> 控制器位置
+A -> ofBlock...(gt.blockcasings2, 2, ...)
+B -> ofBlock...(gt.blockcasings2, 12, ...)
+C -> ofBlock...(gt.blockframes, 300, ...)
+D -> ofBlock...(gtplusplus.blockspecialcasings.2, 0, ...)
+E -> 控制器位置
 
-偏移值 Offsets: 20 24 0
-结构体高度: 26
+偏移值 Offsets: 2 2 0
+结构体高度: 4
 
-宽: 41
-高: 26
-长: 18
+宽: 5
+高: 4
+长: 5
