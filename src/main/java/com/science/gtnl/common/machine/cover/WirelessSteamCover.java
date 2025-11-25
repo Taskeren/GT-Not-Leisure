@@ -70,10 +70,7 @@ public class WirelessSteamCover extends CoverLegacyData {
             && baseTile.getMetaTileEntity() instanceof CommonMetaTileEntity commonMetaTile) {
             FluidStack fluid = commonMetaTile.getFluid();
             if (fluid != null) {
-                for (SteamTypes type : SteamTypes.getSupportedTypes()) {
-                    if (commonMetaTile.getFluid()
-                        .getFluid() != type.fluid) return;
-                }
+                if (!GTUtility.areFluidsEqual(fluid, new FluidStack(SteamTypes.values()[coverData].fluid, 1))) return;
             }
             int capacity = commonMetaTile.getCapacity();
             int fluidAmount = fluid != null ? commonMetaTile.getFluidAmount() : 0;
