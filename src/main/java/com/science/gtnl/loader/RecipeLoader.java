@@ -113,6 +113,7 @@ import com.science.gtnl.common.recipe.gtnl.SteamExtractinatorRecipes;
 import com.science.gtnl.common.recipe.gtnl.SteamFusionReactorRecipes;
 import com.science.gtnl.common.recipe.gtnl.SteamGateAssemblerRecipes;
 import com.science.gtnl.common.recipe.gtnl.SteamManufacturerRecipes;
+import com.science.gtnl.common.recipe.gtnl.SteamWeatherModuleFakeRecipes;
 import com.science.gtnl.common.recipe.gtnl.SteamWoodcutterRecipes;
 import com.science.gtnl.common.recipe.gtnl.TheTwilightForestRecipes;
 import com.science.gtnl.common.recipe.oreDictionary.PortalToAlfheimOreRecipes;
@@ -207,7 +208,7 @@ public class RecipeLoader {
             new ElectrocellGeneratorRecipes(), new RocketAssemblerRecipes(), new FluidSolidifierRecipes(),
             new BotaniaManaInfusionRecipes(), new FormingPressRecipes(), new HammerRecipes(), new CyclotronRecipes(),
             new RuneAltarRecipes(), new IndustrialRockCrusherRecipes(), new PrecisionLaserEngraver(),
-            new NanitesIntegratedProcessingRecipes(), new NanoForgeRecipes() };
+            new NanitesIntegratedProcessingRecipes(), new NanoForgeRecipes(), new SteamWeatherModuleFakeRecipes() };
 
         for (IRecipePool recipePool : recipePools) {
             recipePool.loadRecipes();

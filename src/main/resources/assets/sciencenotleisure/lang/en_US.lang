@@ -1991,6 +1991,9 @@ Tooltip_SteamFlightModule_04=Effective range: 64 * overclock count
 
 NameSteamWeatherModule=Steam Weather Module
 gtnl.recipe.SteamWeatherModuleFakeRecipes=Weather Changes
+NEI.SteamWeather.specialValue.1=Set weather to clear
+NEI.SteamWeather.specialValue.2=Set weather to rain
+NEI.SteamWeather.specialValue.3=Set weather to thunderstorm
 SteamWeatherModuleRecipeType=Weather Changes
 Tooltip_SteamWeatherModule_00=§a§lEnrique Pucci... so that's my stand-in... "Weather Report!"
 Tooltip_SteamWeatherModule_01=Adds weather changes module to the Steam Stairway
@@ -2787,10 +2790,14 @@ Tooltip_CompoundExtremeCoolingUnit_00=Each level of Glass grade provides an addi
 Tooltip_CompoundExtremeCoolingUnit_Casing=Any Freeze-Proof Machine Block
 
 NameIntegratedAssemblyFacility=Integrated Assembly Facility
-IntegratedAssemblyFacilityRecipeType=Assembler
+IntegratedAssemblyFacilityRecipeType=Assembler / Component Assembly Line
+IntegratedAssemblyFacility_Mode_0=Assembler
+IntegratedAssemblyFacility_Mode_1=Component Assembly Line
 Tooltip_IntegratedAssemblyFacility_00=Each level of Glass and Component Assembly Line Casing grade provides an additional 5% acceleration and power consumption reduction (multiplication and superposition)
 Tooltip_IntegratedAssemblyFacility_01=The level of the Component Assembly Line Casing determines the maximum level of the energy warehouse + 3. UIV mechanical blocks unlock all levels.
+Tooltip_IntegratedAssemblyFacility_02=In Component Assembly Line recipes, it does not get the 16x parallel bonus
 Tooltip_IntegratedAssemblyFacility_Casing=Ang Advanced Iridium Plated Machine Casing
+Info_IntegratedAssemblyFacility_00=Component Assembly Line Upgrade
 
 NameEngravingLaserPlant=Engraving Laser Plant
 gtnl.recipe.PrecisionLaserEngraverRecipes=Precision Laser Engraver
@@ -2799,7 +2806,7 @@ EngravingLaserPlant_Mode_0=Laser Engraver
 EngravingLaserPlant_Mode_1=Precision Laser Engraver
 Tooltip_EngravingLaserPlant_00=Each level of Glass and Component Assembly Line Casing grade provides an additional 5% acceleration and power consumption reduction (multiplication and superposition)
 Tooltip_EngravingLaserPlant_01=The level of the Component Assembly Line Casing determines the maximum level of the energy warehouse + 3. UIV mechanical blocks unlock all levels.
-Tooltip_EngravingLaserPlant_02=In precision laser mode, it does not get the 16x parallel bonus
+Tooltip_EngravingLaserPlant_02=In Precision Laser Engraver recipes, it does not get the 16x parallel bonus
 Tooltip_EngravingLaserPlant_Casing=Ang Advanced Iridium Plated Machine Casing
 Info_EngravingLaserPlant_00=Precision Laser Engraver Upgrade
 

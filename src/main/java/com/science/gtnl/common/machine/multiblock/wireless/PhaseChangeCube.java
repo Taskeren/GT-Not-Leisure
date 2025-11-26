@@ -335,6 +335,14 @@ public class PhaseChangeCube extends WirelessEnergyMultiMachineBase<PhaseChangeC
     }
 
     @Override
+    public int nextMachineMode() {
+        if (machineMode == MACHINEMODE_EXTRA) return MACHINEMODE_FLUID;
+        else if (machineMode == MACHINEMODE_FLUID) return MACHINEMODE_SOLID;
+        else if (machineMode == MACHINEMODE_SOLID) return MACHINEMODE_EXTRA;
+        return MACHINEMODE_EXTRA;
+    }
+
+    @Override
     public final void onScrewdriverRightClick(ForgeDirection side, EntityPlayer aPlayer, float aX, float aY, float aZ,
         ItemStack aTool) {
         this.machineMode = (this.machineMode + 1) % 3;

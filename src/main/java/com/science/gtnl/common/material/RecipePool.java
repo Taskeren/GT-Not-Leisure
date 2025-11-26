@@ -29,6 +29,7 @@ import com.science.gtnl.utils.recipes.data.CircuitNanitesRecipeData;
 import com.science.gtnl.utils.recipes.data.NanitesIntegratedProcessingRecipesData;
 import com.science.gtnl.utils.recipes.format.NaquadahReactorFormat;
 import com.science.gtnl.utils.recipes.format.RealArtificialStarFormat;
+import com.science.gtnl.utils.recipes.format.SteamWeatherFormat;
 import com.science.gtnl.utils.recipes.metadata.CircuitNanitesDataMetadata;
 import com.science.gtnl.utils.recipes.metadata.FuelRefiningMetadata;
 import com.science.gtnl.utils.recipes.metadata.IsaMillMetadata;
@@ -299,7 +300,7 @@ public class RecipePool {
         .of("gtnl.recipe.NaquadahReactorRecipes")
         .maxIO(0, 0, 2, 1)
         .dontUseProgressBar()
-        .neiSpecialInfoFormatter(NaquadahReactorFormat.INSTANCE)
+        .neiSpecialInfoFormatter(new NaquadahReactorFormat())
         .frontend(GTNLLogoFrontend::new)
         .neiHandlerInfo(
             builder -> builder.setDisplayStack(GTNLItemList.LargeNaquadahReactor.get(1))
@@ -548,6 +549,7 @@ public class RecipePool {
         .maxIO(9, 1, 0, 0)
         .progressBarSteam(GTUITextures.PROGRESSBAR_EXTRACT_STEAM)
         .frontend(SteamLogoFrontend::new)
+        .neiSpecialInfoFormatter(new SteamWeatherFormat())
         .neiHandlerInfo((builder -> builder.setDisplayStack(GTNLItemList.SteamWeatherModule.get(1))))
         .build();
 

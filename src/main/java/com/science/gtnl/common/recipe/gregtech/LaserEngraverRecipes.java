@@ -1,5 +1,7 @@
 package com.science.gtnl.common.recipe.gregtech;
 
+import net.minecraft.init.Blocks;
+import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 
 import com.science.gtnl.api.IRecipePool;
@@ -8,12 +10,15 @@ import com.science.gtnl.utils.enums.GTNLItemList;
 import gregtech.api.enums.GTValues;
 import gregtech.api.enums.ItemList;
 import gregtech.api.enums.Materials;
+import gregtech.api.enums.Mods;
 import gregtech.api.enums.OrePrefixes;
 import gregtech.api.enums.TierEU;
 import gregtech.api.recipe.RecipeMap;
 import gregtech.api.recipe.RecipeMaps;
+import gregtech.api.util.GTModHandler;
 import gregtech.api.util.GTOreDictUnificator;
 import gregtech.api.util.GTUtility;
+import gtPlusPlus.xmod.gregtech.api.enums.GregtechItemList;
 import tectech.thing.CustomItemList;
 
 public class LaserEngraverRecipes implements IRecipePool {
@@ -89,6 +94,26 @@ public class LaserEngraverRecipes implements IRecipePool {
             500,
             250,
             TierEU.RECIPE_IV);
+
+        GTValues.RA.stdBuilder()
+            .itemInputs(
+                GregtechItemList.Laser_Lens_Special.get(0),
+                new ItemStack(Items.iron_ingot, 1),
+                new ItemStack(Items.diamond, 1))
+            .itemOutputs(GTModHandler.getModItem(Mods.ExtraUtilities.ID, "unstableingot", 1))
+            .duration(100)
+            .eut(TierEU.RECIPE_LuV)
+            .addTo(lER);
+
+        GTValues.RA.stdBuilder()
+            .itemInputs(
+                GregtechItemList.Laser_Lens_Special.get(0),
+                new ItemStack(Blocks.iron_block, 1),
+                new ItemStack(Blocks.diamond_block, 1))
+            .itemOutputs(GTModHandler.getModItem(Mods.ExtraUtilities.ID, "decorativeBlock1", 1, 5))
+            .duration(900)
+            .eut(TierEU.RECIPE_LuV)
+            .addTo(lER);
 
         for (int j = 0; j < 14; j++) {
             for (int i = 0; i < 13; i++) {

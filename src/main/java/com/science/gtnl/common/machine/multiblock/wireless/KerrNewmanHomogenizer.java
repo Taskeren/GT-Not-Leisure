@@ -131,6 +131,11 @@ public class KerrNewmanHomogenizer extends WirelessEnergyMultiMachineBase<KerrNe
         rotation = (rotation + ROTATION_SPEED) % 360d;
 
         if (aBaseMetaTileEntity.getWorld().isRemote) {
+            if (!enableRender) {
+                if (beamUp != null) beamUp.setDead();
+                if (beamDown != null) beamDown.setDead();
+                return;
+            }
             double x = aBaseMetaTileEntity.getXCoord() + 0.5;
             double y = aBaseMetaTileEntity.getYCoord() + 0.5;
             double z = aBaseMetaTileEntity.getZCoord() + 0.5;

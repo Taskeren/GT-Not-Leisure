@@ -1969,9 +1969,9 @@ Tooltip_SteamOreProcessorModule_07=使用螺丝刀切换模式
 Tooltip_SteamOreProcessorModule_08=手持螺丝刀Shift+右键以销毁石粉
 Info_SteamOreProcessorModule_00=实际并行：
 
-NameSteamMonsterRepellentModuleI=蒸汽敌对生物驱逐器模块 I
-NameSteamMonsterRepellentModuleII=蒸汽敌对生物驱逐器模块 II
-NameSteamMonsterRepellentModuleIII=蒸汽敌对生物驱逐器模块 III
+NameSteamMonsterRepellentModuleI=蒸汽敌对生物驱逐模块 I
+NameSteamMonsterRepellentModuleII=蒸汽敌对生物驱逐模块 II
+NameSteamMonsterRepellentModuleIII=蒸汽敌对生物驱逐模块 III
 SteamMonsterRepellentModuleRecipeType=敌对生物驱逐器
 Tooltip_SteamMonsterRepellentModuleI_00=§a§l它通过发出巨大的噪音来赶走怪物...和你一天的好心情.
 Tooltip_SteamMonsterRepellentModuleII_00=§a§l你听不到它，但怪物听得一清二楚.
@@ -1991,6 +1991,9 @@ Tooltip_SteamFlightModule_04=生效范围：64 * 超频次数
 
 NameSteamWeatherModule=蒸汽天气更替模块
 gtnl.recipe.SteamWeatherModuleFakeRecipes=天气更替
+NEI.SteamWeather.specialValue.1=切换天气为晴天
+NEI.SteamWeather.specialValue.2=切换天气为雨天
+NEI.SteamWeather.specialValue.3=切换天气为雷暴
 SteamWeatherModuleRecipeType=天气更替
 Tooltip_SteamWeatherModule_00=§a§l恩里克·普奇...这就是我的替身...「Weather Report！」
 Tooltip_SteamWeatherModule_01=将天气更替功能添加到蒸汽楼梯
@@ -2787,10 +2790,14 @@ Tooltip_CompoundExtremeCoolingUnit_00=每级玻璃额外提供5%的加速和耗�
 Tooltip_CompoundExtremeCoolingUnit_Casing=任意防冻机械方块
 
 NameIntegratedAssemblyFacility=综合组装车间
-IntegratedAssemblyFacilityRecipeType=组装机
+IntegratedAssemblyFacilityRecipeType=组装机 / 部件装配线
+IntegratedAssemblyFacility_Mode_0=组装机
+IntegratedAssemblyFacility_Mode_1=部件装配线
 Tooltip_IntegratedAssemblyFacility_00=每级玻璃和部件装配线外壳等级额外提供5%的加速和耗电减免(乘算叠加)
 Tooltip_IntegratedAssemblyFacility_01=部件装配线外壳等级决定了能源仓最大等级 + 3，UIV装配线外壳解锁所有等级
+Tooltip_IntegratedAssemblyFacility_02=部件装配线配方不获得16倍并行加成
 Tooltip_IntegratedAssemblyFacility_Casing=任意强化镀铱机械方块
+Info_IntegratedAssemblyFacility_00=部件装配线升级
 
 NameEngravingLaserPlant=激光蚀刻工厂
 gtnl.recipe.PrecisionLaserEngraverRecipes=精密激光蚀刻
@@ -2799,7 +2806,7 @@ EngravingLaserPlant_Mode_0=激光蚀刻机
 EngravingLaserPlant_Mode_1=精密激光蚀刻
 Tooltip_EngravingLaserPlant_00=每级玻璃和部件装配线外壳等级额外提供5%的加速和耗电减免(乘算叠加)
 Tooltip_EngravingLaserPlant_01=部件装配线外壳等级决定了能源仓最大等级 + 3，UIV装配线外壳解锁所有等级
-Tooltip_EngravingLaserPlant_02=精密激光蚀刻模式不获得16倍并行加成
+Tooltip_EngravingLaserPlant_02=精密激光蚀刻配方不获得16倍并行加成
 Tooltip_EngravingLaserPlant_Casing=任意强化镀铱机械方块
 Info_EngravingLaserPlant_00=精密激光蚀刻升级
 

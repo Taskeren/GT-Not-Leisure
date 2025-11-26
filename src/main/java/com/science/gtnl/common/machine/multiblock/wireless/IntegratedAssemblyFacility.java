@@ -9,39 +9,68 @@ import static gregtech.api.enums.GTValues.VN;
 import static gregtech.api.enums.HatchElement.*;
 import static gregtech.api.util.GTStructureUtility.*;
 
+import java.util.Arrays;
+import java.util.Collection;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
+import javax.annotation.Nonnull;
+
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.StatCollector;
 import net.minecraftforge.common.util.ForgeDirection;
 
 import org.apache.commons.lang3.tuple.Pair;
+import org.jetbrains.annotations.NotNull;
 
+import com.dreammaster.gthandler.CustomItemList;
 import com.gtnewhorizon.structurelib.structure.IStructureDefinition;
 import com.gtnewhorizon.structurelib.structure.ISurvivalBuildEnvironment;
 import com.gtnewhorizon.structurelib.structure.StructureDefinition;
+import com.gtnewhorizons.modularui.api.forge.ItemStackHandler;
+import com.gtnewhorizons.modularui.api.screen.ModularWindow;
+import com.gtnewhorizons.modularui.api.screen.UIBuildContext;
+import com.science.gtnl.api.IControllerUpgradeable;
 import com.science.gtnl.common.machine.multiMachineBase.WirelessEnergyMultiMachineBase;
 import com.science.gtnl.loader.BlockLoader;
 import com.science.gtnl.utils.StructureUtils;
+import com.science.gtnl.utils.enums.GTNLItemList;
+import com.science.gtnl.utils.recipes.GTNL_OverclockCalculator;
+import com.science.gtnl.utils.recipes.GTNL_ProcessingLogic;
 
+import goodgenerator.api.recipe.GoodGeneratorRecipeMaps;
+import goodgenerator.items.GGMaterial;
 import goodgenerator.loader.Loaders;
+import goodgenerator.util.ItemRefer;
+import gregtech.api.enums.ItemList;
 import gregtech.api.enums.Materials;
+import gregtech.api.enums.MaterialsUEVplus;
+import gregtech.api.enums.OrePrefixes;
 import gregtech.api.enums.Textures;
+import gregtech.api.gui.modularui.GTUITextures;
 import gregtech.api.interfaces.ITexture;
 import gregtech.api.interfaces.metatileentity.IMetaTileEntity;
 import gregtech.api.interfaces.tileentity.IGregTechTileEntity;
+import gregtech.api.logic.ProcessingLogic;
 import gregtech.api.recipe.RecipeMap;
 import gregtech.api.recipe.RecipeMaps;
+import gregtech.api.recipe.check.CheckRecipeResult;
+import gregtech.api.recipe.check.CheckRecipeResultRegistry;
 import gregtech.api.render.TextureFactory;
+import gregtech.api.util.GTOreDictUnificator;
+import gregtech.api.util.GTRecipe;
+import gregtech.api.util.GTUtility;
 import gregtech.api.util.MultiblockTooltipBuilder;
 import gregtech.common.misc.GTStructureChannels;
 import gtnhlanth.common.register.LanthItemList;
+import lombok.Getter;
+import lombok.Setter;
 
-public class IntegratedAssemblyFacility extends WirelessEnergyMultiMachineBase<IntegratedAssemblyFacility> {
+public class IntegratedAssemblyFacility extends WirelessEnergyMultiMachineBase<IntegratedAssemblyFacility>
+    implements IControllerUpgradeable {
 
-    private int mCasingTier;
     private static final int HORIZONTAL_OFF_SET = 8;
     private static final int VERTICAL_OFF_SET = 10;
     private static final int DEPTH_OFF_SET = 0;
@@ -49,6 +78,35 @@ public class IntegratedAssemblyFacility extends WirelessEnergyMultiMachineBase<I
     private static final String IAF_STRUCTURE_FILE_PATH = RESOURCE_ROOT_ID + ":"
         + "multiblock/integrated_assembly_facility";
     private static final String[][] shape = StructureUtils.readStructureFromFile(IAF_STRUCTURE_FILE_PATH);
+
+    private static final int MACHINEMODE_ASSEM = 0;
+    private static final int MACHINEMODE_COMPO = 1;
+
+    private static final int MANUAL_INSERTION_WINDOW_ID = 15;
+
+    public static final ItemStack[] REQUIRED_ITEMS = new ItemStack[] { ItemRefer.Component_Assembly_Line.get(64),
+        GTNLItemList.ComponentAssembler.get(64),
+        GTOreDictUnificator.get(OrePrefixes.frameGt, MaterialsUEVplus.TranscendentMetal, 64),
+        ItemList.Robot_Arm_UIV.get(64), ItemList.Field_Generator_UIV.get(32), ItemList.Sensor_UIV.get(32),
+        ItemList.Emitter_UIV.get(32), GTNLItemList.EnhancementCore.get(16),
+        GTOreDictUnificator.get(OrePrefixes.nanite, MaterialsUEVplus.TranscendentMetal, 16),
+        CustomItemList.PikoCircuit.get(32),
+        GTOreDictUnificator.get(OrePrefixes.wireGt16, Materials.SuperconductorUIV, 32),
+        GTOreDictUnificator.get(OrePrefixes.plateSuperdense, MaterialsUEVplus.Mellion, 8),
+        GGMaterial.shirabon.get(OrePrefixes.plateSuperdense, 8) };
+
+    @Getter
+    public ItemStack[] storedUpgradeWindowItems = new ItemStack[16];
+    @Getter
+    public ItemStackHandler upgradeInputSlotHandler = new ItemStackHandler(16);
+    @Getter
+    public int[] upgradePaidCosts = new int[REQUIRED_ITEMS.length];
+
+    @Getter
+    @Setter
+    public boolean upgradeConsumed = false;
+
+    public int mCasingTier;
 
     public IntegratedAssemblyFacility(String aName) {
         super(aName);
@@ -69,6 +127,7 @@ public class IntegratedAssemblyFacility extends WirelessEnergyMultiMachineBase<I
         tt.addMachineType(StatCollector.translateToLocal("IntegratedAssemblyFacilityRecipeType"))
             .addInfo(StatCollector.translateToLocal("Tooltip_IntegratedAssemblyFacility_00"))
             .addInfo(StatCollector.translateToLocal("Tooltip_IntegratedAssemblyFacility_01"))
+            .addInfo(StatCollector.translateToLocal("Tooltip_IntegratedAssemblyFacility_02"))
             .addInfo(StatCollector.translateToLocal("Tooltip_WirelessEnergyMultiMachine_00"))
             .addInfo(StatCollector.translateToLocal("Tooltip_WirelessEnergyMultiMachine_01"))
             .addInfo(StatCollector.translateToLocal("Tooltip_WirelessEnergyMultiMachine_02"))
@@ -213,6 +272,35 @@ public class IntegratedAssemblyFacility extends WirelessEnergyMultiMachineBase<I
     }
 
     @Override
+    public ProcessingLogic createProcessingLogic() {
+        return new GTNL_ProcessingLogic() {
+
+            @NotNull
+            @Override
+            public CheckRecipeResult validateRecipe(@NotNull GTRecipe recipe) {
+                if (wirelessMode && recipe.mEUt > V[Math.min(mParallelTier + 1, 14)] * 4) {
+                    return CheckRecipeResultRegistry.insufficientPower(recipe.mEUt);
+                }
+                if (machineMode == MACHINEMODE_COMPO && !upgradeConsumed) {
+                    return CheckRecipeResultRegistry.NO_RECIPE;
+                }
+                if (machineMode == MACHINEMODE_COMPO && recipe.mSpecialValue > mCasingTier + 1) {
+                    return CheckRecipeResultRegistry.insufficientMachineTier(recipe.mSpecialValue);
+                }
+                return super.validateRecipe(recipe);
+            }
+
+            @Nonnull
+            @Override
+            public GTNL_OverclockCalculator createOverclockCalculator(@Nonnull GTRecipe recipe) {
+                return super.createOverclockCalculator(recipe).setExtraDurationModifier(mConfigSpeedBoost)
+                    .setEUtDiscount(getEUtDiscount())
+                    .setDurationModifier(getDurationModifier());
+            }
+        }.setMaxParallelSupplier(this::getTrueParallel);
+    }
+
+    @Override
     public long getMachineVoltageLimit() {
         if (mCasingTier < 0) return 0;
         if (wirelessMode) {
@@ -229,13 +317,57 @@ public class IntegratedAssemblyFacility extends WirelessEnergyMultiMachineBase<I
     }
 
     @Override
+    public int getMaxParallelRecipes() {
+        int base = super.getMaxParallelRecipes();
+        if (machineMode == MACHINEMODE_COMPO) {
+            base >>= 4;
+            if (base < 1) base = 1;
+        }
+
+        return base;
+    }
+
+    @Override
     public RecipeMap<?> getRecipeMap() {
-        return RecipeMaps.assemblerRecipes;
+        return machineMode == MACHINEMODE_ASSEM ? RecipeMaps.assemblerRecipes
+            : GoodGeneratorRecipeMaps.componentAssemblyLineRecipes;
+    }
+
+    @Nonnull
+    @Override
+    public Collection<RecipeMap<?>> getAvailableRecipeMaps() {
+        return Arrays.asList(RecipeMaps.assemblerRecipes, GoodGeneratorRecipeMaps.componentAssemblyLineRecipes);
+    }
+
+    @Override
+    public void setMachineModeIcons() {
+        machineModeIcons.add(GTUITextures.OVERLAY_BUTTON_MACHINEMODE_LPF_METAL);
+        machineModeIcons.add(GTUITextures.OVERLAY_BUTTON_MACHINEMODE_PACKAGER);
+    }
+
+    @Override
+    public final void onScrewdriverRightClick(ForgeDirection side, EntityPlayer aPlayer, float aX, float aY, float aZ,
+        ItemStack aTool) {
+        this.machineMode = (this.machineMode + 1) % 2;
+        GTUtility.sendChatToPlayer(
+            aPlayer,
+            StatCollector.translateToLocal("IntegratedAssemblyFacility_Mode_" + this.machineMode));
+    }
+
+    @Override
+    public String getMachineModeName() {
+        return StatCollector.translateToLocal("IntegratedAssemblyFacility_Mode_" + machineMode);
+    }
+
+    @Override
+    public boolean supportsMachineModeSwitch() {
+        return true;
     }
 
     @Override
     public void saveNBTData(NBTTagCompound aNBT) {
         super.saveNBTData(aNBT);
+        saveUpgradeNBTData(aNBT);
         aNBT.setInteger("mGlassTier", mGlassTier);
         aNBT.setInteger("casingTier", mCasingTier);
     }
@@ -243,8 +375,30 @@ public class IntegratedAssemblyFacility extends WirelessEnergyMultiMachineBase<I
     @Override
     public void loadNBTData(NBTTagCompound aNBT) {
         super.loadNBTData(aNBT);
+        loadUpgradeNBTData(aNBT);
         mGlassTier = aNBT.getInteger("mGlassTier");
         mCasingTier = aNBT.getInteger("casingTier");
+    }
+
+    @Override
+    public void addUIWidgets(ModularWindow.Builder builder, UIBuildContext buildContext) {
+        super.addUIWidgets(builder, buildContext);
+        createUpgradeButton(builder, buildContext);
+    }
+
+    @Override
+    public ItemStack[] getUpgradeRequiredItems() {
+        return REQUIRED_ITEMS;
+    }
+
+    @Override
+    public int getUpgradeWindowId() {
+        return MANUAL_INSERTION_WINDOW_ID;
+    }
+
+    @Override
+    public String getUpgradeButtonTooltip() {
+        return StatCollector.translateToLocal("Info_IntegratedAssemblyFacility_00");
     }
 
     @Override

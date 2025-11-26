@@ -1284,6 +1284,12 @@ public class CraftingTableRecipes implements IRecipePool {
                 GTModHandler.getModItem(AvaritiaAddons.ID, "ExtremeAutoCrafter", 1), 'E',
                 GTModHandler.getModItem(AppliedEnergistics2.ID, "tile.BlockCellWorkbench", 1) });
 
+        GTModHandler.addCraftingRecipe(
+            GTNLItemList.LargeSteamBending.get(1),
+            new Object[] { "ABA", "CDC", "EBE", 'A', GTNLItemList.HydraulicMotor.get(1), 'B', "craftingPiston", 'C',
+                GTNLItemList.PrecisionSteamMechanism.get(1), 'D', GTNLItemList.HydraulicConveyor.get(1), 'E',
+                ItemList.Casing_BronzePlatedBricks.get(1) });
+
         if (MainConfig.enableSomethingRecipe) loadExtraRecipe();
     }
 

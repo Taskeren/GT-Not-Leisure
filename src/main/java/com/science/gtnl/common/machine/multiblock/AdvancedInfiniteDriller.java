@@ -45,8 +45,6 @@ import com.science.gtnl.common.machine.multiMachineBase.MultiMachineBase;
 import com.science.gtnl.loader.BlockLoader;
 import com.science.gtnl.utils.StructureUtils;
 import com.science.gtnl.utils.machine.VMTweakHelper;
-import com.science.gtnl.utils.recipes.GTNL_OverclockCalculator;
-import com.science.gtnl.utils.recipes.GTNL_ProcessingLogic;
 
 import bartworks.system.material.WerkstoffLoader;
 import goodgenerator.loader.Loaders;
@@ -61,7 +59,6 @@ import gregtech.api.gui.modularui.GTUITextures;
 import gregtech.api.interfaces.ITexture;
 import gregtech.api.interfaces.metatileentity.IMetaTileEntity;
 import gregtech.api.interfaces.tileentity.IGregTechTileEntity;
-import gregtech.api.logic.ProcessingLogic;
 import gregtech.api.metatileentity.implementations.MTEHatch;
 import gregtech.api.metatileentity.implementations.MTEHatchEnergy;
 import gregtech.api.objects.GTUODimension;
@@ -71,7 +68,6 @@ import gregtech.api.recipe.check.CheckRecipeResult;
 import gregtech.api.recipe.check.CheckRecipeResultRegistry;
 import gregtech.api.render.TextureFactory;
 import gregtech.api.util.GTOreDictUnificator;
-import gregtech.api.util.GTRecipe;
 import gregtech.api.util.GTUtility;
 import gregtech.api.util.MultiblockTooltipBuilder;
 import gregtech.api.util.shutdown.ShutDownReasonRegistry;
@@ -259,7 +255,7 @@ public class AdvancedInfiniteDriller extends MultiMachineBase<AdvancedInfiniteDr
                             continue;
                         }
 
-                        int amount = 1_000_000 + tVeinRNG.nextInt(Integer.MAX_VALUE / 10_000_000) * 10_000_000;
+                        int amount = 2_000_000 + tVeinRNG.nextInt(100) * 2000 * excessFuel;
                         outputFluids.add(new FluidStack(uoFluid.getFluid(), amount));
 
                         needEu += amount / 200;
@@ -268,23 +264,10 @@ public class AdvancedInfiniteDriller extends MultiMachineBase<AdvancedInfiniteDr
                 }
             }
             mOutputFluids = outputFluids.toArray(new FluidStack[0]);
-            this.mMaxProgresstime = (int) (((5750000 / excessFuel) - 475) * mConfigSpeedBoost);
+            this.mMaxProgresstime = (int) ((((double) 5750000 / excessFuel) - 475) * mConfigSpeedBoost);
             this.lEUt = -needEu;
             return CheckRecipeResultRegistry.SUCCESSFUL;
         }
-    }
-
-    @Override
-    public ProcessingLogic createProcessingLogic() {
-        return new GTNL_ProcessingLogic() {
-
-            @NotNull
-            @Override
-            public GTNL_OverclockCalculator createOverclockCalculator(@NotNull GTRecipe recipe) {
-                return GTNL_OverclockCalculator.ofNoOverclock(recipe)
-                    .setExtraDurationModifier(mConfigSpeedBoost);
-            }
-        };
     }
 
     @Override

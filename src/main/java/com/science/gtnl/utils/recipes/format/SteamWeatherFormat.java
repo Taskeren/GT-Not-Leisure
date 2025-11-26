@@ -10,15 +10,14 @@ import org.jetbrains.annotations.NotNull;
 import gregtech.nei.RecipeDisplayInfo;
 import gregtech.nei.formatter.INEISpecialInfoFormatter;
 
-public class NaquadahReactorFormat implements INEISpecialInfoFormatter {
+public class SteamWeatherFormat implements INEISpecialInfoFormatter {
 
     @Override
     @NotNull
     public List<String> format(RecipeDisplayInfo recipeInfo) {
-        List<String> msgs = new ArrayList<>();
-        msgs.add(
-            StatCollector.translateToLocal("NEI.NaquadahReactorRecipes.specialValue") + recipeInfo.recipe.mSpecialValue
-                + " EU/t");
-        return msgs;
+        List<String> specialInfo = new ArrayList<>();
+        specialInfo
+            .add(StatCollector.translateToLocal("NEI.SteamWeather.specialValue." + recipeInfo.recipe.mSpecialValue));
+        return specialInfo;
     }
 }

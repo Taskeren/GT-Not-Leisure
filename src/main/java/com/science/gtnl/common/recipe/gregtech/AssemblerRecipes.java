@@ -3170,6 +3170,85 @@ public class AssemblerRecipes implements IRecipePool {
             .eut(TierEU.RECIPE_UV)
             .addTo(As);
 
+        GTValues.RA.stdBuilder()
+            .itemInputs(
+                GTModHandler.getModItem(GalacticraftCore.ID, "tile.rocketWorkbench", 1),
+                GTOreDictUnificator.get(OrePrefixes.frameGt, Materials.StainlessSteel, 16),
+                ItemList.Casing_CleanStainlessSteel.get(8),
+                ItemList.Conveyor_Module_HV.get(4),
+                ItemList.Robot_Arm_HV.get(4),
+                GTModHandler.getModItem(GalacticraftCore.ID, "item.basicItem", 1, 14),
+                GTOreDictUnificator.get(OrePrefixes.circuit, Materials.HV, 4))
+            .itemOutputs(GTNLItemList.RocketAssembler.get(1))
+            .fluidInputs(Materials.Polytetrafluoroethylene.getMolten(1152))
+            .duration(200)
+            .eut(TierEU.RECIPE_HV)
+            .addTo(As);
+
+        GTValues.RA.stdBuilder()
+            .itemInputs(
+                GTNLItemList.SteamCompactPipeCasing.get(1),
+                GTNLItemList.IronTurbine.get(8),
+                new ItemStack(Blocks.torch, 64),
+                GTNLItemList.HydraulicSteamJetSpewer.get(2),
+                GTNLItemList.HydraulicMotor.get(2),
+                GTOreDictUnificator.get(OrePrefixes.circuit, Materials.LV, 2))
+            .itemOutputs(GTNLItemList.SteamMonsterRepellentModuleI.get(1))
+            .duration(200)
+            .eut(TierEU.RECIPE_LV)
+            .addTo(As);
+
+        GTValues.RA.stdBuilder()
+            .itemInputs(
+                GTNLItemList.SteamCompactPipeCasing.get(2),
+                GTNLItemList.SteelTurbine.get(8),
+                GTModHandler.getModItem(EtFuturumRequiem.ID, "soul_torch", 32),
+                GTNLItemList.HydraulicSteamJetSpewer.get(2),
+                GTNLItemList.HydraulicSteamReceiver.get(2),
+                GTOreDictUnificator.get(OrePrefixes.circuit, Materials.LV, 4))
+            .itemOutputs(GTNLItemList.SteamMonsterRepellentModuleII.get(1))
+            .duration(200)
+            .eut(TierEU.RECIPE_LV)
+            .addTo(As);
+
+        GTValues.RA.stdBuilder()
+            .itemInputs(
+                GTNLItemList.SteamCompactPipeCasing.get(4),
+                GTNLItemList.CompressedSteamTurbine.get(8),
+                GTModHandler.getModItem(EtFuturumRequiem.ID, "soul_torch", 64),
+                GTNLItemList.HydraulicSteamJetSpewer.get(2),
+                GTNLItemList.HydraulicVaporGenerator.get(2),
+                GTOreDictUnificator.get(OrePrefixes.circuit, Materials.LV, 8))
+            .itemOutputs(GTNLItemList.SteamMonsterRepellentModuleIII.get(1))
+            .duration(200)
+            .eut(TierEU.RECIPE_LV)
+            .addTo(As);
+
+        GTValues.RA.stdBuilder()
+            .itemInputs(
+                GTNLItemList.SteamCompactPipeCasing.get(1),
+                GTModHandler.getModItem(Natura.ID, "Cloud", 64, 1),
+                GTModHandler.getModItem(Thaumcraft.ID, "blockCrystal", 2, 6),
+                GTNLItemList.HydraulicPump.get(4),
+                GTNLItemList.HydraulicSteamReceiver.get(4),
+                GTOreDictUnificator.get(OrePrefixes.circuit, Materials.LV, 4))
+            .itemOutputs(GTNLItemList.SteamWeatherModule.get(1))
+            .duration(200)
+            .eut(TierEU.RECIPE_LV)
+            .addTo(As);
+
+        GTValues.RA.stdBuilder()
+            .itemInputs(
+                ItemList.Casing_RobustTungstenSteel.get(1),
+                ItemList.Tool_DataOrb.get(4),
+                ItemRefer.HiC_T2.get(2),
+                GGMaterial.lumiium.get(OrePrefixes.gearGtSmall, 2),
+                GGMaterial.hikarium.get(OrePrefixes.gearGtSmall, 2))
+            .itemOutputs(ItemList.Casing_DataDrive.get(1))
+            .duration(100)
+            .eut(TierEU.RECIPE_IV)
+            .addTo(As);
+
         loadLamp();
         loadWirelessHatch();
         loadLaserHatch();
