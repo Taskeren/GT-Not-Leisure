@@ -5,6 +5,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
 
 import com.science.gtnl.common.block.blocks.tile.TileEntityDirePatternEncoder;
+import com.science.gtnl.common.entity.EntityParticleBeam;
 import com.science.gtnl.common.machine.hatch.SuperCraftingInputHatchME;
 import com.science.gtnl.common.machine.multiblock.AssemblerMatrix;
 import com.science.gtnl.common.packet.NetWorkHandler;
@@ -163,5 +164,10 @@ public class CommonProxy implements IGuiHandler {
 
     public EntityPlayer getEntityPlayerFromContext(final MessageContext ctx) {
         return ctx.getServerHandler().playerEntity;
+    }
+
+    public EntityParticleBeam particleBeam(double x, double y, double z, double masterX, double masterY, double masterZ,
+        double radius, EntityParticleBeam oldBeam, boolean render) {
+        return null;
     }
 }

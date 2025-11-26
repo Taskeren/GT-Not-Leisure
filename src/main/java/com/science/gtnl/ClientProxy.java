@@ -10,6 +10,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.client.MinecraftForgeClient;
 import net.minecraftforge.common.MinecraftForge;
 
+import com.brandon3055.draconicevolution.client.handler.ParticleHandler;
 import com.science.gtnl.client.GTNLInputHandler;
 import com.science.gtnl.client.GTNLTooltipManager;
 import com.science.gtnl.common.block.blocks.item.ItemBlockEternalGregTechWorkshopRender;
@@ -21,6 +22,7 @@ import com.science.gtnl.common.block.blocks.tile.TileEntityLaserBeacon;
 import com.science.gtnl.common.block.blocks.tile.TileEntityNanoPhagocytosisPlant;
 import com.science.gtnl.common.block.blocks.tile.TileEntityPlayerDoll;
 import com.science.gtnl.common.block.blocks.tile.TileEntityWaterCandle;
+import com.science.gtnl.common.entity.EntityParticleBeam;
 import com.science.gtnl.common.entity.EntityPlayerLeashKnot;
 import com.science.gtnl.common.entity.EntitySaddleSlime;
 import com.science.gtnl.common.entity.EntitySteamRocket;
@@ -60,6 +62,7 @@ import com.science.gtnl.utils.gui.portableWorkbench.GuiPortablePortableInfinityC
 import Forge.NullPointerException;
 import appeng.client.render.ItemRenderer;
 import codechicken.nei.guihook.GuiContainerManager;
+import cpw.mods.fml.client.FMLClientHandler;
 import cpw.mods.fml.client.registry.ClientRegistry;
 import cpw.mods.fml.client.registry.RenderingRegistry;
 import cpw.mods.fml.common.FMLCommonHandler;
@@ -167,23 +170,6 @@ public class ClientProxy extends CommonProxy {
     }
 
     @Override
-    public void openProspectorGUI() {
-        EntityPlayer player = Minecraft.getMinecraft().thePlayer;
-        player.openGui(
-            ScienceNotLeisure.instance,
-            GuiType.DetravScannerGUI.getID(),
-            player.worldObj,
-            (int) player.posX,
-            (int) player.posY,
-            (int) player.posZ);
-    }
-
-    @Override
-    public EntityPlayer getEntityPlayerFromContext(MessageContext ctx) {
-        return Minecraft.getMinecraft().thePlayer;
-    }
-
-    @Override
     public Object getClientGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z) {
         return switch (GuiType.getGuiType(ID)) {
             case DetravScannerGUI -> new DetravScannerGUI();
@@ -218,5 +204,42 @@ public class ClientProxy extends CommonProxy {
             }
             case PortableDarkSteelChestGUI -> new GuiPortableChest.DarkSteel(player.inventory, player.getHeldItem());
         };
+    }
+
+    @Override
+    public void openProspectorGUI() {
+        EntityPlayer player = Minecraft.getMinecraft().thePlayer;
+        player.openGui(
+            ScienceNotLeisure.instance,
+            GuiType.DetravScannerGUI.getID(),
+            player.worldObj,
+            (int) player.posX,
+            (int) player.posY,
+            (int) player.posZ);
+    }
+
+    @Override
+    public EntityPlayer getEntityPlayerFromContext(MessageContext ctx) {
+        return Minecraft.getMinecraft().thePlayer;
+    }
+
+    @Override
+    public EntityParticleBeam particleBeam(double x, double y, double z, double masterX, double masterY, double masterZ,
+        double radius, EntityParticleBeam oldBeam, boolean render) {
+        EntityParticleBeam beam = oldBeam;
+        boolean inRange = ParticleHandler.isInRange(masterX, masterY, masterZ, 256);
+        if (beam == null || beam.isDead) {
+            if (inRange) {
+                beam = new EntityParticleBeam(x, y, z, masterX, masterY, masterZ, radius);
+                FMLClientHandler.instance()
+                    .getClient().effectRenderer.addEffect(beam);
+            }
+        } else if (!inRange) {
+            beam.setDead();
+            return null;
+        } else {
+            beam.update();
+        }
+        return beam;
     }
 }
