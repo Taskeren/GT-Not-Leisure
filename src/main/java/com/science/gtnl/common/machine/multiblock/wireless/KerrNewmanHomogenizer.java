@@ -108,7 +108,7 @@ public class KerrNewmanHomogenizer extends WirelessEnergyMultiMachineBase<KerrNe
 
     @Override
     public void renderTESR(double x, double y, double z, float timeSinceLastTick) {
-        if (mMaxProgresstime <= 0 || !enableRender) return;
+        if (!enableRender) return;
         KerrNewmanHomogenizerRenderer.renderTileEntityAt(this, x, y, z, timeSinceLastTick);
     }
 
@@ -195,13 +195,6 @@ public class KerrNewmanHomogenizer extends WirelessEnergyMultiMachineBase<KerrNe
         }
 
         return new double[] { x, y, z };
-    }
-
-    public double[] rotateOffset(Rotation rot) {
-        return switch (rot) {
-            case NORMAL, UPSIDE_DOWN -> new double[] { 5.5d, 0 };
-            case CLOCKWISE, COUNTER_CLOCKWISE -> new double[] { 0, 5.5d };
-        };
     }
 
     public double getInterpolatedRotation(float partialTicks) {
