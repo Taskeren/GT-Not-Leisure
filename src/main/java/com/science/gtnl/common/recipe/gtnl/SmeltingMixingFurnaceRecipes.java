@@ -615,7 +615,7 @@ public class SmeltingMixingFurnaceRecipes implements IRecipePool {
             .addTo(SMFR);
 
         GTValues.RA.stdBuilder()
-            .itemInputs(GTUtility.getIntegratedCircuit(5))
+            .itemInputs(GTUtility.getIntegratedCircuit(6))
             .fluidInputs(
                 Materials.Trinium.getMolten(144 * 36),
                 Materials.Iron.getMolten(144 * 44),
@@ -1246,7 +1246,7 @@ public class SmeltingMixingFurnaceRecipes implements IRecipePool {
 
         GTValues.RA.stdBuilder()
             .itemInputs(
-                GTUtility.getIntegratedCircuit(8),
+                GTUtility.getIntegratedCircuit(9),
                 GTOreDictUnificator.get(OrePrefixes.dust, Materials.Carbon, 50))
             .fluidInputs(
                 Materials.Redstone.getMolten(144 * 50),
