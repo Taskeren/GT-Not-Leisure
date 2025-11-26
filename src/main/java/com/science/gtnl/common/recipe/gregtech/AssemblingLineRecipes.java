@@ -1390,7 +1390,7 @@ public class AssemblingLineRecipes implements IRecipePool {
             40000,
             (int) TierEU.RECIPE_UHV,
             1,
-            new Object[] { GTNLItemList.LargeMaterialPress.get(64), new ItemStack(LanthItemList.ELECTRODE_CASING, 64),
+            new Object[] { GTNLItemList.LargeExtruder.get(64), new ItemStack(LanthItemList.ELECTRODE_CASING, 64),
                 new ItemStack(TTCasingsContainer.sBlockCasingsTT, 32, 0),
                 GTOreDictUnificator.get(OrePrefixes.frameGt, Materials.Tritanium, 64),
                 new ItemStack(GregTechAPI.sBlockCasings9, 8, 14), ItemList.Electric_Motor_UEV.get(32),
