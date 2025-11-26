@@ -1515,7 +1515,7 @@ public class AssemblingLineRecipes implements IRecipePool {
             (int) TierEU.RECIPE_UHV);
 
         TTRecipeAdder.addResearchableAssemblylineRecipe(
-            GTNLItemList.LargeElectrolyzer.get(1),
+            GTNLItemList.LargeElectromagnet.get(1),
             1000000,
             22000,
             (int) TierEU.RECIPE_UV,
