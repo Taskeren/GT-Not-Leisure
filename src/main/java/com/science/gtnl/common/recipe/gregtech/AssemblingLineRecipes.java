@@ -40,6 +40,8 @@ import gregtech.api.util.GTOreDictUnificator;
 import gregtech.api.util.GTRecipeConstants;
 import gregtech.api.util.GTUtility;
 import gregtech.api.util.recipe.Scanning;
+import gtPlusPlus.core.block.ModBlocks;
+import gtPlusPlus.core.fluids.GTPPFluids;
 import gtPlusPlus.core.material.MaterialMisc;
 import gtPlusPlus.core.material.MaterialsAlloy;
 import gtPlusPlus.core.material.MaterialsElements;
