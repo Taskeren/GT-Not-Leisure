@@ -1385,7 +1385,7 @@ public class AssemblingLineRecipes implements IRecipePool {
             (int) TierEU.RECIPE_UV);
 
         TTRecipeAdder.addResearchableAssemblylineRecipe(
-            GTNLItemList.LargeMaterialPress.get(1),
+            GTNLItemList.LargeExtruder.get(1),
             1200000,
             40000,
             (int) TierEU.RECIPE_UHV,
