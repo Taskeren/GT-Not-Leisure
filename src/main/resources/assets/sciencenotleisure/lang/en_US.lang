@@ -29,6 +29,7 @@ Tooltip_ChangeAdder=Change Mod:
 Tooltip_NoMobsSpawnInThisBlock=Mobs cannot Spawn on this Block
 Tooltip_NoTileEntitySpawnInThisBlock=This is NOT a TileEntity!
 Tooltip_Tectech_Hatch=Supports §9Tec§1Tech§r laser hatches!
+Tooltip_HighAmp_Hatch=Supports §9Tec§1Tech§r high amp hatches!
 Tooltip_PerfectOverclock=Machine can perform §clossless overcloc
 Tooltip_PressShift=§rHold §6Shift §rfor more information
 Tooltip_PressCtrl=§rHold §6Ctrl §rfor more information

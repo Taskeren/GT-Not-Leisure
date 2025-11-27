@@ -101,6 +101,12 @@ public class HorizontalCompressor extends WirelessEnergyMultiMachineBase<Horizon
     }
 
     @Override
+    public void setItemNBT(NBTTagCompound aNBT) {
+        super.setItemNBT(aNBT);
+        saveUpgradeNBTData(aNBT);
+    }
+
+    @Override
     public void saveNBTData(NBTTagCompound aNBT) {
         super.saveNBTData(aNBT);
         saveUpgradeNBTData(aNBT);

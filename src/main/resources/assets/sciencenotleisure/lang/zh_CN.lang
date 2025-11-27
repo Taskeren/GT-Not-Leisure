@@ -29,6 +29,7 @@ Tooltip_ChangeAdder=修改模组：
 Tooltip_NoMobsSpawnInThisBlock=生物不会在这个方块上生成
 Tooltip_NoTileEntitySpawnInThisBlock=这不是一个实体！
 Tooltip_Tectech_Hatch=支持§9Tec§1Tech§r§7激光仓！ 
+Tooltip_HighAmp_Hatch=支持§9Tec§1Tech§r§7多安能源仓！
 Tooltip_PerfectOverclock=机器可进行§c无损超频§7
 Tooltip_PressShift=§r按住 §6Shift §r查看更多信息
 Tooltip_PressCtrl=§r按住 §6Ctrl §r查看更多信息

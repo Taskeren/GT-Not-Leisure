@@ -92,7 +92,7 @@ public class GiantElectrochemicalWorkstation extends WirelessEnergyMultiMachineB
 
     @Override
     public int getCasingTextureID() {
-        return StructureUtils.getTextureIndex(sBlockCasings8, 10);
+        return StructureUtils.getTextureIndex(sBlockCasings9, 7);
     }
 
     @Override
@@ -131,8 +131,19 @@ public class GiantElectrochemicalWorkstation extends WirelessEnergyMultiMachineB
             .addShape(STRUCTURE_PIECE_MAIN, transpose(shape))
             .addElement('A', ofBlock(sBlockCasings10, 5))
             .addElement('B', ofBlock(blockCasingsMisc, 5))
+            .addElement('C', ofBlock(sBlockCasings8, 1))
+            .addElement('D', ofBlock(sBlockCasings6, 9))
+            .addElement('E', ofBlock(sBlockCasings10, 8))
+            .addElement('F', ofBlock(sBlockCasings8, 7))
             .addElement(
-                'C',
+                'G',
+                GTStructureChannels.HEATING_COIL.use(
+                    activeCoils(
+                        ofCoil(
+                            GiantElectrochemicalWorkstation::setMCoilLevel,
+                            GiantElectrochemicalWorkstation::getMCoilLevel))))
+            .addElement(
+                'H',
                 buildHatchAdder(GiantElectrochemicalWorkstation.class)
                     .atLeast(
                         Maintenance,
@@ -144,18 +155,7 @@ public class GiantElectrochemicalWorkstation extends WirelessEnergyMultiMachineB
                         ParallelCon)
                     .casingIndex(getCasingTextureID())
                     .dot(1)
-                    .buildAndChain(onElementPass(x -> ++x.mCountCasing, ofBlock(sBlockCasings8, 1))))
-            .addElement('D', ofBlock(sBlockCasings6, 9))
-            .addElement('E', ofBlock(sBlockCasings10, 8))
-            .addElement('F', ofBlock(sBlockCasings8, 7))
-            .addElement(
-                'G',
-                GTStructureChannels.HEATING_COIL.use(
-                    activeCoils(
-                        ofCoil(
-                            GiantElectrochemicalWorkstation::setMCoilLevel,
-                            GiantElectrochemicalWorkstation::getMCoilLevel))))
-            .addElement('H', ofBlock(sBlockCasings9, 7))
+                    .buildAndChain(onElementPass(x -> ++x.mCountCasing, ofBlock(sBlockCasings9, 7))))
             .addElement('I', ofBlock(sBlockTintedGlass, 1))
             .addElement('J', ofFrame(Materials.Polytetrafluoroethylene))
             .addElement('K', ofBlock(sBlockCasingsSE, 0))
