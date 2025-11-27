@@ -79,7 +79,6 @@ public class MainConfig {
     public static int quantumComputerMaximumMultiblockSize = 15;
     public static int quantumComputerMaximumQuantumDataEntangler = 1;
     public static int quantumComputerMaximumQuantumComputerMultiThreader = 1;
-    public static int quantumComputerMaximumQuantumComputerCore = 1;
 
     // Player Doll
     public static boolean enableCustomPlayerDoll = true;
@@ -418,15 +417,6 @@ public class MainConfig {
             Integer.MAX_VALUE,
             "Maximum number of multi threader allowed in a Quantum Computer",
             "config.quantum_computer.quantumComputerMaximumQuantumComputerMultiThreader");
-
-        quantumComputerMaximumQuantumComputerCore = config.getInt(
-            "quantumComputerMaximumQuantumComputerCore",
-            SUB_CATEGORY_QUANTUM_COMPUTER,
-            quantumComputerMaximumQuantumComputerCore,
-            1,
-            Integer.MAX_VALUE,
-            "Maximum number of cores allowed in a Quantum Computer",
-            "config.quantum_computer.quantumComputerMaximumQuantumComputerCore");
 
         quantumComputerMaximumMultiblockSize = config.getInt(
             "quantumComputerMaximumMultiblockSize",

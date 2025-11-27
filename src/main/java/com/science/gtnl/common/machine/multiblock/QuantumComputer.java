@@ -818,8 +818,7 @@ public class QuantumComputer extends MTETooltipMultiBlockBase
         }
 
         if (multiThreaderCount > MainConfig.quantumComputerMaximumQuantumComputerMultiThreader
-            || dataEntanglerCount > MainConfig.quantumComputerMaximumQuantumDataEntangler
-            || coreCount > MainConfig.quantumComputerMaximumQuantumComputerCore) {
+            || dataEntanglerCount > MainConfig.quantumComputerMaximumQuantumDataEntangler) {
             return false;
         }
 
