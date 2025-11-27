@@ -1346,7 +1346,7 @@ public class AssemblingLineRecipes implements IRecipePool {
             1,
             new Object[] { GTNLItemList.LargeCutter.get(64),
                 GregtechItemList.Industrial_CuttingFactoryController.get(64), ItemList.Neutronium_Active_Casing.get(64),
-                ItemList.Casing_ContainmentField.get(12), ItemList.Electric_Motor_UHV.get(32),
+                GregtechItemList.Casing_Autocrafter.get(12), ItemList.Electric_Motor_UHV.get(32),
                 ItemList.Electric_Piston_UHV.get(32), ItemList.Conveyor_Module_UHV.get(32),
                 GTOreDictUnificator.get(OrePrefixes.circuit, Materials.UEV, 12),
                 com.dreammaster.gthandler.CustomItemList.HighEnergyFlowCircuit.get(64),
