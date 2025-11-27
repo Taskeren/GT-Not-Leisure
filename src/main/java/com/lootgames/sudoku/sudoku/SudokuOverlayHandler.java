@@ -16,11 +16,11 @@ import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import org.lwjgl.opengl.GL11;
 
 import com.google.common.collect.Maps;
-import com.lootgames.sudoku.ClientProxy;
 
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import ru.timeconqueror.lootgames.LootGames;
 import ru.timeconqueror.lootgames.utils.future.BlockPos;
+import ru.timeconqueror.timecore.api.util.client.ClientProxy;
 import ru.timeconqueror.timecore.api.util.client.DrawHelper;
 
 /**

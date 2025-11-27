@@ -2268,7 +2268,7 @@ public class AssemblingLineRecipes implements IRecipePool {
                 GTOreDictUnificator.get(OrePrefixes.plateSuperdense, Materials.Infinity, 4),
                 GTOreDictUnificator.get(OrePrefixes.plateSuperdense, Materials.Infinity, 4) },
             new FluidStack[] { MaterialMisc.MUTATED_LIVING_SOLDER.getFluidStack(46080),
-                MaterialPool.PyromelliticDianhydride.getMolten(36864), Materials.SuperCoolant.getFluid(256000),
+                MaterialPool.Polyetheretherketone.getMolten(36864), Materials.SuperCoolant.getFluid(256000),
                 MaterialsAlloy.PIKYONIUM.getFluidStack(46080) },
             GTNLItemList.AdvancedInfiniteDriller.get(1),
             20000,

@@ -57,7 +57,7 @@ public class SteamWeatherModule extends SteamElevatorModule {
 
     @Override
     public RecipeMap<?> getRecipeMap() {
-        return RecipePool.SteamWeatherModuleFakeRecipes;
+        return RecipePool.SteamWeatherModuleRecipes;
     }
 
     @Nonnull

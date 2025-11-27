@@ -1990,7 +1990,7 @@ Tooltip_SteamFlightModule_03=Adjust overclock count to consume more steam and ex
 Tooltip_SteamFlightModule_04=Effective range: 64 * overclock count
 
 NameSteamWeatherModule=Steam Weather Module
-gtnl.recipe.SteamWeatherModuleFakeRecipes=Weather Changes
+gtnl.recipe.SteamWeatherModuleRecipes=Weather Changes
 NEI.SteamWeather.specialValue.1=Set weather to clear
 NEI.SteamWeather.specialValue.2=Set weather to rain
 NEI.SteamWeather.specialValue.3=Set weather to thunderstorm

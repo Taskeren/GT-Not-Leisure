@@ -544,9 +544,9 @@ public class RecipePool {
                 .setHeight(314))
         .build();
 
-    public static final RecipeMap<RecipeMapBackend> SteamWeatherModuleFakeRecipes = RecipeMapBuilder
-        .of("gtnl.recipe.SteamWeatherModuleFakeRecipes")
-        .maxIO(9, 1, 0, 0)
+    public static final RecipeMap<RecipeMapBackend> SteamWeatherModuleRecipes = RecipeMapBuilder
+        .of("gtnl.recipe.SteamWeatherModuleRecipes")
+        .maxIO(4, 0, 0, 0)
         .progressBarSteam(GTUITextures.PROGRESSBAR_EXTRACT_STEAM)
         .frontend(SteamLogoFrontend::new)
         .neiSpecialInfoFormatter(new SteamWeatherFormat())

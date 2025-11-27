@@ -1,9 +1,5 @@
 package com.lootgames.sudoku;
 
-import net.minecraft.client.Minecraft;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.world.World;
-
 import com.lootgames.sudoku.block.SudokuTile;
 import com.lootgames.sudoku.sudoku.SudokuRenderer;
 
@@ -30,13 +26,5 @@ public class ClientProxy extends CommonProxy {
     public void preInit(FMLPreInitializationEvent event) {
         super.preInit(event);
         ClientRegistry.bindTileEntitySpecialRenderer(SudokuTile.class, Hacks.safeCast(new SudokuRenderer()));
-    }
-
-    public static EntityPlayer player() {
-        return Hacks.safeCast(Minecraft.getMinecraft().thePlayer);
-    }
-
-    public static World world() {
-        return Hacks.safeCast(Minecraft.getMinecraft().theWorld);
     }
 }

@@ -3249,6 +3249,20 @@ public class AssemblerRecipes implements IRecipePool {
             .eut(TierEU.RECIPE_IV)
             .addTo(As);
 
+        GTValues.RA.stdBuilder()
+            .itemInputs(
+                GTOreDictUnificator.get(OrePrefixes.frameGt, Materials.Naquadria, 1),
+                ItemList.Radiation_Proof_Prismatic_Naquadah_Composite_Sheet.get(8),
+                ItemList.Field_Generator_ZPM.get(1),
+                GTOreDictUnificator.get(OrePrefixes.plateDense, Materials.Europium, 2),
+                GTOreDictUnificator.get(OrePrefixes.plateDense, Materials.Naquadria, 2),
+                GTOreDictUnificator.get(OrePrefixes.cableGt08, Materials.Naquadah, 2))
+            .itemOutputs(GTNLItemList.GravitationalFocusingLensBlock.get(1))
+            .fluidInputs(Materials.Polybenzimidazole.getMolten(1152))
+            .duration(100)
+            .eut(TierEU.RECIPE_ZPM)
+            .addTo(As);
+
         loadLamp();
         loadWirelessHatch();
         loadLaserHatch();

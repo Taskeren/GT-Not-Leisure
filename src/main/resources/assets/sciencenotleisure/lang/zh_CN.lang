@@ -1990,7 +1990,7 @@ Tooltip_SteamFlightModule_03=调整超频次数来消耗更多蒸汽扩大范围
 Tooltip_SteamFlightModule_04=生效范围：64 * 超频次数
 
 NameSteamWeatherModule=蒸汽天气更替模块
-gtnl.recipe.SteamWeatherModuleFakeRecipes=天气更替
+gtnl.recipe.SteamWeatherModuleRecipes=天气更替
 NEI.SteamWeather.specialValue.1=切换天气为晴天
 NEI.SteamWeather.specialValue.2=切换天气为雨天
 NEI.SteamWeather.specialValue.3=切换天气为雷暴
