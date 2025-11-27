@@ -239,6 +239,7 @@ import com.science.gtnl.common.machine.multiblock.wireless.MegaBathTank;
 import com.science.gtnl.common.machine.multiblock.wireless.MegaBrewer;
 import com.science.gtnl.common.machine.multiblock.wireless.MegaCanner;
 import com.science.gtnl.common.machine.multiblock.wireless.MegaVacuumDryingFurnace;
+import com.science.gtnl.common.machine.multiblock.wireless.MegaWiremill;
 import com.science.gtnl.common.machine.multiblock.wireless.MicroorganismMaster;
 import com.science.gtnl.common.machine.multiblock.wireless.MoltenCore;
 import com.science.gtnl.common.machine.multiblock.wireless.NanitesCircuitAssemblyFactory;
@@ -1635,6 +1636,10 @@ public class MachineLoader {
                 "ChemicalComplex",
                 StatCollector.translateToLocal("NameChemicalComplex")));
         addItemTooltip(GTNLItemList.ChemicalComplex.get(1), AnimatedText.SNL_QYZG);
+
+        GTNLItemList.MegaWiremill.set(
+            new MegaWiremill(MEGA_WIREMILL.ID, "MegaWiremill", StatCollector.translateToLocal("NameMegaWiremill")));
+        addItemTooltip(GTNLItemList.MegaWiremill.get(1), AnimatedText.SNL_QYZG);
 
         // Special Machine
         GTNLItemList.CheatOreProcessingFactory.set(

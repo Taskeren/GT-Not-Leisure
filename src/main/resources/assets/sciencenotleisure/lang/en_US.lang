@@ -2048,6 +2048,11 @@ CompoundDistillationFractionator_Mode_0=Distillation Tower
 CompoundDistillationFractionator_Mode_1=Distillation Chamber
 Tooltip_CompoundDistillationFractionator_Casing=Stabilized Naquadah Water Plant Casing
 
+NameMegaWiremill=Mega Wiremill
+MegaWiremillRecipeType=Wiremill
+Tooltip_MegaWiremill_00=Each coil tier provides an additional 15% speed (multiplicative).
+Tooltip_MegaWiremill_Casing=Any insulated machine block
+
 NameChemicalComplex=Chemical Complex
 ChemicalComplexRecipeType=Chemical Reactor
 Tooltip_ChemicalComplex_00=Each coil tier provides an additional 15% speed (multiplicative).

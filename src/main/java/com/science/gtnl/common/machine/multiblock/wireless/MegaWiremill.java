@@ -5,10 +5,6 @@ import static com.science.gtnl.ScienceNotLeisure.*;
 import static com.science.gtnl.common.machine.multiMachineBase.MultiMachineBase.CustomHatchElement.*;
 import static gregtech.api.GregTechAPI.*;
 import static gregtech.api.enums.HatchElement.*;
-import static gregtech.api.enums.Textures.BlockIcons.*;
-import static gregtech.api.enums.Textures.BlockIcons.OVERLAY_FRONT_LARGE_CHEMICAL_REACTOR;
-import static gregtech.api.enums.Textures.BlockIcons.OVERLAY_FRONT_LARGE_CHEMICAL_REACTOR_ACTIVE_GLOW;
-import static gregtech.api.enums.Textures.BlockIcons.OVERLAY_FRONT_LARGE_CHEMICAL_REACTOR_GLOW;
 import static gregtech.api.util.GTStructureUtility.*;
 import static tectech.thing.casing.TTCasingsContainer.*;
 
@@ -34,34 +30,36 @@ import gregtech.api.recipe.RecipeMaps;
 import gregtech.api.render.TextureFactory;
 import gregtech.api.util.MultiblockTooltipBuilder;
 import gregtech.common.misc.GTStructureChannels;
+import gtPlusPlus.core.block.ModBlocks;
+import gtPlusPlus.xmod.gregtech.common.blocks.textures.TexturesGtBlock;
 
-public class ChemicalComplex extends WirelessEnergyMultiMachineBase<ChemicalComplex> {
+public class MegaWiremill extends WirelessEnergyMultiMachineBase<MegaWiremill> {
 
-    private static final int HORIZONTAL_OFF_SET = 14;
-    private static final int VERTICAL_OFF_SET = 20;
+    private static final int HORIZONTAL_OFF_SET = 53;
+    private static final int VERTICAL_OFF_SET = 7;
     private static final int DEPTH_OFF_SET = 0;
     private static final String STRUCTURE_PIECE_MAIN = "main";
-    private static final String CC_STRUCTURE_FILE_PATH = RESOURCE_ROOT_ID + ":" + "multiblock/chemical_complex";
-    private static final String[][] shape = StructureUtils.readStructureFromFile(CC_STRUCTURE_FILE_PATH);
+    private static final String MW_STRUCTURE_FILE_PATH = RESOURCE_ROOT_ID + ":" + "multiblock/mega_wiremill";
+    private static final String[][] shape = StructureUtils.readStructureFromFile(MW_STRUCTURE_FILE_PATH);
 
-    public ChemicalComplex(String aName) {
+    public MegaWiremill(String aName) {
         super(aName);
     }
 
-    public ChemicalComplex(int aID, String aName, String aNameRegional) {
+    public MegaWiremill(int aID, String aName, String aNameRegional) {
         super(aID, aName, aNameRegional);
     }
 
     @Override
     public IMetaTileEntity newMetaEntity(IGregTechTileEntity aTileEntity) {
-        return new ChemicalComplex(this.mName);
+        return new MegaWiremill(this.mName);
     }
 
     @Override
     public MultiblockTooltipBuilder createTooltip() {
         MultiblockTooltipBuilder tt = new MultiblockTooltipBuilder();
-        tt.addMachineType(StatCollector.translateToLocal("ChemicalComplexRecipeType"))
-            .addInfo(StatCollector.translateToLocal("Tooltip_ChemicalComplex_00"))
+        tt.addMachineType(StatCollector.translateToLocal("MegaWiremillRecipeType"))
+            .addInfo(StatCollector.translateToLocal("Tooltip_MegaWiremill_00"))
             .addInfo(StatCollector.translateToLocal("Tooltip_WirelessEnergyMultiMachine_00"))
             .addInfo(StatCollector.translateToLocal("Tooltip_WirelessEnergyMultiMachine_01"))
             .addInfo(StatCollector.translateToLocal("Tooltip_WirelessEnergyMultiMachine_02"))
@@ -77,12 +75,12 @@ public class ChemicalComplex extends WirelessEnergyMultiMachineBase<ChemicalComp
             .addSeparator()
             .addInfo(StatCollector.translateToLocal("StructureTooComplex"))
             .addInfo(StatCollector.translateToLocal("BLUE_PRINT_INFO"))
-            .beginStructureBlock(29, 23, 13, true)
-            .addInputBus(StatCollector.translateToLocal("Tooltip_ChemicalComplex_Casing"), 1)
-            .addOutputBus(StatCollector.translateToLocal("Tooltip_ChemicalComplex_Casing"), 1)
-            .addInputHatch(StatCollector.translateToLocal("Tooltip_ChemicalComplex_Casing"), 1)
-            .addOutputHatch(StatCollector.translateToLocal("Tooltip_ChemicalComplex_Casing"), 1)
-            .addEnergyHatch(StatCollector.translateToLocal("Tooltip_ChemicalComplex_Casing"), 1)
+            .beginStructureBlock(61, 10, 15, true)
+            .addInputBus(StatCollector.translateToLocal("Tooltip_MegaWiremill_Casing"), 1)
+            .addOutputBus(StatCollector.translateToLocal("Tooltip_MegaWiremill_Casing"), 1)
+            .addInputHatch(StatCollector.translateToLocal("Tooltip_MegaWiremill_Casing"), 1)
+            .addOutputHatch(StatCollector.translateToLocal("Tooltip_MegaWiremill_Casing"), 1)
+            .addEnergyHatch(StatCollector.translateToLocal("Tooltip_MegaWiremill_Casing"), 1)
             .addSubChannelUsage(GTStructureChannels.HEATING_COIL)
             .toolTipFinisher();
         return tt;
@@ -90,30 +88,30 @@ public class ChemicalComplex extends WirelessEnergyMultiMachineBase<ChemicalComp
 
     @Override
     public int getCasingTextureID() {
-        return StructureUtils.getTextureIndex(sBlockCasings8, 0);
+        return StructureUtils.getTextureIndex(sBlockCasings1, 11);
     }
 
     @Override
-    public ITexture[] getTexture(IGregTechTileEntity aBaseMetaTileEntity, ForgeDirection side, ForgeDirection aFacing,
-        int colorIndex, boolean aActive, boolean redstoneLevel) {
-        if (side == aFacing) {
-            if (aActive) return new ITexture[] { Textures.BlockIcons.getCasingTextureForId(getCasingTextureID()),
+    public ITexture[] getTexture(IGregTechTileEntity baseMetaTileEntity, ForgeDirection sideDirection,
+        ForgeDirection facingDirection, int colorIndex, boolean active, boolean redstoneLevel) {
+        if (sideDirection == facingDirection) {
+            if (active) return new ITexture[] { Textures.BlockIcons.getCasingTextureForId(getCasingTextureID()),
                 TextureFactory.builder()
-                    .addIcon(OVERLAY_FRONT_LARGE_CHEMICAL_REACTOR_ACTIVE)
+                    .addIcon(TexturesGtBlock.oMCDIndustrialWireMillActive)
                     .extFacing()
                     .build(),
                 TextureFactory.builder()
-                    .addIcon(OVERLAY_FRONT_LARGE_CHEMICAL_REACTOR_ACTIVE_GLOW)
+                    .addIcon(TexturesGtBlock.oMCDIndustrialWireMillActiveGlow)
                     .extFacing()
                     .glow()
                     .build() };
             return new ITexture[] { Textures.BlockIcons.getCasingTextureForId(getCasingTextureID()),
                 TextureFactory.builder()
-                    .addIcon(OVERLAY_FRONT_LARGE_CHEMICAL_REACTOR)
+                    .addIcon(TexturesGtBlock.oMCDIndustrialWireMill)
                     .extFacing()
                     .build(),
                 TextureFactory.builder()
-                    .addIcon(OVERLAY_FRONT_LARGE_CHEMICAL_REACTOR_GLOW)
+                    .addIcon(TexturesGtBlock.oMCDIndustrialWireMillGlow)
                     .extFacing()
                     .glow()
                     .build() };
@@ -122,18 +120,22 @@ public class ChemicalComplex extends WirelessEnergyMultiMachineBase<ChemicalComp
     }
 
     @Override
-    public IStructureDefinition<ChemicalComplex> getStructureDefinition() {
-        return StructureDefinition.<ChemicalComplex>builder()
+    public IStructureDefinition<MegaWiremill> getStructureDefinition() {
+        return StructureDefinition.<MegaWiremill>builder()
             .addShape(STRUCTURE_PIECE_MAIN, transpose(shape))
-            .addElement('A', ofBlock(BlockLoader.metaCasing, 19))
-            .addElement('B', ofBlock(sBlockCasings10, 3))
+            .addElement('A', ofBlock(sBlockCasingsTT, 8))
+            .addElement('B', ofBlock(BlockLoader.metaCasing, 5))
             .addElement(
                 'C',
                 GTStructureChannels.HEATING_COIL
-                    .use(activeCoils(ofCoil(ChemicalComplex::setMCoilLevel, ChemicalComplex::getMCoilLevel))))
+                    .use(activeCoils(ofCoil(MegaWiremill::setMCoilLevel, MegaWiremill::getMCoilLevel))))
+            .addElement('D', ofBlock(sBlockCasings2, 5))
+            .addElement('E', ofBlock(ModBlocks.blockCasings2Misc, 2))
+            .addElement('F', ofBlock(sBlockCasings2, 11))
+            .addElement('G', ofBlock(sBlockCasings3, 10))
             .addElement(
-                'D',
-                buildHatchAdder(ChemicalComplex.class)
+                'H',
+                buildHatchAdder(MegaWiremill.class)
                     .atLeast(
                         Maintenance,
                         InputHatch,
@@ -144,12 +146,10 @@ public class ChemicalComplex extends WirelessEnergyMultiMachineBase<ChemicalComp
                         ParallelCon)
                     .casingIndex(getCasingTextureID())
                     .dot(1)
-                    .buildAndChain(onElementPass(x -> ++x.mCountCasing, ofBlock(sBlockCasings8, 0))))
-            .addElement('E', ofBlock(sBlockCasings9, 12))
-            .addElement('F', ofBlock(sBlockGlass1, 0))
-            .addElement('G', ofFrame(Materials.StainlessSteel))
-            .addElement('H', ofFrame(Materials.NaquadahAlloy))
-            .addElement('I', ofFrame(Materials.Polytetrafluoroethylene))
+                    .buildAndChain(onElementPass(x -> ++x.mCountCasing, ofBlock(sBlockCasings1, 11))))
+            .addElement('I', ofBlock(sBlockCasings2, 9))
+            .addElement('J', ofBlock(sBlockCasingsTT, 4))
+            .addElement('K', ofFrame(Materials.TungstenSteel))
             .build();
     }
 
@@ -194,7 +194,7 @@ public class ChemicalComplex extends WirelessEnergyMultiMachineBase<ChemicalComp
 
     @Override
     public RecipeMap<?> getRecipeMap() {
-        return RecipeMaps.multiblockChemicalReactorRecipes;
+        return RecipeMaps.wiremillRecipes;
     }
 
     @Override

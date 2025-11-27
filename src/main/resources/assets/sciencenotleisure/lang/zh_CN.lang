@@ -2048,6 +2048,11 @@ CompoundDistillationFractionator_Mode_0=蒸馏塔
 CompoundDistillationFractionator_Mode_1=蒸馏室
 Tooltip_CompoundDistillationFractionator_Casing=稳定化硅岩净水厂机械方块
 
+NameMegaWiremill=特大线材轧机
+MegaWiremillRecipeType=线缆轧机
+Tooltip_MegaWiremill_00=每级线圈等级额外提供15%的加速(乘算叠加)
+Tooltip_MegaWiremill_Casing=任意隔热机械方块
+
 NameChemicalComplex=化工复合体
 ChemicalComplexRecipeType=化学反应釜
 Tooltip_ChemicalComplex_00=每级线圈等级额外提供15%的加速(乘算叠加)

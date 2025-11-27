@@ -620,6 +620,7 @@ public enum GTNLItemList implements IItemContainer {
     KerrNewmanHomogenizer,
     LargeSteamBending,
     ChemicalComplex,
+    MegaWiremill,
 
     EnergyHatchLV,
     EnergyHatchLV4A,
