@@ -963,7 +963,7 @@ public class QuantumComputer extends MTETooltipMultiBlockBase
             .widget(new FakeSyncWidget.IntegerSyncer(() -> height, h -> height = h))
             .widget(new FakeSyncWidget.IntegerSyncer(() -> depth, d -> depth = d))
             .widget(new FakeSyncWidget.IntegerSyncer(() -> maximumParallel, parallel -> maximumParallel = parallel))
-            // .widget(new FakeSyncWidget.IntegerSyncer(() -> getUsedBytes(), parallel -> maximumParallel = parallel))
+            .widget(new FakeSyncWidget.IntegerSyncer(this::getUsedParallel, parallel -> usedParallel = parallel))
             .widget(new FakeSyncWidget.LongSyncer(this::getMaximumStorage, storage -> maximumStorage = storage))
             .widget(new FakeSyncWidget.LongSyncer(this::getUsedBytes, storage -> usedStorage = storage));
     }
@@ -1114,6 +1114,13 @@ public class QuantumComputer extends MTETooltipMultiBlockBase
             .mapToLong(CraftingCPUCluster::getAvailableStorage)
             .sum();
         return usedStorage;
+    }
+
+    public int getUsedParallel() {
+        usedParallel = cpus.stream()
+            .mapToInt(CraftingCPUCluster::getCoProcessors)
+            .sum();
+        return usedParallel;
     }
 
     public void createVirtualCPU() {
