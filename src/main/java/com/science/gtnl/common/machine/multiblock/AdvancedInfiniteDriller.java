@@ -343,11 +343,11 @@ public class AdvancedInfiniteDriller extends MultiMachineBase<AdvancedInfiniteDr
     @Override
     public boolean checkMachine(IGregTechTileEntity aBaseMetaTileEntity, ItemStack aStack) {
         if (!checkPiece(STRUCTURE_PIECE_MAIN, HORIZONTAL_OFF_SET, VERTICAL_OFF_SET, DEPTH_OFF_SET) || !checkHatch()
-            || !mOutputHatches.isEmpty()) {
+            || mOutputHatches.isEmpty()) {
             return false;
         }
         setupParameters();
-        return mCountCasing >= 570;
+        return mCountCasing >= 500;
     }
 
     @Override
