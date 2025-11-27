@@ -943,6 +943,8 @@ tile.MetaCasing02.17.name=量子计算机核心
 Tooltip_QuantumComputerCore_00=提供 256M 合成存储空间和 16384 并行处理线程。
 tile.MetaCasing02.18.name=装配矩阵Debug合成核心
 Tooltip_AssemblerMatrixDebugCrafterCore_00=每个提供9,223,372,036,854,775,807并行
+tile.MetaCasing02.19.name=量子计算机奇点核心
+Tooltip_QuantumComputerSingularityCore_00=将量子计算机的合成存储容量锁定为9.22E
 
 tile.MetaBlock.0.name=测试方块
 tile.MetaBlock.1.name=§d新视野线圈
@@ -2045,6 +2047,11 @@ CompoundDistillationFractionatorRecipeType=蒸馏塔 / 蒸馏室
 CompoundDistillationFractionator_Mode_0=蒸馏塔
 CompoundDistillationFractionator_Mode_1=蒸馏室
 Tooltip_CompoundDistillationFractionator_Casing=稳定化硅岩净水厂机械方块
+
+NameChemicalComplex=化工复合体
+ChemicalComplexRecipeType=化学反应釜
+Tooltip_ChemicalComplex_00=每级线圈等级额外提供15%的加速(乘算叠加)
+Tooltip_ChemicalComplex_Casing=任意化学惰性机械方块
 
 NameMoltenCore=熔火之心
 MoltenCoreRecipeType=流体加热器

@@ -108,6 +108,7 @@ public class QuantumComputer extends MTETooltipMultiBlockBase
     public int maximumParallel = 0;
     public long usedStorage = 0;
     public int usedParallel = 0;
+    public boolean enabledSingularityCore = false;
 
     public long getMaximumStorage() {
         if (singularityCraftingStorageCount > 0) return Long.MAX_VALUE;
@@ -272,6 +273,7 @@ public class QuantumComputer extends MTETooltipMultiBlockBase
         // storage / parallel
         aNBT.setLong("maximumStorage", getMaximumStorage());
         aNBT.setInteger("maximumParallel", this.maximumParallel);
+        aNBT.setBoolean("enabledSingularityCore", enabledSingularityCore);
 
         getProxy().writeToNBT(aNBT);
         writeCPUNBT(aNBT);
@@ -317,6 +319,7 @@ public class QuantumComputer extends MTETooltipMultiBlockBase
         // storage / parallel
         this.maximumStorage = aNBT.getLong("maximumStorage");
         this.maximumParallel = aNBT.getInteger("maximumParallel");
+        this.enabledSingularityCore = aNBT.getBoolean("enabledSingularityCore");
         getProxy().readFromNBT(aNBT);
         readCPUNBT(aNBT);
 
@@ -371,6 +374,7 @@ public class QuantumComputer extends MTETooltipMultiBlockBase
             if (meta == 15) return QuantumComputerBlockType.ACCELERATOR;
             if (meta == 16) return QuantumComputerBlockType.MULTI_THREADER;
             if (meta == 17) return QuantumComputerBlockType.CORE;
+            if (meta == 19) return QuantumComputerBlockType.SINGULARITY_CORE;
         }
 
         if (block == CRAFTING_STORAGE) {
@@ -432,6 +436,13 @@ public class QuantumComputer extends MTETooltipMultiBlockBase
                 maximumParallel = addToParallel(maximumParallel, 16384);
                 unitCount++;
                 coreCount++;
+                return true;
+
+            case SINGULARITY_CORE:
+                unitCount++;
+                coreCount++;
+                singularityCraftingStorageCount++;
+                enabledSingularityCore = true;
                 return true;
 
             case CRAFTING_STORAGE_1K:
@@ -738,6 +749,7 @@ public class QuantumComputer extends MTETooltipMultiBlockBase
         singularityCraftingStorageCount = 0;
         maximumStorage = 0L;
         maximumParallel = 0;
+        enabledSingularityCore = false;
     }
 
     @Override
@@ -821,6 +833,8 @@ public class QuantumComputer extends MTETooltipMultiBlockBase
             || dataEntanglerCount > MainConfig.quantumComputerMaximumQuantumDataEntangler) {
             return false;
         }
+
+        if (singularityCraftingStorageCount > 0) maximumStorage = Long.MAX_VALUE;
 
         for (int i = 0; i < dataEntanglerCount; i++) {
             if (maximumStorage > Long.MAX_VALUE / 4L) {
@@ -1090,13 +1104,16 @@ public class QuantumComputer extends MTETooltipMultiBlockBase
     }
 
     public long getAvailableBytes() {
+        if (enabledSingularityCore) return Long.MAX_VALUE;
         return getMaximumStorage() - getUsedBytes();
     }
 
     public long getUsedBytes() {
-        return cpus.stream()
+        if (enabledSingularityCore) return 0;
+        usedStorage = cpus.stream()
             .mapToLong(CraftingCPUCluster::getAvailableStorage)
             .sum();
+        return usedStorage;
     }
 
     public void createVirtualCPU() {
@@ -1141,6 +1158,7 @@ public class QuantumComputer extends MTETooltipMultiBlockBase
         DATA_ENTANGLER, // 量子数据纠缠器
         ACCELERATOR, // 量子计算机加速器
         CORE, // 量子计算机核心
+        SINGULARITY_CORE, // 量子计算机奇点核心
         CRAFTING_STORAGE_1K, // 1k合成存储器
         CRAFTING_STORAGE_4K, // 4k合成存储器
         CRAFTING_STORAGE_16K, // 16k合成存储器

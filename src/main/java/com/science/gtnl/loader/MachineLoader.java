@@ -215,6 +215,7 @@ import com.science.gtnl.common.machine.multiblock.structuralReconstructionPlan.V
 import com.science.gtnl.common.machine.multiblock.structuralReconstructionPlan.VacuumFreezer;
 import com.science.gtnl.common.machine.multiblock.wireless.AdvancedMassFabricator;
 import com.science.gtnl.common.machine.multiblock.wireless.AetronPressor;
+import com.science.gtnl.common.machine.multiblock.wireless.ChemicalComplex;
 import com.science.gtnl.common.machine.multiblock.wireless.CircuitComponentAssemblyLine;
 import com.science.gtnl.common.machine.multiblock.wireless.CompoundDistillationFractionator;
 import com.science.gtnl.common.machine.multiblock.wireless.CompoundExtremeCoolingUnit;
@@ -1627,6 +1628,13 @@ public class MachineLoader {
                 "LargeSteamBending",
                 StatCollector.translateToLocal("NameLargeSteamBending")));
         addItemTooltip(GTNLItemList.LargeSteamBending.get(1), AnimatedText.SCIENCE_NOT_LEISURE);
+
+        GTNLItemList.ChemicalComplex.set(
+            new ChemicalComplex(
+                CHEMICAL_COMPLEX.ID,
+                "ChemicalComplex",
+                StatCollector.translateToLocal("NameChemicalComplex")));
+        addItemTooltip(GTNLItemList.ChemicalComplex.get(1), AnimatedText.SNL_QYZG);
 
         // Special Machine
         GTNLItemList.CheatOreProcessingFactory.set(

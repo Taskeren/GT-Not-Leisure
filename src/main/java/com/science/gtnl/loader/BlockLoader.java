@@ -557,6 +557,11 @@ public class BlockLoader {
                 18,
                 metaCasing02,
                 new String[] { StatCollector.translateToLocal("Tooltip_AssemblerMatrixDebugCrafterCore_00") }));
+        GTNLItemList.QuantumComputerSingularityCore.set(
+            MetaItemBlockCasing.initMetaBlockCasing(
+                19,
+                metaCasing02,
+                new String[] { StatCollector.translateToLocal("Tooltip_QuantumComputerSingularityCore_00") }));
     }
 
     public static void registry() {

@@ -147,6 +147,7 @@ public enum GTNLItemList implements IItemContainer {
     QuantumComputerCasing,
     QuantumComputerUnit,
     QuantumComputerCore,
+    QuantumComputerSingularityCore,
     QuantumComputerCraftingStorage128M,
     QuantumComputerCraftingStorage256M,
     QuantumComputerDataEntangler,
@@ -618,6 +619,7 @@ public enum GTNLItemList implements IItemContainer {
     DataCenter,
     KerrNewmanHomogenizer,
     LargeSteamBending,
+    ChemicalComplex,
 
     EnergyHatchLV,
     EnergyHatchLV4A,

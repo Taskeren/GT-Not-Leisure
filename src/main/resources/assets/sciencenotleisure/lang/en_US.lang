@@ -934,15 +934,17 @@ tile.MetaCasing02.11.name=Quantum Computer Unit
 tile.MetaCasing02.12.name=128M Quantum Computer Crafting Storage
 tile.MetaCasing02.13.name=256M Quantum Computer Crafting Storage
 tile.MetaCasing02.14.name=Quantum Computer Data Entangler
-Tooltip_QuantumComputerDataEntangler_00=
+Tooltip_QuantumComputerDataEntangler_00=Multiplies the total storage in the Quantum Computer Multiblock by 4. Limited to %d per multiblock
 tile.MetaCasing02.15.name=Quantum Accelerator
 Tooltip_QuantumComputerAccelerator_00=Provides 16384 co-processing threads per block.
 tile.MetaCasing02.16.name=Quantum Computer Multi Threader
-Tooltip_QuantumComputerMultiThreader_00=
+Tooltip_QuantumComputerMultiThreader_00=Multiplies the amount of co-processors in the Quantum Computer Multiblock by 4. Limited to %s per multiblock
 tile.MetaCasing02.17.name=Quantum Computer Core
 Tooltip_QuantumComputerCore_00=Provides 256M crafting storage and 16384 co-processing threads.
 tile.MetaCasing02.18.name=Assembler Matrix Debug Crafter Core
 Tooltip_AssemblerMatrixDebugCrafterCore_00=Each provides 9,223,372,036,854,775,807 parallel processes
+tile.MetaCasing02.19.name=Quantum Computer Singularity Core
+Tooltip_QuantumComputerSingularityCore_00=Locks the total storage of the Quantum Computer Multiblock at 9.22E
 
 tile.MetaBlock.0.name=Test Block
 tile.MetaBlock.1.name=§dNew Horizons Coil
@@ -2045,6 +2047,11 @@ CompoundDistillationFractionatorRecipeType=Distillation Tower / Distillation Cha
 CompoundDistillationFractionator_Mode_0=Distillation Tower
 CompoundDistillationFractionator_Mode_1=Distillation Chamber
 Tooltip_CompoundDistillationFractionator_Casing=Stabilized Naquadah Water Plant Casing
+
+NameChemicalComplex=Chemical Complex
+ChemicalComplexRecipeType=Chemical Reactor
+Tooltip_ChemicalComplex_00=Each coil tier provides an additional 15% speed (multiplicative).
+Tooltip_ChemicalComplex_Casing=Any Chemically Inert Machine Block
 
 NameMoltenCore=Molten Core
 MoltenCoreRecipeType=Fluid Heater
