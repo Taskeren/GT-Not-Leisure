@@ -1,8 +1,11 @@
 <h1 align="center">GTNotLeisure & ScienceNotLeisure</h1>
 <p align="center"><strong><em>GTNH Random Things!</em></strong></p>
 
-Add more machine and things for GTNH
+Add 209 Multiblock and 310 hatch or machine!
 
+Add practical item and block
+
+and more qol things!
 
 ## Downloads & Requirements
 | GTNH  | Mod verison       | Download                                                                                                                            | Maintenance |
