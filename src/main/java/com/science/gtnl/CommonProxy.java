@@ -10,11 +10,9 @@ import com.science.gtnl.common.machine.hatch.SuperCraftingInputHatchME;
 import com.science.gtnl.common.machine.multiblock.AssemblerMatrix;
 import com.science.gtnl.common.packet.NetWorkHandler;
 import com.science.gtnl.common.recipe.gtnl.ExtremeExtremeEntityCrusherRecipes;
-import com.science.gtnl.config.MainConfig;
 import com.science.gtnl.loader.MaterialLoader;
 import com.science.gtnl.utils.SubscribeEventUtils;
 import com.science.gtnl.utils.enums.GuiType;
-import com.science.gtnl.utils.enums.ModList;
 import com.science.gtnl.utils.gui.ContainerDirePatternEncoder;
 import com.science.gtnl.utils.gui.portableWorkbench.ContainerPortableAdvancedWorkbench;
 import com.science.gtnl.utils.gui.portableWorkbench.ContainerPortableAnvil;
@@ -57,12 +55,10 @@ public class CommonProxy implements IGuiHandler {
 
     // load "Do your mod setup. Build whatever data structures you care about. Register recipes." (Remove if not needed)
     public void init(FMLInitializationEvent event) {
-        if (!ModList.VMTweak.isModLoaded() && MainConfig.enableVoidMinerTweak) {
-            MinecraftForge.EVENT_BUS.register(new VMTweakHelper());
-            FMLCommonHandler.instance()
-                .bus()
-                .register(new VMTweakHelper());
-        }
+        MinecraftForge.EVENT_BUS.register(new VMTweakHelper());
+        FMLCommonHandler.instance()
+            .bus()
+            .register(new VMTweakHelper());
         CraftingUnitHandler.register();
     }
 
