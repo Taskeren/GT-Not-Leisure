@@ -141,7 +141,7 @@ public class SubscribeEventUtils {
                     new ChatComponentTranslation("Welcome_GTNL_03")
                         .setChatStyle(new ChatStyle().setColor(EnumChatFormatting.GREEN)));
 
-                if (MainConfig.enableDeleteRecipe || MainConfig.enableDebugMode) {
+                if (MainConfig.enableDeleteRecipe) {
                     player.addChatMessage(
                         new ChatComponentTranslation("Welcome_GTNL_DeleteRecipe")
                             .setChatStyle(new ChatStyle().setColor(EnumChatFormatting.YELLOW)));

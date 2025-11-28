@@ -10,6 +10,8 @@ import static gtPlusPlus.core.block.ModBlocks.*;
 import static kubatech.loaders.BlockLoader.*;
 import static tectech.thing.casing.TTCasingsContainer.*;
 
+import java.util.Collection;
+
 import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
@@ -32,10 +34,12 @@ import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import goodgenerator.loader.Loaders;
 import gregtech.api.enums.Materials;
+import gregtech.api.enums.StructureError;
 import gregtech.api.enums.Textures;
 import gregtech.api.interfaces.ITexture;
 import gregtech.api.interfaces.metatileentity.IMetaTileEntity;
 import gregtech.api.interfaces.tileentity.IGregTechTileEntity;
+import gregtech.api.metatileentity.GregTechTileClientEvents;
 import gregtech.api.recipe.RecipeMap;
 import gregtech.api.render.TextureFactory;
 import gregtech.api.util.GTUtility;
@@ -108,20 +112,28 @@ public class KerrNewmanHomogenizer extends WirelessEnergyMultiMachineBase<KerrNe
 
     @Override
     public void renderTESR(double x, double y, double z, float timeSinceLastTick) {
-        if (!enableRender) return;
+        if (!mMachine || !enableRender) return;
         KerrNewmanHomogenizerRenderer.renderTileEntityAt(this, x, y, z, timeSinceLastTick);
     }
 
     @Override
     public void onValueUpdate(byte aValue) {
         enableRender = (aValue & 0x01) != 0;
+        mMachine = (aValue & 0x02) != 0;
     }
 
     @Override
     public byte getUpdateData() {
         byte data = 0;
         if (enableRender) data |= 0x01;
+        if (mMachine) data |= 0x02;
         return data;
+    }
+
+    @Override
+    public void onFirstTick(IGregTechTileEntity aBaseMetaTileEntity) {
+        super.onFirstTick(aBaseMetaTileEntity);
+        getBaseMetaTileEntity().sendBlockEvent(GregTechTileClientEvents.CHANGE_CUSTOM_DATA, getUpdateData());
     }
 
     @Override
@@ -131,7 +143,7 @@ public class KerrNewmanHomogenizer extends WirelessEnergyMultiMachineBase<KerrNe
         rotation = (rotation + ROTATION_SPEED) % 360d;
 
         if (aBaseMetaTileEntity.getWorld().isRemote) {
-            if (!enableRender) {
+            if (!mMachine || !enableRender) {
                 if (beamUp != null) beamUp.setDead();
                 if (beamDown != null) beamDown.setDead();
                 return;
@@ -350,6 +362,11 @@ public class KerrNewmanHomogenizer extends WirelessEnergyMultiMachineBase<KerrNe
             return false;
         setupParameters();
         return mCountCasing > 200;
+    }
+
+    @Override
+    public void validateStructure(Collection<StructureError> errors, NBTTagCompound context) {
+        getBaseMetaTileEntity().sendBlockEvent(GregTechTileClientEvents.CHANGE_CUSTOM_DATA, getUpdateData());
     }
 
     @Override

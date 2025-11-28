@@ -260,6 +260,12 @@ public abstract class KuangBiaoOneGiantNuclearFusionReactor
     }
 
     @Override
+    public void onFirstTick(IGregTechTileEntity aBaseMetaTileEntity) {
+        super.onFirstTick(aBaseMetaTileEntity);
+        getBaseMetaTileEntity().sendBlockEvent(GregTechTileClientEvents.CHANGE_CUSTOM_DATA, getUpdateData());
+    }
+
+    @Override
     public void onPostTick(IGregTechTileEntity aBaseMetaTileEntity, long aTick) {
         if (aBaseMetaTileEntity.isServerSide()) {
             mTotalRunTime++;
@@ -844,7 +850,6 @@ public abstract class KuangBiaoOneGiantNuclearFusionReactor
         public void onFirstTick(IGregTechTileEntity aBaseMetaTileEntity) {
             super.onFirstTick(aBaseMetaTileEntity);
             this.ownerUUID = aBaseMetaTileEntity.getOwnerUuid();
-            getBaseMetaTileEntity().sendBlockEvent(GregTechTileClientEvents.CHANGE_CUSTOM_DATA, getUpdateData());
         }
 
         @Override

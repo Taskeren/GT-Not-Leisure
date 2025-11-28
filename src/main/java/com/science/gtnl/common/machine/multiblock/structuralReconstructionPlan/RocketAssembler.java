@@ -9,6 +9,8 @@ import static gregtech.api.enums.HatchElement.*;
 import static gregtech.api.enums.Textures.BlockIcons.*;
 import static gregtech.api.util.GTStructureUtility.*;
 
+import java.util.Collection;
+
 import javax.annotation.Nonnull;
 
 import net.minecraft.entity.player.EntityPlayer;
@@ -32,6 +34,7 @@ import com.science.gtnl.utils.recipes.GTNL_OverclockCalculator;
 import com.science.gtnl.utils.recipes.GTNL_ProcessingLogic;
 
 import gregtech.api.enums.Materials;
+import gregtech.api.enums.StructureError;
 import gregtech.api.enums.Textures;
 import gregtech.api.interfaces.ITexture;
 import gregtech.api.interfaces.metatileentity.IMetaTileEntity;
@@ -76,6 +79,12 @@ public class RocketAssembler extends GTMMultiMachineBase<RocketAssembler>
     public void renderTESR(double x, double y, double z, float timeSinceLastTick) {
         if (!mMachine || !enableRender) return;
         RocketAssemblerRenderer.renderTileEntityAt(this, x, y, z, timeSinceLastTick);
+    }
+
+    @Override
+    public void onFirstTick(IGregTechTileEntity aBaseMetaTileEntity) {
+        super.onFirstTick(aBaseMetaTileEntity);
+        getBaseMetaTileEntity().sendBlockEvent(GregTechTileClientEvents.CHANGE_CUSTOM_DATA, getUpdateData());
     }
 
     @Override
@@ -193,12 +202,12 @@ public class RocketAssembler extends GTMMultiMachineBase<RocketAssembler>
             return false;
         }
         setupParameters();
-        if (mCountCasing >= 1) {
-            getBaseMetaTileEntity().sendBlockEvent(GregTechTileClientEvents.CHANGE_CUSTOM_DATA, getUpdateData());
-            return true;
-        } else {
-            return false;
-        }
+        return mCountCasing >= 1;
+    }
+
+    @Override
+    public void validateStructure(Collection<StructureError> errors, NBTTagCompound context) {
+        getBaseMetaTileEntity().sendBlockEvent(GregTechTileClientEvents.CHANGE_CUSTOM_DATA, getUpdateData());
     }
 
     @Override

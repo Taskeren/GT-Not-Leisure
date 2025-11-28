@@ -52,14 +52,14 @@ public class KerrNewmanHomogenizerRenderer {
         double rotation = machine.getInterpolatedRotation(partialTicks);
 
         GL11.glRotated(rotation, 1, 1, 1);
-        KuangBiaoOneGiantNuclearFusionReactorRenderer.renderRing(x, y, z, partialTicks, 20f, 0.9f, 128, 32);
+        KuangBiaoOneGiantNuclearFusionReactorRenderer.renderRing(x, y, z, partialTicks, 20f, 0.9f, 64, 16);
 
         GL11.glRotated(rotation, 0, 0, 1);
-        KuangBiaoOneGiantNuclearFusionReactorRenderer.renderRing(x, y, z, partialTicks, 24f, 0.9f, 128, 32);
+        KuangBiaoOneGiantNuclearFusionReactorRenderer.renderRing(x, y, z, partialTicks, 24f, 0.9f, 64, 16);
 
         GL11.glRotated(rotation, 0, 0, -1);
         GL11.glRotated(rotation, 1, 0, 0);
-        KuangBiaoOneGiantNuclearFusionReactorRenderer.renderRing(x, y, z, partialTicks, 28f, 0.9f, 128, 32);
+        KuangBiaoOneGiantNuclearFusionReactorRenderer.renderRing(x, y, z, partialTicks, 28f, 0.9f, 64, 16);
 
         GL11.glPopMatrix();
 
@@ -69,6 +69,7 @@ public class KerrNewmanHomogenizerRenderer {
             double posX = tileEntity.getXCoord() + xOffset;
             double posY = tileEntity.getYCoord() + yOffset;
             double posZ = tileEntity.getZCoord() + zOffset;
+
             List<EntityPlayer> players = world.getEntitiesWithinAABB(
                 EntityPlayer.class,
                 AxisAlignedBB.getBoundingBox(posX - 32, posY - 32, posZ - 32, posX + 32, posY + 32, posZ + 32));
@@ -79,7 +80,7 @@ public class KerrNewmanHomogenizerRenderer {
                 double dz = player.posZ - posZ;
                 double distance = Math.sqrt(dx * dx + dy * dy + dz * dz);
 
-                if (distance > 32) continue;
+                if (distance > 32 || distance <= 0.001) continue;
 
                 double intensity = (32 - distance) / 32.0;
 
@@ -87,8 +88,23 @@ public class KerrNewmanHomogenizerRenderer {
                 double offsetZShake = (world.rand.nextDouble() - 0.5) * 2 * intensity;
 
                 player.moveEntity(offsetXShake / 5.0, 0, offsetZShake / 5.0);
-                player.rotationYaw -= (float) offsetXShake * 1.5f;
-                player.rotationPitch -= (float) offsetZShake * 1.5f;
+                player.rotationYaw -= (float) offsetXShake;
+                player.rotationPitch -= (float) offsetZShake;
+
+                double pullStrength = 0.002 * intensity;
+
+                double invDist = 1.0 / distance;
+                double normX = -dx * invDist;
+                double normY = -dy * invDist;
+                double normZ = -dz * invDist;
+
+                double pullX = normX * pullStrength;
+                double pullY = normY * pullStrength;
+                double pullZ = normZ * pullStrength;
+
+                player.motionX += pullX;
+                player.motionY += pullY;
+                player.motionZ += pullZ;
             }
         }
     }
