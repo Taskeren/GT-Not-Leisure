@@ -8,7 +8,6 @@ import static gregtech.api.enums.Textures.BlockIcons.OVERLAY_FRONT_ORE_DRILL;
 import static gregtech.api.enums.Textures.BlockIcons.OVERLAY_FRONT_ORE_DRILL_ACTIVE;
 import static gregtech.api.util.GTStructureUtility.buildHatchAdder;
 import static gregtech.api.util.GTStructureUtility.ofFrame;
-import static gregtech.api.util.GTUtility.validMTEList;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,7 +20,6 @@ import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;
-import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
 
 import org.jetbrains.annotations.NotNull;
@@ -59,14 +57,13 @@ import gregtech.api.gui.modularui.GTUITextures;
 import gregtech.api.interfaces.ITexture;
 import gregtech.api.interfaces.metatileentity.IMetaTileEntity;
 import gregtech.api.interfaces.tileentity.IGregTechTileEntity;
-import gregtech.api.metatileentity.implementations.MTEHatch;
-import gregtech.api.metatileentity.implementations.MTEHatchEnergy;
 import gregtech.api.objects.GTUODimension;
 import gregtech.api.objects.GTUOFluid;
 import gregtech.api.objects.XSTR;
 import gregtech.api.recipe.check.CheckRecipeResult;
 import gregtech.api.recipe.check.CheckRecipeResultRegistry;
 import gregtech.api.render.TextureFactory;
+import gregtech.api.util.GTModHandler;
 import gregtech.api.util.GTOreDictUnificator;
 import gregtech.api.util.GTUtility;
 import gregtech.api.util.MultiblockTooltipBuilder;
@@ -124,6 +121,7 @@ public class AdvancedInfiniteDriller extends MultiMachineBase<AdvancedInfiniteDr
             .addInfo(StatCollector.translateToLocal("Tooltip_AdvancedInfiniteDriller_09"))
             .addInfo(StatCollector.translateToLocal("Tooltip_AdvancedInfiniteDriller_10"))
             .addInfo(StatCollector.translateToLocal("Tooltip_AdvancedInfiniteDriller_11"))
+            .addInfo(StatCollector.translateToLocal("Tooltip_AdvancedInfiniteDriller_12"))
             .addInfo(StatCollector.translateToLocal("Tooltip_Tectech_Hatch"))
             .addSeparator()
             .addInfo(StatCollector.translateToLocal("StructureTooComplex"))
@@ -193,17 +191,18 @@ public class AdvancedInfiniteDriller extends MultiMachineBase<AdvancedInfiniteDr
     @Override
     @NotNull
     public CheckRecipeResult checkProcessing() {
+        drillTier = checkDrillTier();
+        if (drillTier == 0) {
+            excessFuel = Math.max(300, excessFuel - 4);
+            return CheckRecipeResultRegistry.NO_RECIPE;
+        }
+
         if (excessFuel < 300) {
             excessFuel = 300;
         }
 
         if (excessFuel > 10000) {
             excessFuel = 10000;
-        }
-
-        if (drillTier == 0) {
-            excessFuel = Math.max(300, excessFuel - 4);
-            return CheckRecipeResultRegistry.NO_RECIPE;
         }
 
         ArrayList<FluidStack> storedFluids = getStoredFluids();
@@ -255,7 +254,7 @@ public class AdvancedInfiniteDriller extends MultiMachineBase<AdvancedInfiniteDr
                             continue;
                         }
 
-                        int amount = 2_000_000 + tVeinRNG.nextInt(100) * 2000 * excessFuel;
+                        int amount = 2_000_000 + tVeinRNG.nextInt(100) * 2000 * excessFuel * drillTier;
                         outputFluids.add(new FluidStack(uoFluid.getFluid(), amount));
 
                         needEu += amount / 200;
@@ -289,7 +288,7 @@ public class AdvancedInfiniteDriller extends MultiMachineBase<AdvancedInfiniteDr
         startRecipeProcessing();
 
         if (excessFuel > 2000 && mProgresstime > 0 && mProgresstime % 20 == 0) {
-            excessFuel += (int) Math.floor(excessFuel / 2000.0);
+            excessFuel += (int) Math.floor(drillTier * excessFuel / 2000.0);
         }
 
         if (excessFuel > 10000) {
@@ -308,7 +307,7 @@ public class AdvancedInfiniteDriller extends MultiMachineBase<AdvancedInfiniteDr
                             tFluid.amount -= consumption;
                             excessFuel += 1;
                         }
-                    } else if (GTUtility.areFluidsEqual(tFluid, FluidRegistry.getFluidStack("ic2distilledwater", 1))) {
+                    } else if (GTUtility.areFluidsEqual(tFluid, GTModHandler.getDistilledWater(1))) {
                         int multiplier = amount / 200_000;
                         if (multiplier > 0) {
                             tFluid.amount -= multiplier * 200_000;
@@ -325,6 +324,12 @@ public class AdvancedInfiniteDriller extends MultiMachineBase<AdvancedInfiniteDr
                         if (multiplier > 0) {
                             tFluid.amount -= multiplier * 200_000;
                             excessFuel -= multiplier * 4;
+                        }
+                    } else if (GTUtility.areFluidsEqual(tFluid, new FluidStack(GTPPFluids.Cryotheum, 1))) {
+                        int multiplier = amount / 200_000;
+                        if (multiplier > 0) {
+                            tFluid.amount -= multiplier * 200_000;
+                            excessFuel -= multiplier * 40;
                         }
                     }
                 }
@@ -353,50 +358,37 @@ public class AdvancedInfiniteDriller extends MultiMachineBase<AdvancedInfiniteDr
     @Override
     public void clearHatches() {
         super.clearHatches();
-        drillTier = 0;
     }
 
     @Override
     public void setupParameters() {
         super.setupParameters();
-        drillTier = checkDrillTier();
     }
 
     public int checkDrillTier() {
         ItemStack controllerSlot = getControllerSlot();
         if (controllerSlot != null) {
             if (controllerSlot
-                .isItemEqual(GTOreDictUnificator.get(OrePrefixes.toolHeadDrill, Materials.Neutronium, 1L))) {
+                .isItemEqual(GTOreDictUnificator.get(OrePrefixes.toolHeadDrill, Materials.CosmicNeutronium, 1L))) {
                 return 1;
             }
 
             if (controllerSlot
-                .isItemEqual(GTOreDictUnificator.get(OrePrefixes.toolHeadDrill, Materials.CosmicNeutronium, 1L))) {
-                return 2;
-            }
-
-            if (controllerSlot
                 .isItemEqual(GTOreDictUnificator.get(OrePrefixes.toolHeadDrill, Materials.Infinity, 1L))) {
-                return 3;
+                return 2;
             }
 
             if (controllerSlot.isItemEqual(
                 GTOreDictUnificator.get(OrePrefixes.toolHeadDrill, MaterialsUEVplus.TranscendentMetal, 1L))) {
+                return 3;
+            }
+
+            if (controllerSlot
+                .isItemEqual(GTOreDictUnificator.get(OrePrefixes.toolHeadDrill, MaterialsUEVplus.SpaceTime, 1L))) {
                 return 4;
             }
         }
         return 0;
-    }
-
-    public int checkEnergyHatchTier() {
-        int tier = 0;
-        for (MTEHatchEnergy tHatch : validMTEList(mEnergyHatches)) {
-            tier = Math.max(tHatch.mTier, tier);
-        }
-        for (MTEHatch tHatch : validMTEList(mExoticEnergyHatches)) {
-            tier = Math.max(tHatch.mTier, tier);
-        }
-        return tier;
     }
 
     @Override

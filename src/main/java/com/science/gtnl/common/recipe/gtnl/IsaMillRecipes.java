@@ -2,7 +2,6 @@ package com.science.gtnl.common.recipe.gtnl;
 
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
-import net.minecraftforge.fluids.FluidRegistry;
 
 import com.science.gtnl.api.IRecipePool;
 import com.science.gtnl.common.material.RecipePool;
@@ -12,6 +11,7 @@ import gregtech.api.enums.GTValues;
 import gregtech.api.enums.Materials;
 import gregtech.api.enums.OrePrefixes;
 import gregtech.api.recipe.RecipeMap;
+import gregtech.api.util.GTModHandler;
 import gregtech.api.util.GTOreDictUnificator;
 import gregtech.api.util.GTUtility;
 import gtPlusPlus.core.util.minecraft.MaterialUtils;
@@ -68,7 +68,7 @@ public class IsaMillRecipes implements IRecipePool {
                     outputAmount,
                     MaterialUtils.generateMaterialFromGtENUM(material)
                         .getMilled(1)))
-            .fluidInputs(FluidRegistry.getFluidStack("ic2distilledwater", fluidAmount))
+            .fluidInputs(GTModHandler.getDistilledWater(fluidAmount))
             .metadata(ISAMILL_TIER, tier)
             .duration(duration)
             .eut(1920)
@@ -84,7 +84,7 @@ public class IsaMillRecipes implements IRecipePool {
                     outputAmount,
                     MaterialUtils.generateMaterialFromGtENUM(material)
                         .getMilled(1)))
-            .fluidInputs(FluidRegistry.getFluidStack("ic2distilledwater", fluidAmount))
+            .fluidInputs(GTModHandler.getDistilledWater(fluidAmount))
             .metadata(ISAMILL_TIER, tier)
             .duration(duration)
             .eut(1920)

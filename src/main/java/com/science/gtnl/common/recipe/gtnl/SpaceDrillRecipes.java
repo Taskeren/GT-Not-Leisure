@@ -22,6 +22,7 @@ import gregtech.api.enums.Materials;
 import gregtech.api.enums.MaterialsUEVplus;
 import gregtech.api.enums.TierEU;
 import gregtech.api.recipe.RecipeMap;
+import gregtech.api.util.GTModHandler;
 import gregtech.api.util.GTUtility;
 import gtPlusPlus.core.fluids.GTPPFluids;
 import gtPlusPlus.core.material.MaterialsElements;
@@ -98,10 +99,10 @@ public class SpaceDrillRecipes implements IRecipePool {
                         Materials.OilHeavy.getFluid(100000),
                         Materials.Lava.getFluid(100000),
                         Materials.SaltWater.getFluid(100000),
-                        safeGetFluidStack("ic2distilledwater"),
+                        GTModHandler.getDistilledWater(100000),
                         new FluidStack(GTPPFluids.Pyrotheum, 100000),
                         new FluidStack(GTPPFluids.Cryotheum, 100000),
-                        safeGetFluidStack("liquiddna"),
+                        GTModHandler.getLiquidDNA(100000),
                         Materials.HydrochloricAcid.getFluid(100000),
                         Materials.SulfuricAcid.getFluid(100000),
                         Materials.NitricAcid.getFluid(100000),

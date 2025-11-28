@@ -36,6 +36,7 @@ import gregtech.api.interfaces.tileentity.IGregTechTileEntity;
 import gregtech.api.recipe.check.CheckRecipeResult;
 import gregtech.api.recipe.check.CheckRecipeResultRegistry;
 import gregtech.api.render.TextureFactory;
+import gregtech.api.util.GTModHandler;
 import gregtech.api.util.GTUtility;
 import gregtech.api.util.MultiblockTooltipBuilder;
 import gregtech.api.util.shutdown.ShutDownReasonRegistry;
@@ -97,9 +98,7 @@ public abstract class PhotovoltaicPowerStation extends MultiMachineBase<Photovol
     @NotNull
     public CheckRecipeResult checkProcessing() {
         for (FluidStack tFluid : getStoredFluids()) {
-            if (tFluid.getFluid()
-                .getName()
-                .equals("ic2distilledwater")) {
+            if (GTUtility.areFluidsEqual(tFluid, GTModHandler.getDistilledWater(1))) {
                 boolean notAirBlocks = false;
                 IGregTechTileEntity base = this.getBaseMetaTileEntity();
                 int xCoord = base.getXCoord(), yCoord = base.getYCoord(), zCoord = base.getZCoord();
@@ -140,9 +139,7 @@ public abstract class PhotovoltaicPowerStation extends MultiMachineBase<Photovol
         if (this.mProgresstime % 20 == 0 && mProgresstime != 0) {
             startRecipeProcessing();
             for (FluidStack tFluid : getStoredFluids()) {
-                if (tFluid.getFluid()
-                    .getName()
-                    .equals("ic2distilledwater")) {
+                if (GTUtility.areFluidsEqual(tFluid, GTModHandler.getDistilledWater(1))) {
                     boolean success = drainFluid(this.mEUt / 4);
                     endRecipeProcessing();
                     if (!success) stopMachine(ShutDownReasonRegistry.NO_REPAIR);
@@ -156,12 +153,10 @@ public abstract class PhotovoltaicPowerStation extends MultiMachineBase<Photovol
 
     private boolean drainFluid(int amount) {
         int remaining = amount;
-        for (FluidStack fs : getStoredFluids()) {
-            if (fs.getFluid()
-                .getName()
-                .equals("ic2distilledwater")) {
-                int drained = Math.min(fs.amount, remaining);
-                fs.amount -= drained;
+        for (FluidStack tFluid : getStoredFluids()) {
+            if (GTUtility.areFluidsEqual(tFluid, GTModHandler.getDistilledWater(1))) {
+                int drained = Math.min(tFluid.amount, remaining);
+                tFluid.amount -= drained;
                 remaining -= drained;
                 if (remaining <= 0) break;
             }

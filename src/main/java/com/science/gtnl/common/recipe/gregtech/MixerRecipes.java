@@ -6,7 +6,6 @@ import static gregtech.api.util.GTRecipeConstants.*;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
-import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
 
 import com.science.gtnl.api.IRecipePool;
@@ -23,6 +22,7 @@ import gregtech.api.enums.OrePrefixes;
 import gregtech.api.enums.TierEU;
 import gregtech.api.recipe.RecipeMap;
 import gregtech.api.recipe.RecipeMaps;
+import gregtech.api.util.GTModHandler;
 import gregtech.api.util.GTOreDictUnificator;
 import gregtech.api.util.GTUtility;
 import gtPlusPlus.api.recipe.GTPPRecipeMaps;
@@ -44,7 +44,7 @@ public class MixerRecipes implements IRecipePool {
             .itemInputs(
                 GTOreDictUnificator.get(OrePrefixes.dust, Materials.SodiumHydroxide, 3L),
                 GTOreDictUnificator.get(OrePrefixes.dust, Materials.SiliconDioxide, 3L))
-            .fluidInputs(FluidRegistry.getFluidStack("ic2distilledwater", 1000))
+            .fluidInputs(GTModHandler.getDistilledWater(1000))
             .fluidOutputs(MaterialPool.SilicaGelBase.getFluidOrGas(1000))
             .duration(130)
             .eut(480)
