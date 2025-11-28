@@ -1,8 +1,8 @@
 package com.science.gtnl.common.recipe.gregtech;
 
 import com.science.gtnl.api.IRecipePool;
+import com.science.gtnl.utils.recipes.RecipeBuilder;
 
-import gregtech.api.enums.GTValues;
 import gregtech.api.enums.Materials;
 import gregtech.api.enums.OrePrefixes;
 import gregtech.api.enums.TierEU;
@@ -16,7 +16,7 @@ public class HammerRecipes implements IRecipePool {
 
     @Override
     public void loadRecipes() {
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs(GTOreDictUnificator.get(OrePrefixes.stick, Materials.Netherite, 2))
             .itemOutputs(GTOreDictUnificator.get(OrePrefixes.stickLong, Materials.Netherite, 1))
             .duration(100)

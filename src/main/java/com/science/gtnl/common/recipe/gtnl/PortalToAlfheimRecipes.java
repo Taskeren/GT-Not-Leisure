@@ -11,8 +11,8 @@ import net.minecraft.util.StatCollector;
 import com.science.gtnl.api.IRecipePool;
 import com.science.gtnl.common.material.RecipePool;
 import com.science.gtnl.utils.enums.GTNLItemList;
+import com.science.gtnl.utils.recipes.RecipeBuilder;
 
-import gregtech.api.enums.GTValues;
 import gregtech.api.enums.ItemList;
 import gregtech.api.enums.Materials;
 import gregtech.api.enums.OrePrefixes;
@@ -27,7 +27,7 @@ public class PortalToAlfheimRecipes implements IRecipePool {
 
     @Override
     public void loadRecipes() {
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs(new ItemStack(Items.bread, 1))
             .itemOutputs(
                 GTUtility.copyAmountUnsafe(
@@ -38,49 +38,49 @@ public class PortalToAlfheimRecipes implements IRecipePool {
             .eut(0)
             .addTo(PTAR);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs(GTModHandler.getModItem(AdvancedSolarPanel.ID, "asp_crafting_items", 1, 9, missing))
             .itemOutputs(GTModHandler.getModItem(Botania.ID, "manaResource", 1, 8, missing))
             .duration(20)
             .eut(2048)
             .addTo(PTAR);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs(GTOreDictUnificator.get(OrePrefixes.circuit, Materials.IV, 1L))
             .itemOutputs(GTModHandler.getModItem(Botania.ID, "manaResource", 1, 9, missing))
             .duration(20)
             .eut(2048)
             .addTo(PTAR);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs(GTModHandler.getModItem(IndustrialCraft2.ID, "blockAlloyGlass", 1, 0, missing))
             .itemOutputs(GTModHandler.getModItem(Botania.ID, "elfGlass", 1, 0, missing))
             .duration(20)
             .eut(2048)
             .addTo(PTAR);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs(new ItemStack(Items.quartz, 1))
             .itemOutputs(GTModHandler.getModItem(Botania.ID, "quartz", 1, 5, missing))
             .duration(20)
             .eut(2048)
             .addTo(PTAR);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs(ItemList.Casing_CleanStainlessSteel.get(1))
             .itemOutputs(GTModHandler.getModItem(Botania.ID, "dreamwood", 1, 0, missing))
             .duration(20)
             .eut(2048)
             .addTo(PTAR);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs(GTOreDictUnificator.get(OrePrefixes.gearGtSmall, Materials.TungstenSteel, 1L))
             .itemOutputs(GTModHandler.getModItem(Botania.ID, "manaResource", 1, 7, missing))
             .duration(20)
             .eut(2048)
             .addTo(PTAR);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs(
                 GTUtility.copyAmountUnsafe(256, GTModHandler.getModItem(IndustrialCraft2.ID, "blockITNT", 1)),
                 new ItemStack(Blocks.beacon, 0),
@@ -162,7 +162,7 @@ public class PortalToAlfheimRecipes implements IRecipePool {
             .eut(122880)
             .addTo(PTAR);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs(
                 GTModHandler.getModItem(Avaritia.ID, "Infinity_Sword", 0, 0, missing),
                 GTModHandler.getModItem(Botania.ID, "manaResource", 1, 14, missing))

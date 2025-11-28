@@ -8,8 +8,8 @@ import net.minecraft.item.ItemStack;
 
 import com.science.gtnl.api.IRecipePool;
 import com.science.gtnl.common.material.RecipePool;
+import com.science.gtnl.utils.recipes.RecipeBuilder;
 
-import gregtech.api.enums.GTValues;
 import gregtech.api.enums.Materials;
 import gregtech.api.enums.Mods;
 import gregtech.api.enums.OrePrefixes;
@@ -25,21 +25,21 @@ public class RockBreakerRecipes implements IRecipePool {
 
     @Override
     public void loadRecipes() {
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs(GTUtility.getIntegratedCircuit(1))
             .itemOutputs(new ItemStack(Blocks.cobblestone, 1))
             .duration(16 * TICKS)
             .eut(TierEU.RECIPE_LV)
             .addTo(RBR);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs(GTUtility.getIntegratedCircuit(2))
             .itemOutputs(new ItemStack(Blocks.stone, 1))
             .duration(16 * TICKS)
             .eut(TierEU.RECIPE_LV)
             .addTo(RBR);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs(
                 GTUtility.getIntegratedCircuit(3),
                 GTOreDictUnificator.get(OrePrefixes.dust, Materials.Redstone, 1L))
@@ -48,7 +48,7 @@ public class RockBreakerRecipes implements IRecipePool {
             .eut(TierEU.RECIPE_LV)
             .addTo(RBR);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs(
                 GTUtility.getIntegratedCircuit(6),
                 GTOreDictUnificator.get(OrePrefixes.dust, Materials.Glowstone, 1L))
@@ -58,7 +58,7 @@ public class RockBreakerRecipes implements IRecipePool {
             .addTo(RBR);
 
         if (Mods.EtFuturumRequiem.isModLoaded()) {
-            GTValues.RA.stdBuilder()
+            RecipeBuilder.builder()
                 .itemInputs(
                     GTUtility.getIntegratedCircuit(4),
                     GTModHandler.getModItem(Mods.EtFuturumRequiem.ID, "blue_ice", 0, 0),
@@ -68,7 +68,7 @@ public class RockBreakerRecipes implements IRecipePool {
                 .eut(TierEU.RECIPE_LV)
                 .addTo(RBR);
 
-            GTValues.RA.stdBuilder()
+            RecipeBuilder.builder()
                 .itemInputs(
                     GTUtility.getIntegratedCircuit(5),
                     GTModHandler.getModItem(Mods.EtFuturumRequiem.ID, "magma", 0, 0),

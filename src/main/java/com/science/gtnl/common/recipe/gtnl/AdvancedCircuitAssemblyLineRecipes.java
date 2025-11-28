@@ -5,8 +5,8 @@ import net.minecraft.item.ItemStack;
 
 import com.science.gtnl.api.IRecipePool;
 import com.science.gtnl.common.material.RecipePool;
+import com.science.gtnl.utils.recipes.RecipeBuilder;
 
-import gregtech.api.enums.GTValues;
 import gregtech.api.enums.ItemList;
 import gregtech.api.enums.TierEU;
 import gregtech.api.recipe.RecipeMap;
@@ -17,8 +17,7 @@ public class AdvancedCircuitAssemblyLineRecipes implements IRecipePool {
 
     @Override
     public void loadRecipes() {
-
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs(new ItemStack(Blocks.dirt, 1))
             .itemOutputs(ItemList.Circuit_Crystalprocessor.get(64))
             .specialValue(14)

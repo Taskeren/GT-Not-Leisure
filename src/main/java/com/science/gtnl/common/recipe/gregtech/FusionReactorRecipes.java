@@ -7,8 +7,8 @@ import net.minecraftforge.fluids.FluidStack;
 
 import com.science.gtnl.api.IRecipePool;
 import com.science.gtnl.common.material.MaterialPool;
+import com.science.gtnl.utils.recipes.RecipeBuilder;
 
-import gregtech.api.enums.GTValues;
 import gregtech.api.enums.Materials;
 import gregtech.api.enums.TierEU;
 import gregtech.api.recipe.RecipeMap;
@@ -21,7 +21,7 @@ public class FusionReactorRecipes implements IRecipePool {
 
     @Override
     public void loadRecipes() {
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .fluidInputs(FluidRegistry.getFluidStack("hydrogen", 144), FluidRegistry.getFluidStack("molten.boron", 144))
             .fluidOutputs(FluidRegistry.getFluidStack("plasma.carbon", 144))
             .duration(10)
@@ -29,7 +29,7 @@ public class FusionReactorRecipes implements IRecipePool {
             .metadata(FUSION_THRESHOLD, 20000000L)
             .addTo(fR);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .fluidInputs(Materials.DraconiumAwakened.getMolten(432), Materials.Radon.getPlasma(144))
             .fluidOutputs(MaterialsElements.STANDALONE.DRAGON_METAL.getFluidStack(288))
             .duration(10)
@@ -37,7 +37,7 @@ public class FusionReactorRecipes implements IRecipePool {
             .metadata(FUSION_THRESHOLD, 1000000000L)
             .addTo(fR);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .fluidInputs(
                 Materials.Arsenic.getMolten(32),
                 new FluidStack(MaterialsElements.getInstance().RUTHENIUM.getFluid(), 16))
@@ -47,7 +47,7 @@ public class FusionReactorRecipes implements IRecipePool {
             .metadata(FUSION_THRESHOLD, 200000000L)
             .addTo(fR);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .fluidInputs(Materials.Molybdenum.getMolten(144), Materials.Palladium.getMolten(144))
             .fluidOutputs(new FluidStack(MaterialsElements.getInstance().RADIUM.getFluid(), 288))
             .duration(32)

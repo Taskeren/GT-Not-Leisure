@@ -3,8 +3,8 @@ package com.science.gtnl.common.recipe.gregtech;
 import com.science.gtnl.api.IRecipePool;
 import com.science.gtnl.common.material.MaterialPool;
 import com.science.gtnl.config.MainConfig;
+import com.science.gtnl.utils.recipes.RecipeBuilder;
 
-import gregtech.api.enums.GTValues;
 import gregtech.api.enums.Materials;
 import gregtech.api.enums.OrePrefixes;
 import gregtech.api.enums.TierEU;
@@ -20,7 +20,7 @@ public class AlloyBlastSmelterRecipes implements IRecipePool {
 
     @Override
     public void loadRecipes() {
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs(
                 GTUtility.getIntegratedCircuit(3),
                 GTOreDictUnificator.get(MaterialsElements.getInstance().GERMANIUM.getDust(3)),
@@ -31,7 +31,7 @@ public class AlloyBlastSmelterRecipes implements IRecipePool {
             .eut(30720)
             .addTo(aBS);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs(
                 GTUtility.getIntegratedCircuit(4),
                 GTOreDictUnificator.get(OrePrefixes.dust, Materials.Invar, 2),
@@ -43,7 +43,7 @@ public class AlloyBlastSmelterRecipes implements IRecipePool {
             .eut(480)
             .addTo(aBS);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs(
                 GTUtility.getIntegratedCircuit(2),
                 GTOreDictUnificator.get(OrePrefixes.dust, Materials.Molybdenum, 1),
@@ -57,7 +57,7 @@ public class AlloyBlastSmelterRecipes implements IRecipePool {
     }
 
     public void loadDeleteRecipe() {
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .setNEIDesc("Remove Change by GTNotLeisure")
             .itemInputs(
                 GTUtility.getIntegratedCircuit(1),

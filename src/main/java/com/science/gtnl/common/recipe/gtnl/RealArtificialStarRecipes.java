@@ -8,8 +8,8 @@ import net.minecraft.util.StatCollector;
 
 import com.science.gtnl.api.IRecipePool;
 import com.science.gtnl.common.material.RecipePool;
+import com.science.gtnl.utils.recipes.RecipeBuilder;
 
-import gregtech.api.enums.GTValues;
 import gregtech.api.recipe.RecipeMap;
 import gregtech.api.util.GTModHandler;
 
@@ -19,7 +19,7 @@ public class RealArtificialStarRecipes implements IRecipePool {
 
     @Override
     public void loadRecipes() {
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs(EnhancementCore.get(1))
             .specialValue(euEveryEnhancementCore)
             .eut(0)
@@ -27,7 +27,7 @@ public class RealArtificialStarRecipes implements IRecipePool {
             .fake()
             .addTo(RAS);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs(DepletedExcitedNaquadahFuelRod.get(1))
             .specialValue(euEveryDepletedExcitedNaquadahFuelRod)
             .eut(0)
@@ -37,7 +37,7 @@ public class RealArtificialStarRecipes implements IRecipePool {
 
         if (TwistSpaceTechnology.isModLoaded()) {
 
-            GTValues.RA.stdBuilder()
+            RecipeBuilder.builder()
                 .itemInputs(GTModHandler.getModItem(TwistSpaceTechnology.ID, "MetaItem01", 1, 14))
                 .specialValue(3)
                 .eut(0)
@@ -45,7 +45,7 @@ public class RealArtificialStarRecipes implements IRecipePool {
                 .fake()
                 .addTo(RAS);
 
-            GTValues.RA.stdBuilder()
+            RecipeBuilder.builder()
                 .itemInputs(GTModHandler.getModItem(TwistSpaceTechnology.ID, "MetaItem01", 1, 16))
                 .itemOutputs(
                     GTModHandler.getModItem(TwistSpaceTechnology.ID, "MetaItem01", 1, 17)
@@ -57,7 +57,7 @@ public class RealArtificialStarRecipes implements IRecipePool {
                 .fake()
                 .addTo(RAS);
 
-            GTValues.RA.stdBuilder()
+            RecipeBuilder.builder()
                 .itemInputs(GTModHandler.getModItem(TwistSpaceTechnology.ID, "MetaItem01", 1, 29))
                 .itemOutputs(
                     GTModHandler.getModItem(TwistSpaceTechnology.ID, "MetaItem01", 1, 17)

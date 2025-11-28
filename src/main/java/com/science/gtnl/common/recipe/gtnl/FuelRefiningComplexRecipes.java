@@ -6,10 +6,10 @@ import net.minecraftforge.fluids.FluidStack;
 
 import com.science.gtnl.api.IRecipePool;
 import com.science.gtnl.common.material.RecipePool;
+import com.science.gtnl.utils.recipes.RecipeBuilder;
 import com.science.gtnl.utils.recipes.metadata.FuelRefiningMetadata;
 
 import goodgenerator.items.GGMaterial;
-import gregtech.api.enums.GTValues;
 import gregtech.api.enums.Materials;
 import gregtech.api.enums.OrePrefixes;
 import gregtech.api.enums.TierEU;
@@ -28,7 +28,7 @@ public class FuelRefiningComplexRecipes implements IRecipePool {
 
     @Override
     public void loadRecipes() {
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Carbon, 44L))
             .fluidInputs(
                 Materials.Oxygen.getGas(12000),
@@ -43,7 +43,7 @@ public class FuelRefiningComplexRecipes implements IRecipePool {
             .eut(TierEU.RECIPE_IV)
             .addTo(FCR);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs(
                 GTUtility.getIntegratedCircuit(2),
                 GTOreDictUnificator.get(OrePrefixes.dust, Materials.Carbon, 64L))
@@ -54,7 +54,7 @@ public class FuelRefiningComplexRecipes implements IRecipePool {
             .eut(TierEU.RECIPE_IV)
             .addTo(FCR);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs(
                 GTUtility.getIntegratedCircuit(3),
                 GTOreDictUnificator.get(OrePrefixes.dust, Materials.Carbon, 32L))
@@ -69,7 +69,7 @@ public class FuelRefiningComplexRecipes implements IRecipePool {
             .eut(TierEU.RECIPE_EV)
             .addTo(FCR);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Carbon, 16L))
             .fluidInputs(
                 Materials.Hydrogen.getGas(10000),
@@ -83,7 +83,7 @@ public class FuelRefiningComplexRecipes implements IRecipePool {
             .eut(TierEU.RECIPE_EV)
             .addTo(FCR);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Carbon, 12L))
             .fluidInputs(
                 Materials.Hydrogen.getGas(10000),
@@ -96,7 +96,7 @@ public class FuelRefiningComplexRecipes implements IRecipePool {
             .eut(TierEU.RECIPE_EV)
             .addTo(FCR);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs(
                 GTUtility.getIntegratedCircuit(1),
                 GTOreDictUnificator.get(OrePrefixes.dust, Materials.Carbon, 11L))
@@ -111,7 +111,7 @@ public class FuelRefiningComplexRecipes implements IRecipePool {
             .eut(TierEU.RECIPE_HV)
             .addTo(FCR);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs(
                 GTUtility.getIntegratedCircuit(2),
                 GTOreDictUnificator.get(OrePrefixes.dust, Materials.Carbon, 6L))
@@ -126,7 +126,7 @@ public class FuelRefiningComplexRecipes implements IRecipePool {
             .eut(TierEU.RECIPE_HV)
             .addTo(FCR);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs(
                 GTUtility.getIntegratedCircuit(4),
                 GTOreDictUnificator.get(OrePrefixes.dust, Materials.Carbon, 12L))
@@ -141,7 +141,7 @@ public class FuelRefiningComplexRecipes implements IRecipePool {
             .eut(TierEU.RECIPE_IV)
             .addTo(FCR);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs(
                 GTUtility.getIntegratedCircuit(5),
                 GTOreDictUnificator.get(OrePrefixes.dust, Materials.Carbon, 13L))
@@ -157,7 +157,7 @@ public class FuelRefiningComplexRecipes implements IRecipePool {
             .eut(TierEU.RECIPE_IV)
             .addTo(FCR);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Thorium, 64L))
             .fluidInputs(
                 Materials.Lithium.getMolten(586),
@@ -169,7 +169,7 @@ public class FuelRefiningComplexRecipes implements IRecipePool {
             .eut(TierEU.RECIPE_IV)
             .addTo(FCR);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Uranium, 36L))
             .fluidInputs(
                 Materials.Potassium.getMolten(1152),
@@ -181,7 +181,7 @@ public class FuelRefiningComplexRecipes implements IRecipePool {
             .eut(TierEU.RECIPE_IV)
             .addTo(FCR);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Plutonium, 45L))
             .fluidInputs(
                 Materials.Neutronium.getMolten(1152),
@@ -193,7 +193,7 @@ public class FuelRefiningComplexRecipes implements IRecipePool {
             .eut(TierEU.RECIPE_LuV)
             .addTo(FCR);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs(
                 GTOreDictUnificator.get(OrePrefixes.dust, Materials.Iron, 4L),
                 GTOreDictUnificator.get(OrePrefixes.dust, Materials.Carbon, 42L))
@@ -210,7 +210,7 @@ public class FuelRefiningComplexRecipes implements IRecipePool {
             .eut(TierEU.RECIPE_IV)
             .addTo(FCR);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs(
                 GTOreDictUnificator.get(OrePrefixes.dust, Materials.Iron, 4L),
                 GTOreDictUnificator.get(OrePrefixes.dust, Materials.Carbon, 40L))
@@ -227,7 +227,7 @@ public class FuelRefiningComplexRecipes implements IRecipePool {
             .eut(TierEU.RECIPE_EV)
             .addTo(FCR);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs(
                 GTUtility.getIntegratedCircuit(1),
                 GTOreDictUnificator.get(OrePrefixes.dust, Materials.Uranium, 1L))
@@ -241,7 +241,7 @@ public class FuelRefiningComplexRecipes implements IRecipePool {
             .eut(TierEU.RECIPE_EV)
             .addTo(FCR);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs(
                 GTUtility.getIntegratedCircuit(2),
                 GTOreDictUnificator.get(OrePrefixes.dust, Materials.Uranium, 1L),
@@ -256,7 +256,7 @@ public class FuelRefiningComplexRecipes implements IRecipePool {
             .eut(TierEU.RECIPE_EV)
             .addTo(FCR);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs(
                 GTUtility.getIntegratedCircuit(3),
                 GTOreDictUnificator.get(OrePrefixes.dust, Materials.Uranium, 1L),
@@ -271,7 +271,7 @@ public class FuelRefiningComplexRecipes implements IRecipePool {
             .eut(TierEU.RECIPE_IV)
             .addTo(FCR);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs(
                 GTUtility.getIntegratedCircuit(4),
                 GTOreDictUnificator.get(OrePrefixes.dust, Materials.Uranium, 1L),
@@ -286,7 +286,7 @@ public class FuelRefiningComplexRecipes implements IRecipePool {
             .eut(TierEU.RECIPE_IV)
             .addTo(FCR);
 
-        // GTValues.RA.stdBuilder()
+        // RecipeBuilder.builder()
         // .itemInputs(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Carbon, 44L))
         // .fluidInputs(
         // Materials.Oxygen.getGas(12000),

@@ -5,10 +5,10 @@ import net.minecraftforge.fluids.FluidStack;
 
 import com.science.gtnl.api.IRecipePool;
 import com.science.gtnl.common.material.MaterialPool;
+import com.science.gtnl.utils.recipes.RecipeBuilder;
 
 import bartworks.system.material.WerkstoffLoader;
 import goodgenerator.items.GGMaterial;
-import gregtech.api.enums.GTValues;
 import gregtech.api.enums.Materials;
 import gregtech.api.enums.Mods;
 import gregtech.api.enums.OrePrefixes;
@@ -27,7 +27,7 @@ public class DistillationTowerRecipes implements IRecipePool {
 
     @Override
     public void loadRecipes() {
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .fluidInputs(MaterialPool.FluorineCrackedNaquadah.getFluidOrGas(1000))
             .fluidOutputs(
                 GGMaterial.naquadahBasedFuelMkI.getFluidOrGas(800),
@@ -39,7 +39,7 @@ public class DistillationTowerRecipes implements IRecipePool {
             .eut(TierEU.RECIPE_ZPM)
             .addTo(DTR);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemOutputs(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Barium, 1))
             .fluidInputs(MaterialPool.EnrichedNaquadahWaste.getFluidOrGas(2000))
             .fluidOutputs(
@@ -51,7 +51,7 @@ public class DistillationTowerRecipes implements IRecipePool {
             .eut(TierEU.RECIPE_HV)
             .addTo(DTR);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .fluidInputs(MaterialPool.RadonCrackedEnrichedNaquadah.getFluidOrGas(1000))
             .fluidOutputs(
                 GGMaterial.naquadahBasedFuelMkII.getFluidOrGas(800),
@@ -62,7 +62,7 @@ public class DistillationTowerRecipes implements IRecipePool {
             .eut(TierEU.RECIPE_LuV)
             .addTo(DTR);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemOutputs(GGMaterial.triniumSulphate.get(OrePrefixes.dust, 1))
             .fluidInputs(MaterialPool.NaquadriaWaste.getFluidOrGas(2000))
             .fluidOutputs(
@@ -73,7 +73,7 @@ public class DistillationTowerRecipes implements IRecipePool {
             .eut(TierEU.RECIPE_EV)
             .addTo(DTR);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemOutputs(GTOreDictUnificator.get(OrePrefixes.dust, Materials.EnderPearl, 1))
             .fluidInputs(MaterialPool.LiquidEnderAir.getFluidOrGas(200000))
             .fluidOutputs(
@@ -90,7 +90,7 @@ public class DistillationTowerRecipes implements IRecipePool {
             .eut(TierEU.RECIPE_IV)
             .addTo(DTR);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs(
                 new ItemStack(BOPBlockRegistrator.leaves_Pine, 64),
                 new ItemStack(BOPBlockRegistrator.leaves_Pine, 64))

@@ -5,9 +5,9 @@ import net.minecraft.item.ItemStack;
 
 import com.science.gtnl.api.IRecipePool;
 import com.science.gtnl.common.material.RecipePool;
+import com.science.gtnl.utils.recipes.RecipeBuilder;
 import com.science.gtnl.utils.recipes.metadata.IsaMillMetadata;
 
-import gregtech.api.enums.GTValues;
 import gregtech.api.enums.Materials;
 import gregtech.api.enums.OrePrefixes;
 import gregtech.api.recipe.RecipeMap;
@@ -59,7 +59,7 @@ public class IsaMillRecipes implements IRecipePool {
 
     public void addIsaMillRecipe(Materials material, OrePrefixes prefix, int circuitNumber, int outputAmount,
         int fluidAmount, int tier, int duration) {
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs(
                 GTUtility.getIntegratedCircuit(circuitNumber),
                 GTOreDictUnificator.get(prefix, material, prefix == OrePrefixes.rawOre ? 16L : 1L))
@@ -77,7 +77,7 @@ public class IsaMillRecipes implements IRecipePool {
 
     public void addIsaMillRecipeCustom(Materials material, ItemStack custom, int circuitNumber, int outputAmount,
         int fluidAmount, int tier, int duration) {
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs(GTUtility.getIntegratedCircuit(circuitNumber), custom)
             .itemOutputs(
                 GTUtility.copyAmountUnsafe(

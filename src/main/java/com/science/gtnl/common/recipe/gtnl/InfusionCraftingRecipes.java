@@ -12,9 +12,9 @@ import net.minecraft.item.ItemStack;
 import com.science.gtnl.api.IRecipePool;
 import com.science.gtnl.common.material.RecipePool;
 import com.science.gtnl.common.recipe.thaumcraft.TCRecipeTools;
+import com.science.gtnl.utils.recipes.RecipeBuilder;
 
 import cpw.mods.fml.common.registry.GameRegistry;
-import gregtech.api.enums.GTValues;
 import gregtech.api.enums.Mods;
 import gregtech.api.enums.TierEU;
 import gregtech.api.interfaces.IRecipeMap;
@@ -70,7 +70,7 @@ public class InfusionCraftingRecipes implements IRecipePool {
                     .getItem()))
                 continue;
 
-            GTValues.RA.stdBuilder()
+            RecipeBuilder.builder()
                 .ignoreCollision()
                 .clearInvalid()
                 .itemInputsUnified(checkInputSpecial(Recipe.getInputItem()))

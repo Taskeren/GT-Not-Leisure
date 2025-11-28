@@ -1,9 +1,9 @@
 package com.science.gtnl.common.recipe.gregtech;
 
 import com.science.gtnl.api.IRecipePool;
+import com.science.gtnl.utils.recipes.RecipeBuilder;
 
 import bartworks.system.material.WerkstoffLoader;
-import gregtech.api.enums.GTValues;
 import gregtech.api.enums.ItemList;
 import gregtech.api.enums.Materials;
 import gregtech.api.enums.MaterialsKevlar;
@@ -23,7 +23,7 @@ public class PCBFactoryRecipes implements IRecipePool {
     @Override
     public void loadRecipes() {
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs(
                 GTOreDictUnificator.get(OrePrefixes.plate, MaterialsKevlar.Kevlar, 1),
                 WerkstoffLoader.Rhodium.get(OrePrefixes.foil, 32),

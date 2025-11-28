@@ -7,8 +7,8 @@ import net.minecraft.util.StatCollector;
 
 import com.science.gtnl.api.IRecipePool;
 import com.science.gtnl.common.material.RecipePool;
+import com.science.gtnl.utils.recipes.RecipeBuilder;
 
-import gregtech.api.enums.GTValues;
 import gregtech.api.enums.MaterialsUEVplus;
 import gregtech.api.recipe.RecipeMap;
 import gregtech.api.util.GTUtility;
@@ -19,7 +19,7 @@ public class ReFusionReactorRecipes implements IRecipePool {
 
     @Override
     public void loadRecipes() {
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs(
                 GTUtility.copyAmountUnsafe(Integer.MAX_VALUE, getModItem("gregtech", "gt.metaitem.01", 1, 2299)))
             .itemOutputs(

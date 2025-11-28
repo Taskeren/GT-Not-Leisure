@@ -5,10 +5,10 @@ import static gregtech.api.util.GTRecipeConstants.COIL_HEAT;
 import com.science.gtnl.api.IRecipePool;
 import com.science.gtnl.common.item.items.MilledOre;
 import com.science.gtnl.config.MainConfig;
+import com.science.gtnl.utils.recipes.RecipeBuilder;
 
 import bartworks.system.material.WerkstoffLoader;
 import goodgenerator.items.GGMaterial;
-import gregtech.api.enums.GTValues;
 import gregtech.api.enums.Materials;
 import gregtech.api.enums.OrePrefixes;
 import gregtech.api.enums.TierEU;
@@ -26,7 +26,7 @@ public class VacuumFurnaceRecipes implements IRecipePool {
 
     @Override
     public void loadRecipes() {
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs(GTUtility.getIntegratedCircuit(1))
             .itemOutputs(
                 GTOreDictUnificator.get(OrePrefixes.dust, Materials.NaquadahEnriched, 64),
@@ -48,7 +48,7 @@ public class VacuumFurnaceRecipes implements IRecipePool {
     }
 
     public void loadDeleteRecipe() {
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .setNEIDesc("Remove Change by GTNotLeisure")
             .itemInputs(GTUtility.getIntegratedCircuit(1))
             .itemOutputs(
@@ -67,7 +67,7 @@ public class VacuumFurnaceRecipes implements IRecipePool {
             .duration(2400)
             .addTo(VFR);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .setNEIDesc("Remove Change by GTNotLeisure")
             .itemInputs(GTUtility.getIntegratedCircuit(1))
             .itemOutputs(
@@ -84,7 +84,7 @@ public class VacuumFurnaceRecipes implements IRecipePool {
             .duration(2400)
             .addTo(VFR);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .setNEIDesc("Remove Change by GTNotLeisure")
             .itemInputs(GTUtility.getIntegratedCircuit(1))
             .itemOutputs(

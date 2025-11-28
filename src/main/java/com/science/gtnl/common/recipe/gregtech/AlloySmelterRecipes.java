@@ -6,8 +6,8 @@ import net.minecraft.item.ItemStack;
 import com.science.gtnl.api.IRecipePool;
 import com.science.gtnl.common.material.MaterialPool;
 import com.science.gtnl.utils.enums.GTNLItemList;
+import com.science.gtnl.utils.recipes.RecipeBuilder;
 
-import gregtech.api.enums.GTValues;
 import gregtech.api.enums.Materials;
 import gregtech.api.enums.OrePrefixes;
 import gregtech.api.recipe.RecipeMap;
@@ -20,14 +20,14 @@ public class AlloySmelterRecipes implements IRecipePool {
 
     @Override
     public void loadRecipes() {
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs(new ItemStack(Items.glowstone_dust, 1), new ItemStack(Items.clay_ball, 1))
             .itemOutputs(GTNLItemList.ClayedGlowstone.get(2))
             .duration(200)
             .eut(16)
             .addTo(aSR);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs(
                 GTOreDictUnificator.get(OrePrefixes.dust, Materials.Steel, 2L),
                 GTOreDictUnificator.get(OrePrefixes.dust, Materials.Bronze, 1L))
@@ -36,7 +36,7 @@ public class AlloySmelterRecipes implements IRecipePool {
             .eut(128)
             .addTo(aSR);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs(
                 GTOreDictUnificator.get(OrePrefixes.dust, Materials.Steel, 2L),
                 GTOreDictUnificator.get(OrePrefixes.ingot, Materials.Bronze, 1L))
@@ -45,7 +45,7 @@ public class AlloySmelterRecipes implements IRecipePool {
             .eut(128)
             .addTo(aSR);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs(
                 GTOreDictUnificator.get(OrePrefixes.ingot, Materials.Steel, 2L),
                 GTOreDictUnificator.get(OrePrefixes.ingot, Materials.Bronze, 1L))
@@ -54,7 +54,7 @@ public class AlloySmelterRecipes implements IRecipePool {
             .eut(128)
             .addTo(aSR);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs(
                 GTOreDictUnificator.get(OrePrefixes.ingot, Materials.Steel, 2L),
                 GTOreDictUnificator.get(OrePrefixes.dust, Materials.Bronze, 1L))

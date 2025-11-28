@@ -4,8 +4,8 @@ import static gregtech.api.enums.Mods.*;
 
 import com.science.gtnl.api.IRecipePool;
 import com.science.gtnl.common.material.RecipePool;
+import com.science.gtnl.utils.recipes.RecipeBuilder;
 
-import gregtech.api.enums.GTValues;
 import gregtech.api.enums.Mods;
 import gregtech.api.recipe.RecipeMap;
 import gregtech.api.util.GTModHandler;
@@ -17,7 +17,7 @@ public class SteamWeatherModuleRecipes implements IRecipePool {
     @Override
     public void loadRecipes() {
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs(
                 GTModHandler.getModItem(Mods.Natura.ID, "Cloud", 16, 3),
                 GTModHandler.getModItem(Mods.Thaumcraft.ID, "blockCrystal", 1, 1))
@@ -26,7 +26,7 @@ public class SteamWeatherModuleRecipes implements IRecipePool {
             .eut(0)
             .addTo(SWMR);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs(
                 GTModHandler.getModItem(Mods.Natura.ID, "Cloud", 16, 2),
                 GTModHandler.getModItem(Mods.Thaumcraft.ID, "blockCrystal", 1, 2))
@@ -35,7 +35,7 @@ public class SteamWeatherModuleRecipes implements IRecipePool {
             .eut(0)
             .addTo(SWMR);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs(
                 GTModHandler.getModItem(Mods.Natura.ID, "Cloud", 16, 1),
                 GTModHandler.getModItem(Mods.Thaumcraft.ID, "blockCrystal", 1, 2),

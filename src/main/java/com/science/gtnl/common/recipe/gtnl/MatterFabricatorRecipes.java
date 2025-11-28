@@ -7,8 +7,8 @@ import net.minecraft.util.StatCollector;
 
 import com.science.gtnl.api.IRecipePool;
 import com.science.gtnl.common.material.RecipePool;
+import com.science.gtnl.utils.recipes.RecipeBuilder;
 
-import gregtech.api.enums.GTValues;
 import gregtech.api.enums.Materials;
 import gregtech.api.enums.OrePrefixes;
 import gregtech.api.recipe.RecipeMap;
@@ -22,7 +22,7 @@ public class MatterFabricatorRecipes implements IRecipePool {
     @Override
     public void loadRecipes() {
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs(
                 GTUtility.getIntegratedCircuit(1),
                 GTOreDictUnificator.get(OrePrefixes.ingot, Materials.Iron, 1L)
@@ -34,7 +34,7 @@ public class MatterFabricatorRecipes implements IRecipePool {
             .fake()
             .addTo(MFR);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs(
                 GTUtility.getIntegratedCircuit(2),
                 GTOreDictUnificator.get(OrePrefixes.ingot, Materials.Iron, 1L)
@@ -45,7 +45,7 @@ public class MatterFabricatorRecipes implements IRecipePool {
             .fake()
             .addTo(MFR);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs(
                 GTUtility.getIntegratedCircuit(1),
                 GTOreDictUnificator.get(OrePrefixes.gem, Materials.Emerald, 1L)
@@ -57,7 +57,7 @@ public class MatterFabricatorRecipes implements IRecipePool {
             .fake()
             .addTo(MFR);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs(
                 GTUtility.getIntegratedCircuit(2),
                 GTOreDictUnificator.get(OrePrefixes.gem, Materials.Emerald, 1L)
@@ -68,7 +68,7 @@ public class MatterFabricatorRecipes implements IRecipePool {
             .fake()
             .addTo(MFR);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs(
                 GTUtility.getIntegratedCircuit(1),
                 GTOreDictUnificator.get(OrePrefixes.block, Materials.Iron, 1L)
@@ -80,7 +80,7 @@ public class MatterFabricatorRecipes implements IRecipePool {
             .fake()
             .addTo(MFR);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs(
                 GTUtility.getIntegratedCircuit(2),
                 GTOreDictUnificator.get(OrePrefixes.block, Materials.Iron, 1L)

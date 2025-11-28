@@ -5,8 +5,8 @@ import static gregtech.api.util.GTRecipeBuilder.*;
 import com.science.gtnl.api.IRecipePool;
 import com.science.gtnl.common.item.items.MilledOre;
 import com.science.gtnl.common.material.RecipePool;
+import com.science.gtnl.utils.recipes.RecipeBuilder;
 
-import gregtech.api.enums.GTValues;
 import gregtech.api.enums.Materials;
 import gregtech.api.enums.TierEU;
 import gregtech.api.recipe.RecipeMap;
@@ -22,7 +22,7 @@ public class CellRegulatorRecipes implements IRecipePool {
     @Override
     public void loadRecipes() {
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs(
                 GregtechItemList.PotassiumEthylXanthate.get(32),
                 MaterialUtils.generateMaterialFromGtENUM(Materials.Nickel)
@@ -33,7 +33,7 @@ public class CellRegulatorRecipes implements IRecipePool {
             .eut(TierEU.RECIPE_IV)
             .addTo(CRR);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs(
                 GregtechItemList.SodiumEthylXanthate.get(32),
                 MaterialUtils.generateMaterialFromGtENUM(Materials.Platinum)
@@ -44,7 +44,7 @@ public class CellRegulatorRecipes implements IRecipePool {
             .eut(TierEU.RECIPE_LuV)
             .addTo(CRR);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs(
                 GregtechItemList.PotassiumEthylXanthate.get(64),
                 MaterialUtils.generateMaterialFromGtENUM(Materials.NaquadahEnriched)
@@ -55,7 +55,7 @@ public class CellRegulatorRecipes implements IRecipePool {
             .eut(TierEU.RECIPE_LuV)
             .addTo(CRR);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs(
                 GregtechItemList.SodiumEthylXanthate.get(32),
                 MaterialUtils.generateMaterialFromGtENUM(Materials.Almandine)
@@ -66,7 +66,7 @@ public class CellRegulatorRecipes implements IRecipePool {
             .eut(TierEU.RECIPE_IV)
             .addTo(CRR);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs(
                 GregtechItemList.PotassiumEthylXanthate.get(32),
                 MaterialUtils.generateMaterialFromGtENUM(Materials.Chalcopyrite)
@@ -77,7 +77,7 @@ public class CellRegulatorRecipes implements IRecipePool {
             .eut(TierEU.RECIPE_IV)
             .addTo(CRR);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs(
                 GregtechItemList.PotassiumEthylXanthate.get(32),
                 MaterialUtils.generateMaterialFromGtENUM(Materials.Grossular)
@@ -88,7 +88,7 @@ public class CellRegulatorRecipes implements IRecipePool {
             .eut(TierEU.RECIPE_LuV)
             .addTo(CRR);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs(
                 GregtechItemList.SodiumEthylXanthate.get(32),
                 MaterialUtils.generateMaterialFromGtENUM(Materials.Pyrope)
@@ -99,7 +99,7 @@ public class CellRegulatorRecipes implements IRecipePool {
             .eut(TierEU.RECIPE_IV)
             .addTo(CRR);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs(
                 GregtechItemList.PotassiumEthylXanthate.get(32),
                 MaterialUtils.generateMaterialFromGtENUM(Materials.Spessartine)
@@ -110,7 +110,7 @@ public class CellRegulatorRecipes implements IRecipePool {
             .eut(TierEU.RECIPE_LuV)
             .addTo(CRR);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs(
                 GregtechItemList.SodiumEthylXanthate.get(32),
                 MaterialUtils.generateMaterialFromGtENUM(Materials.Sphalerite)
@@ -121,7 +121,7 @@ public class CellRegulatorRecipes implements IRecipePool {
             .eut(TierEU.RECIPE_LuV)
             .addTo(CRR);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs(
                 GregtechItemList.PotassiumEthylXanthate.get(32),
                 MaterialUtils.generateMaterialFromGtENUM(Materials.Pentlandite)
@@ -132,7 +132,7 @@ public class CellRegulatorRecipes implements IRecipePool {
             .eut(TierEU.RECIPE_LuV)
             .addTo(CRR);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs(
                 GregtechItemList.SodiumEthylXanthate.get(32),
                 MaterialUtils.generateMaterialFromGtENUM(Materials.Monazite)
@@ -143,7 +143,7 @@ public class CellRegulatorRecipes implements IRecipePool {
             .eut(TierEU.RECIPE_LuV)
             .addTo(CRR);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs(
                 GregtechItemList.SodiumEthylXanthate.get(32),
                 MaterialUtils.generateMaterialFromGtENUM(Materials.Redstone)
@@ -154,7 +154,7 @@ public class CellRegulatorRecipes implements IRecipePool {
             .eut(TierEU.RECIPE_IV)
             .addTo(CRR);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs(
                 MaterialUtils.generateMaterialFromGtENUM(Materials.Netherrack)
                     .getMilled(64))

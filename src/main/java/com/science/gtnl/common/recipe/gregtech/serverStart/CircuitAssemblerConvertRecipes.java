@@ -11,10 +11,10 @@ import com.science.gtnl.common.material.MaterialPool;
 import com.science.gtnl.common.material.RecipePool;
 import com.science.gtnl.config.MainConfig;
 import com.science.gtnl.utils.enums.GTNLItemList;
+import com.science.gtnl.utils.recipes.RecipeBuilder;
 
 import bartworks.system.material.CircuitGeneration.BWMetaItems;
 import bartworks.system.material.WerkstoffLoader;
-import gregtech.api.enums.GTValues;
 import gregtech.api.enums.ItemList;
 import gregtech.api.enums.Materials;
 import gregtech.api.enums.OrePrefixes;
@@ -35,7 +35,7 @@ public class CircuitAssemblerConvertRecipes implements IRecipePool {
     @Override
     public void loadRecipes() {
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs(
                 ItemList.Battery_RE_ULV_Tantalum.get(4L),
                 ItemList.Circuit_Parts_Wiring_Basic.get(4L),
@@ -51,7 +51,7 @@ public class CircuitAssemblerConvertRecipes implements IRecipePool {
             .requiresCleanRoom()
             .addTo(CAR);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs(
                 ItemList.Circuit_Parts_Advanced.get(4L),
                 ItemList.Circuit_Parts_Wiring_Elite.get(4L),
@@ -67,7 +67,7 @@ public class CircuitAssemblerConvertRecipes implements IRecipePool {
             .requiresCleanRoom()
             .addTo(CAR);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs(
                 ItemList.Circuit_Parts_Advanced.get(8L),
                 ItemList.Circuit_Parts_Wiring_Elite.get(8L),
@@ -83,7 +83,7 @@ public class CircuitAssemblerConvertRecipes implements IRecipePool {
             .requiresCleanRoom()
             .addTo(CAR);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs(
                 ItemList.Circuit_Parts_DiodeSMD.get(4L),
                 ItemList.Circuit_Parts_TransistorSMD.get(4L),
@@ -99,7 +99,7 @@ public class CircuitAssemblerConvertRecipes implements IRecipePool {
             .requiresCleanRoom()
             .addTo(CAR);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs(
                 ItemList.Circuit_Parts_DiodeSMD.get(8L),
                 ItemList.Circuit_Parts_TransistorSMD.get(8L),
@@ -115,7 +115,7 @@ public class CircuitAssemblerConvertRecipes implements IRecipePool {
             .requiresCleanRoom()
             .addTo(CAR);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs(
                 ItemList.Circuit_Parts_DiodeASMD.get(4L),
                 ItemList.Circuit_Parts_TransistorASMD.get(4L),
@@ -131,7 +131,7 @@ public class CircuitAssemblerConvertRecipes implements IRecipePool {
             .requiresCleanRoom()
             .addTo(CAR);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs(
                 ItemList.Circuit_Parts_DiodeASMD.get(8L),
                 ItemList.Circuit_Parts_TransistorASMD.get(8L),
@@ -147,7 +147,7 @@ public class CircuitAssemblerConvertRecipes implements IRecipePool {
             .requiresCleanRoom()
             .addTo(CAR);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs(
                 GTNLItemList.BiowareSMDDiode.get(16),
                 GTNLItemList.BiowareSMDCapacitor.get(16),
@@ -163,7 +163,7 @@ public class CircuitAssemblerConvertRecipes implements IRecipePool {
             .requiresCleanRoom()
             .addTo(CAR);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs(
                 ItemList.Circuit_Parts_DiodeXSMD.get(16L),
                 ItemList.Circuit_Parts_TransistorXSMD.get(16L),
@@ -179,7 +179,7 @@ public class CircuitAssemblerConvertRecipes implements IRecipePool {
             .requiresCleanRoom()
             .addTo(CAR);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs(
                 GTNLItemList.ExoticSMDDiode.get(16),
                 GTNLItemList.ExoticSMDCapacitor.get(16),
@@ -195,7 +195,7 @@ public class CircuitAssemblerConvertRecipes implements IRecipePool {
             .requiresCleanRoom()
             .addTo(CAR);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs(
                 GTNLItemList.CosmicSMDDiode.get(16),
                 GTNLItemList.CosmicSMDCapacitor.get(16),
@@ -211,7 +211,7 @@ public class CircuitAssemblerConvertRecipes implements IRecipePool {
             .requiresCleanRoom()
             .addTo(CAR);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs(
                 GTNLItemList.TemporallySMDDiode.get(16),
                 GTNLItemList.TemporallySMDCapacitor.get(16),
@@ -227,7 +227,7 @@ public class CircuitAssemblerConvertRecipes implements IRecipePool {
             .requiresCleanRoom()
             .addTo(CAR);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs(
                 ItemList.Circuit_Primitive.get(0),
                 GTOreDictUnificator.get(OrePrefixes.plate, Materials.Steel, 1),
@@ -238,7 +238,7 @@ public class CircuitAssemblerConvertRecipes implements IRecipePool {
             .eut(7)
             .addTo(CAR);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs(
                 GTModHandler.getModItem(IndustrialCraft2.ID, "itemPartCircuit", 0),
                 GTNLItemList.VerySimpleCircuit.get(1),
@@ -250,7 +250,7 @@ public class CircuitAssemblerConvertRecipes implements IRecipePool {
             .eut(16)
             .addTo(CAR);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs(
                 GTUtility.copyAmount(0, ItemList.Circuit_Good.get(1L)),
                 GTModHandler.getModItem(Minecraft.ID, "paper", 1, 0),
@@ -263,7 +263,7 @@ public class CircuitAssemblerConvertRecipes implements IRecipePool {
             .eut(30)
             .addTo(CAR);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs(
                 GTModHandler.getModItem(IndustrialCraft2.ID, "itemPartCircuitAdv", 0),
                 ItemList.Circuit_Board_Coated_Basic.get(1L),
@@ -277,7 +277,7 @@ public class CircuitAssemblerConvertRecipes implements IRecipePool {
             .eut(120)
             .addTo(CAR);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs(
                 ItemList.Circuit_Board_Phenolic_Good.get(1L),
                 GTNLItemList.AdvancedCircuit.get(1),
@@ -288,7 +288,7 @@ public class CircuitAssemblerConvertRecipes implements IRecipePool {
             .eut(480)
             .addTo(CAR);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs(
                 ItemList.Circuit_Chip_NeuroCPU.get(1L),
                 GTNLItemList.HighlyAdvancedSoc.get(1),
@@ -305,7 +305,7 @@ public class CircuitAssemblerConvertRecipes implements IRecipePool {
     }
 
     public void loadDeleteRecipe() {
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .setNEIDesc("Remove Change by GTNotLeisure")
             .itemInputs(
                 ItemList.Circuit_Chip_BioCPU.get(1L),
@@ -321,7 +321,7 @@ public class CircuitAssemblerConvertRecipes implements IRecipePool {
             .eut(TierEU.RECIPE_UV)
             .addTo(CAR);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .setNEIDesc("Remove Change by GTNotLeisure")
             .itemInputs(
                 ItemList.Circuit_Board_Multifiberglass_Elite.get(1L),
@@ -337,7 +337,7 @@ public class CircuitAssemblerConvertRecipes implements IRecipePool {
             .eut(TierEU.RECIPE_LuV)
             .addTo(CAR);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .setNEIDesc("Remove Change by GTNotLeisure")
             .itemInputs(
                 ItemList.Circuit_Board_Multifiberglass_Elite.get(1L),
@@ -351,7 +351,7 @@ public class CircuitAssemblerConvertRecipes implements IRecipePool {
             .eut(TierEU.RECIPE_ZPM)
             .addTo(CAR);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .setNEIDesc("Remove Change by GTNotLeisure")
             .itemInputs(
                 ItemList.Circuit_Board_Multifiberglass_Elite.get(1L),
@@ -367,7 +367,7 @@ public class CircuitAssemblerConvertRecipes implements IRecipePool {
             .eut(TierEU.RECIPE_LuV)
             .addTo(CAR);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .setNEIDesc("Remove Change by GTNotLeisure")
             .itemInputs(
                 ItemList.Circuit_Board_Multifiberglass_Elite.get(1L),
@@ -383,7 +383,7 @@ public class CircuitAssemblerConvertRecipes implements IRecipePool {
             .eut(TierEU.RECIPE_LuV)
             .addTo(CAR);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs(
                 ItemList.Circuit_Board_Wetware_Extreme.get(1L),
                 ItemList.Circuit_Chip_Stemcell.get(16),
@@ -398,7 +398,7 @@ public class CircuitAssemblerConvertRecipes implements IRecipePool {
             .eut(TierEU.RECIPE_ZPM)
             .addTo(CAR);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .setNEIDesc("Remove Change by GTNotLeisure")
             .itemInputs(
                 ItemList.Circuit_Chip_NeuroCPU.get(1L),
@@ -414,7 +414,7 @@ public class CircuitAssemblerConvertRecipes implements IRecipePool {
             .eut(TierEU.RECIPE_ZPM)
             .addTo(CAR);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .setNEIDesc("Remove Change by GTNotLeisure")
             .itemInputs(
                 ItemList.Circuit_Board_Wetware_Extreme.get(1L),
@@ -430,7 +430,7 @@ public class CircuitAssemblerConvertRecipes implements IRecipePool {
             .eut(TierEU.RECIPE_ZPM)
             .addTo(CAR);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .setNEIDesc("Remove Change by GTNotLeisure")
             .itemInputs(
                 GTOreDictUnificator.get(OrePrefixes.frameGt, Materials.HSSE, 2L),
@@ -469,7 +469,7 @@ public class CircuitAssemblerConvertRecipes implements IRecipePool {
             16 * SECONDS,
             (int) TierEU.RECIPE_UV);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .setNEIDesc("Remove Change by GTNotLeisure")
             .metadata(RESEARCH_ITEM, ItemList.Circuit_Wetwarecomputer.get(1))
             .metadata(SCANNING, new Scanning(30 * MINUTES, TierEU.RECIPE_IV))

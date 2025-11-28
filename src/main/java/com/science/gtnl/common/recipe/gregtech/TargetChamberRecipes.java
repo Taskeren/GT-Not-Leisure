@@ -7,8 +7,8 @@ import net.minecraft.item.ItemStack;
 import com.dreammaster.gthandler.CustomItemList;
 import com.dreammaster.item.NHItemList;
 import com.science.gtnl.api.IRecipePool;
+import com.science.gtnl.utils.recipes.RecipeBuilder;
 
-import gregtech.api.enums.GTValues;
 import gregtech.api.enums.ItemList;
 import gregtech.api.enums.Materials;
 import gregtech.api.enums.OrePrefixes;
@@ -29,7 +29,7 @@ public class TargetChamberRecipes implements IRecipePool {
     public void loadRecipes() {
         ItemStack focusItem = new ItemStack(LanthItemList.maskMap.get(MaskList.CSOC), 0);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs(focusItem, ItemList.IC2_LapotronCrystal.getWildcard(1L))
             .itemOutputs(GTUtility.copyAmountUnsafe(512, ItemList.Circuit_Parts_Crystal_Chip_Master.get(1)))
             .metadata(
@@ -44,7 +44,7 @@ public class TargetChamberRecipes implements IRecipePool {
             .eut(TierEU.RECIPE_IV)
             .addTo(TCR);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs(focusItem, ItemList.IC2_EnergyCrystal.getWildcard(1L))
             .itemOutputs(GTUtility.copyAmountUnsafe(512, CustomItemList.EngravedEnergyChip.get(1)))
             .metadata(
@@ -59,7 +59,7 @@ public class TargetChamberRecipes implements IRecipePool {
             .eut(TierEU.RECIPE_IV)
             .addTo(TCR);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs(focusItem, GTOreDictUnificator.get(OrePrefixes.plate, Materials.Gold, 1))
             .itemOutputs(GTUtility.copyAmountUnsafe(1024, NHItemList.EngravedGoldChip.getIS(1)))
             .metadata(
@@ -74,7 +74,7 @@ public class TargetChamberRecipes implements IRecipePool {
             .eut(TierEU.RECIPE_IV)
             .addTo(TCR);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs(focusItem, GTOreDictUnificator.get(OrePrefixes.plate, Materials.Diamond, 1))
             .itemOutputs(GTUtility.copyAmountUnsafe(512, CustomItemList.EngravedDiamondCrystalChip.get(1)))
             .metadata(
@@ -89,7 +89,7 @@ public class TargetChamberRecipes implements IRecipePool {
             .eut(TierEU.RECIPE_LuV)
             .addTo(TCR);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs(focusItem, GTOreDictUnificator.get(OrePrefixes.gemExquisite, Materials.GarnetYellow, 1))
             .itemOutputs(GTUtility.copyAmountUnsafe(512, CustomItemList.EngravedQuantumChip.get(1)))
             .metadata(
@@ -104,7 +104,7 @@ public class TargetChamberRecipes implements IRecipePool {
             .eut(TierEU.RECIPE_LuV)
             .addTo(TCR);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs(focusItem, CustomItemList.ManyullynCrystal.get(1))
             .itemOutputs(GTUtility.copyAmountUnsafe(512, NHItemList.EngravedManyullynCrystalChip.getIS(1)))
             .metadata(

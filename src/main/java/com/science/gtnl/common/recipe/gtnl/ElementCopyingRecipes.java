@@ -7,10 +7,10 @@ import net.minecraftforge.fluids.FluidStack;
 import com.science.gtnl.api.IRecipePool;
 import com.science.gtnl.common.material.MaterialPool;
 import com.science.gtnl.common.material.RecipePool;
+import com.science.gtnl.utils.recipes.RecipeBuilder;
 
 import bartworks.system.material.WerkstoffLoader;
 import goodgenerator.items.GGMaterial;
-import gregtech.api.enums.GTValues;
 import gregtech.api.enums.Materials;
 import gregtech.api.enums.MaterialsBotania;
 import gregtech.api.enums.MaterialsUEVplus;
@@ -31,7 +31,7 @@ public class ElementCopyingRecipes implements IRecipePool {
     @Override
     public void loadRecipes() {
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs(GregtechItemList.PlatinumGroupCatalyst.get(0))
             .itemOutputs(
                 GTOreDictUnificator.get(OrePrefixes.dust, Materials.Lithium, 16),
@@ -45,7 +45,7 @@ public class ElementCopyingRecipes implements IRecipePool {
             .eut(TierEU.RECIPE_IV)
             .addTo(ECR);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs()
             .itemOutputs(
                 GTOreDictUnificator.get(OrePrefixes.dust, Materials.Beryllium, 16),
@@ -59,7 +59,7 @@ public class ElementCopyingRecipes implements IRecipePool {
             .eut(TierEU.RECIPE_IV)
             .addTo(ECR);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs()
             .itemOutputs(
                 GTOreDictUnificator.get(OrePrefixes.dust, Materials.Scandium, 16),
@@ -73,7 +73,7 @@ public class ElementCopyingRecipes implements IRecipePool {
             .eut(TierEU.RECIPE_IV)
             .addTo(ECR);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs()
             .itemOutputs(
                 GTOreDictUnificator.get(OrePrefixes.dust, Materials.Titanium, 16),
@@ -86,7 +86,7 @@ public class ElementCopyingRecipes implements IRecipePool {
             .eut(TierEU.RECIPE_IV)
             .addTo(ECR);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs()
             .itemOutputs(
                 GTOreDictUnificator.get(OrePrefixes.dust, Materials.Vanadium, 16),
@@ -99,7 +99,7 @@ public class ElementCopyingRecipes implements IRecipePool {
             .eut(TierEU.RECIPE_IV)
             .addTo(ECR);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs()
             .itemOutputs(
                 GTOreDictUnificator.get(OrePrefixes.dust, Materials.Chrome, 16),
@@ -112,7 +112,7 @@ public class ElementCopyingRecipes implements IRecipePool {
             .eut(TierEU.RECIPE_IV)
             .addTo(ECR);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs()
             .itemOutputs(
                 GTOreDictUnificator.get(OrePrefixes.dust, Materials.Manganese, 16),
@@ -125,7 +125,7 @@ public class ElementCopyingRecipes implements IRecipePool {
             .eut(TierEU.RECIPE_IV)
             .addTo(ECR);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs(GTUtility.getIntegratedCircuit(1))
             .itemOutputs(
                 GTOreDictUnificator.get(OrePrefixes.dust, Materials.Iron, 16),
@@ -139,7 +139,7 @@ public class ElementCopyingRecipes implements IRecipePool {
             .eut(TierEU.RECIPE_IV)
             .addTo(ECR);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs(GTUtility.getIntegratedCircuit(2))
             .itemOutputs(
                 GTOreDictUnificator.get(OrePrefixes.dust, Materials.Cobalt, 16),
@@ -152,7 +152,7 @@ public class ElementCopyingRecipes implements IRecipePool {
             .eut(TierEU.RECIPE_IV)
             .addTo(ECR);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs()
             .itemOutputs(
                 GTOreDictUnificator.get(OrePrefixes.dust, Materials.Nickel, 16),
@@ -166,7 +166,7 @@ public class ElementCopyingRecipes implements IRecipePool {
             .eut(TierEU.RECIPE_IV)
             .addTo(ECR);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs()
             .itemOutputs(
                 GTOreDictUnificator.get(OrePrefixes.dust, Materials.Copper, 16),
@@ -179,7 +179,7 @@ public class ElementCopyingRecipes implements IRecipePool {
             .eut(TierEU.RECIPE_IV)
             .addTo(ECR);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs()
             .itemOutputs(
                 GTOreDictUnificator.get(OrePrefixes.dust, Materials.Zinc, 16),
@@ -192,7 +192,7 @@ public class ElementCopyingRecipes implements IRecipePool {
             .eut(TierEU.RECIPE_IV)
             .addTo(ECR);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs()
             .itemOutputs(
                 GTOreDictUnificator.get(OrePrefixes.dust, Materials.Boron, 16),
@@ -206,7 +206,7 @@ public class ElementCopyingRecipes implements IRecipePool {
             .eut(TierEU.RECIPE_IV)
             .addTo(ECR);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs()
             .itemOutputs(
                 GTOreDictUnificator.get(OrePrefixes.dust, Materials.Carbon, 16),
@@ -220,7 +220,7 @@ public class ElementCopyingRecipes implements IRecipePool {
             .eut(TierEU.RECIPE_IV)
             .addTo(ECR);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs()
             .itemOutputs(
                 GTOreDictUnificator.get(OrePrefixes.dust, Materials.Phosphorus, 16),
@@ -234,7 +234,7 @@ public class ElementCopyingRecipes implements IRecipePool {
             .eut(TierEU.RECIPE_IV)
             .addTo(ECR);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs()
             .itemOutputs(
                 GTOreDictUnificator.get(OrePrefixes.dust, Materials.Sulfur, 16),
@@ -247,7 +247,7 @@ public class ElementCopyingRecipes implements IRecipePool {
             .eut(TierEU.RECIPE_IV)
             .addTo(ECR);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs()
             .itemOutputs(
                 GTOreDictUnificator.get(OrePrefixes.dust, Materials.Samarium, 16),
@@ -263,7 +263,7 @@ public class ElementCopyingRecipes implements IRecipePool {
             .eut(TierEU.RECIPE_IV)
             .addTo(ECR);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs()
             .itemOutputs(
                 GTOreDictUnificator.get(OrePrefixes.dust, Materials.Thorium, 16),
@@ -279,7 +279,7 @@ public class ElementCopyingRecipes implements IRecipePool {
             .eut(TierEU.RECIPE_IV)
             .addTo(ECR);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs()
             .itemOutputs(
                 MaterialsElements.getInstance().NEPTUNIUM.getDust(16),
@@ -295,7 +295,7 @@ public class ElementCopyingRecipes implements IRecipePool {
             .eut(TierEU.RECIPE_IV)
             .addTo(ECR);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs()
             .itemOutputs(
                 MaterialsElements.getInstance().FERMIUM.getDust(16),
@@ -310,7 +310,7 @@ public class ElementCopyingRecipes implements IRecipePool {
             .eut(TierEU.RECIPE_IV)
             .addTo(ECR);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs()
             .itemOutputs(
                 GTOreDictUnificator.get(OrePrefixes.dust, Materials.InfusedFire, 16),
@@ -327,7 +327,7 @@ public class ElementCopyingRecipes implements IRecipePool {
             .eut(TierEU.RECIPE_IV)
             .addTo(ECR);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs()
             .itemOutputs(
                 GTOreDictUnificator.get(OrePrefixes.dust, Materials.Naquadah, 16),
@@ -344,7 +344,7 @@ public class ElementCopyingRecipes implements IRecipePool {
             .eut(TierEU.RECIPE_IV)
             .addTo(ECR);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs()
             .itemOutputs(
                 GTOreDictUnificator.get(OrePrefixes.dust, Materials.Quantium, 16),
@@ -361,7 +361,7 @@ public class ElementCopyingRecipes implements IRecipePool {
             .eut(TierEU.RECIPE_IV)
             .addTo(ECR);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs()
             .itemOutputs(
                 GTOreDictUnificator.get(OrePrefixes.dust, MaterialsUEVplus.Eternity, 16),
@@ -378,7 +378,7 @@ public class ElementCopyingRecipes implements IRecipePool {
             .eut(TierEU.RECIPE_IV)
             .addTo(ECR);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs()
             .itemOutputs(
                 GTOreDictUnificator.get(OrePrefixes.dust, Materials.Bedrockium, 16),
@@ -395,7 +395,7 @@ public class ElementCopyingRecipes implements IRecipePool {
             .eut(TierEU.RECIPE_IV)
             .addTo(ECR);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs()
             .itemOutputs(
                 MaterialsAlloy.ENERGYCRYSTAL.getDust(16),
@@ -412,7 +412,7 @@ public class ElementCopyingRecipes implements IRecipePool {
             .eut(TierEU.RECIPE_IV)
             .addTo(ECR);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs()
             .itemOutputs(
                 GTOreDictUnificator.get(OrePrefixes.dust, Materials.MeteoricIron, 16),
@@ -429,7 +429,7 @@ public class ElementCopyingRecipes implements IRecipePool {
             .eut(TierEU.RECIPE_IV)
             .addTo(ECR);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs()
             .itemOutputs(
                 GTOreDictUnificator.get(OrePrefixes.dust, Materials.FierySteel, 16),

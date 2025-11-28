@@ -5,10 +5,10 @@ import static gregtech.api.util.GTRecipeConstants.SIEVERT;
 
 import com.dreammaster.item.NHItemList;
 import com.science.gtnl.api.IRecipePool;
+import com.science.gtnl.utils.recipes.RecipeBuilder;
 
 import bartworks.API.recipe.BartWorksRecipeMaps;
 import bartworks.util.BWUtil;
-import gregtech.api.enums.GTValues;
 import gregtech.api.enums.ItemList;
 import gregtech.api.enums.Materials;
 import gregtech.api.enums.OrePrefixes;
@@ -24,7 +24,7 @@ public class BacterialVatRecipes implements IRecipePool {
     @Override
     public void loadRecipes() {
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs(
                 ItemList.Circuit_Chip_Stemcell.get(64),
                 GTOreDictUnificator.get(OrePrefixes.dust, NaquadahEnriched, 1L))
@@ -35,7 +35,7 @@ public class BacterialVatRecipes implements IRecipePool {
             .duration(800)
             .addTo(BVR);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs(
                 ItemList.Circuit_Chip_Stemcell.get(64),
                 NHItemList.TCetiESeaweedExtract.getIS(16),

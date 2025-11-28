@@ -8,10 +8,10 @@ import net.minecraft.item.ItemStack;
 import com.science.gtnl.api.IRecipePool;
 import com.science.gtnl.common.material.RecipePool;
 import com.science.gtnl.utils.recipes.MeteorRecipeData;
+import com.science.gtnl.utils.recipes.RecipeBuilder;
 
 import WayofTime.alchemicalWizardry.common.summoning.meteor.Meteor;
 import WayofTime.alchemicalWizardry.common.summoning.meteor.MeteorRegistry;
-import gregtech.api.enums.GTValues;
 import gregtech.api.recipe.RecipeMap;
 import gregtech.api.util.GTModHandler;
 
@@ -38,7 +38,7 @@ public class FallingTowerRecipes implements IRecipePool {
                 .mapToInt(chance -> (int) (chance * 20000))
                 .toArray();
 
-            GTValues.RA.stdBuilder()
+            RecipeBuilder.builder()
                 .itemInputs(input)
                 .itemOutputs(outputs)
                 .specialValue(data.cost)

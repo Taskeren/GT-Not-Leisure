@@ -9,8 +9,8 @@ import java.util.Set;
 
 import com.science.gtnl.ScienceNotLeisure;
 import com.science.gtnl.common.material.RecipePool;
+import com.science.gtnl.utils.recipes.RecipeBuilder;
 
-import gregtech.api.enums.GTValues;
 import gtPlusPlus.core.material.Material;
 import gtPlusPlus.core.material.MaterialsOres;
 
@@ -41,7 +41,7 @@ public class GTPPOreHandler {
 
     public void processGTPPOreRecipes() {
         for (Material ore : addSpecials(getGTPPOreMaterials())) {
-            GTValues.RA.stdBuilder()
+            RecipeBuilder.builder()
                 .itemInputs(ore.getOre(1))
                 .itemOutputs(ore.getDust(Integer.MAX_VALUE))
                 .eut(0)
@@ -52,7 +52,7 @@ public class GTPPOreHandler {
 
     public void processGTPPRawOreRecipes() {
         for (Material ore : addSpecials(getGTPPOreMaterials())) {
-            GTValues.RA.stdBuilder()
+            RecipeBuilder.builder()
                 .itemInputs(ore.getRawOre(1))
                 .itemOutputs(ore.getDust(Integer.MAX_VALUE))
                 .eut(0)

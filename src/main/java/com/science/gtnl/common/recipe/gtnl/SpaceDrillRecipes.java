@@ -12,11 +12,11 @@ import com.github.bsideup.jabel.Desugar;
 import com.science.gtnl.api.IRecipePool;
 import com.science.gtnl.common.material.RecipePool;
 import com.science.gtnl.utils.item.ItemUtils;
+import com.science.gtnl.utils.recipes.RecipeBuilder;
 import com.science.gtnl.utils.recipes.metadata.ResourceCollectionModuleMetadata;
 
 import bartworks.system.material.WerkstoffLoader;
 import goodgenerator.items.GGMaterial;
-import gregtech.api.enums.GTValues;
 import gregtech.api.enums.ItemList;
 import gregtech.api.enums.Materials;
 import gregtech.api.enums.MaterialsUEVplus;
@@ -35,7 +35,7 @@ public class SpaceDrillRecipes implements IRecipePool {
 
     public void addSpaceDrillOutputRecipe(int circuit, ItemStack drone, FluidStack fuel, FluidStack output,
         int minerTier, int duration, long eut) {
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs(
                 (circuit < 25) ? GTUtility.getIntegratedCircuit(circuit)
                     : ItemUtils.getIntegratedCircuitPlus(circuit - 25),

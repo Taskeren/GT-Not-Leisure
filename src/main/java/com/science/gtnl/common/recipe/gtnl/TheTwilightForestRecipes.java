@@ -10,8 +10,8 @@ import com.dreammaster.item.NHItemList;
 import com.science.gtnl.api.IRecipePool;
 import com.science.gtnl.common.material.RecipePool;
 import com.science.gtnl.utils.enums.GTNLItemList;
+import com.science.gtnl.utils.recipes.RecipeBuilder;
 
-import gregtech.api.enums.GTValues;
 import gregtech.api.enums.Materials;
 import gregtech.api.enums.OrePrefixes;
 import gregtech.api.enums.TierEU;
@@ -27,7 +27,7 @@ public class TheTwilightForestRecipes implements IRecipePool {
     @Override
     public void loadRecipes() {
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs(GTNLItemList.NagaBook.get(0))
             .itemOutputs(
                 GTModHandler.getModItem(TwilightForest.ID, "item.trophy", 1, 1),
@@ -39,7 +39,7 @@ public class TheTwilightForestRecipes implements IRecipePool {
             .eut(1966080)
             .addTo(TTFR);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs(GTNLItemList.LichBook.get(0))
             .itemOutputs(
                 GTModHandler.getModItem(TwilightForest.ID, "item.trophy", 1, 2),
@@ -54,7 +54,7 @@ public class TheTwilightForestRecipes implements IRecipePool {
             .eut(1966080)
             .addTo(TTFR);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs(GTNLItemList.MinotaurBook.get(0))
             .itemOutputs(
                 GTModHandler.getModItem(TwilightForest.ID, "item.trophy", 1, 5),
@@ -68,7 +68,7 @@ public class TheTwilightForestRecipes implements IRecipePool {
             .eut(1966080)
             .addTo(TTFR);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs(GTNLItemList.HydraBook.get(0))
             .itemOutputs(
                 GTModHandler.getModItem(TwilightForest.ID, "item.trophy", 1, 0),
@@ -84,7 +84,7 @@ public class TheTwilightForestRecipes implements IRecipePool {
             .eut(1966080)
             .addTo(TTFR);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs(GTNLItemList.KnightPhantomBook.get(0))
             .itemOutputs(
                 GTModHandler.getModItem(TwilightForest.ID, "item.trophy", 1, 6),
@@ -94,7 +94,7 @@ public class TheTwilightForestRecipes implements IRecipePool {
             .eut(1966080)
             .addTo(TTFR);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs(GTNLItemList.UrGhastBook.get(0))
             .itemOutputs(
                 GTModHandler.getModItem(TwilightForest.ID, "item.trophy", 1, 3),
@@ -109,7 +109,7 @@ public class TheTwilightForestRecipes implements IRecipePool {
             .eut(1966080)
             .addTo(TTFR);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs(GTNLItemList.AlphaYetiBook.get(0))
             .itemOutputs(
                 GTModHandler.getModItem(TwilightForest.ID, "item.trophy", 1, 7),
@@ -121,7 +121,7 @@ public class TheTwilightForestRecipes implements IRecipePool {
             .eut(1966080)
             .addTo(TTFR);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs(GTNLItemList.SnowQueenBook.get(0))
             .itemOutputs(
                 GTModHandler.getModItem(TwilightForest.ID, "item.trophy", 1, 4),
@@ -139,7 +139,7 @@ public class TheTwilightForestRecipes implements IRecipePool {
             .eut(1966080)
             .addTo(TTFR);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs(GTNLItemList.GiantBook.get(0))
             .itemOutputs(
                 GTModHandler.getModItem(TwilightForest.ID, "tile.GiantCobble", 8),
@@ -155,7 +155,7 @@ public class TheTwilightForestRecipes implements IRecipePool {
             .eut(1966080)
             .addTo(TTFR);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs(GTNLItemList.TwilightForestBook.get(0))
             .itemOutputs(
                 GTUtility.copyAmountUnsafe(262144, new ItemStack(Items.book, 1)),

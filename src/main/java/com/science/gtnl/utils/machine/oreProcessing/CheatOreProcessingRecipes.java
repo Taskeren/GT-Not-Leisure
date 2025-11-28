@@ -12,11 +12,11 @@ import com.google.common.collect.Sets;
 import com.science.gtnl.ScienceNotLeisure;
 import com.science.gtnl.api.IRecipePool;
 import com.science.gtnl.common.material.RecipePool;
+import com.science.gtnl.utils.recipes.RecipeBuilder;
 
 import bartworks.system.material.WerkstoffLoader;
 import goodgenerator.items.GGMaterial;
 import gregtech.api.GregTechAPI;
-import gregtech.api.enums.GTValues;
 import gregtech.api.enums.Materials;
 import gregtech.api.enums.Mods;
 import gregtech.api.enums.OrePrefixes;
@@ -308,7 +308,7 @@ public class CheatOreProcessingRecipes implements IRecipePool {
     }
 
     public void registryOreProcessRecipe(ItemStack input, ItemStack[] output) {
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs(input)
             .itemOutputs(output)
             .eut(0)

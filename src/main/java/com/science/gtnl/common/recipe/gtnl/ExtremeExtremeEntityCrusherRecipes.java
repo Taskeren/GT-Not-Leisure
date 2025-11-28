@@ -19,9 +19,9 @@ import com.kuba6000.mobsinfo.api.MobDrop;
 import com.kuba6000.mobsinfo.api.MobRecipe;
 import com.kuba6000.mobsinfo.api.event.PostMobRegistrationEvent;
 import com.science.gtnl.common.material.RecipePool;
+import com.science.gtnl.utils.recipes.RecipeBuilder;
 
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
-import gregtech.api.enums.GTValues;
 import gregtech.api.recipe.RecipeMap;
 import gregtech.api.util.GTModHandler;
 import gregtech.api.util.GTUtility;
@@ -89,7 +89,7 @@ public class ExtremeExtremeEntityCrusherRecipes {
             chances.add(pair.getRight());
         }
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs(GTUtility.copyAmount(0, spawner))
             .itemOutputs(outputs.toArray(new ItemStack[0]))
             .fluidOutputs(FluidRegistry.getFluidStack("xpjuice", 120))

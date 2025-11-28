@@ -11,9 +11,9 @@ import net.minecraft.item.ItemStack;
 import com.science.gtnl.api.IRecipePool;
 import com.science.gtnl.common.material.MaterialPool;
 import com.science.gtnl.utils.enums.GTNLItemList;
+import com.science.gtnl.utils.recipes.RecipeBuilder;
 
 import bartworks.system.material.WerkstoffLoader;
-import gregtech.api.enums.GTValues;
 import gregtech.api.enums.ItemList;
 import gregtech.api.enums.Materials;
 import gregtech.api.enums.OrePrefixes;
@@ -33,8 +33,8 @@ public class BlastFurnaceRecipes implements IRecipePool {
     @Override
     public void loadRecipes() {
 
-        GTValues.RA.stdBuilder()
-            .itemInputsUnsafe(
+        RecipeBuilder.builder()
+            .itemInputs(
                 GTOreDictUnificator.get(OrePrefixes.block, Materials.SiliconSG, 96),
                 ItemList.GalliumArsenideCrystal.get(8),
                 GTOreDictUnificator.get(OrePrefixes.ingot, Materials.Neutronium, 4),
@@ -46,7 +46,7 @@ public class BlastFurnaceRecipes implements IRecipePool {
             .metadata(COIL_HEAT, 10000)
             .addTo(BFR);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .setNEIDesc("Remove Change by GTNotLeisure")
             .itemInputs(
                 GTOreDictUnificator.get(OrePrefixes.dust, Materials.Europium, 1),
@@ -58,7 +58,7 @@ public class BlastFurnaceRecipes implements IRecipePool {
             .metadata(COIL_HEAT, 8300)
             .addTo(BFR);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs(
                 MaterialPool.PitchblendeSlag.get(OrePrefixes.dust, 12),
                 GTOreDictUnificator.get(OrePrefixes.dust, Materials.SodiumCarbonate, 6))
@@ -71,7 +71,7 @@ public class BlastFurnaceRecipes implements IRecipePool {
             .metadata(COIL_HEAT, 3650)
             .addTo(BFR);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs(GTUtility.getIntegratedCircuit(1), ItemList.Brittle_Netherite_Scrap.get(1))
             .fluidInputs(Materials.HellishMetal.getMolten(1 * INGOTS))
             .itemOutputs(ItemList.Intensely_Bonded_Netherite_Nanoparticles.get(1))
@@ -82,7 +82,7 @@ public class BlastFurnaceRecipes implements IRecipePool {
             .addTo(BFR);
 
         if (Forestry.isModLoaded()) {
-            GTValues.RA.stdBuilder()
+            RecipeBuilder.builder()
                 .itemInputs(
                     GTUtility.getIntegratedCircuit(2),
                     ItemList.Brittle_Netherite_Scrap.get(1),

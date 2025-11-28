@@ -4,9 +4,9 @@ import net.minecraftforge.fluids.FluidRegistry;
 
 import com.science.gtnl.api.IRecipePool;
 import com.science.gtnl.common.material.RecipePool;
+import com.science.gtnl.utils.recipes.RecipeBuilder;
 
 import bartworks.system.material.WerkstoffLoader;
-import gregtech.api.enums.GTValues;
 import gregtech.api.enums.Materials;
 import gregtech.api.enums.OrePrefixes;
 import gregtech.api.enums.TierEU;
@@ -24,7 +24,7 @@ public class PlatinumBasedTreatmentRecipes implements IRecipePool {
     public void loadRecipes() {
 
         // 铂金属粉处理
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs(
                 GTUtility.copyAmountUnsafe(192, WerkstoffLoader.PTMetallicPowder.get(OrePrefixes.dust, 1)),
                 GTOreDictUnificator.get(OrePrefixes.dust, Materials.Sulfur, 13),
@@ -55,7 +55,7 @@ public class PlatinumBasedTreatmentRecipes implements IRecipePool {
             .addTo(PBTR);
 
         // 铂渣粉处理
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs(
                 GTUtility.copyAmountUnsafe(96, WerkstoffLoader.PTResidue.get(OrePrefixes.dust, 1)),
                 MaterialMisc.SODIUM_NITRATE.getDust(103),
@@ -80,7 +80,7 @@ public class PlatinumBasedTreatmentRecipes implements IRecipePool {
             .addTo(PBTR);
 
         // 浸出渣处理
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs(
                 WerkstoffLoader.LeachResidue.get(OrePrefixes.dust, 64),
                 GTOreDictUnificator.get(OrePrefixes.dust, Materials.Saltpeter, 64),
@@ -103,7 +103,7 @@ public class PlatinumBasedTreatmentRecipes implements IRecipePool {
             .addTo(PBTR);
 
         // 稀有金属渣粉处理
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs(WerkstoffLoader.IrOsLeachResidue.get(OrePrefixes.dust, 20))
             .itemOutputs(
                 GTOreDictUnificator.get(OrePrefixes.dust, Materials.Iridium, 10),
@@ -119,7 +119,7 @@ public class PlatinumBasedTreatmentRecipes implements IRecipePool {
             .addTo(PBTR);
 
         // 铱金属渣粉处理
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs(WerkstoffLoader.IrLeachResidue.get(OrePrefixes.dust, 20))
             .itemOutputs(
                 GTOreDictUnificator.get(OrePrefixes.dust, Materials.Iridium, 20),
@@ -134,7 +134,7 @@ public class PlatinumBasedTreatmentRecipes implements IRecipePool {
             .addTo(PBTR);
 
         // 钯金属粉处理
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs(GTUtility.copyAmountUnsafe(90, WerkstoffLoader.PDMetallicPowder.get(OrePrefixes.dust, 1)))
             .itemOutputs(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Palladium, 64))
             .fluidInputs(
@@ -147,7 +147,7 @@ public class PlatinumBasedTreatmentRecipes implements IRecipePool {
             .addTo(PBTR);
 
         // 富钯氨处理
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs()
             .itemOutputs(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Palladium, 64))
             .fluidInputs(
@@ -161,7 +161,7 @@ public class PlatinumBasedTreatmentRecipes implements IRecipePool {
             .addTo(PBTR);
 
         // 粗制铑金属粉处理
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs(
                 GTUtility.copyAmountUnsafe(100, WerkstoffLoader.CrudeRhMetall.get(OrePrefixes.dust, 1)),
                 GTOreDictUnificator.get(OrePrefixes.dust, Materials.Sodium, 50))

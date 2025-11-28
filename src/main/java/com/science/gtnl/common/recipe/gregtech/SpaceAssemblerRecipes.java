@@ -4,9 +4,9 @@ import net.minecraft.item.ItemStack;
 
 import com.science.gtnl.api.IRecipePool;
 import com.science.gtnl.utils.enums.GTNLItemList;
+import com.science.gtnl.utils.recipes.RecipeBuilder;
 
 import goodgenerator.util.ItemRefer;
-import gregtech.api.enums.GTValues;
 import gregtech.api.enums.ItemList;
 import gregtech.api.enums.Materials;
 import gregtech.api.enums.MaterialsUEVplus;
@@ -29,7 +29,7 @@ public class SpaceAssemblerRecipes implements IRecipePool {
     @Override
     public void loadRecipes() {
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs(
                 ItemList.Circuit_Chip_Optical.get(1),
                 ItemList.Circuit_Chip_Ram.get(16),
@@ -46,7 +46,7 @@ public class SpaceAssemblerRecipes implements IRecipePool {
             .eut(TierEU.RECIPE_UV)
             .addTo(SAR);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs(
                 ItemList.Energy_Module.get(1),
                 new ItemStack(ModItems.itemDehydratorCoil, 16, 3),
@@ -65,7 +65,7 @@ public class SpaceAssemblerRecipes implements IRecipePool {
             .eut(TierEU.RECIPE_UHV)
             .addTo(SAR);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs(
                 ItemList.SpaceElevatorModuleMinerT2.get(1),
                 ItemList.SpaceElevatorModuleMinerT2.get(1),
@@ -89,7 +89,7 @@ public class SpaceAssemblerRecipes implements IRecipePool {
             .eut(TierEU.RECIPE_UIV)
             .addTo(SAR);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs(
                 ItemList.Emitter_UXV.get(1),
                 GTModHandler.getModItem(Mods.DraconicEvolution.ID, "reactorCore", 16),

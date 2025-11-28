@@ -10,8 +10,8 @@ import com.science.gtnl.api.IRecipePool;
 import com.science.gtnl.common.material.MaterialPool;
 import com.science.gtnl.common.material.RecipePool;
 import com.science.gtnl.utils.item.ItemUtils;
+import com.science.gtnl.utils.recipes.RecipeBuilder;
 
-import gregtech.api.enums.GTValues;
 import gregtech.api.enums.Materials;
 import gregtech.api.enums.OrePrefixes;
 import gregtech.api.recipe.RecipeMap;
@@ -48,7 +48,7 @@ public class ManaInfusionRecipes implements IRecipePool {
         ItemStack solegnolia = ItemUtils.getSpecialFlower("solegnolia");
         ItemStack solegnoliaChibi = ItemUtils.getSpecialFlower("solegnoliaChibi");
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs(GTModHandler.getModItem(Botania.ID, "alchemyCatalyst", 0), daybloom)
             .itemOutputs(daybloomDecor)
             .fluidInputs(MaterialPool.FluidMana.getFluidOrGas(2500))
@@ -56,7 +56,7 @@ public class ManaInfusionRecipes implements IRecipePool {
             .eut(2048)
             .addTo(MIR);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs(GTModHandler.getModItem(Botania.ID, "alchemyCatalyst", 0), hydroangeas)
             .itemOutputs(hydroangeasDecor)
             .fluidInputs(MaterialPool.FluidMana.getFluidOrGas(2500))
@@ -64,7 +64,7 @@ public class ManaInfusionRecipes implements IRecipePool {
             .eut(2048)
             .addTo(MIR);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs(GTModHandler.getModItem(Botania.ID, "alchemyCatalyst", 0), nightshade)
             .itemOutputs(nightshadeDecor)
             .fluidInputs(MaterialPool.FluidMana.getFluidOrGas(2500))
@@ -72,7 +72,7 @@ public class ManaInfusionRecipes implements IRecipePool {
             .eut(2048)
             .addTo(MIR);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs(GTModHandler.getModItem(Botania.ID, "alchemyCatalyst", 0), bellethorn)
             .itemOutputs(bellethornChibi)
             .fluidInputs(MaterialPool.FluidMana.getFluidOrGas(2500))
@@ -80,7 +80,7 @@ public class ManaInfusionRecipes implements IRecipePool {
             .eut(2048)
             .addTo(MIR);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs(GTModHandler.getModItem(Botania.ID, "alchemyCatalyst", 0), agricarnation)
             .itemOutputs(agricarnationChibi)
             .fluidInputs(MaterialPool.FluidMana.getFluidOrGas(2500))
@@ -88,7 +88,7 @@ public class ManaInfusionRecipes implements IRecipePool {
             .eut(2048)
             .addTo(MIR);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs(GTModHandler.getModItem(Botania.ID, "alchemyCatalyst", 0), hopperhock)
             .itemOutputs(hopperhockChibi)
             .fluidInputs(MaterialPool.FluidMana.getFluidOrGas(2500))
@@ -96,7 +96,7 @@ public class ManaInfusionRecipes implements IRecipePool {
             .eut(2048)
             .addTo(MIR);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs(GTModHandler.getModItem(Botania.ID, "alchemyCatalyst", 0), rannuncarpus)
             .itemOutputs(rannuncarpusChibi)
             .fluidInputs(MaterialPool.FluidMana.getFluidOrGas(2500))
@@ -104,7 +104,7 @@ public class ManaInfusionRecipes implements IRecipePool {
             .eut(2048)
             .addTo(MIR);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs(GTModHandler.getModItem(Botania.ID, "alchemyCatalyst", 0), clayconia)
             .itemOutputs(clayconiaChibi)
             .fluidInputs(MaterialPool.FluidMana.getFluidOrGas(2500))
@@ -112,7 +112,7 @@ public class ManaInfusionRecipes implements IRecipePool {
             .eut(2048)
             .addTo(MIR);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs(GTModHandler.getModItem(Botania.ID, "alchemyCatalyst", 0), marimorphosis)
             .itemOutputs(marimorphosisChibi)
             .fluidInputs(MaterialPool.FluidMana.getFluidOrGas(2500))
@@ -120,7 +120,7 @@ public class ManaInfusionRecipes implements IRecipePool {
             .eut(2048)
             .addTo(MIR);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs(GTModHandler.getModItem(Botania.ID, "alchemyCatalyst", 0), bubbell)
             .itemOutputs(bubbellChibi)
             .fluidInputs(MaterialPool.FluidMana.getFluidOrGas(2500))
@@ -128,7 +128,7 @@ public class ManaInfusionRecipes implements IRecipePool {
             .eut(2048)
             .addTo(MIR);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs(GTModHandler.getModItem(Botania.ID, "alchemyCatalyst", 0), solegnolia)
             .itemOutputs(solegnoliaChibi)
             .fluidInputs(MaterialPool.FluidMana.getFluidOrGas(2500))
@@ -136,7 +136,7 @@ public class ManaInfusionRecipes implements IRecipePool {
             .eut(2048)
             .addTo(MIR);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs(
                 GTModHandler.getModItem(Botania.ID, "conjurationCatalyst", 0),
                 new ItemStack(Blocks.tallgrass, 1))
@@ -146,7 +146,7 @@ public class ManaInfusionRecipes implements IRecipePool {
             .eut(2048)
             .addTo(MIR);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs(
                 GTModHandler.getModItem(Botania.ID, "conjurationCatalyst", 0),
                 new ItemStack(Blocks.leaves, 1, 0))
@@ -156,7 +156,7 @@ public class ManaInfusionRecipes implements IRecipePool {
             .eut(2048)
             .addTo(MIR);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs(GTModHandler.getModItem(Botania.ID, "conjurationCatalyst", 0), new ItemStack(Blocks.leaves, 1))
             .itemOutputs(new ItemStack(Blocks.leaves, 2, 1))
             .fluidInputs(MaterialPool.FluidMana.getFluidOrGas(2000))
@@ -164,7 +164,7 @@ public class ManaInfusionRecipes implements IRecipePool {
             .eut(2048)
             .addTo(MIR);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs(
                 GTModHandler.getModItem(Botania.ID, "conjurationCatalyst", 0),
                 new ItemStack(Blocks.leaves, 1, 2))
@@ -174,7 +174,7 @@ public class ManaInfusionRecipes implements IRecipePool {
             .eut(2048)
             .addTo(MIR);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs(
                 GTModHandler.getModItem(Botania.ID, "conjurationCatalyst", 0),
                 new ItemStack(Blocks.leaves, 1, 3))
@@ -184,7 +184,7 @@ public class ManaInfusionRecipes implements IRecipePool {
             .eut(2048)
             .addTo(MIR);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs(GTModHandler.getModItem(Botania.ID, "conjurationCatalyst", 0), new ItemStack(Blocks.leaves2, 1))
             .itemOutputs(new ItemStack(Blocks.leaves2, 2))
             .fluidInputs(MaterialPool.FluidMana.getFluidOrGas(2000))
@@ -192,7 +192,7 @@ public class ManaInfusionRecipes implements IRecipePool {
             .eut(2048)
             .addTo(MIR);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs(
                 GTModHandler.getModItem(Botania.ID, "conjurationCatalyst", 0),
                 new ItemStack(Blocks.leaves2, 1, 1))
@@ -202,7 +202,7 @@ public class ManaInfusionRecipes implements IRecipePool {
             .eut(2048)
             .addTo(MIR);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs(GTModHandler.getModItem(Botania.ID, "conjurationCatalyst", 0), new ItemStack(Blocks.gravel, 1))
             .itemOutputs(new ItemStack(Blocks.gravel, 2))
             .fluidInputs(MaterialPool.FluidMana.getFluidOrGas(720))
@@ -210,7 +210,7 @@ public class ManaInfusionRecipes implements IRecipePool {
             .eut(2048)
             .addTo(MIR);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs(
                 GTModHandler.getModItem(Botania.ID, "conjurationCatalyst", 0),
                 new ItemStack(Blocks.soul_sand, 1))
@@ -220,7 +220,7 @@ public class ManaInfusionRecipes implements IRecipePool {
             .eut(2048)
             .addTo(MIR);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs(
                 GTModHandler.getModItem(Botania.ID, "conjurationCatalyst", 0),
                 new ItemStack(Blocks.netherrack, 1, 0))
@@ -230,7 +230,7 @@ public class ManaInfusionRecipes implements IRecipePool {
             .eut(2048)
             .addTo(MIR);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs(
                 GTModHandler.getModItem(Botania.ID, "conjurationCatalyst", 0),
                 new ItemStack(Items.snowball, 1, 0))
@@ -240,7 +240,7 @@ public class ManaInfusionRecipes implements IRecipePool {
             .eut(2048)
             .addTo(MIR);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs(GTModHandler.getModItem(Botania.ID, "conjurationCatalyst", 0), new ItemStack(Items.coal, 1, 0))
             .itemOutputs(new ItemStack(Items.coal, 2, 0))
             .fluidInputs(MaterialPool.FluidMana.getFluidOrGas(7500))
@@ -248,7 +248,7 @@ public class ManaInfusionRecipes implements IRecipePool {
             .eut(2048)
             .addTo(MIR);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs(
                 GTModHandler.getModItem(Botania.ID, "conjurationCatalyst", 0),
                 new ItemStack(Items.quartz, 1, 0))
@@ -258,7 +258,7 @@ public class ManaInfusionRecipes implements IRecipePool {
             .eut(2048)
             .addTo(MIR);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs(
                 GTModHandler.getModItem(Botania.ID, "conjurationCatalyst", 0),
                 new ItemStack(Items.glowstone_dust, 1, 0))
@@ -268,7 +268,7 @@ public class ManaInfusionRecipes implements IRecipePool {
             .eut(2048)
             .addTo(MIR);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs(
                 GTModHandler.getModItem(Botania.ID, "conjurationCatalyst", 0),
                 new ItemStack(Items.redstone, 1, 0))
@@ -278,7 +278,7 @@ public class ManaInfusionRecipes implements IRecipePool {
             .eut(2048)
             .addTo(MIR);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs(
                 GTModHandler.getModItem(Botania.ID, "alchemyCatalyst", 0),
                 new ItemStack(Blocks.double_plant, 1, 5))
@@ -288,7 +288,7 @@ public class ManaInfusionRecipes implements IRecipePool {
             .eut(2048)
             .addTo(MIR);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs(
                 GTModHandler.getModItem(Botania.ID, "alchemyCatalyst", 0),
                 new ItemStack(Blocks.yellow_flower, 1, 0))
@@ -298,7 +298,7 @@ public class ManaInfusionRecipes implements IRecipePool {
             .eut(2048)
             .addTo(MIR);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs(
                 GTModHandler.getModItem(Botania.ID, "alchemyCatalyst", 0),
                 new ItemStack(Blocks.red_flower, 1, 0))
@@ -308,7 +308,7 @@ public class ManaInfusionRecipes implements IRecipePool {
             .eut(2048)
             .addTo(MIR);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs(
                 GTModHandler.getModItem(Botania.ID, "alchemyCatalyst", 0),
                 new ItemStack(Blocks.red_flower, 1, 1))
@@ -318,7 +318,7 @@ public class ManaInfusionRecipes implements IRecipePool {
             .eut(2048)
             .addTo(MIR);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs(
                 GTModHandler.getModItem(Botania.ID, "alchemyCatalyst", 0),
                 new ItemStack(Blocks.red_flower, 1, 2))
@@ -328,7 +328,7 @@ public class ManaInfusionRecipes implements IRecipePool {
             .eut(2048)
             .addTo(MIR);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs(
                 GTModHandler.getModItem(Botania.ID, "alchemyCatalyst", 0),
                 new ItemStack(Blocks.red_flower, 1, 3))
@@ -338,7 +338,7 @@ public class ManaInfusionRecipes implements IRecipePool {
             .eut(2048)
             .addTo(MIR);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs(
                 GTModHandler.getModItem(Botania.ID, "alchemyCatalyst", 0),
                 new ItemStack(Blocks.red_flower, 1, 4))
@@ -348,7 +348,7 @@ public class ManaInfusionRecipes implements IRecipePool {
             .eut(2048)
             .addTo(MIR);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs(
                 GTModHandler.getModItem(Botania.ID, "alchemyCatalyst", 0),
                 new ItemStack(Blocks.red_flower, 1, 5))
@@ -358,7 +358,7 @@ public class ManaInfusionRecipes implements IRecipePool {
             .eut(2048)
             .addTo(MIR);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs(
                 GTModHandler.getModItem(Botania.ID, "alchemyCatalyst", 0),
                 new ItemStack(Blocks.red_flower, 1, 6))
@@ -368,7 +368,7 @@ public class ManaInfusionRecipes implements IRecipePool {
             .eut(2048)
             .addTo(MIR);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs(
                 GTModHandler.getModItem(Botania.ID, "alchemyCatalyst", 0),
                 new ItemStack(Blocks.red_flower, 1, 7))
@@ -378,7 +378,7 @@ public class ManaInfusionRecipes implements IRecipePool {
             .eut(2048)
             .addTo(MIR);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs(
                 GTModHandler.getModItem(Botania.ID, "alchemyCatalyst", 0),
                 new ItemStack(Blocks.red_flower, 1, 8))
@@ -388,7 +388,7 @@ public class ManaInfusionRecipes implements IRecipePool {
             .eut(2048)
             .addTo(MIR);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs(
                 GTModHandler.getModItem(Botania.ID, "alchemyCatalyst", 0),
                 new ItemStack(Blocks.double_plant, 1, 0))
@@ -398,7 +398,7 @@ public class ManaInfusionRecipes implements IRecipePool {
             .eut(2048)
             .addTo(MIR);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs(
                 GTModHandler.getModItem(Botania.ID, "alchemyCatalyst", 0),
                 new ItemStack(Blocks.double_plant, 1, 1))
@@ -408,7 +408,7 @@ public class ManaInfusionRecipes implements IRecipePool {
             .eut(2048)
             .addTo(MIR);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs(
                 GTModHandler.getModItem(Botania.ID, "alchemyCatalyst", 0),
                 new ItemStack(Blocks.double_plant, 1, 4))
@@ -418,7 +418,7 @@ public class ManaInfusionRecipes implements IRecipePool {
             .eut(2048)
             .addTo(MIR);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs(GTModHandler.getModItem(Botania.ID, "alchemyCatalyst", 0), new ItemStack(Blocks.tallgrass, 1))
             .itemOutputs(new ItemStack(Blocks.tallgrass, 1, 2))
             .fluidInputs(MaterialPool.FluidMana.getFluidOrGas(500))
@@ -426,7 +426,7 @@ public class ManaInfusionRecipes implements IRecipePool {
             .eut(2048)
             .addTo(MIR);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs(GTModHandler.getModItem(Botania.ID, "alchemyCatalyst", 0), new ItemStack(Blocks.deadbush, 1, 0))
             .itemOutputs(new ItemStack(Blocks.tallgrass, 1))
             .fluidInputs(MaterialPool.FluidMana.getFluidOrGas(500))
@@ -434,7 +434,7 @@ public class ManaInfusionRecipes implements IRecipePool {
             .eut(2048)
             .addTo(MIR);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs(
                 GTModHandler.getModItem(Botania.ID, "alchemyCatalyst", 0),
                 new ItemStack(Blocks.tallgrass, 1, 2))
@@ -444,7 +444,7 @@ public class ManaInfusionRecipes implements IRecipePool {
             .eut(2048)
             .addTo(MIR);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs(
                 GTModHandler.getModItem(Botania.ID, "alchemyCatalyst", 0),
                 GTModHandler.getModItem(Botania.ID, "stone", 1, 2))
@@ -454,7 +454,7 @@ public class ManaInfusionRecipes implements IRecipePool {
             .eut(2048)
             .addTo(MIR);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs(
                 GTModHandler.getModItem(Botania.ID, "alchemyCatalyst", 0),
                 GTModHandler.getModItem(Botania.ID, "stone", 1, 1))
@@ -464,7 +464,7 @@ public class ManaInfusionRecipes implements IRecipePool {
             .eut(2048)
             .addTo(MIR);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs(
                 GTModHandler.getModItem(Botania.ID, "alchemyCatalyst", 0),
                 GTModHandler.getModItem(Botania.ID, "stone", 1, 0))
@@ -474,7 +474,7 @@ public class ManaInfusionRecipes implements IRecipePool {
             .eut(2048)
             .addTo(MIR);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs(
                 GTModHandler.getModItem(Botania.ID, "alchemyCatalyst", 0),
                 GTModHandler.getModItem(Botania.ID, "stone", 1, 3))
@@ -484,7 +484,7 @@ public class ManaInfusionRecipes implements IRecipePool {
             .eut(2048)
             .addTo(MIR);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs(GTModHandler.getModItem(Botania.ID, "alchemyCatalyst", 0), new ItemStack(Items.quartz, 1, 0))
             .itemOutputs(GTModHandler.getModItem(Botania.ID, "manaResource", 1, 10))
             .fluidInputs(MaterialPool.FluidMana.getFluidOrGas(200))
@@ -492,7 +492,7 @@ public class ManaInfusionRecipes implements IRecipePool {
             .eut(2048)
             .addTo(MIR);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs(GTModHandler.getModItem(Botania.ID, "alchemyCatalyst", 0), new ItemStack(Blocks.dirt, 1, 0))
             .itemOutputs(new ItemStack(Blocks.dirt, 1, 1))
             .fluidInputs(MaterialPool.FluidMana.getFluidOrGas(120))
@@ -500,7 +500,7 @@ public class ManaInfusionRecipes implements IRecipePool {
             .eut(2048)
             .addTo(MIR);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs(
                 GTModHandler.getModItem(Botania.ID, "alchemyCatalyst", 0),
                 new ItemStack(Blocks.brick_block, 1, 0))
@@ -510,7 +510,7 @@ public class ManaInfusionRecipes implements IRecipePool {
             .eut(2048)
             .addTo(MIR);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs(GTModHandler.getModItem(Botania.ID, "alchemyCatalyst", 0), new ItemStack(Blocks.clay, 1, 0))
             .itemOutputs(new ItemStack(Items.clay_ball, 1, 0))
             .fluidInputs(MaterialPool.FluidMana.getFluidOrGas(25))
@@ -518,7 +518,7 @@ public class ManaInfusionRecipes implements IRecipePool {
             .eut(2048)
             .addTo(MIR);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs(
                 GTModHandler.getModItem(Botania.ID, "alchemyCatalyst", 0),
                 new ItemStack(Blocks.hardened_clay, 1, 0))
@@ -528,7 +528,7 @@ public class ManaInfusionRecipes implements IRecipePool {
             .eut(2048)
             .addTo(MIR);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs(
                 GTModHandler.getModItem(Botania.ID, "alchemyCatalyst", 0),
                 new ItemStack(Blocks.cobblestone, 1, 0))
@@ -538,7 +538,7 @@ public class ManaInfusionRecipes implements IRecipePool {
             .eut(2048)
             .addTo(MIR);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs(GTModHandler.getModItem(Botania.ID, "alchemyCatalyst", 0), new ItemStack(Items.redstone, 1, 0))
             .itemOutputs(new ItemStack(Items.glowstone_dust, 1, 0))
             .fluidInputs(MaterialPool.FluidMana.getFluidOrGas(300))
@@ -546,7 +546,7 @@ public class ManaInfusionRecipes implements IRecipePool {
             .eut(2048)
             .addTo(MIR);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs(
                 GTModHandler.getModItem(Botania.ID, "alchemyCatalyst", 0),
                 new ItemStack(Items.glowstone_dust, 1, 0))
@@ -556,7 +556,7 @@ public class ManaInfusionRecipes implements IRecipePool {
             .eut(2048)
             .addTo(MIR);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs(
                 GTModHandler.getModItem(Botania.ID, "alchemyCatalyst", 0),
                 new ItemStack(Items.glowstone_dust, 1, 0))
@@ -566,7 +566,7 @@ public class ManaInfusionRecipes implements IRecipePool {
             .eut(2048)
             .addTo(MIR);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs(
                 GTModHandler.getModItem(Botania.ID, "alchemyCatalyst", 0),
                 new ItemStack(Items.ghast_tear, 1, 0))
@@ -576,7 +576,7 @@ public class ManaInfusionRecipes implements IRecipePool {
             .eut(2048)
             .addTo(MIR);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs(
                 GTModHandler.getModItem(Botania.ID, "alchemyCatalyst", 0),
                 new ItemStack(Items.slime_ball, 1, 0))
@@ -586,7 +586,7 @@ public class ManaInfusionRecipes implements IRecipePool {
             .eut(2048)
             .addTo(MIR);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs(GTModHandler.getModItem(Botania.ID, "alchemyCatalyst", 0), new ItemStack(Blocks.cactus, 1, 0))
             .itemOutputs(new ItemStack(Items.slime_ball, 1, 0))
             .fluidInputs(MaterialPool.FluidMana.getFluidOrGas(1200))
@@ -595,7 +595,7 @@ public class ManaInfusionRecipes implements IRecipePool {
             .addTo(MIR);
 
         for (int meta = 15; meta >= 0; meta--) {
-            GTValues.RA.stdBuilder()
+            RecipeBuilder.builder()
                 .itemInputs(
                     GTModHandler.getModItem(Botania.ID, "alchemyCatalyst", 0),
                     new ItemStack(Blocks.wool, 1, meta))
@@ -606,7 +606,7 @@ public class ManaInfusionRecipes implements IRecipePool {
                 .addTo(MIR);
         }
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs(
                 GTModHandler.getModItem(Botania.ID, "alchemyCatalyst", 0),
                 new ItemStack(Items.writable_book, 1, 0))
@@ -616,7 +616,7 @@ public class ManaInfusionRecipes implements IRecipePool {
             .eut(2048)
             .addTo(MIR);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs(GTModHandler.getModItem(Botania.ID, "alchemyCatalyst", 0), new ItemStack(Items.flint, 1, 0))
             .itemOutputs(new ItemStack(Items.gunpowder, 1, 0))
             .fluidInputs(MaterialPool.FluidMana.getFluidOrGas(16000))
@@ -624,7 +624,7 @@ public class ManaInfusionRecipes implements IRecipePool {
             .eut(2048)
             .addTo(MIR);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs(GTModHandler.getModItem(Botania.ID, "alchemyCatalyst", 0), new ItemStack(Items.flint, 1, 0))
             .itemOutputs(new ItemStack(Items.gunpowder, 1, 0))
             .fluidInputs(MaterialPool.FluidMana.getFluidOrGas(4000))
@@ -632,7 +632,7 @@ public class ManaInfusionRecipes implements IRecipePool {
             .eut(2048)
             .addTo(MIR);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs(GTModHandler.getModItem(Botania.ID, "alchemyCatalyst", 0), new ItemStack(Items.gunpowder, 1, 0))
             .itemOutputs(new ItemStack(Items.flint, 1, 0))
             .fluidInputs(MaterialPool.FluidMana.getFluidOrGas(4000))
@@ -640,7 +640,7 @@ public class ManaInfusionRecipes implements IRecipePool {
             .eut(2048)
             .addTo(MIR);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs(GTModHandler.getModItem(Botania.ID, "alchemyCatalyst", 0), new ItemStack(Items.gunpowder, 1, 0))
             .itemOutputs(new ItemStack(Items.flint, 1, 0))
             .fluidInputs(MaterialPool.FluidMana.getFluidOrGas(200))
@@ -648,7 +648,7 @@ public class ManaInfusionRecipes implements IRecipePool {
             .eut(2048)
             .addTo(MIR);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs(GTModHandler.getModItem(Botania.ID, "alchemyCatalyst", 0), new ItemStack(Items.blaze_rod, 1, 0))
             .itemOutputs(new ItemStack(Blocks.nether_wart, 1, 0))
             .fluidInputs(MaterialPool.FluidMana.getFluidOrGas(4000))
@@ -656,7 +656,7 @@ public class ManaInfusionRecipes implements IRecipePool {
             .eut(2048)
             .addTo(MIR);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs(
                 GTModHandler.getModItem(Botania.ID, "alchemyCatalyst", 0),
                 new ItemStack(Items.poisonous_potato, 1, 0))
@@ -666,7 +666,7 @@ public class ManaInfusionRecipes implements IRecipePool {
             .eut(2048)
             .addTo(MIR);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs(
                 GTModHandler.getModItem(Botania.ID, "alchemyCatalyst", 0),
                 new ItemStack(Items.pumpkin_seeds, 1, 0))
@@ -676,7 +676,7 @@ public class ManaInfusionRecipes implements IRecipePool {
             .eut(2048)
             .addTo(MIR);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs(
                 GTModHandler.getModItem(Botania.ID, "alchemyCatalyst", 0),
                 new ItemStack(Items.melon_seeds, 1, 0))
@@ -686,7 +686,7 @@ public class ManaInfusionRecipes implements IRecipePool {
             .eut(2048)
             .addTo(MIR);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs(GTModHandler.getModItem(Botania.ID, "alchemyCatalyst", 0), new ItemStack(Items.carrot, 1, 0))
             .itemOutputs(new ItemStack(Items.melon_seeds, 1, 0))
             .fluidInputs(MaterialPool.FluidMana.getFluidOrGas(16000))
@@ -694,7 +694,7 @@ public class ManaInfusionRecipes implements IRecipePool {
             .eut(2048)
             .addTo(MIR);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs(GTModHandler.getModItem(Botania.ID, "alchemyCatalyst", 0), new ItemStack(Items.potato, 1, 0))
             .itemOutputs(new ItemStack(Items.carrot, 1, 0))
             .fluidInputs(MaterialPool.FluidMana.getFluidOrGas(16000))
@@ -702,7 +702,7 @@ public class ManaInfusionRecipes implements IRecipePool {
             .eut(2048)
             .addTo(MIR);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs(GTModHandler.getModItem(Botania.ID, "alchemyCatalyst", 0), new ItemStack(Blocks.wheat, 1, 0))
             .itemOutputs(new ItemStack(Items.potato, 1, 0))
             .fluidInputs(MaterialPool.FluidMana.getFluidOrGas(16000))
@@ -710,7 +710,7 @@ public class ManaInfusionRecipes implements IRecipePool {
             .eut(2048)
             .addTo(MIR);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs(GTModHandler.getModItem(Botania.ID, "alchemyCatalyst", 0), new ItemStack(Items.dye, 1, 3))
             .itemOutputs(new ItemStack(Items.wheat_seeds, 1, 0))
             .fluidInputs(MaterialPool.FluidMana.getFluidOrGas(16000))
@@ -718,7 +718,7 @@ public class ManaInfusionRecipes implements IRecipePool {
             .eut(2048)
             .addTo(MIR);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs(GTModHandler.getModItem(Botania.ID, "alchemyCatalyst", 0), new ItemStack(Items.fish, 1, 3))
             .itemOutputs(new ItemStack(Items.fish, 1, 0))
             .fluidInputs(MaterialPool.FluidMana.getFluidOrGas(200))
@@ -726,7 +726,7 @@ public class ManaInfusionRecipes implements IRecipePool {
             .eut(2048)
             .addTo(MIR);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs(GTModHandler.getModItem(Botania.ID, "alchemyCatalyst", 0), new ItemStack(Items.fish, 1, 2))
             .itemOutputs(new ItemStack(Items.fish, 1, 3))
             .fluidInputs(MaterialPool.FluidMana.getFluidOrGas(200))
@@ -734,7 +734,7 @@ public class ManaInfusionRecipes implements IRecipePool {
             .eut(2048)
             .addTo(MIR);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs(GTModHandler.getModItem(Botania.ID, "alchemyCatalyst", 0), new ItemStack(Items.fish, 1, 1))
             .itemOutputs(new ItemStack(Items.fish, 1, 2))
             .fluidInputs(MaterialPool.FluidMana.getFluidOrGas(200))
@@ -742,7 +742,7 @@ public class ManaInfusionRecipes implements IRecipePool {
             .eut(2048)
             .addTo(MIR);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs(GTModHandler.getModItem(Botania.ID, "alchemyCatalyst", 0), new ItemStack(Items.fish, 1, 0))
             .itemOutputs(new ItemStack(Items.fish, 1, 1))
             .fluidInputs(MaterialPool.FluidMana.getFluidOrGas(200))
@@ -750,7 +750,7 @@ public class ManaInfusionRecipes implements IRecipePool {
             .eut(2048)
             .addTo(MIR);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs(GTModHandler.getModItem(Botania.ID, "alchemyCatalyst", 0), new ItemStack(Blocks.vine, 1, 0))
             .itemOutputs(new ItemStack(Blocks.waterlily, 1, 0))
             .fluidInputs(MaterialPool.FluidMana.getFluidOrGas(320))
@@ -758,7 +758,7 @@ public class ManaInfusionRecipes implements IRecipePool {
             .eut(2048)
             .addTo(MIR);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs(
                 GTModHandler.getModItem(Botania.ID, "alchemyCatalyst", 0),
                 new ItemStack(Blocks.waterlily, 1, 0))
@@ -768,7 +768,7 @@ public class ManaInfusionRecipes implements IRecipePool {
             .eut(2048)
             .addTo(MIR);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs(
                 GTModHandler.getModItem(Botania.ID, "alchemyCatalyst", 0),
                 new ItemStack(Blocks.waterlily, 1, 0))
@@ -778,7 +778,7 @@ public class ManaInfusionRecipes implements IRecipePool {
             .eut(2048)
             .addTo(MIR);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs(GTModHandler.getModItem(Botania.ID, "alchemyCatalyst", 0), new ItemStack(Blocks.snow, 1, 0))
             .itemOutputs(new ItemStack(Blocks.ice, 1, 0))
             .fluidInputs(MaterialPool.FluidMana.getFluidOrGas(2250))
@@ -786,7 +786,7 @@ public class ManaInfusionRecipes implements IRecipePool {
             .eut(2048)
             .addTo(MIR);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs(
                 GTModHandler.getModItem(Botania.ID, "alchemyCatalyst", 0),
                 new ItemStack(Blocks.stonebrick, 1, 0))
@@ -796,7 +796,7 @@ public class ManaInfusionRecipes implements IRecipePool {
             .eut(2048)
             .addTo(MIR);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs(
                 GTModHandler.getModItem(Botania.ID, "alchemyCatalyst", 0),
                 GTModHandler.getModItem(Botania.ID, "quartzTypeElf", 1, 0))
@@ -806,7 +806,7 @@ public class ManaInfusionRecipes implements IRecipePool {
             .eut(2048)
             .addTo(MIR);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs(
                 GTModHandler.getModItem(Botania.ID, "alchemyCatalyst", 0),
                 GTModHandler.getModItem(Botania.ID, "quartzTypeRed", 1, 0))
@@ -816,7 +816,7 @@ public class ManaInfusionRecipes implements IRecipePool {
             .eut(2048)
             .addTo(MIR);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs(
                 GTModHandler.getModItem(Botania.ID, "alchemyCatalyst", 0),
                 GTModHandler.getModItem(Botania.ID, "quartzTypeLavender", 1, 0))
@@ -826,7 +826,7 @@ public class ManaInfusionRecipes implements IRecipePool {
             .eut(2048)
             .addTo(MIR);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs(
                 GTModHandler.getModItem(Botania.ID, "alchemyCatalyst", 0),
                 GTModHandler.getModItem(Botania.ID, "quartzTypeBlaze", 1, 0))
@@ -836,7 +836,7 @@ public class ManaInfusionRecipes implements IRecipePool {
             .eut(2048)
             .addTo(MIR);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs(
                 GTModHandler.getModItem(Botania.ID, "alchemyCatalyst", 0),
                 GTModHandler.getModItem(Botania.ID, "quartzTypeMana", 1, 0))
@@ -846,7 +846,7 @@ public class ManaInfusionRecipes implements IRecipePool {
             .eut(2048)
             .addTo(MIR);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs(
                 GTModHandler.getModItem(Botania.ID, "alchemyCatalyst", 0),
                 GTModHandler.getModItem(Botania.ID, "quartzTypeDark", 1, 0))
@@ -856,7 +856,7 @@ public class ManaInfusionRecipes implements IRecipePool {
             .eut(2048)
             .addTo(MIR);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs(
                 GTModHandler.getModItem(Botania.ID, "alchemyCatalyst", 0),
                 new ItemStack(Blocks.quartz_block, 1, 0))
@@ -866,7 +866,7 @@ public class ManaInfusionRecipes implements IRecipePool {
             .eut(2048)
             .addTo(MIR);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs(
                 GTModHandler.getModItem(Botania.ID, "alchemyCatalyst", 0),
                 new ItemStack(Blocks.glowstone, 1, 0))
@@ -876,7 +876,7 @@ public class ManaInfusionRecipes implements IRecipePool {
             .eut(2048)
             .addTo(MIR);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs(GTModHandler.getModItem(Botania.ID, "alchemyCatalyst", 0), new ItemStack(Blocks.sapling, 1, 5))
             .itemOutputs(new ItemStack(Blocks.sapling, 1, 0))
             .fluidInputs(MaterialPool.FluidMana.getFluidOrGas(120))
@@ -884,7 +884,7 @@ public class ManaInfusionRecipes implements IRecipePool {
             .eut(2048)
             .addTo(MIR);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs(GTModHandler.getModItem(Botania.ID, "alchemyCatalyst", 0), new ItemStack(Blocks.sapling, 1, 4))
             .itemOutputs(new ItemStack(Blocks.sapling, 1, 5))
             .fluidInputs(MaterialPool.FluidMana.getFluidOrGas(120))
@@ -892,7 +892,7 @@ public class ManaInfusionRecipes implements IRecipePool {
             .eut(2048)
             .addTo(MIR);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs(GTModHandler.getModItem(Botania.ID, "alchemyCatalyst", 0), new ItemStack(Blocks.sapling, 1, 3))
             .itemOutputs(new ItemStack(Blocks.sapling, 1, 4))
             .fluidInputs(MaterialPool.FluidMana.getFluidOrGas(120))
@@ -900,7 +900,7 @@ public class ManaInfusionRecipes implements IRecipePool {
             .eut(2048)
             .addTo(MIR);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs(GTModHandler.getModItem(Botania.ID, "alchemyCatalyst", 0), new ItemStack(Blocks.sapling, 1, 2))
             .itemOutputs(new ItemStack(Blocks.sapling, 1, 3))
             .fluidInputs(MaterialPool.FluidMana.getFluidOrGas(120))
@@ -908,7 +908,7 @@ public class ManaInfusionRecipes implements IRecipePool {
             .eut(2048)
             .addTo(MIR);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs(GTModHandler.getModItem(Botania.ID, "alchemyCatalyst", 0), new ItemStack(Blocks.sapling, 1, 1))
             .itemOutputs(new ItemStack(Blocks.sapling, 1, 2))
             .fluidInputs(MaterialPool.FluidMana.getFluidOrGas(120))
@@ -916,7 +916,7 @@ public class ManaInfusionRecipes implements IRecipePool {
             .eut(2048)
             .addTo(MIR);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs(GTModHandler.getModItem(Botania.ID, "alchemyCatalyst", 0), new ItemStack(Blocks.sapling, 1, 0))
             .itemOutputs(new ItemStack(Blocks.sapling, 1, 1))
             .fluidInputs(MaterialPool.FluidMana.getFluidOrGas(120))
@@ -924,7 +924,7 @@ public class ManaInfusionRecipes implements IRecipePool {
             .eut(2048)
             .addTo(MIR);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs(GTModHandler.getModItem(Botania.ID, "alchemyCatalyst", 0), new ItemStack(Blocks.log2, 1, 0))
             .itemOutputs(new ItemStack(Blocks.log2, 1, 1))
             .fluidInputs(MaterialPool.FluidMana.getFluidOrGas(40))
@@ -932,7 +932,7 @@ public class ManaInfusionRecipes implements IRecipePool {
             .eut(2048)
             .addTo(MIR);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs(GTModHandler.getModItem(Botania.ID, "alchemyCatalyst", 0), new ItemStack(Blocks.log, 1, 3))
             .itemOutputs(new ItemStack(Blocks.log2, 1, 0))
             .fluidInputs(MaterialPool.FluidMana.getFluidOrGas(40))
@@ -940,7 +940,7 @@ public class ManaInfusionRecipes implements IRecipePool {
             .eut(2048)
             .addTo(MIR);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs(GTModHandler.getModItem(Botania.ID, "alchemyCatalyst", 0), new ItemStack(Blocks.log, 1, 2))
             .itemOutputs(new ItemStack(Blocks.log, 1, 3))
             .fluidInputs(MaterialPool.FluidMana.getFluidOrGas(40))
@@ -948,7 +948,7 @@ public class ManaInfusionRecipes implements IRecipePool {
             .eut(2048)
             .addTo(MIR);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs(GTModHandler.getModItem(Botania.ID, "alchemyCatalyst", 0), new ItemStack(Blocks.log, 1, 1))
             .itemOutputs(new ItemStack(Blocks.log, 1, 2))
             .fluidInputs(MaterialPool.FluidMana.getFluidOrGas(40))
@@ -956,7 +956,7 @@ public class ManaInfusionRecipes implements IRecipePool {
             .eut(2048)
             .addTo(MIR);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs(GTModHandler.getModItem(Botania.ID, "alchemyCatalyst", 0), new ItemStack(Blocks.log, 1, 0))
             .itemOutputs(new ItemStack(Blocks.log, 1, 1))
             .fluidInputs(MaterialPool.FluidMana.getFluidOrGas(40))
@@ -964,7 +964,7 @@ public class ManaInfusionRecipes implements IRecipePool {
             .eut(2048)
             .addTo(MIR);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs(GTModHandler.getModItem(Botania.ID, "alchemyCatalyst", 0), new ItemStack(Blocks.log2, 1, 1))
             .itemOutputs(new ItemStack(Blocks.log, 1, 0))
             .fluidInputs(MaterialPool.FluidMana.getFluidOrGas(40))
@@ -972,7 +972,7 @@ public class ManaInfusionRecipes implements IRecipePool {
             .eut(2048)
             .addTo(MIR);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs(
                 GTModHandler.getModItem(Botania.ID, "alchemyCatalyst", 0),
                 new ItemStack(Items.rotten_flesh, 1, 0))
@@ -982,7 +982,7 @@ public class ManaInfusionRecipes implements IRecipePool {
             .eut(2048)
             .addTo(MIR);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs(
                 GTUtility.getIntegratedCircuit(1),
                 GTOreDictUnificator.get(OrePrefixes.ingot, Materials.Steel, 1))
@@ -992,7 +992,7 @@ public class ManaInfusionRecipes implements IRecipePool {
             .eut(2048)
             .addTo(MIR);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs(GTUtility.getIntegratedCircuit(1), GTModHandler.getModItem(Thaumcraft.ID, "ItemResource", 1, 2))
             .itemOutputs(GTModHandler.getModItem(Botania.ID, "manaResource", 1, 0))
             .fluidInputs(MaterialPool.FluidMana.getFluidOrGas(3000))
@@ -1000,7 +1000,7 @@ public class ManaInfusionRecipes implements IRecipePool {
             .eut(2048)
             .addTo(MIR);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs(
                 GTUtility.getIntegratedCircuit(1),
                 GTOreDictUnificator.get(OrePrefixes.block, Materials.Steel, 1))
@@ -1010,7 +1010,7 @@ public class ManaInfusionRecipes implements IRecipePool {
             .eut(2048)
             .addTo(MIR);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs(
                 GTUtility.getIntegratedCircuit(1),
                 GTOreDictUnificator.get(OrePrefixes.block, Materials.Thaumium, 1))
@@ -1020,7 +1020,7 @@ public class ManaInfusionRecipes implements IRecipePool {
             .eut(2048)
             .addTo(MIR);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs(GTUtility.getIntegratedCircuit(1), new ItemStack(Items.gunpowder, 1, 0))
             .itemOutputs(GTModHandler.getModItem(Botania.ID, "manaResource", 1, 23))
             .fluidInputs(MaterialPool.FluidMana.getFluidOrGas(1000))
@@ -1028,7 +1028,7 @@ public class ManaInfusionRecipes implements IRecipePool {
             .eut(2048)
             .addTo(MIR);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs(GTUtility.getIntegratedCircuit(1), new ItemStack(Items.redstone, 1, 0))
             .itemOutputs(GTModHandler.getModItem(Botania.ID, "manaResource", 1, 23))
             .fluidInputs(MaterialPool.FluidMana.getFluidOrGas(1000))
@@ -1036,7 +1036,7 @@ public class ManaInfusionRecipes implements IRecipePool {
             .eut(2048)
             .addTo(MIR);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs(GTUtility.getIntegratedCircuit(1), new ItemStack(Items.sugar, 1, 0))
             .itemOutputs(GTModHandler.getModItem(Botania.ID, "manaResource", 1, 23))
             .fluidInputs(MaterialPool.FluidMana.getFluidOrGas(2000))
@@ -1044,7 +1044,7 @@ public class ManaInfusionRecipes implements IRecipePool {
             .eut(2048)
             .addTo(MIR);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs(GTUtility.getIntegratedCircuit(1), new ItemStack(Items.glowstone_dust, 1, 0))
             .itemOutputs(GTModHandler.getModItem(Botania.ID, "manaResource", 1, 23))
             .fluidInputs(MaterialPool.FluidMana.getFluidOrGas(750))
@@ -1052,7 +1052,7 @@ public class ManaInfusionRecipes implements IRecipePool {
             .eut(2048)
             .addTo(MIR);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs(
                 GTUtility.getIntegratedCircuit(1),
                 GTOreDictUnificator.get(OrePrefixes.dust, Materials.Thaumium, 1))
@@ -1062,7 +1062,7 @@ public class ManaInfusionRecipes implements IRecipePool {
             .eut(2048)
             .addTo(MIR);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs(
                 GTUtility.getIntegratedCircuit(1),
                 GTOreDictUnificator.get(OrePrefixes.dust, Materials.Tritanium, 1))
@@ -1072,7 +1072,7 @@ public class ManaInfusionRecipes implements IRecipePool {
             .eut(2048)
             .addTo(MIR);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs(
                 GTUtility.getIntegratedCircuit(1),
                 GTModHandler.getModItem("DraconicEvolution", "draconiumDust", 1, 0))
@@ -1083,7 +1083,7 @@ public class ManaInfusionRecipes implements IRecipePool {
             .addTo(MIR);
 
         for (int meta = 15; meta >= 0; meta--) {
-            GTValues.RA.stdBuilder()
+            RecipeBuilder.builder()
                 .itemInputs(GTUtility.getIntegratedCircuit(1), GTModHandler.getModItem(Botania.ID, "dye", 1, meta))
                 .itemOutputs(GTModHandler.getModItem(Botania.ID, "manaResource", 1, 23))
                 .fluidInputs(MaterialPool.FluidMana.getFluidOrGas(1500))
@@ -1092,7 +1092,7 @@ public class ManaInfusionRecipes implements IRecipePool {
                 .addTo(MIR);
         }
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs(
                 GTUtility.getIntegratedCircuit(1),
                 GTOreDictUnificator.get(OrePrefixes.gemExquisite, Materials.Diamond, 1))
@@ -1102,7 +1102,7 @@ public class ManaInfusionRecipes implements IRecipePool {
             .eut(2048)
             .addTo(MIR);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs(
                 GTUtility.getIntegratedCircuit(1),
                 GTOreDictUnificator.get(OrePrefixes.gemFlawless, Materials.Diamond, 1))
@@ -1112,7 +1112,7 @@ public class ManaInfusionRecipes implements IRecipePool {
             .eut(2048)
             .addTo(MIR);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs(GTUtility.getIntegratedCircuit(1), new ItemStack(Items.diamond, 1, 0))
             .itemOutputs(GTModHandler.getModItem(Botania.ID, "manaResource", 1, 2))
             .fluidInputs(MaterialPool.FluidMana.getFluidOrGas(40000))
@@ -1120,7 +1120,7 @@ public class ManaInfusionRecipes implements IRecipePool {
             .eut(2048)
             .addTo(MIR);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs(GTUtility.getIntegratedCircuit(1), new ItemStack(Blocks.diamond_block, 1, 0))
             .itemOutputs(GTModHandler.getModItem(Botania.ID, "storage", 1, 3))
             .fluidInputs(MaterialPool.FluidMana.getFluidOrGas(360000))
@@ -1128,7 +1128,7 @@ public class ManaInfusionRecipes implements IRecipePool {
             .eut(2048)
             .addTo(MIR);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs(
                 GTUtility.getIntegratedCircuit(1),
                 GTUtility.getIntegratedCircuit(1),
@@ -1139,7 +1139,7 @@ public class ManaInfusionRecipes implements IRecipePool {
             .eut(2048)
             .addTo(MIR);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs(GTUtility.getIntegratedCircuit(1), new ItemStack(Blocks.deadbush, 1, 1))
             .itemOutputs(GTModHandler.getModItem(Botania.ID, "grassSeeds", 1, 1))
             .fluidInputs(MaterialPool.FluidMana.getFluidOrGas(2500))
@@ -1147,7 +1147,7 @@ public class ManaInfusionRecipes implements IRecipePool {
             .eut(2048)
             .addTo(MIR);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs(GTUtility.getIntegratedCircuit(1), new ItemStack(Blocks.red_mushroom, 1, 0))
             .itemOutputs(GTModHandler.getModItem(Botania.ID, "grassSeeds", 1, 2))
             .fluidInputs(MaterialPool.FluidMana.getFluidOrGas(6500))
@@ -1155,7 +1155,7 @@ public class ManaInfusionRecipes implements IRecipePool {
             .eut(2048)
             .addTo(MIR);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs(GTUtility.getIntegratedCircuit(1), new ItemStack(Blocks.brown_mushroom, 1, 0))
             .itemOutputs(GTModHandler.getModItem(Botania.ID, "grassSeeds", 1, 2))
             .fluidInputs(MaterialPool.FluidMana.getFluidOrGas(6500))
@@ -1163,7 +1163,7 @@ public class ManaInfusionRecipes implements IRecipePool {
             .eut(2048)
             .addTo(MIR);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs(GTUtility.getIntegratedCircuit(1), new ItemStack(Items.quartz, 1, 0))
             .itemOutputs(GTModHandler.getModItem(Botania.ID, "quartz", 1, 1))
             .fluidInputs(MaterialPool.FluidMana.getFluidOrGas(1000))
@@ -1171,7 +1171,7 @@ public class ManaInfusionRecipes implements IRecipePool {
             .eut(2048)
             .addTo(MIR);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs(GTUtility.getIntegratedCircuit(1), new ItemStack(Blocks.glass, 1, 0))
             .itemOutputs(GTModHandler.getModItem(Botania.ID, "manaGlass", 1, 0))
             .fluidInputs(MaterialPool.FluidMana.getFluidOrGas(250))
@@ -1179,7 +1179,7 @@ public class ManaInfusionRecipes implements IRecipePool {
             .eut(2048)
             .addTo(MIR);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs(GTUtility.getIntegratedCircuit(1), new ItemStack(Items.string, 1, 0))
             .itemOutputs(GTModHandler.getModItem(Botania.ID, "manaResource", 1, 16))
             .fluidInputs(MaterialPool.FluidMana.getFluidOrGas(5000))
@@ -1187,7 +1187,7 @@ public class ManaInfusionRecipes implements IRecipePool {
             .eut(2048)
             .addTo(MIR);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs(GTUtility.getIntegratedCircuit(1), new ItemStack(Items.glass_bottle, 1, 0))
             .itemOutputs(GTModHandler.getModItem(Botania.ID, "manaBottle", 1, 0))
             .fluidInputs(MaterialPool.FluidMana.getFluidOrGas(10000))
@@ -1195,7 +1195,7 @@ public class ManaInfusionRecipes implements IRecipePool {
             .eut(2048)
             .addTo(MIR);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs(GTUtility.getIntegratedCircuit(1), new ItemStack(Items.ender_pearl, 1, 0))
             .itemOutputs(GTModHandler.getModItem(Botania.ID, "manaResource", 1, 1))
             .fluidInputs(MaterialPool.FluidMana.getFluidOrGas(5000))
@@ -1203,7 +1203,7 @@ public class ManaInfusionRecipes implements IRecipePool {
             .eut(2048)
             .addTo(MIR);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs(GTUtility.getIntegratedCircuit(1), new ItemStack(Blocks.piston, 1, 0))
             .itemOutputs(GTModHandler.getModItem(Botania.ID, "pistonRelay", 1, 0))
             .fluidInputs(MaterialPool.FluidMana.getFluidOrGas(15000))
@@ -1211,7 +1211,7 @@ public class ManaInfusionRecipes implements IRecipePool {
             .eut(2048)
             .addTo(MIR);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs(GTUtility.getIntegratedCircuit(1), new ItemStack(Items.cookie, 1, 0))
             .itemOutputs(GTModHandler.getModItem(Botania.ID, "manaCookie", 1, 0))
             .fluidInputs(MaterialPool.FluidMana.getFluidOrGas(20000))
@@ -1219,7 +1219,7 @@ public class ManaInfusionRecipes implements IRecipePool {
             .eut(2048)
             .addTo(MIR);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs(GTUtility.getIntegratedCircuit(1), new ItemStack(Items.potato, 1, 0))
             .itemOutputs(GTModHandler.getModItem(Botania.ID, "tinyPotato", 1, 0))
             .fluidInputs(MaterialPool.FluidMana.getFluidOrGas(31337))
@@ -1227,7 +1227,7 @@ public class ManaInfusionRecipes implements IRecipePool {
             .eut(2048)
             .addTo(MIR);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs(
                 GTUtility.getIntegratedCircuit(1),
                 GTModHandler.getModItem(PamsHarvestCraft.ID, "wovencottonItem", 1, 0))
@@ -1237,7 +1237,7 @@ public class ManaInfusionRecipes implements IRecipePool {
             .eut(2048)
             .addTo(MIR);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs(
                 GTUtility.getIntegratedCircuit(1),
                 GTModHandler.getModItem(PamsHarvestCraft.ID, "wovencottonItem", 1, 0))
@@ -1247,7 +1247,7 @@ public class ManaInfusionRecipes implements IRecipePool {
             .eut(2048)
             .addTo(MIR);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs(GTUtility.getIntegratedCircuit(1), GTModHandler.getModItem(ForbiddenMagic.ID, "WandCaps", 1, 4))
             .itemOutputs(GTModHandler.getModItem(ForbiddenMagic.ID, "WandCaps", 1, 3))
             .fluidInputs(MaterialPool.FluidMana.getFluidOrGas(1000))
@@ -1255,7 +1255,7 @@ public class ManaInfusionRecipes implements IRecipePool {
             .eut(2048)
             .addTo(MIR);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs(
                 GTUtility.getIntegratedCircuit(1),
                 GTModHandler.getModItem(ForbiddenMagic.ID, "WandCores", 1, 12))
@@ -1265,7 +1265,7 @@ public class ManaInfusionRecipes implements IRecipePool {
             .eut(2048)
             .addTo(MIR);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs(
                 GTModHandler.getModItem(Botania.ID, "terraPlate", 0),
                 GTModHandler.getModItem(Botania.ID, "manaResource", 1, 0),

@@ -2,9 +2,9 @@ package com.science.gtnl.common.recipe.gregtech;
 
 import com.science.gtnl.api.IRecipePool;
 import com.science.gtnl.common.material.MaterialPool;
+import com.science.gtnl.utils.recipes.RecipeBuilder;
 
 import goodgenerator.items.GGMaterial;
-import gregtech.api.enums.GTValues;
 import gregtech.api.enums.Materials;
 import gregtech.api.enums.TierEU;
 import gregtech.api.recipe.RecipeMap;
@@ -17,8 +17,7 @@ public class CrackingRecipes implements IRecipePool {
 
     @Override
     public void loadRecipes() {
-
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs(GTUtility.getIntegratedCircuit(1))
             .fluidInputs(GGMaterial.naquadahSolution.getFluidOrGas(1000), Materials.Fluorine.getGas(1000))
             .fluidOutputs(MaterialPool.FluorineCrackedNaquadah.getFluidOrGas(1000))
@@ -26,7 +25,7 @@ public class CrackingRecipes implements IRecipePool {
             .eut(TierEU.RECIPE_UV)
             .addTo(CR);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs(GTUtility.getIntegratedCircuit(1))
             .fluidInputs(GGMaterial.enrichedNaquadahRichSolution.getFluidOrGas(1000), Materials.Radon.getGas(1000))
             .fluidOutputs(MaterialPool.RadonCrackedEnrichedNaquadah.getFluidOrGas(1000))

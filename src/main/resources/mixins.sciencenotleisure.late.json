@@ -28,6 +28,8 @@
     "DraconicEvolution.MixinReactorExplosion",
     "EnhancedLootBags.AccessorItemLootBag",
     "GalaxySpace.MixinRocketRecipeHandler",
+    "Gregtech.AccessorGTRecipe",
+    "Gregtech.AccessorGTRecipeBuilder",
     "Gregtech.AccessorGTLanguageManager",
     "Gregtech.AccessorCommonMetaTileEntity",
     "Gregtech.AccessorMetaTileEntity",

@@ -6,6 +6,7 @@ import net.minecraft.item.ItemStack;
 
 import com.science.gtnl.api.IRecipePool;
 import com.science.gtnl.utils.enums.GTNLItemList;
+import com.science.gtnl.utils.recipes.RecipeBuilder;
 
 import gregtech.api.enums.GTValues;
 import gregtech.api.enums.ItemList;
@@ -28,7 +29,7 @@ public class LaserEngraverRecipes implements IRecipePool {
     public void recipeWithPurifiedWater(ItemStack[] inputs, ItemStack[] outputs, Materials lowTierWater,
         Materials highTierWater, int duration, int boostedDuration, long eut) {
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs(inputs)
             .itemOutputs(outputs)
             .fluidInputs(lowTierWater.getFluid(100L))
@@ -36,7 +37,7 @@ public class LaserEngraverRecipes implements IRecipePool {
             .eut(eut)
             .addTo(lER);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs(inputs)
             .itemOutputs(outputs)
             .fluidInputs(highTierWater.getFluid(100L))
@@ -48,14 +49,14 @@ public class LaserEngraverRecipes implements IRecipePool {
     @Override
     public void loadRecipes() {
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs(GTNLItemList.NinefoldInputHatchUHV.get(1), ItemList.Quantum_Tank_IV.get(1))
             .itemOutputs(GTNLItemList.HumongousNinefoldInputHatch.get(1))
             .duration(200)
             .eut(7864320)
             .addTo(lER);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs(
                 GTNLItemList.NeutroniumWafer.get(1),
                 GTOreDictUnificator.get(OrePrefixes.lens, Materials.EnderPearl, 0))
@@ -95,7 +96,7 @@ public class LaserEngraverRecipes implements IRecipePool {
             250,
             TierEU.RECIPE_IV);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs(
                 GregtechItemList.Laser_Lens_Special.get(0),
                 new ItemStack(Items.iron_ingot, 1),
@@ -105,7 +106,7 @@ public class LaserEngraverRecipes implements IRecipePool {
             .eut(TierEU.RECIPE_LuV)
             .addTo(lER);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs(
                 GregtechItemList.Laser_Lens_Special.get(0),
                 new ItemStack(Blocks.iron_block, 1),
@@ -134,7 +135,7 @@ public class LaserEngraverRecipes implements IRecipePool {
                 GTNLItemList[] energyCover = i >= 2 ? GTNLItemList.WIRELESS_ENERGY_COVER_4A
                     : GTNLItemList.WIRELESS_ENERGY_COVER;
 
-                GTValues.RA.stdBuilder()
+                RecipeBuilder.builder()
                     .itemInputs(
                         energyHatch[j >= 4 && i >= 4 ? j - 4 : j][hatchIndex].get(1),
                         energyCover[j].get(Math.min(1L << (i >= 2 ? i - 2 : i), 4L)),

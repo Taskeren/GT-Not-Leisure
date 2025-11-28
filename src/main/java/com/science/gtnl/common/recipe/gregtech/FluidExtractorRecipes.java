@@ -3,8 +3,8 @@ package com.science.gtnl.common.recipe.gregtech;
 import net.minecraftforge.fluids.FluidStack;
 
 import com.science.gtnl.api.IRecipePool;
+import com.science.gtnl.utils.recipes.RecipeBuilder;
 
-import gregtech.api.enums.GTValues;
 import gregtech.api.enums.TierEU;
 import gregtech.api.recipe.RecipeMap;
 import gregtech.api.recipe.RecipeMaps;
@@ -16,7 +16,7 @@ public class FluidExtractorRecipes implements IRecipePool {
 
     @Override
     public void loadRecipes() {
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs(MaterialsElements.getInstance().RADIUM.getDust(1))
             .fluidOutputs(new FluidStack(MaterialsElements.getInstance().RADIUM.getFluid(), 144))
             .duration(20)

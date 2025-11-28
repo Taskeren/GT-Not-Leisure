@@ -1,20 +1,17 @@
 package com.science.gtnl.common.recipe.gregtech;
 
-import static goodgenerator.loader.Loaders.compactFusionCoil;
 import static gregtech.api.util.GTRecipeConstants.PRECISE_ASSEMBLER_CASING_TIER;
-
-import net.minecraft.item.ItemStack;
 
 import com.science.gtnl.api.IRecipePool;
 import com.science.gtnl.common.material.MaterialPool;
 import com.science.gtnl.config.MainConfig;
 import com.science.gtnl.utils.enums.GTNLItemList;
+import com.science.gtnl.utils.recipes.RecipeBuilder;
 
 import bartworks.system.material.WerkstoffLoader;
 import goodgenerator.api.recipe.GoodGeneratorRecipeMaps;
 import goodgenerator.items.GGMaterial;
 import goodgenerator.util.ItemRefer;
-import gregtech.api.enums.GTValues;
 import gregtech.api.enums.ItemList;
 import gregtech.api.enums.Materials;
 import gregtech.api.enums.OrePrefixes;
@@ -34,7 +31,7 @@ public class PreciseAssemblerRecipes implements IRecipePool {
     public void loadRecipes() {
 
         if (MainConfig.enableDeleteRecipe) {
-            GTValues.RA.stdBuilder()
+            RecipeBuilder.builder()
                 .setNEIDesc("Remove Change by GTNotLeisure")
                 .itemInputs(
                     GTNLItemList.NeutroniumWafer.get(4),
@@ -52,7 +49,7 @@ public class PreciseAssemblerRecipes implements IRecipePool {
                 .addTo(PAR);
         }
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs(
                 GTNLItemList.NeutroniumWafer.get(4),
                 ItemList.Circuit_Parts_InductorXSMD.get(8),
@@ -69,7 +66,7 @@ public class PreciseAssemblerRecipes implements IRecipePool {
             .metadata(PRECISE_ASSEMBLER_CASING_TIER, 3)
             .addTo(PAR);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs(
                 ItemList.Optical_Cpu_Containment_Housing.get(1),
                 ItemList.Circuit_Chip_Optical.get(1),
@@ -86,10 +83,10 @@ public class PreciseAssemblerRecipes implements IRecipePool {
             .eut(TierEU.RECIPE_UHV)
             .addTo(PAR);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs(
                 ItemList.FusionComputer_LuV.get(1),
-                new ItemStack(compactFusionCoil, 1, 0),
+                ItemRefer.Compact_Fusion_Coil_T0.get(1),
                 ItemRefer.HiC_T1.get(16),
                 GTOreDictUnificator.get(OrePrefixes.plateDouble, Materials.Osmiridium, 16))
             .itemOutputs(GTNLItemList.LuvKuangBiaoOneGiantNuclearFusionReactor.get(1))
@@ -103,10 +100,10 @@ public class PreciseAssemblerRecipes implements IRecipePool {
             .metadata(PRECISE_ASSEMBLER_CASING_TIER, 1)
             .addTo(PAR);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs(
                 ItemList.FusionComputer_ZPMV.get(1),
-                new ItemStack(compactFusionCoil, 1, 1),
+                ItemRefer.Compact_Fusion_Coil_T1.get(1),
                 ItemRefer.HiC_T2.get(16),
                 GTOreDictUnificator.get(OrePrefixes.plateDouble, Materials.Europium, 16))
             .itemOutputs(GTNLItemList.ZpmKuangBiaoTwoGiantNuclearFusionReactor.get(1))
@@ -120,10 +117,10 @@ public class PreciseAssemblerRecipes implements IRecipePool {
             .metadata(PRECISE_ASSEMBLER_CASING_TIER, 1)
             .addTo(PAR);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs(
                 ItemList.FusionComputer_UV.get(1),
-                new ItemStack(compactFusionCoil, 1, 2),
+                ItemRefer.Compact_Fusion_Coil_T2.get(1),
                 ItemRefer.HiC_T3.get(16),
                 GTOreDictUnificator.get(OrePrefixes.plateDouble, Materials.Americium, 16))
             .itemOutputs(GTNLItemList.UvKuangBiaoThreeGiantNuclearFusionReactor.get(1))
@@ -137,10 +134,10 @@ public class PreciseAssemblerRecipes implements IRecipePool {
             .metadata(PRECISE_ASSEMBLER_CASING_TIER, 2)
             .addTo(PAR);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs(
                 GregtechItemList.FusionComputer_UV2.get(1),
-                new ItemStack(compactFusionCoil, 1, 3),
+                ItemRefer.Compact_Fusion_Coil_T3.get(1),
                 ItemRefer.HiC_T4.get(16),
                 GTOreDictUnificator.get(OrePrefixes.plateDouble, Materials.Infinity, 16))
             .itemOutputs(GTNLItemList.UhvKuangBiaoFourGiantNuclearFusionReactor.get(1))
@@ -154,10 +151,10 @@ public class PreciseAssemblerRecipes implements IRecipePool {
             .metadata(PRECISE_ASSEMBLER_CASING_TIER, 2)
             .addTo(PAR);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs(
                 GregtechItemList.FusionComputer_UV3.get(1),
-                new ItemStack(compactFusionCoil, 1, 4),
+                ItemRefer.Compact_Fusion_Coil_T4.get(1),
                 ItemRefer.HiC_T5.get(16),
                 MaterialsElements.STANDALONE.HYPOGEN.getPlateDouble(16))
             .itemOutputs(GTNLItemList.UevKuangBiaoFiveGiantNuclearFusionReactor.get(1))
@@ -171,7 +168,7 @@ public class PreciseAssemblerRecipes implements IRecipePool {
             .metadata(PRECISE_ASSEMBLER_CASING_TIER, 3)
             .addTo(PAR);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs(
                 GTNLItemList.NeutroniumWafer.get(0),
                 GTOreDictUnificator.get(OrePrefixes.dust, Materials.Graphite, 64))

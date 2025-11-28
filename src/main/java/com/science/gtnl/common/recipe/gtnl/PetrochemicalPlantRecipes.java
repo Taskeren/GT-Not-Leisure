@@ -10,10 +10,10 @@ import com.dreammaster.fluids.FluidList;
 import com.science.gtnl.api.IRecipePool;
 import com.science.gtnl.common.material.MaterialPool;
 import com.science.gtnl.common.material.RecipePool;
+import com.science.gtnl.utils.recipes.RecipeBuilder;
 
 import bartworks.common.loaders.BioItemList;
 import bartworks.util.BioCulture;
-import gregtech.api.enums.GTValues;
 import gregtech.api.enums.Materials;
 import gregtech.api.enums.MaterialsKevlar;
 import gregtech.api.enums.OrePrefixes;
@@ -29,7 +29,7 @@ public class PetrochemicalPlantRecipes implements IRecipePool {
     @Override
     public void loadRecipes() {
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs(GTUtility.getIntegratedCircuit(2))
             .fluidInputs(Materials.OilHeavy.getFluid(1000), Materials.Steam.getGas(1000))
             .fluidOutputs(
@@ -49,7 +49,7 @@ public class PetrochemicalPlantRecipes implements IRecipePool {
             .eut(1920)
             .addTo(PPR);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs(GTUtility.getIntegratedCircuit(2))
             .fluidInputs(Materials.OilLight.getFluid(1000), Materials.Steam.getGas(1000))
             .fluidOutputs(
@@ -69,7 +69,7 @@ public class PetrochemicalPlantRecipes implements IRecipePool {
             .eut(1920)
             .addTo(PPR);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs(GTUtility.getIntegratedCircuit(2))
             .fluidInputs(Materials.Oil.getFluid(1000), Materials.Steam.getGas(1000))
             .fluidOutputs(
@@ -89,7 +89,7 @@ public class PetrochemicalPlantRecipes implements IRecipePool {
             .eut(1920)
             .addTo(PPR);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs(GTUtility.getIntegratedCircuit(2))
             .fluidInputs(Materials.OilMedium.getFluid(1000), Materials.Steam.getGas(1000))
             .fluidOutputs(
@@ -109,7 +109,7 @@ public class PetrochemicalPlantRecipes implements IRecipePool {
             .eut(1920)
             .addTo(PPR);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .fluidInputs(Materials.WoodTar.getFluid(1000), Materials.Steam.getGas(1000))
             .fluidOutputs(
                 Materials.Creosote.getFluid(300),
@@ -123,7 +123,7 @@ public class PetrochemicalPlantRecipes implements IRecipePool {
             .eut(1920)
             .addTo(PPR);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs(
                 GTUtility.copyAmount(0, BioItemList.getPetriDish(getCulture("CombinedBac"))),
                 GTOreDictUnificator.get(OrePrefixes.dust, Materials.AntimonyTrioxide, 16),
@@ -148,7 +148,7 @@ public class PetrochemicalPlantRecipes implements IRecipePool {
             .eut(1966080)
             .addTo(PPR);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .fluidInputs(new FluidStack(GTPPFluids.CoalTar, 1000), Materials.Steam.getGas(1000))
             .fluidOutputs(
                 new FluidStack(GTPPFluids.CoalTarOil, 300),
@@ -161,7 +161,7 @@ public class PetrochemicalPlantRecipes implements IRecipePool {
             .eut(1920)
             .addTo(PPR);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs(GTUtility.getIntegratedCircuit(1))
             .fluidInputs(Materials.OilHeavy.getFluid(2000))
             .fluidOutputs(
@@ -175,7 +175,7 @@ public class PetrochemicalPlantRecipes implements IRecipePool {
             .eut(1920)
             .addTo(PPR);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs(GTUtility.getIntegratedCircuit(1))
             .fluidInputs(Materials.OilLight.getFluid(2000))
             .fluidOutputs(
@@ -189,7 +189,7 @@ public class PetrochemicalPlantRecipes implements IRecipePool {
             .eut(1920)
             .addTo(PPR);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs(GTUtility.getIntegratedCircuit(1))
             .fluidInputs(Materials.Oil.getFluid(1000))
             .fluidOutputs(
@@ -202,7 +202,7 @@ public class PetrochemicalPlantRecipes implements IRecipePool {
             .eut(1920)
             .addTo(PPR);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs(GTUtility.getIntegratedCircuit(1))
             .fluidInputs(Materials.OilMedium.getFluid(2000))
             .fluidOutputs(
@@ -216,7 +216,7 @@ public class PetrochemicalPlantRecipes implements IRecipePool {
             .eut(1920)
             .addTo(PPR);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs(GTUtility.getIntegratedCircuit(1))
             .fluidInputs(Materials.OilExtraHeavy.getFluid(2000))
             .fluidOutputs(

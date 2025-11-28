@@ -7,8 +7,8 @@ import net.minecraft.item.ItemStack;
 
 import com.science.gtnl.api.IRecipePool;
 import com.science.gtnl.utils.enums.GTNLItemList;
+import com.science.gtnl.utils.recipes.RecipeBuilder;
 
-import gregtech.api.enums.GTValues;
 import gregtech.api.enums.ItemList;
 import gregtech.api.enums.Materials;
 import gregtech.api.enums.OrePrefixes;
@@ -24,14 +24,14 @@ public class CuttingRecipes implements IRecipePool {
 
     public void recipeWithPurifiedWater(ItemStack[] inputs, ItemStack[] outputs, Materials lowTierWater,
         Materials highTierWater, int duration, int boostedDuration, long eut) {
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs(inputs)
             .itemOutputs(outputs)
             .fluidInputs(lowTierWater.getFluid(100L))
             .duration(duration)
             .eut(eut)
             .addTo(CR);
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs(inputs)
             .itemOutputs(outputs)
             .fluidInputs(highTierWater.getFluid(100L))
@@ -42,7 +42,7 @@ public class CuttingRecipes implements IRecipePool {
 
     public void registerCutterRecipes(ItemStack[] input, ItemStack[] outputItem, int lubricantAmount,
         int distilledWaterAmount, int waterAmount, int duration, long eut) {
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs(input)
             .itemOutputs(outputItem)
             .fluidInputs(Materials.Lubricant.getFluid(lubricantAmount))
@@ -50,7 +50,7 @@ public class CuttingRecipes implements IRecipePool {
             .eut(eut)
             .addTo(CR);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs(input)
             .itemOutputs(outputItem)
             .fluidInputs(GTModHandler.getDistilledWater(distilledWaterAmount))
@@ -58,7 +58,7 @@ public class CuttingRecipes implements IRecipePool {
             .eut(eut)
             .addTo(CR);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs(input)
             .itemOutputs(outputItem)
             .fluidInputs(Materials.Water.getFluid(waterAmount))
@@ -90,7 +90,7 @@ public class CuttingRecipes implements IRecipePool {
             450,
             TierEU.RECIPE_IV);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs(ItemList.Circuit_Silicon_Wafer7.get(1))
             .itemOutputs(ItemList.Circuit_Chip_Optical.get(16))
             .fluidInputs(Materials.Grade6PurifiedWater.getFluid(280L))

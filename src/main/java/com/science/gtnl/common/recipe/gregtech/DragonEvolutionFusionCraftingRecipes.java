@@ -6,8 +6,8 @@ import static gregtech.api.util.GTRecipeConstants.DEFC_CASING_TIER;
 
 import com.science.gtnl.api.IRecipePool;
 import com.science.gtnl.common.material.MaterialPool;
+import com.science.gtnl.utils.recipes.RecipeBuilder;
 
-import gregtech.api.enums.GTValues;
 import gregtech.api.enums.ItemList;
 import gregtech.api.enums.Materials;
 import gregtech.api.enums.OrePrefixes;
@@ -26,8 +26,7 @@ public class DragonEvolutionFusionCraftingRecipes implements IRecipePool {
     @Override
 
     public void loadRecipes() {
-
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs(
                 ItemList.Field_Generator_UEV.get(0),
                 GTOreDictUnificator.get(OrePrefixes.dust, Materials.Infinity, 64),
@@ -45,8 +44,8 @@ public class DragonEvolutionFusionCraftingRecipes implements IRecipePool {
             .metadata(DEFC_CASING_TIER, 3)
             .addTo(DEFCR);
 
-        GTValues.RA.stdBuilder()
-            .itemInputsUnsafe(
+        RecipeBuilder.builder()
+            .itemInputs(
                 GTModHandler.getModItem(DraconicEvolution.ID, "draconicCore", 0),
                 GTModHandler.getModItem(GalacticraftAmunRa.ID, "item.baseItem", 4, 26),
                 GTOreDictUnificator.get(OrePrefixes.gem, Materials.InfusedEntropy, 512),
@@ -59,8 +58,8 @@ public class DragonEvolutionFusionCraftingRecipes implements IRecipePool {
             .metadata(DEFC_CASING_TIER, 3)
             .addTo(DEFCR);
 
-        GTValues.RA.stdBuilder()
-            .itemInputsUnsafe(
+        RecipeBuilder.builder()
+            .itemInputs(
                 GTModHandler.getModItem(DraconicEvolution.ID, "chaosFragment", 1, 1),
                 GTOreDictUnificator.get(OrePrefixes.plateSuperdense, Materials.Draconium, 1),
                 ItemList.NuclearStar.get(1))

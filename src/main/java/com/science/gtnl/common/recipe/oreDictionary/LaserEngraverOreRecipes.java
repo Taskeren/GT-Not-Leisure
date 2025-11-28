@@ -3,8 +3,8 @@ package com.science.gtnl.common.recipe.oreDictionary;
 import net.minecraft.item.ItemStack;
 
 import com.science.gtnl.utils.enums.GTNLItemList;
+import com.science.gtnl.utils.recipes.RecipeBuilder;
 
-import gregtech.api.enums.GTValues;
 import gregtech.api.enums.ItemList;
 import gregtech.api.enums.Materials;
 import gregtech.api.enums.OrePrefixes;
@@ -24,14 +24,14 @@ public class LaserEngraverOreRecipes implements IOreRecipeRegistrator {
 
     public void recipeWithPurifiedWater(ItemStack[] inputs, ItemStack[] outputs, Materials lowTierWater,
         Materials highTierWater, int duration, int boostedDuration, long eut) {
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs(inputs)
             .itemOutputs(outputs)
             .fluidInputs(lowTierWater.getFluid(100L))
             .duration(duration)
             .eut(eut)
             .addTo(lER);
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs(inputs)
             .itemOutputs(outputs)
             .fluidInputs(highTierWater.getFluid(100L))

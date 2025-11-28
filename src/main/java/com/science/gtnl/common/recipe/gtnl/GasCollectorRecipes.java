@@ -5,8 +5,8 @@ import net.minecraft.item.ItemStack;
 import com.science.gtnl.api.IRecipePool;
 import com.science.gtnl.common.material.MaterialPool;
 import com.science.gtnl.common.material.RecipePool;
+import com.science.gtnl.utils.recipes.RecipeBuilder;
 
-import gregtech.api.enums.GTValues;
 import gregtech.api.enums.ItemList;
 import gregtech.api.enums.Materials;
 import gregtech.api.enums.TierEU;
@@ -21,28 +21,28 @@ public class GasCollectorRecipes implements IRecipePool {
     @Override
     public void loadRecipes() {
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs(GTUtility.getIntegratedCircuit(1))
             .fluidOutputs(Materials.Air.getGas(10000))
             .duration(200)
             .eut(TierEU.RECIPE_LV)
             .addTo(GCR);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs(GTUtility.getIntegratedCircuit(2), ItemList.Machine_Multi_VacuumFreezer.get(0))
             .fluidOutputs(Materials.LiquidAir.getFluid(10000))
             .duration(200)
             .eut(TierEU.RECIPE_HV)
             .addTo(GCR);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs(GTUtility.getIntegratedCircuit(3), new ItemStack(ModBlocks.getBlock("ED"), 0))
             .fluidOutputs(MaterialPool.EnderAir.getFluidOrGas(10000))
             .duration(200)
             .eut(TierEU.RECIPE_HV)
             .addTo(GCR);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs(
                 GTUtility.getIntegratedCircuit(4),
                 new ItemStack(ModBlocks.getBlock("ED"), 0),
@@ -52,14 +52,14 @@ public class GasCollectorRecipes implements IRecipePool {
             .eut(TierEU.RECIPE_IV)
             .addTo(GCR);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs(GTUtility.getIntegratedCircuit(5), new ItemStack(ModBlocks.getBlock("Ne"), 0))
             .fluidOutputs(Materials.NetherAir.getFluid(10000))
             .duration(200)
             .eut(TierEU.RECIPE_EV)
             .addTo(GCR);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs(
                 GTUtility.getIntegratedCircuit(6),
                 new ItemStack(ModBlocks.getBlock("Ne"), 0),
@@ -69,7 +69,7 @@ public class GasCollectorRecipes implements IRecipePool {
             .eut(TierEU.RECIPE_LuV)
             .addTo(GCR);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs(GTUtility.getIntegratedCircuit(7), new ItemStack(ModBlocks.getBlock("Ne"), 0))
             .fluidOutputs(Materials.NefariousGas.getFluid(5000))
             .duration(200)

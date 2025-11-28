@@ -10,10 +10,10 @@ import com.science.gtnl.api.IRecipePool;
 import com.science.gtnl.common.machine.multiblock.module.eternalGregTechWorkshop.util.EternalGregTechWorkshopUpgrade;
 import com.science.gtnl.common.material.RecipePool;
 import com.science.gtnl.utils.enums.GTNLItemList;
+import com.science.gtnl.utils.recipes.RecipeBuilder;
 
 import goodgenerator.items.GGMaterial;
 import goodgenerator.util.ItemRefer;
-import gregtech.api.enums.GTValues;
 import gregtech.api.enums.ItemList;
 import gregtech.api.enums.Materials;
 import gregtech.api.enums.MaterialsUEVplus;
@@ -101,7 +101,7 @@ public class EternalGregTechWorkshopUpgradeRecipes implements IRecipePool {
             ItemList.Robot_Arm_UMV.get(64),
             ItemList.Conveyor_Module_UMV.get(64));
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs(ArrayUtils.addAll(EternalGregTechWorkshopUpgrade.START.getExtraCost()))
             .itemOutputs(
                 CustomItemList.Godforge_GravitonFlowModulatorTier1.get(1),
@@ -112,7 +112,7 @@ public class EternalGregTechWorkshopUpgradeRecipes implements IRecipePool {
             .fake()
             .addTo(EGTWUR);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs(ArrayUtils.addAll(EternalGregTechWorkshopUpgrade.FDIM.getExtraCost()))
             .itemOutputs(CustomItemList.Machine_Multi_MoltenModule.get(1))
             .duration(1)
@@ -121,7 +121,7 @@ public class EternalGregTechWorkshopUpgradeRecipes implements IRecipePool {
             .fake()
             .addTo(EGTWUR);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs(ArrayUtils.addAll(EternalGregTechWorkshopUpgrade.GPCI.getExtraCost()))
             .itemOutputs(CustomItemList.Machine_Multi_PlasmaModule.get(1))
             .duration(1)
@@ -130,7 +130,7 @@ public class EternalGregTechWorkshopUpgradeRecipes implements IRecipePool {
             .fake()
             .addTo(EGTWUR);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs(ArrayUtils.addAll(EternalGregTechWorkshopUpgrade.QGPIU.getExtraCost()))
             .itemOutputs(CustomItemList.Machine_Multi_QuarkGluonPlasmaModule.get(1))
             .duration(1)
@@ -139,7 +139,7 @@ public class EternalGregTechWorkshopUpgradeRecipes implements IRecipePool {
             .fake()
             .addTo(EGTWUR);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs(ArrayUtils.addAll(EternalGregTechWorkshopUpgrade.CD.getExtraCost()))
             .itemOutputs(CustomItemList.Godforge_GravitonFlowModulatorTier2.get(1))
             .duration(1)
@@ -148,7 +148,7 @@ public class EternalGregTechWorkshopUpgradeRecipes implements IRecipePool {
             .fake()
             .addTo(EGTWUR);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs(ArrayUtils.addAll(EternalGregTechWorkshopUpgrade.EE.getExtraCost()))
             .itemOutputs(CustomItemList.Godforge_GravitonFlowModulatorTier3.get(1))
             .duration(1)
@@ -157,7 +157,7 @@ public class EternalGregTechWorkshopUpgradeRecipes implements IRecipePool {
             .fake()
             .addTo(EGTWUR);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs(ArrayUtils.addAll(EternalGregTechWorkshopUpgrade.END.getExtraCost()))
             .itemOutputs(MaterialsUEVplus.GravitonShard.getGems(1))
             .duration(1)

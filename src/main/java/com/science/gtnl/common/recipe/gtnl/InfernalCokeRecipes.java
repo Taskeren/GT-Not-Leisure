@@ -1,6 +1,5 @@
 package com.science.gtnl.common.recipe.gtnl;
 
-import static gregtech.api.enums.GTValues.RA;
 import static gregtech.api.util.GTRecipeBuilder.SECONDS;
 
 import java.util.ArrayList;
@@ -12,8 +11,8 @@ import net.minecraftforge.oredict.OreDictionary;
 
 import com.science.gtnl.api.IRecipePool;
 import com.science.gtnl.common.material.RecipePool;
+import com.science.gtnl.utils.recipes.RecipeBuilder;
 
-import gregtech.api.enums.GTValues;
 import gregtech.api.enums.Materials;
 import gregtech.api.enums.OrePrefixes;
 import gregtech.api.recipe.RecipeMap;
@@ -28,7 +27,7 @@ public class InfernalCokeRecipes implements IRecipePool {
     @Override
     public void loadRecipes() {
 
-        RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs(new ItemStack(Blocks.cactus, 1))
             .itemOutputs(GregtechItemList.CactusCharcoal.get(1))
             .fluidOutputs(Materials.Creosote.getFluid(60))
@@ -36,7 +35,7 @@ public class InfernalCokeRecipes implements IRecipePool {
             .eut(0)
             .addTo(ICR);
 
-        RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs(GregtechItemList.CactusCharcoal.get(1))
             .itemOutputs(GregtechItemList.CactusCoke.get(1))
             .fluidOutputs(Materials.Creosote.getFluid(60))
@@ -44,7 +43,7 @@ public class InfernalCokeRecipes implements IRecipePool {
             .eut(0)
             .addTo(ICR);
 
-        RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs(new ItemStack(Items.reeds, 1))
             .itemOutputs(GregtechItemList.SugarCharcoal.get(1))
             .fluidOutputs(Materials.Creosote.getFluid(60))
@@ -52,7 +51,7 @@ public class InfernalCokeRecipes implements IRecipePool {
             .eut(0)
             .addTo(ICR);
 
-        RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs(GregtechItemList.SugarCharcoal.get(1))
             .itemOutputs(GregtechItemList.SugarCoke.get(1))
             .fluidOutputs(Materials.Creosote.getFluid(60))
@@ -62,7 +61,7 @@ public class InfernalCokeRecipes implements IRecipePool {
 
         ArrayList<ItemStack> aLogData = OreDictionary.getOres("logWood");
         for (ItemStack stack : aLogData) {
-            GTValues.RA.stdBuilder()
+            RecipeBuilder.builder()
                 .itemInputs(GTUtility.copyAmount(1, stack))
                 .itemOutputs(GTOreDictUnificator.get(OrePrefixes.gem, Materials.Charcoal, 1))
                 .fluidOutputs(Materials.Creosote.getFluid(200))
@@ -71,7 +70,7 @@ public class InfernalCokeRecipes implements IRecipePool {
                 .addTo(ICR);
         }
 
-        RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs(new ItemStack(Items.coal, 1))
             .itemOutputs(GTOreDictUnificator.get("fuelCoke", 1))
             .fluidOutputs(Materials.Creosote.getFluid(60))

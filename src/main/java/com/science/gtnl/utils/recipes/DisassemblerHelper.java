@@ -25,7 +25,6 @@ import com.science.gtnl.common.material.RecipePool;
 import com.science.gtnl.common.recipe.gtnl.ShimmerRecipes;
 import com.science.gtnl.utils.item.ItemUtils;
 
-import gregtech.api.enums.GTValues;
 import gregtech.api.enums.ItemList;
 import gregtech.api.enums.Materials;
 import gregtech.api.enums.Mods;
@@ -37,7 +36,6 @@ import gregtech.api.recipe.RecipeMaps;
 import gregtech.api.util.GTModHandler;
 import gregtech.api.util.GTOreDictUnificator;
 import gregtech.api.util.GTRecipe;
-import gregtech.api.util.GTRecipeBuilder;
 import gregtech.api.util.GTUtility;
 import gtnhintergalactic.recipe.IGRecipeMaps;
 import ic2.api.item.IC2Items;
@@ -490,7 +488,7 @@ public class DisassemblerHelper {
                         fluidStacks.add(hardOverride.getValue());
                         ItemStack[] stackArray = fluidStacks.toArray(new ItemStack[0]);
 
-                        GTRecipeBuilder builder = GTValues.RA.stdBuilder()
+                        RecipeBuilder builder = RecipeBuilder.builder()
                             .itemInputs(revInput)
                             .itemOutputs(stackArray)
                             .duration(100)
@@ -520,7 +518,7 @@ public class DisassemblerHelper {
                 fluidStacks.addAll(transformedOutputs);
                 ItemStack[] stacksArray = fluidStacks.toArray(new ItemStack[0]);
 
-                GTRecipeBuilder builder = GTValues.RA.stdBuilder()
+                RecipeBuilder builder = RecipeBuilder.builder()
                     .itemInputs(revInput)
                     .itemOutputs(stacksArray)
                     .duration(100)
@@ -562,7 +560,7 @@ public class DisassemblerHelper {
             }
             if (outputs.isEmpty()) continue;
 
-            GTValues.RA.stdBuilder()
+            RecipeBuilder.builder()
                 .itemInputs(input)
                 .itemOutputs(outputs.toArray(new ItemStack[0]))
                 .duration(100)
@@ -586,7 +584,7 @@ public class DisassemblerHelper {
                 }
             }
 
-            GTValues.RA.stdBuilder()
+            RecipeBuilder.builder()
                 .itemInputs(input)
                 .itemOutputs(outputs.toArray(new ItemStack[0]))
                 .duration(100)
@@ -606,7 +604,7 @@ public class DisassemblerHelper {
 
         try {
             List<ItemStack> outputs = handleRecipeTransformation(revRecipe.mOutputs, null);
-            GTRecipeBuilder builder = GTValues.RA.stdBuilder()
+            RecipeBuilder builder = RecipeBuilder.builder()
                 .itemInputs(revRecipe.mInputs)
                 .itemOutputs(outputs.toArray(new ItemStack[0]))
                 .duration(100)
@@ -627,7 +625,7 @@ public class DisassemblerHelper {
         }
     }
 
-    private static GTRecipeBuilder applyDebugAssembler(GTRecipeBuilder builder, List<GTRecipe> original,
+    public static RecipeBuilder applyDebugAssembler(RecipeBuilder builder, List<GTRecipe> original,
         boolean isHardOverride) {
         if (debugRecipeToRecipe == null) return builder;
 
@@ -647,7 +645,7 @@ public class DisassemblerHelper {
         return builder;
     }
 
-    private static void applyDebugCrafting(GTRecipeBuilder builder, ReversedRecipeRegistry.GTCraftingRecipe original) {
+    private static void applyDebugCrafting(RecipeBuilder builder, ReversedRecipeRegistry.GTCraftingRecipe original) {
         if (debugRecipeToRecipe == null) return;
 
         Optional<GTRecipe> generated = builder.build();

@@ -7,8 +7,8 @@ import net.minecraft.item.ItemStack;
 
 import com.science.gtnl.common.material.MaterialPool;
 import com.science.gtnl.common.material.RecipePool;
+import com.science.gtnl.utils.recipes.RecipeBuilder;
 
-import gregtech.api.enums.GTValues;
 import gregtech.api.enums.Materials;
 import gregtech.api.enums.OrePrefixes;
 import gregtech.api.interfaces.IOreRecipeRegistrator;
@@ -28,7 +28,7 @@ public class PortalToAlfheimOreRecipes implements IOreRecipeRegistrator {
     public void registerOre(OrePrefixes aPrefix, Materials aMaterial, String aOreDictName, String aModName,
         ItemStack aStack) {
         if (aOreDictName.equals("blockGlassEV")) {
-            GTValues.RA.stdBuilder()
+            RecipeBuilder.builder()
                 .itemInputs(GTUtility.copyAmount(1, aStack))
                 .itemOutputs(GTModHandler.getModItem(Botania.ID, "elfGlass", 1, 0, missing))
                 .duration(20)
@@ -38,7 +38,7 @@ public class PortalToAlfheimOreRecipes implements IOreRecipeRegistrator {
     }
 
     public static void addManaInfusionOreRecipes(ItemStack aStack) {
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs(GTModHandler.getModItem(Botania.ID, "alchemyCatalyst", 0), GTUtility.copyAmount(1, aStack))
             .itemOutputs(GTModHandler.getModItem(Botania.ID, "stone", 1, 0))
             .fluidInputs(MaterialPool.FluidMana.getFluidOrGas(200))

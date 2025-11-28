@@ -4,8 +4,8 @@ import net.minecraftforge.fluids.FluidStack;
 
 import com.science.gtnl.api.IRecipePool;
 import com.science.gtnl.common.material.RecipePool;
+import com.science.gtnl.utils.recipes.RecipeBuilder;
 
-import gregtech.api.enums.GTValues;
 import gregtech.api.enums.Materials;
 import gregtech.api.recipe.RecipeMap;
 import gregtech.api.util.GTUtility;
@@ -25,7 +25,7 @@ public class SteamCrackerRecipes implements IRecipePool {
             Materials outputMat = pair[1];
 
             for (int circuit = 1; circuit <= 3; circuit++) {
-                GTValues.RA.stdBuilder()
+                RecipeBuilder.builder()
                     .itemInputs(GTUtility.getIntegratedCircuit(circuit))
                     .fluidInputs(inputMat.getFluid(1000))
                     .fluidOutputs(getSteamCrackedFluid(outputMat, circuit, 400))
@@ -36,7 +36,7 @@ public class SteamCrackerRecipes implements IRecipePool {
         }
 
         for (int circuit = 1; circuit <= 3; circuit++) {
-            GTValues.RA.stdBuilder()
+            RecipeBuilder.builder()
                 .itemInputs(GTUtility.getIntegratedCircuit(circuit))
                 .fluidInputs(Materials.SulfuricGas.getGas(1000))
                 .fluidOutputs(getSteamCrackedFluid(Materials.Gas, circuit, 400))

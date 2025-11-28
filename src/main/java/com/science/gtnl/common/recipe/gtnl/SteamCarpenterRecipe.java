@@ -1,11 +1,11 @@
 package com.science.gtnl.common.recipe.gtnl;
 
-import static gregtech.api.enums.GTValues.RA;
 import static gregtech.api.util.GTRecipeBuilder.SECONDS;
 
 import com.science.gtnl.api.IRecipePool;
 import com.science.gtnl.common.material.RecipePool;
 import com.science.gtnl.utils.enums.GTNLItemList;
+import com.science.gtnl.utils.recipes.RecipeBuilder;
 
 import gregtech.api.enums.Materials;
 import gregtech.api.enums.OrePrefixes;
@@ -19,14 +19,14 @@ public class SteamCarpenterRecipe implements IRecipePool {
     @Override
     public void loadRecipes() {
 
-        RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs(GTOreDictUnificator.get(OrePrefixes.stick, Materials.Wood, 4))
             .itemOutputs(GTOreDictUnificator.get(OrePrefixes.frameGt, Materials.Wood, 1))
             .duration(1 * SECONDS)
             .eut(4)
             .addTo(SCR);
 
-        RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs(
                 GTOreDictUnificator.get(OrePrefixes.frameGt, Materials.Wood, 1),
                 GTOreDictUnificator.get(OrePrefixes.plate, Materials.Iron, 6))
@@ -35,7 +35,7 @@ public class SteamCarpenterRecipe implements IRecipePool {
             .eut(16)
             .addTo(SCR);
 
-        RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs(
                 GTOreDictUnificator.get(OrePrefixes.frameGt, Materials.Wood, 1),
                 GTOreDictUnificator.get(OrePrefixes.plate, Materials.Bronze, 6))
@@ -44,7 +44,7 @@ public class SteamCarpenterRecipe implements IRecipePool {
             .eut(16)
             .addTo(SCR);
 
-        RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs(
                 GTOreDictUnificator.get(OrePrefixes.frameGt, Materials.Wood, 1),
                 GTOreDictUnificator.get(OrePrefixes.plate, Materials.Steel, 6))

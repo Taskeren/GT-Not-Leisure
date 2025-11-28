@@ -9,8 +9,8 @@ import net.minecraft.item.ItemStack;
 import com.science.gtnl.api.IRecipePool;
 import com.science.gtnl.common.material.MaterialPool;
 import com.science.gtnl.utils.enums.GTNLItemList;
+import com.science.gtnl.utils.recipes.RecipeBuilder;
 
-import gregtech.api.enums.GTValues;
 import gregtech.api.enums.ItemList;
 import gregtech.api.enums.Materials;
 import gregtech.api.enums.OrePrefixes;
@@ -28,15 +28,15 @@ public class CompressorRecipes implements IRecipePool {
 
     @Override
     public void loadRecipes() {
-        GTValues.RA.stdBuilder()
-            .itemInputsUnsafe(GTNLItemList.CompressedStargateTier9.get(7296))
+        RecipeBuilder.builder()
+            .itemInputs(GTNLItemList.CompressedStargateTier9.get(7296))
             .itemOutputs(GTNLItemList.StargateSingularity.get(1))
             .duration(120 * SECONDS)
             .eut(TierEU.RECIPE_MAX)
             .metadata(COMPRESSION_TIER, 2)
             .addTo(NCR);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs(ItemList.Shape_Mold_Ingot.get(0))
             .itemOutputs(MaterialPool.CompressedSteam.get(OrePrefixes.ingot, 1))
             .fluidInputs(Materials.Steam.getGas(100000))
@@ -45,7 +45,7 @@ public class CompressorRecipes implements IRecipePool {
             .eut(512)
             .addTo(CR);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs(ItemList.Shape_Mold_Ingot.get(0))
             .itemOutputs(MaterialPool.CompressedSteam.get(OrePrefixes.ingot, 1))
             .fluidInputs(Materials.DenseSupercriticalSteam.getGas(2000))
@@ -54,14 +54,14 @@ public class CompressorRecipes implements IRecipePool {
             .eut(512)
             .addTo(CR);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs(GTNLItemList.BlazeCube.get(9))
             .itemOutputs(GTNLItemList.BlazeCubeBlock.get(1))
             .duration(300)
             .eut(TierEU.RECIPE_LV)
             .addTo(CR);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs(new ItemStack(Blocks.cobblestone, 64))
             .itemOutputs(GTModHandler.getModItem(TwilightForest.ID, "tile.GiantCobble", 1))
             .duration(300)

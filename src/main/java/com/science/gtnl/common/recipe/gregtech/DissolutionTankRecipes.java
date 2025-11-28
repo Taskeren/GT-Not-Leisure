@@ -4,8 +4,8 @@ import static gregtech.api.util.GTRecipeConstants.DISSOLUTION_TANK_RATIO;
 
 import com.science.gtnl.api.IRecipePool;
 import com.science.gtnl.common.material.MaterialPool;
+import com.science.gtnl.utils.recipes.RecipeBuilder;
 
-import gregtech.api.enums.GTValues;
 import gregtech.api.enums.Materials;
 import gregtech.api.enums.OrePrefixes;
 import gregtech.api.recipe.RecipeMap;
@@ -18,7 +18,7 @@ public class DissolutionTankRecipes implements IRecipePool {
 
     @Override
     public void loadRecipes() {
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs(
                 GTOreDictUnificator.get(OrePrefixes.dust, Materials.RareEarth, 10),
                 GTOreDictUnificator.get(OrePrefixes.dust, Materials.SodiumHydroxide, 30))

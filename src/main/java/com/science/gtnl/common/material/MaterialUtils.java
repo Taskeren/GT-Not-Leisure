@@ -5,9 +5,9 @@ import static gregtech.api.recipe.RecipeMaps.wiremillRecipes;
 import static gregtech.api.util.GTRecipeBuilder.*;
 
 import com.science.gtnl.client.GTNLCreativeTabs;
+import com.science.gtnl.utils.recipes.RecipeBuilder;
 
 import bartworks.system.material.Werkstoff;
-import gregtech.api.enums.GTValues;
 import gregtech.api.enums.ItemList;
 import gregtech.api.enums.Materials;
 import gregtech.api.enums.OrePrefixes;
@@ -167,8 +167,7 @@ public class MaterialUtils {
         GTNLCreativeTabs.addToMachineList(GTOreDictUnificator.get(OrePrefixes.pipeMedium, material, 1));
         GTNLCreativeTabs.addToMachineList(GTOreDictUnificator.get(OrePrefixes.pipeLarge, material, 1));
         GTNLCreativeTabs.addToMachineList(GTOreDictUnificator.get(OrePrefixes.pipeHuge, material, 1));
-
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs(
                 GTOreDictUnificator.get(OrePrefixes.ingot, material, 1),
                 ItemList.Shape_Extruder_Pipe_Tiny.get(0))
@@ -176,7 +175,7 @@ public class MaterialUtils {
             .duration(material.getMass() * TICKS)
             .eut(TierEU.RECIPE_MV)
             .addTo(extruderRecipes);
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs(
                 GTOreDictUnificator.get(OrePrefixes.ingot, material, 1),
                 ItemList.Shape_Extruder_Pipe_Small.get(0))
@@ -184,7 +183,7 @@ public class MaterialUtils {
             .duration(material.getMass() * 2 * TICKS)
             .eut(TierEU.RECIPE_MV)
             .addTo(extruderRecipes);
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs(
                 GTOreDictUnificator.get(OrePrefixes.ingot, material, 3),
                 ItemList.Shape_Extruder_Pipe_Medium.get(0))
@@ -192,7 +191,7 @@ public class MaterialUtils {
             .duration(material.getMass() * 6 * TICKS)
             .eut(TierEU.RECIPE_MV)
             .addTo(extruderRecipes);
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs(
                 GTOreDictUnificator.get(OrePrefixes.ingot, material, 6),
                 ItemList.Shape_Extruder_Pipe_Large.get(0))
@@ -200,7 +199,7 @@ public class MaterialUtils {
             .duration(material.getMass() * 12 * TICKS)
             .eut(TierEU.RECIPE_MV)
             .addTo(extruderRecipes);
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs(
                 GTOreDictUnificator.get(OrePrefixes.ingot, material, 12),
                 ItemList.Shape_Extruder_Pipe_Huge.get(0))
@@ -208,35 +207,35 @@ public class MaterialUtils {
             .duration(material.getMass() * 24 * TICKS)
             .eut(TierEU.RECIPE_MV)
             .addTo(extruderRecipes);
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs(ItemList.Shape_Mold_Pipe_Tiny.get(0))
             .fluidInputs(material.getMolten(1 * HALF_INGOTS))
             .itemOutputs(GTOreDictUnificator.get(OrePrefixes.pipeTiny, material, 1))
             .duration(material.getMass() * TICKS)
             .eut(TierEU.RECIPE_LV)
             .addTo(fluidSolidifierRecipes);
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs(ItemList.Shape_Mold_Pipe_Small.get(0))
             .fluidInputs(material.getMolten(1 * INGOTS))
             .itemOutputs(GTOreDictUnificator.get(OrePrefixes.pipeSmall, material, 1))
             .duration(material.getMass() * 2 * TICKS)
             .eut(TierEU.RECIPE_LV)
             .addTo(fluidSolidifierRecipes);
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs(ItemList.Shape_Mold_Pipe_Medium.get(0))
             .fluidInputs(material.getMolten(3 * INGOTS))
             .itemOutputs(GTOreDictUnificator.get(OrePrefixes.pipeMedium, material, 1))
             .duration(material.getMass() * 6 * TICKS)
             .eut(TierEU.RECIPE_LV)
             .addTo(fluidSolidifierRecipes);
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs(ItemList.Shape_Mold_Pipe_Large.get(0))
             .fluidInputs(material.getMolten(6 * INGOTS))
             .itemOutputs(GTOreDictUnificator.get(OrePrefixes.pipeLarge, material, 1))
             .duration(material.getMass() * 12 * TICKS)
             .eut(TierEU.RECIPE_LV)
             .addTo(fluidSolidifierRecipes);
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs(ItemList.Shape_Mold_Pipe_Huge.get(0))
             .fluidInputs(material.getMolten(1728))
             .itemOutputs(GTOreDictUnificator.get(OrePrefixes.pipeHuge, material, 1))
@@ -445,77 +444,77 @@ public class MaterialUtils {
             GTNLCreativeTabs.addToMachineList(GTOreDictUnificator.get(OrePrefixes.cableGt16, material, 1));
         }
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs(GTOreDictUnificator.get(OrePrefixes.ingot, material, 1), GTUtility.getIntegratedCircuit(1))
             .itemOutputs(GTOreDictUnificator.get(OrePrefixes.wireGt01, material, 2))
             .duration(5 * SECONDS)
             .eut(4)
             .addTo(wiremillRecipes);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs(GTOreDictUnificator.get(OrePrefixes.ingot, material, 1), GTUtility.getIntegratedCircuit(2))
             .itemOutputs(GTOreDictUnificator.get(OrePrefixes.wireGt02, material, 1))
             .duration(7 * SECONDS + 10 * TICKS)
             .eut(4)
             .addTo(wiremillRecipes);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs(GTOreDictUnificator.get(OrePrefixes.ingot, material, 2), GTUtility.getIntegratedCircuit(4))
             .itemOutputs(GTOreDictUnificator.get(OrePrefixes.wireGt04, material, 1))
             .duration(10 * SECONDS)
             .eut(4)
             .addTo(wiremillRecipes);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs(GTOreDictUnificator.get(OrePrefixes.ingot, material, 4), GTUtility.getIntegratedCircuit(8))
             .itemOutputs(GTOreDictUnificator.get(OrePrefixes.wireGt08, material, 1))
             .duration(12 * SECONDS + 10 * TICKS)
             .eut(4)
             .addTo(wiremillRecipes);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs(GTOreDictUnificator.get(OrePrefixes.ingot, material, 6), GTUtility.getIntegratedCircuit(12))
             .itemOutputs(GTOreDictUnificator.get(OrePrefixes.wireGt12, material, 1))
             .duration(15 * SECONDS)
             .eut(4)
             .addTo(wiremillRecipes);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs(GTOreDictUnificator.get(OrePrefixes.ingot, material, 8), GTUtility.getIntegratedCircuit(16))
             .itemOutputs(GTOreDictUnificator.get(OrePrefixes.wireGt16, material, 1))
             .duration(17 * SECONDS + 10 * TICKS)
             .eut(4)
             .addTo(wiremillRecipes);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs(GTOreDictUnificator.get(OrePrefixes.stick, material, 1), GTUtility.getIntegratedCircuit(1))
             .itemOutputs(GTOreDictUnificator.get(OrePrefixes.wireGt01, material, 1))
             .duration(2 * SECONDS + 10 * TICKS)
             .eut(4)
             .addTo(wiremillRecipes);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs(GTOreDictUnificator.get(OrePrefixes.stick, material, 2), GTUtility.getIntegratedCircuit(2))
             .itemOutputs(GTOreDictUnificator.get(OrePrefixes.wireGt02, material, 1))
             .duration(5 * SECONDS)
             .eut(4)
             .addTo(wiremillRecipes);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs(GTOreDictUnificator.get(OrePrefixes.stick, material, 4), GTUtility.getIntegratedCircuit(4))
             .itemOutputs(GTOreDictUnificator.get(OrePrefixes.wireGt04, material, 1))
             .duration(7 * SECONDS + 10 * TICKS)
             .eut(4)
             .addTo(wiremillRecipes);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs(GTOreDictUnificator.get(OrePrefixes.stick, material, 8), GTUtility.getIntegratedCircuit(8))
             .itemOutputs(GTOreDictUnificator.get(OrePrefixes.wireGt08, material, 1))
             .duration(10 * SECONDS)
             .eut(4)
             .addTo(wiremillRecipes);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs(GTOreDictUnificator.get(OrePrefixes.stick, material, 12), GTUtility.getIntegratedCircuit(12))
             .itemOutputs(GTOreDictUnificator.get(OrePrefixes.wireGt12, material, 1))
             .duration(12 * SECONDS + 10 * TICKS)

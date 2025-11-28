@@ -7,9 +7,10 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
+import com.science.gtnl.utils.recipes.RecipeBuilder;
+
 import bartworks.system.material.Werkstoff;
 import bartworks.system.material.werkstoff_loaders.recipe.SimpleMetalLoader;
-import gregtech.api.enums.GTValues;
 import gregtech.api.enums.ItemList;
 import gregtech.api.recipe.RecipeMaps;
 import gregtech.api.util.GTModHandler;
@@ -22,7 +23,7 @@ public abstract class MixinSimpleMetalLoader {
     private void injectSuperdensePlateRecipe(Werkstoff werkstoff, CallbackInfo ci) {
         if (werkstoff.hasItemType(turbineBlade)) {
             if (werkstoff.hasItemType(cellMolten)) {
-                GTValues.RA.stdBuilder()
+                RecipeBuilder.builder()
                     .itemInputs(ItemList.Shape_Mold_Turbine_Blade.get(0))
                     .itemOutputs(werkstoff.get(turbineBlade, 1))
                     .fluidInputs(werkstoff.getMolten(864))
@@ -37,7 +38,7 @@ public abstract class MixinSimpleMetalLoader {
             }
 
             if (werkstoff.hasItemType(cell)) {
-                GTValues.RA.stdBuilder()
+                RecipeBuilder.builder()
                     .itemInputs(ItemList.Shape_Mold_Turbine_Blade.get(0))
                     .itemOutputs(werkstoff.get(turbineBlade, 1))
                     .fluidInputs(werkstoff.getFluidOrGas(864))
@@ -51,7 +52,7 @@ public abstract class MixinSimpleMetalLoader {
                     .addTo(RecipeMaps.fluidSolidifierRecipes);
             }
 
-            GTValues.RA.stdBuilder()
+            RecipeBuilder.builder()
                 .itemInputs(
                     werkstoff.get(ingot, 6),
                     GTUtility.copyAmount(0, ItemList.Shape_Extruder_Turbine_Blade.get(1)))
@@ -65,7 +66,7 @@ public abstract class MixinSimpleMetalLoader {
                 .eut(16)
                 .addTo(RecipeMaps.extruderRecipes);
 
-            GTValues.RA.stdBuilder()
+            RecipeBuilder.builder()
                 .itemInputs(werkstoff.get(plateDouble, 3), werkstoff.get(screw, 2))
                 .itemOutputs(werkstoff.get(turbineBlade, 1))
 

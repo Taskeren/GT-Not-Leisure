@@ -4,8 +4,8 @@ import net.minecraftforge.fluids.FluidStack;
 
 import com.science.gtnl.api.IRecipePool;
 import com.science.gtnl.common.material.MaterialPool;
+import com.science.gtnl.utils.recipes.RecipeBuilder;
 
-import gregtech.api.enums.GTValues;
 import gregtech.api.recipe.RecipeMap;
 import gregtech.api.recipe.RecipeMaps;
 import gregtech.api.util.GTModHandler;
@@ -17,14 +17,14 @@ public class FluidExtraction implements IRecipePool {
 
     @Override
     public void loadRecipes() {
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs(MaterialsElements.getInstance().ZIRCONIUM.getIngot(1))
             .fluidOutputs(new FluidStack(MaterialsElements.getInstance().ZIRCONIUM.getFluid(), 144))
             .duration(4)
             .eut(8)
             .addTo(fER);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs(GTModHandler.getModItem("GalaxySpace", "barnardaClog", 64, 0))
             .fluidOutputs(MaterialPool.BarnardaCSappy.getFluidOrGas(500))
             .duration(4)

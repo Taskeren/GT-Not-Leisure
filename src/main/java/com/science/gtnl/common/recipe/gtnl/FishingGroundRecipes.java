@@ -12,8 +12,8 @@ import com.dreammaster.item.NHItemList;
 import com.science.gtnl.api.IRecipePool;
 import com.science.gtnl.common.material.RecipePool;
 import com.science.gtnl.utils.item.ItemUtils;
+import com.science.gtnl.utils.recipes.RecipeBuilder;
 
-import gregtech.api.enums.GTValues;
 import gregtech.api.enums.ItemList;
 import gregtech.api.enums.Materials;
 import gregtech.api.enums.OrePrefixes;
@@ -30,7 +30,7 @@ public class FishingGroundRecipes implements IRecipePool {
     @Override
     public void loadRecipes() {
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs(GTUtility.getIntegratedCircuit(1), new ItemStack(Items.fishing_rod, 0))
             .itemOutputs(
                 new ItemStack(Items.fish, 16, 0),
@@ -43,7 +43,7 @@ public class FishingGroundRecipes implements IRecipePool {
             .eut(512)
             .addTo(FGR);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs(
                 GTUtility.getIntegratedCircuit(2),
                 new ItemStack(Items.fishing_rod, 0),
@@ -59,7 +59,7 @@ public class FishingGroundRecipes implements IRecipePool {
             .eut(512)
             .addTo(FGR);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs(
                 GTUtility.getIntegratedCircuit(3),
                 new ItemStack(Items.fishing_rod, 0),
@@ -75,7 +75,7 @@ public class FishingGroundRecipes implements IRecipePool {
             .eut(512)
             .addTo(FGR);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs(GTUtility.getIntegratedCircuit(7), ItemList.ActivatedCarbonFilterMesh.get(1))
             .itemOutputs(
                 new ItemStack(Items.rotten_flesh, 16),
@@ -148,7 +148,7 @@ public class FishingGroundRecipes implements IRecipePool {
             .eut(2048)
             .addTo(FGR);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs(
                 GTUtility.getIntegratedCircuit(8),
                 GTUtility.copyAmount(0, ItemList.ActivatedCarbonFilterMesh.get(1)))
@@ -173,7 +173,7 @@ public class FishingGroundRecipes implements IRecipePool {
             .eut(2048)
             .addTo(FGR);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs(GTUtility.getIntegratedCircuit(9), NHItemList.MaceratedPlantmass.getIS(16))
             .itemOutputs(
                 GregtechItemList.AlgaeBiomass.get(64),
@@ -186,7 +186,7 @@ public class FishingGroundRecipes implements IRecipePool {
             .eut(2048)
             .addTo(FGR);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs(
                 GTUtility.getIntegratedCircuit(10),
                 GTOreDictUnificator.get(OrePrefixes.dust, Materials.Mytryl, 32L),
@@ -203,7 +203,7 @@ public class FishingGroundRecipes implements IRecipePool {
 
         if (PamsHarvestCraft.isModLoaded()) {
 
-            GTValues.RA.stdBuilder()
+            RecipeBuilder.builder()
                 .itemInputs(GTUtility.getIntegratedCircuit(4), new ItemStack(Items.fishing_rod, 0))
                 .itemOutputs(
                     GTModHandler.getModItem(PamsHarvestCraft.ID, "anchovyrawItem", 16),
@@ -266,7 +266,7 @@ public class FishingGroundRecipes implements IRecipePool {
                 .eut(512)
                 .addTo(FGR);
 
-            GTValues.RA.stdBuilder()
+            RecipeBuilder.builder()
                 .itemInputs(
                     GTUtility.getIntegratedCircuit(5),
                     new ItemStack(Items.fishing_rod, 0),
@@ -332,7 +332,7 @@ public class FishingGroundRecipes implements IRecipePool {
                 .eut(512)
                 .addTo(FGR);
 
-            GTValues.RA.stdBuilder()
+            RecipeBuilder.builder()
                 .itemInputs(
                     GTUtility.getIntegratedCircuit(6),
                     new ItemStack(Items.fishing_rod, 0),

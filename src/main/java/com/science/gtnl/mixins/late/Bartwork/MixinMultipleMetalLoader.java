@@ -7,9 +7,10 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
+import com.science.gtnl.utils.recipes.RecipeBuilder;
+
 import bartworks.system.material.Werkstoff;
 import bartworks.system.material.werkstoff_loaders.recipe.MultipleMetalLoader;
-import gregtech.api.enums.GTValues;
 import gregtech.api.enums.OrePrefixes;
 import gregtech.api.enums.TierEU;
 import gregtech.api.recipe.RecipeMaps;
@@ -24,7 +25,7 @@ public abstract class MixinMultipleMetalLoader {
 
             final CompressionTierKey COMPRESSION_TIER = CompressionTierKey.INSTANCE;
 
-            GTValues.RA.stdBuilder()
+            RecipeBuilder.builder()
                 .itemInputs(werkstoff.get(plate, 64))
                 .itemOutputs(werkstoff.get(plateSuperdense, 1))
 

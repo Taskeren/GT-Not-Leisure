@@ -2,8 +2,8 @@ package com.science.gtnl.common.recipe.gtnl;
 
 import com.science.gtnl.api.IRecipePool;
 import com.science.gtnl.common.material.RecipePool;
+import com.science.gtnl.utils.recipes.RecipeBuilder;
 
-import gregtech.api.enums.GTValues;
 import gregtech.api.enums.ItemList;
 import gregtech.api.enums.TierEU;
 import gregtech.api.recipe.RecipeMap;
@@ -15,7 +15,7 @@ public class PrecisionLaserEngraver implements IRecipePool {
 
     @Override
     public void loadRecipes() {
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs(ItemList.Circuit_Silicon_Wafer7.get(1))
             .itemOutputs(GTUtility.copyAmountUnsafe(4096, ItemList.Circuit_Wafer_CPU.get(1)))
             .duration(300)

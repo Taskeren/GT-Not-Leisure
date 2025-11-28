@@ -8,9 +8,9 @@ import static gregtech.api.util.GTRecipeConstants.*;
 import com.dreammaster.gthandler.CustomItemList;
 import com.science.gtnl.api.IRecipePool;
 import com.science.gtnl.utils.enums.GTNLItemList;
+import com.science.gtnl.utils.recipes.RecipeBuilder;
 
 import goodgenerator.items.GGMaterial;
-import gregtech.api.enums.GTValues;
 import gregtech.api.enums.ItemList;
 import gregtech.api.enums.Materials;
 import gregtech.api.enums.MaterialsUEVplus;
@@ -26,7 +26,7 @@ public class NanoForgeRecipes implements IRecipePool {
 
     @Override
     public void loadRecipes() {
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs(
                 GTOreDictUnificator.get(OrePrefixes.lens, Materials.GarnetRed, 0),
                 GGMaterial.shirabon.get(OrePrefixes.block, 8),
@@ -44,7 +44,7 @@ public class NanoForgeRecipes implements IRecipePool {
             .eut(2_000_000_000)
             .addTo(NFR);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs(
                 GTOreDictUnificator.get(OrePrefixes.lens, Materials.Topaz, 0),
                 GGMaterial.atomicSeparationCatalyst.get(OrePrefixes.block, 8),
@@ -57,7 +57,7 @@ public class NanoForgeRecipes implements IRecipePool {
             .eut(20_000_000)
             .addTo(NFR);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs(
                 CustomItemList.RadoxPolymerLens.get(0),
                 GGMaterial.metastableOganesson.get(OrePrefixes.block, 8),
@@ -70,7 +70,7 @@ public class NanoForgeRecipes implements IRecipePool {
             .eut(40_000_000)
             .addTo(NFR);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs(
                 GregtechItemList.Laser_Lens_Special.get(0),
                 GGMaterial.preciousMetalAlloy.get(OrePrefixes.block, 8),
@@ -83,7 +83,7 @@ public class NanoForgeRecipes implements IRecipePool {
             .eut(40_000_000)
             .addTo(NFR);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs(
                 CustomItemList.ChromaticLens.get(0),
                 GGMaterial.extremelyUnstableNaquadah.get(OrePrefixes.block, 16),

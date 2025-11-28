@@ -9,8 +9,8 @@ import net.minecraft.item.ItemStack;
 import com.science.gtnl.api.IRecipePool;
 import com.science.gtnl.common.material.MaterialPool;
 import com.science.gtnl.config.MainConfig;
+import com.science.gtnl.utils.recipes.RecipeBuilder;
 
-import gregtech.api.enums.GTValues;
 import gregtech.api.enums.ItemList;
 import gregtech.api.enums.Materials;
 import gregtech.api.enums.MaterialsGTNH;
@@ -32,7 +32,7 @@ public class AutoclaveRecipes implements IRecipePool {
     @Override
     public void loadRecipes() {
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Carbon, 16))
             .fluidInputs(MaterialPool.Polyetheretherketone.getMolten(9))
             .itemOutputs(GTModHandler.getModItem(IndustrialCraft2.ID, "itemPartCarbonFibre", 64))
@@ -42,7 +42,7 @@ public class AutoclaveRecipes implements IRecipePool {
             .addTo(AR);
 
         // 海晶石 蒸馏水配方
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs(
                 GregtechItemList.RedAlgaeBiomass.get(32),
                 GTOreDictUnificator.get(OrePrefixes.dust, Materials.CertusQuartz, 32))
@@ -52,7 +52,7 @@ public class AutoclaveRecipes implements IRecipePool {
             .eut(TierEU.RECIPE_IV)
             .addTo(AR);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs(GTOreDictUnificator.get(OrePrefixes.gem, Materials.Sapphire, 64))
             .fluidInputs(Materials.Enderium.getMolten(9216))
             .itemOutputs(GTModHandler.getModItem(EnderIO.ID, "itemMaterial", 64, 8))
@@ -60,7 +60,7 @@ public class AutoclaveRecipes implements IRecipePool {
             .eut(TierEU.RECIPE_IV)
             .addTo(AR);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs(GTOreDictUnificator.get(OrePrefixes.gem, Materials.Olivine, 64))
             .fluidInputs(Materials.VividAlloy.getMolten(9216))
             .itemOutputs(GTModHandler.getModItem(EnderIO.ID, "itemMaterial", 64, 9))
@@ -68,7 +68,7 @@ public class AutoclaveRecipes implements IRecipePool {
             .eut(TierEU.RECIPE_IV)
             .addTo(AR);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs(GTOreDictUnificator.get(OrePrefixes.gem, Materials.GreenSapphire, 64))
             .fluidInputs(Materials.EnergeticSilver.getMolten(9216))
             .itemOutputs(GTModHandler.getModItem(EnderIO.ID, "itemMaterial", 64, 13))
@@ -82,7 +82,7 @@ public class AutoclaveRecipes implements IRecipePool {
     public void loadDeleteRecipe() {
 
         // 下界合金碎片种子配方移除概率
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .setNEIDesc("Remove Change by GTNotLeisure")
             .itemInputs(ItemList.Hot_Netherite_Scrap.get(2))
             .fluidInputs(Materials.RichNetherWaste.getFluid(2_000))
@@ -94,7 +94,7 @@ public class AutoclaveRecipes implements IRecipePool {
             .addTo(AR);
 
         // 海晶石 1级水配方 输出x2
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .setNEIDesc("Remove Change by GTNotLeisure")
             .itemInputs(
                 GregtechItemList.RedAlgaeBiomass.get(32),
@@ -106,7 +106,7 @@ public class AutoclaveRecipes implements IRecipePool {
             .addTo(AR);
 
         if (Forestry.isModLoaded()) {
-            GTValues.RA.stdBuilder() // Prismarine + Comb
+            RecipeBuilder.builder() // Prismarine + Comb
                 .setNEIDesc("Remove Change by GTNotLeisure")
                 .itemInputs(
                     GregtechItemList.RedAlgaeBiomass.get(32),

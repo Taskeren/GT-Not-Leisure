@@ -10,8 +10,8 @@ import net.minecraftforge.oredict.OreDictionary;
 import com.science.gtnl.api.IRecipePool;
 import com.science.gtnl.common.material.MaterialPool;
 import com.science.gtnl.common.material.RecipePool;
+import com.science.gtnl.utils.recipes.RecipeBuilder;
 
-import gregtech.api.enums.GTValues;
 import gregtech.api.enums.TierEU;
 import gregtech.api.recipe.RecipeMap;
 import gregtech.api.util.GTUtility;
@@ -81,7 +81,7 @@ public class RuneAltarRecipes implements IRecipePool {
                 finalInputs.add(first);
             });
 
-            GTValues.RA.stdBuilder()
+            RecipeBuilder.builder()
                 .itemInputs(finalInputs.toArray(new Object[0]))
                 .itemOutputs(recipe.getOutput())
                 .fluidInputs(MaterialPool.FluidMana.getFluidOrGas(recipe.getManaUsage()))

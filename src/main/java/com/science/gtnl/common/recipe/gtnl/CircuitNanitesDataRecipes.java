@@ -2,10 +2,10 @@ package com.science.gtnl.common.recipe.gtnl;
 
 import com.science.gtnl.api.IRecipePool;
 import com.science.gtnl.common.material.RecipePool;
+import com.science.gtnl.utils.recipes.RecipeBuilder;
 import com.science.gtnl.utils.recipes.data.CircuitNanitesRecipeData;
 import com.science.gtnl.utils.recipes.metadata.CircuitNanitesDataMetadata;
 
-import gregtech.api.enums.GTValues;
 import gregtech.api.enums.MaterialsUEVplus;
 import gregtech.api.enums.OrePrefixes;
 import gregtech.api.recipe.RecipeMap;
@@ -23,7 +23,7 @@ public class CircuitNanitesDataRecipes implements IRecipePool {
 
     @Override
     public void loadRecipes() {
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs(GTOreDictUnificator.get(OrePrefixes.nanite, MaterialsUEVplus.MagMatter, 1))
             .metadata(
                 RECIPE_DATA,

@@ -8,8 +8,8 @@ import net.minecraftforge.fluids.FluidStack;
 import com.science.gtnl.api.IRecipePool;
 import com.science.gtnl.common.material.MaterialPool;
 import com.science.gtnl.loader.BlockLoader;
+import com.science.gtnl.utils.recipes.RecipeBuilder;
 
-import gregtech.api.enums.GTValues;
 import gregtech.api.enums.Materials;
 import gregtech.api.enums.OrePrefixes;
 import gregtech.api.enums.TierEU;
@@ -27,7 +27,7 @@ public class CentrifugeRecipes implements IRecipePool {
 
     @Override
     public void loadRecipes() {
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .fluidInputs(MaterialPool.NeutralisedRedMud.getFluidOrGas(2000))
             .fluidOutputs(
                 FluidUtils.getFluidStack(GTPPFluids.RedMud, 1000),
@@ -37,7 +37,7 @@ public class CentrifugeRecipes implements IRecipePool {
             .eut(120)
             .addTo(CNCR);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .fluidInputs(MaterialPool.FerricReeChloride.getFluidOrGas(2000))
             .fluidOutputs(
                 MaterialPool.RareEarthChlorides.getFluidOrGas(1000),
@@ -47,7 +47,7 @@ public class CentrifugeRecipes implements IRecipePool {
             .eut(480)
             .addTo(CNCR);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs(GTModHandler.getModItem(DraconicEvolution.ID, "magnet", 0, 1))
             .fluidInputs(MaterialPool.RareEarthChlorides.getFluidOrGas(2000))
             .fluidOutputs(
@@ -60,7 +60,7 @@ public class CentrifugeRecipes implements IRecipePool {
             .eut(480)
             .addTo(CNCR);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs(MaterialPool.UraniumChlorideSlag.get(OrePrefixes.dust, 3))
             .itemOutputs(
                 MaterialPool.BariumChloride.get(OrePrefixes.dust, 1),
@@ -72,7 +72,7 @@ public class CentrifugeRecipes implements IRecipePool {
             .eut(TierEU.RECIPE_HV)
             .addTo(CNCR);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .fluidInputs(MaterialPool.EnderAir.getFluidOrGas(10000))
             .fluidOutputs(
                 Materials.NitrogenDioxide.getGas(3000),
@@ -82,7 +82,7 @@ public class CentrifugeRecipes implements IRecipePool {
             .eut(TierEU.RECIPE_HV)
             .addTo(CNCR);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs(GTUtility.getIntegratedCircuit(1))
             .fluidInputs(FluidRegistry.getFluidStack("for.honey", 1000))
             .fluidOutputs(new FluidStack(BlockLoader.honeyFluid, 1000))
@@ -90,7 +90,7 @@ public class CentrifugeRecipes implements IRecipePool {
             .eut(TierEU.RECIPE_ULV)
             .addTo(CNCR);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemOutputs(Materials.Beryllium.getDust(24))
             .fluidInputs(MaterialPool.PostProcessBeWaste.getFluidOrGas(24000))
             .fluidOutputs(Materials.DilutedSulfuricAcid.getFluid(8000))

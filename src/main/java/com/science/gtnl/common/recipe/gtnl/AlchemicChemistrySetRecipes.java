@@ -6,10 +6,10 @@ import net.minecraft.item.ItemStack;
 
 import com.science.gtnl.api.IRecipePool;
 import com.science.gtnl.common.material.RecipePool;
+import com.science.gtnl.utils.recipes.RecipeBuilder;
 
 import WayofTime.alchemicalWizardry.api.alchemy.AlchemyRecipe;
 import WayofTime.alchemicalWizardry.api.alchemy.AlchemyRecipeRegistry;
-import gregtech.api.enums.GTValues;
 import gregtech.api.recipe.RecipeMap;
 
 public class AlchemicChemistrySetRecipes implements IRecipePool {
@@ -19,7 +19,7 @@ public class AlchemicChemistrySetRecipes implements IRecipePool {
     @Override
     public void loadRecipes() {
         for (AlchemyRecipe recipe : AlchemyRecipeRegistry.recipes) {
-            GTValues.RA.stdBuilder()
+            RecipeBuilder.builder()
                 .itemInputs(concatToLast(ItemStack.class, recipe.getRecipe()))
                 .itemOutputs(recipe.getResult())
                 .specialValue(recipe.getAmountNeeded() * 2)

@@ -1,7 +1,5 @@
 package com.science.gtnl.mixins.late.Gregtech;
 
-import static gregtech.api.enums.GTValues.RA;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,6 +11,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import com.science.gtnl.common.material.RecipePool;
+import com.science.gtnl.utils.recipes.RecipeBuilder;
 
 import gregtech.api.enums.TierEU;
 import gtPlusPlus.xmod.gregtech.common.tileentities.machines.multi.production.MTETreeFarm;
@@ -60,7 +59,7 @@ public class MixinMTETreeFarm {
             chances.add(3000);
         }
 
-        RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs(newSaplingIn)
             .itemOutputs(outputs.toArray(new ItemStack[0]))
             .outputChances(

@@ -1,7 +1,6 @@
 package com.science.gtnl.common.recipe.gregtech;
 
 import static bartworks.common.loaders.ItemRegistry.*;
-import static goodgenerator.loader.Loaders.*;
 import static gregtech.api.enums.MetaTileEntityIDs.*;
 import static gregtech.api.enums.Mods.*;
 import static gregtech.api.util.GTRecipeBuilder.*;
@@ -18,6 +17,7 @@ import com.science.gtnl.api.IRecipePool;
 import com.science.gtnl.common.material.MaterialPool;
 import com.science.gtnl.utils.enums.GTNLItemList;
 import com.science.gtnl.utils.item.ItemUtils;
+import com.science.gtnl.utils.recipes.RecipeBuilder;
 
 import bartworks.common.loaders.ItemRegistry;
 import bartworks.system.material.WerkstoffLoader;
@@ -25,7 +25,6 @@ import ggfab.GGItemList;
 import goodgenerator.items.GGMaterial;
 import goodgenerator.util.ItemRefer;
 import gregtech.api.GregTechAPI;
-import gregtech.api.enums.GTValues;
 import gregtech.api.enums.ItemList;
 import gregtech.api.enums.Materials;
 import gregtech.api.enums.MaterialsBotania;
@@ -82,7 +81,7 @@ public class AssemblingLineRecipes implements IRecipePool {
             30 * SECONDS,
             (int) TierEU.RECIPE_UHV);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .metadata(RESEARCH_ITEM, GTModHandler.getModItem(Botania.ID, "lexicon", 1, 0))
             .metadata(SCANNING, new Scanning(1 * MINUTES, TierEU.RECIPE_ZPM))
             .itemInputs(
@@ -111,7 +110,7 @@ public class AssemblingLineRecipes implements IRecipePool {
             .duration(300 * SECONDS)
             .addTo(AL);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .metadata(RESEARCH_ITEM, GTModHandler.getModItem(GalaxySpace.ID, "item.RocketControlComputer", 1, 4))
             .metadata(SCANNING, new Scanning(4 * MINUTES, TierEU.RECIPE_IV))
             .itemInputs(
@@ -134,7 +133,7 @@ public class AssemblingLineRecipes implements IRecipePool {
             .duration(30 * SECONDS)
             .addTo(AL);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .metadata(RESEARCH_ITEM, GTModHandler.getModItem(GalaxySpace.ID, "item.RocketControlComputer", 1, 7))
             .metadata(SCANNING, new Scanning(10 * MINUTES, TierEU.RECIPE_ZPM))
             .itemInputs(
@@ -187,7 +186,7 @@ public class AssemblingLineRecipes implements IRecipePool {
             120 * SECONDS,
             (int) TierEU.RECIPE_UMV);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .metadata(
                 RESEARCH_ITEM,
                 GTModHandler.getModItem(ThaumicEnergistics.ID, "thaumicenergistics.block.arcane.assembler", 1))
@@ -222,7 +221,7 @@ public class AssemblingLineRecipes implements IRecipePool {
             .duration(300 * SECONDS)
             .addTo(AL);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .metadata(RESEARCH_ITEM, ReAvaItemList.NeutronCollector.get(1))
             .metadata(SCANNING, new Scanning(114 * MINUTES, TierEU.RECIPE_ZPM))
             .itemInputs(
@@ -244,7 +243,7 @@ public class AssemblingLineRecipes implements IRecipePool {
             .duration(60 * SECONDS)
             .addTo(AL);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .metadata(RESEARCH_ITEM, ReAvaItemList.DenseNeutronCollector.get(1))
             .metadata(SCANNING, new Scanning(4 * MINUTES, TierEU.RECIPE_ZPM))
             .itemInputs(
@@ -266,7 +265,7 @@ public class AssemblingLineRecipes implements IRecipePool {
             .duration(120 * SECONDS)
             .addTo(AL);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .metadata(RESEARCH_ITEM, ReAvaItemList.DenserNeutronCollector.get(1))
             .metadata(SCANNING, new Scanning(120 * MINUTES, TierEU.RECIPE_UV))
             .itemInputs(
@@ -310,7 +309,7 @@ public class AssemblingLineRecipes implements IRecipePool {
             120 * SECONDS,
             (int) TierEU.RECIPE_UEV);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .metadata(RESEARCH_ITEM, GTNLItemList.ElectricBlastFurnace.get(1))
             .metadata(SCANNING, new Scanning(60 * MINUTES, TierEU.RECIPE_IV))
             .itemInputs(
@@ -359,7 +358,7 @@ public class AssemblingLineRecipes implements IRecipePool {
             60 * SECONDS,
             (int) TierEU.RECIPE_UHV);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .metadata(RESEARCH_ITEM, ItemList.Hatch_CraftingInput_Bus_ME_ItemOnly.get(1))
             .metadata(SCANNING, new Scanning(30 * MINUTES, TierEU.RECIPE_IV))
             .itemInputs(
@@ -397,7 +396,7 @@ public class AssemblingLineRecipes implements IRecipePool {
             60 * SECONDS,
             (int) TierEU.RECIPE_UV);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .metadata(RESEARCH_ITEM, GTNLItemList.DualInputHatchLuV.get(1))
             .metadata(SCANNING, new Scanning(30 * MINUTES, TierEU.RECIPE_IV))
             .itemInputs(
@@ -436,7 +435,7 @@ public class AssemblingLineRecipes implements IRecipePool {
             30 * SECONDS,
             (int) TierEU.RECIPE_UHV);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .metadata(RESEARCH_ITEM, ItemList.Hatch_CraftingInput_Bus_ME.get(1))
             .metadata(SCANNING, new Scanning(30 * MINUTES, TierEU.RECIPE_IV))
             .itemInputs(
@@ -470,7 +469,7 @@ public class AssemblingLineRecipes implements IRecipePool {
             25 * SECONDS,
             (int) TierEU.RECIPE_UV);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .metadata(RESEARCH_ITEM, GTNLItemList.IVParallelControllerCore.get(1))
             .metadata(SCANNING, new Scanning(30 * MINUTES, TierEU.RECIPE_IV))
             .itemInputs(
@@ -491,7 +490,7 @@ public class AssemblingLineRecipes implements IRecipePool {
             .duration(20 * SECONDS)
             .addTo(AL);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .metadata(RESEARCH_ITEM, GTNLItemList.LuVParallelControllerCore.get(1))
             .metadata(SCANNING, new Scanning(30 * MINUTES, TierEU.RECIPE_IV))
             .itemInputs(
@@ -518,7 +517,7 @@ public class AssemblingLineRecipes implements IRecipePool {
             .duration(20 * SECONDS)
             .addTo(AL);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .metadata(RESEARCH_ITEM, GTNLItemList.ZPMParallelControllerCore.get(1))
             .metadata(SCANNING, new Scanning(30 * MINUTES, TierEU.RECIPE_ZPM))
             .itemInputs(
@@ -701,7 +700,7 @@ public class AssemblingLineRecipes implements IRecipePool {
             300 * SECONDS,
             (int) TierEU.RECIPE_UHV);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .metadata(RESEARCH_ITEM, GregtechItemList.Controller_IsaMill.get(1))
             .metadata(SCANNING, new Scanning(30 * MINUTES, TierEU.RECIPE_IV))
             .itemInputs(
@@ -720,7 +719,7 @@ public class AssemblingLineRecipes implements IRecipePool {
             .duration(40 * SECONDS)
             .addTo(AL);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .metadata(RESEARCH_ITEM, GTNLItemList.Incubator.get(1))
             .metadata(SCANNING, new Scanning(30 * MINUTES, TierEU.RECIPE_ZPM))
             .itemInputs(
@@ -791,7 +790,7 @@ public class AssemblingLineRecipes implements IRecipePool {
             400,
             (int) TierEU.RECIPE_UV);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .metadata(RESEARCH_ITEM, GregtechItemList.Controller_Flotation_Cell.get(1))
             .metadata(SCANNING, new Scanning(30 * MINUTES, TierEU.RECIPE_IV))
             .itemInputs(
@@ -826,7 +825,7 @@ public class AssemblingLineRecipes implements IRecipePool {
             1200,
             (int) TierEU.RECIPE_UV);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .metadata(RESEARCH_ITEM, ItemRegistry.megaMachines[4])
             .metadata(SCANNING, new Scanning(30 * MINUTES, TierEU.RECIPE_IV))
             .itemInputs(
@@ -891,7 +890,7 @@ public class AssemblingLineRecipes implements IRecipePool {
             1200,
             (int) TierEU.RECIPE_UEV);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .metadata(RESEARCH_ITEM, GTModHandler.getModItem(TwilightForest.ID, "item.lampOfCinders", 1))
             .metadata(SCANNING, new Scanning(30 * MINUTES, TierEU.RECIPE_UV))
             .itemInputs(
@@ -921,7 +920,7 @@ public class AssemblingLineRecipes implements IRecipePool {
             .duration(60 * SECONDS)
             .addTo(AL);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .metadata(RESEARCH_ITEM, GTModHandler.getModItem(BloodMagic.ID, "Altar", 1))
             .metadata(SCANNING, new Scanning(30 * MINUTES, TierEU.RECIPE_ZPM))
             .itemInputs(
@@ -990,7 +989,7 @@ public class AssemblingLineRecipes implements IRecipePool {
             9000,
             (int) TierEU.RECIPE_UEV);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .metadata(RESEARCH_ITEM, GTModHandler.getModItem(AppliedEnergistics2.ID, "item.ItemMultiMaterial", 1, 47))
             .metadata(SCANNING, new Scanning(30 * MINUTES, TierEU.RECIPE_IV))
             .itemInputs(
@@ -1010,7 +1009,7 @@ public class AssemblingLineRecipes implements IRecipePool {
             .duration(120 * SECONDS)
             .addTo(AL);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .metadata(RESEARCH_ITEM, new ItemStack(GregTechAPI.sBlockMachines, 1, BioLab_LuV.ID))
             .metadata(SCANNING, new Scanning(30 * MINUTES, TierEU.RECIPE_IV))
             .itemInputs(
@@ -1057,7 +1056,7 @@ public class AssemblingLineRecipes implements IRecipePool {
             2400,
             (int) TierEU.RECIPE_UIV);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .metadata(RESEARCH_ITEM, ItemList.AlloySmelterUIV.get(1))
             .metadata(SCANNING, new Scanning(24 * HOURS, TierEU.RECIPE_LV))
             .itemInputs(
@@ -1082,7 +1081,7 @@ public class AssemblingLineRecipes implements IRecipePool {
             .duration(300 * SECONDS)
             .addTo(GTRecipeConstants.AssemblyLine);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .metadata(RESEARCH_ITEM, ItemList.FluidExtractorUIV.get(1))
             .metadata(SCANNING, new Scanning(24 * HOURS, TierEU.RECIPE_LV))
             .itemInputs(
@@ -1109,7 +1108,7 @@ public class AssemblingLineRecipes implements IRecipePool {
             .duration(300 * SECONDS)
             .addTo(GTRecipeConstants.AssemblyLine);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .metadata(RESEARCH_ITEM, GregtechItemList.Mega_AlloyBlastSmelter.get(1))
             .metadata(SCANNING, new Scanning(24 * HOURS, TierEU.RECIPE_LV))
             .itemInputs(
@@ -1179,7 +1178,7 @@ public class AssemblingLineRecipes implements IRecipePool {
             100,
             (int) TierEU.RECIPE_UV);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .metadata(RESEARCH_ITEM, GTModHandler.getModItem(AppliedEnergistics2.ID, "item.ItemMultiMaterial", 1, 55))
             .metadata(SCANNING, new Scanning(4 * HOURS, TierEU.RECIPE_HV))
             .itemInputs(
@@ -1195,7 +1194,7 @@ public class AssemblingLineRecipes implements IRecipePool {
             .duration(10 * SECONDS)
             .addTo(GTRecipeConstants.AssemblyLine);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .metadata(RESEARCH_ITEM, new ItemStack(GregTechAPI.sBlockMachines, 1, MetaTileEntityIDs.ManualTrafo.ID))
             .metadata(SCANNING, new Scanning(30 * MINUTES, TierEU.RECIPE_HV))
             .itemInputs(
@@ -1255,7 +1254,7 @@ public class AssemblingLineRecipes implements IRecipePool {
             1000,
             (int) TierEU.RECIPE_MAX);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .metadata(RESEARCH_ITEM, GTNLItemList.DualInputHatchEV.get(1))
             .metadata(SCANNING, new Scanning(10 * MINUTES, TierEU.RECIPE_HV))
             .itemInputs(
@@ -1275,7 +1274,7 @@ public class AssemblingLineRecipes implements IRecipePool {
             .duration(15 * SECONDS)
             .addTo(GTRecipeConstants.AssemblyLine);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .metadata(RESEARCH_ITEM, GTNLItemList.SuperDualInputHatchME.get(1))
             .metadata(SCANNING, new Scanning(30 * MINUTES, TierEU.RECIPE_HV))
             .itemInputs(
@@ -1295,7 +1294,7 @@ public class AssemblingLineRecipes implements IRecipePool {
             .duration(15 * SECONDS)
             .addTo(GTRecipeConstants.AssemblyLine);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .metadata(RESEARCH_ITEM, ItemList.Automation_TypeFilter_IV.get(1))
             .metadata(SCANNING, new Scanning(15 * MINUTES, TierEU.RECIPE_EV))
             .itemInputs(
@@ -1648,7 +1647,7 @@ public class AssemblingLineRecipes implements IRecipePool {
             2400,
             (int) TierEU.RECIPE_UHV);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .metadata(RESEARCH_ITEM, GTNLItemList.VacuumFreezer.get(1))
             .metadata(SCANNING, new Scanning(60 * MINUTES, TierEU.RECIPE_IV))
             .itemInputs(
@@ -1703,7 +1702,7 @@ public class AssemblingLineRecipes implements IRecipePool {
             2000,
             (int) TierEU.RECIPE_UMV);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .metadata(RESEARCH_ITEM, CustomItemList.DATApipe.get(1))
             .metadata(SCANNING, new Scanning(10 * MINUTES, TierEU.RECIPE_IV))
             .itemInputs(
@@ -1745,7 +1744,7 @@ public class AssemblingLineRecipes implements IRecipePool {
             2000,
             (int) TierEU.RECIPE_UEV);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .metadata(RESEARCH_ITEM, GTNLItemList.AssemblerMatrixCrafterCore.get(1))
             .metadata(SCANNING, new Scanning(5 * MINUTES, TierEU.RECIPE_UEV))
             .itemInputs(
@@ -2223,7 +2222,7 @@ public class AssemblingLineRecipes implements IRecipePool {
             20000,
             (int) TierEU.RECIPE_UMV);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .metadata(RESEARCH_ITEM, CustomItemList.Machine_Multi_DataBank.get(1))
             .metadata(SCANNING, new Scanning(5 * MINUTES, TierEU.RECIPE_ZPM))
             .itemInputs(

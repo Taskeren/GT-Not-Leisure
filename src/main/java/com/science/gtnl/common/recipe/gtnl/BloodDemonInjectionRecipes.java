@@ -4,13 +4,13 @@ import net.minecraft.item.ItemStack;
 
 import com.science.gtnl.api.IRecipePool;
 import com.science.gtnl.common.material.RecipePool;
+import com.science.gtnl.utils.recipes.RecipeBuilder;
 
 import WayofTime.alchemicalWizardry.ModItems;
 import WayofTime.alchemicalWizardry.api.altarRecipeRegistry.AltarRecipe;
 import WayofTime.alchemicalWizardry.api.altarRecipeRegistry.AltarRecipeRegistry;
 import WayofTime.alchemicalWizardry.api.bindingRegistry.BindingRecipe;
 import WayofTime.alchemicalWizardry.api.bindingRegistry.BindingRegistry;
-import gregtech.api.enums.GTValues;
 import gregtech.api.recipe.RecipeMap;
 import gregtech.api.util.GTUtility;
 
@@ -24,7 +24,7 @@ public class BloodDemonInjectionRecipes implements IRecipePool {
             // filter empty output recipes, which these recipes are most likely charging orbs.
             if (recipe.result == null) continue;
 
-            GTValues.RA.stdBuilder()
+            RecipeBuilder.builder()
                 .itemInputs(recipe.requiredItem)
                 .itemOutputs(recipe.result)
                 .eut(0)
@@ -34,7 +34,7 @@ public class BloodDemonInjectionRecipes implements IRecipePool {
         }
 
         for (BindingRecipe recipe : BindingRegistry.bindingRecipes) {
-            GTValues.RA.stdBuilder()
+            RecipeBuilder.builder()
                 .itemInputs(
                     recipe.requiredItem,
                     new ItemStack(ModItems.weakBloodShard, 1),

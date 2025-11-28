@@ -8,8 +8,8 @@ import com.dreammaster.gthandler.CustomItemList;
 import com.science.gtnl.api.IRecipePool;
 import com.science.gtnl.common.material.RecipePool;
 import com.science.gtnl.utils.enums.GTNLItemList;
+import com.science.gtnl.utils.recipes.RecipeBuilder;
 
-import gregtech.api.enums.GTValues;
 import gregtech.api.enums.ItemList;
 import gregtech.api.enums.Materials;
 import gregtech.api.enums.Mods;
@@ -26,7 +26,7 @@ public class PrimitiveBrickKilnRecipes implements IRecipePool {
     @Override
     public void loadRecipes() {
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs(
                 GTUtility.getIntegratedCircuit(1),
                 GTOreDictUnificator.get(OrePrefixes.plate, Materials.Bronze, 4),
@@ -36,7 +36,7 @@ public class PrimitiveBrickKilnRecipes implements IRecipePool {
             .eut(16)
             .addTo(PBKR);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs(
                 GTUtility.getIntegratedCircuit(2),
                 GTOreDictUnificator.get(OrePrefixes.plate, Materials.Bronze, 3),
@@ -46,7 +46,7 @@ public class PrimitiveBrickKilnRecipes implements IRecipePool {
             .eut(16)
             .addTo(PBKR);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs(
                 GTOreDictUnificator.get(OrePrefixes.plate, Materials.WroughtIron, 3),
                 new ItemStack(Blocks.brick_block, 2))
@@ -55,7 +55,7 @@ public class PrimitiveBrickKilnRecipes implements IRecipePool {
             .eut(16)
             .addTo(PBKR);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs(
                 GTOreDictUnificator.get(OrePrefixes.plate, Materials.Bronze, 2),
                 GTOreDictUnificator.get(OrePrefixes.plate, Materials.CrudeSteel, 2),
@@ -65,7 +65,7 @@ public class PrimitiveBrickKilnRecipes implements IRecipePool {
             .eut(16)
             .addTo(PBKR);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs(
                 GTOreDictUnificator.get(OrePrefixes.plate, Materials.Steel, 2),
                 GTOreDictUnificator.get(OrePrefixes.plate, Materials.CrudeSteel, 2),
@@ -75,7 +75,7 @@ public class PrimitiveBrickKilnRecipes implements IRecipePool {
             .eut(16)
             .addTo(PBKR);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs(
                 ItemList.Firebrick.get(4),
                 GTOreDictUnificator.get(OrePrefixes.dust, Materials.Gypsum, 1),
@@ -89,35 +89,35 @@ public class PrimitiveBrickKilnRecipes implements IRecipePool {
             .eut(16)
             .addTo(PBKR);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Netherrack, 4))
             .itemOutputs(new ItemStack(Blocks.nether_brick, 1))
             .duration(100)
             .eut(16)
             .addTo(PBKR);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs(new ItemStack(Items.netherbrick, 3))
             .itemOutputs(new ItemStack(Blocks.nether_brick, 1))
             .duration(100)
             .eut(16)
             .addTo(PBKR);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs(new ItemStack(Items.clay_ball, 1))
             .itemOutputs(new ItemStack(Items.brick, 1))
             .duration(40)
             .eut(16)
             .addTo(PBKR);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs(new ItemStack(Blocks.clay, 1))
             .itemOutputs(new ItemStack(Blocks.brick_block, 1))
             .duration(100)
             .eut(16)
             .addTo(PBKR);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs(GTOreDictUnificator.get(OrePrefixes.ingot, Materials.Iron, 1))
             .itemOutputs(GTOreDictUnificator.get(OrePrefixes.ingot, Materials.WroughtIron, 1))
             .duration(200)
@@ -125,13 +125,13 @@ public class PrimitiveBrickKilnRecipes implements IRecipePool {
             .addTo(PBKR);
 
         if (Mods.Railcraft.isModLoaded()) {
-            GTValues.RA.stdBuilder()
+            RecipeBuilder.builder()
                 .itemInputs(CustomItemList.CokeOvenBrick.get(3))
                 .itemOutputs(GTModHandler.getModItem(Mods.Railcraft.ID, "machine.alpha", 1, 7))
                 .duration(200)
                 .eut(16)
                 .addTo(PBKR);
-            GTValues.RA.stdBuilder()
+            RecipeBuilder.builder()
                 .itemInputs(CustomItemList.AdvancedCokeOvenBrick.get(3))
                 .itemOutputs(GTModHandler.getModItem(Mods.Railcraft.ID, "machine.alpha", 1, 12))
                 .duration(200)

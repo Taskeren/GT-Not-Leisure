@@ -1,8 +1,8 @@
 package com.science.gtnl.common.recipe.gregtech;
 
 import com.science.gtnl.api.IRecipePool;
+import com.science.gtnl.utils.recipes.RecipeBuilder;
 
-import gregtech.api.enums.GTValues;
 import gregtech.api.enums.ItemList;
 import gregtech.api.enums.Materials;
 import gregtech.api.enums.TierEU;
@@ -17,7 +17,7 @@ public class ChemicalPlantRecipes implements IRecipePool {
     @Override
     public void loadRecipes() {
         // 海晶石溶液单步结晶
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs(MaterialMisc.STRONTIUM_HYDROXIDE.getDust(48))
             .itemOutputs(ItemList.Prismarine_Precipitate.get(8))
             .fluidInputs(Materials.PrismarineSolution.getFluid(8000))

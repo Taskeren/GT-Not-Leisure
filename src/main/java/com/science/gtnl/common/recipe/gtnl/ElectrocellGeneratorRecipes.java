@@ -3,10 +3,10 @@ package com.science.gtnl.common.recipe.gtnl;
 import com.science.gtnl.api.IRecipePool;
 import com.science.gtnl.common.material.MaterialPool;
 import com.science.gtnl.common.material.RecipePool;
+import com.science.gtnl.utils.recipes.RecipeBuilder;
 import com.science.gtnl.utils.recipes.metadata.ElectrocellGeneratorMetadata;
 
 import goodgenerator.items.GGMaterial;
-import gregtech.api.enums.GTValues;
 import gregtech.api.enums.Materials;
 import gregtech.api.enums.MaterialsUEVplus;
 import gregtech.api.enums.OrePrefixes;
@@ -21,7 +21,7 @@ public class ElectrocellGeneratorRecipes implements IRecipePool {
 
     @Override
     public void loadRecipes() {
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs(
                 GTOreDictUnificator.get(OrePrefixes.plate, MaterialsUEVplus.Universium, 1),
                 GTOreDictUnificator.get(OrePrefixes.plate, MaterialsUEVplus.MagMatter, 1))
@@ -39,7 +39,7 @@ public class ElectrocellGeneratorRecipes implements IRecipePool {
             .duration(5000)
             .addTo(EGR);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs(
                 GTOreDictUnificator.get(OrePrefixes.dust, Materials.Zinc, 1),
                 ItemUtils.getItemStackOfAmountFromOreDict("dustBerylliumHydroxide", 6))
@@ -53,7 +53,7 @@ public class ElectrocellGeneratorRecipes implements IRecipePool {
             .duration(1000)
             .addTo(EGR);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs(
                 GTOreDictUnificator.get(OrePrefixes.foil, Materials.Aluminium, 1),
                 GTOreDictUnificator.get(OrePrefixes.dust, Materials.SodiumBisulfate, 4))
@@ -67,7 +67,7 @@ public class ElectrocellGeneratorRecipes implements IRecipePool {
             .duration(600)
             .addTo(EGR);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs(
                 GTOreDictUnificator.get(OrePrefixes.stick, Materials.TungstenSteel, 1),
                 GTOreDictUnificator.get(OrePrefixes.dust, Materials.SodiumBisulfate, 6))
@@ -81,7 +81,7 @@ public class ElectrocellGeneratorRecipes implements IRecipePool {
             .duration(1000)
             .addTo(EGR);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs(
                 GTOreDictUnificator.get(OrePrefixes.stick, Materials.TungstenSteel, 1),
                 GTOreDictUnificator.get(OrePrefixes.dust, Materials.SodiumHydroxide, 7))

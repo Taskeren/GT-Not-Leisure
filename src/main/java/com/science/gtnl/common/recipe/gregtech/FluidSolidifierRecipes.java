@@ -2,9 +2,9 @@ package com.science.gtnl.common.recipe.gregtech;
 
 import com.science.gtnl.api.IRecipePool;
 import com.science.gtnl.utils.enums.GTNLItemList;
+import com.science.gtnl.utils.recipes.RecipeBuilder;
 
 import goodgenerator.items.GGMaterial;
-import gregtech.api.enums.GTValues;
 import gregtech.api.enums.Materials;
 import gregtech.api.enums.MaterialsUEVplus;
 import gregtech.api.enums.OrePrefixes;
@@ -20,7 +20,7 @@ public class FluidSolidifierRecipes implements IRecipePool {
     @Override
 
     public void loadRecipes() {
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs(GTOreDictUnificator.get(OrePrefixes.block, Materials.BorosilicateGlass, 1))
             .fluidInputs(MaterialsUEVplus.QuarkGluonPlasma.getFluid(1152))
             .itemOutputs(GTNLItemList.QuarkGluonPlasmaReinforcedBoronSilicateGlass.get(1))
@@ -28,7 +28,7 @@ public class FluidSolidifierRecipes implements IRecipePool {
             .eut(TierEU.RECIPE_UXV)
             .addTo(FSR);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs(GTOreDictUnificator.get(OrePrefixes.block, Materials.BorosilicateGlass, 1))
             .fluidInputs(GGMaterial.shirabon.getMolten(1152))
             .itemOutputs(GTNLItemList.ShirabonReinforcedBoronSilicateGlass.get(1))

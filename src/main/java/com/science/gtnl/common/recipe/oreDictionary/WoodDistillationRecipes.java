@@ -4,8 +4,8 @@ import net.minecraft.item.ItemStack;
 import net.minecraftforge.fluids.FluidStack;
 
 import com.science.gtnl.common.material.RecipePool;
+import com.science.gtnl.utils.recipes.RecipeBuilder;
 
-import gregtech.api.enums.GTValues;
 import gregtech.api.enums.Materials;
 import gregtech.api.enums.OrePrefixes;
 import gregtech.api.interfaces.IOreRecipeRegistrator;
@@ -23,7 +23,7 @@ public class WoodDistillationRecipes implements IOreRecipeRegistrator {
     public void registerOre(OrePrefixes aPrefix, Materials aMaterial, String aOreDictName, String aModName,
         ItemStack aStack) {
         if (aOreDictName.equals("logWood")) {
-            GTValues.RA.stdBuilder()
+            RecipeBuilder.builder()
                 .itemInputs(GTUtility.copyAmount(16, aStack))
                 .itemOutputs(GTOreDictUnificator.get(OrePrefixes.dust, Materials.DarkAsh, 4L))
                 .fluidInputs(Materials.Nitrogen.getGas(1000))
