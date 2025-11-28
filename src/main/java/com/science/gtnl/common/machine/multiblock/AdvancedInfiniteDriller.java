@@ -10,6 +10,7 @@ import static gregtech.api.util.GTStructureUtility.buildHatchAdder;
 import static gregtech.api.util.GTStructureUtility.ofFrame;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import net.minecraft.entity.player.EntityPlayerMP;
@@ -29,15 +30,9 @@ import com.gtnewhorizon.structurelib.alignment.constructable.ISurvivalConstructa
 import com.gtnewhorizon.structurelib.structure.IStructureDefinition;
 import com.gtnewhorizon.structurelib.structure.ISurvivalBuildEnvironment;
 import com.gtnewhorizon.structurelib.structure.StructureDefinition;
-import com.gtnewhorizons.modularui.api.math.MainAxisAlignment;
-import com.gtnewhorizons.modularui.api.screen.ModularWindow;
-import com.gtnewhorizons.modularui.api.screen.UIBuildContext;
-import com.gtnewhorizons.modularui.common.widget.Column;
-import com.gtnewhorizons.modularui.common.widget.DrawableWidget;
 import com.gtnewhorizons.modularui.common.widget.DynamicPositionedColumn;
-import com.gtnewhorizons.modularui.common.widget.DynamicPositionedRow;
 import com.gtnewhorizons.modularui.common.widget.FakeSyncWidget;
-import com.gtnewhorizons.modularui.common.widget.Scrollable;
+import com.gtnewhorizons.modularui.common.widget.SlotWidget;
 import com.gtnewhorizons.modularui.common.widget.TextWidget;
 import com.science.gtnl.common.machine.multiMachineBase.MultiMachineBase;
 import com.science.gtnl.loader.BlockLoader;
@@ -53,7 +48,6 @@ import gregtech.api.enums.OrePrefixes;
 import gregtech.api.enums.Textures;
 import gregtech.api.enums.TierEU;
 import gregtech.api.enums.VoidingMode;
-import gregtech.api.gui.modularui.GTUITextures;
 import gregtech.api.interfaces.ITexture;
 import gregtech.api.interfaces.metatileentity.IMetaTileEntity;
 import gregtech.api.interfaces.tileentity.IGregTechTileEntity;
@@ -423,53 +417,24 @@ public class AdvancedInfiniteDriller extends MultiMachineBase<AdvancedInfiniteDr
     }
 
     @Override
-    public void addUIWidgets(ModularWindow.Builder builder, UIBuildContext buildContext) {
-        builder.widget(
-            new DrawableWidget().setDrawable(GTUITextures.PICTURE_SCREEN_BLACK)
-                .setPos(4, 4)
-                .setSize(190, 85));
-
-        slotWidgets.clear();
-        createInventorySlots();
-
-        Column slotsColumn = new Column();
-        for (int i = slotWidgets.size() - 1; i >= 0; i--) {
-            slotsColumn.widget(slotWidgets.get(i));
-        }
-        builder.widget(
-            slotsColumn.setAlignment(MainAxisAlignment.END)
-                .setPos(173, 167 - 1));
-
-        final DynamicPositionedColumn screenElements = new DynamicPositionedColumn();
-        drawTexts(screenElements, !slotWidgets.isEmpty() ? slotWidgets.get(0) : null);
+    protected void drawTexts(DynamicPositionedColumn screenElements, SlotWidget inventorySlot) {
+        super.drawTexts(screenElements, inventorySlot);
         screenElements
             .widget(
-                new TextWidget().setStringSupplier(
-                    () -> StatCollector.translateToLocalFormatted("Info_AdvancedInfiniteDriller_00") + excessFuel + "K")
+                new TextWidget()
+                    .setStringSupplier(
+                        () -> StatCollector.translateToLocalFormatted("Info_AdvancedInfiniteDriller_00", excessFuel))
                     .setDefaultColor(COLOR_TEXT_WHITE.get())
                     .setEnabled(true))
             .widget(
                 new FakeSyncWidget.IntegerSyncer(() -> excessFuel, Fuel -> excessFuel = Fuel).setSynced(true, false));
-        builder.widget(
-            new Scrollable().setVerticalScroll()
-                .widget(screenElements.setPos(10, 0))
-                .setPos(0, 7)
-                .setSize(190, 79));
+    }
 
-        builder.widget(createPowerSwitchButton(builder))
-            .widget(createVoidExcessButton(builder))
-            .widget(createInputSeparationButton(builder))
-            .widget(createBatchModeButton(builder))
-            .widget(createLockToSingleRecipeButton(builder))
-            .widget(createStructureUpdateButton(builder));
-
-        DynamicPositionedRow configurationElements = new DynamicPositionedRow();
-        addConfigurationWidgets(configurationElements, buildContext);
-
-        builder.widget(
-            configurationElements.setSpace(2)
-                .setAlignment(MainAxisAlignment.SPACE_BETWEEN)
-                .setPos(getRecipeLockingButtonPos().add(18, 0)));
+    @Override
+    public String[] getInfoData() {
+        List<String> ret = new ArrayList<>(Arrays.asList(super.getInfoData()));
+        ret.add(StatCollector.translateToLocalFormatted("Info_AdvancedInfiniteDriller_00", excessFuel));
+        return ret.toArray(new String[0]);
     }
 
     @Override

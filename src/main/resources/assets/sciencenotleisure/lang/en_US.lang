@@ -2059,6 +2059,10 @@ ChemicalComplexRecipeType=Chemical Reactor
 Tooltip_ChemicalComplex_00=Each coil tier provides an additional 15% speed (multiplicative).
 Tooltip_ChemicalComplex_Casing=Any Chemically Inert Machine Block
 
+NameGiantFlotationTank=Giant Flotation Tank
+GiantFlotationTankRecipeType=Flotation
+Tooltip_GiantFlotationTank_Casing=Any Hastelloy-X Structure Block
+
 NameMoltenCore=Molten Core
 MoltenCoreRecipeType=Fluid Heater
 Tooltip_MoltenCore_00=Each coil tier provides an additional 15% speed (multiplicative).
@@ -2972,7 +2976,7 @@ Tooltip_AdvancedInfiniteDriller_10=Cryotheum 40K
 Tooltip_AdvancedInfiniteDriller_11=Blazing Pyrotheum consumption formula: (Current Temperature^1.3)
 Tooltip_AdvancedInfiniteDriller_12=Place the corresponding dimension marker block to extract fluids, supports multiple!
 Tooltip_AdvancedInfiniteDriller_Casing=Any Radiant Naquadah Alloy Machine Block
-Info_AdvancedInfiniteDriller_00=Current Temperature:
+Info_AdvancedInfiniteDriller_00=Current Temperature: %s K
 
 NameLargeSteamFurnace=Large Steam Furnace
 LargeSteamFurnaceRecipeType=Furnace
@@ -3132,10 +3136,19 @@ NameKerrNewmanHomogenizer=Kerr Newman Homogenizer
 KerrNewmanHomogenizerRecipeType=Mixer
 Tooltip_KerrNewmanHomogenizer_Casing=Any Reinforced Iridium Machine Block
 
+NameDissolutionCore=Dissolution Core
+DissolutionCoreRecipeType=Dissolution Tank / Digester
+DissolutionCore_Mode_0=Dissolution Tank
+DissolutionCore_Mode_1=Digester
+Tooltip_DissolutionCore_00=Each coil tier provides an additional 15% speed (multiplicative).
+Tooltip_DissolutionCore_01=Ignore ratio and heat requirement
+Tooltip_DissolutionCore_Casing=Any radioactive Naquadah alloy machine block
+
 NameGeminiContainmentSystem=Gemini Containment System
 GeminiContainmentSystemRecipeType=Packer / Unpacker
 GeminiContainmentSystem_Mode_0=Packer
 GeminiContainmentSystem_Mode_1=Unpacker
+Tooltip_GeminiContainmentSystem_00=Each coil tier provides an additional 15% speed (multiplicative).
 Tooltip_GeminiContainmentSystem_Casing=Any Reinforced Iridium Machine Block
 
 NameExtremeCompressor=Extreme Compressor

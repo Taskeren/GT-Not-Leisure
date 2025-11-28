@@ -279,7 +279,7 @@ public class SteamOreProcessorModule extends SteamElevatorModule {
         }
     }
 
-    public boolean checkTypes(int aID, IntOpenHashSet... aTables) {
+    public static boolean checkTypes(int aID, IntOpenHashSet... aTables) {
         for (IntOpenHashSet set : aTables) {
             if (set.contains(aID)) {
                 return true;

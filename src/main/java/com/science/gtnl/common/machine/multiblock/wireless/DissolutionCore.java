@@ -5,11 +5,21 @@ import static com.science.gtnl.ScienceNotLeisure.*;
 import static com.science.gtnl.common.machine.multiMachineBase.MultiMachineBase.CustomHatchElement.*;
 import static gregtech.api.GregTechAPI.*;
 import static gregtech.api.enums.HatchElement.*;
+import static gregtech.api.enums.Textures.BlockIcons.*;
+import static gregtech.api.enums.Textures.BlockIcons.OVERLAY_FRONT_OIL_CRACKER;
+import static gregtech.api.enums.Textures.BlockIcons.OVERLAY_FRONT_OIL_CRACKER_ACTIVE_GLOW;
+import static gregtech.api.enums.Textures.BlockIcons.OVERLAY_FRONT_OIL_CRACKER_GLOW;
 import static gregtech.api.util.GTStructureUtility.*;
 import static gtPlusPlus.core.block.ModBlocks.*;
+import static gtnhlanth.common.register.LanthItemList.*;
 import static tectech.thing.casing.TTCasingsContainer.*;
 
-import net.minecraft.block.Block;
+import java.util.Arrays;
+import java.util.Collection;
+
+import javax.annotation.Nonnull;
+
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.StatCollector;
 import net.minecraftforge.common.util.ForgeDirection;
@@ -18,52 +28,53 @@ import com.gtnewhorizon.structurelib.structure.IStructureDefinition;
 import com.gtnewhorizon.structurelib.structure.ISurvivalBuildEnvironment;
 import com.gtnewhorizon.structurelib.structure.StructureDefinition;
 import com.science.gtnl.common.machine.multiMachineBase.WirelessEnergyMultiMachineBase;
+import com.science.gtnl.loader.BlockLoader;
 import com.science.gtnl.utils.StructureUtils;
 
 import gregtech.api.enums.HeatingCoilLevel;
 import gregtech.api.enums.Materials;
 import gregtech.api.enums.Textures;
+import gregtech.api.gui.modularui.GTUITextures;
 import gregtech.api.interfaces.ITexture;
 import gregtech.api.interfaces.metatileentity.IMetaTileEntity;
 import gregtech.api.interfaces.tileentity.IGregTechTileEntity;
 import gregtech.api.recipe.RecipeMap;
 import gregtech.api.render.TextureFactory;
+import gregtech.api.util.GTUtility;
 import gregtech.api.util.MultiblockTooltipBuilder;
 import gregtech.common.misc.GTStructureChannels;
-import gtPlusPlus.api.recipe.GTPPRecipeMaps;
-import gtPlusPlus.core.material.MaterialsAlloy;
-import gtPlusPlus.xmod.gregtech.common.blocks.textures.TexturesGtBlock;
-import gtnhintergalactic.tile.multi.elevator.TileEntitySpaceElevator;
-import gtnhlanth.common.register.LanthItemList;
+import gtnhlanth.api.recipe.LanthanidesRecipeMaps;
 
-public class GiantElectrochemicalWorkstation extends WirelessEnergyMultiMachineBase<GiantElectrochemicalWorkstation> {
+public class DissolutionCore extends WirelessEnergyMultiMachineBase<DissolutionCore> {
 
-    private static final int HORIZONTAL_OFF_SET = 22;
-    private static final int VERTICAL_OFF_SET = 6;
-    private static final int DEPTH_OFF_SET = 1;
+    private static final int HORIZONTAL_OFF_SET = 15;
+    private static final int VERTICAL_OFF_SET = 13;
+    private static final int DEPTH_OFF_SET = 0;
     private static final String STRUCTURE_PIECE_MAIN = "main";
-    private static final String GEW_STRUCTURE_FILE_PATH = RESOURCE_ROOT_ID + ":"
-        + "multiblock/giant_electrochemical_workstation";
-    private static final String[][] shape = StructureUtils.readStructureFromFile(GEW_STRUCTURE_FILE_PATH);
+    private static final String DC_STRUCTURE_FILE_PATH = RESOURCE_ROOT_ID + ":" + "multiblock/dissolution_core";
+    private static final String[][] shape = StructureUtils.readStructureFromFile(DC_STRUCTURE_FILE_PATH);
+    public static final int MACHINEMODE_DISSOLUTION = 0;
+    public static final int MACHINEMODE_DIGESTER = 1;
 
-    public GiantElectrochemicalWorkstation(String aName) {
+    public DissolutionCore(String aName) {
         super(aName);
     }
 
-    public GiantElectrochemicalWorkstation(int aID, String aName, String aNameRegional) {
+    public DissolutionCore(int aID, String aName, String aNameRegional) {
         super(aID, aName, aNameRegional);
     }
 
     @Override
     public IMetaTileEntity newMetaEntity(IGregTechTileEntity aTileEntity) {
-        return new GiantElectrochemicalWorkstation(this.mName);
+        return new DissolutionCore(this.mName);
     }
 
     @Override
     public MultiblockTooltipBuilder createTooltip() {
         MultiblockTooltipBuilder tt = new MultiblockTooltipBuilder();
-        tt.addMachineType(StatCollector.translateToLocal("GiantElectrochemicalWorkstationRecipeType"))
-            .addInfo(StatCollector.translateToLocal("Tooltip_GiantElectrochemicalWorkstation_00"))
+        tt.addMachineType(StatCollector.translateToLocal("DissolutionCoreRecipeType"))
+            .addInfo(StatCollector.translateToLocal("Tooltip_DissolutionCore_00"))
+            .addInfo(StatCollector.translateToLocal("Tooltip_DissolutionCore_01"))
             .addInfo(StatCollector.translateToLocal("Tooltip_WirelessEnergyMultiMachine_00"))
             .addInfo(StatCollector.translateToLocal("Tooltip_WirelessEnergyMultiMachine_01"))
             .addInfo(StatCollector.translateToLocal("Tooltip_WirelessEnergyMultiMachine_02"))
@@ -79,12 +90,12 @@ public class GiantElectrochemicalWorkstation extends WirelessEnergyMultiMachineB
             .addSeparator()
             .addInfo(StatCollector.translateToLocal("StructureTooComplex"))
             .addInfo(StatCollector.translateToLocal("BLUE_PRINT_INFO"))
-            .beginStructureBlock(45, 13, 15, true)
-            .addInputBus(StatCollector.translateToLocal("Tooltip_GiantElectrochemicalWorkstation_Casing"), 1)
-            .addOutputBus(StatCollector.translateToLocal("Tooltip_GiantElectrochemicalWorkstation_Casing"), 1)
-            .addInputHatch(StatCollector.translateToLocal("Tooltip_GiantElectrochemicalWorkstation_Casing"), 1)
-            .addOutputHatch(StatCollector.translateToLocal("Tooltip_GiantElectrochemicalWorkstation_Casing"), 1)
-            .addEnergyHatch(StatCollector.translateToLocal("Tooltip_GiantElectrochemicalWorkstation_Casing"), 1)
+            .beginStructureBlock(31, 16, 31, true)
+            .addInputBus(StatCollector.translateToLocal("Tooltip_DissolutionCore_Casing"), 1)
+            .addOutputBus(StatCollector.translateToLocal("Tooltip_DissolutionCore_Casing"), 1)
+            .addInputHatch(StatCollector.translateToLocal("Tooltip_DissolutionCore_Casing"), 1)
+            .addOutputHatch(StatCollector.translateToLocal("Tooltip_DissolutionCore_Casing"), 1)
+            .addEnergyHatch(StatCollector.translateToLocal("Tooltip_DissolutionCore_Casing"), 1)
             .addSubChannelUsage(GTStructureChannels.HEATING_COIL)
             .toolTipFinisher();
         return tt;
@@ -92,59 +103,45 @@ public class GiantElectrochemicalWorkstation extends WirelessEnergyMultiMachineB
 
     @Override
     public int getCasingTextureID() {
-        return StructureUtils.getTextureIndex(sBlockCasings9, 7);
+        return StructureUtils.getTextureIndex(sBlockCasings8, 10);
     }
 
     @Override
-    public ITexture[] getTexture(IGregTechTileEntity baseMetaTileEntity, ForgeDirection sideDirection,
-        ForgeDirection facingDirection, int colorIndex, boolean active, boolean redstoneLevel) {
-        if (sideDirection == facingDirection) {
-            if (active) return new ITexture[] {
-                Textures.BlockIcons.getCasingTextureForId(TileEntitySpaceElevator.CASING_INDEX_BASE),
+    public ITexture[] getTexture(IGregTechTileEntity te, ForgeDirection side, ForgeDirection facing, int colorIndex,
+        boolean active, boolean redstone) {
+        if (side == facing) {
+            if (active) return new ITexture[] { Textures.BlockIcons.getCasingTextureForId(getCasingTextureID()),
                 TextureFactory.builder()
-                    .addIcon(TexturesGtBlock.oMCDIndustrialElectrolyzerActive)
+                    .addIcon(OVERLAY_FRONT_OIL_CRACKER_ACTIVE)
                     .extFacing()
                     .build(),
                 TextureFactory.builder()
-                    .addIcon(TexturesGtBlock.oMCDIndustrialElectrolyzerActiveGlow)
+                    .addIcon(OVERLAY_FRONT_OIL_CRACKER_ACTIVE_GLOW)
                     .extFacing()
                     .glow()
                     .build() };
-            return new ITexture[] {
-                Textures.BlockIcons.getCasingTextureForId(TileEntitySpaceElevator.CASING_INDEX_BASE),
+            return new ITexture[] { Textures.BlockIcons.getCasingTextureForId(getCasingTextureID()),
                 TextureFactory.builder()
-                    .addIcon(TexturesGtBlock.oMCDIndustrialElectrolyzer)
+                    .addIcon(OVERLAY_FRONT_OIL_CRACKER)
                     .extFacing()
                     .build(),
                 TextureFactory.builder()
-                    .addIcon(TexturesGtBlock.oMCDIndustrialElectrolyzerGlow)
+                    .addIcon(OVERLAY_FRONT_OIL_CRACKER_GLOW)
                     .extFacing()
                     .glow()
                     .build() };
         }
-        return new ITexture[] { Textures.BlockIcons.getCasingTextureForId(TileEntitySpaceElevator.CASING_INDEX_BASE) };
+        return new ITexture[] { Textures.BlockIcons.getCasingTextureForId(getCasingTextureID()) };
     }
 
     @Override
-    public IStructureDefinition<GiantElectrochemicalWorkstation> getStructureDefinition() {
-        return StructureDefinition.<GiantElectrochemicalWorkstation>builder()
+    public IStructureDefinition<DissolutionCore> getStructureDefinition() {
+        return StructureDefinition.<DissolutionCore>builder()
             .addShape(STRUCTURE_PIECE_MAIN, transpose(shape))
-            .addElement('A', ofBlock(sBlockCasings10, 5))
-            .addElement('B', ofBlock(blockCasingsMisc, 5))
-            .addElement('C', ofBlock(sBlockCasings8, 1))
-            .addElement('D', ofBlock(sBlockCasings6, 9))
-            .addElement('E', ofBlock(sBlockCasings10, 8))
-            .addElement('F', ofBlock(sBlockCasings8, 7))
+            .addElement('A', ofBlock(sBlockCasings10, 7))
             .addElement(
-                'G',
-                GTStructureChannels.HEATING_COIL.use(
-                    activeCoils(
-                        ofCoil(
-                            GiantElectrochemicalWorkstation::setMCoilLevel,
-                            GiantElectrochemicalWorkstation::getMCoilLevel))))
-            .addElement(
-                'H',
-                buildHatchAdder(GiantElectrochemicalWorkstation.class)
+                'B',
+                buildHatchAdder(DissolutionCore.class)
                     .atLeast(
                         Maintenance,
                         InputHatch,
@@ -155,17 +152,26 @@ public class GiantElectrochemicalWorkstation extends WirelessEnergyMultiMachineB
                         ParallelCon)
                     .casingIndex(getCasingTextureID())
                     .dot(1)
-                    .buildAndChain(onElementPass(x -> ++x.mCountCasing, ofBlock(sBlockCasings9, 7))))
-            .addElement('I', ofBlock(sBlockTintedGlass, 1))
-            .addElement('J', ofFrame(Materials.Polytetrafluoroethylene))
-            .addElement('K', ofBlock(sBlockCasingsSE, 0))
+                    .buildAndChain(onElementPass(x -> ++x.mCountCasing, ofBlock(sBlockCasings8, 10))))
             .addElement(
-                'L',
-                ofBlockAnyMeta(
-                    Block.getBlockFromItem(
-                        MaterialsAlloy.HASTELLOY_N.getFrameBox(1)
-                            .getItem())))
-            .addElement('M', ofBlockAnyMeta(LanthItemList.ELECTRODE_CASING))
+                'C',
+                GTStructureChannels.HEATING_COIL
+                    .use(activeCoils(ofCoil(DissolutionCore::setMCoilLevel, DissolutionCore::getMCoilLevel))))
+            .addElement('D', ofBlock(BlockLoader.metaCasing, 4))
+            .addElement('E', ofBlock(sBlockCasings8, 1))
+            .addElement('F', ofBlock(sBlockCasings9, 11))
+            .addElement('G', ofBlock(sBlockCasings11, 2))
+            .addElement('H', ofBlock(sBlockCasingsBA0, 6))
+            .addElement('I', ofBlock(kubatech.loaders.BlockLoader.defcCasingBlock, 7))
+            .addElement('J', ofBlock(blockCasings2Misc, 0))
+            .addElement('K', ofBlock(sBlockCasings9, 7))
+            .addElement('L', ofBlock(BlockLoader.metaBlockGlass, 2))
+            .addElement('M', ofBlock(sBlockCasings10, 7))
+            .addElement('N', ofBlockAnyMeta(ELECTRODE_CASING))
+            .addElement('O', ofFrame(Materials.Polytetrafluoroethylene))
+            .addElement('P', ofBlock(sBlockCasings8, 0))
+            .addElement('Q', ofFrame(Materials.BlackSteel))
+            .addElement('R', ofBlock(sBlockCasings9, 12))
             .build();
     }
 
@@ -210,7 +216,37 @@ public class GiantElectrochemicalWorkstation extends WirelessEnergyMultiMachineB
 
     @Override
     public RecipeMap<?> getRecipeMap() {
-        return GTPPRecipeMaps.electrolyzerNonCellRecipes;
+        return (machineMode == MACHINEMODE_DISSOLUTION) ? LanthanidesRecipeMaps.dissolutionTankRecipes
+            : LanthanidesRecipeMaps.digesterRecipes;
+    }
+
+    @Nonnull
+    @Override
+    public Collection<RecipeMap<?>> getAvailableRecipeMaps() {
+        return Arrays.asList(LanthanidesRecipeMaps.dissolutionTankRecipes, LanthanidesRecipeMaps.digesterRecipes);
+    }
+
+    @Override
+    public void setMachineModeIcons() {
+        machineModeIcons.add(GTUITextures.OVERLAY_BUTTON_MACHINEMODE_PACKAGER);
+        machineModeIcons.add(GTUITextures.OVERLAY_BUTTON_MACHINEMODE_UNPACKAGER);
+    }
+
+    @Override
+    public final void onScrewdriverRightClick(ForgeDirection side, EntityPlayer aPlayer, float aX, float aY, float aZ,
+        ItemStack aTool) {
+        this.machineMode = (this.machineMode + 1) % 2;
+        GTUtility.sendChatToPlayer(aPlayer, StatCollector.translateToLocal("DissolutionCore_Mode_" + this.machineMode));
+    }
+
+    @Override
+    public String getMachineModeName() {
+        return StatCollector.translateToLocal("DissolutionCore_Mode_" + machineMode);
+    }
+
+    @Override
+    public boolean supportsMachineModeSwitch() {
+        return true;
     }
 
     @Override

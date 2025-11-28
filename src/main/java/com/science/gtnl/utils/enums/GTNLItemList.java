@@ -621,6 +621,8 @@ public enum GTNLItemList implements IItemContainer {
     LargeSteamBending,
     ChemicalComplex,
     MegaWiremill,
+    GiantFlotationTank,
+    DissolutionCore,
 
     EnergyHatchLV,
     EnergyHatchLV4A,

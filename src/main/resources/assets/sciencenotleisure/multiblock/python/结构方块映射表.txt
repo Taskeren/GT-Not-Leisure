@@ -1,22 +1,29 @@
 结构方块映射表:
 
 字母对应关系:
-A -> ofBlock...(tile.blockDiamond, 0, ...)
-B -> ofBlock...(tile.cloth, 0, ...)
-C -> ofBlock...(tile.cloth, 1, ...)
-D -> ofBlock...(tile.cloth, 3, ...)
-E -> ofBlock...(tile.cloth, 4, ...)
-F -> ofBlock...(tile.cloth, 5, ...)
-G -> ofBlock...(tile.cloth, 8, ...)
-H -> ofBlock...(tile.cloth, 13, ...)
-I -> ofBlock...(tile.oreIron, 0, ...)
-J -> ofBlock...(tile.stainedGlass, 3, ...)
-K -> ofBlock...(tile.stainedGlass, 11, ...)
-L -> 控制器位置
+A -> ofBlock...(tile.bedrock, 0, ...)
+B -> ofBlock...(tile.blockCoal, 0, ...)
+C -> ofBlock...(tile.blockDiamond, 0, ...)
+D -> ofBlock...(tile.blockIron, 0, ...)
+E -> ofBlock...(tile.blockLapis, 0, ...)
+F -> ofBlock...(tile.cloth, 0, ...)
+G -> ofBlock...(tile.cloth, 1, ...)
+H -> ofBlock...(tile.cloth, 2, ...)
+I -> ofBlock...(tile.cloth, 7, ...)
+J -> ofBlock...(tile.cloth, 14, ...)
+K -> ofBlock...(tile.cloth, 15, ...)
+L -> ofBlock...(tile.glass, 0, ...)
+M -> ofBlock...(tile.obsidian, 0, ...)
+N -> ofBlock...(tile.oreCoal, 0, ...)
+O -> ofBlock...(tile.oreLapis, 4, ...)
+P -> ofBlock...(tile.stainedGlass, 7, ...)
+Q -> ofBlock...(tile.stainedGlass, 8, ...)
+R -> ofBlock...(tile.stainedGlass, 15, ...)
+S -> 控制器位置
 
-偏移值 Offsets: 53 7 0
-结构体高度: 10
+偏移值 Offsets: 15 13 0
+结构体高度: 16
 
-宽: 61
-高: 10
-长: 15
+宽: 31
+高: 16
+长: 31

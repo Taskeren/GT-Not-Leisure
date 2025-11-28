@@ -221,12 +221,14 @@ import com.science.gtnl.common.machine.multiblock.wireless.CompoundDistillationF
 import com.science.gtnl.common.machine.multiblock.wireless.CompoundExtremeCoolingUnit;
 import com.science.gtnl.common.machine.multiblock.wireless.CrackerHub;
 import com.science.gtnl.common.machine.multiblock.wireless.CrystalBuilder;
+import com.science.gtnl.common.machine.multiblock.wireless.DissolutionCore;
 import com.science.gtnl.common.machine.multiblock.wireless.EngravingLaserPlant;
 import com.science.gtnl.common.machine.multiblock.wireless.ExtremeCompressor;
 import com.science.gtnl.common.machine.multiblock.wireless.ExtremeElectricFurnace;
 import com.science.gtnl.common.machine.multiblock.wireless.FieldForgePress;
 import com.science.gtnl.common.machine.multiblock.wireless.GeminiContainmentSystem;
 import com.science.gtnl.common.machine.multiblock.wireless.GiantElectrochemicalWorkstation;
+import com.science.gtnl.common.machine.multiblock.wireless.GiantFlotationTank;
 import com.science.gtnl.common.machine.multiblock.wireless.HandOfJohnDavisonRockefeller;
 import com.science.gtnl.common.machine.multiblock.wireless.HeavyRolling;
 import com.science.gtnl.common.machine.multiblock.wireless.HighEnergyLaserLathe;
@@ -1640,6 +1642,20 @@ public class MachineLoader {
         GTNLItemList.MegaWiremill.set(
             new MegaWiremill(MEGA_WIREMILL.ID, "MegaWiremill", StatCollector.translateToLocal("NameMegaWiremill")));
         addItemTooltip(GTNLItemList.MegaWiremill.get(1), AnimatedText.SNL_QYZG);
+
+        GTNLItemList.GiantFlotationTank.set(
+            new GiantFlotationTank(
+                GIANT_FLOTATION_TANK.ID,
+                "GiantFlotationTank",
+                StatCollector.translateToLocal("NameGiantFlotationTank")));
+        addItemTooltip(GTNLItemList.GiantFlotationTank.get(1), AnimatedText.SNL_QYZG);
+
+        GTNLItemList.DissolutionCore.set(
+            new DissolutionCore(
+                DissolutionCore.ID,
+                "DissolutionCore",
+                StatCollector.translateToLocal("NameDissolutionCore")));
+        addItemTooltip(GTNLItemList.DissolutionCore.get(1), AnimatedText.SNL_QYZG);
 
         // Special Machine
         GTNLItemList.CheatOreProcessingFactory.set(

@@ -142,7 +142,7 @@ public class SmartSiftingHub extends WirelessEnergyMultiMachineBase<SmartSifting
                     .buildAndChain(onElementPass(x -> ++x.mCountCasing, ofBlock(sBlockCasings8, 10))))
             .addElement('K', ofBlock(sBlockCasingsTT, 6))
             .addElement('L', ofBlock(BlockLoader.metaBlockGlass, 2))
-            .addElement('M', ofBlock(LanthItemList.ELECTRODE_CASING, 0))
+            .addElement('M', ofBlockAnyMeta(LanthItemList.ELECTRODE_CASING))
             .build();
     }
 

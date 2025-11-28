@@ -276,7 +276,7 @@ public abstract class MixinMTEIntegratedOreFactory
         if (sMidProduct != null) {
             for (ItemStack aStack : sMidProduct) {
                 int tID = GTUtility.stackToInt(aStack);
-                if (checkTypesFast(tID, aTables)) {
+                if (checkTypes(tID, aTables)) {
                     // cache by intID
                     GTRecipe tRecipe = getCachedRecipe(
                         MAC_CACHE,
@@ -304,7 +304,7 @@ public abstract class MixinMTEIntegratedOreFactory
         if (sMidProduct != null) {
             for (ItemStack aStack : sMidProduct) {
                 int tID = GTUtility.stackToInt(aStack);
-                if (checkTypesFast(tID, aTables)) {
+                if (checkTypes(tID, aTables)) {
                     GTRecipe tRecipe = getCachedRecipe(
                         WASH_CACHE,
                         tID,
@@ -332,7 +332,7 @@ public abstract class MixinMTEIntegratedOreFactory
         if (sMidProduct != null) {
             for (ItemStack aStack : sMidProduct) {
                 int tID = GTUtility.stackToInt(aStack);
-                if (checkTypesFast(tID, aTables)) {
+                if (checkTypes(tID, aTables)) {
                     GTRecipe tRecipe = getCachedRecipe(
                         THERMAL_CACHE,
                         tID,
@@ -359,7 +359,7 @@ public abstract class MixinMTEIntegratedOreFactory
         if (sMidProduct != null) {
             for (ItemStack aStack : sMidProduct) {
                 int tID = GTUtility.stackToInt(aStack);
-                if (checkTypesFast(tID, aTables)) {
+                if (checkTypes(tID, aTables)) {
                     GTRecipe tRecipe = getCachedRecipe(
                         CENTRIFUGE_CACHE,
                         tID,
@@ -385,7 +385,7 @@ public abstract class MixinMTEIntegratedOreFactory
         if (sMidProduct != null) {
             for (ItemStack aStack : sMidProduct) {
                 int tID = GTUtility.stackToInt(aStack);
-                if (checkTypesFast(tID, aTables)) {
+                if (checkTypes(tID, aTables)) {
                     GTRecipe tRecipe = getCachedRecipe(
                         SIFTER_CACHE,
                         tID,
@@ -411,7 +411,7 @@ public abstract class MixinMTEIntegratedOreFactory
         if (sMidProduct != null) {
             for (ItemStack aStack : sMidProduct) {
                 int tID = GTUtility.stackToInt(aStack);
-                if (checkTypesFast(tID, aTables)) {
+                if (checkTypes(tID, aTables)) {
                     GTRecipe tRecipe = getCachedRecipe(
                         CHEMBATH_CACHE,
                         tID,
@@ -438,16 +438,6 @@ public abstract class MixinMTEIntegratedOreFactory
             }
         }
         doCompress(tProduct);
-    }
-
-    @Unique
-    public boolean checkTypesFast(int aID, IntOpenHashSet... aTables) {
-        for (IntOpenHashSet set : aTables) {
-            if (set.contains(aID)) {
-                return true;
-            }
-        }
-        return false;
     }
 
     @Unique

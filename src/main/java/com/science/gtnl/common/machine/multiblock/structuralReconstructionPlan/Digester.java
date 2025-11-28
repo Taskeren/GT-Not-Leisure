@@ -72,6 +72,7 @@ public class Digester extends GTMMultiMachineBase<Digester> implements ISurvival
         return new Digester(this.mName);
     }
 
+    @Override
     public ITexture[] getTexture(IGregTechTileEntity te, ForgeDirection side, ForgeDirection facing, int colorIndex,
         boolean active, boolean redstone) {
         if (side == facing) {

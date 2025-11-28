@@ -70,6 +70,7 @@ public class GeminiContainmentSystem extends WirelessEnergyMultiMachineBase<Gemi
     public MultiblockTooltipBuilder createTooltip() {
         MultiblockTooltipBuilder tt = new MultiblockTooltipBuilder();
         tt.addMachineType(StatCollector.translateToLocal("GeminiContainmentSystemRecipeType"))
+            .addInfo(StatCollector.translateToLocal("Tooltip_GeminiContainmentSystem_00"))
             .addInfo(StatCollector.translateToLocal("Tooltip_WirelessEnergyMultiMachine_00"))
             .addInfo(StatCollector.translateToLocal("Tooltip_WirelessEnergyMultiMachine_01"))
             .addInfo(StatCollector.translateToLocal("Tooltip_WirelessEnergyMultiMachine_02"))

@@ -298,7 +298,7 @@ public class DataCenter extends TTMultiblockBase implements ISurvivalConstructab
                     .buildAndChain(TTCasingsContainer.sBlockCasingsTT, 1))
             .addElement('D', ofBlock(sBlockCasings8, 7))
             .addElement('E', ofBlock(sBlockCasings10, 9))
-            .addElement('F', ofBlock(LanthItemList.ELECTRODE_CASING, 0))
+            .addElement('F', ofBlockAnyMeta(LanthItemList.ELECTRODE_CASING))
             .addElement('G', ofBlock(TTCasingsContainer.sBlockCasingsTT, 4))
             .addElement('H', ofBlock(TTCasingsContainer.sBlockCasingsTT, 2))
             .addElement('I', ofBlock(BlockLoader.metaCasing, 4))

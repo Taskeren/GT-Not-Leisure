@@ -110,7 +110,7 @@ public class AetronPressor extends WirelessEnergyMultiMachineBase<AetronPressor>
         return StructureDefinition.<AetronPressor>builder()
             .addShape(STRUCTURE_PIECE_MAIN, transpose(shape))
             .addElement('A', ofBlock(sBlockCasingsTT, 6))
-            .addElement('B', ofBlock(LanthItemList.ELECTRODE_CASING, 0))
+            .addElement('B', ofBlockAnyMeta(LanthItemList.ELECTRODE_CASING))
             .addElement('C', ofBlock(sBlockCasingsTT, 0))
             .addElement('D', ofBlock(sBlockCasings9, 14))
             .addElement('E', ofBlock(BlockLoader.metaCasing, 18))

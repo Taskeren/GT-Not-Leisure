@@ -147,7 +147,7 @@ public class ExtremeElectricFurnace extends WirelessEnergyMultiMachineBase<Extre
             .addElement('N', ofBlock(BlockLoader.metaCasing, 4))
             .addElement('O', Muffler.newAny(getCasingTextureID(), 1))
             .addElement('P', ofBlock(sBlockCasings8, 10))
-            .addElement('Q', ofBlock(LanthItemList.ELECTRODE_CASING, 0))
+            .addElement('Q', ofBlockAnyMeta(LanthItemList.ELECTRODE_CASING))
             .addElement('R', ofFrame(Materials.Naquadah))
             .build();
     }
