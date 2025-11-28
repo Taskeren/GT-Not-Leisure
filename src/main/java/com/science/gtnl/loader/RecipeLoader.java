@@ -151,7 +151,9 @@ public class RecipeLoader {
     public static boolean recipesAdded;
 
     public static void loadPostInit() {
-        RemoveRecipes.removeCircuitAssemblerRecipes();
+        if (MainConfig.enableDeleteRecipe) {
+            RemoveRecipes.removeCircuitAssemblerRecipes();
+        }
 
         IRecipePool[] recipePools = new IRecipePool[] { new CircuitAssemblerConvertRecipes() };
 
