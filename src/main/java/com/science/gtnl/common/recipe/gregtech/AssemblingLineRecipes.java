@@ -1785,7 +1785,7 @@ public class AssemblingLineRecipes implements IRecipePool {
                 CustomItemList.Machine_Multi_ForgeOfGods.get(2), CustomItemList.Machine_Multi_EyeOfHarmony.get(2),
                 GTModHandler.getModItem(EternalSingularity.ID, "eternal_singularity", 64),
                 GTUtility.copyAmountUnsafe(64, Particle.getBaseParticle(Particle.GRAVITON)),
-                ItemList.Black_Hole_Opener.get(32), ItemList.EnergisedTesseract.get(32),
+                ItemList.Black_Hole_Stabilizer.get(32), ItemList.EnergisedTesseract.get(32),
                 ItemList.Field_Generator_UMV.get(16), ItemList.Transdimensional_Alignment_Matrix.get(8),
                 CustomItemList.astralArrayFabricator.get(1),
                 GTModHandler.getModItem(AppliedEnergistics2.ID, "item.ItemExtremeStorageCell.Universe", 1) },
