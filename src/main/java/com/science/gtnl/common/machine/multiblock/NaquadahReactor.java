@@ -239,7 +239,7 @@ public abstract class NaquadahReactor extends TTMultiblockBase implements IConst
                     + " EU/t"
                     + EnumChatFormatting.RESET);
         }
-        if (tag.hasKey("useExtraGas")) {
+        if (tag.getBoolean("useExtraGas")) {
             currentTip.add(StatCollector.translateToLocal("NaquadahReactor.Generates.1"));
         }
     }
