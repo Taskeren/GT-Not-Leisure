@@ -1662,6 +1662,13 @@ public class MachineLoader {
             .set(new SwarmCore(SWARM_CORE.ID, "SwarmCore", StatCollector.translateToLocal("NameSwarmCore")));
         addItemTooltip(GTNLItemList.SwarmCore.get(1), AnimatedText.SNL_QYZG);
 
+        GTNLItemList.HyperNaquadahReactor.set(
+            new NaquadahReactor.HyperNaquadahReactor(
+                HYPER_NAQUADAH_REACTOR.ID,
+                "HyperNaquadahReactor",
+                StatCollector.translateToLocal("NameHyperNaquadahReactor")));
+        addItemTooltip(GTNLItemList.HyperNaquadahReactor.get(1), AnimatedText.SNL_QYZG);
+
         // Special Machine
         GTNLItemList.CheatOreProcessingFactory.set(
             new CheatOreProcessingFactory(

@@ -2,13 +2,14 @@ package com.science.gtnl.common.machine.multiblock;
 
 import static com.gtnewhorizon.structurelib.structure.StructureUtility.*;
 import static com.science.gtnl.ScienceNotLeisure.RESOURCE_ROOT_ID;
-import static gregtech.api.GregTechAPI.sBlockCasings8;
+import static gregtech.api.GregTechAPI.*;
 import static gregtech.api.enums.HatchElement.*;
 import static gregtech.api.enums.Textures.BlockIcons.NAQUADAH_REACTOR_SOLID_FRONT;
 import static gregtech.api.enums.Textures.BlockIcons.NAQUADAH_REACTOR_SOLID_FRONT_ACTIVE;
 import static gregtech.api.util.GTStructureUtility.buildHatchAdder;
 import static gregtech.api.util.GTStructureUtility.ofFrame;
 import static gtPlusPlus.core.block.ModBlocks.blockCasings4Misc;
+import static kubatech.loaders.BlockLoader.*;
 import static tectech.thing.casing.TTCasingsContainer.sBlockCasingsTT;
 import static tectech.thing.metaTileEntity.multi.base.TTMultiblockBase.HatchElement.*;
 
@@ -17,6 +18,7 @@ import java.util.List;
 import javax.annotation.Nonnull;
 
 import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
@@ -44,7 +46,11 @@ import com.science.gtnl.utils.recipes.GTNL_OverclockCalculator;
 import com.science.gtnl.utils.recipes.GTNL_ProcessingLogic;
 import com.science.gtnl.utils.recipes.metadata.NaquadahReactorMetadata;
 
+import goodgenerator.items.GGMaterial;
+import gregtech.api.GregTechAPI;
+import gregtech.api.enums.GTValues;
 import gregtech.api.enums.Materials;
+import gregtech.api.enums.SoundResource;
 import gregtech.api.enums.Textures;
 import gregtech.api.interfaces.ITexture;
 import gregtech.api.interfaces.metatileentity.IMetaTileEntity;
@@ -198,6 +204,7 @@ public abstract class NaquadahReactor extends TTMultiblockBase implements IConst
             startRecipeProcessing();
 
             if (!depleteInput(getExtraGas())) {
+                doExplosion(lEUt);
                 stopMachine(ShutDownReasonRegistry.NONE);
                 endRecipeProcessing();
                 return false;
@@ -206,6 +213,18 @@ public abstract class NaquadahReactor extends TTMultiblockBase implements IConst
             endRecipeProcessing();
         }
         return super.onRunningTick(stack);
+    }
+
+    @Override
+    public void doExplosion(long aExplosionPower) {
+        float tStrength = GTValues.getExplosionPowerForVoltage(aExplosionPower);
+        final int tX = getBaseMetaTileEntity().getXCoord();
+        final int tY = getBaseMetaTileEntity().getYCoord();
+        final int tZ = getBaseMetaTileEntity().getZCoord();
+        final World tWorld = getBaseMetaTileEntity().getWorld();
+        GTUtility.sendSoundToPlayers(tWorld, SoundResource.IC2_MACHINES_MACHINE_OVERLOAD, 1.0F, -1, tX, tY, tZ);
+        tWorld.setBlock(tX, tY, tZ, Blocks.air);
+        if (GregTechAPI.sMachineExplosions) tWorld.createExplosion(null, tX + 0.5, tY + 0.5, tZ + 0.5, tStrength, true);
     }
 
     @Override
@@ -221,10 +240,7 @@ public abstract class NaquadahReactor extends TTMultiblockBase implements IConst
                     + EnumChatFormatting.RESET);
         }
         if (tag.hasKey("useExtraGas")) {
-            currentTip.add(
-                StatCollector.translateToLocal("NaquadahReactor.Generates.1") + EnumChatFormatting.WHITE
-                    + tag.getBoolean("useExtraGas")
-                    + EnumChatFormatting.RESET);
+            currentTip.add(StatCollector.translateToLocal("NaquadahReactor.Generates.1"));
         }
     }
 
@@ -312,7 +328,7 @@ public abstract class NaquadahReactor extends TTMultiblockBase implements IConst
         @Override
         public MultiblockTooltipBuilder createTooltip() {
             MultiblockTooltipBuilder tt = new MultiblockTooltipBuilder();
-            tt.addMachineType(StatCollector.translateToLocal("LargeNaquadahReactorRecipeType"))
+            tt.addMachineType(StatCollector.translateToLocal("NaquadahReactorRecipeType"))
                 .addInfo(
                     StatCollector.translateToLocalFormatted("Tooltip_LargeNaquadahReactor_00", getMaxParallelRecipes()))
                 .addInfo(StatCollector.translateToLocal("Tooltip_LargeNaquadahReactor_01"))
@@ -359,6 +375,135 @@ public abstract class NaquadahReactor extends TTMultiblockBase implements IConst
         @Override
         public FluidStack getExtraGas() {
             return Materials.Oxygen.getGas(2500);
+        }
+
+        @Override
+        public boolean checkMachine_EM(IGregTechTileEntity aBaseMetaTileEntity, ItemStack aStack) {
+            return checkPiece(STRUCTURE_PIECE_MAIN, HORIZONTAL_OFF_SET, VERTICAL_OFF_SET, DEPTH_OFF_SET)
+                && mMaintenanceHatches.size() <= 1
+                && tCountCasing >= 50;
+        }
+
+        @Override
+        public void construct(ItemStack stackSize, boolean hintsOnly) {
+            buildPiece(STRUCTURE_PIECE_MAIN, stackSize, hintsOnly, HORIZONTAL_OFF_SET, VERTICAL_OFF_SET, DEPTH_OFF_SET);
+        }
+
+        @Override
+        public int survivalConstruct(ItemStack stackSize, int elementBudget, ISurvivalBuildEnvironment env) {
+            if (mMachine) return -1;
+            return survivalBuildPiece(
+                STRUCTURE_PIECE_MAIN,
+                stackSize,
+                HORIZONTAL_OFF_SET,
+                VERTICAL_OFF_SET,
+                DEPTH_OFF_SET,
+                elementBudget,
+                env,
+                false,
+                true);
+        }
+    }
+
+    public static class HyperNaquadahReactor extends NaquadahReactor {
+
+        private static final String STRUCTURE_PIECE_MAIN = "main";
+        private static final String HNR_STRUCTURE_FILE_PATH = RESOURCE_ROOT_ID + ":"
+            + "multiblock/hyper_naquadah_reactor";
+        private static final String[][] shape = StructureUtils.readStructureFromFile(HNR_STRUCTURE_FILE_PATH);
+        private static final int HORIZONTAL_OFF_SET = 13;
+        private static final int VERTICAL_OFF_SET = 10;
+        private static final int DEPTH_OFF_SET = 7;
+
+        public HyperNaquadahReactor(int aID, String aName, String aNameRegional) {
+            super(aID, aName, aNameRegional);
+        }
+
+        public HyperNaquadahReactor(String aName) {
+            super(aName);
+        }
+
+        @Override
+        public IMetaTileEntity newMetaEntity(IGregTechTileEntity aTileEntity) {
+            return new HyperNaquadahReactor(this.mName);
+        }
+
+        @Override
+        public IStructureDefinition<HyperNaquadahReactor> getStructure_EM() {
+            return StructureDefinition.<HyperNaquadahReactor>builder()
+                .addShape(STRUCTURE_PIECE_MAIN, transpose(shape))
+                .addElement('A', ofBlock(sBlockCasingsTT, 0))
+                .addElement('B', ofBlock(BlockLoader.metaCasing, 18))
+                .addElement('C', ofBlock(sBlockCasingsTT, 6))
+                .addElement('D', ofBlock(BlockLoader.metaCasing, 4))
+                .addElement('E', ofBlock(sBlockCasingsSE, 0))
+                .addElement('F', ofBlock(sBlockCasingsTT, 4))
+                .addElement(
+                    'G',
+                    buildHatchAdder(HyperNaquadahReactor.class).casingIndex(getCasingTextureID())
+                        .dot(1)
+                        .atLeast(Maintenance, InputHatch, OutputHatch, Energy.or(EnergyMulti), Dynamo.or(DynamoMulti))
+                        .buildAndChain(onElementPass(x -> ++x.tCountCasing, ofBlock(defcCasingBlock, 7))))
+                .addElement('H', ofBlock(BlockLoader.metaBlockGlass, 2))
+                .addElement('I', ofFrame(Materials.Neutronium))
+                .build();
+        }
+
+        @Override
+        public int getCasingTextureID() {
+            return (1 << 7) + (15 + 48);
+        }
+
+        @Override
+        public MultiblockTooltipBuilder createTooltip() {
+            MultiblockTooltipBuilder tt = new MultiblockTooltipBuilder();
+            tt.addMachineType(StatCollector.translateToLocal("NaquadahReactorRecipeType"))
+                .addInfo(
+                    StatCollector.translateToLocalFormatted("Tooltip_HyperNaquadahReactor_00", getMaxParallelRecipes()))
+                .addInfo(StatCollector.translateToLocal("Tooltip_HyperNaquadahReactor_01"))
+                .addInfo(
+                    StatCollector.translateToLocalFormatted(
+                        "Tooltip_HyperNaquadahReactor_02",
+                        getDurationMultiple(),
+                        getEUtMultiple()))
+                .addInfo(
+                    StatCollector.translateToLocalFormatted("Tooltip_HyperNaquadahReactor_03", getExtraGas().amount))
+                .addSeparator()
+                .addInfo(StatCollector.translateToLocal("StructureTooComplex"))
+                .addInfo(StatCollector.translateToLocal("BLUE_PRINT_INFO"))
+                .beginStructureBlock(27, 21, 21, true)
+                .addInputHatch(StatCollector.translateToLocal("Tooltip_HyperNaquadahReactor_Casing"))
+                .addOutputHatch(StatCollector.translateToLocal("Tooltip_HyperNaquadahReactor_Casing"))
+                .addEnergyHatch(StatCollector.translateToLocal("Tooltip_HyperNaquadahReactor_Casing"))
+                .addDynamoHatch(StatCollector.translateToLocal("Tooltip_HyperNaquadahReactor_Casing"))
+                .addMaintenanceHatch(StatCollector.translateToLocal("Tooltip_HyperNaquadahReactor_Casing"))
+                .toolTipFinisher();
+            return tt;
+        }
+
+        @Override
+        public int getReactorTier() {
+            return 1;
+        }
+
+        @Override
+        public int getDurationMultiple() {
+            return 10;
+        }
+
+        @Override
+        public int getEUtMultiple() {
+            return 64;
+        }
+
+        @Override
+        public int getMaxParallelRecipes() {
+            return 64;
+        }
+
+        @Override
+        public FluidStack getExtraGas() {
+            return GGMaterial.naquadahGas.getFluidOrGas(100);
         }
 
         @Override
