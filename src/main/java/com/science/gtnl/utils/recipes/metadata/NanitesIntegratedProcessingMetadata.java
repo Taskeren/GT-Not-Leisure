@@ -1,6 +1,7 @@
 package com.science.gtnl.utils.recipes.metadata;
 
 import javax.annotation.Nullable;
+import javax.annotation.ParametersAreNonnullByDefault;
 
 import net.minecraft.util.StatCollector;
 
@@ -9,8 +10,11 @@ import org.jetbrains.annotations.NotNull;
 import com.science.gtnl.utils.recipes.data.NanitesIntegratedProcessingRecipesData;
 
 import gregtech.api.recipe.RecipeMetadataKey;
+import gregtech.api.util.MethodsReturnNonnullByDefault;
 import gregtech.nei.RecipeDisplayInfo;
 
+@ParametersAreNonnullByDefault
+@MethodsReturnNonnullByDefault
 public class NanitesIntegratedProcessingMetadata extends RecipeMetadataKey<NanitesIntegratedProcessingRecipesData> {
 
     public static final NanitesIntegratedProcessingMetadata INSTANCE = new NanitesIntegratedProcessingMetadata();

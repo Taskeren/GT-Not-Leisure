@@ -87,9 +87,9 @@ public class MolecularTransformer extends GTMMultiMachineBase<MolecularTransform
     public MultiblockTooltipBuilder createTooltip() {
         MultiblockTooltipBuilder tt = new MultiblockTooltipBuilder();
         tt.addMachineType(StatCollector.translateToLocal("MolecularTransformerRecipeType"))
-            .addInfo(StatCollector.translateToLocal("Tooltip_Tectech_Hatch"))
             .addInfo(StatCollector.translateToLocal("Tooltip_GTMMultiMachine_02"))
             .addInfo(StatCollector.translateToLocal("Tooltip_GTMMultiMachine_03"))
+            .addInfo(StatCollector.translateToLocal("Tooltip_Tectech_Hatch"))
             .addSeparator()
             .addInfo(StatCollector.translateToLocal("StructureTooComplex"))
             .addInfo(StatCollector.translateToLocal("BLUE_PRINT_INFO"))
@@ -128,6 +128,11 @@ public class MolecularTransformer extends GTMMultiMachineBase<MolecularTransform
         }
         setupParameters();
         return mCountCasing >= 25;
+    }
+
+    @Override
+    public boolean checkEnergyHatch() {
+        return true;
     }
 
     @Override

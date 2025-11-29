@@ -34,6 +34,7 @@ import com.science.gtnl.utils.recipes.metadata.CircuitNanitesDataMetadata;
 import com.science.gtnl.utils.recipes.metadata.FuelRefiningMetadata;
 import com.science.gtnl.utils.recipes.metadata.IsaMillMetadata;
 import com.science.gtnl.utils.recipes.metadata.NanitesIntegratedProcessingMetadata;
+import com.science.gtnl.utils.recipes.metadata.NaquadahReactorMetadata;
 import com.science.gtnl.utils.recipes.metadata.ResourceCollectionModuleMetadata;
 import com.science.gtnl.utils.recipes.metadata.SteamFusionMetadata;
 
@@ -305,6 +306,11 @@ public class RecipePool {
         .neiHandlerInfo(
             builder -> builder.setDisplayStack(GTNLItemList.LargeNaquadahReactor.get(1))
                 .setMaxRecipesPerPage(1))
+        .neiRecipeComparator(
+            Comparator
+                .<GTRecipe, Integer>comparing(
+                    recipe -> recipe.getMetadataOrDefault(NaquadahReactorMetadata.INSTANCE, 0))
+                .thenComparing(GTRecipe::compareTo))
         .addSpecialTexture(59, 20, 58, 42, GGUITextures.PICTURE_NAQUADAH_REACTOR)
         .build();
 

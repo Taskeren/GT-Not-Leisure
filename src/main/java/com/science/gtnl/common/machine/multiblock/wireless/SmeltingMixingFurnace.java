@@ -88,6 +88,7 @@ public class SmeltingMixingFurnace extends WirelessEnergyMultiMachineBase<Smelti
             .addInfo(StatCollector.translateToLocal("Tooltip_SmeltingMixingFurnace_00"))
             .addInfo(StatCollector.translateToLocal("Tooltip_SmeltingMixingFurnace_01"))
             .addInfo(StatCollector.translateToLocal("Tooltip_SmeltingMixingFurnace_02"))
+            .addInfo(StatCollector.translateToLocal("Tooltip_SmeltingMixingFurnace_03"))
             .addInfo(StatCollector.translateToLocal("Tooltip_WirelessEnergyMultiMachine_01"))
             .addInfo(StatCollector.translateToLocal("Tooltip_WirelessEnergyMultiMachine_02"))
             .addInfo(StatCollector.translateToLocal("Tooltip_WirelessEnergyMultiMachine_03"))
@@ -258,10 +259,6 @@ public class SmeltingMixingFurnace extends WirelessEnergyMultiMachineBase<Smelti
             @Override
             public GTNL_OverclockCalculator createOverclockCalculator(@Nonnull GTRecipe recipe) {
                 return super.createOverclockCalculator(recipe).setExtraDurationModifier(mConfigSpeedBoost)
-                    .setPerfectOC(getPerfectOC())
-                    .setAmperageOC(getAmperageOC())
-                    .setAmperage(getMaxInputAmps())
-                    .setEUt(getMachineVoltageLimit())
                     .setEUtDiscount(getEUtDiscount())
                     .setDurationModifier(getDurationModifier());
             }
@@ -269,21 +266,22 @@ public class SmeltingMixingFurnace extends WirelessEnergyMultiMachineBase<Smelti
     }
 
     @Override
-    public long getMaxInputAmps() {
+    public void setProcessingLogicPower(ProcessingLogic logic) {
         if (wirelessMode) {
-            return (1L << (mParallelTier * 2 + 3)) - 2L;
+            logic.setAvailableVoltage(
+                machineMode == MACHINEMODE_DTPF ? Integer.MAX_VALUE : V[Math.min(mParallelTier + 1, 14)]);
+            logic.setAvailableAmperage((8L << (2 * mParallelTier)) - 2L);
+            logic.setAmperageOC(false);
+            logic.enablePerfectOverclock();
+        } else {
+            boolean useSingleAmp = mEnergyHatches.size() == 1 && mExoticEnergyHatches.isEmpty()
+                && getMaxInputAmps() <= 4;
+            logic.setAvailableVoltage(
+                machineMode == MACHINEMODE_DTPF ? getMachineVoltageLimit() * getMaxInputAmps()
+                    : getMachineVoltageLimit());
+            logic.setAvailableAmperage((machineMode == MACHINEMODE_DTPF || useSingleAmp) ? 1 : getMaxInputAmps());
+            logic.setAmperageOC(!useSingleAmp);
         }
-
-        return super.getMaxInputAmps();
-    }
-
-    @Override
-    public long getMachineVoltageLimit() {
-        if (wirelessMode) {
-            return machineMode == MACHINEMODE_DTPF ? Integer.MAX_VALUE : V[Math.min(mParallelTier + 1, 14)];
-        }
-
-        return super.getMachineVoltageLimit();
     }
 
     @Override

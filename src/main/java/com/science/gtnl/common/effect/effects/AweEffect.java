@@ -80,8 +80,10 @@ public class AweEffect extends EffectBase {
     public void removeAttributesModifiersFromEntity(EntityLivingBase entityLiving, BaseAttributeMap attributeMap,
         int amplifier) {
         super.removeAttributesModifiersFromEntity(entityLiving, attributeMap, amplifier);
-
         if (entityLiving instanceof EntityPlayerMP player) {
+            for (PotionEffect effect : player.getActivePotionEffects()) {
+                player.removePotionEffect(effect.getPotionID());
+            }
             if (!player.capabilities.isCreativeMode) {
                 player.playerNetServerHandler.kickPlayerFromServer(StatCollector.translateToLocal("Awe_Kick"));
             } else {

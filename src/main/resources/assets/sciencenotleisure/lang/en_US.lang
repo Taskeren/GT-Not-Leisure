@@ -1629,7 +1629,7 @@ Tooltip_WirelessEnergyMultiMachine_06=Supports cross-recipe parallelism in wirel
 Tooltip_WirelessEnergyMultiMachine_07=Machine can perform §clossless overclocking§7
 Tooltip_WirelessEnergyMultiMachine_08=Wireless upgrade grants +500% speed and -20% power use
 Tooltip_WirelessEnergyMultiMachine_09=Automatically enters wireless mode if no energy storage is installed and a wireless upgrade is installed
-Tooltip_WirelessEnergyMultiMachine_10=In wireless mode, the voltage is the parallel control core level + 1, ampere is 4 ^ level - 2
+Tooltip_WirelessEnergyMultiMachine_10=In wireless mode, the voltage is the parallel control core level + 1, ampere is 4 ^ (level + 1) - 2
 Waila_WirelessUpgrade=Wireless Upgrade Installed
 Waila_WirelessMode=Wireless Mode
 Waila_CurrentEuCost=Current EU Consumption
@@ -1749,6 +1749,15 @@ AtomicEnergyExcitationPlantRecipeType=Fuel Refining Complex
 Tooltip_AtomicEnergyExcitationPlant_00=For every 900K above the recipe temperature, energy consumption is multiplied by 95% (excluding overclocking)
 Tooltip_AtomicEnergyExcitationPlant_01=For every 1800K above the recipe temperature, perform one lossless overclock
 Tooltip_AtomicEnergyExcitationPlant_02=Use a wire cutter to turn on/off the animation effects.
+
+NameSwarmCore=Swarm Core
+SwarmCoreRecipeType=Nano Forge
+Tooltip_SwarmCore_00=§o§l§dGod Ascension ↗↗↗ Love from 1987
+Tooltip_SwarmCore_01=Upgrade machine to use more advanced recipes!
+Tooltip_SwarmCore_02=Voltage is fixed at MAX
+Tooltip_SwarmCore_Casing=Any radioactive Naquadah alloy machine block
+Info_SwarmCore_00=Nano Forge Upgrade
+Info_SwarmCore_01=Machine Tier: %s
 
 NameHorizontalCompressor=Horizontal Compressor
 HorizontalCompressorRecipeType=Compressor
@@ -2148,10 +2157,10 @@ LargeNaquadahReactorRecipeType=Naquadah Reaction
 NEI.NaquadahReactorRecipes.specialValue=Power Output:
 LargeNaquadahReactor.Generates.0=Power Output:
 LargeNaquadahReactor.Generates.1=Oxygen Boost:
-Tooltip_LargeNaquadahReactor_00=Fixed parallelism of 4
+Tooltip_LargeNaquadahReactor_00=Fixed parallelism of %s
 Tooltip_LargeNaquadahReactor_01=Can input oxygen at the start of the recipe
-Tooltip_LargeNaquadahReactor_02=This will make time 20 times shorter and power 32 times greater
-Tooltip_LargeNaquadahReactor_03=The cost is 2500L of oxygen consumed per second
+Tooltip_LargeNaquadahReactor_02=This will make time %s times shorter and power %s times greater
+Tooltip_LargeNaquadahReactor_03=The cost is %sL of oxygen consumed per second
 Tooltip_LargeNaquadahReactor_Casing=Any radioactive Naquadah alloy machine block
 
 NameGrandAssemblyLine=Grand Assembly Line
@@ -3152,7 +3161,9 @@ Tooltip_GeminiContainmentSystem_00=Each coil tier provides an additional 15% spe
 Tooltip_GeminiContainmentSystem_Casing=Any Reinforced Iridium Machine Block
 
 NameExtremeCompressor=Extreme Compressor
-ExtremeCompressorRecipeType=Electric Implosion Compressor
+ExtremeCompressorRecipeType=Electric Implosion Compressor / Neutronium Compressor
+ExtremeCompressor_Mode_0=Electric Implosion Compressor
+ExtremeCompressor_Mode_1=Neutronium Compressor
 Tooltip_ExtremeCompressor_Casing=Any Reinforced Iridium Machine Block
 
 NameDataCenter=Data Center
@@ -3213,7 +3224,8 @@ SmeltingMixingFurnace_Mode_0=Smelting Mixing
 SmeltingMixingFurnace_Mode_1=Hyperdimensional Plasma Forge
 Tooltip_SmeltingMixingFurnace_00=§9§lManipulate substances in an extremely efficient manner
 Tooltip_SmeltingMixingFurnace_01=§9§lFree the production of alloys from the constraints of smelting
-Tooltip_SmeltingMixingFurnace_02=Place the Transdimensional Alignment Matrix into the controller to enable the Dimensionally Transcendent Plasma Forge recipe
+Tooltip_SmeltingMixingFurnace_02=Place the Transdimensional Alignment Matrix into the controller to enable the DTPF recipe
+Tooltip_SmeltingMixingFurnace_03=DTPF recipe use a fixed voltage of MAX
 Tooltip_SmeltingMixingFurnace_Casing=Any Hyper Energy Machine Block
 
 NameProcessingArrayGTNL=Processing Array: Rebirth

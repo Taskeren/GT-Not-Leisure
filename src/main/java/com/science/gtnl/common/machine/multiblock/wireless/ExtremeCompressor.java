@@ -11,9 +11,14 @@ import static gregtech.api.enums.Textures.BlockIcons.OVERLAY_FRONT_IMPLOSION_COM
 import static gregtech.api.enums.Textures.BlockIcons.OVERLAY_FRONT_IMPLOSION_COMPRESSOR_GLOW;
 import static gregtech.api.util.GTStructureUtility.*;
 import static gtPlusPlus.core.block.ModBlocks.*;
-import static tectech.thing.casing.TTCasingsContainer.*;
+
+import java.util.Arrays;
+import java.util.Collection;
+
+import javax.annotation.Nonnull;
 
 import net.minecraft.block.Block;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.StatCollector;
 import net.minecraftforge.common.util.ForgeDirection;
@@ -27,11 +32,14 @@ import com.science.gtnl.utils.StructureUtils;
 
 import bartworks.API.recipe.BartWorksRecipeMaps;
 import gregtech.api.enums.Textures;
+import gregtech.api.gui.modularui.GTUITextures;
 import gregtech.api.interfaces.ITexture;
 import gregtech.api.interfaces.metatileentity.IMetaTileEntity;
 import gregtech.api.interfaces.tileentity.IGregTechTileEntity;
 import gregtech.api.recipe.RecipeMap;
+import gregtech.api.recipe.RecipeMaps;
 import gregtech.api.render.TextureFactory;
+import gregtech.api.util.GTUtility;
 import gregtech.api.util.MultiblockTooltipBuilder;
 import gtPlusPlus.core.material.MaterialsAlloy;
 
@@ -43,6 +51,8 @@ public class ExtremeCompressor extends WirelessEnergyMultiMachineBase<ExtremeCom
     private static final String STRUCTURE_PIECE_MAIN = "main";
     private static final String EC_STRUCTURE_FILE_PATH = RESOURCE_ROOT_ID + ":" + "multiblock/extreme_compressor";
     private static final String[][] shape = StructureUtils.readStructureFromFile(EC_STRUCTURE_FILE_PATH);
+    public static final int MACHINEMODE_ELECTRIC = 0;
+    public static final int MACHINEMODE_NEUTRONIUM = 1;
 
     public ExtremeCompressor(String aName) {
         super(aName);
@@ -205,7 +215,39 @@ public class ExtremeCompressor extends WirelessEnergyMultiMachineBase<ExtremeCom
 
     @Override
     public RecipeMap<?> getRecipeMap() {
-        return BartWorksRecipeMaps.electricImplosionCompressorRecipes;
+        return (machineMode == MACHINEMODE_ELECTRIC) ? BartWorksRecipeMaps.electricImplosionCompressorRecipes
+            : RecipeMaps.neutroniumCompressorRecipes;
+    }
+
+    @Nonnull
+    @Override
+    public Collection<RecipeMap<?>> getAvailableRecipeMaps() {
+        return Arrays
+            .asList(BartWorksRecipeMaps.electricImplosionCompressorRecipes, RecipeMaps.neutroniumCompressorRecipes);
+    }
+
+    @Override
+    public void setMachineModeIcons() {
+        machineModeIcons.add(GTUITextures.OVERLAY_BUTTON_MACHINEMODE_PACKAGER);
+        machineModeIcons.add(GTUITextures.OVERLAY_BUTTON_MACHINEMODE_LPF_METAL);
+    }
+
+    @Override
+    public final void onScrewdriverRightClick(ForgeDirection side, EntityPlayer aPlayer, float aX, float aY, float aZ,
+        ItemStack aTool) {
+        this.machineMode = (this.machineMode + 1) % 2;
+        GTUtility
+            .sendChatToPlayer(aPlayer, StatCollector.translateToLocal("ExtremeCompressor_Mode_" + this.machineMode));
+    }
+
+    @Override
+    public String getMachineModeName() {
+        return StatCollector.translateToLocal("ExtremeCompressor_Mode_" + machineMode);
+    }
+
+    @Override
+    public boolean supportsMachineModeSwitch() {
+        return true;
     }
 
 }

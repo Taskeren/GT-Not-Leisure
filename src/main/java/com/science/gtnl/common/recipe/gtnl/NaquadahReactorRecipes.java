@@ -3,6 +3,7 @@ package com.science.gtnl.common.recipe.gtnl;
 import com.science.gtnl.api.IRecipePool;
 import com.science.gtnl.common.material.RecipePool;
 import com.science.gtnl.utils.recipes.RecipeBuilder;
+import com.science.gtnl.utils.recipes.metadata.NaquadahReactorMetadata;
 
 import goodgenerator.items.GGMaterial;
 import gregtech.api.enums.Materials;
@@ -10,11 +11,11 @@ import gregtech.api.recipe.RecipeMap;
 
 public class NaquadahReactorRecipes implements IRecipePool {
 
+    public NaquadahReactorMetadata REACTOR_TIER = NaquadahReactorMetadata.INSTANCE;
     public RecipeMap<?> NRR = RecipePool.NaquadahReactorRecipes;
 
     @Override
     public void loadRecipes() {
-
         RecipeBuilder.builder()
             .fluidInputs(GGMaterial.naquadahBasedFuelMkI.getFluidOrGas(20), Materials.Hydrogen.getGas(1600))
             .fluidOutputs(GGMaterial.naquadahBasedFuelMkIDepleted.getFluidOrGas(20))

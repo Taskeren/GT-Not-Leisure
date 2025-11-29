@@ -263,7 +263,6 @@ public class ResourceCollectionModule extends TileEntityModuleBase {
                         setProcessingLogicPower(processingLogic);
                         return CheckRecipeResultRegistry.SUCCESSFUL;
                     } else {
-
                         return SimpleCheckRecipeResult.ofFailure("no_mining_drone");
                     }
                 }

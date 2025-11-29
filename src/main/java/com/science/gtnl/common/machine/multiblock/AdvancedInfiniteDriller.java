@@ -417,7 +417,7 @@ public class AdvancedInfiniteDriller extends MultiMachineBase<AdvancedInfiniteDr
     }
 
     @Override
-    protected void drawTexts(DynamicPositionedColumn screenElements, SlotWidget inventorySlot) {
+    public void drawTexts(DynamicPositionedColumn screenElements, SlotWidget inventorySlot) {
         super.drawTexts(screenElements, inventorySlot);
         screenElements
             .widget(
@@ -427,7 +427,7 @@ public class AdvancedInfiniteDriller extends MultiMachineBase<AdvancedInfiniteDr
                     .setDefaultColor(COLOR_TEXT_WHITE.get())
                     .setEnabled(true))
             .widget(
-                new FakeSyncWidget.IntegerSyncer(() -> excessFuel, Fuel -> excessFuel = Fuel).setSynced(true, false));
+                new FakeSyncWidget.IntegerSyncer(() -> excessFuel, fuel -> excessFuel = fuel).setSynced(true, false));
     }
 
     @Override

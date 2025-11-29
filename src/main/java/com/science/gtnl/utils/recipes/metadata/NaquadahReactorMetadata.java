@@ -11,17 +11,21 @@ import gregtech.nei.RecipeDisplayInfo;
 
 @ParametersAreNonnullByDefault
 @MethodsReturnNonnullByDefault
-public class SteamFusionMetadata extends RecipeMetadataKey<Integer> {
+public class NaquadahReactorMetadata extends RecipeMetadataKey<Integer> {
 
-    public static final SteamFusionMetadata INSTANCE = new SteamFusionMetadata();
+    public static final NaquadahReactorMetadata INSTANCE = new NaquadahReactorMetadata();
 
-    private SteamFusionMetadata() {
-        super(Integer.class, "steam_fusion_key");
+    public NaquadahReactorMetadata() {
+        super(Integer.class, "naquadah_reactor_data");
     }
 
     @Override
     public void drawInfo(RecipeDisplayInfo recipeInfo, @Nullable Object value) {
         int tier = cast(value, 0);
-        if (tier != 0) recipeInfo.drawText(StatCollector.translateToLocal("SteamFusionMetadata.0"));
+        if (tier == 1) {
+            recipeInfo.drawText(StatCollector.translateToLocal("NaquadahReactorMetadata.0"));
+        } else if (tier == 2) {
+            recipeInfo.drawText(StatCollector.translateToLocal("NaquadahReactorMetadata.1"));
+        }
     }
 }

@@ -1,0 +1,346 @@
+package com.science.gtnl.common.machine.multiblock.wireless;
+
+import static com.gtnewhorizon.structurelib.structure.StructureUtility.*;
+import static com.science.gtnl.ScienceNotLeisure.*;
+import static com.science.gtnl.common.machine.multiMachineBase.MultiMachineBase.CustomHatchElement.*;
+import static gregtech.api.GregTechAPI.*;
+import static gregtech.api.enums.HatchElement.*;
+import static gregtech.api.enums.Textures.BlockIcons.*;
+import static gregtech.api.util.GTStructureUtility.*;
+import static gtnhlanth.common.register.LanthItemList.*;
+import static tectech.thing.casing.TTCasingsContainer.*;
+
+import javax.annotation.Nonnull;
+
+import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.StatCollector;
+import net.minecraftforge.common.util.ForgeDirection;
+
+import org.jetbrains.annotations.NotNull;
+
+import com.gtnewhorizon.structurelib.structure.IStructureDefinition;
+import com.gtnewhorizon.structurelib.structure.ISurvivalBuildEnvironment;
+import com.gtnewhorizon.structurelib.structure.StructureDefinition;
+import com.gtnewhorizons.modularui.api.forge.ItemStackHandler;
+import com.gtnewhorizons.modularui.api.screen.ModularWindow;
+import com.gtnewhorizons.modularui.api.screen.UIBuildContext;
+import com.gtnewhorizons.modularui.common.widget.DynamicPositionedColumn;
+import com.gtnewhorizons.modularui.common.widget.FakeSyncWidget;
+import com.gtnewhorizons.modularui.common.widget.SlotWidget;
+import com.gtnewhorizons.modularui.common.widget.TextWidget;
+import com.science.gtnl.api.IControllerUpgradeable;
+import com.science.gtnl.common.machine.multiMachineBase.WirelessEnergyMultiMachineBase;
+import com.science.gtnl.loader.BlockLoader;
+import com.science.gtnl.utils.StructureUtils;
+import com.science.gtnl.utils.recipes.GTNL_OverclockCalculator;
+import com.science.gtnl.utils.recipes.GTNL_ProcessingLogic;
+
+import bartworks.common.loaders.ItemRegistry;
+import gregtech.api.enums.ItemList;
+import gregtech.api.enums.Materials;
+import gregtech.api.enums.Textures;
+import gregtech.api.interfaces.ITexture;
+import gregtech.api.interfaces.metatileentity.IMetaTileEntity;
+import gregtech.api.interfaces.tileentity.IGregTechTileEntity;
+import gregtech.api.logic.ProcessingLogic;
+import gregtech.api.recipe.RecipeMap;
+import gregtech.api.recipe.RecipeMaps;
+import gregtech.api.recipe.check.CheckRecipeResult;
+import gregtech.api.recipe.check.CheckRecipeResultRegistry;
+import gregtech.api.render.TextureFactory;
+import gregtech.api.util.GTRecipe;
+import gregtech.api.util.MultiblockTooltipBuilder;
+import lombok.Getter;
+
+public class SwarmCore extends WirelessEnergyMultiMachineBase<SwarmCore> implements IControllerUpgradeable {
+
+    private static final int HORIZONTAL_OFF_SET = 20;
+    private static final int VERTICAL_OFF_SET = 47;
+    private static final int DEPTH_OFF_SET = 8;
+    private static final String STRUCTURE_PIECE_MAIN = "main";
+    private static final String SC_STRUCTURE_FILE_PATH = RESOURCE_ROOT_ID + ":" + "multiblock/swarm_core";
+    private static final String[][] shape = StructureUtils.readStructureFromFile(SC_STRUCTURE_FILE_PATH);
+    private static final int MANUAL_INSERTION_WINDOW_ID = 15;
+
+    public static final ItemStack[][] REQUIRED_ITEMS = new ItemStack[][] { { ItemList.Black_Hole_Stabilizer.get(1) },
+        { ItemList.Black_Hole_Opener.get(1) }, { ItemList.Black_Hole_Closer.get(1) } };
+
+    @Getter
+    public ItemStack[] storedUpgradeWindowItems = new ItemStack[16];
+    @Getter
+    public ItemStackHandler upgradeInputSlotHandler = new ItemStackHandler(16);
+    public int[][] upgradePaidCosts = new int[3][REQUIRED_ITEMS.length];
+    public int machineTier = 1;
+
+    public SwarmCore(String aName) {
+        super(aName);
+    }
+
+    public SwarmCore(int aID, String aName, String aNameRegional) {
+        super(aID, aName, aNameRegional);
+    }
+
+    @Override
+    public IMetaTileEntity newMetaEntity(IGregTechTileEntity aTileEntity) {
+        return new SwarmCore(this.mName);
+    }
+
+    @Override
+    public int[] getUpgradePaidCosts() {
+        return upgradePaidCosts[Math.min(machineTier - 1, 2)];
+    }
+
+    @Override
+    public boolean isUpgradeConsumed() {
+        return machineTier >= 4;
+    }
+
+    @Override
+    public void setUpgradeConsumed(boolean upgradeConsumed) {}
+
+    @Override
+    public boolean tryConsumeItems() {
+        boolean result = IControllerUpgradeable.super.tryConsumeItems();
+        if (result && machineTier < 4) machineTier++;
+        return result;
+    }
+
+    @Override
+    public void setItemNBT(NBTTagCompound aNBT) {
+        super.setItemNBT(aNBT);
+        saveUpgradeNBTData(aNBT);
+        aNBT.setInteger("machineTier", machineTier);
+    }
+
+    @Override
+    public void saveNBTData(NBTTagCompound aNBT) {
+        super.saveNBTData(aNBT);
+        saveUpgradeNBTData(aNBT);
+        aNBT.setInteger("machineTier", machineTier);
+    }
+
+    @Override
+    public void loadNBTData(NBTTagCompound aNBT) {
+        super.loadNBTData(aNBT);
+        loadUpgradeNBTData(aNBT);
+        machineTier = aNBT.getInteger("machineTier");
+    }
+
+    @Override
+    public void addUIWidgets(ModularWindow.Builder builder, UIBuildContext buildContext) {
+        super.addUIWidgets(builder, buildContext);
+        createUpgradeButton(builder, buildContext);
+    }
+
+    @Override
+    public void drawTexts(DynamicPositionedColumn screenElements, SlotWidget inventorySlot) {
+        super.drawTexts(screenElements, inventorySlot);
+        screenElements
+            .widget(
+                new TextWidget()
+                    .setStringSupplier(() -> StatCollector.translateToLocalFormatted("Info_SwarmCore_01", machineTier))
+                    .setDefaultColor(COLOR_TEXT_WHITE.get())
+                    .setEnabled(true))
+            .widget(
+                new FakeSyncWidget.IntegerSyncer(() -> machineTier, tier -> machineTier = tier).setSynced(true, false));
+    }
+
+    @Override
+    public ItemStack[] getUpgradeRequiredItems() {
+        return REQUIRED_ITEMS[Math.min(machineTier - 1, 2)];
+    }
+
+    @Override
+    public int getUpgradeWindowId() {
+        return MANUAL_INSERTION_WINDOW_ID;
+    }
+
+    @Override
+    public String getUpgradeButtonTooltip() {
+        return StatCollector.translateToLocal("Info_SwarmCore_00");
+    }
+
+    @Override
+    public MultiblockTooltipBuilder createTooltip() {
+        MultiblockTooltipBuilder tt = new MultiblockTooltipBuilder();
+        tt.addMachineType(StatCollector.translateToLocal("SwarmCoreRecipeType"))
+            .addInfo(StatCollector.translateToLocal("Tooltip_SwarmCore_00"))
+            .addInfo(StatCollector.translateToLocal("Tooltip_WirelessEnergyMultiMachine_00"))
+            .addInfo(StatCollector.translateToLocal("Tooltip_WirelessEnergyMultiMachine_01"))
+            .addInfo(StatCollector.translateToLocal("Tooltip_WirelessEnergyMultiMachine_02"))
+            .addInfo(StatCollector.translateToLocal("Tooltip_WirelessEnergyMultiMachine_03"))
+            .addInfo(StatCollector.translateToLocal("Tooltip_WirelessEnergyMultiMachine_04"))
+            .addInfo(StatCollector.translateToLocal("Tooltip_WirelessEnergyMultiMachine_05"))
+            .addInfo(StatCollector.translateToLocal("Tooltip_WirelessEnergyMultiMachine_06"))
+            .addInfo(StatCollector.translateToLocal("Tooltip_WirelessEnergyMultiMachine_07"))
+            .addInfo(StatCollector.translateToLocal("Tooltip_WirelessEnergyMultiMachine_08"))
+            .addInfo(StatCollector.translateToLocal("Tooltip_WirelessEnergyMultiMachine_09"))
+            .addInfo(StatCollector.translateToLocal("Tooltip_WirelessEnergyMultiMachine_10"))
+            .addInfo(StatCollector.translateToLocal("Tooltip_SwarmCore_01"))
+            .addInfo(StatCollector.translateToLocal("Tooltip_SwarmCore_02"))
+            .addInfo(StatCollector.translateToLocal("Tooltip_Tectech_Hatch"))
+            .addSeparator()
+            .addInfo(StatCollector.translateToLocal("StructureTooComplex"))
+            .addInfo(StatCollector.translateToLocal("BLUE_PRINT_INFO"))
+            .beginStructureBlock(41, 54, 41, true)
+            .addInputHatch(StatCollector.translateToLocal("Tooltip_SwarmCore_Casing"))
+            .addOutputHatch(StatCollector.translateToLocal("Tooltip_SwarmCore_Casing"))
+            .addInputBus(StatCollector.translateToLocal("Tooltip_SwarmCore_Casing"))
+            .addOutputBus(StatCollector.translateToLocal("Tooltip_SwarmCore_Casing"))
+            .addEnergyHatch(StatCollector.translateToLocal("Tooltip_SwarmCore_Casing"))
+            .addMaintenanceHatch(StatCollector.translateToLocal("Tooltip_SwarmCore_Casing"))
+            .toolTipFinisher();
+        return tt;
+    }
+
+    @Override
+    public int getCasingTextureID() {
+        return StructureUtils.getTextureIndex(sBlockCasings8, 10);
+    }
+
+    @Override
+    public ITexture[] getTexture(IGregTechTileEntity aBaseMetaTileEntity, ForgeDirection side, ForgeDirection aFacing,
+        int colorIndex, boolean aActive, boolean redstoneLevel) {
+        if (side == aFacing) {
+            if (aActive) return new ITexture[] { Textures.BlockIcons.getCasingTextureForId(getCasingTextureID()),
+                TextureFactory.builder()
+                    .addIcon(OVERLAY_FRONT_ASSEMBLY_LINE_ACTIVE)
+                    .extFacing()
+                    .build(),
+                TextureFactory.builder()
+                    .addIcon(OVERLAY_FRONT_ASSEMBLY_LINE_ACTIVE_GLOW)
+                    .extFacing()
+                    .glow()
+                    .build() };
+            return new ITexture[] { Textures.BlockIcons.getCasingTextureForId(getCasingTextureID()),
+                TextureFactory.builder()
+                    .addIcon(OVERLAY_FRONT_ASSEMBLY_LINE)
+                    .extFacing()
+                    .build(),
+                TextureFactory.builder()
+                    .addIcon(OVERLAY_FRONT_ASSEMBLY_LINE_GLOW)
+                    .extFacing()
+                    .glow()
+                    .build() };
+        }
+        return new ITexture[] { Textures.BlockIcons.getCasingTextureForId(getCasingTextureID()) };
+    }
+
+    @Override
+    public IStructureDefinition<SwarmCore> getStructureDefinition() {
+        return StructureDefinition.<SwarmCore>builder()
+            .addShape(STRUCTURE_PIECE_MAIN, transpose(shape))
+            .addElement('A', ofBlock(sBlockCasingsTT, 8))
+            .addElement('B', ofBlock(sBlockCasings10, 11))
+            .addElement('C', ofBlock(sBlockCasingsTT, 0))
+            .addElement('D', ofBlock(BlockLoader.metaCasing, 18))
+            .addElement('E', ofBlock(sBlockCasingsTT, 6))
+            .addElement('F', ofBlock(sBlockCasings1, 14))
+            .addElement('G', activeCoils(ofBlock(sBlockCasings5, 13)))
+            .addElement('H', ofBlock(sBlockCasings10, 2))
+            .addElement('I', ofBlockAnyMeta(ELECTRODE_CASING))
+            .addElement('J', ofBlock(sBlockCasingsTT, 4))
+            .addElement(
+                'K',
+                buildHatchAdder(SwarmCore.class)
+                    .atLeast(
+                        Maintenance,
+                        InputHatch,
+                        OutputHatch,
+                        InputBus,
+                        OutputBus,
+                        Energy.or(ExoticEnergy),
+                        ParallelCon)
+                    .casingIndex(getCasingTextureID())
+                    .dot(1)
+                    .buildAndChain(onElementPass(x -> ++x.mCountCasing, ofBlock(sBlockCasings8, 10))))
+            .addElement('L', ofBlock(BlockLoader.metaBlockGlass, 2))
+            .addElement('M', ofBlock(sBlockCasings10, 7))
+            .addElement('N', ofFrame(Materials.Neutronium))
+            .addElement('O', ofBlock(sBlockGlass1, 1))
+            .addElement('P', ofFrame(Materials.NaquadahAlloy))
+            .addElement('Q', ofBlock(ItemRegistry.bw_realglas2, 0))
+            .build();
+    }
+
+    @Override
+    public void construct(ItemStack stackSize, boolean hintsOnly) {
+        this.buildPiece(
+            STRUCTURE_PIECE_MAIN,
+            stackSize,
+            hintsOnly,
+            HORIZONTAL_OFF_SET,
+            VERTICAL_OFF_SET,
+            DEPTH_OFF_SET);
+    }
+
+    @Override
+    public int survivalConstruct(ItemStack stackSize, int elementBudget, ISurvivalBuildEnvironment env) {
+        if (this.mMachine) return -1;
+        return this.survivalBuildPiece(
+            STRUCTURE_PIECE_MAIN,
+            stackSize,
+            HORIZONTAL_OFF_SET,
+            VERTICAL_OFF_SET,
+            DEPTH_OFF_SET,
+            elementBudget,
+            env,
+            false,
+            true);
+    }
+
+    @Override
+    public boolean checkMachine(IGregTechTileEntity aBaseMetaTileEntity, ItemStack aStack) {
+        if (!checkPiece(STRUCTURE_PIECE_MAIN, HORIZONTAL_OFF_SET, VERTICAL_OFF_SET, DEPTH_OFF_SET) || !checkHatch()) {
+            return false;
+        }
+        setupParameters();
+        return mCountCasing > 200;
+    }
+
+    @Override
+    public ProcessingLogic createProcessingLogic() {
+        return new GTNL_ProcessingLogic() {
+
+            @NotNull
+            @Override
+            public CheckRecipeResult validateRecipe(@NotNull GTRecipe recipe) {
+                if (recipe.mSpecialValue > machineTier) {
+                    return CheckRecipeResultRegistry.insufficientMachineTier(recipe.mSpecialValue);
+                }
+                return super.validateRecipe(recipe);
+            }
+
+            @Nonnull
+            @Override
+            public GTNL_OverclockCalculator createOverclockCalculator(@Nonnull GTRecipe recipe) {
+                return super.createOverclockCalculator(recipe).setExtraDurationModifier(mConfigSpeedBoost)
+                    .setEUtDiscount(getEUtDiscount())
+                    .setDurationModifier(getDurationModifier());
+            }
+        }.setMaxParallelSupplier(this::getTrueParallel);
+    }
+
+    @Override
+    public void setProcessingLogicPower(ProcessingLogic logic) {
+        if (wirelessMode) {
+            logic.setAvailableVoltage(Integer.MAX_VALUE);
+            logic.setAvailableAmperage((8L << (2 * mParallelTier)) - 2L);
+            logic.setAmperageOC(false);
+            logic.enablePerfectOverclock();
+        } else {
+            boolean useSingleAmp = mEnergyHatches.size() == 1 && mExoticEnergyHatches.isEmpty()
+                && getMaxInputAmps() <= 4;
+            logic.setAvailableVoltage(getMachineVoltageLimit() * getMaxInputAmps());
+            logic.setAvailableAmperage(1);
+            logic.setAmperageOC(!useSingleAmp);
+        }
+    }
+
+    @Override
+    public RecipeMap<?> getRecipeMap() {
+        return RecipeMaps.nanoForgeRecipes;
+    }
+
+}

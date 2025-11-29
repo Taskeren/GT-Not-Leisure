@@ -4,13 +4,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.Nullable;
+import javax.annotation.ParametersAreNonnullByDefault;
 
 import net.minecraft.util.StatCollector;
 
 import gregtech.api.recipe.RecipeMetadataKey;
+import gregtech.api.util.MethodsReturnNonnullByDefault;
 import gregtech.nei.RecipeDisplayInfo;
 import gregtech.nei.formatter.INEISpecialInfoFormatter;
 
+@ParametersAreNonnullByDefault
+@MethodsReturnNonnullByDefault
 public class ElectrocellGeneratorMetadata extends RecipeMetadataKey<Long> implements INEISpecialInfoFormatter {
 
     public static final ElectrocellGeneratorMetadata INSTANCE = new ElectrocellGeneratorMetadata();

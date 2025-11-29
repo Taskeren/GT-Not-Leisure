@@ -1629,7 +1629,7 @@ Tooltip_WirelessEnergyMultiMachine_06=无线模式下支持跨配方并行
 Tooltip_WirelessEnergyMultiMachine_07=机器可进行§c无损超频§7
 Tooltip_WirelessEnergyMultiMachine_08=安装无线升级将额外提供500%加速和20%耗电减免
 Tooltip_WirelessEnergyMultiMachine_09=不安装能源仓且安装无线升级将自动进入无线模式
-Tooltip_WirelessEnergyMultiMachine_10=无线模式下电压为并行控制核心等级 + 1，电流为 4 ^ 等级 - 2
+Tooltip_WirelessEnergyMultiMachine_10=无线模式下电压为并行控制核心等级 + 1，电流为 4 ^ (等级 + 1) - 2
 Waila_WirelessUpgrade=已安装无线升级
 Waila_WirelessMode=无线模式
 Waila_CurrentEuCost=当前EU消耗
@@ -1749,6 +1749,15 @@ AtomicEnergyExcitationPlantRecipeType=燃料精炼复合体
 Tooltip_AtomicEnergyExcitationPlant_00=每超过配方温度900K，耗能均将乘以95%(不计超频)
 Tooltip_AtomicEnergyExcitationPlant_01=每超过配方温度1800K，将进行一次无损超频
 Tooltip_AtomicEnergyExcitationPlant_02=使用剪线钳开启/关闭动画特效
+
+NameSwarmCore=蜂群之心
+SwarmCoreRecipeType=纳米锻炉
+Tooltip_SwarmCore_00=§o§l§d神的上升↗↗↗爱来自1987
+Tooltip_SwarmCore_01=升级机器来使用更高级的配方！
+Tooltip_SwarmCore_02=固定电压为MAX
+Tooltip_SwarmCore_Casing=任意放射硅岩合金机械方块
+Info_SwarmCore_00=纳米锻炉升级
+Info_SwarmCore_01=锻炉等级：%s
 
 NameHorizontalCompressor=卧式压缩机
 HorizontalCompressorRecipeType=压缩机
@@ -2144,14 +2153,16 @@ Tooltip_ElectrocellGenerator_Casing=任意脱氧钢机械方块
 
 NameLargeNaquadahReactor=大型硅岩反应堆
 gtnl.recipe.NaquadahReactorRecipes=硅岩反应
+NaquadahReactorMetadata.0=需要超能反应堆
+NaquadahReactorMetadata.1=需要进阶超能反应堆
 LargeNaquadahReactorRecipeType=硅岩反应
 NEI.NaquadahReactorRecipes.specialValue=产能功率：
 LargeNaquadahReactor.Generates.0=产能功率：
 LargeNaquadahReactor.Generates.1=使用氧气加速：
-Tooltip_LargeNaquadahReactor_00=固定并行为4
+Tooltip_LargeNaquadahReactor_00=固定并行为%s
 Tooltip_LargeNaquadahReactor_01=可以在配方开始的时候输入氧气
-Tooltip_LargeNaquadahReactor_02=这会让时间减少20倍，功率翻32倍
-Tooltip_LargeNaquadahReactor_03=代价是每秒会消耗2500L的氧气
+Tooltip_LargeNaquadahReactor_02=这会让时间减少%s倍，功率翻%s倍
+Tooltip_LargeNaquadahReactor_03=代价是每秒会消耗%sL的氧气
 Tooltip_LargeNaquadahReactor_Casing=任意放射硅岩合金机械方块
 
 NameGrandAssemblyLine=大型装配线
@@ -3152,7 +3163,9 @@ Tooltip_GeminiContainmentSystem_00=每级线圈等级额外提供15%的加速(�
 Tooltip_GeminiContainmentSystem_Casing=任意强化镀铱机械方块
 
 NameExtremeCompressor=极限压缩装置
-ExtremeCompressorRecipeType=电动聚爆压缩机
+ExtremeCompressorRecipeType=电动聚爆压缩机 / 中子态素压缩机
+ExtremeCompressor_Mode_0=电动聚爆压缩机
+ExtremeCompressor_Mode_1=中子态素压缩机
 Tooltip_ExtremeCompressor_Casing=任意强化镀铱机械方块
 
 NameDataCenter=数据中心
@@ -3214,6 +3227,7 @@ SmeltingMixingFurnace_Mode_1=超维度等离子锻炉
 Tooltip_SmeltingMixingFurnace_00=§9§l以极高效的方式操纵物质
 Tooltip_SmeltingMixingFurnace_01=§9§l使合金的制作摆脱冶炼的桎梏
 Tooltip_SmeltingMixingFurnace_02=在控制器放入超维校准矩阵来启用超维度等离子锻炉配方
+Tooltip_SmeltingMixingFurnace_03=超维度等离子锻炉配方固定电压为MAX
 Tooltip_SmeltingMixingFurnace_Casing=任意超能机械方块
 
 NameProcessingArrayGTNL=处理阵列：重生

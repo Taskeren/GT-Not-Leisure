@@ -243,8 +243,7 @@ public class SuperCraftingInputHatchME extends MTEHatchInputBus
             ItemStack[] inputItems = this.parentMTE.getSharedItems();
             FluidStack[] inputFluids = GTValues.emptyFluidStackArray;
 
-            for (IAEItemStack singleInput : this.getPatternDetails()
-                .getInputs()) {
+            for (IAEItemStack singleInput : this.patternDetails.getInputs()) {
                 if (singleInput == null) continue;
                 ItemStack singleInputItemStack = singleInput.getItemStack();
                 if (singleInputItemStack.getItem() instanceof ItemFluidDrop) {
@@ -357,7 +356,7 @@ public class SuperCraftingInputHatchME extends MTEHatchInputBus
             }
         }
 
-        private void insertItem(ItemStack inserted) {
+        public void insertItem(ItemStack inserted) {
             for (ItemStack itemStack : itemInventory) {
                 if (GTUtility.areStacksEqual(inserted, itemStack)) {
                     if (itemStack.stackSize > Integer.MAX_VALUE - inserted.stackSize) {
@@ -374,7 +373,7 @@ public class SuperCraftingInputHatchME extends MTEHatchInputBus
             }
         }
 
-        private void insertFluid(FluidStack inserted) {
+        public void insertFluid(FluidStack inserted) {
             for (FluidStack fluidStack : fluidInventory) {
                 if (GTUtility.areFluidsEqual(inserted, fluidStack)) {
                     if (fluidStack.amount > Integer.MAX_VALUE - inserted.amount) {
@@ -425,33 +424,33 @@ public class SuperCraftingInputHatchME extends MTEHatchInputBus
         }
     }
 
-    public static final UITexture OVERLAY_BUTTON_X2 = UITexture.fullImage(RESOURCE_ROOT_ID, "gui/overlay_button/x2");
-    private static final int MAX_PATTERN_COUNT = 40 * 9;
-    private static final int SLOT_MANUAL_SIZE = 81;
-    private static final int MAX_INV_COUNT = MAX_PATTERN_COUNT + SLOT_MANUAL_SIZE + 1;
-    private static final int SLOT_CIRCUIT = MAX_PATTERN_COUNT;
-    private static final int SLOT_MANUAL_START = SLOT_CIRCUIT + 1;
-    private static final int MANUAL_SLOT_WINDOW = 82;
-    private BaseActionSource requestSource = null;
-    private @Nullable AENetworkProxy gridProxy = null;
+    public static UITexture OVERLAY_BUTTON_X2 = UITexture.fullImage(RESOURCE_ROOT_ID, "gui/overlay_button/x2");
+    public static int MAX_PATTERN_COUNT = 40 * 9;
+    public static int SLOT_MANUAL_SIZE = 81;
+    public static int MAX_INV_COUNT = MAX_PATTERN_COUNT + SLOT_MANUAL_SIZE + 1;
+    public static int SLOT_CIRCUIT = MAX_PATTERN_COUNT;
+    public static int SLOT_MANUAL_START = SLOT_CIRCUIT + 1;
+    public static int MANUAL_SLOT_WINDOW = 82;
+    public BaseActionSource requestSource = null;
+    public @Nullable AENetworkProxy gridProxy = null;
     public List<ProcessingLogic> processingLogics = new ArrayList<>();
     public boolean showPattern = true;
 
     // holds all internal inventories
     @SuppressWarnings("unchecked") // Java doesn't allow to create an array of a generic type.
-    private final PatternSlot<SuperCraftingInputHatchME>[] internalInventory = new PatternSlot[MAX_PATTERN_COUNT];
+    public PatternSlot<SuperCraftingInputHatchME>[] internalInventory = new PatternSlot[MAX_PATTERN_COUNT];
 
     // a hash map for faster lookup of pattern slots, not necessarily all valid.
-    private final Map<ICraftingPatternDetails, PatternSlot<SuperCraftingInputHatchME>> patternDetailsPatternSlotMap = new HashMap<>(
+    public Map<ICraftingPatternDetails, PatternSlot<SuperCraftingInputHatchME>> patternDetailsPatternSlotMap = new HashMap<>(
         MAX_PATTERN_COUNT);
 
-    private boolean needPatternSync = true;
-    private boolean justHadNewItems = false;
+    public boolean needPatternSync = true;
+    public boolean justHadNewItems = false;
 
-    private String customName = null;
-    private final boolean supportFluids;
-    private boolean additionalConnection = false;
-    private boolean disablePatternOptimization = false;
+    public String customName = null;
+    public boolean supportFluids;
+    public boolean additionalConnection = false;
+    public boolean disablePatternOptimization = false;
 
     public SuperCraftingInputHatchME(int aID, String aName, String aNameRegional, boolean supportFluids) {
         super(
@@ -544,7 +543,7 @@ public class SuperCraftingInputHatchME extends MTEHatchInputBus
         return isOutputFacing(forgeDirection) ? AECableType.SMART : AECableType.NONE;
     }
 
-    private void updateValidGridProxySides() {
+    public void updateValidGridProxySides() {
         if (additionalConnection) {
             getProxy().setValidSides(EnumSet.complementOf(EnumSet.of(ForgeDirection.UNKNOWN)));
         } else {
@@ -622,7 +621,7 @@ public class SuperCraftingInputHatchME extends MTEHatchInputBus
     @Override
     public String getName() {
         if (hasCustomName()) {
-            return getCustomName();
+            return customName;
         }
         StringBuilder name = new StringBuilder();
         if (getCrafterIcon() != null) {
@@ -750,7 +749,7 @@ public class SuperCraftingInputHatchME extends MTEHatchInputBus
         return true;
     }
 
-    private String describePattern(ICraftingPatternDetails patternDetails) {
+    public String describePattern(ICraftingPatternDetails patternDetails) {
         return Arrays.stream(patternDetails.getCondensedOutputs())
             .map(
                 aeItemStack -> aeItemStack.getItem()
@@ -942,12 +941,12 @@ public class SuperCraftingInputHatchME extends MTEHatchInputBus
         }
     }
 
-    private BaseActionSource getRequest() {
+    public BaseActionSource getRequest() {
         if (requestSource == null) requestSource = new MachineSource((IActionHost) getBaseMetaTileEntity());
         return requestSource;
     }
 
-    private void onPatternChange(int index, ItemStack newItem) {
+    public void onPatternChange(int index, ItemStack newItem) {
         if (!getBaseMetaTileEntity().isServerSide()) return;
 
         World world = getBaseMetaTileEntity().getWorld();
@@ -994,7 +993,7 @@ public class SuperCraftingInputHatchME extends MTEHatchInputBus
         }
     }
 
-    private void resetCraftingInputRecipeMap() {
+    public void resetCraftingInputRecipeMap() {
         for (ProcessingLogic pl : processingLogics) {
             for (PatternSlot<SuperCraftingInputHatchME> sl : internalInventory) {
                 if (sl == null) continue;
@@ -1116,7 +1115,7 @@ public class SuperCraftingInputHatchME extends MTEHatchInputBus
         super.onBlockDestroyed();
     }
 
-    private void refundAll(boolean shouldDrop) {
+    public void refundAll(boolean shouldDrop) {
         for (PatternSlot<SuperCraftingInputHatchME> slot : internalInventory) {
             if (slot == null) continue;
             try {
@@ -1182,7 +1181,7 @@ public class SuperCraftingInputHatchME extends MTEHatchInputBus
         resetCraftingInputRecipeMap();
     }
 
-    private boolean postMEPatternChange() {
+    public boolean postMEPatternChange() {
         // don't post until it's active
         if (!getProxy().isActive()) return false;
         try {
