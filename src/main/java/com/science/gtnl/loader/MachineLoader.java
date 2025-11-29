@@ -88,12 +88,12 @@ import com.science.gtnl.common.machine.multiblock.LargeBrewer;
 import com.science.gtnl.common.machine.multiblock.LargeCircuitAssembler;
 import com.science.gtnl.common.machine.multiblock.LargeGasCollector;
 import com.science.gtnl.common.machine.multiblock.LargeIncubator;
-import com.science.gtnl.common.machine.multiblock.LargeNaquadahReactor;
 import com.science.gtnl.common.machine.multiblock.LibraryOfRuina;
 import com.science.gtnl.common.machine.multiblock.MassFabricator;
 import com.science.gtnl.common.machine.multiblock.MatterFabricator;
 import com.science.gtnl.common.machine.multiblock.MegaMixer;
 import com.science.gtnl.common.machine.multiblock.MeteorMiner;
+import com.science.gtnl.common.machine.multiblock.NaquadahReactor;
 import com.science.gtnl.common.machine.multiblock.PetrochemicalPlant;
 import com.science.gtnl.common.machine.multiblock.PhotovoltaicPowerStation;
 import com.science.gtnl.common.machine.multiblock.PlatinumBasedTreatment;
@@ -254,6 +254,7 @@ import com.science.gtnl.common.machine.multiblock.wireless.SmartSiftingHub;
 import com.science.gtnl.common.machine.multiblock.wireless.SmeltingMixingFurnace;
 import com.science.gtnl.common.machine.multiblock.wireless.SuperconductingElectromagnetism;
 import com.science.gtnl.common.machine.multiblock.wireless.SuperconductingMagneticPresser;
+import com.science.gtnl.common.machine.multiblock.wireless.SwarmCore;
 import com.science.gtnl.common.machine.multiblock.wireless.VortexMatterCentrifuge;
 import com.science.gtnl.common.material.MaterialPool;
 import com.science.gtnl.common.material.MaterialUtils;
@@ -811,7 +812,7 @@ public class MachineLoader {
         addItemTooltip(GTNLItemList.LargePyrolyseOven.get(1), AnimatedText.SNL_QYZG_SRP);
 
         GTNLItemList.LargeNaquadahReactor.set(
-            new LargeNaquadahReactor(
+            new NaquadahReactor.LargeNaquadahReactor(
                 LARGE_NAQUADAH_REACTOR.ID,
                 "LargeNaquadahReactor",
                 StatCollector.translateToLocal("NameLargeNaquadahReactor")));
@@ -1652,10 +1653,14 @@ public class MachineLoader {
 
         GTNLItemList.DissolutionCore.set(
             new DissolutionCore(
-                DissolutionCore.ID,
+                DISSOLUTION_CORE.ID,
                 "DissolutionCore",
                 StatCollector.translateToLocal("NameDissolutionCore")));
         addItemTooltip(GTNLItemList.DissolutionCore.get(1), AnimatedText.SNL_QYZG);
+
+        GTNLItemList.SwarmCore
+            .set(new SwarmCore(SWARM_CORE.ID, "SwarmCore", StatCollector.translateToLocal("NameSwarmCore")));
+        addItemTooltip(GTNLItemList.SwarmCore.get(1), AnimatedText.SNL_QYZG);
 
         // Special Machine
         GTNLItemList.CheatOreProcessingFactory.set(
