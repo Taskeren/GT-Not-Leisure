@@ -33,7 +33,7 @@ public abstract class MixinWirelessTerminalGuiObject implements RCWirelessTermin
 
     @Inject(method = "<init>", at = @At("TAIL"))
     public void onInit(IWirelessTermHandler wh, ItemStack is, EntityPlayer ep, World w, int x, int y, int z,
-                       CallbackInfo ci) {
+        CallbackInfo ci) {
         if (z == Integer.MIN_VALUE) {
             gtnl$isSpecial = true;
             gtnl$isBauble = y == 1;
