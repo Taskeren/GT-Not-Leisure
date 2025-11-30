@@ -1,5 +1,6 @@
 package com.science.gtnl.common.packet;
 
+import com.glodblock.github.util.Util;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemStack;
@@ -11,7 +12,6 @@ import appeng.api.config.Actionable;
 import appeng.api.config.SecurityPermissions;
 import appeng.api.features.IWirelessTermHandler;
 import appeng.api.networking.IGrid;
-import appeng.api.networking.IGridNode;
 import appeng.api.networking.security.ISecurityGrid;
 import appeng.api.networking.security.PlayerSource;
 import appeng.api.networking.storage.IStorageGrid;
@@ -64,11 +64,12 @@ public class WirelessPickBlock implements IMessage, IMessageHandler<WirelessPick
             else needItem.stackSize = handItem.getMaxStackSize();
         }
 
-        ServerThreadUtil.addScheduledTask(() -> readPlayer(player, needItem, message));
-
-        if (needItem != null && needItem.stackSize != 0 && Loader.isModLoaded("Baubles")) {
-            ServerThreadUtil.addScheduledTask(() -> readBaubles(player, needItem, message.slot));
-        }
+        ServerThreadUtil.addScheduledTask(() -> {
+            readPlayer(player, needItem, message);
+            if (needItem != null && needItem.stackSize != 0 && Loader.isModLoaded("Baubles")) {
+                readBaubles(player, needItem, message.slot);
+            }
+        });
 
         return null;
     }
@@ -117,12 +118,11 @@ public class WirelessPickBlock implements IMessage, IMessageHandler<WirelessPick
             return false;
         }
 
-        if (!obj.rangeCheck()) {
+        if (!obj.rangeCheck() && !Util.hasInfinityBoosterCard(item)) {
             player.addChatMessage(PlayerMessages.OutOfRange.toChat());
         } else {
-            IGridNode gridNode = obj.getActionableNode();
-            if (gridNode == null) return false;
-            IGrid grid = gridNode.getGrid();
+            IGrid grid = obj.getGrid();
+            if (grid == null) return false;
             if (securityCheck(player, grid, SecurityPermissions.EXTRACT)) {
                 IStorageGrid storageGrid = grid.getCache(IStorageGrid.class);
                 var iItemStorageChannel = storageGrid.getItemInventory();
