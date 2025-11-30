@@ -17,11 +17,13 @@ import java.util.List;
 
 import javax.annotation.Nonnull;
 
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.ChunkCoordinates;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
@@ -39,6 +41,7 @@ import com.gtnewhorizons.modularui.api.screen.ModularWindow;
 import com.gtnewhorizons.modularui.common.widget.DrawableWidget;
 import com.science.gtnl.api.IConfigurationMaintenance;
 import com.science.gtnl.common.material.RecipePool;
+import com.science.gtnl.common.render.tile.AdvancedHyperNaquadahReactorRenderer;
 import com.science.gtnl.loader.BlockLoader;
 import com.science.gtnl.utils.StructureUtils;
 import com.science.gtnl.utils.item.ItemUtils;
@@ -50,12 +53,14 @@ import goodgenerator.items.GGMaterial;
 import gregtech.api.GregTechAPI;
 import gregtech.api.enums.GTValues;
 import gregtech.api.enums.Materials;
+import gregtech.api.enums.MaterialsUEVplus;
 import gregtech.api.enums.SoundResource;
 import gregtech.api.enums.Textures;
 import gregtech.api.interfaces.ITexture;
 import gregtech.api.interfaces.metatileentity.IMetaTileEntity;
 import gregtech.api.interfaces.tileentity.IGregTechTileEntity;
 import gregtech.api.logic.ProcessingLogic;
+import gregtech.api.metatileentity.GregTechTileClientEvents;
 import gregtech.api.metatileentity.implementations.MTEHatchMaintenance;
 import gregtech.api.recipe.RecipeMap;
 import gregtech.api.recipe.check.CheckRecipeResult;
@@ -65,13 +70,14 @@ import gregtech.api.util.GTRecipe;
 import gregtech.api.util.GTUtility;
 import gregtech.api.util.MultiblockTooltipBuilder;
 import gregtech.api.util.shutdown.ShutDownReasonRegistry;
+import gregtech.common.render.IMTERenderer;
 import mcp.mobius.waila.api.IWailaConfigHandler;
 import mcp.mobius.waila.api.IWailaDataAccessor;
 import tectech.thing.metaTileEntity.multi.base.TTMultiblockBase;
 
 public abstract class NaquadahReactor extends TTMultiblockBase implements IConstructable, ISurvivalConstructable {
 
-    public int tCountCasing;
+    public int mCountCasing;
     public double mConfigSpeedBoost = 1;
     public boolean useExtraGas = false;
 
@@ -312,7 +318,7 @@ public abstract class NaquadahReactor extends TTMultiblockBase implements IConst
                     buildHatchAdder(LargeNaquadahReactor.class).casingIndex(getCasingTextureID())
                         .dot(1)
                         .atLeast(Maintenance, InputHatch, OutputHatch, Energy.or(EnergyMulti), Dynamo.or(DynamoMulti))
-                        .buildAndChain(onElementPass(x -> ++x.tCountCasing, ofBlock(sBlockCasings8, 10))))
+                        .buildAndChain(onElementPass(x -> ++x.mCountCasing, ofBlock(sBlockCasings8, 10))))
                 .addElement('D', ofBlock(sBlockCasingsTT, 0))
                 .addElement('E', ofFrame(Materials.Naquadria))
                 .addElement('F', ofFrame(Materials.Trinium))
@@ -381,7 +387,7 @@ public abstract class NaquadahReactor extends TTMultiblockBase implements IConst
         public boolean checkMachine_EM(IGregTechTileEntity aBaseMetaTileEntity, ItemStack aStack) {
             return checkPiece(STRUCTURE_PIECE_MAIN, HORIZONTAL_OFF_SET, VERTICAL_OFF_SET, DEPTH_OFF_SET)
                 && mMaintenanceHatches.size() <= 1
-                && tCountCasing >= 50;
+                && mCountCasing >= 50;
         }
 
         @Override
@@ -443,7 +449,7 @@ public abstract class NaquadahReactor extends TTMultiblockBase implements IConst
                     buildHatchAdder(HyperNaquadahReactor.class).casingIndex(getCasingTextureID())
                         .dot(1)
                         .atLeast(Maintenance, InputHatch, OutputHatch, Energy.or(EnergyMulti), Dynamo.or(DynamoMulti))
-                        .buildAndChain(onElementPass(x -> ++x.tCountCasing, ofBlock(defcCasingBlock, 7))))
+                        .buildAndChain(onElementPass(x -> ++x.mCountCasing, ofBlock(defcCasingBlock, 7))))
                 .addElement('H', ofBlock(BlockLoader.metaBlockGlass, 2))
                 .addElement('I', ofFrame(Materials.Neutronium))
                 .build();
@@ -510,7 +516,7 @@ public abstract class NaquadahReactor extends TTMultiblockBase implements IConst
         public boolean checkMachine_EM(IGregTechTileEntity aBaseMetaTileEntity, ItemStack aStack) {
             return checkPiece(STRUCTURE_PIECE_MAIN, HORIZONTAL_OFF_SET, VERTICAL_OFF_SET, DEPTH_OFF_SET)
                 && mMaintenanceHatches.size() <= 1
-                && tCountCasing >= 50;
+                && mCountCasing >= 50;
         }
 
         @Override
@@ -531,6 +537,309 @@ public abstract class NaquadahReactor extends TTMultiblockBase implements IConst
                 env,
                 false,
                 true);
+        }
+    }
+
+    public static class AdvancedHyperNaquadahReactor extends NaquadahReactor implements IMTERenderer {
+
+        private static final String STRUCTURE_PIECE_MAIN = "main";
+        private static final String STRUCTURE_PIECE_SPHERE = "sphere";
+        private static final String STRUCTURE_PIECE_SPHERE_AIR = "sphere_air";
+        private static final String AHNR_STRUCTURE_FILE_PATH = RESOURCE_ROOT_ID + ":"
+            + "multiblock/advanced_hyper_naquadah_reactor";
+        private static final String AHNRS_STRUCTURE_FILE_PATH = RESOURCE_ROOT_ID + ":"
+            + "multiblock/advanced_hyper_naquadah_reactor_sphere";
+        private static final String[][] shape = StructureUtils.readStructureFromFile(AHNR_STRUCTURE_FILE_PATH);
+        private static final String[][] shapeSphere = StructureUtils.readStructureFromFile(AHNRS_STRUCTURE_FILE_PATH);
+        private static final String[][] shapeSphereAir = StructureUtils.replaceLetters(shapeSphere, "I");
+        private static final int HORIZONTAL_OFF_SET = 17;
+        private static final int VERTICAL_OFF_SET = 16;
+        private static final int DEPTH_OFF_SET = 0;
+        private static final int HORIZONTAL_OFF_SET_SPHERE = 5;
+        private static final int VERTICAL_OFF_SET_SPHERE = 13;
+        private static final int DEPTH_OFF_SET_SPHERE = -13;
+
+        public boolean enableRender = true;
+        public boolean isRenderActive = false;
+        public float rotation = 0;
+
+        public AdvancedHyperNaquadahReactor(int aID, String aName, String aNameRegional) {
+            super(aID, aName, aNameRegional);
+        }
+
+        public AdvancedHyperNaquadahReactor(String aName) {
+            super(aName);
+        }
+
+        @Override
+        public IMetaTileEntity newMetaEntity(IGregTechTileEntity aTileEntity) {
+            return new AdvancedHyperNaquadahReactor(this.mName);
+        }
+
+        @Override
+        public void renderTESR(double x, double y, double z, float timeSinceLastTick) {
+            if (!isRenderActive || !enableRender) return;
+            AdvancedHyperNaquadahReactorRenderer.renderTileEntity(this, x, y, z, timeSinceLastTick);
+        }
+
+        @Override
+        public IStructureDefinition<AdvancedHyperNaquadahReactor> getStructure_EM() {
+            return StructureDefinition.<AdvancedHyperNaquadahReactor>builder()
+                .addShape(STRUCTURE_PIECE_MAIN, transpose(shape))
+                .addShape(STRUCTURE_PIECE_SPHERE, transpose(shapeSphere))
+                .addShape(STRUCTURE_PIECE_SPHERE_AIR, transpose(shapeSphereAir))
+                .addElement('A', ofBlock(sBlockCasingsTT, 6))
+                .addElement('B', ofBlock(sBlockCasings1, 14))
+                .addElement('C', ofBlock(sBlockCasingsDyson, 0))
+                .addElement('D', ofBlock(sBlockCasings9, 13))
+                .addElement('E', ofBlock(sBlockCasings1, 12))
+                .addElement(
+                    'F',
+                    buildHatchAdder(AdvancedHyperNaquadahReactor.class).casingIndex(getCasingTextureID())
+                        .dot(1)
+                        .atLeast(Maintenance, InputHatch, OutputHatch, Energy.or(EnergyMulti), Dynamo.or(DynamoMulti))
+                        .buildAndChain(onElementPass(x -> ++x.mCountCasing, ofBlock(defcCasingBlock, 7))))
+                .addElement('G', ofFrame(Materials.Naquadria))
+                .addElement('H', ofBlock(BlockLoader.metaCasing, 18))
+                .addElement('I', isAir())
+                .build();
+        }
+
+        @Override
+        public int getCasingTextureID() {
+            return (1 << 7) + (15 + 48);
+        }
+
+        @Override
+        public void onValueUpdate(byte aValue) {
+            isRenderActive = (aValue & 0x01) != 0;
+            enableRender = (aValue & 0x02) != 0;
+        }
+
+        @Override
+        public byte getUpdateData() {
+            byte data = 0;
+            if (isRenderActive) data |= 0x01;
+            if (enableRender) data |= 0x02;
+            return data;
+        }
+
+        @Override
+        public void onPostTick(IGregTechTileEntity aBaseMetaTileEntity, long aTick) {
+            super.onPostTick(aBaseMetaTileEntity, aTick);
+            rotation += 0.5F;
+        }
+
+        @Override
+        public boolean onWireCutterRightClick(ForgeDirection side, ForgeDirection wrenchingSide, EntityPlayer aPlayer,
+            float aX, float aY, float aZ, ItemStack aTool) {
+            if (getBaseMetaTileEntity().isServerSide()) {
+                enableRender = !enableRender;
+                GTUtility.sendChatToPlayer(
+                    aPlayer,
+                    StatCollector.translateToLocal("Info_Render_" + (enableRender ? "Enabled" : "Disabled")));
+                checkStructure(true);
+            }
+            return true;
+        }
+
+        public void destroySphere() {
+            buildPiece(
+                STRUCTURE_PIECE_SPHERE_AIR,
+                null,
+                false,
+                HORIZONTAL_OFF_SET_SPHERE,
+                VERTICAL_OFF_SET_SPHERE,
+                DEPTH_OFF_SET_SPHERE);
+            isRenderActive = true;
+        }
+
+        public void buildSphere() {
+            buildPiece(
+                STRUCTURE_PIECE_SPHERE,
+                null,
+                false,
+                HORIZONTAL_OFF_SET_SPHERE,
+                VERTICAL_OFF_SET_SPHERE,
+                DEPTH_OFF_SET_SPHERE);
+            isRenderActive = false;
+        }
+
+        public ChunkCoordinates getRenderPos() {
+            ForgeDirection back = getExtendedFacing().getRelativeBackInWorld();
+            ForgeDirection up = getExtendedFacing().getRelativeUpInWorld();
+
+            int xOffset = 18 * back.offsetX + 8 * up.offsetX;
+            int yOffset = 18 * back.offsetY + 8 * up.offsetY;
+            int zOffset = 18 * back.offsetZ + 8 * up.offsetZ;
+
+            return new ChunkCoordinates(xOffset, yOffset, zOffset);
+        }
+
+        @Override
+        public MultiblockTooltipBuilder createTooltip() {
+            MultiblockTooltipBuilder tt = new MultiblockTooltipBuilder();
+            tt.addMachineType(StatCollector.translateToLocal("NaquadahReactorRecipeType"))
+                .addInfo(
+                    StatCollector
+                        .translateToLocalFormatted("Tooltip_AdvancedHyperNaquadahReactor_00", getMaxParallelRecipes()))
+                .addInfo(StatCollector.translateToLocal("Tooltip_AdvancedHyperNaquadahReactor_01"))
+                .addInfo(
+                    StatCollector.translateToLocalFormatted(
+                        "Tooltip_AdvancedHyperNaquadahReactor_02",
+                        getDurationMultiple(),
+                        getEUtMultiple()))
+                .addInfo(
+                    StatCollector
+                        .translateToLocalFormatted("Tooltip_AdvancedHyperNaquadahReactor_03", getExtraGas().amount))
+                .addSeparator()
+                .addInfo(StatCollector.translateToLocal("StructureTooComplex"))
+                .addInfo(StatCollector.translateToLocal("BLUE_PRINT_INFO"))
+                .beginStructureBlock(35, 19, 36, true)
+                .addInputHatch(StatCollector.translateToLocal("Tooltip_AdvancedHyperNaquadahReactor_Casing"))
+                .addOutputHatch(StatCollector.translateToLocal("Tooltip_AdvancedHyperNaquadahReactor_Casing"))
+                .addEnergyHatch(StatCollector.translateToLocal("Tooltip_AdvancedHyperNaquadahReactor_Casing"))
+                .addDynamoHatch(StatCollector.translateToLocal("Tooltip_AdvancedHyperNaquadahReactor_Casing"))
+                .addMaintenanceHatch(StatCollector.translateToLocal("Tooltip_AdvancedHyperNaquadahReactor_Casing"))
+                .toolTipFinisher();
+            return tt;
+        }
+
+        @Override
+        public int getReactorTier() {
+            return 2;
+        }
+
+        @Override
+        public int getDurationMultiple() {
+            return 4;
+        }
+
+        @Override
+        public int getEUtMultiple() {
+            return 1024;
+        }
+
+        @Override
+        public int getMaxParallelRecipes() {
+            return 4096;
+        }
+
+        @Override
+        public FluidStack getExtraGas() {
+            return MaterialsUEVplus.SpaceTime.getMolten(100);
+        }
+
+        @Override
+        public boolean checkMachine_EM(IGregTechTileEntity aBaseMetaTileEntity, ItemStack aStack) {
+            if (isRenderActive) {
+                if (!checkPiece(STRUCTURE_PIECE_MAIN, HORIZONTAL_OFF_SET, VERTICAL_OFF_SET, DEPTH_OFF_SET)
+                    || !checkPiece(
+                        STRUCTURE_PIECE_SPHERE_AIR,
+                        HORIZONTAL_OFF_SET_SPHERE,
+                        VERTICAL_OFF_SET_SPHERE,
+                        DEPTH_OFF_SET_SPHERE)) {
+                    buildSphere();
+                    return false;
+                }
+            } else if (!checkPiece(STRUCTURE_PIECE_MAIN, HORIZONTAL_OFF_SET, VERTICAL_OFF_SET, DEPTH_OFF_SET)
+                || !checkPiece(
+                    STRUCTURE_PIECE_SPHERE,
+                    HORIZONTAL_OFF_SET_SPHERE,
+                    VERTICAL_OFF_SET_SPHERE,
+                    DEPTH_OFF_SET_SPHERE)) {
+                        return false;
+                    }
+
+            if (mCountCasing < 50 || mMaintenanceHatches.size() > 1) return false;
+
+            if (!isRenderActive && enableRender && mTotalRunTime > 0) {
+                destroySphere();
+            } else if (isRenderActive && !enableRender) {
+                buildSphere();
+            }
+
+            getBaseMetaTileEntity().sendBlockEvent(GregTechTileClientEvents.CHANGE_CUSTOM_DATA, getUpdateData());
+
+            return true;
+        }
+
+        @Override
+        public boolean isFlipChangeAllowed() {
+            if (mMachine || isRenderActive) return false;
+            return super.isFlipChangeAllowed();
+        }
+
+        @Override
+        public boolean isRotationChangeAllowed() {
+            if (mMachine || isRenderActive) return false;
+            return super.isRotationChangeAllowed();
+        }
+
+        @Override
+        public void onBlockDestroyed() {
+            super.onBlockDestroyed();
+            if (isRenderActive) {
+                buildSphere();
+            }
+        }
+
+        @Override
+        public void saveNBTData(NBTTagCompound aNBT) {
+            super.saveNBTData(aNBT);
+            aNBT.setBoolean("isRenderActive", isRenderActive);
+            aNBT.setBoolean("enableRender", enableRender);
+        }
+
+        @Override
+        public void loadNBTData(NBTTagCompound aNBT) {
+            super.loadNBTData(aNBT);
+            isRenderActive = aNBT.getBoolean("isRenderActive");
+            enableRender = aNBT.getBoolean("enableRender");
+        }
+
+        @Override
+        public void construct(ItemStack stackSize, boolean hintsOnly) {
+            buildPiece(STRUCTURE_PIECE_MAIN, stackSize, hintsOnly, HORIZONTAL_OFF_SET, VERTICAL_OFF_SET, DEPTH_OFF_SET);
+            buildPiece(
+                STRUCTURE_PIECE_SPHERE,
+                stackSize,
+                hintsOnly,
+                HORIZONTAL_OFF_SET_SPHERE,
+                VERTICAL_OFF_SET_SPHERE,
+                DEPTH_OFF_SET_SPHERE);
+        }
+
+        @Override
+        public int survivalConstruct(ItemStack stackSize, int elementBudget, ISurvivalBuildEnvironment env) {
+            if (this.mMachine) return -1;
+            int realBudget = elementBudget >= 500 ? elementBudget : Math.min(500, elementBudget * 5);
+
+            int built;
+            built = survivalBuildPiece(
+                STRUCTURE_PIECE_MAIN,
+                stackSize,
+                HORIZONTAL_OFF_SET,
+                VERTICAL_OFF_SET,
+                DEPTH_OFF_SET,
+                realBudget,
+                env,
+                false,
+                true);
+
+            if (built >= 0) return built;
+
+            built += survivalBuildPiece(
+                STRUCTURE_PIECE_SPHERE,
+                stackSize,
+                HORIZONTAL_OFF_SET_SPHERE,
+                VERTICAL_OFF_SET_SPHERE,
+                DEPTH_OFF_SET_SPHERE,
+                realBudget,
+                env,
+                false,
+                true);
+            return built;
         }
     }
 }

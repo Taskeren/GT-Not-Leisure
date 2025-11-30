@@ -398,11 +398,11 @@ public class NanoPhagocytosisPlant extends WirelessEnergyMultiMachineBase<NanoPh
         ForgeDirection back = getExtendedFacing().getRelativeBackInWorld();
         ForgeDirection up = getExtendedFacing().getRelativeUpInWorld();
 
-        double xOffset = 9 * back.offsetX + 13 * up.offsetX;
-        double yOffset = 9 * back.offsetY + 13 * up.offsetY;
-        double zOffset = 9 * back.offsetZ + 13 * up.offsetZ;
+        int xOffset = 9 * back.offsetX + 13 * up.offsetX;
+        int yOffset = 9 * back.offsetY + 13 * up.offsetY;
+        int zOffset = 9 * back.offsetZ + 13 * up.offsetZ;
 
-        return new ChunkCoordinates((int) (x + xOffset), (int) (y + yOffset), (int) (z + zOffset));
+        return new ChunkCoordinates(x + xOffset, y + yOffset, z + zOffset);
     }
 
     public void destroyFirstRing() {

@@ -330,9 +330,10 @@ public class AdvancedInfiniteDriller extends MultiMachineBase<AdvancedInfiniteDr
             }
         } else if (aTick % 20 == 0 && !aBaseMetaTileEntity.isActive()) {
             excessFuel -= 4;
-            if (excessFuel < 300) {
-                excessFuel = 300;
-            }
+        }
+
+        if (excessFuel < 300) {
+            excessFuel = 300;
         }
 
         endRecipeProcessing();

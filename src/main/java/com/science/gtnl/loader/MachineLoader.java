@@ -1669,6 +1669,13 @@ public class MachineLoader {
                 StatCollector.translateToLocal("NameHyperNaquadahReactor")));
         addItemTooltip(GTNLItemList.HyperNaquadahReactor.get(1), AnimatedText.SNL_QYZG);
 
+        GTNLItemList.AdvancedHyperNaquadahReactor.set(
+            new NaquadahReactor.AdvancedHyperNaquadahReactor(
+                ADVANCED_HYPER_NAQUADAH_REACTOR.ID,
+                "AdvancedHyperNaquadahReactor",
+                StatCollector.translateToLocal("NameAdvancedHyperNaquadahReactor")));
+        addItemTooltip(GTNLItemList.AdvancedHyperNaquadahReactor.get(1), AnimatedText.SNL_QYZG);
+
         // Special Machine
         GTNLItemList.CheatOreProcessingFactory.set(
             new CheatOreProcessingFactory(

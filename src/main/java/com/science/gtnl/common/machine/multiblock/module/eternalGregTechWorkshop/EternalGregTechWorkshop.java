@@ -167,7 +167,6 @@ public class EternalGregTechWorkshop extends MultiMachineBase<EternalGregTechWor
     public static final String[][] shapeExtra = StructureUtils.readStructureFromFile(EGTWE_STRUCTURE_FILE_PATH);
     private static final String[][] shapeExtraAir = StructureUtils.replaceLetters(shapeExtra, "a");
 
-    public int tCountCasing = 0;
     public int mHeatingCapacity = 0;
     public int mMachineTier = 0;
     public int mModuleTier = 1;
@@ -425,7 +424,7 @@ public class EternalGregTechWorkshop extends MultiMachineBase<EternalGregTechWor
                     .casingIndex(getCasingTextureID() + 1)
                     .dot(1)
                     .buildAndChain(
-                        onElementPass(x -> ++x.tCountCasing, ofBlock(TTCasingsContainer.GodforgeCasings, 1))))
+                        onElementPass(x -> ++x.mCountCasing, ofBlock(TTCasingsContainer.GodforgeCasings, 1))))
             .addElement('O', ofBlock(GregTechAPI.sBlockCasings10, 2))
             .addElement('P', ofBlock(TTCasingsContainer.sBlockCasingsBA0, 10))
             .addElement('Q', ofBlock(TTCasingsContainer.GodforgeCasings, 7))
@@ -452,7 +451,7 @@ public class EternalGregTechWorkshop extends MultiMachineBase<EternalGregTechWor
 
     @Override
     public boolean checkMachine(IGregTechTileEntity aBaseMetaTileEntity, ItemStack aStack) {
-        tCountCasing = 0;
+        mCountCasing = 0;
         moduleHatches.clear();
         int checkTier = 0;
 
@@ -552,7 +551,7 @@ public class EternalGregTechWorkshop extends MultiMachineBase<EternalGregTechWor
             destroyRenderer();
             mExtraModule = false;
         }
-        return tCountCasing > 1;
+        return mCountCasing > 1;
     }
 
     @Override
@@ -801,7 +800,7 @@ public class EternalGregTechWorkshop extends MultiMachineBase<EternalGregTechWor
                             module.connect();
                             module.setEUtDiscount(getEUtDiscount());
                             module.setDurationModifier(getSpeedBoost());
-                            module.setMaxParallel(getTrueParallel());
+                            module.setMMaxParallel(getTrueParallel());
                             module.setMaxUseEUt(getMaxUseEUt());
                             module.setHeat(getHeatingCapacity());
                             EternalGregTechWorkshopModule.queryMilestoneStats(module, this);
@@ -809,8 +808,8 @@ public class EternalGregTechWorkshop extends MultiMachineBase<EternalGregTechWor
                             module.disconnect();
                             module.setEUtDiscount(1);
                             module.setDurationModifier(1);
-                            module.setMaxParallel(0);
-                            module.setMaxParallel(0);
+                            module.setMMaxParallel(0);
+                            module.setMMaxParallel(0);
                             module.setMaxUseEUt(0);
                         }
                     }

@@ -16,7 +16,6 @@ import static tectech.thing.casing.TTCasingsContainer.*;
 import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.stream.Stream;
 
 import javax.annotation.Nonnull;
@@ -215,7 +214,7 @@ public class NineIndustrialMultiMachine extends WirelessEnergyMultiMachineBase<N
         return new ITexture[] { Textures.BlockIcons.getCasingTextureForId(getCasingTextureID()) };
     }
 
-    private ItemStack getCircuit(ItemStack[] t) {
+    public ItemStack getCircuit(ItemStack[] t) {
         for (ItemStack j : t) {
             if (j.getItem() == GTUtility.getIntegratedCircuit(0)
                 .getItem()) {
@@ -227,7 +226,7 @@ public class NineIndustrialMultiMachine extends WirelessEnergyMultiMachineBase<N
         return null;
     }
 
-    private int getCircuitID(ItemStack circuit) {
+    public int getCircuitID(ItemStack circuit) {
         int H = circuit.getItemDamage();
         int T = (H == 20 ? 0 : (H == 21 ? 1 : (H == 22 ? 2 : -1)));
         if (T == -1) {
@@ -236,13 +235,7 @@ public class NineIndustrialMultiMachine extends WirelessEnergyMultiMachineBase<N
         return NineIndustrialMultiMachineManager.getModeMapIndex(machineMode, T);
     }
 
-    @Nonnull
-    @Override
-    public Collection<RecipeMap<?>> getAvailableRecipeMaps() {
-        return NineIndustrialMultiMachineManager.getAllRecipeMaps();
-    }
-
-    private static RecipeMap<?> getRecipeMap(int mode) {
+    public static RecipeMap<?> getRecipeMap(int mode) {
         return NineIndustrialMultiMachineManager.getRecipeMap(mode);
     }
 
@@ -341,6 +334,7 @@ public class NineIndustrialMultiMachine extends WirelessEnergyMultiMachineBase<N
         return machineMode;
     }
 
+    @Override
     public void setMachineModeIcons() {
         machineModeIcons.clear();
         machineModeIcons.add(GTUITextures.OVERLAY_BUTTON_MACHINEMODE_DEFAULT);

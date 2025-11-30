@@ -115,7 +115,7 @@ public class EyeOfHarmonyInjector extends TTMultiblockBase
     public Parameters.Group.ParameterIn maxHeliumAmountSetting;
     public Parameters.Group.ParameterIn maxHydrogenAmountSetting;
     public Parameters.Group.ParameterIn maxRawStarMatterAmountSetting;
-    public int tCountCasing;
+    public int mCountCasing;
 
     public float angle;
     public ArrayList<TileEntityEyeOfHarmony.OrbitingObject> orbitingObjects = new ArrayList<>();
@@ -877,7 +877,7 @@ public class EyeOfHarmonyInjector extends TTMultiblockBase
                         .dot(1)
                         .atLeast(InputHatch, OutputHatch, InputBus, OutputBus, Energy.or(ExoticEnergy))
                         .buildAndChain(),
-                    onElementPass(e -> e.tCountCasing++, ofBlock(sBlockCasingsTT, 0))))
+                    onElementPass(e -> e.mCountCasing++, ofBlock(sBlockCasingsTT, 0))))
             .build();
     }
 

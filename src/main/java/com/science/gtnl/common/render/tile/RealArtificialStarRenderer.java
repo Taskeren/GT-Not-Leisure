@@ -31,9 +31,14 @@ public class RealArtificialStarRenderer extends TileEntitySpecialRenderer {
         if (!(tile instanceof TileEntityArtificialStar star)) return;
         final double size = star.size;
         GL11.glPushMatrix();
+        GL11.glDisable(GL11.GL_LIGHTING);
+        float lastBrightnessX = OpenGlHelper.lastBrightnessX;
+        float lastBrightnessY = OpenGlHelper.lastBrightnessY;
+        OpenGlHelper.setLightmapTextureCoords(OpenGlHelper.lightmapTexUnit, 200F, 200F);
         GL11.glTranslated(x + 0.5, y + 0.5, z + 0.5);
         GL11.glRotated(star.Rotation, 1, 1, 1);
         renderStar(star, size);
+        OpenGlHelper.setLightmapTextureCoords(OpenGlHelper.lightmapTexUnit, lastBrightnessX, lastBrightnessY);
         GL11.glPopMatrix();
     }
 

@@ -48,13 +48,13 @@ import gregtech.api.util.MultiblockTooltipBuilder;
 
 public abstract class LargeBoiler extends MTEEnhancedMultiBlockBase<LargeBoiler> implements ISurvivalConstructable {
 
-    private boolean firstRun = true;
-    private int integratedCircuitConfig = 0;
-    private long excessWater = 0;
-    private int excessFuel = 0;
-    private int excessProjectedEU = 0;
-    private int tCountCasing;
-    private int mFireboxCasing;
+    public boolean firstRun = true;
+    public int integratedCircuitConfig = 0;
+    public long excessWater = 0;
+    public int excessFuel = 0;
+    public int excessProjectedEU = 0;
+    public int mCountCasing;
+    public int mFireboxCasing;
     private static final String STRUCTURE_PIECE_MAIN = "main";
 
     public LargeBoiler(int aID, String aName, String aNameRegional) {
@@ -100,11 +100,11 @@ public abstract class LargeBoiler extends MTEEnhancedMultiBlockBase<LargeBoiler>
         return false;
     }
 
-    private void onCasingAdded() {
-        tCountCasing++;
+    public void onCasingAdded() {
+        mCountCasing++;
     }
 
-    private void onFireboxAdded() {
+    public void onFireboxAdded() {
         mFireboxCasing++;
     }
 
@@ -310,11 +310,11 @@ public abstract class LargeBoiler extends MTEEnhancedMultiBlockBase<LargeBoiler>
 
     @Override
     public boolean checkMachine(IGregTechTileEntity aBaseMetaTileEntity, ItemStack aStack) {
-        tCountCasing = 0;
+        mCountCasing = 0;
         mFireboxCasing = 0;
 
         if (!checkPiece(STRUCTURE_PIECE_MAIN, 1, 4, 0)) return false;
-        return tCountCasing >= 20 && mFireboxCasing >= 3;
+        return mCountCasing >= 20 && mFireboxCasing >= 3;
     }
 
     @Override

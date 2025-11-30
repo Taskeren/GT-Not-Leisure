@@ -52,14 +52,14 @@ import tectech.thing.metaTileEntity.multi.base.TTMultiblockBase;
 
 public class EnergyInfuser extends TTMultiblockBase implements IConstructable {
 
-    private final List<ItemStack> mStoredItems = new ArrayList<>();
-    private boolean outputAllItems = false;
-    private static final int maxRepairedDamagePerOperation = 10000;
-    private static final long usedEuPerDurability = 1000;
-    private static final int usedUumPerDurability = 1;
-    private int tCountCasing;
+    public final List<ItemStack> mStoredItems = new ArrayList<>();
+    public boolean outputAllItems = false;
+    public static final int maxRepairedDamagePerOperation = 10000;
+    public static final long usedEuPerDurability = 1000;
+    public static final int usedUumPerDurability = 1;
+    public int mCountCasing;
     private static final String STRUCTURE_PIECE_MAIN = "main";
-    public static final String EI_STRUCTURE_FILE_PATH = RESOURCE_ROOT_ID + ":" + "multiblock/energy_infuser";
+    private static final String EI_STRUCTURE_FILE_PATH = RESOURCE_ROOT_ID + ":" + "multiblock/energy_infuser";
     private static final String[][] shape = StructureUtils.readStructureFromFile(EI_STRUCTURE_FILE_PATH);
     private static final int HORIZONTAL_OFF_SET = 2;
     private static final int VERTICAL_OFF_SET = 7;
@@ -78,7 +78,7 @@ public class EnergyInfuser extends TTMultiblockBase implements IConstructable {
                     .casingIndex(1028)
                     .dot(1)
                     .buildAndChain(
-                        onElementPass(x -> ++x.tCountCasing, ofBlock(TTCasingsContainer.sBlockCasingsTT, 4))))
+                        onElementPass(x -> ++x.mCountCasing, ofBlock(TTCasingsContainer.sBlockCasingsTT, 4))))
             .addElement('D', ofBlock(TTCasingsContainer.sBlockCasingsTT, 7))
             .addElement('E', ofFrame(Materials.Osmiridium))
             .addElement('F', ofBlock(lscLapotronicEnergyUnit, 6))
