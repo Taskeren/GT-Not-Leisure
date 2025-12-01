@@ -3003,7 +3003,7 @@ Tooltip_AdvancedInfiniteDriller_10=Cryotheum 40K
 Tooltip_AdvancedInfiniteDriller_11=Blazing Pyrotheum consumption formula: (Current Temperature^1.3)
 Tooltip_AdvancedInfiniteDriller_12=Place the corresponding dimension marker block to extract fluids, supports multiple!
 Tooltip_AdvancedInfiniteDriller_Casing=Any Radiant Naquadah Alloy Machine Block
-Info_AdvancedInfiniteDriller_00=Current Temperature: %s K
+Info_AdvancedInfiniteDriller_00=§rCurrent Temperature: §e%s §rK
 
 NameLargeSteamFurnace=Large Steam Furnace
 LargeSteamFurnaceRecipeType=Furnace

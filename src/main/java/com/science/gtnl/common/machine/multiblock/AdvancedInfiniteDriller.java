@@ -11,13 +11,13 @@ import static gregtech.api.util.GTStructureUtility.ofFrame;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;
@@ -48,6 +48,7 @@ import gregtech.api.enums.OrePrefixes;
 import gregtech.api.enums.Textures;
 import gregtech.api.enums.TierEU;
 import gregtech.api.enums.VoidingMode;
+import gregtech.api.interfaces.IHatchElement;
 import gregtech.api.interfaces.ITexture;
 import gregtech.api.interfaces.metatileentity.IMetaTileEntity;
 import gregtech.api.interfaces.tileentity.IGregTechTileEntity;
@@ -60,8 +61,10 @@ import gregtech.api.render.TextureFactory;
 import gregtech.api.util.GTModHandler;
 import gregtech.api.util.GTOreDictUnificator;
 import gregtech.api.util.GTUtility;
+import gregtech.api.util.IGTHatchAdder;
 import gregtech.api.util.MultiblockTooltipBuilder;
 import gregtech.api.util.shutdown.ShutDownReasonRegistry;
+import gregtech.common.tileentities.machines.multi.compressor.MTEHeatSensor;
 import gtPlusPlus.core.fluids.GTPPFluids;
 import gtneioreplugin.plugin.item.ItemDimensionDisplay;
 import mcp.mobius.waila.api.IWailaConfigHandler;
@@ -70,9 +73,6 @@ import mcp.mobius.waila.api.IWailaDataAccessor;
 public class AdvancedInfiniteDriller extends MultiMachineBase<AdvancedInfiniteDriller>
     implements ISurvivalConstructable {
 
-    public int excessFuel = 0;
-    public int drillTier = 0;
-
     private static final String STRUCTURE_PIECE_MAIN = "main";
     private static final String AID_STRUCTURE_FILE_PATH = RESOURCE_ROOT_ID + ":"
         + "multiblock/advanced_infinite_driller";
@@ -80,6 +80,10 @@ public class AdvancedInfiniteDriller extends MultiMachineBase<AdvancedInfiniteDr
     private static final int HORIZONTAL_OFF_SET = 12;
     private static final int VERTICAL_OFF_SET = 39;
     private static final int DEPTH_OFF_SET = 0;
+
+    public int excessFuel = 0;
+    public int drillTier = 0;
+    public ArrayList<MTEHeatSensor> sensorHatches = new ArrayList<>();
 
     public AdvancedInfiniteDriller(int aID, String aName, String aNameRegional) {
         super(aID, aName, aNameRegional);
@@ -147,7 +151,13 @@ public class AdvancedInfiniteDriller extends MultiMachineBase<AdvancedInfiniteDr
                 'J',
                 buildHatchAdder(AdvancedInfiniteDriller.class).casingIndex(getCasingTextureID())
                     .dot(1)
-                    .atLeast(Maintenance, InputBus, InputHatch, OutputHatch, Energy.or(ExoticEnergy))
+                    .atLeast(
+                        Maintenance,
+                        InputBus,
+                        InputHatch,
+                        OutputHatch,
+                        Energy.or(ExoticEnergy),
+                        SpecialHatchElement.HeatSensor)
                     .buildAndChain(onElementPass(x -> ++x.mCountCasing, ofBlock(sBlockCasings8, 10))))
             .addElement('K', ofFrame(Materials.Neutronium))
             .addElement('L', ofBlock(sBlockMetal8, 0))
@@ -336,6 +346,15 @@ public class AdvancedInfiniteDriller extends MultiMachineBase<AdvancedInfiniteDr
             excessFuel = 300;
         }
 
+        float percent = excessFuel / 100.0f;
+        if (percent > 100.0f) {
+            percent = 100.0f;
+        }
+
+        for (MTEHeatSensor hatch : sensorHatches) {
+            hatch.updateRedstoneOutput(percent);
+        }
+
         endRecipeProcessing();
         super.onPostTick(aBaseMetaTileEntity, aTick);
     }
@@ -397,6 +416,7 @@ public class AdvancedInfiniteDriller extends MultiMachineBase<AdvancedInfiniteDr
     }
 
     @Override
+
     public void getWailaNBTData(EntityPlayerMP player, TileEntity tile, NBTTagCompound tag, World world, int x, int y,
         int z) {
         super.getWailaNBTData(player, tile, tag, world, x, y, z);
@@ -411,9 +431,8 @@ public class AdvancedInfiniteDriller extends MultiMachineBase<AdvancedInfiniteDr
         final NBTTagCompound tag = accessor.getNBTData();
         if (tag.hasKey("excessFuel")) {
             currentTip.add(
-                StatCollector.translateToLocal("Info_AdvancedInfiniteDriller_00") + EnumChatFormatting.YELLOW
-                    + tag.getInteger("excessFuel")
-                    + "K");
+                StatCollector
+                    .translateToLocalFormatted("Info_AdvancedInfiniteDriller_00", tag.getInteger("excessFuel")));
         }
     }
 
@@ -481,5 +500,45 @@ public class AdvancedInfiniteDriller extends MultiMachineBase<AdvancedInfiniteDr
             env,
             false,
             true);
+    }
+
+    public boolean addSensorHatchToMachineList(IGregTechTileEntity aTileEntity, int aBaseCasingIndex) {
+        if (aTileEntity == null) return false;
+        IMetaTileEntity aMetaTileEntity = aTileEntity.getMetaTileEntity();
+        if (aMetaTileEntity instanceof MTEHeatSensor sensor) {
+            sensor.updateTexture(aBaseCasingIndex);
+            return this.sensorHatches.add(sensor);
+        }
+        return false;
+    }
+
+    public enum SpecialHatchElement implements IHatchElement<AdvancedInfiniteDriller> {
+
+        HeatSensor(AdvancedInfiniteDriller::addSensorHatchToMachineList, MTEHeatSensor.class) {
+
+            @Override
+            public long count(AdvancedInfiniteDriller machine) {
+                return machine.sensorHatches.size();
+            }
+        };
+
+        private final List<Class<? extends IMetaTileEntity>> mteClasses;
+        private final IGTHatchAdder<AdvancedInfiniteDriller> adder;
+
+        @SafeVarargs
+        SpecialHatchElement(IGTHatchAdder<AdvancedInfiniteDriller> adder,
+            Class<? extends IMetaTileEntity>... mteClasses) {
+            this.mteClasses = Collections.unmodifiableList(Arrays.asList(mteClasses));
+            this.adder = adder;
+        }
+
+        @Override
+        public List<? extends Class<? extends IMetaTileEntity>> mteClasses() {
+            return mteClasses;
+        }
+
+        public IGTHatchAdder<? super AdvancedInfiniteDriller> adder() {
+            return adder;
+        }
     }
 }
