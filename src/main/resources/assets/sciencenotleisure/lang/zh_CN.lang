@@ -206,6 +206,8 @@ config.message.enableShowJoinMessage=加入欢迎消息
 config.message.enableShowJoinMessage.tooltip=启用玩家加入世界时的欢迎信息
 config.message.enableShowAddMods=显示加载模组
 config.message.enableShowAddMods.tooltip=启用向玩家显示已加载模组列表
+config.debug.enableQuest=加载GTNL任务
+config.debug.enableQuest.tooltip=启用GTNL任务添加，添加尚未完成的任务
 config.debug.enableDebugMode=调试模式
 config.debug.enableDebugMode.tooltip=启用调试日志输出
 

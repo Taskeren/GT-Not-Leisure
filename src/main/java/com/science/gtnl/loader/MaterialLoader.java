@@ -41,7 +41,7 @@ public class MaterialLoader {
     public static void loadPreInit() {
         EffectLoader.registry();
         EntityLoader.registry();
-        if (Mods.BetterQuesting.isModLoaded() && MainConfig.enableDebugMode) {
+        if (Mods.BetterQuesting.isModLoaded() && MainConfig.enableQuest) {
             QuestLoader.registry();
         }
 

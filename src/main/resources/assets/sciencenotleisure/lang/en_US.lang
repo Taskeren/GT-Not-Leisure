@@ -206,6 +206,8 @@ config.message.enableShowJoinMessage=Enable Show Join Message
 config.message.enableShowJoinMessage.tooltip=Enable welcome message when player joins
 config.message.enableShowAddMods=Enable Show Add Mods
 config.message.enableShowAddMods.tooltip=Enable showing loaded mods info to player
+config.debug.enableQuest=Load GTNL Quest
+config.debug.enableQuest.tooltip=Enable GTNL quest addition and add the quests that are not yet completed
 config.debug.enableDebugMode=Debug Mode
 config.debug.enableDebugMode.tooltip=Enable Debug Print Log
 

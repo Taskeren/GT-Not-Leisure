@@ -153,6 +153,7 @@ public class MainConfig {
     public static boolean enableShowAddMods = true;
 
     // Debug
+    public static boolean enableQuest = false;
     public static boolean enableDebugMode = false;
 
     public static boolean enableAprilFool = false;
@@ -742,6 +743,13 @@ public class MainConfig {
             "config.message.enableShowAddMods");
 
         // Debug
+        enableQuest = config.getBoolean(
+            "enableQuest",
+            CATEGORY_DEBUG,
+            enableQuest,
+            "Enable GTNL Quest, add more quest",
+            "config.debug.enableQuest");
+
         enableDebugMode = config.getBoolean(
             "enableDebugMode",
             CATEGORY_DEBUG,
