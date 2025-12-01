@@ -97,9 +97,9 @@ public class PrimitiveBrickKilnRecipes implements IRecipePool {
             .addTo(PBKR);
 
         RecipeBuilder.builder()
-            .itemInputs(new ItemStack(Items.netherbrick, 3))
+            .itemInputs(new ItemStack(Items.netherbrick, 4))
             .itemOutputs(new ItemStack(Blocks.nether_brick, 1))
-            .duration(100)
+            .duration(50)
             .eut(16)
             .addTo(PBKR);
 
@@ -126,13 +126,13 @@ public class PrimitiveBrickKilnRecipes implements IRecipePool {
 
         if (Mods.Railcraft.isModLoaded()) {
             RecipeBuilder.builder()
-                .itemInputs(CustomItemList.CokeOvenBrick.get(3))
+                .itemInputs(CustomItemList.CokeOvenBrick.get(4))
                 .itemOutputs(GTModHandler.getModItem(Mods.Railcraft.ID, "machine.alpha", 1, 7))
                 .duration(200)
                 .eut(16)
                 .addTo(PBKR);
             RecipeBuilder.builder()
-                .itemInputs(CustomItemList.AdvancedCokeOvenBrick.get(3))
+                .itemInputs(CustomItemList.AdvancedCokeOvenBrick.get(4))
                 .itemOutputs(GTModHandler.getModItem(Mods.Railcraft.ID, "machine.alpha", 1, 12))
                 .duration(200)
                 .eut(16)

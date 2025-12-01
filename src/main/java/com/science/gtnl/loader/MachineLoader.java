@@ -7,7 +7,6 @@ import static gregtech.api.enums.Textures.BlockIcons.*;
 import java.util.HashSet;
 import java.util.Set;
 
-import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.StatCollector;
 import net.minecraftforge.fluids.Fluid;
@@ -255,6 +254,7 @@ import com.science.gtnl.common.machine.multiblock.wireless.SmeltingMixingFurnace
 import com.science.gtnl.common.machine.multiblock.wireless.SuperconductingElectromagnetism;
 import com.science.gtnl.common.machine.multiblock.wireless.SuperconductingMagneticPresser;
 import com.science.gtnl.common.machine.multiblock.wireless.SwarmCore;
+import com.science.gtnl.common.machine.multiblock.wireless.TransliminalOasis;
 import com.science.gtnl.common.machine.multiblock.wireless.VortexMatterCentrifuge;
 import com.science.gtnl.common.material.MaterialPool;
 import com.science.gtnl.common.material.MaterialUtils;
@@ -292,9 +292,6 @@ import tectech.thing.metaTileEntity.hatch.MTEHatchEnergyTunnel;
 import tectech.thing.metaTileEntity.hatch.MTEHatchWirelessMulti;
 
 public class MachineLoader {
-
-    public static ItemStack ResourceCollectionModule;
-    public static ItemStack SuperSpaceElevator;
 
     public static void registerMachines() {
         GTNLItemList.QuantumComputer.set(
@@ -864,11 +861,11 @@ public class MachineLoader {
                 StatCollector.translateToLocal("NameFuelRefiningComplex")));
         addItemTooltip(GTNLItemList.FuelRefiningComplex.get(1), AnimatedText.SNL_QYZG);
 
-        ResourceCollectionModule = new ResourceCollectionModule(
-            RESOURCE_COLLECTION_MODULE.ID,
-            "ResourceCollectionModule",
-            StatCollector.translateToLocal("NameResourceCollectionModule")).getStackForm(1);
-        GTNLItemList.ResourceCollectionModule.set(ResourceCollectionModule);
+        GTNLItemList.ResourceCollectionModule.set(
+            new ResourceCollectionModule(
+                RESOURCE_COLLECTION_MODULE.ID,
+                "ResourceCollectionModule",
+                StatCollector.translateToLocal("NameResourceCollectionModule")));
         addItemTooltip(GTNLItemList.ResourceCollectionModule.get(1), AnimatedText.SCIENCE_NOT_LEISURE);
 
         GTNLItemList.LuvKuangBiaoOneGiantNuclearFusionReactor.set(
@@ -1160,11 +1157,11 @@ public class MachineLoader {
                 StatCollector.translateToLocal("NameOreExtractionModule")));
         addItemTooltip(GTNLItemList.OreExtractionModule.get(1), AnimatedText.SNL_QYZG);
 
-        SuperSpaceElevator = new SuperSpaceElevator(
-            SUPER_SPACE_ELEVATOR.ID,
-            "SuperSpaceElevator",
-            StatCollector.translateToLocal("NameSuperSpaceElevator")).getStackForm(1);
-        GTNLItemList.SuperSpaceElevator.set(SuperSpaceElevator);
+        GTNLItemList.SuperSpaceElevator.set(
+            new SuperSpaceElevator(
+                SUPER_SPACE_ELEVATOR.ID,
+                "SuperSpaceElevator",
+                StatCollector.translateToLocal("NameSuperSpaceElevator")));
         addItemTooltip(GTNLItemList.SuperSpaceElevator.get(1), AnimatedText.SNL_QYZG);
 
         GTNLItemList.LargeBioLab
@@ -1675,6 +1672,13 @@ public class MachineLoader {
                 "AdvancedHyperNaquadahReactor",
                 StatCollector.translateToLocal("NameAdvancedHyperNaquadahReactor")));
         addItemTooltip(GTNLItemList.AdvancedHyperNaquadahReactor.get(1), AnimatedText.SNL_QYZG);
+
+        GTNLItemList.TransliminalOasis.set(
+            new TransliminalOasis(
+                TRANSLIMINAL_OASIS.ID,
+                "TransliminalOasis",
+                StatCollector.translateToLocal("NameTransliminalOasis")));
+        addItemTooltip(GTNLItemList.TransliminalOasis.get(1), AnimatedText.SNL_QYZG);
 
         // Special Machine
         GTNLItemList.CheatOreProcessingFactory.set(

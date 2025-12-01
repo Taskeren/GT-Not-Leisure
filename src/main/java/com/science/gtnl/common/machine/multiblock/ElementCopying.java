@@ -10,8 +10,6 @@ import static gregtech.common.misc.WirelessNetworkManager.*;
 import static gtnhlanth.common.register.LanthItemList.ELECTRODE_CASING;
 import static tectech.thing.casing.TTCasingsContainer.sBlockCasingsTT;
 
-import java.math.BigInteger;
-
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.StatCollector;
 import net.minecraftforge.common.util.ForgeDirection;
@@ -30,8 +28,6 @@ import gregtech.api.interfaces.ITexture;
 import gregtech.api.interfaces.metatileentity.IMetaTileEntity;
 import gregtech.api.interfaces.tileentity.IGregTechTileEntity;
 import gregtech.api.recipe.RecipeMap;
-import gregtech.api.recipe.check.CheckRecipeResult;
-import gregtech.api.recipe.check.CheckRecipeResultRegistry;
 import gregtech.api.render.TextureFactory;
 import gregtech.api.util.MultiblockTooltipBuilder;
 
@@ -174,32 +170,5 @@ public class ElementCopying extends WirelessEnergyMultiMachineBase<ElementCopyin
     @Override
     public double getDurationModifier() {
         return 1 * Math.pow(0.75, mParallelTier);
-    }
-
-    @Override
-    public CheckRecipeResult wirelessModeProcessOnce() {
-        if (!isRecipeProcessing) startRecipeProcessing();
-        setupProcessingLogic(processingLogic);
-
-        CheckRecipeResult result = doCheckRecipe();
-        if (!result.wasSuccessful()) {
-            return result;
-        }
-
-        BigInteger costEU = BigInteger.valueOf(processingLogic.getCalculatedEut())
-            .multiply(BigInteger.valueOf(processingLogic.getDuration()));
-
-        if (!addEUToGlobalEnergyMap(ownerUUID, costEU.multiply(NEGATIVE_ONE))) {
-            return CheckRecipeResultRegistry.insufficientPower(costEU.longValue());
-        }
-
-        costingEU = costingEU.add(costEU);
-
-        mOutputItems = mergeArray(mOutputItems, processingLogic.getOutputItems());
-        mOutputFluids = mergeArray(mOutputFluids, processingLogic.getOutputFluids());
-        totalOverclockedDuration += processingLogic.getDuration();
-
-        endRecipeProcessing();
-        return result;
     }
 }

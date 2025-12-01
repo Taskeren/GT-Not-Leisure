@@ -2522,8 +2522,8 @@ Tooltip_SteamRockBreaker_04=§b§o注意结构共用：>
 Tooltip_SteamRockBreaker_Casing=任意镀铜砖块或脱氧钢机械方块
 
 NameSteamWoodcutter=蒸汽树场
-gtnl.recipe.SteamWoodcutterRecipes=蒸汽园艺
-SteamWoodcutterRecipeType=树场
+gtnl.recipe.WoodcutterRecipes=伐木场
+SteamWoodcutterRecipeType=伐木场
 Tooltip_SteamWoodcutter_00=§b§o从树苗缓慢生长成树木
 Tooltip_SteamWoodcutter_01=作者：§d§oSteam§f§oIs§d§oThe§f§oNumber
 
@@ -2753,6 +2753,11 @@ NameNeutroniumWireCutting=中子丝线切割机
 NeutroniumWireCuttingRecipeType=切割机
 Tooltip_NeutroniumWireCutting_00=每级玻璃等级额外提供5%的加速和耗电减免(乘算叠加)
 Tooltip_NeutroniumWireCutting_Casing=任意超能硅岩强化无菌净水厂机械方块
+
+NameTransliminalOasis=超限绿洲
+TransliminalOasisRecipeType=伐木场
+Tooltip_TransliminalOasis_00=每级玻璃等级额外提供5%的加速和耗电减免(乘算叠加)
+Tooltip_TransliminalOasis_Casing=任意压力抑制机械方块
 
 NameHighEnergyLaserLathe=高能激光车床
 HighEnergyLaserLatheRecipeType=车床

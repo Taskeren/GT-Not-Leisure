@@ -68,6 +68,6 @@ public class MixinMTETreeFarm {
                     .toArray())
             .duration(40)
             .eut(TierEU.RECIPE_LV)
-            .addTo(RecipePool.SteamWoodcutterRecipes);
+            .addTo(RecipePool.WoodcutterRecipes);
     }
 }

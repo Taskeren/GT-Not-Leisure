@@ -1076,13 +1076,13 @@ public class AssemblerRecipes implements IRecipePool {
         RecipeBuilder.builder()
             .itemInputs(
                 GTUtility.getIntegratedCircuit(4),
-                ItemList.Hull_LV.get(1),
-                GTOreDictUnificator.get(OrePrefixes.plateDouble, Materials.Steel, 2L),
-                ItemList.Robot_Arm_LV.get(1L),
-                ItemList.Emitter_LV.get(1L),
-                ItemList.Sensor_LV.get(1L),
-                GTOreDictUnificator.get(OrePrefixes.circuit, Materials.MV, 2L),
-                GTOreDictUnificator.get(OrePrefixes.cableGt02, Materials.Tin, 2L))
+                ItemList.Hull_LV.get(4),
+                GTOreDictUnificator.get(OrePrefixes.plateDouble, Materials.Steel, 32L),
+                ItemList.Robot_Arm_LV.get(8L),
+                ItemList.Emitter_LV.get(8L),
+                ItemList.Sensor_LV.get(8L),
+                GTOreDictUnificator.get(OrePrefixes.circuit, Materials.MV, 16L),
+                GTOreDictUnificator.get(OrePrefixes.cableGt02, Materials.Tin, 32L))
             .itemOutputs(GTNLItemList.LVParallelControllerCore.get(1))
             .fluidInputs(Materials.Cupronickel.getMolten(1296))
             .duration(400)
@@ -1092,13 +1092,13 @@ public class AssemblerRecipes implements IRecipePool {
         RecipeBuilder.builder()
             .itemInputs(
                 GTUtility.getIntegratedCircuit(4),
-                ItemList.Hull_MV.get(1),
-                GTOreDictUnificator.get(OrePrefixes.plateDouble, Materials.Aluminium, 2L),
-                ItemList.Robot_Arm_MV.get(1L),
-                ItemList.Emitter_MV.get(1L),
-                ItemList.Sensor_MV.get(1L),
-                GTOreDictUnificator.get(OrePrefixes.circuit, Materials.HV, 2L),
-                GTOreDictUnificator.get(OrePrefixes.cableGt02, Materials.AnnealedCopper, 2L))
+                ItemList.Hull_MV.get(4),
+                GTOreDictUnificator.get(OrePrefixes.plateDouble, Materials.Aluminium, 32L),
+                ItemList.Robot_Arm_MV.get(8L),
+                ItemList.Emitter_MV.get(8L),
+                ItemList.Sensor_MV.get(8L),
+                GTOreDictUnificator.get(OrePrefixes.circuit, Materials.HV, 16L),
+                GTOreDictUnificator.get(OrePrefixes.cableGt02, Materials.AnnealedCopper, 32L))
             .itemOutputs(GTNLItemList.MVParallelControllerCore.get(1))
             .fluidInputs(Materials.SolderingAlloy.getMolten(1296))
             .duration(400)
@@ -1108,14 +1108,14 @@ public class AssemblerRecipes implements IRecipePool {
         RecipeBuilder.builder()
             .itemInputs(
                 GTUtility.getIntegratedCircuit(4),
-                ItemList.Hull_HV.get(1),
-                GTOreDictUnificator.get(OrePrefixes.plateDouble, Materials.StainlessSteel, 4L),
-                ItemList.Electric_Motor_HV.get(1L),
-                ItemList.Robot_Arm_HV.get(1L),
-                ItemList.Emitter_HV.get(1L),
-                ItemList.Sensor_HV.get(1L),
-                GTOreDictUnificator.get(OrePrefixes.circuit, Materials.EV, 2L),
-                GTOreDictUnificator.get(OrePrefixes.cableGt02, Materials.BlueAlloy, 2L))
+                ItemList.Hull_HV.get(4),
+                GTOreDictUnificator.get(OrePrefixes.plateDouble, Materials.StainlessSteel, 32L),
+                ItemList.Electric_Motor_HV.get(8L),
+                ItemList.Robot_Arm_HV.get(8L),
+                ItemList.Emitter_HV.get(8L),
+                ItemList.Sensor_HV.get(8L),
+                GTOreDictUnificator.get(OrePrefixes.circuit, Materials.EV, 16L),
+                GTOreDictUnificator.get(OrePrefixes.cableGt02, Materials.BlueAlloy, 32L))
             .itemOutputs(GTNLItemList.HVParallelControllerCore.get(1))
             .fluidInputs(Materials.EnergeticAlloy.getMolten(1296))
             .duration(400)
@@ -1125,14 +1125,14 @@ public class AssemblerRecipes implements IRecipePool {
         RecipeBuilder.builder()
             .itemInputs(
                 GTUtility.getIntegratedCircuit(4),
-                ItemList.Hull_EV.get(1),
-                GTOreDictUnificator.get(OrePrefixes.plateDouble, Materials.Titanium, 4L),
-                ItemList.Electric_Motor_EV.get(2L),
-                ItemList.Robot_Arm_EV.get(1L),
-                ItemList.Emitter_EV.get(1L),
-                ItemList.Sensor_EV.get(1L),
-                GTOreDictUnificator.get(OrePrefixes.circuit, Materials.IV, 4L),
-                GTOreDictUnificator.get(OrePrefixes.cableGt02, Materials.Aluminium, 2L))
+                ItemList.Hull_EV.get(4),
+                GTOreDictUnificator.get(OrePrefixes.plateDouble, Materials.Titanium, 32L),
+                ItemList.Electric_Motor_EV.get(16L),
+                ItemList.Robot_Arm_EV.get(8L),
+                ItemList.Emitter_EV.get(8L),
+                ItemList.Sensor_EV.get(8L),
+                GTOreDictUnificator.get(OrePrefixes.circuit, Materials.IV, 16L),
+                GTOreDictUnificator.get(OrePrefixes.cableGt02, Materials.Aluminium, 32L))
             .itemOutputs(GTNLItemList.EVParallelControllerCore.get(1))
             .fluidInputs(Materials.TPV.getMolten(1296))
             .duration(400)
@@ -1142,14 +1142,14 @@ public class AssemblerRecipes implements IRecipePool {
         RecipeBuilder.builder()
             .itemInputs(
                 GTUtility.getIntegratedCircuit(4),
-                ItemList.Hull_IV.get(2),
-                GTOreDictUnificator.get(OrePrefixes.plateDouble, Materials.TungstenSteel, 8L),
-                ItemList.Electric_Motor_IV.get(2L),
-                ItemList.Robot_Arm_IV.get(2L),
-                ItemList.Emitter_IV.get(2L),
-                ItemList.Sensor_IV.get(2L),
-                GTOreDictUnificator.get(OrePrefixes.circuit, Materials.LuV, 4L),
-                GTOreDictUnificator.get(OrePrefixes.cableGt02, Materials.Tungsten, 4L))
+                ItemList.Hull_IV.get(8),
+                GTOreDictUnificator.get(OrePrefixes.plateDouble, Materials.TungstenSteel, 32L),
+                ItemList.Electric_Motor_IV.get(16L),
+                ItemList.Robot_Arm_IV.get(16L),
+                ItemList.Emitter_IV.get(16L),
+                ItemList.Sensor_IV.get(16L),
+                GTOreDictUnificator.get(OrePrefixes.circuit, Materials.LuV, 16L),
+                GTOreDictUnificator.get(OrePrefixes.cableGt02, Materials.Tungsten, 32L))
             .itemOutputs(GTNLItemList.IVParallelControllerCore.get(1))
             .fluidInputs(Materials.HSSG.getMolten(1296))
             .duration(400)

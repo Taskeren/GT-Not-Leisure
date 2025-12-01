@@ -90,7 +90,7 @@ public class SteamWoodcutter extends SteamMultiMachineBase<SteamWoodcutter> impl
 
     @Override
     public RecipeMap<?> getRecipeMap() {
-        return RecipePool.SteamWoodcutterRecipes;
+        return RecipePool.WoodcutterRecipes;
     }
 
     @Override

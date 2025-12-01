@@ -2522,7 +2522,7 @@ Tooltip_SteamRockBreaker_04=§b§oKeep an eye for Wallsharing :>
 Tooltip_SteamRockBreaker_Casing=Any Copper Plated Bricks or Deoxidized Steel Machine Block
 
 NameSteamWoodcutter=Steam Woodcutter
-gtnl.recipe.SteamWoodcutterRecipes=Vapor Gardening
+gtnl.recipe.WoodcutterRecipes=Woodcutter
 SteamWoodcutterRecipeType=Woodcutter
 Tooltip_SteamWoodcutter_00=§b§oGrows trees slowly from saplings.
 Tooltip_SteamWoodcutter_01=Author: §d§oSteam§f§oIs§d§oThe§f§oNumber
@@ -2753,6 +2753,11 @@ NameNeutroniumWireCutting=Neutronium Wire Cutter
 NeutroniumWireCuttingRecipeType=Cutter
 Tooltip_NeutroniumWireCutting_00=Each glass tier provides an additional 5% speed and power reduction (multiplicative).
 Tooltip_NeutroniumWireCutting_Casing=Any Superconductor Reinforced Sterile Water Purifier Machine Block
+
+NameTransliminalOasis=Transliminal Oasis
+TransliminalOasisRecipeType=Woodcutter
+Tooltip_TransliminalOasis_00=Each glass tier provides an additional 5% speed and power reduction (multiplicative).
+Tooltip_TransliminalOasis_Casing=Any Pressure Suppression Machine Block
 
 NameHighEnergyLaserLathe=High Energy Laser Lathe
 HighEnergyLaserLatheRecipeType=Lathe
