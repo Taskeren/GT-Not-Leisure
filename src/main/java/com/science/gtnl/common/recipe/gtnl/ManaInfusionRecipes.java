@@ -703,7 +703,7 @@ public class ManaInfusionRecipes implements IRecipePool {
             .addTo(MIR);
 
         RecipeBuilder.builder()
-            .itemInputs(GTModHandler.getModItem(Botania.ID, "alchemyCatalyst", 0), new ItemStack(Blocks.wheat, 1, 0))
+            .itemInputs(GTModHandler.getModItem(Botania.ID, "alchemyCatalyst", 0), new ItemStack(Items.wheat, 1, 0))
             .itemOutputs(new ItemStack(Items.potato, 1, 0))
             .fluidInputs(MaterialPool.FluidMana.getFluidOrGas(16000))
             .duration(20)
