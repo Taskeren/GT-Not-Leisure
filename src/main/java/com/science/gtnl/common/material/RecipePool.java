@@ -1,5 +1,7 @@
 package com.science.gtnl.common.material;
 
+import static gregtech.api.util.GTUtility.*;
+
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -21,6 +23,7 @@ import com.science.gtnl.utils.gui.recipe.FallingTowerFrontend;
 import com.science.gtnl.utils.gui.recipe.GTNLLogoFrontend;
 import com.science.gtnl.utils.gui.recipe.GeneralFrontend;
 import com.science.gtnl.utils.gui.recipe.IndustrialInfusionCraftingRecipesFrontend;
+import com.science.gtnl.utils.gui.recipe.RocketAssemblerBackend;
 import com.science.gtnl.utils.gui.recipe.RocketAssemblerFrontend;
 import com.science.gtnl.utils.gui.recipe.SpaceMinerFrontend;
 import com.science.gtnl.utils.gui.recipe.SteamGateAssemblerFrontend;
@@ -603,8 +606,8 @@ public class RecipePool {
         .neiHandlerInfo(builder -> builder.setDisplayStack(GTNLItemList.ElectrocellGenerator.get(1)))
         .build();
 
-    public static final RecipeMap<RecipeMapBackend> RocketAssemblerRecipes = RecipeMapBuilder
-        .of("gtnl.recipe.RocketAssemblerRecipes")
+    public static final RecipeMap<RocketAssemblerBackend> RocketAssemblerRecipes = RecipeMapBuilder
+        .of("gtnl.recipe.RocketAssemblerRecipes", RocketAssemblerBackend::new)
         .maxIO(52, 1, 0, 0)
         .dontUseProgressBar()
         .frontend(RocketAssemblerFrontend::new)

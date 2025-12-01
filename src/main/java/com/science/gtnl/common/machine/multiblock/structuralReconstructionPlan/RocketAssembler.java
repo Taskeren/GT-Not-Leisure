@@ -30,6 +30,7 @@ import com.science.gtnl.common.machine.multiMachineBase.GTMMultiMachineBase;
 import com.science.gtnl.common.material.RecipePool;
 import com.science.gtnl.common.render.tile.RocketAssemblerRenderer;
 import com.science.gtnl.utils.StructureUtils;
+import com.science.gtnl.utils.gui.recipe.RocketAssemblerBackend;
 import com.science.gtnl.utils.recipes.GTNL_OverclockCalculator;
 import com.science.gtnl.utils.recipes.GTNL_ProcessingLogic;
 
@@ -257,15 +258,8 @@ public class RocketAssembler extends GTMMultiMachineBase<RocketAssembler>
             @Nonnull
             @Override
             public CalculationResult validateAndCalculateRecipe(@Nonnull GTRecipe recipe) {
-                if (recipe.mSpecialItems == null) return super.validateAndCalculateRecipe(recipe);
-                if (recipe.mSpecialItems instanceof ItemStack itemStack) {
-                    for (ItemStack item : getAllStoredInputs()) {
-                        if (GTUtility.areStacksEqual(itemStack, item, true))
-                            return super.validateAndCalculateRecipe(recipe);
-                    }
+                if (recipe == RocketAssemblerBackend.notFoundRecipe)
                     return CalculationResult.ofFailure(SimpleCheckRecipeResult.ofFailure("missing_schematic"));
-                }
-
                 return super.validateAndCalculateRecipe(recipe);
             }
 

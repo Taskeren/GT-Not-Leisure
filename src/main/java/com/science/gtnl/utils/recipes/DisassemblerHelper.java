@@ -39,6 +39,7 @@ import gregtech.api.util.GTRecipe;
 import gregtech.api.util.GTUtility;
 import gtnhintergalactic.recipe.IGRecipeMaps;
 import ic2.api.item.IC2Items;
+import tectech.thing.CustomItemList;
 
 public class DisassemblerHelper {
 
@@ -51,6 +52,7 @@ public class DisassemblerHelper {
         inputBlacklist.add(new GTItemStack(Materials.Graphene.getDust(1)));
         inputBlacklist.add(new GTItemStack(ItemList.Circuit_Parts_Vacuum_Tube.get(1)));
         inputBlacklist.add(new GTItemStack(ItemList.Schematic.get(1)));
+        inputBlacklist.add(new GTItemStack(CustomItemList.hatch_CreativeMaintenance.get(1)));
 
         if (Mods.Railcraft.isModLoaded()) {
             inputBlacklist.add(new GTItemStack(GTModHandler.getModItem(Mods.Railcraft.ID, "track", 1L, 0)));
