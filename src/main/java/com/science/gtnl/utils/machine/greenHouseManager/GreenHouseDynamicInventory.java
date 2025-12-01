@@ -40,22 +40,22 @@ import gregtech.api.util.GTUtility;
 
 public class GreenHouseDynamicInventory<T> {
 
-    int width, height;
-    Supplier<Integer> maxSeedCountGetter;
-    Supplier<Integer> maxSeedTypeGetter;
-    Supplier<Integer> usedSeedCountGetter;
-    Supplier<Integer> usedSeedTypesGetter;
-    private int maxSeedTypes = 0;
-    private int maxSeedCount = 0;
-    private int usedSeedTypes = 0;
-    private int usedSeedCount = 0;
-    List<T> inventory;
-    TInventoryGetter<T> inventoryGetter;
-    TInventoryInjector inventoryInjector = null;
-    TInventoryExtractor<T> inventoryExtractor = null;
-    TInventoryReplacerOrMerger inventoryReplacer = null;
-    Supplier<Boolean> isEnabledGetter = null;
-    boolean isEnabled = true;
+    public int width, height;
+    public Supplier<Integer> maxSeedCountGetter;
+    public Supplier<Integer> maxSeedTypeGetter;
+    public Supplier<Integer> usedSeedCountGetter;
+    public Supplier<Integer> usedSeedTypesGetter;
+    public int maxSeedTypes = 0;
+    public int maxSeedCount = 0;
+    public int usedSeedTypes = 0;
+    public int usedSeedCount = 0;
+    public List<T> inventory;
+    public TInventoryGetter<T> inventoryGetter;
+    public TInventoryInjector inventoryInjector = null;
+    public TInventoryExtractor<T> inventoryExtractor = null;
+    public TInventoryReplacerOrMerger inventoryReplacer = null;
+    public Supplier<Boolean> isEnabledGetter = null;
+    public boolean isEnabled = true;
 
     public GreenHouseDynamicInventory(int width, int height, Supplier<Integer> maxSeedTypeGetter,
         Supplier<Integer> maxSeedCountGetter, Supplier<Integer> usedSeedTypesGetter,

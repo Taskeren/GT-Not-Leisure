@@ -137,6 +137,7 @@ public class GreenHouseIC2Bucket extends GreenHouseBucket {
     public static class FakeTileEntityCrop extends TileEntityCrop {
 
         public boolean isValid;
+        public boolean useNoHumidity;
 
         public FakeTileEntityCrop(GreenHouseIC2Bucket bucket, IGreenHouse greenhouse, int[] xyz) {
             super();
@@ -159,6 +160,7 @@ public class GreenHouseIC2Bucket extends GreenHouseBucket {
             this.blockMetadata = 0;
 
             this.isValid = true;
+            this.useNoHumidity = greenhouse.isUseNoHumidity();
         }
 
         @Override
@@ -168,12 +170,12 @@ public class GreenHouseIC2Bucket extends GreenHouseBucket {
 
         @Override
         public byte getHumidity() {
-            return 100;
+            return (byte) (useNoHumidity ? 0 : 100);
         }
 
         @Override
         public byte updateHumidity() {
-            return 100;
+            return (byte) (useNoHumidity ? 0 : 100);
         }
 
         @Override

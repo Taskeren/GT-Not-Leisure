@@ -29,7 +29,7 @@ public abstract class GreenHouseBucket {
     public int seedCount;
     public ItemStack[] supportItems;
 
-    public static int NUMBER_OF_DROPS_TO_SIMULATE = 5;
+    public static int NUMBER_OF_DROPS_TO_SIMULATE = 50;
 
     public GreenHouseBucket(ItemStack seed, int seedCount, ItemStack[] supportItem) {
         this.seed = seed.copy();
