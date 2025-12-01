@@ -139,13 +139,7 @@ public class AtomicEnergyExcitationPlant extends GTMMultiMachineBase<AtomicEnerg
             GTUtility.sendChatToPlayer(
                 aPlayer,
                 StatCollector.translateToLocal("Info_Render_" + (enableRender ? "Enabled" : "Disabled")));
-            if (mMachine) {
-                if (enableRender) {
-                    destroySphere();
-                } else {
-                    buildSphere();
-                }
-            }
+            checkStructure(true);
         }
         return true;
     }
@@ -345,13 +339,16 @@ public class AtomicEnergyExcitationPlant extends GTMMultiMachineBase<AtomicEnerg
                     return false;
                 }
 
-        if (mCountCasing < 350 && !checkHatch()) return false;
+        if (mCountCasing < 350 || !checkHatch()) return false;
 
         setupParameters();
 
         if (!isRenderActive && enableRender && mTotalRunTime > 0) {
             destroySphere();
+        } else if (isRenderActive && !enableRender) {
+            buildSphere();
         }
+
         getBaseMetaTileEntity().sendBlockEvent(GregTechTileClientEvents.CHANGE_CUSTOM_DATA, getUpdateData());
 
         return true;

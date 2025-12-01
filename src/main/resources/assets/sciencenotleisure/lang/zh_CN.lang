@@ -2153,6 +2153,7 @@ Tooltip_ElectrocellGenerator_Casing=任意脱氧钢机械方块
 
 NameLargeNaquadahReactor=大型硅岩反应堆
 NameHyperNaquadahReactor=超能硅岩反应堆
+NameAdvancedHyperNaquadahReactor=进阶超能硅岩反应堆
 gtnl.recipe.NaquadahReactorRecipes=硅岩反应
 NaquadahReactorMetadata.0=需要超能硅岩反应堆
 NaquadahReactorMetadata.1=需要进阶超能硅岩反应堆
@@ -2170,6 +2171,11 @@ Tooltip_HyperNaquadahReactor_01=可以在配方开始的时候输入硅岩气
 Tooltip_HyperNaquadahReactor_02=这会让时间减少%s倍，功率翻%s倍
 Tooltip_HyperNaquadahReactor_03=代价是每秒会消耗%sL的硅岩气
 Tooltip_HyperNaquadahReactor_Casing=任意硅岩合金聚合机械方块
+Tooltip_AdvancedHyperNaquadahReactor_00=固定并行为%s
+Tooltip_AdvancedHyperNaquadahReactor_01=可以在配方开始的时候输入熔融时空
+Tooltip_AdvancedHyperNaquadahReactor_02=这会让时间减少%s倍，功率翻%s倍
+Tooltip_AdvancedHyperNaquadahReactor_03=代价是每秒会消耗%sL的熔融时空
+Tooltip_AdvancedHyperNaquadahReactor_Casing=任意硅岩合金聚合机械方块
 
 NameGrandAssemblyLine=大型装配线
 GrandAssemblyLineRecipeType=无序装配线

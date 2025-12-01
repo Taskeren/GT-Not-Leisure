@@ -284,6 +284,7 @@ public class SteamElevator extends SteamMultiMachineBase<SteamElevator> implemen
                 if (aTick % 20 == 0) {
                     if (!mModuleHatches.isEmpty()) {
                         long perModuleEnergy;
+                        long usedSteam = 0;
                         if (wirelessMode) {
                             perModuleEnergy = Long.MAX_VALUE;
                         } else {
@@ -293,8 +294,8 @@ public class SteamElevator extends SteamMultiMachineBase<SteamElevator> implemen
                             mModule.connect();
                             if (wirelessMode && getUserSteam(ownerUUID).compareTo(BigInteger.ZERO) > 0) {
                                 long used = mModule.increaseStoredEU(perModuleEnergy);
-                                costingEUText = GTUtility.formatNumbers(used);
                                 addSteamToGlobalSteamMap(ownerUUID, -used);
+                                usedSteam += used;
                             } else {
                                 long tAvailableEnergy = getEUVar();
                                 if (tAvailableEnergy > 0) {
@@ -304,6 +305,7 @@ public class SteamElevator extends SteamMultiMachineBase<SteamElevator> implemen
                             }
 
                         }
+                        costingEUText = GTUtility.formatNumbers(usedSteam);
                     }
                 }
             } else {
@@ -670,7 +672,7 @@ public class SteamElevator extends SteamMultiMachineBase<SteamElevator> implemen
                     + EnumChatFormatting.GOLD
                     + tag.getString("costingEUText")
                     + EnumChatFormatting.RESET
-                    + " EU");
+                    + " L");
         }
     }
 

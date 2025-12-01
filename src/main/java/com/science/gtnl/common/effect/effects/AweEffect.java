@@ -1,6 +1,8 @@
 package com.science.gtnl.common.effect.effects;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Random;
 import java.util.Set;
 
@@ -80,10 +82,14 @@ public class AweEffect extends EffectBase {
     public void removeAttributesModifiersFromEntity(EntityLivingBase entityLiving, BaseAttributeMap attributeMap,
         int amplifier) {
         super.removeAttributesModifiersFromEntity(entityLiving, attributeMap, amplifier);
+
         if (entityLiving instanceof EntityPlayerMP player) {
-            for (PotionEffect effect : player.getActivePotionEffects()) {
+            List<PotionEffect> effects = new ArrayList<>(player.getActivePotionEffects());
+
+            for (PotionEffect effect : effects) {
                 player.removePotionEffect(effect.getPotionID());
             }
+
             if (!player.capabilities.isCreativeMode) {
                 player.playerNetServerHandler.kickPlayerFromServer(StatCollector.translateToLocal("Awe_Kick"));
             } else {

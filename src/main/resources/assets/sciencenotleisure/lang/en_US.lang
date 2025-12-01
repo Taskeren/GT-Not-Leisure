@@ -2153,6 +2153,7 @@ Tooltip_ElectrocellGenerator_Casing=Any Solid Steel Machine Casing
 
 NameLargeNaquadahReactor=Large Naquadah Reactor
 NameHyperNaquadahReactor=Hyper Naquadah Reactor
+NameAdvancedHyperNaquadahReactor=Advanced Hyper Naquadah Reactor
 gtnl.recipe.NaquadahReactorRecipes=Naquadah Reaction
 NaquadahReactorMetadata.0=Requires Hyper Naquadah Reactor
 NaquadahReactorMetadata.1=Requires Advanced Hyper Naquadah Reactor
@@ -2170,6 +2171,11 @@ Tooltip_HyperNaquadahReactor_01=Can input naquadah gas at the start of the recip
 Tooltip_HyperNaquadahReactor_02=This will make time %s times shorter and power %s times greater
 Tooltip_HyperNaquadahReactor_03=The cost is %sL of naquadah gas consumed per second
 Tooltip_HyperNaquadahReactor_Casing=Any Naquadah Alloy Fusion Casing
+Tooltip_AdvancedHyperNaquadahReactor_00=Fixed parallelism of %s
+Tooltip_AdvancedHyperNaquadahReactor_01=Can input spacetime at the start of the recipe
+Tooltip_AdvancedHyperNaquadahReactor_02=This will make time %s times shorter and power %s times greater
+Tooltip_AdvancedHyperNaquadahReactor_03=The cost is %sL of spacetime consumed per second
+Tooltip_AdvancedHyperNaquadahReactor_Casing=Any Naquadah Alloy Fusion Casing
 
 NameGrandAssemblyLine=Grand Assembly Line
 GrandAssemblyLineRecipeType=Disordered Assembly Line

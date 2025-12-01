@@ -123,10 +123,10 @@ public class SuperSpaceElevator extends TTMultiblockBase
     private static final String[][] shapeBase = StructureUtils.readStructureFromFile(SSEB_STRUCTURE_FILE_PATH);
     private static final String[][] shapeExtended = StructureUtils.readStructureFromFile(SSEE_STRUCTURE_FILE_PATH);
 
-    private int tCountCasing = 0;
-    private boolean wirelessMode = false;
-    private UUID ownerUUID;
-    private String costingEUText = ZERO_STRING;
+    public int mCountCasing = 0;
+    public boolean wirelessMode = false;
+    public UUID ownerUUID;
+    public String costingEUText = ZERO_STRING;
 
     public SuperSpaceElevator(int aID, String aName, String aNameRegional) {
         super(aID, aName, aNameRegional);
@@ -267,7 +267,7 @@ public class SuperSpaceElevator extends TTMultiblockBase
                 buildHatchAdder(SuperSpaceElevator.class).atLeast(Energy.or(ExoticEnergy), Dynamo)
                     .casingIndex(TileEntitySpaceElevator.CASING_INDEX_BASE)
                     .dot(1)
-                    .buildAndChain(onElementPass(x -> ++x.tCountCasing, ofBlock(sBlockCasingsSE, 0))))
+                    .buildAndChain(onElementPass(x -> ++x.mCountCasing, ofBlock(sBlockCasingsSE, 0))))
             .addElement('G', ofBlock(sBlockCasingsDyson, 9))
             .addElement('H', ofBlock(sBlockCasingsSE, 1))
             .addElement('I', ofBlock(sBlockCasings1, 12))
@@ -408,7 +408,7 @@ public class SuperSpaceElevator extends TTMultiblockBase
 
         if (motorTier > 2 && mExoticEnergyHatches.isEmpty() && mEnergyHatches.isEmpty()) wirelessMode = true;
 
-        return tCountCasing > 1000;
+        return mCountCasing > 1000;
     }
 
     public boolean addProjectModuleToMachineList(IGregTechTileEntity aTileEntity, int aBaseCasingIndex) {

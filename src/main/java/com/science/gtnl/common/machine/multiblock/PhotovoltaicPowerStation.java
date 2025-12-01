@@ -45,7 +45,6 @@ import gtPlusPlus.xmod.gregtech.common.blocks.textures.TexturesGtBlock;
 public abstract class PhotovoltaicPowerStation extends MultiMachineBase<PhotovoltaicPowerStation>
     implements ISurvivalConstructable {
 
-    public int tCountCasing;
     public int fuelConsumption;
 
     public abstract long getOutputEUt();
@@ -168,7 +167,7 @@ public abstract class PhotovoltaicPowerStation extends MultiMachineBase<Photovol
     public boolean checkMachine(IGregTechTileEntity aBaseMetaTileEntity, ItemStack aStack) {
         return checkPiece(STRUCTURE_PIECE_MAIN, HORIZONTAL_OFF_SET, VERTICAL_OFF_SET, DEPTH_OFF_SET) && checkHatch()
             && mMaintenanceHatches.size() == 1
-            && tCountCasing >= 8;
+            && mCountCasing >= 8;
     }
 
     @Override
@@ -235,7 +234,7 @@ public abstract class PhotovoltaicPowerStation extends MultiMachineBase<Photovol
                 buildHatchAdder(PhotovoltaicPowerStation.class).casingIndex(getCasingTextureIndex())
                     .dot(1)
                     .atLeast(Maintenance, InputHatch, Dynamo, Maintenance)
-                    .buildAndChain(onElementPass(x -> ++x.tCountCasing, ofBlock(getCasingBlock(), getCasingMeta()))))
+                    .buildAndChain(onElementPass(x -> ++x.mCountCasing, ofBlock(getCasingBlock(), getCasingMeta()))))
             .addElement('B', ofFrame(Materials.StainlessSteel))
             .addElement('D', ofBlock(getPhotovoltaicBlock(), getPhotovoltaicMeta()))
             .build();

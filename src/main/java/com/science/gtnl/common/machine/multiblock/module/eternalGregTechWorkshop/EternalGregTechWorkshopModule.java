@@ -77,9 +77,6 @@ public abstract class EternalGregTechWorkshopModule extends MultiMachineBase<Ete
     public boolean isConnected = false;
     public double mEUtDiscount = 1;
     public double mSpeedBoost = 1;
-    public int maxParallel = 1;
-    public int mHeatingCapacity = 0;
-    public int tCountCasing = 0;
     @Setter
     @Getter
     public long maxUseEUt = 0;
@@ -142,19 +139,17 @@ public abstract class EternalGregTechWorkshopModule extends MultiMachineBase<Ete
         mSpeedBoost = boost;
     }
 
-    @Override
-    public int getMaxParallel() {
-        return maxParallel;
+    public int getMMaxParallel() {
+        return mMaxParallel;
     }
 
-    @Override
-    public void setMaxParallel(int parallel) {
-        maxParallel = parallel;
+    public void setMMaxParallel(int parallel) {
+        mMaxParallel = parallel;
     }
 
     @Override
     public int getMaxParallelRecipes() {
-        return getMaxParallel();
+        return getMMaxParallel();
     }
 
     @Override
@@ -195,7 +190,7 @@ public abstract class EternalGregTechWorkshopModule extends MultiMachineBase<Ete
                     .setEUtDiscount(getEUtDiscount())
                     .setDurationModifier(getDurationModifier());
             }
-        }.setMaxParallelSupplier(this::getMaxParallel);
+        }.setMaxParallelSupplier(this::getMMaxParallel);
     }
 
     @Override
@@ -310,7 +305,7 @@ public abstract class EternalGregTechWorkshopModule extends MultiMachineBase<Ete
                         .casingIndex(getCasingTextureID())
                         .dot(1)
                         .buildAndChain(
-                            onElementPass(x -> ++x.tCountCasing, ofBlock(TTCasingsContainer.GodforgeCasings, 0)))))
+                            onElementPass(x -> ++x.mCountCasing, ofBlock(TTCasingsContainer.GodforgeCasings, 0)))))
             .build();
     }
 
