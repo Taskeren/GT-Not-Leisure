@@ -367,7 +367,7 @@ public class EdenGarden extends MultiMachineBase<EdenGarden> implements IGreenHo
     }
 
     public CheckRecipeResult calculateProgressAndDrops() {
-        double multiplier = GreenHouseMode.EIG_BALANCE_MAX_FERTILIZER_BOOST;
+        double multiplier = 50;
         this.guiDropTracker = new GreenHouseDropTable();
 
         int baseTime = 1200;
