@@ -1,4 +1,4 @@
-package com.science.gtnl.mixins.late.AppliedEnergistics.assembler;
+package com.science.gtnl.mixins.late.AppliedEnergistics;
 
 import java.util.Map;
 
@@ -20,7 +20,9 @@ import com.llamalad7.mixinextras.sugar.Local;
 import com.llamalad7.mixinextras.sugar.Share;
 import com.llamalad7.mixinextras.sugar.ref.LocalBooleanRef;
 import com.llamalad7.mixinextras.sugar.ref.LocalLongRef;
+import com.science.gtnl.common.block.blocks.tile.TileEntityAEChisel;
 import com.science.gtnl.common.machine.multiblock.AssemblerMatrix;
+import com.science.gtnl.utils.ChiselPatternDetails;
 import com.science.gtnl.utils.DireCraftingPatternDetails;
 import com.science.gtnl.utils.LargeInventoryCrafting;
 
@@ -76,7 +78,7 @@ public abstract class MixinCraftingCPUCluster {
     }
 
     /**
-     * 检查样板是否是合成，并且是否由装配矩阵进行
+     * 检查样板是否是合成，并且是否由装配矩阵(或是凿子？) 进行
      * 若是，重新计算可进行的最大合并项
      */
     @Inject(
@@ -89,33 +91,33 @@ public abstract class MixinCraftingCPUCluster {
         @Local(name = "medium") ICraftingMedium instance, @Local(name = "details") ICraftingPatternDetails details,
         @Share("snl$assembly") LocalBooleanRef assembly,
         @Share("snl$craftingFrequency") LocalLongRef craftingFrequencyR) {
-        if ((details.isCraftable() || details instanceof DireCraftingPatternDetails)
-            && instance instanceof AssemblerMatrix ef) {
-            if (!ef.isBusy()) {
-                assembly.set(true);
-                var craftingFrequency = Math
-                    .min(craftingFrequencyR.get(), Long.MAX_VALUE / details.getCondensedOutputs()[0].getStackSize());
-                for (IAEItemStack input : details.getCondensedInputs()) {
-                    if (input == null) continue;
-                    final long size = craftingFrequency;
-                    var item = this.inventory.extractItems(
-                        input.copy()
-                            .setStackSize(size),
-                        Actionable.SIMULATE,
-                        this.machineSrc);
-                    if (item == null) continue;
-                    if (item.getStackSize() < size) {
-                        long size0 = item.getStackSize();
-                        if (size0 < 2) {
-                            craftingFrequency = 1;
-                        } else {
-                            craftingFrequency = size0;
-                        }
+        if ((details instanceof ChiselPatternDetails && instance instanceof TileEntityAEChisel)
+            || ((details.isCraftable() || details instanceof DireCraftingPatternDetails)
+                && instance instanceof AssemblerMatrix ef
+                && !ef.isBusy())) {
+            assembly.set(true);
+            var craftingFrequency = Math
+                .min(craftingFrequencyR.get(), Long.MAX_VALUE / details.getCondensedOutputs()[0].getStackSize());
+            for (IAEItemStack input : details.getCondensedInputs()) {
+                if (input == null) continue;
+                final long size = craftingFrequency;
+                var item = this.inventory.extractItems(
+                    input.copy()
+                        .setStackSize(size),
+                    Actionable.SIMULATE,
+                    this.machineSrc);
+                if (item == null) continue;
+                if (item.getStackSize() < size) {
+                    long size0 = item.getStackSize();
+                    if (size0 < 2) {
+                        craftingFrequency = 1;
+                    } else {
+                        craftingFrequency = size0;
                     }
                 }
-                craftingFrequencyR.set(craftingFrequency);
-            } else assembly.set(false);
-        } else assembly.set(false);
+            }
+            craftingFrequencyR.set(craftingFrequency);
+        }
     }
 
     /**
