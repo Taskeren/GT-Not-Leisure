@@ -521,10 +521,8 @@ public class GTNL_OverclockCalculator extends OverclockCalculator {
         duration /= Math.pow(durationDecreasePerHeatOC, heatOverclocks);
         neededOverclocks = (int) Math.ceil((Math.log(duration) / Math.log(durationDecreasePerOC)));
 
-        int heatMultiplier = (int) Math
-            .pow(durationDecreasePerHeatOC, Math.max(heatOverclocks - neededHeatOverclocks, 0));
-        int regularMultiplier = (int) Math
-            .pow(durationDecreasePerOC, Math.max(regularOverclocks - neededOverclocks, 0));
+        double heatMultiplier = Math.pow(durationDecreasePerHeatOC, Math.max(heatOverclocks - neededHeatOverclocks, 0));
+        double regularMultiplier = Math.pow(durationDecreasePerOC, Math.max(regularOverclocks - neededOverclocks, 0));
 
         // Produces a fractional multiplier that corrects for inaccuracies resulting from discrete parallels and tick
         // durations. It is 1 / (duration of first OC to go below 1 tick)

@@ -123,7 +123,7 @@ public class LargeExtruder extends GTMMultiMachineBase<LargeExtruder> implements
                 'C',
                 buildHatchAdder(LargeExtruder.class).casingIndex(getCasingTextureID())
                     .dot(1)
-                    .atLeast(Maintenance, InputBus, OutputBus, Maintenance, Energy.or(ExoticEnergy), ParallelCon)
+                    .atLeast(InputBus, OutputBus, Maintenance, Energy.or(ExoticEnergy), ParallelCon)
                     .buildAndChain(onElementPass(x -> ++x.mCountCasing, ofBlock(blockCasings3Misc, 1))))
             .build();
     }

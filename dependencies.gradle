@@ -30,8 +30,8 @@ dependencies {
     runtimeOnlyNonPublishable("com.github.GTNewHorizons:ForestryMC:4.10.17:dev")
     runtimeOnlyNonPublishable(rfg.deobf("curse.maven:spark-361579:4271867"))
 
-    implementation('com.google.auto.value:auto-value-annotations:1.10.1')
-    annotationProcessor('com.google.auto.value:auto-value:1.10.1')
+    implementation('com.google.auto.value:auto-value-annotations:1.10.4')
+    annotationProcessor('com.google.auto.value:auto-value:1.10.4')
 
     compileOnlyApi files("libs/extrautilities-1.2.12.jar")
     compileOnlyApi files("libs/NHUtilities-1.5.11-dev.jar")
