@@ -3,7 +3,6 @@ package com.science.gtnl.utils.detrav;
 import static com.science.gtnl.ScienceNotLeisure.network;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 import net.minecraft.client.gui.GuiScreen;
@@ -18,6 +17,7 @@ import com.science.gtnl.common.packet.TeleportRequestPacket;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import gregtech.api.util.GTUtility;
+import it.unimi.dsi.fastutil.bytes.Byte2ShortMap;
 
 @SideOnly(Side.CLIENT)
 public class DetravScannerGUI extends GuiScreen {
@@ -84,9 +84,9 @@ public class DetravScannerGUI extends GuiScreen {
         int worldZ = baseZ + tY;
 
         int ptype = map.packet.ptype();
-        HashMap<Byte, Short>[][] grid = map.packet.map();
+        Byte2ShortMap[][] grid = map.packet.map();
         if (grid == null || tX >= grid.length || tY >= grid[0].length) return;
-        HashMap<Byte, Short> cell = grid[tX][tY];
+        Byte2ShortMap cell = grid[tX][tY];
 
         boolean canTeleport = false;
         String nameToShow = null;
@@ -173,7 +173,7 @@ public class DetravScannerGUI extends GuiScreen {
             drawTexturedModalRect(aX + currentWidth + 100, i, 171, 5, 5, Math.min(128, aY + currentHeight - i)); // right
 
         if (map.packet.ptype() == 2) {
-            HashMap<Byte, Short>[][] fluidInfo = map.packet.map();
+            Byte2ShortMap[][] fluidInfo = map.packet.map();
             int tX = x - aX;
             int tY = y - aY;
             if (tX >= 0 && tY >= 0 && tX < fluidInfo.length && tY < fluidInfo[0].length) {

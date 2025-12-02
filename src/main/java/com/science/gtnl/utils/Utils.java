@@ -45,6 +45,7 @@ import com.mojang.authlib.GameProfile;
 import com.science.gtnl.utils.machine.FluidTankG;
 import com.science.gtnl.utils.machine.ItemStackG;
 
+import appeng.api.storage.data.IAEItemStack;
 import cpw.mods.fml.common.FMLCommonHandler;
 import gregtech.api.metatileentity.MetaTileEntity;
 import gregtech.api.util.GTUtility;
@@ -63,6 +64,22 @@ public class Utils {
     public static final String[] UNITS = { "", "K", "M", "G", "T", "P", "E", "Z", "Y", "R", "Q" };
     public static final BigDecimal THOUSAND_DEC = BigDecimal.valueOf(1000);
     public static final DecimalFormat DF = new DecimalFormat("0.00", DecimalFormatSymbols.getInstance(Locale.US));
+
+    public static boolean equlsItemStackAndAEItemStack(IAEItemStack AEstack, ItemStack stack) {
+        if (AEstack == null) {
+            return stack == null;
+        } else {
+            if (stack == null) return false;
+            boolean b = AEstack.getItem() == stack.getItem() && AEstack.getItemDamage() == stack.getItemDamage();
+            if (b) {
+                if (AEstack.getTagCompound() != null) {
+                    return AEstack.getTagCompound()
+                        .equals(stack.getTagCompound());
+                } else return stack.getTagCompound() == null;
+            }
+            return false;
+        }
+    }
 
     public static boolean isClientSide() {
         return FMLCommonHandler.instance()
@@ -370,7 +387,7 @@ public class Utils {
     public static String repeatExclamation(int count) {
         StringBuilder sb = new StringBuilder();
         for (int i = 0; i < count; i++) {
-            sb.append("!");
+            sb.append('!');
         }
         return sb.toString();
     }

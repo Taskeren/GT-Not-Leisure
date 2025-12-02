@@ -11,6 +11,7 @@ import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.oredict.OreDictionary;
 
 import com.science.gtnl.client.GTNLCreativeTabs;
+import com.science.gtnl.common.block.blocks.BlockAEChisel;
 import com.science.gtnl.common.block.blocks.BlockArtificialStarRender;
 import com.science.gtnl.common.block.blocks.BlockCardboardBox;
 import com.science.gtnl.common.block.blocks.BlockDirePatternEncoder;
@@ -24,6 +25,7 @@ import com.science.gtnl.common.block.blocks.BlockSearedLadder;
 import com.science.gtnl.common.block.blocks.BlockShimmerFluid;
 import com.science.gtnl.common.block.blocks.BlockWaterCandle;
 import com.science.gtnl.common.block.blocks.BlocksCompressedStargate;
+import com.science.gtnl.common.block.blocks.tile.TileEntityAEChisel;
 import com.science.gtnl.common.block.blocks.tile.TileEntityArtificialStar;
 import com.science.gtnl.common.block.blocks.tile.TileEntityCardboardBox;
 import com.science.gtnl.common.block.blocks.tile.TileEntityDirePatternEncoder;
@@ -63,6 +65,7 @@ public class BlockLoader {
     public static Block searedLadder;
     public static Block playerLeash;
     public static Block direPatternEncoder;
+    public static Block aeChisel;
     public static Block nanoPhagocytosisPlantRender;
     public static Block eternalGregTechWorkshopRender;
 
@@ -97,6 +100,9 @@ public class BlockLoader {
 
         direPatternEncoder = new BlockDirePatternEncoder();
         GameRegistry.registerTileEntity(TileEntityDirePatternEncoder.class, "DirePatternEncoderTileEntity");
+
+        aeChisel = new BlockAEChisel();
+        GameRegistry.registerTileEntity(TileEntityAEChisel.class, "AEChisel");
 
         cardboardBox = new BlockCardboardBox();
         GameRegistry.registerTileEntity(TileEntityCardboardBox.class, "CardboardBoxTileEntity");

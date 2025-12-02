@@ -15,6 +15,7 @@ import com.science.gtnl.client.GTNLInputHandler;
 import com.science.gtnl.client.GTNLTooltipManager;
 import com.science.gtnl.common.block.blocks.item.ItemBlockEternalGregTechWorkshopRender;
 import com.science.gtnl.common.block.blocks.item.ItemBlockNanoPhagocytosisPlantRender;
+import com.science.gtnl.common.block.blocks.tile.TileEntityAEChisel;
 import com.science.gtnl.common.block.blocks.tile.TileEntityArtificialStar;
 import com.science.gtnl.common.block.blocks.tile.TileEntityDirePatternEncoder;
 import com.science.gtnl.common.block.blocks.tile.TileEntityEternalGregTechWorkshop;
@@ -47,6 +48,7 @@ import com.science.gtnl.loader.ItemLoader;
 import com.science.gtnl.utils.SubscribeEventClientUtils;
 import com.science.gtnl.utils.detrav.DetravScannerGUI;
 import com.science.gtnl.utils.enums.GuiType;
+import com.science.gtnl.utils.gui.GuiAEChisel;
 import com.science.gtnl.utils.gui.GuiDirePatternEncoder;
 import com.science.gtnl.utils.gui.portableWorkbench.ContainerPortableAdvancedWorkbench;
 import com.science.gtnl.utils.gui.portableWorkbench.GuiPortableAdvancedWorkbench;
@@ -203,6 +205,13 @@ public class ClientProxy extends CommonProxy {
                 yield null;
             }
             case PortableDarkSteelChestGUI -> new GuiPortableChest.DarkSteel(player.inventory, player.getHeldItem());
+            case AEChiselGUI -> {
+                var t = world.getTileEntity(x, y, z);
+                if (t instanceof TileEntityAEChisel d) {
+                    yield new GuiAEChisel(player.inventory, d);
+                }
+                yield null;
+            }
         };
     }
 

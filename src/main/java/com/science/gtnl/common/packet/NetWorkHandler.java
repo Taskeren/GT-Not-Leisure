@@ -36,6 +36,8 @@ public class NetWorkHandler {
             Side.SERVER);
         registerMessage(PktPatternTermUploadPattern.class, i++, Side.SERVER);
         registerMessage(DirePatternHandler.class, i++, Side.SERVER);
+        registerMessage(AEChiselSyncParallel.class, i++, Side.SERVER);
+        registerMessage(AEChiselSyncParallel.class, i++, Side.CLIENT);
         network.registerMessage(
             PortableInfinityChestSyncPacket.Handler.class,
             PortableInfinityChestSyncPacket.class,
