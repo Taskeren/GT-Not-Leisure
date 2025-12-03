@@ -384,7 +384,7 @@ public class VeinMiningPickaxe extends ItemPickaxe implements SubtitleDisplay {
             if (silk) {
                 Item item = Item.getItemFromBlock(blk);
                 if (item != null) {
-                    Block drop = item instanceof ItemBlock && !blk.isFlowerPot() ? Block.getBlockFromItem(item) : blk;
+                    Block drop = item instanceof ItemBlock ? Block.getBlockFromItem(item) : blk;
                     drops.add(new ItemStack(item, 1, drop.getDamageValue(world, x, y, z)));
                 }
             } else {
