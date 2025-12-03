@@ -1119,6 +1119,10 @@ Tooltip_PlayerLeash_00=Creates a powerful leash field that allows the placer to 
 tile.DirePatternEncoder.name=Dire Pattern Encoder
 container.DirePatternEncoder=Dire Pattern Encoder
 
+tile.AEChisel.name=ME Chisel
+container.AEChisel=ME Chisel
+text.ae_chisel.gui.parallel=Set Pattern Parallel
+
 item.ElectricProspectorTool.0.name=Mana Teleport Prospector Tool
 item.ElectricProspectorTool.1.name=Debug Teleport Prospector Tool
 Info_DetravScanner_TP=Teleport to vein: %s (%s, %s)

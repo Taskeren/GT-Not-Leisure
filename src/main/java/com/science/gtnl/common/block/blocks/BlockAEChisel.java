@@ -11,6 +11,7 @@ import net.minecraft.world.World;
 
 import com.science.gtnl.ScienceNotLeisure;
 import com.science.gtnl.client.GTNLCreativeTabs;
+import com.science.gtnl.common.block.blocks.item.ItemBlockAEChisel;
 import com.science.gtnl.common.block.blocks.tile.TileEntityAEChisel;
 import com.science.gtnl.common.packet.AEChiselSyncParallel;
 import com.science.gtnl.utils.enums.GTNLItemList;
@@ -23,14 +24,14 @@ public class BlockAEChisel extends AEBaseTileBlock {
 
     public BlockAEChisel() {
         super(Material.iron);
-        this.setTileEntity(TileEntityAEChisel.class);
         setHardness(50.0F);
         setResistance(2000.0F);
         setBlockName("AEChisel");
         setHarvestLevel("pickaxe", 3);
         setCreativeTab(GTNLCreativeTabs.GTNotLeisureBlock);
-        GameRegistry.registerBlock(this, getUnlocalizedName());
+        GameRegistry.registerBlock(this, ItemBlockAEChisel.class, getUnlocalizedName());
         GTNLItemList.AEChisel.set(new ItemStack(this, 1));
+        setTileEntity(TileEntityAEChisel.class);
         setBlockTextureName(RESOURCE_ROOT_ID + ":AEChisel");
     }
 

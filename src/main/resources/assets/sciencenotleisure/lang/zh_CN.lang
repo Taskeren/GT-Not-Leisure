@@ -1119,6 +1119,10 @@ Tooltip_PlayerLeash_00=创造一个强大的拴绳立场，允许放置其方块
 tile.DirePatternEncoder.name=终极样板编码台
 container.DirePatternEncoder=终极样板编码台
 
+tile.AEChisel.name=ME雕凿机
+container.AEChisel=ME雕凿机
+text.ae_chisel.gui.parallel=设置样板并行
+
 item.ElectricProspectorTool.0.name=魔力传送探矿仪
 item.ElectricProspectorTool.1.name=Debug传送探矿仪
 Info_DetravScanner_TP=传送至矿脉：%s (%s，%s)
