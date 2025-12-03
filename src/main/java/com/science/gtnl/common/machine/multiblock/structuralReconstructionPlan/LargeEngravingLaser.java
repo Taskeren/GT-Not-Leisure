@@ -61,10 +61,9 @@ public class LargeEngravingLaser extends GTMMultiMachineBase<LargeEngravingLaser
     @Override
     public ITexture[] getTexture(IGregTechTileEntity baseMetaTileEntity, ForgeDirection side, ForgeDirection aFacing,
         int colorIndex, boolean aActive, boolean redstoneLevel) {
-        ITexture[] rTexture;
         if (side == aFacing) {
             if (aActive) {
-                rTexture = new ITexture[] {
+                return new ITexture[] {
                     Textures.BlockIcons
                         .getCasingTextureForId(GTUtility.getCasingTextureIndex(GregTechAPI.sBlockCasings10, 1)),
                     TextureFactory.builder()
@@ -77,7 +76,7 @@ public class LargeEngravingLaser extends GTMMultiMachineBase<LargeEngravingLaser
                         .glow()
                         .build() };
             } else {
-                rTexture = new ITexture[] {
+                return new ITexture[] {
                     Textures.BlockIcons
                         .getCasingTextureForId(GTUtility.getCasingTextureIndex(GregTechAPI.sBlockCasings10, 1)),
                     TextureFactory.builder()
@@ -90,11 +89,10 @@ public class LargeEngravingLaser extends GTMMultiMachineBase<LargeEngravingLaser
                         .glow()
                         .build() };
             }
-        } else {
-            rTexture = new ITexture[] { Textures.BlockIcons
-                .getCasingTextureForId(GTUtility.getCasingTextureIndex(GregTechAPI.sBlockCasings10, 1)) };
         }
-        return rTexture;
+        return new ITexture[] { Textures.BlockIcons
+            .getCasingTextureForId(GTUtility.getCasingTextureIndex(GregTechAPI.sBlockCasings10, 1)) };
+
     }
 
     @Override

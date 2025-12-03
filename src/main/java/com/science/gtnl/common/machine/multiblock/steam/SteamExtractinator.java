@@ -65,10 +65,9 @@ public class SteamExtractinator extends SteamMultiMachineBase<SteamExtractinator
     @Override
     public ITexture[] getTexture(IGregTechTileEntity aBaseMetaTileEntity, ForgeDirection side, ForgeDirection facing,
         int aColorIndex, boolean aActive, boolean aRedstone) {
-        ITexture[] rTexture;
         if (side == facing) {
             if (aActive) {
-                rTexture = new ITexture[] {
+                return new ITexture[] {
                     Textures.BlockIcons
                         .getCasingTextureForId(GTUtility.getCasingTextureIndex(GregTechAPI.sBlockCasings1, 10)),
                     TextureFactory.builder()
@@ -76,7 +75,7 @@ public class SteamExtractinator extends SteamMultiMachineBase<SteamExtractinator
                         .extFacing()
                         .build() };
             } else {
-                rTexture = new ITexture[] {
+                return new ITexture[] {
                     Textures.BlockIcons
                         .getCasingTextureForId(GTUtility.getCasingTextureIndex(GregTechAPI.sBlockCasings1, 10)),
                     TextureFactory.builder()
@@ -84,11 +83,9 @@ public class SteamExtractinator extends SteamMultiMachineBase<SteamExtractinator
                         .extFacing()
                         .build() };
             }
-        } else {
-            rTexture = new ITexture[] { Textures.BlockIcons
-                .getCasingTextureForId(GTUtility.getCasingTextureIndex(GregTechAPI.sBlockCasings1, 10)) };
         }
-        return rTexture;
+        return new ITexture[] { Textures.BlockIcons
+            .getCasingTextureForId(GTUtility.getCasingTextureIndex(GregTechAPI.sBlockCasings1, 10)) };
     }
 
     @Override

@@ -1857,6 +1857,7 @@ Tooltip_SuperSpaceElevator_05=MK-III及以上加速轨道可开启无线模式
 Tooltip_SuperSpaceElevator_06=当主结构未安装能源仓时自动进入无线模式
 Tooltip_SuperSpaceElevator_07=关闭控制器即可暂停所有模块
 Tooltip_SuperSpaceElevator_Casing=任意太空电梯基座机械方块
+Info_SuperSpaceElevator_00=已检测到附属层数：
 
 NameRocketAssembler=火箭组装厂
 gtnl.recipe.RocketAssemblerRecipes=火箭组装厂
@@ -2339,8 +2340,8 @@ Tooltip_LargeSolidifier_Casing=任意洗矿厂机械方块
 
 NameMegaCanner=特大装罐机
 MegaCannerRecipeType=装罐机 / 流体装罐机
-MegaCanning_Mode_0=装罐机
-MegaCanning_Mode_1=流体装罐机
+MegaCanner_Mode_0=装罐机
+MegaCanner_Mode_1=流体装罐机
 Tooltip_MegaCanner_Casing=任意洗矿厂机械方块
 
 NameLargeCanning=大型装罐机
@@ -2439,6 +2440,14 @@ Tooltip_HandOfJohnDavisonRockefeller_02=每增加一级玻璃或电压等级，E
 Tooltip_HandOfJohnDavisonRockefeller_03=每增加一级玻璃或电压等级，速度加快2.5%
 Tooltip_HandOfJohnDavisonRockefeller_04=无视配方要求的等级！
 Tooltip_HandOfJohnDavisonRockefeller_Casing=任意压力抑制机械方块
+
+NameFastNeutronBreederReactor=快中子增殖堆
+gtnl.recipe.ElectricNeutronActivatorRecipes=电力中子活化器
+FastNeutronBreederReactorRecipeType=衰变加速器 / 电力中子活化器 / 粒子加速器
+FastNeutronBreederReactor_Mode_0=衰变加速器
+FastNeutronBreederReactor_Mode_1=电力中子活化器
+FastNeutronBreederReactor_Mode_2=粒子加速器
+Tooltip_FastNeutronBreederReactor_Casing=任意批量生产框架
 
 NameBrickedBlastFurnace=砖高炉
 BrickBlastFurnaceRecipeType=§c跃§6进§e一§a号§b原§9始§d高§5炉

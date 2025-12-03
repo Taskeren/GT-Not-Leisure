@@ -3,6 +3,7 @@ package com.science.gtnl.utils.enums;
 import static com.science.gtnl.ScienceNotLeisure.RESOURCE_ROOT_ID;
 
 import gregtech.api.enums.Textures;
+import gregtech.api.interfaces.IIconContainer;
 
 public class BlockIcons {
 
@@ -203,5 +204,14 @@ public class BlockIcons {
         BASE + "SingularityDataHub/OVERLAY_FRONT_ACTIVE");
     public static Textures.BlockIcons.CustomIcon OVERLAY_FRONT_SINGULARITY_DATA_HUB_ACTIVE_GLOW = new Textures.BlockIcons.CustomIcon(
         BASE + "SingularityDataHub/OVERLAY_FRONT_ACTIVE_GLOW");
+
+    public static IIconContainer OVERLAY_FRONT_NEUTRON_ACTIVATOR = new Textures.BlockIcons.CustomIcon(
+        "icons/NeutronActivator_Off");
+    public static IIconContainer OVERLAY_FRONT_NEUTRON_ACTIVATOR_GLOW = new Textures.BlockIcons.CustomIcon(
+        "icons/NeutronActivator_Off_GLOW");
+    public static IIconContainer OVERLAY_FRONT_NEUTRON_ACTIVATOR_ACTIVE = new Textures.BlockIcons.CustomIcon(
+        "icons/NeutronActivator_On");
+    public static IIconContainer OVERLAY_FRONT_NEUTRON_ACTIVATOR_ACTIVE_GLOW = new Textures.BlockIcons.CustomIcon(
+        "icons/NeutronActivator_On_GLOW");
 
 }

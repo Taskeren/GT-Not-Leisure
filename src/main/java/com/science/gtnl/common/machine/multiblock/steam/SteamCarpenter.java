@@ -132,10 +132,9 @@ public class SteamCarpenter extends SteamMultiMachineBase<SteamCarpenter> implem
     @Override
     public ITexture[] getTexture(IGregTechTileEntity aBaseMetaTileEntity, ForgeDirection side, ForgeDirection facing,
         int aColorIndex, boolean aActive, boolean aRedstone) {
-        ITexture[] rTexture;
         if (side == facing) {
             if (aActive) {
-                rTexture = new ITexture[] {
+                return new ITexture[] {
                     Textures.BlockIcons
                         .getCasingTextureForId(GTUtility.getCasingTextureIndex(GregTechAPI.sBlockCasings1, 10)),
                     TextureFactory.builder()
@@ -143,7 +142,7 @@ public class SteamCarpenter extends SteamMultiMachineBase<SteamCarpenter> implem
                         .extFacing()
                         .build() };
             } else {
-                rTexture = new ITexture[] {
+                return new ITexture[] {
                     Textures.BlockIcons
                         .getCasingTextureForId(GTUtility.getCasingTextureIndex(GregTechAPI.sBlockCasings1, 10)),
                     TextureFactory.builder()
@@ -151,11 +150,9 @@ public class SteamCarpenter extends SteamMultiMachineBase<SteamCarpenter> implem
                         .extFacing()
                         .build() };
             }
-        } else {
-            rTexture = new ITexture[] { Textures.BlockIcons
-                .getCasingTextureForId(GTUtility.getCasingTextureIndex(GregTechAPI.sBlockCasings1, 10)) };
         }
-        return rTexture;
+        return new ITexture[] { Textures.BlockIcons
+            .getCasingTextureForId(GTUtility.getCasingTextureIndex(GregTechAPI.sBlockCasings1, 10)) };
     }
 
     @Override

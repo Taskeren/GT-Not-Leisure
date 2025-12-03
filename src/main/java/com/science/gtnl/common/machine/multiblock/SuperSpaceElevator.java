@@ -93,21 +93,8 @@ import tectech.thing.metaTileEntity.multi.base.render.TTRenderedExtendedFacingTe
 public class SuperSpaceElevator extends TTMultiblockBase
     implements IConstructable, ISecondaryDescribable, ISurvivalConstructable {
 
-    /** List of project modules in this elevator */
-    public ArrayList<TileEntityModuleBase> mProjectModuleHatches = new ArrayList<>();
-    /** TE of the cable */
-    public TileEntitySpaceElevatorCable elevatorCable;
-    /** Motor tier of the Space Elevator */
-    @Getter
-    @Setter
-    public int motorTier = 0;
-    /** Flag if the chunks of the machine are loaded by it */
-    private boolean isLoadedChunk;
-    /** Interval in which the modules will be supplied with power in ticks */
     private static final int MODULE_CHARGE_INTERVAL = 20;
-    /** Multiplier for the internal EU buffer */
     private static final int INTERNAL_BUFFER_MULTIPLIER = 256;
-
     private static final String STRUCTURE_PIECE_MAIN = "main_base";
     private static final String STRUCTURE_PIECE_EXTENDED = "main_extended";
     private static final int STRUCTURE_PIECE_MAIN_HOR_OFFSET = 32;
@@ -123,10 +110,17 @@ public class SuperSpaceElevator extends TTMultiblockBase
     private static final String[][] shapeBase = StructureUtils.readStructureFromFile(SSEB_STRUCTURE_FILE_PATH);
     private static final String[][] shapeExtended = StructureUtils.readStructureFromFile(SSEE_STRUCTURE_FILE_PATH);
 
+    @Getter
+    @Setter
+    public int motorTier = 0;
+    public int mTier = 0;
     public int mCountCasing = 0;
     public boolean wirelessMode = false;
     public UUID ownerUUID;
     public String costingEUText = ZERO_STRING;
+    public ArrayList<TileEntityModuleBase> mProjectModuleHatches = new ArrayList<>();
+    public TileEntitySpaceElevatorCable elevatorCable;
+    public boolean isLoadedChunk;
 
     public SuperSpaceElevator(int aID, String aName, String aNameRegional) {
         super(aID, aName, aNameRegional);
@@ -374,6 +368,7 @@ public class SuperSpaceElevator extends TTMultiblockBase
         elevatorCable = null;
         motorTier = 0;
         wirelessMode = false;
+        mTier = 0;
 
         if (!structureCheck_EM(
             STRUCTURE_PIECE_MAIN,
@@ -400,6 +395,7 @@ public class SuperSpaceElevator extends TTMultiblockBase
 
                 actualExtensionLayers++;
             }
+            mTier = actualExtensionLayers;
         }
 
         if (elevatorCable != null) {
@@ -504,23 +500,27 @@ public class SuperSpaceElevator extends TTMultiblockBase
                         } else {
                             perModuleEnergy = getEUVar() / mProjectModuleHatches.size() * MODULE_CHARGE_INTERVAL;
                         }
+                        BigInteger totalUsedEU = BigInteger.ZERO;
                         for (TileEntityModuleBase projectModule : mProjectModuleHatches) {
                             if (projectModule.getNeededMotorTier() <= motorTier) {
                                 projectModule.connect();
+
                                 if (wirelessMode && getUserEU(ownerUUID).compareTo(BigInteger.ZERO) > 0) {
                                     long used = projectModule.increaseStoredEU(perModuleEnergy);
-                                    costingEUText = GTUtility.formatNumbers(used);
+                                    totalUsedEU = totalUsedEU.add(BigInteger.valueOf(used));
                                     addEUToGlobalEnergyMap(ownerUUID, -used);
                                 } else {
                                     long tAvailableEnergy = getEUVar();
                                     if (tAvailableEnergy > 0) {
                                         long used = projectModule
                                             .increaseStoredEU(Math.min(perModuleEnergy, tAvailableEnergy));
+                                        totalUsedEU = totalUsedEU.add(BigInteger.valueOf(used));
                                         setEUVar(Math.max(0, tAvailableEnergy - used));
                                     }
                                 }
                             }
                         }
+                        costingEUText = GTUtility.formatNumbers(totalUsedEU);
                     }
                 }
             } else {
@@ -580,21 +580,17 @@ public class SuperSpaceElevator extends TTMultiblockBase
     @Override
     public void drawTexts(DynamicPositionedColumn screenElements, SlotWidget inventorySlot) {
         screenElements.setSynced(false)
-            .setSpace(0)
-            .setPos(10, 7);
-
+            .setSpace(0);
         screenElements
             .widget(
                 new TextWidget(StatCollector.translateToLocal("gt.interact.desc.mb.incomplete"))
                     .setDefaultColor(COLOR_TEXT_WHITE.get())
                     .setEnabled(widget -> !mMachine))
             .widget(new FakeSyncWidget.BooleanSyncer(() -> mMachine, val -> mMachine = val));
-
         screenElements.widget(
             new TextWidget(StatCollector.translateToLocal("gt.blockmachines.multimachine.ig.elevator.gui.ready"))
                 .setDefaultColor(COLOR_TEXT_WHITE.get())
                 .setEnabled(widget -> mMachine));
-
         screenElements
             .widget(
                 TextWidget
@@ -603,6 +599,10 @@ public class SuperSpaceElevator extends TTMultiblockBase
                             "gt.blockmachines.multimachine.ig.elevator.gui.numOfModules") + ": " + getNumberOfModules())
                     .setDefaultColor(COLOR_TEXT_WHITE.get())
                     .setEnabled(widget -> getBaseMetaTileEntity().isAllowedToWork()));
+        screenElements.widget(
+            TextWidget.dynamicString(() -> StatCollector.translateToLocal("Info_SuperSpaceElevator_00") + mTier)
+                .setDefaultColor(COLOR_TEXT_WHITE.get())
+                .setEnabled(widget -> getBaseMetaTileEntity().isAllowedToWork()));
     }
 
     @Override

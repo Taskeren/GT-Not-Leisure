@@ -51,15 +51,15 @@ public abstract class MixinMTEVoidMinerBase extends MTEEnhancedMultiBlockBase<Mi
 
     @Shadow
     @Final
-    public byte TIER_MULTIPLIER;
+    protected byte TIER_MULTIPLIER;
     @Unique
     public long lEUt;
 
     @Shadow
-    public abstract int getMinTier();
+    protected abstract int getMinTier();
 
     @Shadow
-    public abstract ItemStack nextOre();
+    protected abstract ItemStack nextOre();
 
     @Shadow
     private boolean mBlacklist;

@@ -58,18 +58,15 @@ public class Steamgate extends MTEEnhancedMultiBlockBase<Steamgate> implements I
     @Override
     public ITexture[] getTexture(IGregTechTileEntity baseMetaTileEntity, ForgeDirection side, ForgeDirection facing,
         int colorIndex, boolean active, boolean redstoneLevel) {
-        ITexture[] rTexture;
         if (side == facing) {
-            rTexture = new ITexture[] { Textures.BlockIcons.getCasingTextureForId(14870), TextureFactory.builder()
+            return new ITexture[] { Textures.BlockIcons.getCasingTextureForId(14870), TextureFactory.builder()
                 .addIcon(OVERLAY_FRONT_STEAM_GATE)
                 .extFacing()
                 .glow()
                 .build() };
 
-        } else {
-            rTexture = new ITexture[] { Textures.BlockIcons.getCasingTextureForId(14870) };
         }
-        return rTexture;
+        return new ITexture[] { Textures.BlockIcons.getCasingTextureForId(14870) };
     }
 
     @Override

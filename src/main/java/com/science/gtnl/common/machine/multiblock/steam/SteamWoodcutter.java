@@ -136,28 +136,26 @@ public class SteamWoodcutter extends SteamMultiMachineBase<SteamWoodcutter> impl
     @Override
     public ITexture[] getTexture(IGregTechTileEntity aBaseMetaTileEntity, ForgeDirection side, ForgeDirection facing,
         int aColorIndex, boolean aActive, boolean aRedstone) {
-        ITexture[] rTexture;
         if (side == facing) {
             if (aActive) {
-                rTexture = new ITexture[] {
+                return new ITexture[] {
                     Textures.BlockIcons.getCasingTextureForId(GTUtility.getTextureId((byte) 116, (byte) 24)),
                     TextureFactory.builder()
                         .addIcon(TexturesGtBlock.oMCATreeFarmActive)
                         .extFacing()
                         .build() };
             } else {
-                rTexture = new ITexture[] {
+                return new ITexture[] {
                     Textures.BlockIcons.getCasingTextureForId(GTUtility.getTextureId((byte) 116, (byte) 24)),
                     TextureFactory.builder()
                         .addIcon(TexturesGtBlock.oMCATreeFarm)
                         .extFacing()
                         .build() };
             }
-        } else {
-            rTexture = new ITexture[] {
-                Textures.BlockIcons.getCasingTextureForId(GTUtility.getTextureId((byte) 116, (byte) 24)) };
         }
-        return rTexture;
+        return new ITexture[] {
+            Textures.BlockIcons.getCasingTextureForId(GTUtility.getTextureId((byte) 116, (byte) 24)) };
+
     }
 
     @Override

@@ -224,6 +224,7 @@ import com.science.gtnl.common.machine.multiblock.wireless.DissolutionCore;
 import com.science.gtnl.common.machine.multiblock.wireless.EngravingLaserPlant;
 import com.science.gtnl.common.machine.multiblock.wireless.ExtremeCompressor;
 import com.science.gtnl.common.machine.multiblock.wireless.ExtremeElectricFurnace;
+import com.science.gtnl.common.machine.multiblock.wireless.FastNeutronBreederReactor;
 import com.science.gtnl.common.machine.multiblock.wireless.FieldForgePress;
 import com.science.gtnl.common.machine.multiblock.wireless.GeminiContainmentSystem;
 import com.science.gtnl.common.machine.multiblock.wireless.GiantElectrochemicalWorkstation;
@@ -1679,6 +1680,13 @@ public class MachineLoader {
                 "TransliminalOasis",
                 StatCollector.translateToLocal("NameTransliminalOasis")));
         addItemTooltip(GTNLItemList.TransliminalOasis.get(1), AnimatedText.SNL_QYZG);
+
+        GTNLItemList.FastNeutronBreederReactor.set(
+            new FastNeutronBreederReactor(
+                FAST_NEUTRON_BREEDER_REACTOR.ID,
+                "FastNeutronBreederReactor",
+                StatCollector.translateToLocal("NameFastNeutronBreederReactor")));
+        addItemTooltip(GTNLItemList.FastNeutronBreederReactor.get(1), AnimatedText.SNL_QYZG);
 
         // Special Machine
         GTNLItemList.CheatOreProcessingFactory.set(

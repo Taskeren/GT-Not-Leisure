@@ -1857,6 +1857,7 @@ Tooltip_SuperSpaceElevator_05=MK-III and above speed tracks can enable wireless 
 Tooltip_SuperSpaceElevator_06=The system automatically activates wireless mode when no energy hatch is installed in the main structure
 Tooltip_SuperSpaceElevator_07=Disabling this controller also pauses all modules
 Tooltip_SuperSpaceElevator_Casing=Any Space Elevator Base Casing
+Info_SuperSpaceElevator_00=Detected attached structure levels: 
 
 NameRocketAssembler=Rocket Assembler
 gtnl.recipe.RocketAssemblerRecipes=Rocket Assembler
@@ -2339,8 +2340,8 @@ Tooltip_LargeSolidifier_Casing=Any ore washing plant machine block
 
 NameMegaCanner=Mega Canner
 MegaCannerRecipeType=Canning Machine / Fluid Canning Machine
-MegaCanning_Mode_0=Canning Machine
-MegaCanning_Mode_1=Fluid Canning Machine
+MegaCanner_Mode_0=Canning Machine
+MegaCanner_Mode_1=Fluid Canning Machine
 Tooltip_MegaCanner_Casing=Any ore washing plant machine block
 
 NameLargeCanning=Large Canning Machine
@@ -2439,6 +2440,14 @@ Tooltip_HandOfJohnDavisonRockefeller_02=EU consumption multiplied by 95% per gla
 Tooltip_HandOfJohnDavisonRockefeller_03=Speed increases by 2.5% per glass or voltage tier increase
 Tooltip_HandOfJohnDavisonRockefeller_04=Ignores recipe tier requirements!
 Tooltip_HandOfJohnDavisonRockefeller_Casing=Any Pressure Suppression Machine Block
+
+NameFastNeutronBreederReactor=Fast Neutron Breeder Reactor
+gtnl.recipe.ElectricNeutronActivatorRecipes=Electric Neutron Activator
+FastNeutronBreederReactorRecipeType=Decay Distortion / Electric Neutron Activator / Particle Accelerator
+FastNeutronBreederReactor_Mode_0=Decay Distortion
+FastNeutronBreederReactor_Mode_1=Electric Neutron Activator
+FastNeutronBreederReactor_Mode_2=Particle Accelerator
+Tooltip_FastNeutronBreederReactor_Casing=Any Batch Processing Machine Block
 
 NameBrickedBlastFurnace=Bricked Blast Furnace
 BrickBlastFurnaceRecipeType=§cLeap§6ing§eOne§aPrimitive§bBlast§9Furnace

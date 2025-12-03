@@ -110,38 +110,21 @@ public class MegaSolarBoiler extends SteamMultiMachineBase<MegaSolarBoiler> impl
     @Override
     public ITexture[] getTexture(IGregTechTileEntity aBaseMetaTileEntity, ForgeDirection side, ForgeDirection facing,
         int aColorIndex, boolean aActive, boolean aRedstone) {
-        ITexture[] rTexture;
         if (side == facing) {
-            if (aActive) {
-                rTexture = new ITexture[] {
-                    Textures.BlockIcons.getCasingTextureForId(GTUtility.getCasingTextureIndex(sBlockCasings1, 10)),
-                    TextureFactory.builder()
-                        .addIcon(OVERLAY_FRONT_MEGA_SOLAR_BOILER)
-                        .extFacing()
-                        .build(),
-                    TextureFactory.builder()
-                        .addIcon(OVERLAY_FRONT_MEGA_SOLAR_BOILER)
-                        .extFacing()
-                        .glow()
-                        .build() };
-            } else {
-                rTexture = new ITexture[] {
-                    Textures.BlockIcons.getCasingTextureForId(GTUtility.getCasingTextureIndex(sBlockCasings1, 10)),
-                    TextureFactory.builder()
-                        .addIcon(OVERLAY_FRONT_MEGA_SOLAR_BOILER)
-                        .extFacing()
-                        .build(),
-                    TextureFactory.builder()
-                        .addIcon(OVERLAY_FRONT_MEGA_SOLAR_BOILER)
-                        .extFacing()
-                        .glow()
-                        .build() };
-            }
-        } else {
-            rTexture = new ITexture[] {
-                Textures.BlockIcons.getCasingTextureForId(GTUtility.getCasingTextureIndex(sBlockCasings1, 10)) };
+            return new ITexture[] {
+                Textures.BlockIcons.getCasingTextureForId(GTUtility.getCasingTextureIndex(sBlockCasings1, 10)),
+                TextureFactory.builder()
+                    .addIcon(OVERLAY_FRONT_MEGA_SOLAR_BOILER)
+                    .extFacing()
+                    .build(),
+                TextureFactory.builder()
+                    .addIcon(OVERLAY_FRONT_MEGA_SOLAR_BOILER)
+                    .extFacing()
+                    .glow()
+                    .build() };
         }
-        return rTexture;
+        return new ITexture[] {
+            Textures.BlockIcons.getCasingTextureForId(GTUtility.getCasingTextureIndex(sBlockCasings1, 10)) };
     }
 
     @Override

@@ -245,10 +245,9 @@ public class MeteorMiner extends MultiMachineBase<MeteorMiner> implements ISurvi
     @Override
     public ITexture[] getTexture(IGregTechTileEntity baseMetaTileEntity, ForgeDirection side, ForgeDirection aFacing,
         int colorIndex, boolean aActive, boolean redstoneLevel) {
-        ITexture[] rTexture;
         if (side == aFacing) {
             if (aActive) {
-                rTexture = new ITexture[] { Textures.BlockIcons.getCasingTextureForId(getCasingTextureID()),
+                return new ITexture[] { Textures.BlockIcons.getCasingTextureForId(getCasingTextureID()),
                     TextureFactory.builder()
                         .addIcon(OVERLAY_FRONT_METEOR_MINER_ACTIVE)
                         .extFacing()
@@ -259,7 +258,7 @@ public class MeteorMiner extends MultiMachineBase<MeteorMiner> implements ISurvi
                         .glow()
                         .build() };
             } else {
-                rTexture = new ITexture[] { Textures.BlockIcons.getCasingTextureForId(getCasingTextureID()),
+                return new ITexture[] { Textures.BlockIcons.getCasingTextureForId(getCasingTextureID()),
                     TextureFactory.builder()
                         .addIcon(OVERLAY_FRONT_METEOR_MINER)
                         .extFacing()
@@ -270,10 +269,8 @@ public class MeteorMiner extends MultiMachineBase<MeteorMiner> implements ISurvi
                         .glow()
                         .build() };
             }
-        } else {
-            rTexture = new ITexture[] { Textures.BlockIcons.getCasingTextureForId(getCasingTextureID()) };
         }
-        return rTexture;
+        return new ITexture[] { Textures.BlockIcons.getCasingTextureForId(getCasingTextureID()) };
     }
 
     @Override

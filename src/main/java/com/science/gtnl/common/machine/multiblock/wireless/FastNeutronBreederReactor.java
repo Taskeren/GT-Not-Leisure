@@ -3,11 +3,9 @@ package com.science.gtnl.common.machine.multiblock.wireless;
 import static com.gtnewhorizon.structurelib.structure.StructureUtility.*;
 import static com.science.gtnl.ScienceNotLeisure.*;
 import static com.science.gtnl.common.machine.multiMachineBase.MultiMachineBase.CustomHatchElement.*;
+import static com.science.gtnl.utils.enums.BlockIcons.*;
 import static gregtech.api.GregTechAPI.*;
 import static gregtech.api.enums.HatchElement.*;
-import static gregtech.api.enums.Mods.*;
-import static gregtech.api.enums.Textures.BlockIcons.*;
-import static gregtech.api.enums.Textures.BlockIcons.OVERLAY_FRONT_MULTI_CANNER;
 import static gregtech.api.util.GTStructureUtility.*;
 import static gtPlusPlus.core.block.ModBlocks.*;
 
@@ -25,9 +23,12 @@ import com.gtnewhorizon.structurelib.structure.IStructureDefinition;
 import com.gtnewhorizon.structurelib.structure.ISurvivalBuildEnvironment;
 import com.gtnewhorizon.structurelib.structure.StructureDefinition;
 import com.science.gtnl.common.machine.multiMachineBase.WirelessEnergyMultiMachineBase;
+import com.science.gtnl.common.material.RecipePool;
+import com.science.gtnl.loader.BlockLoader;
 import com.science.gtnl.utils.StructureUtils;
 
-import cpw.mods.fml.common.registry.GameRegistry;
+import goodgenerator.loader.Loaders;
+import gregtech.api.enums.Materials;
 import gregtech.api.enums.TAE;
 import gregtech.api.enums.Textures;
 import gregtech.api.gui.modularui.GTUITextures;
@@ -35,39 +36,42 @@ import gregtech.api.interfaces.ITexture;
 import gregtech.api.interfaces.metatileentity.IMetaTileEntity;
 import gregtech.api.interfaces.tileentity.IGregTechTileEntity;
 import gregtech.api.recipe.RecipeMap;
-import gregtech.api.recipe.RecipeMaps;
 import gregtech.api.render.TextureFactory;
 import gregtech.api.util.GTUtility;
 import gregtech.api.util.MultiblockTooltipBuilder;
+import gtPlusPlus.api.recipe.GTPPRecipeMaps;
+import gtnhlanth.common.register.LanthItemList;
 
-public class MegaCanner extends WirelessEnergyMultiMachineBase<MegaCanner> {
+public class FastNeutronBreederReactor extends WirelessEnergyMultiMachineBase<FastNeutronBreederReactor> {
 
-    private static final int MACHINEMODE_CANNER = 0;
-    private static final int MACHINEMODE_FLUIDCANNER = 1;
-    private static final int HORIZONTAL_OFF_SET = 4;
-    private static final int VERTICAL_OFF_SET = 15;
-    private static final int DEPTH_OFF_SET = 0;
+    private static final int MACHINEMODE_DECAY = 0;
+    private static final int MACHINEMODE_NEUTRON = 1;
+    private static final int MACHINEMODE_PARTICLE = 2;
+    private static final int HORIZONTAL_OFF_SET = 7;
+    private static final int VERTICAL_OFF_SET = 22;
+    private static final int DEPTH_OFF_SET = 1;
     private static final String STRUCTURE_PIECE_MAIN = "main";
-    private static final String MC_STRUCTURE_FILE_PATH = RESOURCE_ROOT_ID + ":" + "multiblock/mega_canner";
-    private static final String[][] shape = StructureUtils.readStructureFromFile(MC_STRUCTURE_FILE_PATH);
+    private static final String FNBR_STRUCTURE_FILE_PATH = RESOURCE_ROOT_ID + ":"
+        + "multiblock/fast_neutron_breeder_reactor";
+    private static final String[][] shape = StructureUtils.readStructureFromFile(FNBR_STRUCTURE_FILE_PATH);
 
-    public MegaCanner(String aName) {
+    public FastNeutronBreederReactor(String aName) {
         super(aName);
     }
 
-    public MegaCanner(int aID, String aName, String aNameRegional) {
+    public FastNeutronBreederReactor(int aID, String aName, String aNameRegional) {
         super(aID, aName, aNameRegional);
     }
 
     @Override
     public IMetaTileEntity newMetaEntity(IGregTechTileEntity aTileEntity) {
-        return new MegaCanner(this.mName);
+        return new FastNeutronBreederReactor(this.mName);
     }
 
     @Override
     public MultiblockTooltipBuilder createTooltip() {
         MultiblockTooltipBuilder tt = new MultiblockTooltipBuilder();
-        tt.addMachineType(StatCollector.translateToLocal("MegaCannerRecipeType"))
+        tt.addMachineType(StatCollector.translateToLocal("FastNeutronBreederReactorRecipeType"))
             .addInfo(StatCollector.translateToLocal("Tooltip_WirelessEnergyMultiMachine_00"))
             .addInfo(StatCollector.translateToLocal("Tooltip_WirelessEnergyMultiMachine_01"))
             .addInfo(StatCollector.translateToLocal("Tooltip_WirelessEnergyMultiMachine_02"))
@@ -83,19 +87,19 @@ public class MegaCanner extends WirelessEnergyMultiMachineBase<MegaCanner> {
             .addSeparator()
             .addInfo(StatCollector.translateToLocal("StructureTooComplex"))
             .addInfo(StatCollector.translateToLocal("BLUE_PRINT_INFO"))
-            .beginStructureBlock(9, 18, 15, true)
-            .addInputBus(StatCollector.translateToLocal("Tooltip_MegaCanner_Casing"), 1)
-            .addOutputBus(StatCollector.translateToLocal("Tooltip_MegaCanner_Casing"), 1)
-            .addInputHatch(StatCollector.translateToLocal("Tooltip_MegaCanner_Casing"), 1)
-            .addOutputHatch(StatCollector.translateToLocal("Tooltip_MegaCanner_Casing"), 1)
-            .addEnergyHatch(StatCollector.translateToLocal("Tooltip_MegaCanner_Casing"), 1)
+            .beginStructureBlock(15, 24, 15, true)
+            .addInputBus(StatCollector.translateToLocal("Tooltip_FastNeutronBreederReactor_Casing"), 1)
+            .addOutputBus(StatCollector.translateToLocal("Tooltip_FastNeutronBreederReactor_Casing"), 1)
+            .addInputHatch(StatCollector.translateToLocal("Tooltip_FastNeutronBreederReactor_Casing"), 1)
+            .addOutputHatch(StatCollector.translateToLocal("Tooltip_FastNeutronBreederReactor_Casing"), 1)
+            .addEnergyHatch(StatCollector.translateToLocal("Tooltip_FastNeutronBreederReactor_Casing"), 1)
             .toolTipFinisher();
         return tt;
     }
 
     @Override
     public int getCasingTextureID() {
-        return TAE.GTPP_INDEX(11);
+        return TAE.getIndexFromPage(0, 10);
     }
 
     @Override
@@ -104,27 +108,39 @@ public class MegaCanner extends WirelessEnergyMultiMachineBase<MegaCanner> {
         if (side == aFacing) {
             if (aActive) return new ITexture[] { Textures.BlockIcons.getCasingTextureForId(getCasingTextureID()),
                 TextureFactory.builder()
-                    .addIcon(OVERLAY_FRONT_MULTI_CANNER_ACTIVE)
+                    .addIcon(OVERLAY_FRONT_NEUTRON_ACTIVATOR_ACTIVE)
                     .extFacing()
+                    .build(),
+                TextureFactory.builder()
+                    .addIcon(OVERLAY_FRONT_NEUTRON_ACTIVATOR_ACTIVE_GLOW)
+                    .extFacing()
+                    .glow()
                     .build() };
             return new ITexture[] { Textures.BlockIcons.getCasingTextureForId(getCasingTextureID()),
                 TextureFactory.builder()
-                    .addIcon(OVERLAY_FRONT_MULTI_CANNER)
+                    .addIcon(OVERLAY_FRONT_NEUTRON_ACTIVATOR)
                     .extFacing()
+                    .build(),
+                TextureFactory.builder()
+                    .addIcon(OVERLAY_FRONT_NEUTRON_ACTIVATOR_GLOW)
+                    .extFacing()
+                    .glow()
                     .build() };
         }
         return new ITexture[] { Textures.BlockIcons.getCasingTextureForId(getCasingTextureID()) };
     }
 
     @Override
-    public IStructureDefinition<MegaCanner> getStructureDefinition() {
-        return StructureDefinition.<MegaCanner>builder()
+    public IStructureDefinition<FastNeutronBreederReactor> getStructureDefinition() {
+        return StructureDefinition.<FastNeutronBreederReactor>builder()
             .addShape(STRUCTURE_PIECE_MAIN, transpose(shape))
-            .addElement('A', ofBlock(sBlockCasings1, 15))
-            .addElement('B', ofBlock(blockCasings3Misc, 1))
+            .addElement('A', ofBlock(BlockLoader.metaCasing, 7))
+            .addElement('B', ofBlock(sBlockCasingsSE, 1))
+            .addElement('C', ofBlockAnyMeta(LanthItemList.COOLANT_DELIVERY_CASING))
+            .addElement('D', ofBlock(sBlockCasings6, 7))
             .addElement(
-                'C',
-                buildHatchAdder(MegaCanner.class)
+                'E',
+                buildHatchAdder(FastNeutronBreederReactor.class)
                     .atLeast(
                         Maintenance,
                         InputHatch,
@@ -135,10 +151,17 @@ public class MegaCanner extends WirelessEnergyMultiMachineBase<MegaCanner> {
                         ParallelCon)
                     .casingIndex(getCasingTextureID())
                     .dot(1)
-                    .buildAndChain(onElementPass(x -> ++x.mCountCasing, ofBlock(blockCasings2Misc, 4))))
-            .addElement('D', ofBlock(sBlockCasings1, 8))
-            .addElement('E', ofBlock(sBlockCasings9, 12))
-            .addElement('F', ofBlockAnyMeta(GameRegistry.findBlock(IndustrialCraft2.ID, "blockAlloyGlass")))
+                    .buildAndChain(onElementPass(x -> ++x.mCountCasing, ofBlock(blockCasings2Misc, 12))))
+            .addElement('F', ofBlock(sBlockCasings10, 3))
+            .addElement('G', ofBlock(sBlockCasings8, 7))
+            .addElement('H', ofBlock(Loaders.MAR_Casing, 0))
+            .addElement('I', ofBlock(sBlockCasingsDyson, 9))
+            .addElement('J', ofBlockAnyMeta(LanthItemList.SHIELDED_ACCELERATOR_CASING))
+            .addElement('K', ofBlock(blockCasings2Misc, 9))
+            .addElement('L', ofBlock(BlockLoader.metaBlockGlass, 2))
+            .addElement('M', ofBlock(sBlockCasings1, 15))
+            .addElement('N', ofFrame(Materials.TungstenCarbide))
+            .addElement('O', ofBlock(sBlockCasings9, 7))
             .build();
     }
 
@@ -178,13 +201,22 @@ public class MegaCanner extends WirelessEnergyMultiMachineBase<MegaCanner> {
 
     @Override
     public RecipeMap<?> getRecipeMap() {
-        return (machineMode == MACHINEMODE_FLUIDCANNER) ? RecipeMaps.fluidCannerRecipes : RecipeMaps.cannerRecipes;
+        if (machineMode == MACHINEMODE_DECAY) {
+            return RecipePool.DecayHastenerRecipes;
+        } else if (machineMode == MACHINEMODE_NEUTRON) {
+            return RecipePool.ElectricNeutronActivatorRecipes;
+        } else {
+            return GTPPRecipeMaps.cyclotronRecipes;
+        }
     }
 
     @Nonnull
     @Override
     public Collection<RecipeMap<?>> getAvailableRecipeMaps() {
-        return Arrays.asList(RecipeMaps.fluidCannerRecipes, RecipeMaps.cannerRecipes);
+        return Arrays.asList(
+            RecipePool.DecayHastenerRecipes,
+            RecipePool.ElectricNeutronActivatorRecipes,
+            GTPPRecipeMaps.cyclotronRecipes);
     }
 
     @Override
@@ -193,19 +225,33 @@ public class MegaCanner extends WirelessEnergyMultiMachineBase<MegaCanner> {
     }
 
     @Override
+    public int nextMachineMode() {
+        if (machineMode == MACHINEMODE_DECAY) {
+            return MACHINEMODE_NEUTRON;
+        } else if (machineMode == MACHINEMODE_NEUTRON) {
+            return MACHINEMODE_PARTICLE;
+        } else {
+            return MACHINEMODE_DECAY;
+        }
+    }
+
+    @Override
     public final void onScrewdriverRightClick(ForgeDirection side, EntityPlayer aPlayer, float aX, float aY, float aZ,
         ItemStack aTool) {
-        this.machineMode = (this.machineMode + 1) % 2;
-        GTUtility.sendChatToPlayer(aPlayer, StatCollector.translateToLocal("MegaCanner_Mode_" + this.machineMode));
+        this.machineMode = (this.machineMode + 1) % 3;
+        GTUtility.sendChatToPlayer(
+            aPlayer,
+            StatCollector.translateToLocal("FastNeutronBreederReactor_Mode_" + this.machineMode));
     }
 
     @Override
     public String getMachineModeName() {
-        return StatCollector.translateToLocal("MegaCanner_Mode_" + machineMode);
+        return StatCollector.translateToLocal("FastNeutronBreederReactor_Mode_" + machineMode);
     }
 
     @Override
     public void setMachineModeIcons() {
+        machineModeIcons.add(GTUITextures.OVERLAY_BUTTON_MACHINEMODE_UNPACKAGER);
         machineModeIcons.add(GTUITextures.OVERLAY_BUTTON_MACHINEMODE_PACKAGER);
         machineModeIcons.add(GTUITextures.OVERLAY_BUTTON_MACHINEMODE_LPF_FLUID);
     }

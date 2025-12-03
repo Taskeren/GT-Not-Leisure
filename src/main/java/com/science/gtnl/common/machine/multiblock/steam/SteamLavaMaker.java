@@ -95,28 +95,26 @@ public class SteamLavaMaker extends SteamMultiMachineBase<SteamLavaMaker> implem
     @Override
     public ITexture[] getTexture(IGregTechTileEntity aBaseMetaTileEntity, ForgeDirection side, ForgeDirection facing,
         int aColorIndex, boolean aActive, boolean aRedstone) {
-        ITexture[] rTexture;
         if (side == facing) {
             if (aActive) {
-                rTexture = new ITexture[] {
+                return new ITexture[] {
                     Textures.BlockIcons.getCasingTextureForId(GTUtility.getTextureId((byte) 116, (byte) 27)),
                     TextureFactory.builder()
                         .addIcon(OVERLAY_FRONT_STEAM_LAVA_MAKER_ACTIVE)
                         .extFacing()
                         .build() };
             } else {
-                rTexture = new ITexture[] {
+                return new ITexture[] {
                     Textures.BlockIcons.getCasingTextureForId(GTUtility.getTextureId((byte) 116, (byte) 27)),
                     TextureFactory.builder()
                         .addIcon(OVERLAY_FRONT_STEAM_LAVA_MAKER)
                         .extFacing()
                         .build() };
             }
-        } else {
-            rTexture = new ITexture[] { Textures.BlockIcons
-                .getCasingTextureForId(GTUtility.getCasingTextureIndex(BlockLoader.metaCasing, 27)) };
         }
-        return rTexture;
+        return new ITexture[] {
+            Textures.BlockIcons.getCasingTextureForId(GTUtility.getCasingTextureIndex(BlockLoader.metaCasing, 27)) };
+
     }
 
     @Override

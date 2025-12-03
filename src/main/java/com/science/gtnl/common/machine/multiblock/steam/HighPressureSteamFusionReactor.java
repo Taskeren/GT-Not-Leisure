@@ -144,28 +144,26 @@ public class HighPressureSteamFusionReactor extends SteamMultiMachineBase<HighPr
     @Override
     public ITexture[] getTexture(IGregTechTileEntity aBaseMetaTileEntity, ForgeDirection side, ForgeDirection facing,
         int aColorIndex, boolean aActive, boolean aRedstone) {
-        ITexture[] rTexture;
         if (side == facing) {
             if (aActive) {
-                rTexture = new ITexture[] {
+                return new ITexture[] {
                     Textures.BlockIcons.getCasingTextureForId(GTUtility.getTextureId((byte) 116, (byte) 32)),
                     TextureFactory.builder()
                         .addIcon(OVERLAY_TOP_STEAM_MACERATOR_ACTIVE)
                         .extFacing()
                         .build() };
             } else {
-                rTexture = new ITexture[] {
+                return new ITexture[] {
                     Textures.BlockIcons.getCasingTextureForId(GTUtility.getTextureId((byte) 116, (byte) 32)),
                     TextureFactory.builder()
                         .addIcon(OVERLAY_TOP_STEAM_MACERATOR)
                         .extFacing()
                         .build() };
             }
-        } else {
-            rTexture = new ITexture[] {
-                Textures.BlockIcons.getCasingTextureForId(GTUtility.getTextureId((byte) 116, (byte) 32)) };
         }
-        return rTexture;
+        return new ITexture[] {
+            Textures.BlockIcons.getCasingTextureForId(GTUtility.getTextureId((byte) 116, (byte) 32)) };
+
     }
 
     @Override

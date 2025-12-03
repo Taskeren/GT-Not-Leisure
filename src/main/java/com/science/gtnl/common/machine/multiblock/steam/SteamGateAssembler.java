@@ -96,9 +96,8 @@ public class SteamGateAssembler extends SteamMultiMachineBase<SteamGateAssembler
     @Override
     public ITexture[] getTexture(IGregTechTileEntity aBaseMetaTileEntity, ForgeDirection side, ForgeDirection facing,
         int aColorIndex, boolean aActive, boolean aRedstone) {
-        ITexture[] rTexture;
         if (side == facing) {
-            rTexture = new ITexture[] {
+            return new ITexture[] {
                 Textures.BlockIcons.getCasingTextureForId(GTUtility.getCasingTextureIndex(sBlockCasings2, 0)),
                 TextureFactory.builder()
                     .addIcon(OVERLAY_FRONT_STEAM_GATE_ASSEMBLER)
@@ -109,11 +108,9 @@ public class SteamGateAssembler extends SteamMultiMachineBase<SteamGateAssembler
                     .extFacing()
                     .glow()
                     .build() };
-        } else {
-            rTexture = new ITexture[] {
-                Textures.BlockIcons.getCasingTextureForId(GTUtility.getCasingTextureIndex(sBlockCasings2, 0)) };
         }
-        return rTexture;
+        return new ITexture[] {
+            Textures.BlockIcons.getCasingTextureForId(GTUtility.getCasingTextureIndex(sBlockCasings2, 0)) };
     }
 
     @Override

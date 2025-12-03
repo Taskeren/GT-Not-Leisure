@@ -148,10 +148,9 @@ public class MegaSteamCompressor extends SteamMultiMachineBase<MegaSteamCompress
     @Override
     public ITexture[] getTexture(IGregTechTileEntity aBaseMetaTileEntity, ForgeDirection side, ForgeDirection facing,
         int aColorIndex, boolean aActive, boolean aRedstone) {
-        ITexture[] rTexture;
         if (side == facing) {
             if (aActive) {
-                rTexture = new ITexture[] {
+                return new ITexture[] {
                     Textures.BlockIcons.getCasingTextureForId(GTUtility.getCasingTextureIndex(sBlockCasings2, 0)),
                     TextureFactory.builder()
                         .addIcon(OVERLAY_FRONT_MEGA_STEAM_COMPRESSOR_ACTIVE)
@@ -163,7 +162,7 @@ public class MegaSteamCompressor extends SteamMultiMachineBase<MegaSteamCompress
                         .glow()
                         .build() };
             } else {
-                rTexture = new ITexture[] {
+                return new ITexture[] {
                     Textures.BlockIcons.getCasingTextureForId(GTUtility.getCasingTextureIndex(sBlockCasings2, 0)),
                     TextureFactory.builder()
                         .addIcon(OVERLAY_FRONT_MEGA_STEAM_COMPRESSOR)
@@ -175,11 +174,10 @@ public class MegaSteamCompressor extends SteamMultiMachineBase<MegaSteamCompress
                         .glow()
                         .build() };
             }
-        } else {
-            rTexture = new ITexture[] {
-                Textures.BlockIcons.getCasingTextureForId(GTUtility.getCasingTextureIndex(sBlockCasings2, 0)) };
         }
-        return rTexture;
+        return new ITexture[] {
+            Textures.BlockIcons.getCasingTextureForId(GTUtility.getCasingTextureIndex(sBlockCasings2, 0)) };
+
     }
 
     @Override

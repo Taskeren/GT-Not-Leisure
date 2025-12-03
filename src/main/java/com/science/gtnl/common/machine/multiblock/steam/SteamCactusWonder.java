@@ -129,9 +129,8 @@ public class SteamCactusWonder extends SteamMultiMachineBase<SteamCactusWonder> 
     @Override
     public ITexture[] getTexture(IGregTechTileEntity aBaseMetaTileEntity, ForgeDirection side, ForgeDirection facing,
         int aColorIndex, boolean aActive, boolean aRedstone) {
-        ITexture[] rTexture;
         if (side == facing) {
-            rTexture = new ITexture[] {
+            return new ITexture[] {
                 Textures.BlockIcons.getCasingTextureForId(GTUtility.getCasingTextureIndex(sBlockCasings1, 10)),
                 TextureFactory.builder()
                     .addIcon(OVERLAY_FRONT_CACTUS_WONDER)
@@ -142,11 +141,9 @@ public class SteamCactusWonder extends SteamMultiMachineBase<SteamCactusWonder> 
                     .extFacing()
                     .glow()
                     .build() };
-        } else {
-            rTexture = new ITexture[] {
-                Textures.BlockIcons.getCasingTextureForId(GTUtility.getCasingTextureIndex(sBlockCasings1, 10)) };
         }
-        return rTexture;
+        return new ITexture[] {
+            Textures.BlockIcons.getCasingTextureForId(GTUtility.getCasingTextureIndex(sBlockCasings1, 10)) };
     }
 
     @Override

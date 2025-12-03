@@ -72,6 +72,7 @@ import com.science.gtnl.common.recipe.gtnl.CircuitNanitesDataRecipes;
 import com.science.gtnl.common.recipe.gtnl.CraftingTableRecipes;
 import com.science.gtnl.common.recipe.gtnl.DecayHastenerRecipes;
 import com.science.gtnl.common.recipe.gtnl.DesulfurizerRecipes;
+import com.science.gtnl.common.recipe.gtnl.ElectricNeutronActivatorRecipes;
 import com.science.gtnl.common.recipe.gtnl.ElectrocellGeneratorRecipes;
 import com.science.gtnl.common.recipe.gtnl.ElementCopyingRecipes;
 import com.science.gtnl.common.recipe.gtnl.EternalGregTechWorkshopUpgradeRecipes;
@@ -210,7 +211,8 @@ public class RecipeLoader {
             new ElectrocellGeneratorRecipes(), new RocketAssemblerRecipes(), new FluidSolidifierRecipes(),
             new BotaniaManaInfusionRecipes(), new FormingPressRecipes(), new HammerRecipes(), new CyclotronRecipes(),
             new RuneAltarRecipes(), new IndustrialRockCrusherRecipes(), new PrecisionLaserEngraver(),
-            new NanitesIntegratedProcessingRecipes(), new NanoForgeRecipes(), new SteamWeatherModuleRecipes() };
+            new NanitesIntegratedProcessingRecipes(), new NanoForgeRecipes(), new SteamWeatherModuleRecipes(),
+            new ElectricNeutronActivatorRecipes() };
 
         for (IRecipePool recipePool : recipePools) {
             recipePool.loadRecipes();

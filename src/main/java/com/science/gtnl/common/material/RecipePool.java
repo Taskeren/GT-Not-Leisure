@@ -1,7 +1,5 @@
 package com.science.gtnl.common.material;
 
-import static gregtech.api.util.GTUtility.*;
-
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -671,5 +669,14 @@ public class RecipePool {
                         NanitesIntegratedProcessingMetadata.INSTANCE,
                         new NanitesIntegratedProcessingRecipesData(false, false, false)))
                 .thenComparing(GTRecipe::compareTo))
+        .build();
+
+    public static final RecipeMap<RecipeMapBackend> ElectricNeutronActivatorRecipes = RecipeMapBuilder
+        .of("gtnl.recipe.ElectricNeutronActivatorRecipes")
+        .maxIO(9, 9, 1, 1)
+        .frontend(GTNLLogoFrontend::new)
+        .dontUseProgressBar()
+        .addSpecialTexture(73, 22, 31, 21, GGUITextures.PICTURE_NEUTRON_ACTIVATOR)
+        .neiHandlerInfo(builder -> builder.setDisplayStack(GTNLItemList.EngravingLaserPlant.get(1)))
         .build();
 }
