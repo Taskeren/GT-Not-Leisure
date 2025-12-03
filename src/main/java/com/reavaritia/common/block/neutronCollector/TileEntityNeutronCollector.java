@@ -36,7 +36,7 @@ public class TileEntityNeutronCollector extends TileLudicrous implements IInvent
     @Override
     public void updateEntity() {
         if (++progress >= time) {
-            if (isNeutronItem(neutrons) && neutrons.stackSize <= 64) {
+            if (isNeutronItem(neutrons)) {
                 createNeutronItemStack();
                 neutrons.stackSize++;
             }
@@ -51,8 +51,10 @@ public class TileEntityNeutronCollector extends TileLudicrous implements IInvent
         }
     }
 
-    private boolean isNeutronItem(ItemStack stack) {
-        return stack == null || GTUtility.areStacksEqual(neutrons, stack);
+    public boolean isNeutronItem(ItemStack stack) {
+        if (stack == null) return true;
+        if (neutrons == null) return false;
+        return GTUtility.areStacksEqual(neutrons, stack) && neutrons.stackSize < 64;
     }
 
     public void setFacing(int facing) {

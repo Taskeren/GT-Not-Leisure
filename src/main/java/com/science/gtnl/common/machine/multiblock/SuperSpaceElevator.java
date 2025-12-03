@@ -285,11 +285,26 @@ public class SuperSpaceElevator extends TTMultiblockBase
                     .buildAndChain(sBlockCasingsSE, 0))
             .addElement(
                 'M',
-                HatchElementBuilder.<SuperSpaceElevator>builder()
-                    .atLeast(ProjectModuleElement.ProjectModule)
-                    .casingIndex(TileEntitySpaceElevator.CASING_INDEX_BASE)
-                    .dot(1)
-                    .buildAndChain(sBlockCasingsSE, 0))
+                ofChain(
+                    HatchElementBuilder.<SuperSpaceElevator>builder()
+                        .atLeast(ProjectModuleElement.ProjectModule)
+                        .casingIndex(TileEntitySpaceElevator.CASING_INDEX_BASE)
+                        .dot(1)
+                        .buildAndChain(sBlockCasingsSE, 0),
+                    buildHatchAdder(SuperSpaceElevator.class)
+                        .atLeast(
+                            Maintenance,
+                            InputBus,
+                            InputHatch,
+                            OutputHatch,
+                            OutputBus,
+                            HatchElement.EnergyMulti,
+                            HatchElement.DynamoMulti,
+                            HatchElement.InputData,
+                            HatchElement.OutputData)
+                        .casingIndex(TileEntitySpaceElevator.CASING_INDEX_BASE)
+                        .dot(1)
+                        .buildAndChain(sBlockCasingsSE, 0)))
             .addElement(
                 'N',
                 ElevatorUtil.ofBlockAdder(SuperSpaceElevator::addCable, GregTechAPI.sSpaceElevatorCable, 0))
