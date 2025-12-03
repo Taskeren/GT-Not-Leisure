@@ -2248,7 +2248,8 @@ public class MachineLoader {
             new OredictInputBusME(
                 OREDICT_INPUT_BUS_HATCH_ME.ID,
                 "OredictInputBusME",
-                StatCollector.translateToLocal("OredictInputBusME")));
+                StatCollector.translateToLocal("OredictInputBusME"),
+                false));
         addItemTooltip(GTNLItemList.OredictInputBusME.get(1), AnimatedText.SNL_SKYINR);
 
         GTNLItemList.NanitesInputBus.set(
@@ -2485,7 +2486,8 @@ public class MachineLoader {
             new TypeFilteredInputBusME(
                 TYPE_FILTERED_INPUT_BUS_ME.ID,
                 "TypeFilteredInputBusME",
-                StatCollector.translateToLocal("TypeFilteredInputBusME")));
+                StatCollector.translateToLocal("TypeFilteredInputBusME"),
+                false));
         addItemTooltip(GTNLItemList.TypeFilteredInputBusME.get(1), AnimatedText.SCIENCE_NOT_LEISURE);
 
         GTNLItemList.HumongousOutputBusLV.set(
@@ -4762,6 +4764,22 @@ public class MachineLoader {
                 StatCollector.translateToLocal("LootBagRedemption"),
                 1));
         addItemTooltip(GTNLItemList.LootBagRedemption.get(1), AnimatedText.SCIENCE_NOT_LEISURE);
+
+        GTNLItemList.SuperOredictInputBusME.set(
+            new OredictInputBusME(
+                SUPER_OREDICT_INPUT_BUS_HATCH_ME.ID,
+                "SuperOredictInputBusME",
+                StatCollector.translateToLocal("SuperOredictInputBusME"),
+                true));
+        addItemTooltip(GTNLItemList.SuperOredictInputBusME.get(1), AnimatedText.SCIENCE_NOT_LEISURE);
+
+        GTNLItemList.SuperTypeFilteredInputBusME.set(
+            new TypeFilteredInputBusME(
+                SUPER_TYPE_FILTERED_INPUT_BUS_ME.ID,
+                "SuperTypeFilteredInputBusME",
+                StatCollector.translateToLocal("SuperTypeFilteredInputBusME"),
+                true));
+        addItemTooltip(GTNLItemList.SuperTypeFilteredInputBusME.get(1), AnimatedText.SCIENCE_NOT_LEISURE);
     }
 
     public static void registerWireAndPipe() {

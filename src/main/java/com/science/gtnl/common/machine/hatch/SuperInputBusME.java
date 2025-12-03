@@ -20,20 +20,17 @@ import com.cleanroommc.modularui.utils.item.ItemStackHandler;
 import com.gtnewhorizons.modularui.api.ModularUITextures;
 import com.gtnewhorizons.modularui.api.drawable.IDrawable;
 import com.gtnewhorizons.modularui.api.math.Alignment;
-import com.gtnewhorizons.modularui.api.math.Color;
 import com.gtnewhorizons.modularui.api.math.Size;
 import com.gtnewhorizons.modularui.api.screen.ModularWindow;
 import com.gtnewhorizons.modularui.api.screen.UIBuildContext;
 import com.gtnewhorizons.modularui.common.internal.wrapper.BaseSlot;
 import com.gtnewhorizons.modularui.common.widget.ButtonWidget;
-import com.gtnewhorizons.modularui.common.widget.CycleButtonWidget;
 import com.gtnewhorizons.modularui.common.widget.DrawableWidget;
 import com.gtnewhorizons.modularui.common.widget.FakeSyncWidget;
 import com.gtnewhorizons.modularui.common.widget.Scrollable;
 import com.gtnewhorizons.modularui.common.widget.SlotGroup;
 import com.gtnewhorizons.modularui.common.widget.SlotWidget;
 import com.gtnewhorizons.modularui.common.widget.TextWidget;
-import com.gtnewhorizons.modularui.common.widget.textfield.NumericWidget;
 import com.science.gtnl.mixins.late.Gregtech.AccessorCommonMetaTileEntity;
 import com.science.gtnl.mixins.late.Gregtech.AccessorMetaTileEntity;
 import com.science.gtnl.utils.enums.GTNLItemList;
@@ -43,9 +40,6 @@ import appeng.api.config.Actionable;
 import appeng.api.config.PowerMultiplier;
 import appeng.api.implementations.IPowerChannelState;
 import appeng.api.networking.GridFlags;
-import appeng.api.networking.security.BaseActionSource;
-import appeng.api.networking.security.IActionHost;
-import appeng.api.networking.security.MachineSource;
 import appeng.api.storage.IMEMonitor;
 import appeng.api.storage.data.IAEItemStack;
 import appeng.core.localization.WailaText;
@@ -137,19 +131,6 @@ public class SuperInputBusME extends MTEHatchInputBusME implements IConfiguratio
     }
 
     @Override
-    public void onPostTick(IGregTechTileEntity aBaseMetaTileEntity, long aTimer) {
-        if (aBaseMetaTileEntity.isServerSide()) {
-            if (aTimer % autoPullRefreshTime == 0 && autoPullItemList) {
-                refreshItemList();
-            }
-            if (aTimer % 20 == 0) {
-                aBaseMetaTileEntity.setActive(isActive());
-            }
-        }
-        super.onPostTick(aBaseMetaTileEntity, aTimer);
-    }
-
-    @Override
     public void saveNBTData(NBTTagCompound aNBT) {
         super.saveNBTData(aNBT);
         int[] sizes = new int[100];
@@ -172,11 +153,6 @@ public class SuperInputBusME extends MTEHatchInputBusME implements IConfiguratio
             refreshItemList();
         }
         updateAllInformationSlots();
-    }
-
-    @Override
-    public boolean doFastRecipeCheck() {
-        return expediteRecipeCheck;
     }
 
     @Override
@@ -240,15 +216,7 @@ public class SuperInputBusME extends MTEHatchInputBusME implements IConfiguratio
 
     @Override
     public NBTTagCompound getCopiedData(EntityPlayer player) {
-        NBTTagCompound tag = new NBTTagCompound();
-        tag.setString("type", COPIED_DATA_IDENTIFIER);
-        tag.setBoolean("autoPull", autoPullItemList);
-        tag.setInteger("minStackSize", minAutoPullStackSize);
-        tag.setInteger("refreshTime", autoPullRefreshTime);
-        tag.setBoolean("expediteRecipeCheck", expediteRecipeCheck);
-        tag.setBoolean("additionalConnection", additionalConnection);
-        tag.setTag("circuit", GTUtility.saveItem(getStackInSlot(getCircuitSlot())));
-        tag.setByte("color", this.getColor());
+        NBTTagCompound nbt = super.getCopiedData(player);
 
         NBTTagList stockingItems = new NBTTagList();
 
@@ -256,9 +224,9 @@ public class SuperInputBusME extends MTEHatchInputBusME implements IConfiguratio
             for (int index = 0; index < SIDE_SLOT_COUNT; index++) {
                 stockingItems.appendTag(GTUtility.saveItem(mInventory[index]));
             }
-            tag.setTag("itemsToStock", stockingItems);
+            nbt.setTag("itemsToStock", stockingItems);
         }
-        return tag;
+        return nbt;
     }
 
     @Override
@@ -269,11 +237,6 @@ public class SuperInputBusME extends MTEHatchInputBusME implements IConfiguratio
     @Override
     public int getCircuitSlotX() {
         return 188;
-    }
-
-    @Override
-    public int getCircuitSlotY() {
-        return 64;
     }
 
     @Override
@@ -332,12 +295,6 @@ public class SuperInputBusME extends MTEHatchInputBusME implements IConfiguratio
             this.setInventorySlotContents(aIndex + SIDE_SLOT_COUNT, null);
         }
         return mInventory[aIndex];
-    }
-
-    @Override
-    public BaseActionSource getRequestSource() {
-        if (requestSource == null) requestSource = new MachineSource((IActionHost) getBaseMetaTileEntity());
-        return requestSource;
     }
 
     @Override
@@ -693,65 +650,6 @@ public class SuperInputBusME extends MTEHatchInputBusME implements IConfiguratio
         builder.widget(
             scrollable.setSize(18 * 9 + 4, 18 * 4)
                 .setPos(7, 7));
-        return builder.build();
-    }
-
-    @Override
-    public ModularWindow createStackSizeConfigurationWindow(final EntityPlayer player) {
-        final int WIDTH = 78;
-        final int HEIGHT = 115;
-        final int PARENT_WIDTH = getGUIWidth();
-        final int PARENT_HEIGHT = getGUIHeight();
-        ModularWindow.Builder builder = ModularWindow.builder(WIDTH, HEIGHT);
-        builder.setBackground(GTUITextures.BACKGROUND_SINGLEBLOCK_DEFAULT);
-        builder.setGuiTint(getGUIColorization());
-        builder.setDraggable(true);
-        builder.setPos(
-            (size, window) -> Alignment.Center.getAlignedPos(size, new Size(PARENT_WIDTH, PARENT_HEIGHT))
-                .add(
-                    Alignment.TopRight.getAlignedPos(new Size(PARENT_WIDTH, PARENT_HEIGHT), new Size(WIDTH, HEIGHT))
-                        .add(WIDTH - 3, 0)));
-        builder.widget(
-            TextWidget.localised("GT5U.machines.stocking_bus.min_stack_size")
-                .setPos(3, 2)
-                .setSize(74, 14))
-            .widget(
-                new NumericWidget().setSetter(val -> minAutoPullStackSize = (int) val)
-                    .setGetter(() -> minAutoPullStackSize)
-                    .setBounds(1, Integer.MAX_VALUE)
-                    .setScrollValues(1, 4, 64)
-                    .setTextAlignment(Alignment.Center)
-                    .setTextColor(Color.WHITE.normal)
-                    .setSize(70, 18)
-                    .setPos(3, 18)
-                    .setBackground(GTUITextures.BACKGROUND_TEXT_FIELD));
-        builder.widget(
-            TextWidget.localised("GT5U.machines.stocking_bus.refresh_time")
-                .setPos(3, 42)
-                .setSize(74, 14))
-            .widget(
-                new NumericWidget().setSetter(val -> autoPullRefreshTime = (int) val)
-                    .setGetter(() -> autoPullRefreshTime)
-                    .setBounds(1, Integer.MAX_VALUE)
-                    .setScrollValues(1, 4, 64)
-                    .setTextAlignment(Alignment.Center)
-                    .setTextColor(Color.WHITE.normal)
-                    .setSize(70, 18)
-                    .setPos(3, 58)
-                    .setBackground(GTUITextures.BACKGROUND_TEXT_FIELD));
-        builder.widget(
-            TextWidget.localised("GT5U.machines.stocking_bus.force_check")
-                .setPos(3, 88)
-                .setSize(50, 14))
-            .widget(
-                new CycleButtonWidget().setToggle(() -> expediteRecipeCheck, this::setRecipeCheck)
-                    .setTextureGetter(
-                        state -> expediteRecipeCheck ? GTUITextures.OVERLAY_BUTTON_CHECKMARK
-                            : GTUITextures.OVERLAY_BUTTON_CROSS)
-                    .setBackground(GTUITextures.BUTTON_STANDARD)
-                    .setPos(53, 87)
-                    .setSize(16, 16)
-                    .addTooltip(StatCollector.translateToLocal("GT5U.machines.stocking_bus.hatch_warning")));
         return builder.build();
     }
 

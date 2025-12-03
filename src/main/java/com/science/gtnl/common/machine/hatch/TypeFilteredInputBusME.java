@@ -1,10 +1,10 @@
 package com.science.gtnl.common.machine.hatch;
 
-import java.util.Iterator;
+import static gregtech.api.enums.GTValues.*;
+
 import java.util.function.Predicate;
 
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.StatCollector;
 
@@ -23,9 +23,7 @@ import com.science.gtnl.utils.ItemFilteredList;
 import com.science.gtnl.utils.enums.GTNLItemList;
 
 import appeng.api.networking.GridFlags;
-import appeng.api.storage.IMEMonitor;
 import appeng.api.storage.data.IAEItemStack;
-import appeng.me.GridAccessException;
 import appeng.me.helpers.AENetworkProxy;
 import appeng.me.helpers.IGridProxyable;
 import gregtech.api.gui.modularui.GTUITextures;
@@ -33,45 +31,44 @@ import gregtech.api.interfaces.ITexture;
 import gregtech.api.interfaces.tileentity.IGregTechTileEntity;
 import gregtech.api.metatileentity.MetaTileEntity;
 import gregtech.api.util.GTRecipeBuilder;
-import gregtech.api.util.GTUtility;
-import gregtech.common.tileentities.machines.MTEHatchInputBusME;
 
-public class TypeFilteredInputBusME extends MTEHatchInputBusME {
+public class TypeFilteredInputBusME extends OredictInputBusME {
 
     @Nullable
-    private String modid;
+    public String modid;
     @Nullable
-    private String name;
-    private int meta = GTRecipeBuilder.WILDCARD;
+    public String name = "*";
+    public int meta = GTRecipeBuilder.WILDCARD;
 
-    public TypeFilteredInputBusME(int aID, String aName, String aNameRegional) {
-        super(aID, true, aName, aNameRegional);
+    public TypeFilteredInputBusME(int aID, String aName, String aNameRegional, boolean isSuper) {
+        super(aID, aName, aNameRegional, isSuper);
     }
 
     public TypeFilteredInputBusME(String aName, boolean autoPullAvailable, int aTier, String[] aDescription,
-        ITexture[][][] aTextures) {
-        super(aName, autoPullAvailable, aTier, aDescription, aTextures);
+        ITexture[][][] aTextures, boolean isSuper) {
+        super(aName, autoPullAvailable, aTier, aDescription, aTextures, isSuper);
     }
 
     @Override
     public MetaTileEntity newMetaEntity(IGregTechTileEntity aTileEntity) {
-        return new TypeFilteredInputBusME(mName, autoPullAvailable, mTier, mDescriptionArray, mTextures);
+        return new TypeFilteredInputBusME(mName, autoPullAvailable, mTier, mDescriptionArray, mTextures, isSuper);
     }
 
     @Override
     public String[] getDescription() {
         return new String[] { StatCollector.translateToLocal("Tooltip_TypeFilteredInputBusME_00"),
-            StatCollector.translateToLocal("Tooltip_TypeFilteredInputBusME_01"),
+            StatCollector.translateToLocal("Tooltip_TypeFilteredInputBusME_01") + TIER_COLORS[isSuper ? 8 : 6],
             StatCollector.translateToLocal("Tooltip_TypeFilteredInputBusME_02"),
-            StatCollector.translateToLocal("Tooltip_TypeFilteredInputBusME_03"),
+            StatCollector.translateToLocalFormatted("Tooltip_TypeFilteredInputBusME_03", isSuper ? 100 : 16),
             StatCollector.translateToLocal("Tooltip_TypeFilteredInputBusME_04"),
             StatCollector.translateToLocal("Tooltip_TypeFilteredInputBusME_05"),
-            StatCollector.translateToLocal("Tooltip_TypeFilteredInputBusME_06"),
+            StatCollector.translateToLocalFormatted("Tooltip_TypeFilteredInputBusME_06", isSuper ? 100 : 16),
             StatCollector.translateToLocal("Tooltip_TypeFilteredInputBusME_07"),
             StatCollector.translateToLocal("Tooltip_TypeFilteredInputBusME_08"),
             StatCollector.translateToLocal("Tooltip_TypeFilteredInputBusME_09") };
     }
 
+    @Override
     public boolean hasFilter() {
         return (modid != null && !modid.isEmpty()) || (name != null && !name.isEmpty())
             || (meta != GTRecipeBuilder.WILDCARD);
@@ -107,42 +104,12 @@ public class TypeFilteredInputBusME extends MTEHatchInputBusME {
     }
 
     @Override
-    public void refreshItemList() {
-        AENetworkProxy proxy = getProxy();
-        try {
-            String combinedFilter = buildFilterString();
-            Predicate<IAEItemStack> itemFilter = hasFilter() ? ItemFilteredList.makeFilter(combinedFilter) : null;
-
-            IMEMonitor<IAEItemStack> sg = proxy.getStorage()
-                .getItemInventory();
-            Iterator<IAEItemStack> iterator = sg.getStorageList()
-                .iterator();
-
-            int index = 0;
-            while (iterator.hasNext() && index < SLOT_COUNT) {
-                IAEItemStack currItem = iterator.next();
-                if (currItem == null || itemFilter == null || !itemFilter.test(currItem)) continue;
-
-                if (currItem.getStackSize() >= minAutoPullStackSize) {
-                    ItemStack itemstack = GTUtility.copyAmount(1, currItem.getItemStack());
-                    if (expediteRecipeCheck) {
-                        ItemStack previous = this.mInventory[index];
-                        if (itemstack != null) {
-                            justHadNewItems = !ItemStack.areItemStacksEqual(itemstack, previous);
-                        }
-                    }
-                    this.mInventory[index] = itemstack;
-                    index++;
-                }
-            }
-            for (int i = index; i < SLOT_COUNT; i++) {
-                mInventory[i] = null;
-            }
-
-        } catch (final GridAccessException ignored) {}
+    public Predicate<IAEItemStack> createFilter() {
+        if (!hasFilter()) return null;
+        return ItemFilteredList.makeFilter(buildFilterString());
     }
 
-    private String buildFilterString() {
+    public String buildFilterString() {
         StringBuilder sb = new StringBuilder();
         if (modid != null && !modid.isEmpty()) sb.append(modid);
         if (name != null && !name.isEmpty()) {
