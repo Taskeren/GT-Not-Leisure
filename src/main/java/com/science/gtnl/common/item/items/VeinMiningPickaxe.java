@@ -20,7 +20,6 @@ import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.Item;
-import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemPickaxe;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -384,8 +383,7 @@ public class VeinMiningPickaxe extends ItemPickaxe implements SubtitleDisplay {
             if (silk) {
                 Item item = Item.getItemFromBlock(blk);
                 if (item != null) {
-                    Block drop = item instanceof ItemBlock ? Block.getBlockFromItem(item) : blk;
-                    drops.add(new ItemStack(item, 1, drop.getDamageValue(world, x, y, z)));
+                    drops.add(new ItemStack(item, 1, blk.damageDropped(meta)));
                 }
             } else {
                 drops.addAll(blk.getDrops(world, x, y, z, meta, fortune));
