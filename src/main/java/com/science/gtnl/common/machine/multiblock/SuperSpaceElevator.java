@@ -307,25 +307,23 @@ public class SuperSpaceElevator extends TTMultiblockBase
             STRUCTURE_PIECE_MAIN_VERT_OFFSET,
             STRUCTURE_PIECE_MAIN_DEPTH_OFFSET);
 
-        int tMotorTier = Math.min(stackSize.stackSize, 6);
-        if (tMotorTier > 1) {
-            for (int i = 0; i < tMotorTier - 1; i++) {
-                this.buildPiece(
-                    STRUCTURE_PIECE_EXTENDED,
-                    stackSize,
-                    hintsOnly,
-                    STRUCTURE_PIECE_EXTENDED_HOR_OFFSET,
-                    STRUCTURE_PIECE_EXTENDED_VERT_OFFSET - i * 6,
-                    STRUCTURE_PIECE_EXTENDED_DEPTH_OFFSET);
-            }
+        int tTier = Math.min(stackSize.stackSize, 5);
+        for (int i = 0; i < tTier; i++) {
+            this.buildPiece(
+                STRUCTURE_PIECE_EXTENDED,
+                stackSize,
+                hintsOnly,
+                STRUCTURE_PIECE_EXTENDED_HOR_OFFSET,
+                STRUCTURE_PIECE_EXTENDED_VERT_OFFSET - i * 6,
+                STRUCTURE_PIECE_EXTENDED_DEPTH_OFFSET);
         }
     }
 
     @Override
     public int survivalConstruct(ItemStack stackSize, int elementBudget, ISurvivalBuildEnvironment env) {
-        if (this.mMachine && motorTier >= 6) return -1;
+        if (this.mMachine) return -1;
 
-        int tMotorTier = Math.min(stackSize.stackSize, 6);
+        int tTier = Math.min(stackSize.stackSize, 5);
 
         int built;
 
@@ -342,21 +340,19 @@ public class SuperSpaceElevator extends TTMultiblockBase
 
         if (built >= 0) return built;
 
-        if (tMotorTier > 1) {
-            for (int i = 0; i < tMotorTier - 1; i++) {
-                built = this.survivalBuildPiece(
-                    STRUCTURE_PIECE_EXTENDED,
-                    stackSize,
-                    STRUCTURE_PIECE_EXTENDED_HOR_OFFSET,
-                    STRUCTURE_PIECE_EXTENDED_VERT_OFFSET - i * 6,
-                    STRUCTURE_PIECE_EXTENDED_DEPTH_OFFSET,
-                    elementBudget,
-                    env,
-                    false,
-                    true);
+        for (int i = 0; i < tTier; i++) {
+            built = this.survivalBuildPiece(
+                STRUCTURE_PIECE_EXTENDED,
+                stackSize,
+                STRUCTURE_PIECE_EXTENDED_HOR_OFFSET,
+                STRUCTURE_PIECE_EXTENDED_VERT_OFFSET - i * 6,
+                STRUCTURE_PIECE_EXTENDED_DEPTH_OFFSET,
+                elementBudget,
+                env,
+                false,
+                true);
 
-                if (built >= 0) return built;
-            }
+            if (built >= 0) return built;
         }
 
         return built;
