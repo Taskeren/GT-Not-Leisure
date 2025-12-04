@@ -1,7 +1,6 @@
 package com.science.gtnl.loader;
 
 import java.util.Collection;
-import java.util.HashMap;
 import java.util.Map;
 
 import net.minecraft.init.Blocks;
@@ -145,6 +144,8 @@ import gregtech.api.util.GTOreDictUnificator;
 import gregtech.api.util.GTRecipe;
 import gtPlusPlus.xmod.gregtech.api.enums.GregtechItemList;
 import gtnhlanth.api.recipe.LanthanidesRecipeMaps;
+import it.unimi.dsi.fastutil.objects.Object2IntMap;
+import it.unimi.dsi.fastutil.objects.Object2IntOpenHashMap;
 import tectech.thing.CustomItemList;
 
 public class RecipeLoader {
@@ -449,7 +450,7 @@ public class RecipeLoader {
         LanthanidesRecipeMaps.targetChamberRecipes.getBackend()
             .clearRecipes();
 
-        Map<ItemStack, Integer> waferMultiplier = new HashMap<>() {
+        Object2IntMap<ItemStack> waferMultiplier = new Object2IntOpenHashMap<>() {
 
             {
                 put(ItemList.Circuit_Silicon_Wafer2.get(1), 1);

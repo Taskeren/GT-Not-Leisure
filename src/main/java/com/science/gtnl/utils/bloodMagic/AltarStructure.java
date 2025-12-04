@@ -29,6 +29,7 @@ import com.gtnewhorizon.structurelib.structure.StructureDefinition;
 import WayofTime.alchemicalWizardry.AlchemicalWizardry;
 import WayofTime.alchemicalWizardry.ModBlocks;
 import WayofTime.alchemicalWizardry.api.BlockStack;
+import it.unimi.dsi.fastutil.ints.IntArrayList;
 
 public class AltarStructure {
 
@@ -180,14 +181,15 @@ public class AltarStructure {
             out.add(StatCollector.translateToLocal("structurelib.bloodmagic.altar.1"));
             out.add(StatCollector.translateToLocal("structurelib.bloodmagic.altar.2"));
 
-            int[] pillarTiers = { 3, 4, 6 };
+            IntArrayList pillarTiers = new IntArrayList(new int[] { 3, 4, 6 });
             List<BlockStack>[] pillarLists = new List[] { AlchemicalWizardry.thirdTierPillars,
                 AlchemicalWizardry.fourthTierPillars, AlchemicalWizardry.sixthTierPillars };
-            ArrayList<Integer> pillars = new ArrayList<>();
 
-            for (int i = 0; i < pillarTiers.length; i++) {
+            IntArrayList pillars = new IntArrayList();
+
+            for (int i = 0; i < pillarTiers.size(); i++) {
                 if (pillarLists[i].isEmpty()) {
-                    pillars.add(pillarTiers[i]);
+                    pillars.add(pillarTiers.getInt(i));
                 }
             }
 
@@ -199,14 +201,14 @@ public class AltarStructure {
                             .join(pillars)));
             }
 
-            int[] capTiers = { 3, 4, 6 };
+            IntArrayList capTiers = new IntArrayList(new int[] { 3, 4, 6 });
             List<BlockStack>[] capLists = new List[] { AlchemicalWizardry.thirdTierCaps,
                 AlchemicalWizardry.fourthTierCaps, AlchemicalWizardry.sixthTierCaps };
-            ArrayList<Integer> caps = new ArrayList<>();
 
-            for (int i = 0; i < capTiers.length; i++) {
+            IntArrayList caps = new IntArrayList();
+            for (int i = 0; i < capTiers.size(); i++) {
                 if (capLists[i].isEmpty()) {
-                    caps.add(capTiers[i]);
+                    caps.add(capTiers.getInt(i));
                 }
             }
 
@@ -218,7 +220,7 @@ public class AltarStructure {
                             .join(caps)));
             }
 
-            if (AlchemicalWizardry.fifthTierBeacons.isEmpty()) { // T5 Beacon
+            if (AlchemicalWizardry.fifthTierBeacons.isEmpty()) {
                 out.add(StatCollector.translateToLocal("structurelib.bloodmagic.altar.5"));
             }
 

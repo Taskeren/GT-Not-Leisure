@@ -15,7 +15,6 @@ import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
-import net.minecraftforge.common.util.EnumHelper;
 
 import com.reavaritia.ReAvaCreativeTabs;
 import com.reavaritia.ReAvaItemList;
@@ -28,10 +27,8 @@ import cpw.mods.fml.relauncher.SideOnly;
 
 public class BlazeSword extends ItemSword {
 
-    public static final ToolMaterial BLAZE = EnumHelper.addToolMaterial("BLAZE", 3, 7777, 10.0F, 22.0F, 30);
-
     public BlazeSword() {
-        super(BLAZE);
+        super(ToolHelper.BLAZE);
         this.setUnlocalizedName("BlazeSword");
         this.setTextureName(RESOURCE_ROOT_ID + ":" + "BlazeSword");
         this.setCreativeTab(CreativeTabs.tabCombat);

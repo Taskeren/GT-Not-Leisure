@@ -19,7 +19,6 @@ import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.IChatComponent;
 import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
-import net.minecraftforge.common.util.EnumHelper;
 
 import com.reavaritia.ReAvaCreativeTabs;
 import com.reavaritia.ReAvaItemList;
@@ -30,10 +29,8 @@ import cpw.mods.fml.relauncher.SideOnly;
 
 public class BlazeShovel extends ItemSpade implements SubtitleDisplay {
 
-    public static final ToolMaterial BLAZE = EnumHelper.addToolMaterial("BLAZE", 3, 7777, 9999F, 10F, 10);
-
     public BlazeShovel() {
-        super(BLAZE);
+        super(ToolHelper.BLAZE);
         this.setUnlocalizedName("BlazeShovel");
         setCreativeTab(CreativeTabs.tabTools);
         this.setCreativeTab(ReAvaCreativeTabs.ReAvaritia);

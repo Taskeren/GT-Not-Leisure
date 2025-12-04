@@ -19,7 +19,6 @@ import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.IChatComponent;
 import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
-import net.minecraftforge.common.util.EnumHelper;
 
 import com.reavaritia.ReAvaCreativeTabs;
 import com.reavaritia.ReAvaItemList;
@@ -30,10 +29,8 @@ import cpw.mods.fml.relauncher.SideOnly;
 
 public class CrystalPickaxe extends ItemPickaxe implements SubtitleDisplay {
 
-    public static final ToolMaterial CRYSTAL = EnumHelper.addToolMaterial("CRYSTAL", 32, 8888, 9999F, 8.0F, 22);
-
     public CrystalPickaxe() {
-        super(CRYSTAL);
+        super(ToolHelper.CRYSTAL);
         this.setUnlocalizedName("CrystalPickaxe");
         setCreativeTab(CreativeTabs.tabTools);
         this.setCreativeTab(ReAvaCreativeTabs.ReAvaritia);

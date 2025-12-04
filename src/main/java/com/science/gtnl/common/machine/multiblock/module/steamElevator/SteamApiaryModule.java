@@ -87,6 +87,8 @@ import gregtech.api.recipe.check.SimpleCheckRecipeResult;
 import gregtech.api.util.GTUtility;
 import gregtech.api.util.MultiblockTooltipBuilder;
 import gregtech.common.tileentities.machines.MTEHatchOutputBusME;
+import it.unimi.dsi.fastutil.objects.Object2IntMap;
+import it.unimi.dsi.fastutil.objects.Object2IntOpenHashMap;
 import kubatech.api.DynamicInventory;
 
 public class SteamApiaryModule extends SteamElevatorModule {
@@ -184,7 +186,7 @@ public class SteamApiaryModule extends SteamElevatorModule {
                 "" + EnumChatFormatting.GOLD + mStorage.size() + EnumChatFormatting.RESET,
                 (mStorage.size() > mMaxSlots ? EnumChatFormatting.DARK_RED.toString()
                     : EnumChatFormatting.GOLD.toString()) + mMaxSlots + EnumChatFormatting.RESET));
-        HashMap<String, Integer> infos = new HashMap<>();
+        Object2IntMap<String> infos = new Object2IntOpenHashMap<>();
         for (int i = 0; i < mStorage.size(); i++) {
             StringBuilder builder = new StringBuilder();
             if (i > mMaxSlots) builder.append(EnumChatFormatting.DARK_RED);

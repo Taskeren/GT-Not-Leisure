@@ -2,10 +2,7 @@ package com.reavaritia.common.item;
 
 import static com.reavaritia.ReAvaritia.RESOURCE_ROOT_ID;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Map.Entry;
 
 import net.minecraft.client.gui.GuiScreen;
@@ -29,6 +26,9 @@ import codechicken.lib.math.MathHelper;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import fox.spiteful.avaritia.render.ICosmicRenderItem;
+import it.unimi.dsi.fastutil.objects.Object2IntMap;
+import it.unimi.dsi.fastutil.objects.Object2IntOpenHashMap;
+import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 
 public class MatterCluster extends Item implements ICosmicRenderItem {
 
@@ -103,13 +103,13 @@ public class MatterCluster extends Item implements ICosmicRenderItem {
         }
     }
 
-    public static List<ItemStack> makeClusters(List<ItemStack> input) {
-        Map<ItemStackWrapper, Integer> items = ToolHelper.collateMatterCluster(input);
-        List<ItemStack> clusters = new ArrayList<>();
-        List<Entry<ItemStackWrapper, Integer>> itemlist = new ArrayList<>(items.entrySet());
+    public static ObjectArrayList<ItemStack> makeClusters(List<ItemStack> input) {
+        Object2IntOpenHashMap<ItemStackWrapper> items = ToolHelper.collateMatterCluster(input);
+        ObjectArrayList<ItemStack> clusters = new ObjectArrayList<>();
+        ObjectArrayList<Entry<ItemStackWrapper, Integer>> itemlist = new ObjectArrayList<>(items.object2IntEntrySet());
 
         int currentTotal = 0;
-        Map<ItemStackWrapper, Integer> currentItems = new HashMap<>();
+        Object2IntOpenHashMap<ItemStackWrapper> currentItems = new Object2IntOpenHashMap<>();
 
         while (!itemlist.isEmpty()) {
             Entry<ItemStackWrapper, Integer> e = itemlist.get(0);
@@ -118,38 +118,33 @@ public class MatterCluster extends Item implements ICosmicRenderItem {
 
             int count = Math.min(capacity - currentTotal, wrapcount);
 
-            if (!currentItems.containsKey(e.getKey())) {
-                currentItems.put(wrap, count);
-            } else {
-                currentItems.put(wrap, currentItems.get(wrap) + count);
-            }
+            currentItems.put(wrap, currentItems.getInt(wrap) + count);
             currentTotal += count;
 
             e.setValue(wrapcount - count);
+
             if (e.getValue() == 0) {
                 itemlist.remove(0);
             }
 
             if (currentTotal == capacity) {
                 ItemStack cluster = makeCluster(currentItems);
-
                 clusters.add(cluster);
 
                 currentTotal = 0;
-                currentItems = new HashMap<>();
+                currentItems.clear();
             }
         }
 
         if (currentTotal > 0) {
             ItemStack cluster = makeCluster(currentItems);
-
             clusters.add(cluster);
         }
 
         return clusters;
     }
 
-    public static ItemStack makeCluster(Map<ItemStackWrapper, Integer> input) {
+    public static ItemStack makeCluster(Object2IntOpenHashMap<ItemStackWrapper> input) {
         ItemStack cluster = new ItemStack(ItemLoader.MatterCluster);
         int total = 0;
         for (int num : input.values()) {
@@ -159,15 +154,15 @@ public class MatterCluster extends Item implements ICosmicRenderItem {
         return cluster;
     }
 
-    public static Map<ItemStackWrapper, Integer> getClusterData(ItemStack cluster) {
+    public static Object2IntOpenHashMap<ItemStackWrapper> getClusterData(ItemStack cluster) {
         if (!cluster.hasTagCompound() || !cluster.getTagCompound()
             .hasKey(MAINTAG)) {
-            return new HashMap<>();
+            return new Object2IntOpenHashMap<>();
         }
         NBTTagCompound tag = cluster.getTagCompound()
             .getCompoundTag(MAINTAG);
         NBTTagList list = tag.getTagList(LISTTAG, 10);
-        Map<ItemStackWrapper, Integer> data = new HashMap<>();
+        Object2IntOpenHashMap<ItemStackWrapper> data = new Object2IntOpenHashMap<>();
 
         for (int i = 0; i < list.tagCount(); i++) {
             NBTTagCompound entry = list.getCompoundTagAt(i);
@@ -192,7 +187,7 @@ public class MatterCluster extends Item implements ICosmicRenderItem {
             .getInteger(MAINCOUNTTAG);
     }
 
-    public static void setClusterData(ItemStack stack, Map<ItemStackWrapper, Integer> data, int count) {
+    public static void setClusterData(ItemStack stack, Object2IntMap<ItemStackWrapper> data, int count) {
         if (!stack.hasTagCompound()) {
             stack.setTagCompound(new NBTTagCompound());
         }
@@ -200,7 +195,7 @@ public class MatterCluster extends Item implements ICosmicRenderItem {
         NBTTagCompound clustertag = new NBTTagCompound();
         NBTTagList list = new NBTTagList();
 
-        for (Entry<ItemStackWrapper, Integer> entry : data.entrySet()) {
+        for (Entry<ItemStackWrapper, Integer> entry : data.object2IntEntrySet()) {
             NBTTagCompound itemtag = new NBTTagCompound();
             itemtag.setTag(
                 ITEMTAG,
@@ -224,9 +219,11 @@ public class MatterCluster extends Item implements ICosmicRenderItem {
             return;
         }
 
-        Map<ItemStackWrapper, Integer> donordata = getClusterData(donor);
-        Map<ItemStackWrapper, Integer> recipientdata = getClusterData(recipient);
-        List<Entry<ItemStackWrapper, Integer>> datalist = new ArrayList<>(donordata.entrySet());
+        Object2IntOpenHashMap<ItemStackWrapper> donordata = getClusterData(donor);
+        Object2IntOpenHashMap<ItemStackWrapper> recipientdata = getClusterData(recipient);
+
+        ObjectArrayList<Entry<ItemStackWrapper, Integer>> datalist = new ObjectArrayList<>(
+            donordata.object2IntEntrySet());
 
         while (recipientcount < capacity && donorcount > 0) {
             Entry<ItemStackWrapper, Integer> e = datalist.get(0);
@@ -235,11 +232,7 @@ public class MatterCluster extends Item implements ICosmicRenderItem {
 
             int count = Math.min(capacity - recipientcount, wrapcount);
 
-            if (!recipientdata.containsKey(wrap)) {
-                recipientdata.put(wrap, count);
-            } else {
-                recipientdata.put(wrap, recipientdata.get(wrap) + count);
-            }
+            recipientdata.put(wrap, recipientdata.getOrDefault(wrap, 0) + count);
 
             donorcount -= count;
             recipientcount += count;
@@ -251,8 +244,11 @@ public class MatterCluster extends Item implements ICosmicRenderItem {
                 datalist.remove(0);
             }
         }
+
+        // 更新 recipient 的数据
         setClusterData(recipient, recipientdata, recipientcount);
 
+        // 如果 donor 仍有剩余物品，更新 donor 数据，否则清空 donor 数据
         if (donorcount > 0) {
             setClusterData(donor, donordata, donorcount);
         } else {

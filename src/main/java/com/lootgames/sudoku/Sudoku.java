@@ -24,6 +24,7 @@ import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import ru.timeconqueror.lootgames.api.LootGamesAPI;
 
+@Deprecated
 @Mod(modid = MODID, version = "0.0.1", name = MODNAME, acceptedMinecraftVersions = "1.7.10")
 public class Sudoku {
 

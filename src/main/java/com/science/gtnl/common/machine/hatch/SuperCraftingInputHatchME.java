@@ -117,6 +117,8 @@ import gregtech.common.tileentities.machines.IDualInputHatch;
 import gregtech.common.tileentities.machines.IDualInputHatchWithPattern;
 import gregtech.common.tileentities.machines.IDualInputInventory;
 import gregtech.common.tileentities.machines.IDualInputInventoryWithPattern;
+import it.unimi.dsi.fastutil.objects.Object2LongOpenHashMap;
+import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import lombok.Getter;
 import mcp.mobius.waila.api.IWailaConfigHandler;
 import mcp.mobius.waila.api.IWailaDataAccessor;
@@ -759,13 +761,14 @@ public class SuperCraftingInputHatchME extends MTEHatchInputBus
 
     @Override
     public String[] getInfoData() {
-        List<String> ret = new ArrayList<>();
+        List<String> ret = new ObjectArrayList<>();
         ret.add(
             "The bus is " + ((getProxy() != null && getProxy().isActive()) ? EnumChatFormatting.GREEN + "online"
                 : EnumChatFormatting.RED + "offline" + getAEDiagnostics()) + EnumChatFormatting.RESET);
         ret.add(StatCollector.translateToLocal("Info_ShowPattern_" + (showPattern ? "Enabled" : "Disabled")));
         ret.add("Internal Inventory: ");
         int i = 0;
+
         for (PatternSlot<SuperCraftingInputHatchME> slot : internalInventory) {
             if (slot == null) continue;
             IWideReadableNumberConverter nc = ReadableNumberConverter.INSTANCE;
@@ -776,8 +779,11 @@ public class SuperCraftingInputHatchME extends MTEHatchInputBus
                     "GT5U.infodata.hatch.internal_inventory.slot",
                     i,
                     EnumChatFormatting.BLUE + describePattern(slot.patternDetails) + EnumChatFormatting.RESET));
-            Map<GTUtility.ItemId, Long> itemMap = GTUtility.convertItemListToMap(slot.itemInventory);
-            for (Map.Entry<GTUtility.ItemId, Long> entry : itemMap.entrySet()) {
+
+            Object2LongOpenHashMap<GTUtility.ItemId> itemMap = new Object2LongOpenHashMap<>();
+            itemMap.putAll(GTUtility.convertItemListToMap(slot.itemInventory));
+
+            for (Map.Entry<GTUtility.ItemId, Long> entry : itemMap.object2LongEntrySet()) {
                 ItemStack item = entry.getKey()
                     .getItemStack();
                 long amount = entry.getValue();
@@ -788,8 +794,11 @@ public class SuperCraftingInputHatchME extends MTEHatchInputBus
                         + nc.toWideReadableForm(amount)
                         + EnumChatFormatting.RESET);
             }
-            Map<Fluid, Long> fluidMap = GTUtility.convertFluidListToMap(slot.fluidInventory);
-            for (Map.Entry<Fluid, Long> entry : fluidMap.entrySet()) {
+
+            Object2LongOpenHashMap<Fluid> fluidMap = new Object2LongOpenHashMap<>();
+            fluidMap.putAll(GTUtility.convertFluidListToMap(slot.fluidInventory));
+
+            for (Map.Entry<Fluid, Long> entry : fluidMap.object2LongEntrySet()) {
                 FluidStack fluid = new FluidStack(entry.getKey(), 1);
                 long amount = entry.getValue();
                 ret.add(
@@ -1030,23 +1039,27 @@ public class SuperCraftingInputHatchME extends MTEHatchInputBus
         int z) {
         tag.setBoolean("showPattern", showPattern);
         NBTTagList inventory = new NBTTagList();
-        HashMap<String, Long> nameToAmount = new HashMap<>();
-        for (Iterator<PatternSlot<SuperCraftingInputHatchME>> it = inventories(); it.hasNext();) {
+
+        Object2LongOpenHashMap<String> nameToAmount = new Object2LongOpenHashMap<>();
+
+        Iterator<PatternSlot<SuperCraftingInputHatchME>> it = inventories();
+        while (it.hasNext()) {
             PatternSlot<SuperCraftingInputHatchME> i = it.next();
             for (ItemStack item : i.itemInventory) {
                 if (item != null && item.stackSize > 0) {
                     String name = item.getDisplayName();
-                    nameToAmount.merge(name, (long) item.stackSize, Long::sum);
+                    nameToAmount.merge(name, item.stackSize, Long::sum);
                 }
             }
             for (FluidStack fluid : i.fluidInventory) {
                 if (fluid != null && fluid.amount > 0) {
                     String name = fluid.getLocalizedName();
-                    nameToAmount.merge(name, (long) fluid.amount, Long::sum);
+                    nameToAmount.merge(name, fluid.amount, Long::sum);
                 }
             }
         }
-        for (Map.Entry<String, Long> entry : nameToAmount.entrySet()) {
+
+        for (Map.Entry<String, Long> entry : nameToAmount.object2LongEntrySet()) {
             NBTTagCompound item = new NBTTagCompound();
             item.setString("name", entry.getKey());
             item.setLong("amount", entry.getValue());
@@ -1054,9 +1067,11 @@ public class SuperCraftingInputHatchME extends MTEHatchInputBus
         }
 
         tag.setTag("inventory", inventory);
+
         if (!Objects.equals(getName(), getLocalName())) {
             tag.setString("name", getName());
         }
+
         super.getWailaNBTData(player, tile, tag, world, x, y, z);
     }
 

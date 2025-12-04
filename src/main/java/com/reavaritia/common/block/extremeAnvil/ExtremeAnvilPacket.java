@@ -14,8 +14,8 @@ import lombok.Getter;
 @Getter
 public class ExtremeAnvilPacket implements IMessage {
 
-    private String payloadIdentifier;
-    private byte[] payloadData;
+    public String payloadIdentifier;
+    public byte[] payloadData;
 
     public ExtremeAnvilPacket() {}
 

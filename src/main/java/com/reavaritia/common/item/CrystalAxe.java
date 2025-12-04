@@ -16,7 +16,6 @@ import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
-import net.minecraftforge.common.util.EnumHelper;
 
 import com.reavaritia.ReAvaCreativeTabs;
 import com.reavaritia.ReAvaItemList;
@@ -26,10 +25,8 @@ import cpw.mods.fml.relauncher.SideOnly;
 
 public class CrystalAxe extends ItemAxe {
 
-    public static final ToolMaterial CRYSTAL = EnumHelper.addToolMaterial("CRYSTAL", 32, 8888, 9999F, 7.0F, 22);
-
     public CrystalAxe() {
-        super(CRYSTAL);
+        super(ToolHelper.CRYSTAL);
         this.setUnlocalizedName("CrystalAxe");
         this.setCreativeTab(CreativeTabs.tabCombat);
         this.setCreativeTab(CreativeTabs.tabTools);

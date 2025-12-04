@@ -16,7 +16,6 @@ import net.minecraft.item.ItemHoe;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
-import net.minecraftforge.common.util.EnumHelper;
 
 import com.reavaritia.ReAvaCreativeTabs;
 import com.reavaritia.ReAvaItemList;
@@ -26,11 +25,10 @@ import cpw.mods.fml.relauncher.SideOnly;
 
 public class CrystalHoe extends ItemHoe {
 
-    public static final ToolMaterial CRYSTAL = EnumHelper.addToolMaterial("CRYSTAL", 3, 8888, 9999F, 8.0F, 22);
-    private static final int RANGE = 8;
+    public static final int RANGE = 8;
 
     public CrystalHoe() {
-        super(CRYSTAL);
+        super(ToolHelper.CRYSTAL);
         this.setUnlocalizedName("CrystalHoe");
         this.setCreativeTab(CreativeTabs.tabTools);
         this.setCreativeTab(ReAvaCreativeTabs.ReAvaritia);

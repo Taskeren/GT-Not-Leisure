@@ -1,7 +1,6 @@
 package com.reavaritia.common.item;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -15,16 +14,72 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.NBTTagList;
 import net.minecraft.util.MathHelper;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
+import net.minecraftforge.common.util.EnumHelper;
+
+import com.reavaritia.common.ItemLoader;
+
+import it.unimi.dsi.fastutil.objects.Object2IntOpenHashMap;
+import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 
 public class ToolHelper {
 
+    public static Item.ToolMaterial BLAZE = EnumHelper.addToolMaterial("BLAZE", 32, 7777, 9999F, 33.0F, 22);
+    public static Item.ToolMaterial CRYSTAL = EnumHelper.addToolMaterial("CRYSTAL", 32, 8888, 9999F, 7.0F, 22);
+    public static Item.ToolMaterial INFINITY = EnumHelper.addToolMaterial("INFINITY", 32, 9999, 9999F, 98F, 200);
+    public static Material[] MATERIALS = new Material[] { Material.rock, Material.iron, Material.ice, Material.glass,
+        Material.piston, Material.anvil, Material.grass, Material.ground, Material.sand, Material.snow,
+        Material.craftedSnow, Material.clay };
+
     public static Set<EntityPlayer> hammering = new HashSet<>();
     public static Map<EntityPlayer, List<ItemStack>> hammerdrops = new WeakHashMap<>();
+
+    public static void generateMatterCluster(World world, EntityPlayer player, Map<ItemStackWrapper, Integer> items) {
+        NBTTagCompound tag = new NBTTagCompound();
+        NBTTagCompound clusterItems = new NBTTagCompound();
+
+        int total = items.values()
+            .stream()
+            .mapToInt(Integer::intValue)
+            .sum();
+        clusterItems.setInteger("total", total);
+
+        NBTTagList itemsList = new NBTTagList();
+        items.forEach((key, count) -> {
+            NBTTagCompound entry = new NBTTagCompound();
+
+            NBTTagCompound itemTag = new NBTTagCompound();
+            itemTag.setInteger(
+                "id",
+                Item.getIdFromItem(
+                    key.stack()
+                        .getItem()));
+            itemTag.setInteger("Count", 1);
+            itemTag.setInteger("Damage", key.stack().stackSize);
+
+            entry.setTag("item", itemTag);
+            entry.setInteger("count", count);
+
+            itemsList.appendTag(entry);
+        });
+
+        clusterItems.setTag("items", itemsList);
+        tag.setTag("clusteritems", clusterItems);
+
+        ItemStack cluster = new ItemStack(ItemLoader.MatterCluster, 1);
+        cluster.setTagCompound(tag);
+
+        EntityItem entity = new EntityItem(world, player.posX, player.posY + 0.5, player.posZ, cluster);
+        entity.delayBeforeCanPickup = 0;
+        world.spawnEntityInWorld(entity);
+    }
 
     public static void removeBlocksInIteration(EntityPlayer player, ItemStack stack, World world, int x, int y, int z,
         int xs, int ys, int zs, int xe, int ye, int ze, Block block, Material[] materialsListing, boolean silk,
@@ -146,18 +201,19 @@ public class ToolHelper {
         world.spawnEntityInWorld(entityitem);
     }
 
-    public static List<ItemStack> collateMatterClusterContents(Map<ItemStackWrapper, Integer> input) {
-        List<ItemStack> collated = new ArrayList<>();
+    public static List<ItemStack> collateMatterClusterContents(Object2IntOpenHashMap<ItemStackWrapper> input) {
+        List<ItemStack> collated = new ObjectArrayList<>();
         if (input == null) return collated;
-        for (Entry<ItemStackWrapper, Integer> e : input.entrySet()) {
+
+        for (Entry<ItemStackWrapper, Integer> e : input.object2IntEntrySet()) {
             int count = e.getValue();
             ItemStackWrapper wrap = e.getKey();
 
             int size = wrap.stack()
                 .getMaxStackSize();
-            int fullstacks = (int) (double) (count / size);
+            int fullStacks = count / size;
 
-            for (int i = 0; i < fullstacks; i++) {
+            for (int i = 0; i < fullStacks; i++) {
                 count -= size;
                 ItemStack stack = wrap.stack()
                     .copy();
@@ -176,8 +232,8 @@ public class ToolHelper {
         return collated;
     }
 
-    public static Map<ItemStackWrapper, Integer> collateMatterCluster(List<ItemStack> input) {
-        Map<ItemStackWrapper, Integer> counts = new HashMap<>();
+    public static Object2IntOpenHashMap<ItemStackWrapper> collateMatterCluster(List<ItemStack> input) {
+        Object2IntOpenHashMap<ItemStackWrapper> counts = new Object2IntOpenHashMap<>();
 
         if (input != null) {
             for (ItemStack stack : input) {

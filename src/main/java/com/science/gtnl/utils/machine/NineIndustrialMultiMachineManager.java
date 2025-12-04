@@ -2,8 +2,6 @@ package com.science.gtnl.utils.machine;
 
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.stream.Collectors;
 
 import bartworks.API.recipe.BartWorksRecipeMaps;
@@ -12,6 +10,8 @@ import gregtech.api.recipe.RecipeMap;
 import gregtech.api.recipe.RecipeMaps;
 import gtPlusPlus.api.recipe.GTPPRecipeMaps;
 import gtnhlanth.api.recipe.LanthanidesRecipeMaps;
+import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
+import it.unimi.dsi.fastutil.ints.Int2ObjectOpenHashMap;
 import kubatech.loaders.DEFCRecipes;
 import lombok.Getter;
 import tectech.recipe.TecTechRecipeMaps;
@@ -171,7 +171,7 @@ public class NineIndustrialMultiMachineManager {
             return "NineIndustrialMultiMachine_Mode_" + id;
         }
 
-        public static final Map<Integer, MachineMode> BY_ID = new HashMap<>();
+        public static final Int2ObjectMap<MachineMode> BY_ID = new Int2ObjectOpenHashMap<>();
 
         static {
             for (MachineMode mode : values()) {

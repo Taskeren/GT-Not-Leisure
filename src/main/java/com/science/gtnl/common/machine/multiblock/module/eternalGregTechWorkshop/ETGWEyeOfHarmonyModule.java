@@ -10,9 +10,7 @@ import static net.minecraft.util.EnumChatFormatting.*;
 import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
@@ -48,6 +46,8 @@ import gregtech.common.tileentities.machines.MTEHatchInputBusME;
 import gregtech.common.tileentities.machines.MTEHatchOutputBusME;
 import gregtech.common.tileentities.machines.MTEHatchOutputME;
 import gtneioreplugin.plugin.block.ModBlocks;
+import it.unimi.dsi.fastutil.objects.Object2LongMap;
+import it.unimi.dsi.fastutil.objects.Object2LongOpenHashMap;
 import tectech.TecTech;
 import tectech.recipe.EyeOfHarmonyRecipe;
 import tectech.recipe.TecTechRecipeMaps;
@@ -57,15 +57,15 @@ import tectech.util.ItemStackLong;
 
 public class ETGWEyeOfHarmonyModule extends EternalGregTechWorkshopModule {
 
-    private BigInteger outputEU_BigInt = BigInteger.ZERO;
-    private long startEU = 0;
-    private long currentCircuitMultiplier = 0;
-    private boolean enableRawStarMatter;
+    public BigInteger outputEU_BigInt = BigInteger.ZERO;
+    public long startEU = 0;
+    public long currentCircuitMultiplier = 0;
+    public boolean enableRawStarMatter;
 
-    private List<ItemStackLong> outputItems = new ArrayList<>();
-    private List<FluidStackLong> outputFluids = new ArrayList<>();
+    public List<ItemStackLong> outputItems = new ArrayList<>();
+    public List<FluidStackLong> outputFluids = new ArrayList<>();
 
-    private final Map<Fluid, Long> validFluidMap = new HashMap<>() {
+    public Object2LongMap<Fluid> validFluidMap = new Object2LongOpenHashMap<>() {
 
         private static final long serialVersionUID = -8452610443191188130L;
 

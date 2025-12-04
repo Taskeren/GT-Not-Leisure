@@ -13,22 +13,15 @@ public record ItemStackWrapper(ItemStack stack) {
 
     @Override
     public boolean equals(Object otherobj) {
-        if (otherobj instanceof ItemStackWrapper other) {
+        if (!(otherobj instanceof ItemStackWrapper other)) return false;
 
-            if (!Objects.equals(this.stack.getItem(), other.stack.getItem())
-                || this.stack.getItemDamage() != other.stack.getItemDamage()) {
-                return false;
-            }
+        if (!Objects.equals(this.stack.getItem(), other.stack.getItem())) return false;
+        if (this.stack.getItemDamage() != other.stack.getItemDamage()) return false;
 
-            if (this.stack.stackTagCompound == null && other.stack.stackTagCompound == null) {
-                return true;
-            }
-            if (this.stack.stackTagCompound == null ^ other.stack.stackTagCompound == null) {
-                return false;
-            }
-            return this.stack.stackTagCompound.equals(other.stack.stackTagCompound);
-        }
-        return false;
+        if (this.stack.stackTagCompound == null && other.stack.stackTagCompound == null) return true;
+        if (this.stack.stackTagCompound == null || other.stack.stackTagCompound == null) return false;
+
+        return this.stack.stackTagCompound.equals(other.stack.stackTagCompound);
     }
 
     @Override

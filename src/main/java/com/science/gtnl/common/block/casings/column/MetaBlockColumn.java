@@ -1,11 +1,9 @@
 package com.science.gtnl.common.block.casings.column;
 
 import static com.science.gtnl.ScienceNotLeisure.RESOURCE_ROOT_ID;
-import static com.science.gtnl.common.block.casings.column.ItemBlockColumn.MetaBlockSet;
+import static com.science.gtnl.common.block.casings.column.ItemBlockColumn.metaSet;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
@@ -22,18 +20,18 @@ import com.science.gtnl.client.GTNLCreativeTabs;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
+import it.unimi.dsi.fastutil.ints.Int2ObjectOpenHashMap;
 
 public class MetaBlockColumn extends Block {
 
-    public String[] TextureName;
-    public Map<Integer, IIcon[]> TextureMap;
+    public String[] textureName = new String[] { "Side", "Top", "Bottom" };
+    public Int2ObjectMap<IIcon[]> textureMap = new Int2ObjectOpenHashMap<>();
 
     public MetaBlockColumn() {
         super(Material.iron);
         this.setHardness(1.0F);
         this.setResistance(6000000.0F);
-        this.TextureName = new String[] { "Side", "Top", "Bottom" };
-        this.TextureMap = new HashMap<>();
         this.setCreativeTab(GTNLCreativeTabs.GTNotLeisureBlock);
     }
 
@@ -45,9 +43,9 @@ public class MetaBlockColumn extends Block {
     @SideOnly(Side.CLIENT)
     @Override
     public IIcon getIcon(int side, int meta) {
-        IIcon[] textures = this.TextureMap.get(meta);
+        IIcon[] textures = this.textureMap.get(meta);
         if (textures == null) {
-            textures = this.TextureMap.get(0);
+            textures = this.textureMap.get(0);
         }
         return side == 1 ? textures[1] : (side == 0 ? textures[2] : textures[0]);
     }
@@ -55,20 +53,20 @@ public class MetaBlockColumn extends Block {
     @SideOnly(Side.CLIENT)
     @Override
     public void registerBlockIcons(IIconRegister reg) {
-        for (int meta : MetaBlockSet) {
-            IIcon[] textures = new IIcon[TextureName.length];
-            for (int i = 0; i < this.TextureName.length; ++i) {
+        for (int meta : metaSet) {
+            IIcon[] textures = new IIcon[textureName.length];
+            for (int i = 0; i < this.textureName.length; ++i) {
                 textures[i] = reg
-                    .registerIcon(RESOURCE_ROOT_ID + ":" + "MetaBlockColumn/" + meta + "_" + TextureName[i]);
+                    .registerIcon(RESOURCE_ROOT_ID + ":" + "MetaBlockColumn/" + meta + "_" + textureName[i]);
             }
-            this.TextureMap.put(meta, textures);
+            this.textureMap.put(meta, textures);
         }
     }
 
     @SideOnly(Side.CLIENT)
     @Override
     public void getSubBlocks(Item item, CreativeTabs tab, List<ItemStack> list) {
-        for (int meta : MetaBlockSet) {
+        for (int meta : metaSet) {
             list.add(new ItemStack(item, 1, meta));
         }
     }

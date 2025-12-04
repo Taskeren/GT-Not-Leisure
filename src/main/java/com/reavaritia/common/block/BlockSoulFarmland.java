@@ -25,8 +25,8 @@ import cpw.mods.fml.common.registry.GameRegistry;
 
 public class BlockSoulFarmland extends BlockFarmland {
 
-    private IIcon topIcon;
-    private IIcon sideIcon;
+    public IIcon topIcon;
+    public IIcon sideIcon;
 
     public BlockSoulFarmland() {
         super();

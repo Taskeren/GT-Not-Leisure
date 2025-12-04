@@ -39,6 +39,8 @@ import gregtech.api.util.GTRecipe;
 import gregtech.api.util.GTUtility;
 import gtnhintergalactic.recipe.IGRecipeMaps;
 import ic2.api.item.IC2Items;
+import it.unimi.dsi.fastutil.ints.Int2ObjectOpenHashMap;
+import it.unimi.dsi.fastutil.objects.Object2ObjectOpenHashMap;
 import tectech.thing.CustomItemList;
 
 public class DisassemblerHelper {
@@ -173,10 +175,13 @@ public class DisassemblerHelper {
         }
     }
 
-    public static final Map<GTRecipe, List<GeneratedRecipeInfo<?>>> debugRecipeToRecipe = DEBUG_MODE ? new HashMap<>()
+    public static final Object2ObjectOpenHashMap<GTRecipe, List<GeneratedRecipeInfo<?>>> debugRecipeToRecipe = DEBUG_MODE
+        ? new Object2ObjectOpenHashMap<>()
         : null;
-    public static final Map<Integer, GeneratedRecipeInfo<?>> debugIndexToRecipe = DEBUG_MODE ? new HashMap<>() : null;
-    private static final AtomicInteger debugIndexBumper = new AtomicInteger(0);
+    public static final Int2ObjectOpenHashMap<GeneratedRecipeInfo<?>> debugIndexToRecipe = DEBUG_MODE
+        ? new Int2ObjectOpenHashMap<>()
+        : null;
+    public static final AtomicInteger debugIndexBumper = new AtomicInteger(0);
 
     public static List<ItemStack> handleRecipeTransformation(ItemStack[] outputs,
         Set<ItemStack[]> outputsInOtherRecipes) {

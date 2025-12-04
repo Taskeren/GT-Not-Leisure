@@ -1,7 +1,7 @@
 package com.science.gtnl.common.block.casings.glow;
 
 import static com.science.gtnl.ScienceNotLeisure.RESOURCE_ROOT_ID;
-import static com.science.gtnl.common.block.casings.glow.ItemBlockGlow.MetaBlockSet;
+import static com.science.gtnl.common.block.casings.glow.ItemBlockGlow.metaSet;
 
 import java.util.List;
 
@@ -62,7 +62,7 @@ public class MetaBlockGlow extends Block {
     @SideOnly(Side.CLIENT)
     public void registerBlockIcons(IIconRegister reg) {
         this.blockIcon = reg.registerIcon(RESOURCE_ROOT_ID + ":" + "MetaBlockGlow/0");
-        for (int Meta : MetaBlockSet) {
+        for (int Meta : metaSet) {
             BlockStaticDataClientOnly.iconsBlockMapGlow
                 .put(Meta, reg.registerIcon(RESOURCE_ROOT_ID + ":" + "MetaBlockGlow/" + Meta));
         }
@@ -71,7 +71,7 @@ public class MetaBlockGlow extends Block {
     @Override
     @SideOnly(Side.CLIENT)
     public void getSubBlocks(Item aItem, CreativeTabs aCreativeTabs, List<ItemStack> list) {
-        for (int Meta : MetaBlockSet) {
+        for (int Meta : metaSet) {
             list.add(new ItemStack(aItem, 1, Meta));
         }
     }

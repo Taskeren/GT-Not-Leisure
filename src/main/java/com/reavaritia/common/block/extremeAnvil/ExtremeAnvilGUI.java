@@ -29,16 +29,16 @@ import cpw.mods.fml.relauncher.SideOnly;
 @SideOnly(Side.CLIENT)
 public class ExtremeAnvilGUI extends GuiContainer implements ICrafting {
 
-    private static final ResourceLocation ANVIL_TEXTURE = new ResourceLocation(
+    public static final ResourceLocation ANVIL_TEXTURE = new ResourceLocation(
         RESOURCE_ROOT_ID + ":" + "textures/gui/extreme_anvil.png");
 
-    private GuiTextField itemNameTextField;
-    private final ContainerExtremeAnvil containerAnvil;
-    private boolean isTextFieldManuallyEdited = false;
-    private ItemStack lastInputStack = null;
-    private ItemStack lastMaterialStack = null;
+    public GuiTextField itemNameTextField;
+    public final ContainerExtremeAnvil containerAnvil;
+    public boolean isTextFieldManuallyEdited = false;
+    public ItemStack lastInputStack = null;
+    public ItemStack lastMaterialStack = null;
 
-    private int clientCanTake = 0;
+    public int clientCanTake = 0;
 
     public ExtremeAnvilGUI(InventoryPlayer playerInv, World world, int x, int y, int z, IInventory inputSlots,
         IInventory outputSlot, EntityPlayer player) {
@@ -120,7 +120,7 @@ public class ExtremeAnvilGUI extends GuiContainer implements ICrafting {
         }
     }
 
-    private void updateItemName() {
+    public void updateItemName() {
         String itemName = this.itemNameTextField.getText();
 
         Slot firstSlot = this.containerAnvil.getSlot(0);
@@ -154,7 +154,7 @@ public class ExtremeAnvilGUI extends GuiContainer implements ICrafting {
         this.containerAnvil.removeCraftingFromCrafters(this);
     }
 
-    private boolean isPointInRegion(int mouseX, int mouseY) {
+    public boolean isPointInRegion(int mouseX, int mouseY) {
         int guiLeft = (this.width - this.xSize) / 2;
         int guiTop = (this.height - this.ySize) / 2;
         mouseX -= guiLeft;
@@ -162,7 +162,7 @@ public class ExtremeAnvilGUI extends GuiContainer implements ICrafting {
         return mouseX >= 62 - 1 && mouseX < 62 + 103 + 1 && mouseY >= 24 - 1 && mouseY < 24 + 12 + 1;
     }
 
-    private String getLocalizedName() {
+    public String getLocalizedName() {
         return StatCollector.translateToLocal("container.ExtremeAnvil");
     }
 

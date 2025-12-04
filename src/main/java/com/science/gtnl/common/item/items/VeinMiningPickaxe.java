@@ -5,12 +5,8 @@ import static com.science.gtnl.utils.item.ItemUtils.*;
 
 import java.util.ArrayDeque;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
 import java.util.Queue;
-import java.util.Set;
 
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
@@ -49,6 +45,10 @@ import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import gregtech.api.interfaces.tileentity.IGregTechTileEntity;
 import gregtech.api.items.MetaGeneratedTool;
+import it.unimi.dsi.fastutil.longs.LongOpenHashSet;
+import it.unimi.dsi.fastutil.longs.LongSet;
+import it.unimi.dsi.fastutil.objects.Object2IntMap;
+import it.unimi.dsi.fastutil.objects.Object2IntOpenHashMap;
 
 public class VeinMiningPickaxe extends ItemPickaxe implements SubtitleDisplay {
 
@@ -228,7 +228,7 @@ public class VeinMiningPickaxe extends ItemPickaxe implements SubtitleDisplay {
         }
         World world = player.worldObj;
         Queue<Node> queue = new ArrayDeque<>();
-        Set<Long> visited = new HashSet<>();
+        LongSet visited = new LongOpenHashSet();
         int cleared = 0;
         int blocksSinceHunger = 0;
         int toolMaxDamage = Math.toIntExact(MetaGeneratedTool.getToolMaxDamage(stack));
@@ -344,23 +344,24 @@ public class VeinMiningPickaxe extends ItemPickaxe implements SubtitleDisplay {
                 .addExhaustion(1f);
         }
 
-        Map<ItemStackWrapper, Integer> merged = new HashMap<>();
+        Object2IntOpenHashMap<ItemStackWrapper> merged = new Object2IntOpenHashMap<>();
         for (ItemStack drop : allDrops) {
             if (drop == null) continue;
             ItemStackWrapper key = new ItemStackWrapper(drop);
             merged.put(key, merged.getOrDefault(key, 0) + drop.stackSize);
         }
-        for (Map.Entry<ItemStackWrapper, Integer> entry : merged.entrySet()) {
+        for (Object2IntMap.Entry<ItemStackWrapper> entry : merged.object2IntEntrySet()) {
             ItemStack dropStack = entry.getKey()
                 .stack()
                 .copy();
-            dropStack.stackSize = entry.getValue();
-            EntityItem entityitem = new EntityItem(world, player.posX, player.posY + 1, player.posZ, dropStack);
-            entityitem.delayBeforeCanPickup = 0;
-            entityitem.motionX = 0;
-            entityitem.motionY = 0;
-            entityitem.motionZ = 0;
-            world.spawnEntityInWorld(entityitem);
+            dropStack.stackSize = entry.getIntValue();
+
+            EntityItem entityItem = new EntityItem(world, player.posX, player.posY + 1, player.posZ, dropStack);
+            entityItem.delayBeforeCanPickup = 0;
+            entityItem.motionX = 0;
+            entityItem.motionY = 0;
+            entityItem.motionZ = 0;
+            world.spawnEntityInWorld(entityItem);
         }
         isEnable = false;
     }

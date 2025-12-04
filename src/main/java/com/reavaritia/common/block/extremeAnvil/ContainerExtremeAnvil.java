@@ -1,7 +1,5 @@
 package com.reavaritia.common.block.extremeAnvil;
 
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Objects;
 
 import net.minecraft.enchantment.Enchantment;
@@ -11,7 +9,6 @@ import net.minecraft.init.Items;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.ICrafting;
 import net.minecraft.inventory.IInventory;
-import net.minecraft.inventory.InventoryBasic;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemEnchantedBook;
 import net.minecraft.item.ItemStack;
@@ -21,19 +18,10 @@ import net.minecraft.world.World;
 
 import org.apache.commons.lang3.StringUtils;
 
+import it.unimi.dsi.fastutil.ints.Int2IntMap;
+import it.unimi.dsi.fastutil.ints.Int2IntOpenHashMap;
+
 public class ContainerExtremeAnvil extends Container {
-
-    public IInventory inputSlots;
-    {
-        new InventoryBasic("Repair", true, 2) {
-
-            @Override
-            public void markDirty() {
-                super.markDirty();
-                ContainerExtremeAnvil.this.onCraftMatrixChanged(this);
-            }
-        };
-    }
 
     public World world;
     public int anvilX;
@@ -41,6 +29,7 @@ public class ContainerExtremeAnvil extends Container {
     public int anvilZ;
     public EntityPlayer player;
 
+    public IInventory inputSlots;
     public IInventory outputSlot;
 
     public String repairedItemName = "";
@@ -219,26 +208,20 @@ public class ContainerExtremeAnvil extends Container {
         detectAndSendChanges();
     }
 
-    private ItemStack applyMergedEnchantments(ItemStack baseStack, ItemStack inputStack, ItemStack materialStack) {
+    public ItemStack applyMergedEnchantments(ItemStack baseStack, ItemStack inputStack, ItemStack materialStack) {
         if (baseStack == null) return null;
 
-        Map<Integer, Integer> enchantments = new HashMap<>();
-        this.mergeEnchantments(enchantments, inputStack);
-        this.mergeEnchantments(enchantments, materialStack);
+        Int2IntMap enchantments = new Int2IntOpenHashMap();
+        mergeEnchantments(enchantments, inputStack);
+        mergeEnchantments(enchantments, materialStack);
 
         NBTTagList enchList = new NBTTagList();
-        for (Map.Entry<Integer, Integer> entry : enchantments.entrySet()) {
+        enchantments.forEach((id, lvl) -> {
             NBTTagCompound tag = new NBTTagCompound();
-            tag.setShort(
-                "id",
-                (short) entry.getKey()
-                    .intValue());
-            tag.setShort(
-                "lvl",
-                (short) entry.getValue()
-                    .intValue());
+            tag.setInteger("id", id);
+            tag.setInteger("lvl", lvl);
             enchList.appendTag(tag);
-        }
+        });
 
         NBTTagCompound finalTag;
 
@@ -284,7 +267,7 @@ public class ContainerExtremeAnvil extends Container {
         return baseStack;
     }
 
-    public void mergeEnchantments(Map<Integer, Integer> map, ItemStack stack) {
+    public void mergeEnchantments(Int2IntMap map, ItemStack stack) {
         if (stack == null) return;
 
         NBTTagList list = null;
@@ -300,14 +283,12 @@ public class ContainerExtremeAnvil extends Container {
         if (list != null) {
             for (int i = 0; i < list.tagCount(); ++i) {
                 NBTTagCompound tag = list.getCompoundTagAt(i);
-                int id = tag.getShort("id");
-                int lvl = tag.getShort("lvl");
+                int id = tag.getInteger("id");
+                int lvl = tag.getInteger("lvl");
 
                 Enchantment ench = Enchantment.enchantmentsList[id];
                 if (ench != null) {
-                    int currentLevel = map.getOrDefault(id, 0);
-                    int mergedLevel = currentLevel + lvl;
-                    map.put(id, mergedLevel);
+                    map.put(id, map.getOrDefault(id, 0) + lvl);
                 }
             }
         }

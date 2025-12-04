@@ -1,6 +1,5 @@
 package com.science.gtnl.utils.recipes;
 
-import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
@@ -8,13 +7,16 @@ import net.minecraft.item.ItemStack;
 
 import WayofTime.alchemicalWizardry.common.summoning.meteor.Meteor;
 import WayofTime.alchemicalWizardry.common.summoning.meteor.MeteorComponent;
+import it.unimi.dsi.fastutil.floats.FloatArrayList;
+import it.unimi.dsi.fastutil.ints.IntArrayList;
+import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 
 public class MeteorRecipeData {
 
     public final ItemStack input;
-    public final List<ItemStack> outputs = new ArrayList<>();
-    public final List<Float> chances = new ArrayList<>();
-    public final List<Integer> expectedAmounts = new ArrayList<>();
+    public final ObjectArrayList<ItemStack> outputs = new ObjectArrayList<>();
+    public final FloatArrayList chances = new FloatArrayList();
+    public final IntArrayList expectedAmounts = new IntArrayList();
     public final int cost;
     public final int radius;
 
@@ -26,8 +28,9 @@ public class MeteorRecipeData {
         float fillerRatio = meteor.fillerChance / 100.0f;
         float componentRatio = 1.0f - fillerRatio;
 
-        List<MeteorComponent> componentsCopy = copyComponents(meteor.ores);
-        List<MeteorComponent> fillersCopy = meteor.fillerChance > 0 ? copyComponents(meteor.filler) : new ArrayList<>();
+        ObjectArrayList<MeteorComponent> componentsCopy = copyComponents(meteor.ores);
+        ObjectArrayList<MeteorComponent> fillersCopy = meteor.fillerChance > 0 ? copyComponents(meteor.filler)
+            : new ObjectArrayList<>();
 
         float totalComponentWeight = calculateTotalWeight(componentsCopy);
         componentsCopy.sort(Comparator.comparingInt(c -> -c.getWeight()));
@@ -41,8 +44,8 @@ public class MeteorRecipeData {
         }
     }
 
-    private List<MeteorComponent> copyComponents(List<MeteorComponent> originals) {
-        List<MeteorComponent> copies = new ArrayList<>();
+    public ObjectArrayList<MeteorComponent> copyComponents(List<MeteorComponent> originals) {
+        ObjectArrayList<MeteorComponent> copies = new ObjectArrayList<>();
         for (MeteorComponent comp : originals) {
             copies.add(
                 new MeteorComponent(
@@ -53,13 +56,13 @@ public class MeteorRecipeData {
         return copies;
     }
 
-    private float calculateTotalWeight(List<MeteorComponent> components) {
+    public float calculateTotalWeight(ObjectArrayList<MeteorComponent> components) {
         return (float) components.stream()
             .mapToInt(MeteorComponent::getWeight)
             .sum();
     }
 
-    private void processComponents(List<MeteorComponent> components, float ratio, float totalWeight) {
+    public void processComponents(ObjectArrayList<MeteorComponent> components, float ratio, float totalWeight) {
         for (MeteorComponent component : components) {
             float chance = component.getWeight() / totalWeight * ratio;
             ItemStack outputStack = component.getBlock()
@@ -71,7 +74,7 @@ public class MeteorRecipeData {
         }
     }
 
-    private int getEstimatedAmount(float chance, int radius) {
+    public int getEstimatedAmount(float chance, int radius) {
         return (int) Math.ceil(4f / 3 * Math.PI * Math.pow(radius + 0.5, 3) * chance);
     }
 

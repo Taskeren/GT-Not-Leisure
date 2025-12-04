@@ -40,16 +40,11 @@ import fox.spiteful.avaritia.entity.EntityImmortalItem;
 
 public class InfinityShovel extends ItemSpade implements SubtitleDisplay {
 
-    private static final ToolMaterial INFINITY = EnumHelper.addToolMaterial("INFINITY", 32, 9999, 9999F, 50.0F, 200);
-    public static final Material[] MATERIALS = new Material[] { Material.rock, Material.iron, Material.ice,
-        Material.glass, Material.piston, Material.anvil, Material.grass, Material.ground, Material.sand, Material.snow,
-        Material.craftedSnow, Material.clay };
-
     @SideOnly(Side.CLIENT)
     private IIcon Destroyer;
 
     public InfinityShovel() {
-        super(INFINITY);
+        super(ToolHelper.INFINITY);
         this.setUnlocalizedName("InfinityShovel");
         this.setCreativeTab(ReAvaCreativeTabs.ReAvaritia);
         this.setTextureName(RESOURCE_ROOT_ID + ":" + "InfinityShovel");
@@ -164,7 +159,7 @@ public class InfinityShovel extends ItemSpade implements SubtitleDisplay {
         World world = player.worldObj;
         Material mat = world.getBlock(x, y, z)
             .getMaterial();
-        if (!ToolHelper.isRightMaterial(mat, MATERIALS)) return;
+        if (!ToolHelper.isRightMaterial(mat, ToolHelper.MATERIALS)) return;
 
         ForgeDirection direction = ForgeDirection.getOrientation(side);
         int fortune = EnchantmentHelper.getFortuneModifier(player);
@@ -185,7 +180,7 @@ public class InfinityShovel extends ItemSpade implements SubtitleDisplay {
             doY ? 14 : 8,
             8,
             null,
-            MATERIALS,
+            ToolHelper.MATERIALS,
             silk,
             fortune,
             false);

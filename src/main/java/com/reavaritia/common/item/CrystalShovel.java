@@ -14,7 +14,6 @@ import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.common.util.EnumHelper;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
 
 import com.reavaritia.ReAvaCreativeTabs;
@@ -26,10 +25,8 @@ import cpw.mods.fml.relauncher.SideOnly;
 
 public class CrystalShovel extends ItemSpade {
 
-    public static final ToolMaterial CRYSTAL = EnumHelper.addToolMaterial("CRYSTAL", 3, 8888, 9999F, 9.0F, 22);
-
     public CrystalShovel() {
-        super(CRYSTAL);
+        super(ToolHelper.CRYSTAL);
         this.setUnlocalizedName("CrystalShovel");
         this.setCreativeTab(CreativeTabs.tabTools);
         this.setCreativeTab(ReAvaCreativeTabs.ReAvaritia);

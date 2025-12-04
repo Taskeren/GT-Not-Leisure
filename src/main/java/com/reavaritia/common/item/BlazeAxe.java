@@ -4,7 +4,6 @@ import static com.reavaritia.ReAvaritia.RESOURCE_ROOT_ID;
 
 import java.util.List;
 import java.util.Map;
-import java.util.Random;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.creativetab.CreativeTabs;
@@ -26,7 +25,6 @@ import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.IChatComponent;
 import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
-import net.minecraftforge.common.util.EnumHelper;
 
 import com.reavaritia.ReAvaCreativeTabs;
 import com.reavaritia.ReAvaItemList;
@@ -37,11 +35,8 @@ import cpw.mods.fml.relauncher.SideOnly;
 
 public class BlazeAxe extends ItemAxe implements SubtitleDisplay {
 
-    private static final Random random = new Random();
-    public static final ToolMaterial BLAZE = EnumHelper.addToolMaterial("BLAZE", 32, 7777, 9999F, 33.0F, 22);
-
     public BlazeAxe() {
-        super(BLAZE);
+        super(ToolHelper.BLAZE);
         this.setUnlocalizedName("BlazeAxe");
         setCreativeTab(CreativeTabs.tabTools);
         this.setCreativeTab(ReAvaCreativeTabs.ReAvaritia);
@@ -141,7 +136,7 @@ public class BlazeAxe extends ItemAxe implements SubtitleDisplay {
     public boolean hitEntity(ItemStack stack, EntityLivingBase target, EntityLivingBase attacker) {
         target.addPotionEffect(new PotionEffect(Potion.moveSlowdown.id, 100, 2));
 
-        if (random.nextInt(100) < 30) {
+        if (itemRand.nextInt(100) < 30) {
             performAreaAttack(attacker, target);
         }
 

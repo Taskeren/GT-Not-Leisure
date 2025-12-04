@@ -884,11 +884,11 @@ public class SuperDualInputHatchME extends MTEHatchInputBus
                 .setPos(367, 81));
     }
 
-    long[] i_client = new long[100];
-    long[] f_client = new long[100];
+    public long[] i_client = new long[100];
+    public long[] f_client = new long[100];
 
-    DecimalFormat df2 = new DecimalFormat("#,###.00");
-    DecimalFormat df = new DecimalFormat("#,###");
+    public DecimalFormat df2 = new DecimalFormat("#,###.00");
+    public DecimalFormat df = new DecimalFormat("#,###");
 
     public List<String> rewriteItem(BaseSlot slot, List<String> s) {
 

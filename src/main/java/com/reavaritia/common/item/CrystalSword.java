@@ -20,7 +20,6 @@ import net.minecraft.util.IChatComponent;
 import net.minecraft.util.StatCollector;
 import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
-import net.minecraftforge.common.util.EnumHelper;
 
 import com.reavaritia.ReAvaCreativeTabs;
 import com.reavaritia.ReAvaItemList;
@@ -32,7 +31,7 @@ import cpw.mods.fml.relauncher.SideOnly;
 public class CrystalSword extends ItemSword implements SubtitleDisplay {
 
     public CrystalSword() {
-        super(EnumHelper.addToolMaterial("CRYSTAL", 3, 8888, 8.0F, 48.0F, 10));
+        super(ToolHelper.CRYSTAL);
         this.setUnlocalizedName("CrystalSword");
         this.setCreativeTab(CreativeTabs.tabCombat);
         this.setCreativeTab(ReAvaCreativeTabs.ReAvaritia);

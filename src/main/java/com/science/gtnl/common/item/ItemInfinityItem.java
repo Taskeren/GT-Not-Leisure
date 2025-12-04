@@ -7,7 +7,6 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Queue;
-import java.util.Set;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.concurrent.ExecutorService;
@@ -38,6 +37,8 @@ import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.common.gameevent.TickEvent;
 import gregtech.api.util.GTUtility;
+import it.unimi.dsi.fastutil.longs.LongOpenHashSet;
+import it.unimi.dsi.fastutil.longs.LongSet;
 import vazkii.botania.common.Botania;
 
 public class ItemInfinityItem extends Item implements IFluidContainerItem {
@@ -179,7 +180,7 @@ public class ItemInfinityItem extends Item implements IFluidContainerItem {
     public void clearConnectedFluid(World world, int x, int y, int z, Block fluidBlock, int limit) {
         FLUID_CLEAR_EXECUTOR.submit(() -> {
             Queue<int[]> queue = new ArrayDeque<>();
-            Set<Long> visited = new HashSet<>();
+            LongSet visited = new LongOpenHashSet();
             List<int[]> blocksToClear = new ArrayList<>();
 
             queue.add(new int[] { x, y, z });

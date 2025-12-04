@@ -12,7 +12,6 @@ import static gregtech.api.util.GTStructureUtility.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 
@@ -76,12 +75,14 @@ import gregtech.api.util.IGTHatchAdder;
 import gregtech.api.util.MultiblockTooltipBuilder;
 import gregtech.api.util.recipe.Sievert;
 import gregtech.common.misc.GTStructureChannels;
+import it.unimi.dsi.fastutil.objects.Object2IntMap;
+import it.unimi.dsi.fastutil.objects.Object2IntOpenHashMap;
 
 public class Incubator extends MultiMachineBase<Incubator> implements ISurvivalConstructable {
 
-    public static final HashMap<Coords, Integer> staticColorMap = new HashMap<>();
+    public static Object2IntMap<Coords> staticColorMap = new Object2IntOpenHashMap<>();
 
-    public static final byte TIMERDIVIDER = 20;
+    public static long TIMERDIVIDER = 20;
 
     public Sievert defaultSievertData = new Sievert(0, false);
     public HashSet<EntityPlayerMP> playerMPHashSet = new HashSet<>();

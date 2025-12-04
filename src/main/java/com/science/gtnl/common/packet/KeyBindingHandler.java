@@ -93,7 +93,7 @@ public class KeyBindingHandler implements IMessage, IMessageHandler<KeyBindingHa
         buf.writeBoolean(this.isAE);
     }
 
-    private static final Map<UUID, Long> map = new ConcurrentHashMap<>();
+    public static Map<UUID, Long> map = new ConcurrentHashMap<>();
 
     @Override
     public IMessage onMessage(KeyBindingHandler message, MessageContext ctx) {

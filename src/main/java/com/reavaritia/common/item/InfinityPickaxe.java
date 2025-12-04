@@ -43,16 +43,11 @@ import fox.spiteful.avaritia.items.LudicrousItems;
 
 public class InfinityPickaxe extends ItemPickaxe implements SubtitleDisplay {
 
-    private static final ToolMaterial INFINITY = EnumHelper.addToolMaterial("INFINITY", 32, 9999, 9999F, 49.0F, 200);
-    public static final Material[] MATERIALS = new Material[] { Material.rock, Material.iron, Material.ice,
-        Material.glass, Material.piston, Material.anvil, Material.grass, Material.ground, Material.sand, Material.snow,
-        Material.craftedSnow, Material.clay };
-
     @SideOnly(Side.CLIENT)
     private IIcon hammer;
 
     public InfinityPickaxe() {
-        super(INFINITY);
+        super(ToolHelper.INFINITY);
         this.setUnlocalizedName("InfinityPickaxe");
         this.setCreativeTab(ReAvaCreativeTabs.ReAvaritia);
         this.setTextureName(RESOURCE_ROOT_ID + ":" + "InfinityPickaxe");
@@ -181,7 +176,7 @@ public class InfinityPickaxe extends ItemPickaxe implements SubtitleDisplay {
         World world = player.worldObj;
         Material mat = world.getBlock(x, y, z)
             .getMaterial();
-        if (!ToolHelper.isRightMaterial(mat, MATERIALS)) return;
+        if (!ToolHelper.isRightMaterial(mat, ToolHelper.MATERIALS)) return;
 
         ForgeDirection direction = ForgeDirection.getOrientation(side);
         int fortune = EnchantmentHelper.getFortuneModifier(player);
@@ -202,7 +197,7 @@ public class InfinityPickaxe extends ItemPickaxe implements SubtitleDisplay {
             doY ? 14 : 8,
             8,
             null,
-            MATERIALS,
+            ToolHelper.MATERIALS,
             silk,
             fortune,
             false);

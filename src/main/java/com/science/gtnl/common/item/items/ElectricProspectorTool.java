@@ -7,11 +7,7 @@ import static gregtech.api.enums.Mods.VisualProspecting;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
-import java.util.Set;
 import java.util.SplittableRandom;
 
 import net.minecraft.block.Block;
@@ -32,8 +28,6 @@ import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
 import net.minecraft.world.chunk.Chunk;
 import net.minecraftforge.fluids.FluidStack;
-
-import org.apache.commons.lang3.tuple.Pair;
 
 import com.science.gtnl.client.GTNLCreativeTabs;
 import com.science.gtnl.common.item.ItemStaticDataClientOnly;
@@ -59,16 +53,23 @@ import gregtech.common.UndergroundOil;
 import gregtech.common.blocks.BlockOresAbstract;
 import gregtech.common.blocks.TileEntityOres;
 import gregtech.common.pollution.Pollution;
+import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
+import it.unimi.dsi.fastutil.ints.Int2ObjectOpenHashMap;
+import it.unimi.dsi.fastutil.ints.IntLongPair;
+import it.unimi.dsi.fastutil.ints.IntOpenHashSet;
+import it.unimi.dsi.fastutil.ints.IntSet;
+import it.unimi.dsi.fastutil.objects.Object2IntMap;
+import it.unimi.dsi.fastutil.objects.Object2IntOpenHashMap;
 
 public class ElectricProspectorTool extends Item {
 
     public String unlocalizedName = "ElectricProspectorTool";
     public static int[] DISTANCEINTS = new int[] { 0, 4, 25, 64 };
-    public HashMap<String, Integer> ores;
+    public Object2IntMap<String> ores = new Object2IntOpenHashMap<>();
     public int distTextIndex;
     public int mCosts = 1;
-    public static final Map<Integer, Pair<Integer, Long>> mRangeMap = new HashMap<>();
-    public static final Set<Integer> metaSet = new HashSet<>();
+    public static Int2ObjectMap<IntLongPair> mRangeMap = new Int2ObjectOpenHashMap<>();
+    public static IntSet metaSet = new IntOpenHashSet();
 
     public static String CHAT_MSG_SEPARATOR = EnumChatFormatting.STRIKETHROUGH + "--------------------";
 
@@ -82,7 +83,7 @@ public class ElectricProspectorTool extends Item {
     }
 
     public static ItemStack initItem(int aMeta, int aRange, long maxDamage) {
-        mRangeMap.put(aMeta, Pair.of(aRange, maxDamage));
+        mRangeMap.put(aMeta, IntLongPair.of(aRange, maxDamage));
         ItemStack stack = MetaItemStackUtils.initMetaItemStack(aMeta, ItemLoader.electricProspectorTool, metaSet);
         setToolMaxDamage(stack, maxDamage);
         if (!stack.hasTagCompound()) stack.setTagCompound(new NBTTagCompound());
@@ -140,7 +141,7 @@ public class ElectricProspectorTool extends Item {
             setToolMaxDamage(
                 stack,
                 mRangeMap.get(meta)
-                    .getRight());
+                    .rightLong());
 
             if (!stack.hasTagCompound()) stack.setTagCompound(new NBTTagCompound());
             stack.stackTagCompound.setInteger("toolMeta", meta);
@@ -154,9 +155,9 @@ public class ElectricProspectorTool extends Item {
         if (!aWorld.isRemote) {
             if (!aStack.hasTagCompound()) aStack.setTagCompound(new NBTTagCompound());
             int meta = aStack.stackTagCompound.getInteger("toolMeta");
-            Pair<Integer, Long> rangeMap = mRangeMap.get(meta);
+            IntLongPair rangeMap = mRangeMap.get(meta);
             if (rangeMap == null) return aStack;
-            setToolMaxDamage(aStack, rangeMap.getRight());
+            setToolMaxDamage(aStack, rangeMap.rightLong());
             int data = getDetravData(aStack);
             if (aPlayer.isSneaking()) {
                 data++;
@@ -172,7 +173,7 @@ public class ElectricProspectorTool extends Item {
 
             int cX = ((int) aPlayer.posX) >> 4;
             int cZ = ((int) aPlayer.posZ) >> 4;
-            int size = rangeMap.getLeft();
+            int size = rangeMap.leftInt();
             List<Chunk> chunks = new ArrayList<>();
             aPlayer.addChatMessage(new ChatComponentText("Scanning..."));
 
@@ -359,9 +360,9 @@ public class ElectricProspectorTool extends Item {
         if (!aWorld.isRemote) {
             if (!aStack.hasTagCompound()) aStack.setTagCompound(new NBTTagCompound());
             int meta = aStack.stackTagCompound.getInteger("toolMeta");
-            Pair<Integer, Long> rangeMap = mRangeMap.get(meta);
+            IntLongPair rangeMap = mRangeMap.get(meta);
             if (rangeMap == null) return true;
-            setToolMaxDamage(aStack, rangeMap.getRight());
+            setToolMaxDamage(aStack, rangeMap.rightLong());
             int polution = getPollution(aWorld, aX, aZ);
             addChatMassageByValue(aPlayer, polution, "Pollution");
             if (MetaGeneratedTool.getToolDamage(aStack) >= MetaGeneratedTool.getToolMaxDamage(aStack)) {
@@ -376,14 +377,14 @@ public class ElectricProspectorTool extends Item {
         int bX = aX;
         int bZ = aZ;
 
-        ores = new HashMap<>();
+        ores = new Object2IntOpenHashMap<>();
 
         if (!aStack.hasTagCompound()) aStack.setTagCompound(new NBTTagCompound());
         int meta = aStack.stackTagCompound.getInteger("toolMeta");
-        Pair<Integer, Long> rangeMap = mRangeMap.get(meta);
+        IntLongPair rangeMap = mRangeMap.get(meta);
         if (rangeMap == null) return;
 
-        int range = rangeMap.getLeft();
+        int range = rangeMap.leftInt();
         if ((range % 2) == 0) {
             range += 1; // kinda not needed here, divide takes it out, but we put it back in with the range+1 in the
             // loop
@@ -488,7 +489,7 @@ public class ElectricProspectorTool extends Item {
 
     // Used by Electric scanner when scanning the chunk whacked by the scanner. 100% chance find rate
     public void prospectSingleChunk(ItemStack aStack, EntityPlayer aPlayer, World aWorld, int aX, int aY, int aZ) {
-        ores = new HashMap<>();
+        ores = new Object2IntOpenHashMap<>();
         aPlayer.addChatMessage(
             new ChatComponentText(
                 EnumChatFormatting.GOLD + StatCollector.translateToLocal(

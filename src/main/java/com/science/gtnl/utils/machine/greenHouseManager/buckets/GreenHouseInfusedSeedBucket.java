@@ -14,6 +14,8 @@ import com.science.gtnl.utils.machine.greenHouseManager.GreenHouseBucket;
 import com.science.gtnl.utils.machine.greenHouseManager.GreenHouseDropTable;
 import com.science.gtnl.utils.machine.greenHouseManager.IGreenHouseBucketFactory;
 
+import it.unimi.dsi.fastutil.objects.Object2IntMap;
+import it.unimi.dsi.fastutil.objects.Object2IntOpenHashMap;
 import thaumcraft.api.aspects.Aspect;
 import thaumic.tinkerer.common.item.ItemInfusedSeeds;
 
@@ -118,7 +120,7 @@ public class GreenHouseInfusedSeedBucket extends GreenHouseBucket {
             // slow approach, but if `totalDrop` is small enough
             // then it's better to simulate this way for accuracy
 
-            HashMap<ItemStack, Integer> accumulated = new HashMap<>();
+            Object2IntMap<ItemStack> accumulated = new Object2IntOpenHashMap<>();
             for (int i = 0; i < totalDrop; i++) {
                 int roll = random.nextInt(totalWeight);
                 for (Map.Entry<ItemStack, Integer> kv : aspectDrops.entrySet()) {
@@ -132,8 +134,8 @@ public class GreenHouseInfusedSeedBucket extends GreenHouseBucket {
                 }
             }
 
-            for (Map.Entry<ItemStack, Integer> kv : accumulated.entrySet()) {
-                tracker.addDrop(kv.getKey(), multiplier * kv.getValue());
+            for (Object2IntMap.Entry<ItemStack> kv : accumulated.object2IntEntrySet()) {
+                tracker.addDrop(kv.getKey(), multiplier * kv.getIntValue());
             }
             return;
         }

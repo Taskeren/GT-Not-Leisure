@@ -10,10 +10,10 @@ import cpw.mods.fml.common.registry.GameRegistry;
 
 public class NeutronCollector extends AbstractNeutronCollector {
 
-    private final int energy;
-    private final int tier;
-    private final String texturePrefix;
-    private final String tileEntityName;
+    public int energy;
+    public int tier;
+    public String texturePrefix;
+    public String tileEntityName;
 
     public NeutronCollector(String name, int energy, int tier, String texturePrefix, String tileEntityName,
         Class<? extends ItemBlock> itemBlockClass, ReAvaItemList itemListEntry) {

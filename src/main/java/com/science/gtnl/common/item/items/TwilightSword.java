@@ -2,9 +2,7 @@ package com.science.gtnl.common.item.items;
 
 import static com.science.gtnl.ScienceNotLeisure.RESOURCE_ROOT_ID;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Random;
 import java.util.UUID;
 
@@ -37,6 +35,8 @@ import com.science.gtnl.utils.enums.GTNLItemList;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import it.unimi.dsi.fastutil.objects.Object2IntMap;
+import it.unimi.dsi.fastutil.objects.Object2IntOpenHashMap;
 
 public class TwilightSword extends ItemSword implements playSound {
 
@@ -53,8 +53,8 @@ public class TwilightSword extends ItemSword implements playSound {
         VOID
     }
 
-    private final Map<UUID, Integer> cooldownMap = new HashMap<>();
-    private int attackCount = 0;
+    public Object2IntMap<UUID> cooldownMap = new Object2IntOpenHashMap<>();
+    public int attackCount = 0;
 
     public TwilightSword() {
         super(TWILIGHT_MATERIALS[0]);

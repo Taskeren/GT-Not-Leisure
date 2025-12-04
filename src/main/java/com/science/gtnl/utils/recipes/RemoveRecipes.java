@@ -34,6 +34,8 @@ import gregtech.api.util.GTOreDictUnificator;
 import gregtech.api.util.GTRecipe;
 import gregtech.api.util.GTUtility;
 import gtPlusPlus.api.recipe.GTPPRecipeMaps;
+import it.unimi.dsi.fastutil.objects.Object2IntMap;
+import it.unimi.dsi.fastutil.objects.Object2IntOpenHashMap;
 
 public class RemoveRecipes {
 
@@ -52,7 +54,7 @@ public class RemoveRecipes {
         RecipeMapBackend chemicalPlantRecipe = GTPPRecipeMaps.chemicalPlantRecipes.getBackend();
         RecipeMapBackend mixerRecipe = RecipeMaps.mixerRecipes.getBackend();
         RecipeMapBackend mixerNonCellRecipe = GTPPRecipeMaps.mixerNonCellRecipes.getBackend();
-        Map<String, Integer> removedRecipeCounts = new HashMap<>();
+        Object2IntMap<String> removedRecipeCounts = new Object2IntOpenHashMap<>();
 
         // 合金冶炼炉
         List<GTRecipe> recipesToRemoveFromAlloyBlastSmelter = new ArrayList<>();

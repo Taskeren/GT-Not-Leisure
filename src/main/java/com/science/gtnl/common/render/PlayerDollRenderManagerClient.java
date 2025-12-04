@@ -14,8 +14,6 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.Base64;
-import java.util.HashMap;
-import java.util.Map;
 
 import javax.imageio.ImageIO;
 
@@ -30,12 +28,17 @@ import org.lwjgl.opengl.GL11;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
+import it.unimi.dsi.fastutil.objects.Object2IntMap;
+import it.unimi.dsi.fastutil.objects.Object2IntOpenHashMap;
+import it.unimi.dsi.fastutil.objects.Object2ObjectMap;
+import it.unimi.dsi.fastutil.objects.Object2ObjectOpenHashMap;
+
 public class PlayerDollRenderManagerClient {
 
     public static boolean isSteveModel = false;
-    public static Map<String, ResourceLocation> textureCache = new HashMap<>();
-    private static final Map<String, BufferedImage> pendingTextures = new HashMap<>();
-    private static final Map<String, Integer> uploadedTextureIds = new HashMap<>();
+    public static Object2ObjectMap<String, ResourceLocation> textureCache = new Object2ObjectOpenHashMap<>();
+    public static Object2ObjectMap<String, BufferedImage> pendingTextures = new Object2ObjectOpenHashMap<>();
+    public static Object2IntMap<String> uploadedTextureIds = new Object2IntOpenHashMap<>();
     public static ResourceLocation DEFAULT_SKIN = new ResourceLocation(RESOURCE_ROOT_ID + ":" + "model/skin.png");
     public static ResourceLocation DEFAULT_CAPE = new ResourceLocation(RESOURCE_ROOT_ID + ":" + "model/cape.png");
     public static ResourceLocation MODEL_STEVE = new ResourceLocation(

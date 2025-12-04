@@ -30,6 +30,8 @@ import cpw.mods.fml.relauncher.SideOnly;
 
 public class BlockExtremeAnvil extends Block {
 
+    public IIcon Icon;
+
     public BlockExtremeAnvil() {
         super(Material.anvil);
         setBlockName("ExtremeAnvil");
@@ -42,8 +44,6 @@ public class BlockExtremeAnvil extends Block {
         GameRegistry.registerTileEntity(TileEntityExtremeAnvil.class, "ExtremeAnvilTileEntity");
         ReAvaItemList.ExtremeAnvil.set(new ItemStack(this, 1));
     }
-
-    private IIcon Icon;
 
     public void isFalling(World world, int x, int y, int z, int meta) {
         world.setBlock(x, y, z, this, meta, 3);
@@ -151,7 +151,7 @@ public class BlockExtremeAnvil extends Block {
         checkAndFall(world, x, y, z);
     }
 
-    private boolean hasOreTag(ItemStack stack) {
+    public boolean hasOreTag(ItemStack stack) {
         if (stack == null || stack.getItem() == null) return false;
 
         int[] oreIDs = OreDictionary.getOreIDs(stack);
@@ -183,7 +183,7 @@ public class BlockExtremeAnvil extends Block {
         return 2;
     }
 
-    private void checkAndFall(World world, int x, int y, int z) {
+    public void checkAndFall(World world, int x, int y, int z) {
         if (world.getBlock(x, y, z) != this) return;
 
         Block below = world.getBlock(x, y - 1, z);
@@ -219,7 +219,7 @@ public class BlockExtremeAnvil extends Block {
         }
     }
 
-    private boolean canFallInto(World world, int x, int y, int z) {
+    public boolean canFallInto(World world, int x, int y, int z) {
         Block block = world.getBlock(x, y, z);
         return block.isAir(world, x, y, z) || block == Blocks.fire
             || block.getMaterial()

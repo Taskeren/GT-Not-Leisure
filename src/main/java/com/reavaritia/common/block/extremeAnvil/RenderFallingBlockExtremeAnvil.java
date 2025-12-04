@@ -14,9 +14,9 @@ import cpw.mods.fml.relauncher.SideOnly;
 @SideOnly(Side.CLIENT)
 public class RenderFallingBlockExtremeAnvil extends Render {
 
-    private static final ExtremeAnvilModel model = new ExtremeAnvilModel();
+    public static ExtremeAnvilModel model = new ExtremeAnvilModel();
 
-    private static final ResourceLocation TEXTURE = new ResourceLocation(
+    public static ResourceLocation TEXTURE = new ResourceLocation(
         RESOURCE_ROOT_ID + ":" + "textures/blocks/ExtremeAnvil.png");
 
     public RenderFallingBlockExtremeAnvil() {

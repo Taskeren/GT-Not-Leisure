@@ -1,20 +1,19 @@
 package com.science.gtnl.api;
 
-import java.util.Map;
-import java.util.Set;
-
 import net.minecraft.util.IIcon;
+
+import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
+import it.unimi.dsi.fastutil.ints.IntSet;
 
 public interface IMetaBlock {
 
-    Set<Integer> getUsedMetaSet();
+    IntSet getUsedMetaSet();
 
-    Map<Integer, String[]> getTooltipsMap();
+    Int2ObjectMap<String[]> getTooltipsMap();
 
-    Map<Integer, IIcon> getIconMap();
+    Int2ObjectMap<IIcon> getIconMap();
 
     default String[] getTooltips(int meta) {
         return getTooltipsMap().get(meta);
     }
-
 }

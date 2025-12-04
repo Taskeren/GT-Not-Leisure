@@ -4,11 +4,7 @@ import static com.science.gtnl.utils.item.MetaItemStackUtils.initMetaItemStack;
 import static com.science.gtnl.utils.item.MetaItemStackUtils.metaItemStackTooltipsAdd;
 
 import java.util.Arrays;
-import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
-import java.util.Set;
 
 import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
@@ -20,11 +16,15 @@ import com.science.gtnl.loader.BlockLoader;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
+import it.unimi.dsi.fastutil.ints.Int2ObjectOpenHashMap;
+import it.unimi.dsi.fastutil.ints.IntOpenHashSet;
+import it.unimi.dsi.fastutil.ints.IntSet;
 
 public class ItemBlockColumn extends ItemBlock {
 
-    public static final Map<Integer, String[]> MetaBlockTooltipsMap = new HashMap<>();
-    public static final Set<Integer> MetaBlockSet = new HashSet<>();
+    public static Int2ObjectMap<String[]> metaItemTooltipsMap = new Int2ObjectOpenHashMap<>();
+    public static IntSet metaSet = new IntOpenHashSet();
 
     public ItemBlockColumn(Block aBlock) {
         super(aBlock);
@@ -33,24 +33,24 @@ public class ItemBlockColumn extends ItemBlock {
         this.setCreativeTab(GTNLCreativeTabs.GTNotLeisureBlock);
     }
 
-    public static ItemStack initMetaBlock(int Meta) {
-        return initMetaItemStack(Meta, BlockLoader.metaBlockColumn, MetaBlockSet);
+    public static ItemStack initMetaBlock(int meta) {
+        return initMetaItemStack(meta, BlockLoader.metaBlockColumn, metaSet);
     }
 
     public static ItemStack initMetaBlock(String i18nName, int Meta, String[] tooltips) {
         if (tooltips != null) {
-            metaItemStackTooltipsAdd(MetaBlockTooltipsMap, Meta, tooltips);
+            metaItemStackTooltipsAdd(metaItemTooltipsMap, Meta, tooltips);
         }
         return initMetaBlock(Meta);
     }
 
     @SideOnly(Side.CLIENT)
     @Override
-    public void addInformation(ItemStack aItemStack, EntityPlayer p_77624_2_, List<String> theTooltipsList,
+    public void addInformation(ItemStack aItemStack, EntityPlayer entityPlayer, List<String> theTooltipsList,
         boolean p_77624_4_) {
         int meta = aItemStack.getItemDamage();
-        if (null != MetaBlockTooltipsMap.get(meta)) {
-            String[] tooltips = MetaBlockTooltipsMap.get(meta);
+        if (null != metaItemTooltipsMap.get(meta)) {
+            String[] tooltips = metaItemTooltipsMap.get(meta);
             theTooltipsList.addAll(Arrays.asList(tooltips));
         }
     }

@@ -3,10 +3,6 @@ package com.science.gtnl.common.recipe.gtnl;
 import static gregtech.api.enums.Mods.EnderIO;
 
 import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Random;
-import java.util.Set;
 
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -22,18 +18,23 @@ import com.science.gtnl.common.material.RecipePool;
 import com.science.gtnl.utils.recipes.RecipeBuilder;
 
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
+import gregtech.api.objects.XSTR;
 import gregtech.api.recipe.RecipeMap;
 import gregtech.api.util.GTModHandler;
 import gregtech.api.util.GTUtility;
+import it.unimi.dsi.fastutil.ints.IntOpenHashSet;
+import it.unimi.dsi.fastutil.ints.IntSet;
+import it.unimi.dsi.fastutil.objects.ObjectArrayList;
+import it.unimi.dsi.fastutil.objects.ObjectList;
 import kubatech.loaders.MobHandlerLoader;
 
 public class ExtremeExtremeEntityCrusherRecipes {
 
     public RecipeMap<?> EEEC = RecipePool.ExtremeExtremeEntityCrusherRecipes;
 
-    public static Set<String> registeredSpawnerTypes = new HashSet<>();
+    public static IntSet registeredSpawnerTypes = new IntOpenHashSet();
 
-    public static Random FIXED_RANDOM = new Random(1145141919810L);
+    public static XSTR FIXED_RANDOM = new XSTR(1145141919810L);
 
     @SubscribeEvent
     public void onPostMobRegistration(PostMobRegistrationEvent event) {
@@ -43,7 +44,7 @@ public class ExtremeExtremeEntityCrusherRecipes {
 
         if (drops.isEmpty() || !mobRecipe.isUsableInVial) return;
 
-        if (!registeredSpawnerTypes.add(mobType)) {
+        if (!registeredSpawnerTypes.add(mobType.hashCode())) {
             return;
         }
 
@@ -57,7 +58,7 @@ public class ExtremeExtremeEntityCrusherRecipes {
         nbt.setBoolean("eio.abstractMachine", true);
         spawner.setTagCompound(nbt);
 
-        List<Pair<ItemStack, Integer>> merged = new ArrayList<>();
+        ObjectList<Pair<ItemStack, Integer>> merged = new ObjectArrayList<>();
 
         outer: for (MobDrop drop : drops) {
             ItemStack output = drop.stack.copy();
@@ -81,8 +82,8 @@ public class ExtremeExtremeEntityCrusherRecipes {
             merged.add(Pair.of(output, chance));
         }
 
-        List<ItemStack> outputs = new ArrayList<>();
-        List<Integer> chances = new ArrayList<>();
+        ObjectList<ItemStack> outputs = new ObjectArrayList<>();
+        ObjectList<Integer> chances = new ObjectArrayList<>();
 
         for (Pair<ItemStack, Integer> pair : merged) {
             outputs.add(pair.getLeft());

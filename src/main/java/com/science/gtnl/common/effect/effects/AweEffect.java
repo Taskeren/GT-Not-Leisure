@@ -1,8 +1,6 @@
 package com.science.gtnl.common.effect.effects;
 
-import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Random;
 import java.util.Set;
 
@@ -16,6 +14,7 @@ import net.minecraft.util.StatCollector;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.living.LivingEvent;
 
+import com.google.common.collect.ImmutableList;
 import com.science.gtnl.common.effect.EffectBase;
 
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
@@ -84,9 +83,7 @@ public class AweEffect extends EffectBase {
         super.removeAttributesModifiersFromEntity(entityLiving, attributeMap, amplifier);
 
         if (entityLiving instanceof EntityPlayerMP player) {
-            List<PotionEffect> effects = new ArrayList<>(player.getActivePotionEffects());
-
-            for (PotionEffect effect : effects) {
+            for (PotionEffect effect : ImmutableList.copyOf(player.getActivePotionEffects())) {
                 player.removePotionEffect(effect.getPotionID());
             }
 

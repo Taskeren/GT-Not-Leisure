@@ -29,14 +29,14 @@ import cpw.mods.fml.relauncher.SideOnly;
 
 public class EntityExtremeAnvil extends Entity {
 
-    private Block blockType;
+    public Block blockType;
     public int blockMetadata;
     public int timeSinceFalling;
     public boolean dropItem;
-    private boolean hurtEntities;
-    private boolean hasBlockFallen;
-    private int maxFallDamage;
-    private float fallDamageMultiplier;
+    public boolean hurtEntities;
+    public boolean hasBlockFallen;
+    public int maxFallDamage;
+    public float fallDamageMultiplier;
     public NBTTagCompound tileEntityData;
 
     public EntityExtremeAnvil(World world) {
@@ -77,15 +77,18 @@ public class EntityExtremeAnvil extends Entity {
     /**
      * Returns if this entity triggers Block.onEntityWalking on the blocks they walk on.
      */
+    @Override
     public boolean canTriggerWalking() {
         return false;
     }
 
+    @Override
     public void entityInit() {}
 
     /**
      * Returns true if other Entities should be prevented from moving through this Entity.
      */
+    @Override
     public boolean canBeCollidedWith() {
         return !this.isDead;
     }
@@ -297,19 +300,16 @@ public class EntityExtremeAnvil extends Entity {
     }
 
     @SideOnly(Side.CLIENT)
+    @Override
     public float getShadowSize() {
         return 0.0F;
-    }
-
-    @SideOnly(Side.CLIENT)
-    public World getClientWorld() {
-        return this.worldObj;
     }
 
     /**
      * Return whether this entity should be rendered as on fire.
      */
     @SideOnly(Side.CLIENT)
+    @Override
     public boolean canRenderOnFire() {
         return false;
     }

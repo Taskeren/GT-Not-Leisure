@@ -18,9 +18,9 @@ import cpw.mods.fml.client.registry.ISimpleBlockRenderingHandler;
 
 public class RenderExtremeAnvil extends TileEntitySpecialRenderer implements ISimpleBlockRenderingHandler {
 
-    private final ExtremeAnvilModel model = new ExtremeAnvilModel();
+    public ExtremeAnvilModel model = new ExtremeAnvilModel();
 
-    private static final ResourceLocation TEXTURE = new ResourceLocation(
+    public static ResourceLocation TEXTURE = new ResourceLocation(
         RESOURCE_ROOT_ID + ":" + "textures/blocks/ExtremeAnvil.png");
 
     @Override

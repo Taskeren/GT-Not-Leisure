@@ -5,9 +5,7 @@ import static com.science.gtnl.common.render.PlayerDollRenderManager.*;
 import static com.science.gtnl.utils.steam.GlobalSteamWorldSavedData.loadInstance;
 
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Map;
 import java.util.Set;
 import java.util.UUID;
 
@@ -71,11 +69,13 @@ import cpw.mods.fml.common.network.FMLNetworkEvent;
 import gregtech.api.interfaces.metatileentity.IMetaTileEntity;
 import gregtech.api.metatileentity.BaseMetaTileEntity;
 import ic2.api.event.ExplosionEvent;
+import it.unimi.dsi.fastutil.objects.Object2IntMap;
+import it.unimi.dsi.fastutil.objects.Object2IntOpenHashMap;
 import micdoodle8.mods.galacticraft.api.recipe.SchematicRegistry;
 
 public class SubscribeEventUtils {
 
-    private static final Set<String> MOD_BLACKLIST = new HashSet<>(
+    public static Set<String> MOD_BLACKLIST = new HashSet<>(
         Arrays.asList(
             ModList.QzMiner.ID,
             ModList.Baubles.ID,
@@ -84,10 +84,9 @@ public class SubscribeEventUtils {
             ModList.Sudoku.ID,
             ModList.GiveCount.ID));
 
-    private static final Map<UUID, Integer> foodTickTimers = new HashMap<>();
+    public static Object2IntMap<UUID> foodTickTimers = new Object2IntOpenHashMap<>();
 
-    public static final DamageSource CRUSHING_DAMAGE = new DamageSource("damage.gtnl.crushing")
-        .setDamageBypassesArmor();
+    public static DamageSource CRUSHING_DAMAGE = new DamageSource("damage.gtnl.crushing").setDamageBypassesArmor();
 
     public static boolean circuitNanitesDataLoad = false;
 

@@ -3,11 +3,7 @@ package com.science.gtnl.common.item;
 import static com.science.gtnl.ScienceNotLeisure.RESOURCE_ROOT_ID;
 
 import java.util.Arrays;
-import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
-import java.util.Set;
 
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.creativetab.CreativeTabs;
@@ -22,6 +18,10 @@ import com.science.gtnl.utils.item.MetaItemStackUtils;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import fox.spiteful.avaritia.render.IHaloRenderItem;
+import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
+import it.unimi.dsi.fastutil.ints.Int2ObjectOpenHashMap;
+import it.unimi.dsi.fastutil.ints.IntOpenHashSet;
+import it.unimi.dsi.fastutil.ints.IntSet;
 
 /**
  * An ItemStack Generator used Meta Item System.
@@ -30,11 +30,8 @@ import fox.spiteful.avaritia.render.IHaloRenderItem;
  */
 public class MetaItemAdder extends ItemAdder_Basic implements IHaloRenderItem {
 
-    /**
-     * A Set contains the meta value that has been used.
-     */
-    public static final Set<Integer> metaSet = new HashSet<>();
-    public static final Map<Integer, String[]> metaItemTooltipsMap = new HashMap<>();
+    public static Int2ObjectMap<String[]> metaItemTooltipsMap = new Int2ObjectOpenHashMap<>();
+    public static IntSet metaSet = new IntOpenHashSet();
 
     public final String unlocalizedName;
     public IIcon[] halo;

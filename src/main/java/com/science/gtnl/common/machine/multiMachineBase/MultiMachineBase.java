@@ -7,7 +7,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -80,6 +79,8 @@ import gregtech.common.tileentities.machines.MTEHatchCraftingInputME;
 import gtPlusPlus.GTplusplus;
 import gtPlusPlus.api.objects.minecraft.BlockPos;
 import gtPlusPlus.xmod.gregtech.api.metatileentity.implementations.MTEHatchSteamBusInput;
+import it.unimi.dsi.fastutil.objects.Object2IntMap;
+import it.unimi.dsi.fastutil.objects.Object2IntOpenHashMap;
 import lombok.Getter;
 import lombok.Setter;
 import tectech.thing.metaTileEntity.hatch.MTEHatchDynamoMulti;
@@ -116,7 +117,7 @@ public abstract class MultiMachineBase<T extends MultiMachineBase<T>> extends MT
     public HeatingCoilLevel mCoilLevel = HeatingCoilLevel.None;
     public int mHeatingCapacity = 0;
 
-    public static Map<ItemStack, Integer> PARALLEL_TIERS = new HashMap<>() {
+    public static Object2IntMap<ItemStack> PARALLEL_TIERS = new Object2IntOpenHashMap<>() {
 
         {
             put(GTNLItemList.LVParallelControllerCore.get(1), 1);

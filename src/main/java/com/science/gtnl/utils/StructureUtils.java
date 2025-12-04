@@ -17,8 +17,8 @@ import gregtech.common.blocks.BlockCasingsAbstract;
 public class StructureUtils {
 
     // 基础路径
-    public static final String BASE_PATH = "/assets/";
-    public static final ConcurrentHashMap<String, List<String[]>> MULTIBLOCK_CACHE = new ConcurrentHashMap<>();
+    public static String BASE_PATH = "/assets/";
+    public static ConcurrentHashMap<String, String[][]> MULTIBLOCK_CACHE = new ConcurrentHashMap<>();
 
     /**
      * 从文件读取多方块结构
@@ -28,7 +28,7 @@ public class StructureUtils {
      */
     public static String[][] readStructureFromFile(String fileName) {
         return MULTIBLOCK_CACHE.computeIfAbsent(fileName, name -> {
-            List<String[]> structure = new ArrayList<>();
+            List<String[]> structureList = new ArrayList<>();
             String filePath = BASE_PATH + name.replace(':', '/') + ".mb";
             try (InputStream is = StructureUtils.class.getResourceAsStream(filePath)) {
                 if (is == null) {
@@ -37,15 +37,14 @@ public class StructureUtils {
                 try (BufferedReader br = new BufferedReader(new InputStreamReader(is))) {
                     String line;
                     while ((line = br.readLine()) != null) {
-                        structure.add(line.split(","));
+                        structureList.add(line.split(","));
                     }
                 }
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            return structure;
-        })
-            .toArray(new String[0][]);
+            return structureList.toArray(new String[0][]);
+        });
     }
 
     /**
@@ -88,18 +87,18 @@ public class StructureUtils {
      * blocks in the world, with the machine facing the XZ direction.
      *
      * @param aBaseMetaTileEntity the machine
-     * @param OffSetX             HORIZONTAL_OFF_SET of the machine structure definition
-     * @param OffSetY             VERTICAL_OFF_SET of the machine structure definition
-     * @param OffSetZ             DEPTH_OFF_SET of the machine structure definition
-     * @param StructureString     the machine structure definition string array
+     * @param offSetX             HORIZONTAL_OFF_SET of the machine structure definition
+     * @param offSetY             VERTICAL_OFF_SET of the machine structure definition
+     * @param offSetZ             DEPTH_OFF_SET of the machine structure definition
+     * @param structureString     the machine structure definition string array
      * @param isStructureFlipped  if the machine is flipped, use getFlip().isHorizontallyFlipped() to get it
-     * @param TargetString        target character
-     * @param TargetBlock         target block
-     * @param TargetMeta          target block meta
+     * @param targetString        target character
+     * @param targetBlock         target block
+     * @param targetMeta          target block meta
      */
-    public static void setStringBlockXZ(IGregTechTileEntity aBaseMetaTileEntity, int OffSetX, int OffSetY, int OffSetZ,
-        String[][] StructureString, boolean isStructureFlipped, String TargetString, Block TargetBlock,
-        int TargetMeta) {
+    public static void setStringBlockXZ(IGregTechTileEntity aBaseMetaTileEntity, int offSetX, int offSetY, int offSetZ,
+        String[][] structureString, boolean isStructureFlipped, String targetString, Block targetBlock,
+        int targetMeta) {
         int mDirectionX = aBaseMetaTileEntity.getFrontFacing().offsetX;
         int mDirectionZ = aBaseMetaTileEntity.getFrontFacing().offsetZ;
         int xDir = 0;
@@ -122,18 +121,18 @@ public class StructureUtils {
             xDir = 1;
             zDir = -1;
         }
-        int LengthX = StructureString[0][0].length();
-        int LengthY = StructureString.length;
-        int LengthZ = StructureString[0].length;
-        for (int x = 0; x < LengthX; x++) {
-            for (int z = 0; z < LengthZ; z++) {
-                for (int y = 0; y < LengthY; y++) {
-                    String ListStr = String.valueOf(StructureString[y][z].charAt(x));
-                    if (!Objects.equals(ListStr, TargetString)) continue;
+        int lengthX = structureString[0][0].length();
+        int lengthY = structureString.length;
+        int lengthZ = structureString[0].length;
+        for (int x = 0; x < lengthX; x++) {
+            for (int z = 0; z < lengthZ; z++) {
+                for (int y = 0; y < lengthY; y++) {
+                    String listStr = String.valueOf(structureString[y][z].charAt(x));
+                    if (!Objects.equals(listStr, targetString)) continue;
 
-                    int aX = (OffSetX - x) * xDir;
-                    int aY = OffSetY - y;
-                    int aZ = (OffSetZ - z) * zDir;
+                    int aX = (offSetX - x) * xDir;
+                    int aY = offSetY - y;
+                    int aZ = (offSetZ - z) * zDir;
                     if (mDirectionX == 1 || mDirectionX == -1) {
                         int temp = aX;
                         aX = aZ;
@@ -152,25 +151,25 @@ public class StructureUtils {
                             aBaseMetaTileEntity.getXCoord() + aX,
                             aBaseMetaTileEntity.getYCoord() + aY,
                             aBaseMetaTileEntity.getZCoord() + aZ,
-                            TargetBlock,
-                            TargetMeta,
+                            targetBlock,
+                            targetMeta,
                             3);
                 }
             }
         }
     }
 
-    public static void setStringBlockXZ(IGregTechTileEntity aBaseMetaTileEntity, int OffSetX, int OffSetY, int OffSetZ,
-        String[][] StructureString, boolean isStructureFlipped, String TargetString, Block TargetBlock) {
+    public static void setStringBlockXZ(IGregTechTileEntity aBaseMetaTileEntity, int offSetX, int offSetY, int offSetZ,
+        String[][] structureString, boolean isStructureFlipped, String targetString, Block targetBlock) {
         setStringBlockXZ(
             aBaseMetaTileEntity,
-            OffSetX,
-            OffSetY,
-            OffSetZ,
-            StructureString,
+            offSetX,
+            offSetY,
+            offSetZ,
+            structureString,
             isStructureFlipped,
-            TargetString,
-            TargetBlock,
+            targetString,
+            targetBlock,
             0);
     }
 

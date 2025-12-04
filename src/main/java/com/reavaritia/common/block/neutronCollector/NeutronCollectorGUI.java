@@ -15,17 +15,17 @@ import cpw.mods.fml.relauncher.SideOnly;
 @SideOnly(Side.CLIENT)
 public class NeutronCollectorGUI extends GuiContainer {
 
-    private static final ResourceLocation GuiTextures = new ResourceLocation(
+    public static ResourceLocation GuiTextures = new ResourceLocation(
         "reavaritia",
         "textures/gui/neutron_collector.png");
-    private final TileEntityNeutronCollector machine;
+    public TileEntityNeutronCollector machine;
 
     public NeutronCollectorGUI(InventoryPlayer player, TileEntityNeutronCollector machine) {
         super(new ContainerNeutronItem(player, machine));
         this.machine = machine;
     }
 
-    private String getLocalizedName() {
+    public String getLocalizedName() {
         return StatCollector.translateToLocal("container." + machine.getMachineType());
     }
 

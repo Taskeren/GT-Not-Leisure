@@ -9,7 +9,6 @@ import java.io.InputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.math.BigInteger;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
@@ -19,6 +18,7 @@ import net.minecraft.world.WorldSavedData;
 import net.minecraft.world.storage.MapStorage;
 
 import gregtech.common.misc.spaceprojects.SpaceProjectManager;
+import it.unimi.dsi.fastutil.objects.Object2ObjectOpenHashMap;
 
 public class GlobalSteamWorldSavedData extends WorldSavedData {
 
@@ -57,7 +57,7 @@ public class GlobalSteamWorldSavedData extends WorldSavedData {
             InputStream byteArrayInputStream = new ByteArrayInputStream(ba);
             ObjectInputStream objectInputStream = new ObjectInputStream(byteArrayInputStream);
             Object data = objectInputStream.readObject();
-            HashMap<Object, BigInteger> hashData = (HashMap<Object, BigInteger>) data;
+            Object2ObjectOpenHashMap<Object, BigInteger> hashData = (Object2ObjectOpenHashMap<Object, BigInteger>) data;
             for (Map.Entry<Object, BigInteger> entry : hashData.entrySet()) {
                 try {
                     GlobalSteam.put(
@@ -80,7 +80,7 @@ public class GlobalSteamWorldSavedData extends WorldSavedData {
             InputStream byteArrayInputStream = new ByteArrayInputStream(ba);
             ObjectInputStream objectInputStream = new ObjectInputStream(byteArrayInputStream);
             Object data = objectInputStream.readObject();
-            HashMap<String, String> oldTeams = (HashMap<String, String>) data;
+            Object2ObjectOpenHashMap<String, String> oldTeams = (Object2ObjectOpenHashMap<String, String>) data;
             for (String member : oldTeams.keySet()) {
                 String leader = oldTeams.get(member);
                 try {
@@ -100,7 +100,8 @@ public class GlobalSteamWorldSavedData extends WorldSavedData {
         try {
             ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
             ObjectOutputStream objectOutputStream = new ObjectOutputStream(byteArrayOutputStream);
-            objectOutputStream.writeObject(GlobalSteam);
+            Object2ObjectOpenHashMap<Object, BigInteger> fastMap = new Object2ObjectOpenHashMap<>(GlobalSteam);
+            objectOutputStream.writeObject(fastMap);
             objectOutputStream.flush();
             byte[] data = byteArrayOutputStream.toByteArray();
             nbtTagCompound.setByteArray(GlobalSteamNBTTag, data);

@@ -39,6 +39,7 @@ import net.minecraftforge.event.entity.living.LivingAttackEvent;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.event.entity.living.LivingEvent;
 
+import com.google.common.collect.ImmutableList;
 import com.reavaritia.ReAvaCreativeTabs;
 import com.reavaritia.ReAvaItemList;
 import com.reavaritia.common.SubtitleDisplay;
@@ -524,36 +525,37 @@ public class InfinitySword extends ItemSword implements ICosmicRenderItem, Subti
 
     @SubscribeEvent(priority = EventPriority.HIGHEST)
     public void onPlayerUpdate(LivingEvent.LivingUpdateEvent event) {
-        if (event.entity instanceof EntityPlayer player) {
-            if (player.getHeldItem() != null && player.getHeldItem()
-                .getItem() == this) {
-                if (MainConfig.enableInfinitySwordBypassMechanism) cancelBloodSword = true;
-                if (player.isBurning()) {
-                    player.extinguish();
-                }
+        if (!(event.entity instanceof EntityPlayer player)) return;
 
-                List<Integer> badEffects = new ArrayList<>();
-                for (PotionEffect effect : player.getActivePotionEffects()) {
-                    if (isBadEffect(effect)) {
-                        badEffects.add(effect.getPotionID());
-                    }
-                }
+        ItemStack held = player.getHeldItem();
 
-                for (int potionID : badEffects) {
-                    player.removePotionEffect(potionID);
-                }
+        if (held == null || held.getItem() != this) {
+            cancelBloodSword = false;
+            return;
+        }
 
-                player.setHealth(player.getMaxHealth());
-                player.getFoodStats()
-                    .addStats(20, 20.0F);
+        cancelBloodSword = MainConfig.enableInfinitySwordBypassMechanism;
 
-                player.addPotionEffect(new PotionEffect(Potion.nightVision.id, 1200, 255));
-                if (player.posY < 0) {
-                    player.setPositionAndUpdate(player.posX, 255, player.posZ);
-                }
-            } else {
-                cancelBloodSword = false;
+        if (player.isBurning()) {
+            player.extinguish();
+        }
+
+        for (PotionEffect effect : ImmutableList.copyOf(player.getActivePotionEffects())) {
+            if (isBadEffect(effect)) {
+                player.removePotionEffect(effect.getPotionID());
             }
+        }
+
+        player.setHealth(player.getMaxHealth());
+        player.getFoodStats()
+            .setFoodLevel(20);
+        player.getFoodStats()
+            .setFoodSaturationLevel(20);
+
+        player.addPotionEffect(new PotionEffect(Potion.nightVision.id, 220, 0));
+
+        if (player.posY < 0 && player.motionY < 0) {
+            player.setPositionAndUpdate(player.posX, 255, player.posZ);
         }
     }
 

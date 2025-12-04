@@ -37,6 +37,7 @@ import com.science.gtnl.utils.Utils;
 import com.science.gtnl.utils.gui.AutoScalingStackSizeText;
 
 import gregtech.api.util.GTUtility;
+import it.unimi.dsi.fastutil.ints.IntArrayList;
 
 public class GreenHouseDynamicInventory<T> {
 
@@ -165,7 +166,7 @@ public class GreenHouseDynamicInventory<T> {
                         continue;
                     }
                     ItemStack stack = inventoryGetter.get(slot);
-                    newDrawables.add(new StackableItemSlot(1, stack, new ArrayList<>(Collections.singletonList(i))));
+                    newDrawables.add(new StackableItemSlot(1, stack, new IntArrayList(Collections.singletonList(i))));
                 }
                 if (!Objects.equals(newDrawables, drawables)) {
                     drawables = newDrawables;
@@ -210,7 +211,7 @@ public class GreenHouseDynamicInventory<T> {
                     continue;
                 }
                 ItemStack stack = inventoryGetter.get(slot);
-                drawables.add(new StackableItemSlot(1, stack, new ArrayList<>(Collections.singleton(i))));
+                drawables.add(new StackableItemSlot(1, stack, new IntArrayList(Collections.singleton(i))));
             }
         }
 
@@ -480,7 +481,7 @@ public class GreenHouseDynamicInventory<T> {
 
     public static class StackableItemSlot {
 
-        public StackableItemSlot(int count, ItemStack stack, ArrayList<Integer> realSlots) {
+        public StackableItemSlot(int count, ItemStack stack, IntArrayList realSlots) {
             this.count = count;
             this.stack = stack;
             this.hashcode = GTUtility.ItemId.createNoCopyWithStackSize(stack)
@@ -490,8 +491,8 @@ public class GreenHouseDynamicInventory<T> {
 
         public final int count;
         public final ItemStack stack;
-        private final int hashcode;
-        public final ArrayList<Integer> realSlots;
+        public final int hashcode;
+        public final IntArrayList realSlots;
 
         public void write(PacketBuffer buffer) throws IOException {
             buffer.writeVarIntToBuffer(count);
@@ -502,7 +503,7 @@ public class GreenHouseDynamicInventory<T> {
             return new StackableItemSlot(
                 buffer.readVarIntFromBuffer(),
                 buffer.readItemStackFromBuffer(),
-                new ArrayList<>());
+                new IntArrayList());
         }
 
         @Override

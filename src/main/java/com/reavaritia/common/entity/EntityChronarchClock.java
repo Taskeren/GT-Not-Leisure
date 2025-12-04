@@ -12,10 +12,10 @@ import com.science.gtnl.utils.enums.ModList;
 
 public class EntityChronarchClock extends Entity {
 
-    private final int radius;
-    private final int speedMultiplier;
-    private final int maxTicks;
-    private int age = 0;
+    public int radius;
+    public int speedMultiplier;
+    public int maxTicks;
+    public int age = 0;
 
     public EntityChronarchClock(World world) {
         super(world);

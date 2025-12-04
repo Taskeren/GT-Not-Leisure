@@ -1,9 +1,7 @@
 package com.science.gtnl.common.block.blocks;
 
 import java.util.List;
-import java.util.Map;
 import java.util.UUID;
-import java.util.WeakHashMap;
 
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.Entity;
@@ -21,9 +19,12 @@ import com.science.gtnl.common.block.BlockFluidBase;
 import com.science.gtnl.common.recipe.gtnl.ShimmerRecipes;
 import com.science.gtnl.loader.EffectLoader;
 
+import it.unimi.dsi.fastutil.objects.Object2IntMap;
+import it.unimi.dsi.fastutil.objects.Object2IntOpenHashMap;
+
 public class BlockShimmerFluid extends BlockFluidBase {
 
-    private final Map<UUID, Integer> itemTimeMap = new WeakHashMap<>();
+    public Object2IntMap<UUID> itemTimeMap = new Object2IntOpenHashMap<>();
 
     public BlockShimmerFluid(Fluid fluid) {
         super(fluid, Material.water);

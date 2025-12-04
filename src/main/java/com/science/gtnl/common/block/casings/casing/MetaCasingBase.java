@@ -2,11 +2,7 @@ package com.science.gtnl.common.block.casings.casing;
 
 import static com.science.gtnl.ScienceNotLeisure.RESOURCE_ROOT_ID;
 
-import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
-import java.util.Set;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
@@ -24,13 +20,17 @@ import com.science.gtnl.client.GTNLCreativeTabs;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
+import it.unimi.dsi.fastutil.ints.Int2ObjectOpenHashMap;
+import it.unimi.dsi.fastutil.ints.IntOpenHashSet;
+import it.unimi.dsi.fastutil.ints.IntSet;
 
 public abstract class MetaCasingBase extends Block implements IMetaBlock {
 
-    public final Set<Integer> usedMetaSet = new HashSet<>(16);
-    public final Map<Integer, String[]> tooltipsMap = new HashMap<>(16);
-    public final Map<Integer, IIcon> iconMap = new HashMap<>(16);
-    public final String unlocalizedName;
+    public IntSet usedMetaSet = new IntOpenHashSet(16);
+    public Int2ObjectMap<String[]> tooltipsMap = new Int2ObjectOpenHashMap<>(16);
+    public Int2ObjectMap<IIcon> iconMap = new Int2ObjectOpenHashMap<>(16);
+    public String unlocalizedName;
 
     public MetaCasingBase(String unlocalizedName) {
         super(Material.iron);
@@ -48,17 +48,17 @@ public abstract class MetaCasingBase extends Block implements IMetaBlock {
     public abstract boolean isNormalCube(IBlockAccess world, int x, int y, int z);
 
     @Override
-    public Set<Integer> getUsedMetaSet() {
+    public IntSet getUsedMetaSet() {
         return usedMetaSet;
     }
 
     @Override
-    public Map<Integer, String[]> getTooltipsMap() {
+    public Int2ObjectMap<String[]> getTooltipsMap() {
         return tooltipsMap;
     }
 
     @Override
-    public Map<Integer, IIcon> getIconMap() {
+    public Int2ObjectMap<IIcon> getIconMap() {
         return iconMap;
     }
 
@@ -75,27 +75,31 @@ public abstract class MetaCasingBase extends Block implements IMetaBlock {
     @Override
     @SideOnly(Side.CLIENT)
     public void registerBlockIcons(IIconRegister reg) {
-        Map<Integer, IIcon> iconMap;
-        Set<Integer> usedMetaSet;
-        if ((iconMap = this.iconMap) == null || (usedMetaSet = this.usedMetaSet) == null) {
+        Int2ObjectMap<IIcon> iconMap = this.iconMap;
+        IntSet usedMetaSet = this.usedMetaSet;
+
+        if (iconMap == null || usedMetaSet == null) {
             throw new NullPointerException("Null in " + this.unlocalizedName);
         }
+
         String root = RESOURCE_ROOT_ID + ":" + this.unlocalizedName + "/";
+
         this.blockIcon = reg.registerIcon(root + "0");
-        for (int Meta : usedMetaSet) {
-            iconMap.put(Meta, reg.registerIcon(root + Meta));
+
+        for (int meta : usedMetaSet) {
+            iconMap.put(meta, reg.registerIcon(root + meta));
         }
     }
 
     @Override
     @SideOnly(Side.CLIENT)
     public void getSubBlocks(Item aItem, CreativeTabs aCreativeTabs, List<ItemStack> list) {
-        Set<Integer> usedMetaSet;
+        IntSet usedMetaSet;
         if ((usedMetaSet = this.usedMetaSet) == null) {
             throw new NullPointerException("Null in " + this.unlocalizedName);
         }
-        for (int Meta : usedMetaSet) {
-            list.add(new ItemStack(aItem, 1, Meta));
+        for (int meta : usedMetaSet) {
+            list.add(new ItemStack(aItem, 1, meta));
         }
     }
 
