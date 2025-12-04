@@ -122,15 +122,15 @@ import tectech.thing.casing.BlockGTCasingsTT;
 
 public class GrandAssemblyLine extends GTMMultiMachineBase<GrandAssemblyLine> implements ISurvivalConstructable {
 
-    public static final Int2ObjectMap<List<GTRecipe.RecipeAssemblyLine>> recipeCache = new Int2ObjectOpenHashMap<>();
-    public static final int PARALLEL_WINDOW_ID = 10;
+    public static Int2ObjectMap<List<GTRecipe.RecipeAssemblyLine>> recipeCache = new Int2ObjectOpenHashMap<>();
+    public static int PARALLEL_WINDOW_ID = 10;
     private static final String STRUCTURE_PIECE_MAIN = "main";
     private static final String GAL_STRUCTURE_FILE_PATH = RESOURCE_ROOT_ID + ":" + "multiblock/grand_assembly_line";
     private static final String[][] shape = StructureUtils.readStructureFromFile(GAL_STRUCTURE_FILE_PATH);
     private static final int HORIZONTAL_OFF_SET = 46;
     private static final int VERTICAL_OFF_SET = 2;
     private static final int DEPTH_OFF_SET = 0;
-    public final List<MTEHatchDataAccess> mDataAccessHatches = new ObjectArrayList<>();
+    public List<MTEHatchDataAccess> mDataAccessHatches = new ObjectArrayList<>();
     public String costingEUText = ZERO_STRING;
     public UUID ownerUUID;
     public boolean wirelessMode = false;

@@ -48,7 +48,7 @@ public class AssLineRecipeHook {
     }
 
     @SuppressWarnings("SameParameterValue")
-    private static final class Builder {
+    public static class Builder {
 
         private String researchKey;
 
@@ -103,7 +103,7 @@ public class AssLineRecipeHook {
         }
     }
 
-    public static final class RemovalRecipe {
+    public static class RemovalRecipe {
 
         public final String removalKey;
 
