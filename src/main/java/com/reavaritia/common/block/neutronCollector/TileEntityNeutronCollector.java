@@ -36,9 +36,13 @@ public class TileEntityNeutronCollector extends TileLudicrous implements IInvent
     @Override
     public void updateEntity() {
         if (++progress >= time) {
-            if (isNeutronItem(neutrons)) {
-                createNeutronItemStack();
-                neutrons.stackSize++;
+            if (this.worldObj != null && !this.worldObj.isRemote) {
+                if (neutrons == null) {
+                    createNeutronItemStack();
+                } else if (GTUtility.areStacksEqual(neutrons, new ItemStack(LudicrousItems.resource, 1, meta))
+                    && neutrons.stackSize < 64) {
+                        neutrons.stackSize++;
+                    }
             }
             progress = 0;
             markDirty();
@@ -49,12 +53,6 @@ public class TileEntityNeutronCollector extends TileLudicrous implements IInvent
         if (neutrons == null) {
             neutrons = new ItemStack(LudicrousItems.resource, 1, meta);
         }
-    }
-
-    public boolean isNeutronItem(ItemStack stack) {
-        if (stack == null) return true;
-        if (neutrons == null) return false;
-        return GTUtility.areStacksEqual(neutrons, stack) && neutrons.stackSize < 64;
     }
 
     public void setFacing(int facing) {
@@ -76,6 +74,7 @@ public class TileEntityNeutronCollector extends TileLudicrous implements IInvent
         this.progress = tag.getInteger("progress");
         this.time = tag.getInteger("time");
         this.facing = tag.getInteger("facing");
+        this.meta = tag.getInteger("meta");
         this.machineType = tag.getString("machineType");
     }
 
@@ -84,6 +83,7 @@ public class TileEntityNeutronCollector extends TileLudicrous implements IInvent
         tag.setInteger("progress", this.progress);
         tag.setInteger("time", this.time);
         tag.setInteger("facing", this.facing);
+        tag.setInteger("meta", this.meta);
         if (neutrons != null) {
             NBTTagCompound produce = new NBTTagCompound();
             neutrons.writeToNBT(produce);

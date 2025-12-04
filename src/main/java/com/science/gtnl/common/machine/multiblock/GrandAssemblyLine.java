@@ -964,17 +964,19 @@ public class GrandAssemblyLine extends GTMMultiMachineBase<GrandAssemblyLine> im
     public boolean checkHatch() {
         setupParameters();
         if (mParallelTier < 9 && !checkEnergyHatch()) return false;
-        if (mParallelTier >= 12 && mEnergyHatches.isEmpty() && mExoticEnergyHatches.isEmpty()) {
-            wirelessMode = true;
-            useSingleAmp = false;
-            mEnergyHatchTier = 14;
-            return mDataAccessHatches.size() <= 1 && mMaintenanceHatches.size() <= 1;
-        } else if (mEnergyHatches.isEmpty() && mExoticEnergyHatches.isEmpty()) return false;
 
         if (!mDualInputHatches.isEmpty()) {
             isDualInputHatch = true;
             if (!mInputBusses.isEmpty() || !mInputHatches.isEmpty()) return false;
         }
+
+        if (mParallelTier >= 12 && mEnergyHatches.isEmpty() && mExoticEnergyHatches.isEmpty()) {
+            wirelessMode = true;
+            useSingleAmp = false;
+            mEnergyHatchTier = 14;
+            return mDataAccessHatches.size() <= 1 && mMaintenanceHatches.size() <= 1;
+        }
+
         return !(mEnergyHatches.isEmpty() && mExoticEnergyHatches.isEmpty()) && mDataAccessHatches.size() <= 1
             && mMaintenanceHatches.size() <= 1;
     }
