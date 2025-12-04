@@ -1,0 +1,243 @@
+package com.science.gtnl.common.machine.multiblock.wireless;
+
+import static com.gtnewhorizon.structurelib.structure.StructureUtility.*;
+import static com.science.gtnl.ScienceNotLeisure.*;
+import static com.science.gtnl.common.machine.multiMachineBase.MultiMachineBase.CustomHatchElement.*;
+import static gregtech.api.GregTechAPI.*;
+import static gregtech.api.enums.GTValues.*;
+import static gregtech.api.enums.HatchElement.*;
+import static gregtech.api.util.GTStructureUtility.*;
+import static tectech.thing.casing.TTCasingsContainer.*;
+
+import javax.annotation.Nonnull;
+
+import net.minecraft.block.Block;
+import net.minecraft.item.ItemStack;
+import net.minecraft.util.StatCollector;
+import net.minecraftforge.common.util.ForgeDirection;
+
+import com.gtnewhorizon.structurelib.structure.IStructureDefinition;
+import com.gtnewhorizon.structurelib.structure.ISurvivalBuildEnvironment;
+import com.gtnewhorizon.structurelib.structure.StructureDefinition;
+import com.science.gtnl.common.machine.multiMachineBase.WirelessEnergyMultiMachineBase;
+import com.science.gtnl.loader.BlockLoader;
+import com.science.gtnl.utils.StructureUtils;
+import com.science.gtnl.utils.recipes.GTNL_OverclockCalculator;
+import com.science.gtnl.utils.recipes.GTNL_ProcessingLogic;
+
+import gregtech.api.enums.Textures;
+import gregtech.api.interfaces.ITexture;
+import gregtech.api.interfaces.metatileentity.IMetaTileEntity;
+import gregtech.api.interfaces.tileentity.IGregTechTileEntity;
+import gregtech.api.logic.ProcessingLogic;
+import gregtech.api.recipe.RecipeMap;
+import gregtech.api.recipe.RecipeMaps;
+import gregtech.api.render.TextureFactory;
+import gregtech.api.util.GTRecipe;
+import gregtech.api.util.MultiblockTooltipBuilder;
+import gtPlusPlus.core.block.ModBlocks;
+import gtPlusPlus.core.material.MaterialsAlloy;
+import tectech.thing.casing.BlockGTCasingsTT;
+
+public class MagneticConfinementDimensionalityShockDevice
+    extends WirelessEnergyMultiMachineBase<MagneticConfinementDimensionalityShockDevice> {
+
+    private static final int HORIZONTAL_OFF_SET = 11;
+    private static final int VERTICAL_OFF_SET = 21;
+    private static final int DEPTH_OFF_SET = 0;
+    private static final String STRUCTURE_PIECE_MAIN = "main";
+    private static final String MCDSD_STRUCTURE_FILE_PATH = RESOURCE_ROOT_ID + ":"
+        + "multiblock/magnetic_confinement_dimensionality_shock_device";
+    private static final String[][] shape = StructureUtils.readStructureFromFile(MCDSD_STRUCTURE_FILE_PATH);
+
+    public MagneticConfinementDimensionalityShockDevice(String aName) {
+        super(aName);
+    }
+
+    public MagneticConfinementDimensionalityShockDevice(int aID, String aName, String aNameRegional) {
+        super(aID, aName, aNameRegional);
+    }
+
+    @Override
+    public IMetaTileEntity newMetaEntity(IGregTechTileEntity aTileEntity) {
+        return new MagneticConfinementDimensionalityShockDevice(this.mName);
+    }
+
+    @Override
+    public MultiblockTooltipBuilder createTooltip() {
+        MultiblockTooltipBuilder tt = new MultiblockTooltipBuilder();
+        tt.addMachineType(StatCollector.translateToLocal("MagneticConfinementDimensionalityShockDeviceRecipeType"))
+            .addInfo(StatCollector.translateToLocal("Tooltip_MagneticConfinementDimensionalityShockDevice_00"))
+            .addInfo(StatCollector.translateToLocal("Tooltip_MagneticConfinementDimensionalityShockDevice_01"))
+            .addInfo(StatCollector.translateToLocal("Tooltip_MagneticConfinementDimensionalityShockDevice_02"))
+            .addInfo(StatCollector.translateToLocal("Tooltip_MagneticConfinementDimensionalityShockDevice_03"))
+            .addInfo(StatCollector.translateToLocal("Tooltip_WirelessEnergyMultiMachine_00"))
+            .addInfo(StatCollector.translateToLocal("Tooltip_WirelessEnergyMultiMachine_01"))
+            .addInfo(StatCollector.translateToLocal("Tooltip_WirelessEnergyMultiMachine_05"))
+            .addInfo(StatCollector.translateToLocal("Tooltip_WirelessEnergyMultiMachine_06"))
+            .addInfo(StatCollector.translateToLocal("Tooltip_WirelessEnergyMultiMachine_07"))
+            .addInfo(StatCollector.translateToLocal("Tooltip_WirelessEnergyMultiMachine_08"))
+            .addInfo(StatCollector.translateToLocal("Tooltip_WirelessEnergyMultiMachine_09"))
+            .addInfo(StatCollector.translateToLocal("Tooltip_Tectech_Hatch"))
+            .addSeparator()
+            .addInfo(StatCollector.translateToLocal("StructureTooComplex"))
+            .addInfo(StatCollector.translateToLocal("BLUE_PRINT_INFO"))
+            .beginStructureBlock(23, 23, 32, true)
+            .addInputBus(
+                StatCollector.translateToLocal("Tooltip_MagneticConfinementDimensionalityShockDevice_Casing"),
+                1)
+            .addOutputBus(
+                StatCollector.translateToLocal("Tooltip_MagneticConfinementDimensionalityShockDevice_Casing"),
+                1)
+            .addInputHatch(
+                StatCollector.translateToLocal("Tooltip_MagneticConfinementDimensionalityShockDevice_Casing"),
+                1)
+            .addOutputHatch(
+                StatCollector.translateToLocal("Tooltip_MagneticConfinementDimensionalityShockDevice_Casing"),
+                1)
+            .addEnergyHatch(
+                StatCollector.translateToLocal("Tooltip_MagneticConfinementDimensionalityShockDevice_Casing"),
+                1)
+            .toolTipFinisher();
+        return tt;
+    }
+
+    @Override
+    public int getCasingTextureID() {
+        return BlockGTCasingsTT.textureOffset + 4;
+    }
+
+    @Override
+    public ITexture[] getTexture(IGregTechTileEntity aBaseMetaTileEntity, ForgeDirection side, ForgeDirection aFacing,
+        int colorIndex, boolean aActive, boolean redstoneLevel) {
+        if (side == aFacing) {
+            if (aActive) return new ITexture[] { Textures.BlockIcons.getCasingTextureForId(getCasingTextureID()),
+                TextureFactory.builder()
+                    .addIcon(Textures.BlockIcons.OVERLAY_DTPF_ON)
+                    .extFacing()
+                    .build() };
+            return new ITexture[] { Textures.BlockIcons.getCasingTextureForId(getCasingTextureID()),
+                TextureFactory.builder()
+                    .addIcon(Textures.BlockIcons.OVERLAY_DTPF_OFF)
+                    .extFacing()
+                    .build() };
+        }
+        return new ITexture[] { Textures.BlockIcons.getCasingTextureForId(getCasingTextureID()) };
+    }
+
+    @Override
+    public IStructureDefinition<MagneticConfinementDimensionalityShockDevice> getStructureDefinition() {
+        return StructureDefinition.<MagneticConfinementDimensionalityShockDevice>builder()
+            .addShape(STRUCTURE_PIECE_MAIN, transpose(shape))
+            .addElement('A', ofBlock(sBlockCasings1, 13))
+            .addElement('B', ofBlock(sBlockCasings10, 7))
+            .addElement('C', ofBlock(BlockLoader.metaCasing, 4))
+            .addElement('D', ofBlock(sBlockCasings4, 7))
+            .addElement('E', ofBlock(sBlockCasings9, 9))
+            .addElement('F', ofBlock(sBlockCasings1, 14))
+            .addElement('G', ofBlock(sBlockMetal9, 11))
+            .addElement('H', ofBlock(sBlockCasings1, 12))
+            .addElement('I', ofBlock(sBlockCasings9, 13))
+            .addElement(
+                'J',
+                buildHatchAdder(MagneticConfinementDimensionalityShockDevice.class)
+                    .atLeast(
+                        Maintenance,
+                        InputBus,
+                        OutputBus,
+                        InputHatch,
+                        OutputHatch,
+                        Energy.or(ExoticEnergy),
+                        ParallelCon)
+                    .casingIndex(getCasingTextureID())
+                    .dot(1)
+                    .buildAndChain(onElementPass(x -> ++x.mCountCasing, ofBlock(sBlockCasingsTT, 4))))
+            .addElement('K', ofBlock(sBlockMetal8, 10))
+            .addElement('L', ofBlock(ModBlocks.blockCasings2Misc, 9))
+            .addElement(
+                'M',
+                ofBlockAnyMeta(
+                    Block.getBlockFromItem(
+                        MaterialsAlloy.HASTELLOY_X.getFrameBox(1)
+                            .getItem())))
+            .addElement('N', ofBlock(BlockLoader.metaCasing, 5))
+            .addElement('O', ofBlock(sBlockCasings10, 6))
+            .build();
+    }
+
+    @Override
+    public void construct(ItemStack stackSize, boolean hintsOnly) {
+        this.buildPiece(
+            STRUCTURE_PIECE_MAIN,
+            stackSize,
+            hintsOnly,
+            HORIZONTAL_OFF_SET,
+            VERTICAL_OFF_SET,
+            DEPTH_OFF_SET);
+    }
+
+    @Override
+    public int survivalConstruct(ItemStack stackSize, int elementBudget, ISurvivalBuildEnvironment env) {
+        if (this.mMachine) return -1;
+        return this.survivalBuildPiece(
+            STRUCTURE_PIECE_MAIN,
+            stackSize,
+            HORIZONTAL_OFF_SET,
+            VERTICAL_OFF_SET,
+            DEPTH_OFF_SET,
+            elementBudget,
+            env,
+            false,
+            true);
+    }
+
+    @Override
+    public void onFirstTick(IGregTechTileEntity aBaseMetaTileEntity) {
+        wirelessUpgrade = true;
+        super.onFirstTick(aBaseMetaTileEntity);
+    }
+
+    @Override
+    public boolean checkMachine(IGregTechTileEntity aBaseMetaTileEntity, ItemStack aStack) {
+        if (!checkPiece(STRUCTURE_PIECE_MAIN, HORIZONTAL_OFF_SET, VERTICAL_OFF_SET, DEPTH_OFF_SET) || !checkHatch()) {
+            return false;
+        }
+        setupParameters();
+        return mCountCasing > 500;
+    }
+
+    @Override
+    public ProcessingLogic createProcessingLogic() {
+        return new GTNL_ProcessingLogic() {
+
+            @Nonnull
+            @Override
+            public GTNL_OverclockCalculator createOverclockCalculator(@Nonnull GTRecipe recipe) {
+                return super.createOverclockCalculator(recipe).setExtraDurationModifier(mConfigSpeedBoost)
+                    .setEUtDiscount(getEUtDiscount())
+                    .setDurationModifier(getDurationModifier());
+            }
+        }.setMaxParallelSupplier(this::getTrueParallel);
+    }
+
+    @Override
+    public void setProcessingLogicPower(ProcessingLogic logic) {
+        if (wirelessMode) {
+            logic.setAvailableVoltage(V[15]);
+            logic.setAvailableAmperage(V[14]);
+            logic.setAmperageOC(false);
+            logic.enablePerfectOverclock();
+        } else {
+            boolean useSingleAmp = mEnergyHatches.size() == 1 && mExoticEnergyHatches.isEmpty()
+                && getMaxInputAmps() <= 4;
+            logic.setAvailableVoltage(getMachineVoltageLimit());
+            logic.setAvailableAmperage(useSingleAmp ? 1 : getMaxInputAmps());
+            logic.setAmperageOC(!useSingleAmp);
+        }
+    }
+
+    @Override
+    public RecipeMap<?> getRecipeMap() {
+        return RecipeMaps.transcendentPlasmaMixerRecipes;
+    }
+}

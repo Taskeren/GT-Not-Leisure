@@ -217,6 +217,7 @@ public enum GTNLMachineID {
     ADVANCED_HYPER_NAQUADAH_REACTOR(21212),
     TRANSLIMINAL_OASIS(21213),
     FAST_NEUTRON_BREEDER_REACTOR(21214),
+    MagneticConfinementDimensionalityShockDevice(21215),
 
     // Special Machine
     CHEAT_ORE_PROCESSING_FACTORY(21919),

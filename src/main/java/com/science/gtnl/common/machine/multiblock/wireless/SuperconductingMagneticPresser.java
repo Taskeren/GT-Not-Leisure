@@ -63,6 +63,7 @@ public class SuperconductingMagneticPresser extends WirelessEnergyMultiMachineBa
     public MultiblockTooltipBuilder createTooltip() {
         MultiblockTooltipBuilder tt = new MultiblockTooltipBuilder();
         tt.addMachineType(StatCollector.translateToLocal("SuperconductingMagneticPresserRecipeType"))
+            .addInfo(StatCollector.translateToLocal("Tooltip_SuperconductingMagneticPresser_00"))
             .addInfo(StatCollector.translateToLocal("Tooltip_WirelessEnergyMultiMachine_00"))
             .addInfo(StatCollector.translateToLocal("Tooltip_WirelessEnergyMultiMachine_01"))
             .addInfo(StatCollector.translateToLocal("Tooltip_WirelessEnergyMultiMachine_02"))
@@ -178,7 +179,7 @@ public class SuperconductingMagneticPresser extends WirelessEnergyMultiMachineBa
             return false;
         }
         setupParameters();
-        return mCountCasing > 1200;
+        return mCountCasing > 500;
     }
 
     @Override

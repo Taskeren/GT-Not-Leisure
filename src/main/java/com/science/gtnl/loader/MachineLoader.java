@@ -235,6 +235,7 @@ import com.science.gtnl.common.machine.multiblock.wireless.HighEnergyLaserLathe;
 import com.science.gtnl.common.machine.multiblock.wireless.HorizontalCompressor;
 import com.science.gtnl.common.machine.multiblock.wireless.IntegratedAssemblyFacility;
 import com.science.gtnl.common.machine.multiblock.wireless.KerrNewmanHomogenizer;
+import com.science.gtnl.common.machine.multiblock.wireless.MagneticConfinementDimensionalityShockDevice;
 import com.science.gtnl.common.machine.multiblock.wireless.MagneticEnergyReactionFurnace;
 import com.science.gtnl.common.machine.multiblock.wireless.MantleCrusher;
 import com.science.gtnl.common.machine.multiblock.wireless.MegaBathTank;
@@ -1687,6 +1688,13 @@ public class MachineLoader {
                 "FastNeutronBreederReactor",
                 StatCollector.translateToLocal("NameFastNeutronBreederReactor")));
         addItemTooltip(GTNLItemList.FastNeutronBreederReactor.get(1), AnimatedText.SNL_QYZG);
+
+        GTNLItemList.MagneticConfinementDimensionalityShockDevice.set(
+            new MagneticConfinementDimensionalityShockDevice(
+                MagneticConfinementDimensionalityShockDevice.ID,
+                "MagneticConfinementDimensionalityShockDevice",
+                StatCollector.translateToLocal("NameMagneticConfinementDimensionalityShockDevice")));
+        addItemTooltip(GTNLItemList.MagneticConfinementDimensionalityShockDevice.get(1), AnimatedText.SNL_QYZG);
 
         // Special Machine
         GTNLItemList.CheatOreProcessingFactory.set(

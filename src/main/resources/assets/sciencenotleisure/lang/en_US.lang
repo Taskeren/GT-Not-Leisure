@@ -2797,7 +2797,15 @@ Tooltip_HeavyRolling_Casing=Any Blast Furnace Machine Block
 
 NameSuperconductingMagneticPresser=Superconducting Magnetic Presser
 SuperconductingMagneticPresserRecipeType=Forming Press
+Tooltip_SuperconductingMagneticPresser_00=Each glass tier provides an additional 5% speed and power reduction (multiplicative).
 Tooltip_SuperconductingMagneticPresser_Casing=Ang Advanced Iridium Plated Machine Casing
+
+NameMagneticConfinementDimensionalityShockDevice=Magnetic Confinement Dimensionality Shock Device
+MagneticConfinementDimensionalityShockDeviceRecipeType=Transcendent Mixer
+Tooltip_MagneticConfinementDimensionalityShockDevice_00=§ePlay the symphony of string theory of the universe
+Tooltip_MagneticConfinementDimensionalityShockDevice_01=Comes with 2,147,483,647 parallel processes
+Tooltip_MagneticConfinementDimensionalityShockDevice_02=Comes with wireless upgrade by default
+Tooltip_MagneticConfinementDimensionalityShockDevice_03=Wireless mode: Voltage fixed at MAX+1, current at MAX Amperage
 
 NameNanitesCircuitAssemblyFactory=Nanites Circuit Assembly Factory
 NanitesCircuitAssemblyFactoryRecipeType=Circuit Assembler

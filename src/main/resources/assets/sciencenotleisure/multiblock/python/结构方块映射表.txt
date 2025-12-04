@@ -2,25 +2,25 @@
 
 字母对应关系:
 A -> ofBlock...(tile.bedrock, 0, ...)
-B -> ofBlock...(tile.blockCoal, 0, ...)
-C -> ofBlock...(tile.blockDiamond, 0, ...)
-D -> ofBlock...(tile.blockEmerald, 0, ...)
-E -> ofBlock...(tile.blockGold, 0, ...)
-F -> ofBlock...(tile.blockIron, 0, ...)
-G -> ofBlock...(tile.cloth, 0, ...)
-H -> ofBlock...(tile.cloth, 2, ...)
-I -> ofBlock...(tile.cloth, 7, ...)
-J -> ofBlock...(tile.cloth, 8, ...)
-K -> ofBlock...(tile.cloth, 10, ...)
-L -> ofBlock...(tile.glass, 0, ...)
-M -> ofBlock...(tile.obsidian, 0, ...)
-N -> ofBlock...(tile.stainedGlass, 7, ...)
+B -> ofBlock...(tile.blockDiamond, 0, ...)
+C -> ofBlock...(tile.blockEmerald, 0, ...)
+D -> ofBlock...(tile.blockGold, 0, ...)
+E -> ofBlock...(tile.blockIron, 0, ...)
+F -> ofBlock...(tile.blockLapis, 0, ...)
+G -> ofBlock...(tile.cloth, 1, ...)
+H -> ofBlock...(tile.cloth, 3, ...)
+I -> ofBlock...(tile.cloth, 10, ...)
+J -> ofBlock...(tile.cloth, 11, ...)
+K -> ofBlock...(tile.cloth, 13, ...)
+L -> ofBlock...(tile.cloth, 15, ...)
+M -> ofBlock...(tile.glass, 0, ...)
+N -> ofBlock...(tile.obsidian, 0, ...)
 O -> ofBlock...(tile.stone, 0, ...)
 P -> 控制器位置
 
-偏移值 Offsets: 7 22 1
-结构体高度: 24
+偏移值 Offsets: 11 21 0
+结构体高度: 23
 
-宽: 15
-高: 24
-长: 15
+宽: 23
+高: 23
+长: 32
