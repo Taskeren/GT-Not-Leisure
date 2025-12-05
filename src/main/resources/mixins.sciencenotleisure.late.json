@@ -45,6 +45,7 @@
     "Gregtech.MixinGTShapelessRecipe",
     "Gregtech.MixinItemFluidDisplay",
     "Gregtech.MixinMTEBetterJukebox",
+    "Gregtech.MixinMTEHatch",
     "Gregtech.MixinMTEDigitalTankBase",
     "Gregtech.MixinMTEHatchDataAccess",
     "Gregtech.MixinMTEHatchSteamBusOutput",
