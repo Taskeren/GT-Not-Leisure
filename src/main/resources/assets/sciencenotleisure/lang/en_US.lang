@@ -1636,7 +1636,7 @@ Tooltip_WirelessEnergyMultiMachine_05=Speed boost changed from additive to multi
 Tooltip_WirelessEnergyMultiMachine_06=Supports cross-recipe parallelism in wireless mode
 Tooltip_WirelessEnergyMultiMachine_07=Machine can perform §clossless overclocking§7
 Tooltip_WirelessEnergyMultiMachine_08=Wireless upgrade grants +500% speed and -20% power use
-Tooltip_WirelessEnergyMultiMachine_09=Automatically enters wireless mode if no energy storage is installed and a wireless upgrade is installed
+Tooltip_WirelessEnergyMultiMachine_09=Automatically enters wireless mode if no energy hatch and wireless upgrade is installed
 Tooltip_WirelessEnergyMultiMachine_10=In wireless mode, the voltage is the parallel control core level + 1, ampere is 4 ^ (level + 1) - 2
 Waila_WirelessUpgrade=Wireless Upgrade Installed
 Waila_WirelessMode=Wireless Mode
@@ -2746,6 +2746,17 @@ Tooltip_LapotronChip_01=Can be used to quickly build a basic base.
 Tooltip_LapotronChip_Casing=Any Radiant Naquadah Alloy Machine Block
 
 gtnl.recipe.ExtremeExtremeEntityCrusherRecipes=Extreme Extreme Entity Crusher
+
+NameSupercomputingCenter=Supercomputing Center
+SupercomputingCenterRecipeType=Quantum Computer
+Tooltip_SupercomputingCenter_00=Used to generate computation (and heat)
+Tooltip_SupercomputingCenter_01=Can continuously input Cryotheum to reduce heat
+Tooltip_SupercomputingCenter_02=The cost is that the heat of each rack will increase by rack computation / 256
+Tooltip_SupercomputingCenter_03=Each rack provides an additional 16 times computation
+Tooltip_SupercomputingCenter_04=If Cryotheum is input, computation will increase by an additional 16 times
+Tooltip_SupercomputingCenter_05=Use screwdriver to toggle wireless mode
+Tooltip_SupercomputingCenter_06=If no energy hatch is installed, it will automatically enter wireless energy network
+Tooltip_SupercomputingCenter_Casing=Hint 2 dots
 
 NameHighPerformanceComputationArray=High Performance Computation Array
 HighPerformanceComputationArrayRecipeType=Quantum Computer

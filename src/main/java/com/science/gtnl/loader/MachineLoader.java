@@ -106,6 +106,7 @@ import com.science.gtnl.common.machine.multiblock.ShallowChemicalCoupling;
 import com.science.gtnl.common.machine.multiblock.SingularityDataHub;
 import com.science.gtnl.common.machine.multiblock.SpaceAssembler;
 import com.science.gtnl.common.machine.multiblock.SuperSpaceElevator;
+import com.science.gtnl.common.machine.multiblock.SupercomputingCenter;
 import com.science.gtnl.common.machine.multiblock.TeleportationArrayToAlfheim;
 import com.science.gtnl.common.machine.multiblock.WhiteNightGenerator;
 import com.science.gtnl.common.machine.multiblock.WoodDistillation;
@@ -1691,10 +1692,17 @@ public class MachineLoader {
 
         GTNLItemList.MagneticConfinementDimensionalityShockDevice.set(
             new MagneticConfinementDimensionalityShockDevice(
-                MagneticConfinementDimensionalityShockDevice.ID,
+                MAGNETIC_CONFINEMENT_DIMENSIONALITY_SHOCK_DEVICE.ID,
                 "MagneticConfinementDimensionalityShockDevice",
                 StatCollector.translateToLocal("NameMagneticConfinementDimensionalityShockDevice")));
         addItemTooltip(GTNLItemList.MagneticConfinementDimensionalityShockDevice.get(1), AnimatedText.SNL_QYZG);
+
+        GTNLItemList.SupercomputingCenter.set(
+            new SupercomputingCenter(
+                SUPERCOMPUTING_CENTER.ID,
+                "SupercomputingCenter",
+                StatCollector.translateToLocal("NameSupercomputingCenter")));
+        addItemTooltip(GTNLItemList.SupercomputingCenter.get(1), AnimatedText.SNL_QYZG);
 
         // Special Machine
         GTNLItemList.CheatOreProcessingFactory.set(
