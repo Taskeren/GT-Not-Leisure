@@ -711,6 +711,7 @@ public class SteamElevator extends SteamMultiMachineBase<SteamElevator> implemen
             return mteClasses;
         }
 
+        @Override
         public IGTHatchAdder<? super SteamElevator> adder() {
             return adder;
         }

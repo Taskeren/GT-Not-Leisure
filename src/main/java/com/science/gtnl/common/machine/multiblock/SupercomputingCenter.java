@@ -171,8 +171,7 @@ public class SupercomputingCenter extends TTMultiblockBase implements ISurvivalC
                 .setActive(iGregTechTileEntity.isActive());
         }
 
-        if (mEnergyHatches.isEmpty() && mExoticEnergyHatches.isEmpty() && eEnergyMulti.isEmpty())
-            energyWirelessMode = true;
+        if (mEnergyHatches.isEmpty() && mExoticEnergyHatches.isEmpty()) energyWirelessMode = true;
         return eUncertainHatches.size() == 1;
     }
 
@@ -433,7 +432,7 @@ public class SupercomputingCenter extends TTMultiblockBase implements ISurvivalC
         }
     }
 
-    public final boolean addRackToMachineList(IGregTechTileEntity aTileEntity, int aBaseCasingIndex) {
+    public boolean addRackToMachineList(IGregTechTileEntity aTileEntity, int aBaseCasingIndex) {
         if (aTileEntity == null) {
             return false;
         }
@@ -448,7 +447,7 @@ public class SupercomputingCenter extends TTMultiblockBase implements ISurvivalC
         return false;
     }
 
-    public final boolean addWirelessDataOutputToMachineList(IGregTechTileEntity aTileEntity, int aBaseCasingIndex) {
+    public boolean addWirelessDataOutputToMachineList(IGregTechTileEntity aTileEntity, int aBaseCasingIndex) {
         if (aTileEntity == null) {
             return false;
         }
@@ -493,7 +492,11 @@ public class SupercomputingCenter extends TTMultiblockBase implements ISurvivalC
             .addElement('B', ofBlock(sBlockCasings8, 10))
             .addElement(
                 'C',
-                RackHatchElement.RackHatch.newAnyOrCasing(BlockGTCasingsTT.textureOffset + 1, 2, sBlockCasingsTT, 1))
+                buildHatchAdder(SupercomputingCenter.class).atLeast(CustomHatchElement.RackHatch)
+                    .casingIndex(BlockGTCasingsTT.textureOffset + 1)
+                    .shouldReject(t -> !t.mRackHatchs.isEmpty())
+                    .dot(1)
+                    .buildAndChain(sBlockCasingsTT, 1))
             .addElement('D', ofBlock(sBlockCasingsTT, 3))
             .addElement('E', ofBlock(sBlockCasingsTT, 1))
             .addElement('F', ofBlock(sBlockCasingsTT, 2))
@@ -508,10 +511,10 @@ public class SupercomputingCenter extends TTMultiblockBase implements ISurvivalC
                         HatchElement.Uncertainty,
                         HatchElement.InputData,
                         HatchElement.OutputData,
-                        WirelessComputationHatchElement.WirelessOutputData)
+                        CustomHatchElement.WirelessOutputData)
                     .casingIndex(StructureUtils.getTextureIndex(sBlockCasings9, 7))
                     .dot(1)
-                    .buildAndChain(ofBlock(sBlockCasings9, 7)))
+                    .buildAndChain(sBlockCasings9, 7))
             .addElement('H', ofBlock(sBlockCasings8, 7))
             .addElement('I', ofBlock(sBlockCasingsTT, 0))
             .addElement('J', ofBlock(sBlockCasings8, 5))
@@ -549,43 +552,42 @@ public class SupercomputingCenter extends TTMultiblockBase implements ISurvivalC
         return data.toArray(new String[] {});
     }
 
-    public enum RackHatchElement implements IHatchElement<SupercomputingCenter> {
+    public enum CustomHatchElement implements IHatchElement<SupercomputingCenter> {
 
-        RackHatch;
+        WirelessOutputData(SupercomputingCenter::addWirelessDataOutputToMachineList,
+            MTEHatchWirelessComputationOutput.class) {
+
+            @Override
+            public long count(SupercomputingCenter tileEntity) {
+                return tileEntity.mWirelessComputationOutputHatchs.size();
+            }
+        },
+
+        RackHatch(SupercomputingCenter::addRackToMachineList, MTEHatchRack.class) {
+
+            @Override
+            public long count(SupercomputingCenter tileEntity) {
+                return tileEntity.mRackHatchs.size();
+            }
+        };
+
+        private final List<Class<? extends IMetaTileEntity>> mteClasses;
+        private final IGTHatchAdder<SupercomputingCenter> adder;
+
+        @SafeVarargs
+        CustomHatchElement(IGTHatchAdder<SupercomputingCenter> adder, Class<? extends IMetaTileEntity>... mteClasses) {
+            this.mteClasses = Collections.unmodifiableList(Arrays.asList(mteClasses));
+            this.adder = adder;
+        }
 
         @Override
         public List<? extends Class<? extends IMetaTileEntity>> mteClasses() {
-            return Collections.singletonList(MTEHatchRack.class);
+            return mteClasses;
         }
 
         @Override
         public IGTHatchAdder<? super SupercomputingCenter> adder() {
-            return SupercomputingCenter::addRackToMachineList;
-        }
-
-        @Override
-        public long count(SupercomputingCenter t) {
-            return t.mRackHatchs.size();
-        }
-    }
-
-    public enum WirelessComputationHatchElement implements IHatchElement<SupercomputingCenter> {
-
-        WirelessOutputData;
-
-        @Override
-        public List<? extends Class<? extends IMetaTileEntity>> mteClasses() {
-            return Collections.singletonList(MTEHatchWirelessComputationOutput.class);
-        }
-
-        @Override
-        public IGTHatchAdder<? super SupercomputingCenter> adder() {
-            return SupercomputingCenter::addWirelessDataOutputToMachineList;
-        }
-
-        @Override
-        public long count(SupercomputingCenter gtMetaTileEntityEmComputer) {
-            return gtMetaTileEntityEmComputer.mWirelessComputationOutputHatchs.size();
+            return adder;
         }
     }
 }

@@ -2756,7 +2756,7 @@ Tooltip_SupercomputingCenter_03=Each rack provides an additional 16 times comput
 Tooltip_SupercomputingCenter_04=If Cryotheum is input, computation will increase by an additional 16 times
 Tooltip_SupercomputingCenter_05=Use screwdriver to toggle wireless mode
 Tooltip_SupercomputingCenter_06=If no energy hatch is installed, it will automatically enter wireless energy network
-Tooltip_SupercomputingCenter_Casing=Hint 2 dots
+Tooltip_SupercomputingCenter_Casing=Hint 1 dots
 
 NameHighPerformanceComputationArray=High Performance Computation Array
 HighPerformanceComputationArrayRecipeType=Quantum Computer
