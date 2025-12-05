@@ -548,9 +548,7 @@ public class InfinitySword extends ItemSword implements ICosmicRenderItem, Subti
 
         player.setHealth(player.getMaxHealth());
         player.getFoodStats()
-            .setFoodLevel(20);
-        player.getFoodStats()
-            .setFoodSaturationLevel(20);
+            .addStats(200, 200.0F);
 
         player.addPotionEffect(new PotionEffect(Potion.nightVision.id, 220, 0));
 
