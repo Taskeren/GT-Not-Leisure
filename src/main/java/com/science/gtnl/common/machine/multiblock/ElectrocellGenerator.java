@@ -261,7 +261,8 @@ public class ElectrocellGenerator extends MultiMachineBase<ElectrocellGenerator>
                         List<ItemStack> outputList = new ArrayList<>();
 
                         for (int i = 0; i < recipe.mOutputs.length; i++) {
-                            int chance = i < recipe.mChances.length ? recipe.mChances[i] : 10000;
+                            int chance = (recipe.mChances != null && i < recipe.mChances.length) ? recipe.mChances[i]
+                                : 10000;
 
                             if (random.nextInt(10000) < chance) {
                                 outputList.add(recipe.mOutputs[i]);
