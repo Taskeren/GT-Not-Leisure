@@ -439,7 +439,7 @@ public class AssemblerRecipes implements IRecipePool {
                 ItemList.Machine_IV_Brewery.get(1L),
                 ItemList.Machine_IV_Fermenter.get(1L),
                 ItemList.Machine_IV_FluidHeater.get(1L),
-                GTNLItemList.FusionGlass.get(8),
+                ItemList.GlassPHResistant.get(8),
                 ItemList.Electric_Pump_IV.get(2L),
                 MaterialsAlloy.TANTALLOY_61.getPlateDouble(16),
                 GTOreDictUnificator.get(OrePrefixes.rotor, Materials.TungstenSteel, 8L),
