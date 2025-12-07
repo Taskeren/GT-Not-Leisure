@@ -1952,7 +1952,7 @@ SteamApiaryModuleRecipeType=气动蜂箱
 Tooltip_SteamApiaryModule_00=§a§l高压力让蜜蜂工作§0§m内卷§a§l更卖力.
 Tooltip_SteamApiaryModule_01=将蜂箱功能添加到蒸汽楼梯
 Tooltip_SteamApiaryModule_02=蜜蜂的理想(?)家园
-Tooltip_SteamApiaryModule_03=固定运行时间为15秒
+Tooltip_SteamApiaryModule_03=固定运行时间为30秒
 Tooltip_SteamApiaryModule_04=每次超频，可放入数翻倍，功率*4
 Tooltip_SteamApiaryModule_05=基础数量为8
 

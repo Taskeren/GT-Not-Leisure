@@ -1952,7 +1952,7 @@ SteamApiaryModuleRecipeType=Pneumatic Beehive
 Tooltip_SteamApiaryModule_00=§a§lHigh pressure makes the bees work §0§mharder§a§l and more efficiently.
 Tooltip_SteamApiaryModule_01=Adds apiary module to the Steam Stairway
 Tooltip_SteamApiaryModule_02=The bees' (ideal?) home
-Tooltip_SteamApiaryModule_03=Fixed operating time: 15 seconds
+Tooltip_SteamApiaryModule_03=Fixed operating time: 30 seconds
 Tooltip_SteamApiaryModule_04=Each overclock doubles the capacity, power ×4
 Tooltip_SteamApiaryModule_05=Base amount: 8
 

@@ -117,7 +117,7 @@ public class AssemblerRecipes implements IRecipePool {
 
         RecipeBuilder.builder()
             .itemInputs(
-                GTModHandler.getModItem(GTPlusPlus.ID, "blockCompressedObsidian", 1, 6),
+                GregtechItemList.QuadrupleCompressedObsidian.get(1),
                 GTOreDictUnificator.get(OrePrefixes.frameGt, Materials.StainlessSteel, 4),
                 GTModHandler.getModItem(ExtraUtilities.ID, "decorativeBlock2", 1, 7))
             .itemOutputs(GTNLItemList.FortifyGlowstone.get(1))
@@ -404,7 +404,7 @@ public class AssemblerRecipes implements IRecipePool {
             .itemInputs(
                 GTUtility.getIntegratedCircuit(17),
                 GregtechItemList.Industrial_Arc_Furnace.get(1L),
-                GTModHandler.getModItem(GTPlusPlus.ID, "item.itemBufferCore6", 2),
+                GregtechItemList.Energy_Core_IV.get(2),
                 ItemList.Field_Generator_IV.get(1L),
                 ItemList.Emitter_IV.get(2L),
                 GTOreDictUnificator.get(OrePrefixes.circuit, Materials.IV, 2L),
@@ -822,10 +822,9 @@ public class AssemblerRecipes implements IRecipePool {
 
         RecipeBuilder.builder()
             .itemInputs(
-                ItemList.Hatch_Input_IV.get(1L),
+                ItemList.Hatch_Input_ME.get(1L),
                 GTModHandler.getModItem(AE2FluidCraft.ID, "part_fluid_interface", 1),
                 ItemList.Electric_Pump_IV.get(1),
-                ItemList.Sensor_IV.get(1),
                 GTModHandler.getModItem(AppliedEnergistics2.ID, "item.ItemMultiMaterial", 4, 30))
             .itemOutputs(ItemList.Hatch_Input_ME_Advanced.get(1))
             .duration(300)
@@ -834,10 +833,9 @@ public class AssemblerRecipes implements IRecipePool {
 
         RecipeBuilder.builder()
             .itemInputs(
-                ItemList.Hatch_Input_Bus_IV.get(1L),
+                ItemList.Hatch_Input_Bus_ME.get(1L),
                 GTModHandler.getModItem(AppliedEnergistics2.ID, "item.ItemMultiPart", 1, 440),
                 ItemList.Conveyor_Module_IV.get(1),
-                ItemList.Sensor_IV.get(1),
                 GTModHandler.getModItem(AppliedEnergistics2.ID, "item.ItemMultiMaterial", 4, 30))
             .itemOutputs(ItemList.Hatch_Input_Bus_ME_Advanced.get(1))
             .duration(300)
@@ -2213,8 +2211,7 @@ public class AssemblerRecipes implements IRecipePool {
             .itemInputs(
                 GTNLItemList.SuperInputBusME.get(1),
                 GTModHandler.getModItem(AppliedEnergistics2.ID, "tile.BlockChest", 1),
-                ItemList.Conveyor_Module_ZPM.get(4),
-                ItemList.Emitter_ZPM.get(2),
+                ItemList.Conveyor_Module_ZPM.get(2),
                 GTModHandler.getModItem(AppliedEnergistics2.ID, "item.ItemMultiMaterial", 4, 56))
             .itemOutputs(GTNLItemList.AdvancedSuperInputBusME.get(1))
             .fluidInputs(MaterialsAlloy.INDALLOY_140.getFluidStack(1296))
@@ -2248,8 +2245,7 @@ public class AssemblerRecipes implements IRecipePool {
             .itemInputs(
                 GTNLItemList.SuperInputHatchME.get(1),
                 GTModHandler.getModItem(AppliedEnergistics2.ID, "tile.BlockChest", 2),
-                ItemList.Electric_Pump_ZPM.get(4),
-                ItemList.Sensor_ZPM.get(2),
+                ItemList.Electric_Pump_ZPM.get(2),
                 GTModHandler.getModItem(AppliedEnergistics2.ID, "item.ItemMultiMaterial", 6, 56))
             .itemOutputs(GTNLItemList.AdvancedSuperInputHatchME.get(1))
             .fluidInputs(MaterialsAlloy.INDALLOY_140.getFluidStack(1296))

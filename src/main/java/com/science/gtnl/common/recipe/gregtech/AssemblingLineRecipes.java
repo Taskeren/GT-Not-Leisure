@@ -1184,7 +1184,6 @@ public class AssemblingLineRecipes implements IRecipePool {
             .itemInputs(
                 ItemList.Hatch_Input_Bus_ME_Advanced.get(1),
                 ItemList.Conveyor_Module_IV.get(1),
-                ItemList.Emitter_IV.get(1),
                 GTModHandler.getModItem(AppliedEnergistics2.ID, "item.ItemMultiMaterial", 1, 55),
                 GTModHandler.getModItem(AppliedEnergistics2.ID, "item.ItemMultiMaterial", 4, 30),
                 GTModHandler.getModItem(AppliedEnergistics2.ID, "tile.BlockChest", 1))
@@ -1300,7 +1299,6 @@ public class AssemblingLineRecipes implements IRecipePool {
             .itemInputs(
                 ItemList.Hatch_Input_Bus_ME_Advanced.get(1),
                 ItemList.Conveyor_Module_IV.get(1),
-                ItemList.Emitter_IV.get(1),
                 ItemList.Automation_TypeFilter_IV.get(1),
                 GTModHandler.getModItem(AppliedEnergistics2.ID, "item.ItemMultiMaterial", 4, 30),
                 GTModHandler.getModItem(AppliedEnergistics2.ID, "tile.BlockChest", 1))
