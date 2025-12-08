@@ -11,6 +11,7 @@ import org.spongepowered.asm.mixin.Mixin;
 
 import gregtech.common.items.ItemFluidDisplay;
 
+@Deprecated
 @Mixin(value = ItemFluidDisplay.class, remap = false)
 public abstract class MixinItemFluidDisplay implements IFluidContainerItem {
 

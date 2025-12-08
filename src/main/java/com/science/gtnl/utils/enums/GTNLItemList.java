@@ -631,6 +631,7 @@ public enum GTNLItemList implements IItemContainer {
     FastNeutronBreederReactor,
     MagneticConfinementDimensionalityShockDevice,
     SupercomputingCenter,
+    PCBFactory,
 
     EnergyHatchLV,
     EnergyHatchLV4A,

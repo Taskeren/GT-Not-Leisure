@@ -43,7 +43,6 @@
     "Gregtech.MixinGTRecipeConstants",
     "Gregtech.MixinGTShapedRecipe",
     "Gregtech.MixinGTShapelessRecipe",
-    "Gregtech.MixinItemFluidDisplay",
     "Gregtech.MixinMTEBetterJukebox",
     "Gregtech.MixinMTEHatch",
     "Gregtech.MixinMTEDigitalTankBase",

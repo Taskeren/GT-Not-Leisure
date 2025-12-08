@@ -35,7 +35,6 @@ import gregtech.api.interfaces.tileentity.IGregTechTileEntity;
 import gregtech.api.recipe.RecipeMap;
 import gregtech.api.recipe.RecipeMaps;
 import gregtech.api.recipe.check.CheckRecipeResult;
-import gregtech.api.recipe.check.CheckRecipeResultRegistry;
 import gregtech.api.render.TextureFactory;
 import gregtech.api.util.MultiblockTooltipBuilder;
 
@@ -202,26 +201,8 @@ public class BrickedBlastFurnace extends SteamMultiMachineBase<BrickedBlastFurna
     @Nonnull
     @Override
     public CheckRecipeResult checkProcessing() {
-        if (processingLogic == null) {
-            return checkRecipe(mInventory[1]) ? CheckRecipeResultRegistry.SUCCESSFUL
-                : CheckRecipeResultRegistry.NO_RECIPE;
-        }
-
-        setupProcessingLogic(processingLogic);
-
-        CheckRecipeResult result = doCheckRecipe();
-        result = postCheckRecipe(result, processingLogic);
-        updateSlots();
-        if (!result.wasSuccessful()) return result;
-
-        mEfficiency = 10000;
-        mEfficiencyIncrease = 10000;
+        CheckRecipeResult result = super.checkProcessing();
         mMaxProgresstime = 128;
-        setEnergyUsage(processingLogic);
-
-        mOutputItems = processingLogic.getOutputItems();
-        mOutputFluids = processingLogic.getOutputFluids();
-
         return result;
     }
 
