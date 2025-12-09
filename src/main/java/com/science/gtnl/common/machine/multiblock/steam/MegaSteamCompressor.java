@@ -4,7 +4,6 @@ import static com.gtnewhorizon.structurelib.structure.StructureUtility.*;
 import static com.science.gtnl.ScienceNotLeisure.RESOURCE_ROOT_ID;
 import static com.science.gtnl.utils.enums.BlockIcons.*;
 import static gregtech.api.GregTechAPI.*;
-import static gregtech.api.enums.GTValues.V;
 import static gregtech.api.enums.HatchElement.*;
 import static gregtech.api.recipe.RecipeMaps.compressorRecipes;
 import static gregtech.api.util.GTStructureUtility.*;
@@ -226,14 +225,6 @@ public class MegaSteamCompressor extends SteamMultiMachineBase<MegaSteamCompress
     @Override
     public int getMaxParallelRecipes() {
         return 256;
-    }
-
-    @Override
-    public void setProcessingLogicPower(ProcessingLogic logic) {
-        logic.setAvailableVoltage(V[3]);
-        // We need to trick the GT_ParallelHelper we have enough amps for all recipe parallels.
-        logic.setAvailableAmperage(getTrueParallel());
-        logic.setAmperageOC(false);
     }
 
     @Override
