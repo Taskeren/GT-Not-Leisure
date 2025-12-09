@@ -34,7 +34,7 @@ public class FluidLakeWorldGen {
             new WorldGenLakes(BlockLoader.honeyFluidBlock).generate(world, random, xPos, yPos, zPos);
 
         xPos = xChunk + random.nextInt(16) + 8;
-        yPos = random.nextInt(40) + 8;
+        yPos = random.nextInt(70) + 8;
         zPos = zChunk + random.nextInt(16) + 8;
 
         if (random.nextInt(512) == 0)

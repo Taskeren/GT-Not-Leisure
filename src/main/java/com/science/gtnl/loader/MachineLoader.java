@@ -93,6 +93,7 @@ import com.science.gtnl.common.machine.multiblock.MatterFabricator;
 import com.science.gtnl.common.machine.multiblock.MegaMixer;
 import com.science.gtnl.common.machine.multiblock.MeteorMiner;
 import com.science.gtnl.common.machine.multiblock.NaquadahReactor;
+import com.science.gtnl.common.machine.multiblock.PCBFactory;
 import com.science.gtnl.common.machine.multiblock.PetrochemicalPlant;
 import com.science.gtnl.common.machine.multiblock.PhotovoltaicPowerStation;
 import com.science.gtnl.common.machine.multiblock.PlatinumBasedTreatment;
@@ -1703,6 +1704,10 @@ public class MachineLoader {
                 "SupercomputingCenter",
                 StatCollector.translateToLocal("NameSupercomputingCenter")));
         addItemTooltip(GTNLItemList.SupercomputingCenter.get(1), AnimatedText.SNL_QYZG);
+
+        GTNLItemList.PCBFactory
+            .set(new PCBFactory(PCB_FACTORY.ID, "PCBFactory", StatCollector.translateToLocal("NamePCBFactory")));
+        addItemTooltip(GTNLItemList.PCBFactory.get(1), AnimatedText.SNL_QYZG);
 
         // Special Machine
         GTNLItemList.CheatOreProcessingFactory.set(

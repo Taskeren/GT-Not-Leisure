@@ -2307,6 +2307,22 @@ Tooltip_LargeElectrolyzer_00=200% faster than machines of the same voltage
 Tooltip_LargeElectrolyzer_01=Only requires 80% of the recipe's power demand
 Tooltip_LargeElectrolyzer_Casing=Any electrolyzer machine block
 
+NamePCBFactory=PCB Factory
+PCBFactoryRecipeType=PCB Factory
+Tooltip_PCBFactory_00=200% faster than machines of the same voltage
+Tooltip_PCBFactory_01=Only requires 80% of the recipe's power demand
+Tooltip_PCBFactory_02=Ignores Biochamber Upgrade requirements
+Tooltip_PCBFactory_03=Fixed double output
+Tooltip_PCBFactory_04=Consumes 7500L of distilled water every 5 seconds when machine is running
+Tooltip_PCBFactory_05=Consumes 100L of low-grade purified water/50L of high-grade purified water per parallel
+Tooltip_PCBFactory_06=Machine consumes half the amount of purified water for each tier above the recipe's tier
+Tooltip_PCBFactory_07=For each machine tier increase, speed +100%, power requirement -10%
+Tooltip_PCBFactory_08=Enables §clossless overclocking§7 when machine tier exceeds 3
+Tooltip_PCBFactory_09=Requires Nanites to increase the machine tier
+Tooltip_PCBFactory_Casing=An Advanced Iridium Plated Machine Casing
+Info_PCBFactory_00=Machine Tier: %s
+Info_PCBFactory_01=T4 Machine Tier Upgrade
+
 NameLargeElectromagnet=Large Electromagnet Factory
 LargeElectromagnetRecipeType=Electromagnetic Separator / Two-stage Magnetizer
 LargeElectromagnet_Mode_0=Electromagnetic Separator

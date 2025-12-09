@@ -74,7 +74,6 @@ public class EngravingLaserPlant extends WirelessEnergyMultiMachineBase<Engravin
     private static final String STRUCTURE_PIECE_MAIN = "main";
     private static final String ELP_STRUCTURE_FILE_PATH = RESOURCE_ROOT_ID + ":" + "multiblock/engraving_laser_plant";
     private static final String[][] shape = StructureUtils.readStructureFromFile(ELP_STRUCTURE_FILE_PATH);
-    private static final int MANUAL_INSERTION_WINDOW_ID = 15;
 
     public static final ItemStack[] REQUIRED_ITEMS = new ItemStack[] {
         GTUtility.copyAmountUnsafe(114514, ItemList.Circuit_Silicon_Wafer7.get(1)) };
@@ -353,11 +352,6 @@ public class EngravingLaserPlant extends WirelessEnergyMultiMachineBase<Engravin
     @Override
     public ItemStack[] getUpgradeRequiredItems() {
         return REQUIRED_ITEMS;
-    }
-
-    @Override
-    public int getUpgradeWindowId() {
-        return MANUAL_INSERTION_WINDOW_ID;
     }
 
     @Override

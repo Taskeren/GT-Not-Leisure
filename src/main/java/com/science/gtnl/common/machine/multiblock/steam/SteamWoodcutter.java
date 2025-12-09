@@ -84,7 +84,7 @@ public class SteamWoodcutter extends SteamMultiMachineBase<SteamWoodcutter> impl
                     ofBlock(BlockLoader.metaCasing, 24)))
             .addElement('C', ofBlock(BlockLoader.metaCasing, 25))
             .addElement('D', chainAllGlasses())
-            .addElement('E', ofBlock(Blocks.dirt, 0))
+            .addElement('E', ofChain(ofBlockAnyMeta(Blocks.dirt), ofBlockAnyMeta(Blocks.grass)))
             .build();
     }
 

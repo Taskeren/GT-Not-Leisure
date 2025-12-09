@@ -82,8 +82,6 @@ public class IntegratedAssemblyFacility extends WirelessEnergyMultiMachineBase<I
     private static final int MACHINEMODE_ASSEM = 0;
     private static final int MACHINEMODE_COMPO = 1;
 
-    private static final int MANUAL_INSERTION_WINDOW_ID = 15;
-
     public static final ItemStack[] REQUIRED_ITEMS = new ItemStack[] { ItemRefer.Component_Assembly_Line.get(64),
         GTNLItemList.ComponentAssembler.get(64),
         GTOreDictUnificator.get(OrePrefixes.frameGt, MaterialsUEVplus.TranscendentMetal, 64),
@@ -395,11 +393,6 @@ public class IntegratedAssemblyFacility extends WirelessEnergyMultiMachineBase<I
     @Override
     public ItemStack[] getUpgradeRequiredItems() {
         return REQUIRED_ITEMS;
-    }
-
-    @Override
-    public int getUpgradeWindowId() {
-        return MANUAL_INSERTION_WINDOW_ID;
     }
 
     @Override

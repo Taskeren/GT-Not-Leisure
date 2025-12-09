@@ -67,7 +67,6 @@ public class HorizontalCompressor extends WirelessEnergyMultiMachineBase<Horizon
     private static final String STRUCTURE_PIECE_MAIN = "main";
     private static final String HC_STRUCTURE_FILE_PATH = RESOURCE_ROOT_ID + ":" + "multiblock/horizontal_compressor";
     private static final String[][] shape = StructureUtils.readStructureFromFile(HC_STRUCTURE_FILE_PATH);
-    private static final int MANUAL_INSERTION_WINDOW_ID = 15;
 
     public static final ItemStack[] REQUIRED_ITEMS = new ItemStack[] {
         GTUtility.copyAmountUnsafe(3670, ItemList.Extreme_Density_Casing.get(1)),
@@ -127,11 +126,6 @@ public class HorizontalCompressor extends WirelessEnergyMultiMachineBase<Horizon
     @Override
     public ItemStack[] getUpgradeRequiredItems() {
         return REQUIRED_ITEMS;
-    }
-
-    @Override
-    public int getUpgradeWindowId() {
-        return MANUAL_INSERTION_WINDOW_ID;
     }
 
     @Override

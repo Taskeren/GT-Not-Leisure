@@ -61,7 +61,6 @@ public class SwarmCore extends WirelessEnergyMultiMachineBase<SwarmCore> impleme
     private static final String STRUCTURE_PIECE_MAIN = "main";
     private static final String SC_STRUCTURE_FILE_PATH = RESOURCE_ROOT_ID + ":" + "multiblock/swarm_core";
     private static final String[][] shape = StructureUtils.readStructureFromFile(SC_STRUCTURE_FILE_PATH);
-    private static final int MANUAL_INSERTION_WINDOW_ID = 15;
 
     public static final ItemStack[][] REQUIRED_ITEMS = new ItemStack[][] { { ItemList.Black_Hole_Stabilizer.get(1) },
         { ItemList.Black_Hole_Opener.get(1) }, { ItemList.Black_Hole_Closer.get(1) } };
@@ -149,11 +148,6 @@ public class SwarmCore extends WirelessEnergyMultiMachineBase<SwarmCore> impleme
     @Override
     public ItemStack[] getUpgradeRequiredItems() {
         return REQUIRED_ITEMS[Math.min(machineTier - 1, 2)];
-    }
-
-    @Override
-    public int getUpgradeWindowId() {
-        return MANUAL_INSERTION_WINDOW_ID;
     }
 
     @Override
