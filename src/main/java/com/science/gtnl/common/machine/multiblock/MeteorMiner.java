@@ -10,10 +10,8 @@ import static gregtech.api.enums.Mods.*;
 import static gregtech.api.util.GTModHandler.getModItem;
 import static gregtech.api.util.GTStructureUtility.*;
 
-import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Deque;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
@@ -82,6 +80,9 @@ import gregtech.common.blocks.TileEntityOres;
 import gregtech.common.misc.GTStructureChannels;
 import gregtech.common.render.IMTERenderer;
 import gtPlusPlus.core.block.ModBlocks;
+import it.unimi.dsi.fastutil.objects.ObjectArrayFIFOQueue;
+import it.unimi.dsi.fastutil.objects.ObjectArrayList;
+import it.unimi.dsi.fastutil.objects.ObjectList;
 import lombok.Getter;
 import mcp.mobius.waila.api.IWailaConfigHandler;
 import mcp.mobius.waila.api.IWailaDataAccessor;
@@ -106,8 +107,8 @@ public class MeteorMiner extends MultiMachineBase<MeteorMiner> implements ISurvi
     public final Collection<ItemStack> itemDrop = new ArrayList<>();
     public byte tierMachine = 0;
 
-    public final Deque<BlockPos> scanQueue = new ArrayDeque<>();
-    public final Deque<List<BlockPos>> rowQueue = new ArrayDeque<>();
+    public ObjectArrayFIFOQueue<BlockPos> scanQueue = new ObjectArrayFIFOQueue<>();
+    public ObjectArrayFIFOQueue<ObjectList<BlockPos>> rowQueue = new ObjectArrayFIFOQueue<>();
 
     public static final int SCAN_WIDTH = 100;
     public static final int SCAN_HEIGHT = 150;
@@ -489,14 +490,14 @@ public class MeteorMiner extends MultiMachineBase<MeteorMiner> implements ISurvi
             if (tierMachine == 1) {
                 int done = 0;
                 while (done < MAX_BLOCKS_PER_CYCLE && !scanQueue.isEmpty()) {
-                    BlockPos pos = scanQueue.pollFirst();
+                    BlockPos pos = scanQueue.dequeue();
                     mineAt(pos.x, pos.y, pos.z);
                     done++;
                 }
             } else {
                 int rows = 0;
                 while (rows < MAX_ROWS_PER_CYCLE && !rowQueue.isEmpty()) {
-                    List<BlockPos> row = rowQueue.pollFirst();
+                    List<BlockPos> row = rowQueue.dequeue();
                     for (BlockPos pos : row) {
                         mineAt(pos.x, pos.y, pos.z);
                     }
@@ -563,7 +564,7 @@ public class MeteorMiner extends MultiMachineBase<MeteorMiner> implements ISurvi
                 for (int dz = 0; dz < SCAN_DEPTH; dz++) {
                     int x = x0 + dx, y = y0 + dy, z = z0 + dz;
                     if (!w.isAirBlock(x, y, z)) {
-                        scanQueue.addLast(new BlockPos(x, y, z));
+                        scanQueue.enqueue(new BlockPos(x, y, z));
                     }
                 }
             }
@@ -580,7 +581,7 @@ public class MeteorMiner extends MultiMachineBase<MeteorMiner> implements ISurvi
         int z0 = zStart - SCAN_DEPTH / 2;
         for (int dy = 0; dy < SCAN_HEIGHT; dy++) {
             for (int dx = 0; dx < SCAN_WIDTH; dx++) {
-                List<BlockPos> row = new ArrayList<>(SCAN_DEPTH);
+                ObjectList<BlockPos> row = new ObjectArrayList<>(SCAN_DEPTH);
                 for (int dz = 0; dz < SCAN_DEPTH; dz++) {
                     int x = x0 + dx, y = y0 + dy, z = z0 + dz;
                     if (!w.isAirBlock(x, y, z)) {
@@ -588,7 +589,7 @@ public class MeteorMiner extends MultiMachineBase<MeteorMiner> implements ISurvi
                     }
                 }
                 if (!row.isEmpty()) {
-                    rowQueue.addLast(row);
+                    rowQueue.enqueue(row);
                 }
             }
         }

@@ -42,7 +42,6 @@ import com.gtnewhorizons.modularui.common.widget.SlotWidget;
 import com.gtnewhorizons.modularui.common.widget.TextWidget;
 import com.science.gtnl.api.IControllerUpgradeable;
 import com.science.gtnl.common.machine.multiMachineBase.WirelessEnergyMultiMachineBase;
-import com.science.gtnl.mixins.late.Gregtech.AccessorProcessingLogic;
 import com.science.gtnl.utils.StructureUtils;
 import com.science.gtnl.utils.recipes.GTNL_OverclockCalculator;
 import com.science.gtnl.utils.recipes.GTNL_ProcessingLogic;
@@ -480,7 +479,7 @@ public class PCBFactory extends WirelessEnergyMultiMachineBase<PCBFactory>
     }
 
     public void depletePurifiedWater() {
-        int tier = ((AccessorProcessingLogic) processingLogic).getLastRecipe()
+        int tier = ((GTNL_ProcessingLogic) processingLogic).getLastRecipe()
             .getMetadataOrDefault(PCBFactoryTierKey.INSTANCE, 1);
         int parallel = processingLogic.getCurrentParallels();
 

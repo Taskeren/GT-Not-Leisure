@@ -165,7 +165,7 @@ public abstract class NaquadahReactor extends TTMultiblockBase implements IConst
         mEfficiency = 10000;
         mEfficiencyIncrease = 10000;
         mMaxProgresstime = (int) (processingLogic.getDuration() * mConfigSpeedBoost);
-        lEUt = (long) ((GTNL_ProcessingLogic) processingLogic).lastRecipe.mSpecialValue
+        lEUt = (long) ((GTNL_ProcessingLogic) processingLogic).getLastRecipe().mSpecialValue
             * processingLogic.getCurrentParallels();
 
         mOutputItems = processingLogic.getOutputItems();

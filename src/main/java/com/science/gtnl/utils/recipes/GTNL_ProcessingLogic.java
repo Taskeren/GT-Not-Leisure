@@ -37,40 +37,8 @@ import gregtech.common.tileentities.machines.IDualInputInventoryWithPattern;
 @SuppressWarnings({ "unused", "UnusedReturnValue" })
 public class GTNL_ProcessingLogic extends ProcessingLogic {
 
-    // Traits
-    public IVoidable machine;
-    public IRecipeLockable recipeLockableMachine;
-    public boolean isRecipeLocked;
-    public ItemStack[] inputItems;
-    public FluidStack[] inputFluids;
-    public ItemStack specialSlotItem;
-    public int maxParallel = 1;
-    public Supplier<Integer> maxParallelSupplier;
-    public int batchSize = 1;
-    public Supplier<RecipeMap<?>> recipeMapSupplier;
-    public double euModifier = 1.0;
-    public double speedBoost = 1.0;
     public double extraSpeedBoost = 1.0;
-    public long availableVoltage;
-    public long availableAmperage;
     public int maxOverclocks = Integer.MAX_VALUE;
-    public int maxTierSkips = Integer.MAX_VALUE;
-    public boolean protectItems;
-    public boolean protectFluids;
-    public double overClockTimeReduction = 2.0;
-    public double overClockPowerIncrease = 4.0;
-    public boolean amperageOC = true;
-
-    // Calculated results
-    public ItemStack[] outputItems;
-    public FluidStack[] outputFluids;
-    public long calculatedEut;
-    public int duration;
-    public int calculatedParallels = 0;
-
-    // Cache
-    public RecipeMap<?> lastRecipeMap;
-    public GTRecipe lastRecipe;
 
     /**
      * The {@link IDualInputInventoryWithPattern} that has any possible recipe found in the last call of
@@ -676,14 +644,17 @@ public class GTNL_ProcessingLogic extends ProcessingLogic {
 
     // region Getters
 
-    @Override
-    public ItemStack[] getOutputItems() {
-        return outputItems;
+    // Traits
+    public IVoidable getMachine() {
+        return machine;
     }
 
-    @Override
-    public FluidStack[] getOutputFluids() {
-        return outputFluids;
+    public IRecipeLockable getRecipeLockableMachine() {
+        return recipeLockableMachine;
+    }
+
+    public boolean isRecipeLocked() {
+        return isRecipeLocked;
     }
 
     public ItemStack[] getInputItems() {
@@ -694,9 +665,79 @@ public class GTNL_ProcessingLogic extends ProcessingLogic {
         return inputFluids;
     }
 
+    public ItemStack getSpecialSlotItem() {
+        return specialSlotItem;
+    }
+
+    public int getMaxParallel() {
+        return maxParallel;
+    }
+
+    public Supplier<Integer> getMaxParallelSupplier() {
+        return maxParallelSupplier;
+    }
+
+    public int getBatchSize() {
+        return batchSize;
+    }
+
+    public Supplier<RecipeMap<?>> getRecipeMapSupplier() {
+        return recipeMapSupplier;
+    }
+
+    public double getEuModifier() {
+        return euModifier;
+    }
+
+    public double getSpeedBoost() {
+        return speedBoost;
+    }
+
+    public long getAvailableVoltage() {
+        return availableVoltage;
+    }
+
+    public long getAvailableAmperage() {
+        return availableAmperage;
+    }
+
+    public int getMaxTierSkips() {
+        return maxTierSkips;
+    }
+
+    public boolean isProtectItems() {
+        return protectItems;
+    }
+
+    public boolean isProtectFluids() {
+        return protectFluids;
+    }
+
+    public double getOverClockTimeReduction() {
+        return overClockTimeReduction;
+    }
+
+    public double getOverClockPowerIncrease() {
+        return overClockPowerIncrease;
+    }
+
+    public boolean isAmperageOC() {
+        return amperageOC;
+    }
+
+    public boolean isRecipeCaching() {
+        return recipeCaching;
+    }
+
+    // Calculated results
     @Override
-    public int getDuration() {
-        return duration;
+    public ItemStack[] getOutputItems() {
+        return outputItems;
+    }
+
+    @Override
+    public FluidStack[] getOutputFluids() {
+        return outputFluids;
     }
 
     @Override
@@ -705,8 +746,22 @@ public class GTNL_ProcessingLogic extends ProcessingLogic {
     }
 
     @Override
+    public int getDuration() {
+        return duration;
+    }
+
+    @Override
     public int getCurrentParallels() {
         return calculatedParallels;
+    }
+
+    // Cache
+    public RecipeMap<?> getLastRecipeMap() {
+        return lastRecipeMap;
+    }
+
+    public GTRecipe getLastRecipe() {
+        return lastRecipe;
     }
 
     // endregion
