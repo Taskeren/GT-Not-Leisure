@@ -524,7 +524,7 @@ public class ChemicalRecipes implements IRecipePool {
             .addTo(UC);
 
         RecipeBuilder.builder()
-            .itemInputs(GTOreDictUnificator.get(OrePrefixes.plate, Materials.Plastic, 1))
+            .itemInputs(GTOreDictUnificator.get(OrePrefixes.plate, Materials.Plastic, 4))
             .itemOutputs(GTModHandler.getModItem(IndustrialCraft2.ID, "blockITNT", 32))
             .fluidInputs(MaterialPool.SmallBaka.getFluidOrGas(2000))
             .duration(100)

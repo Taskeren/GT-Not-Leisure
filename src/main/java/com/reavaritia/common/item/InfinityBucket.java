@@ -278,7 +278,7 @@ public class InfinityBucket extends Item implements IFluidContainerItem, Subtitl
                 else tag.setInteger("Amount", newAmount);
             }
 
-            showSubtitle(fluid.getLocalizedName(), amount - 1000);
+            if (world.isRemote) showSubtitle(fluid.getLocalizedName(), amount - 1000);
         }
     }
 
@@ -352,6 +352,7 @@ public class InfinityBucket extends Item implements IFluidContainerItem, Subtitl
         return new FluidStack(fluid, amount);
     }
 
+    @SideOnly(Side.CLIENT)
     @Override
     public void showSubtitle(String name, int amount) {
         String amtText = (amount == INFINITE_FLUID_AMOUNT) ? "∞" : amount + "L";
