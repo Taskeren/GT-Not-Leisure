@@ -41,7 +41,7 @@ import com.gtnewhorizons.modularui.common.widget.DynamicPositionedColumn;
 import com.gtnewhorizons.modularui.common.widget.SlotWidget;
 import com.gtnewhorizons.modularui.common.widget.TextWidget;
 import com.science.gtnl.api.IControllerUpgradeable;
-import com.science.gtnl.common.machine.multiMachineBase.GTMMultiMachineBase;
+import com.science.gtnl.common.machine.multiMachineBase.WirelessEnergyMultiMachineBase;
 import com.science.gtnl.mixins.late.Gregtech.AccessorProcessingLogic;
 import com.science.gtnl.utils.StructureUtils;
 import com.science.gtnl.utils.recipes.GTNL_OverclockCalculator;
@@ -74,12 +74,13 @@ import gregtech.api.util.GTUtility;
 import gregtech.api.util.IGTHatchAdder;
 import gregtech.api.util.MultiblockTooltipBuilder;
 import gregtech.api.util.shutdown.ShutDownReasonRegistry;
+import gregtech.common.tileentities.machines.IRecipeProcessingAwareHatch;
 import gregtech.common.tileentities.machines.MTEHatchInputME;
 import gtPlusPlus.core.material.MaterialsAlloy;
 import lombok.Getter;
 import lombok.Setter;
 
-public class PCBFactory extends GTMMultiMachineBase<PCBFactory>
+public class PCBFactory extends WirelessEnergyMultiMachineBase<PCBFactory>
     implements ISurvivalConstructable, IControllerUpgradeable {
 
     private static final String STRUCTURE_PIECE_MAIN = "main";
@@ -181,45 +182,43 @@ public class PCBFactory extends GTMMultiMachineBase<PCBFactory>
     }
 
     @Override
+    public void startRecipeProcessing() {
+        for (MTEHatchInput hatch : validMTEList(mWaterInputHatches)) {
+            if (hatch instanceof IRecipeProcessingAwareHatch aware) {
+                aware.startRecipeProcessing();
+            }
+        }
+        super.startRecipeProcessing();
+    }
+
+    @Override
+    public void endRecipeProcessing() {
+        for (MTEHatchInput hatch : validMTEList(mWaterInputHatches)) {
+            if (hatch instanceof IRecipeProcessingAwareHatch aware) {
+                setResultIfFailure(aware.endRecipeProcessing(this));
+            }
+        }
+        super.endRecipeProcessing();
+    }
+
+    @Override
     public @NotNull CheckRecipeResult checkProcessing() {
         CheckRecipeResult result = super.checkProcessing();
         if (!result.wasSuccessful()) return result;
-
-        int tier = ((AccessorProcessingLogic) processingLogic).getLastRecipe()
-            .getMetadataOrDefault(PCBFactoryTierKey.INSTANCE, 1);
-        int parallel = processingLogic.getCurrentParallels();
-
-        for (FluidStack fluidStack : getStoredWater()) {
-            if (parallel <= 0) break;
-            if (GTUtility.areFluidsEqual(fluidStack, purifiedWater[tier - 1])) {
-                int deductAmount = 100 / (int) GTUtility.powInt(2, machineTier - tier);
-                int timesToDeduct = fluidStack.amount / deductAmount;
-                if (timesToDeduct > 0) {
-                    fluidStack.amount -= deductAmount * timesToDeduct;
-                    parallel -= deductAmount;
-                }
-            }
-
-            if (parallel <= 0) break;
-
-            if (GTUtility.areFluidsEqual(fluidStack, purifiedWater[tier * 2 - 1])) {
-                int deductAmount = 50 / (int) GTUtility.powInt(2, machineTier - tier);
-                int timesToDeduct = fluidStack.amount / deductAmount;
-                if (timesToDeduct > 0) {
-                    fluidStack.amount -= deductAmount * timesToDeduct;
-                    parallel -= deductAmount;
-                }
-            }
+        if (!wirelessMode) {
+            depletePurifiedWater();
         }
-
-        ItemStack[] outputItems = processingLogic.getOutputItems();
-        for (ItemStack itemStack : outputItems) {
+        for (ItemStack itemStack : mOutputItems) {
             if (itemStack != null) itemStack.stackSize *= 2;
-
         }
+        return result;
+    }
 
-        mOutputItems = outputItems;
-        mOutputFluids = processingLogic.getOutputFluids();
+    @Override
+    public CheckRecipeResult wirelessModeProcessOnce() {
+        CheckRecipeResult result = super.wirelessModeProcessOnce();
+        if (!result.wasSuccessful()) return result;
+        depletePurifiedWater();
         return result;
     }
 
@@ -261,8 +260,10 @@ public class PCBFactory extends GTMMultiMachineBase<PCBFactory>
                     }
                 }
 
-                maxParallel = GTUtility.min(parallel, mMaxParallel);
+                maxParallel = GTUtility.min(parallel, getTrueParallel());
                 mMaxParallel = maxParallel;
+
+                if (mMaxParallel <= 0) return CheckRecipeResultRegistry.NO_RECIPE;
 
                 return super.validateRecipe(recipe);
             }
@@ -309,8 +310,13 @@ public class PCBFactory extends GTMMultiMachineBase<PCBFactory>
             .addInfo(StatCollector.translateToLocal("Tooltip_PCBFactory_07"))
             .addInfo(StatCollector.translateToLocal("Tooltip_PCBFactory_08"))
             .addInfo(StatCollector.translateToLocal("Tooltip_PCBFactory_09"))
-            .addInfo(StatCollector.translateToLocal("Tooltip_GTMMultiMachine_02"))
-            .addInfo(StatCollector.translateToLocal("Tooltip_GTMMultiMachine_03"))
+            .addInfo(StatCollector.translateToLocal("Tooltip_WirelessEnergyMultiMachine_02"))
+            .addInfo(StatCollector.translateToLocal("Tooltip_WirelessEnergyMultiMachine_03"))
+            .addInfo(StatCollector.translateToLocal("Tooltip_WirelessEnergyMultiMachine_04"))
+            .addInfo(StatCollector.translateToLocal("Tooltip_WirelessEnergyMultiMachine_06"))
+            .addInfo(StatCollector.translateToLocal("Tooltip_WirelessEnergyMultiMachine_08"))
+            .addInfo(StatCollector.translateToLocal("Tooltip_WirelessEnergyMultiMachine_09"))
+            .addInfo(StatCollector.translateToLocal("Tooltip_WirelessEnergyMultiMachine_10"))
             .addInfo(StatCollector.translateToLocal("Tooltip_Tectech_Hatch"))
             .addSeparator()
             .addInfo(StatCollector.translateToLocal("StructureTooComplex"))
@@ -399,6 +405,12 @@ public class PCBFactory extends GTMMultiMachineBase<PCBFactory>
         return mCountCasing >= 30;
     }
 
+    @Override
+    public void clearHatches() {
+        super.clearHatches();
+        mWaterInputHatches.clear();
+    }
+
     public int getMachineTier() {
         ItemStack stack = getControllerSlot();
         if (GTUtility.areStacksEqual(stack, t1Nanite)) return 1;
@@ -414,26 +426,25 @@ public class PCBFactory extends GTMMultiMachineBase<PCBFactory>
     }
 
     @Override
-    public boolean checkEnergyHatch() {
-        return true;
-    }
-
-    @Override
     public double getEUtDiscount() {
-        return super.getEUtDiscount() - 0.1 * (machineTier - 1);
+        return (wirelessUpgrade ? 0.6 : 0.8) - 0.1 * (machineTier - 1);
     }
 
     @Override
     public double getDurationModifier() {
-        return 1.0 / (3.0 + machineTier - 1) - (Math.max(0, mParallelTier - 1) / 50.0);
+        return 1.0 / (wirelessUpgrade ? 8.0 : 3.0 + machineTier - 1) - (Math.max(0, mParallelTier - 1) / 50.0);
     }
 
     @Override
     public void onPostTick(IGregTechTileEntity aBaseMetaTileEntity, long aTick) {
         super.onPostTick(aBaseMetaTileEntity, aTick);
         if (!getBaseMetaTileEntity().isServerSide()) return;
-        if (isAllowedToWork() && aTick % 100 == 0 && !depleteWaterInput(distilledWater)) {
-            stopMachine(ShutDownReasonRegistry.NONE);
+        if (isAllowedToWork() && aTick % 100 == 0) {
+            startRecipeProcessing();
+            if (!depleteWaterInput(distilledWater)) {
+                stopMachine(ShutDownReasonRegistry.NONE);
+            }
+            endRecipeProcessing();
         }
     }
 
@@ -441,7 +452,6 @@ public class PCBFactory extends GTMMultiMachineBase<PCBFactory>
         ArrayList<FluidStack> rList = new ArrayList<>();
         Map<Fluid, FluidStack> inputsFromME = new HashMap<>();
         for (MTEHatchInput tHatch : validMTEList(mWaterInputHatches)) {
-            setHatchRecipeMap(tHatch);
             if (tHatch instanceof MTEHatchMultiInput multiInputHatch) {
                 for (FluidStack tFluid : multiInputHatch.getStoredFluid()) {
                     if (tFluid != null) {
@@ -469,9 +479,38 @@ public class PCBFactory extends GTMMultiMachineBase<PCBFactory>
         return rList;
     }
 
+    public void depletePurifiedWater() {
+        int tier = ((AccessorProcessingLogic) processingLogic).getLastRecipe()
+            .getMetadataOrDefault(PCBFactoryTierKey.INSTANCE, 1);
+        int parallel = processingLogic.getCurrentParallels();
+
+        for (FluidStack fluidStack : getStoredWater()) {
+            if (parallel <= 0) break;
+            if (GTUtility.areFluidsEqual(fluidStack, purifiedWater[tier - 1])) {
+                int deductAmount = 100 / (int) GTUtility.powInt(2, machineTier - tier);
+                int timesToDeduct = fluidStack.amount / deductAmount;
+                if (timesToDeduct > 0) {
+                    fluidStack.amount -= deductAmount * timesToDeduct;
+                    parallel -= deductAmount;
+                }
+            }
+
+            if (parallel <= 0) break;
+
+            if (GTUtility.areFluidsEqual(fluidStack, purifiedWater[tier * 2 - 1])) {
+                int deductAmount = 50 / (int) GTUtility.powInt(2, machineTier - tier);
+                int timesToDeduct = fluidStack.amount / deductAmount;
+                if (timesToDeduct > 0) {
+                    fluidStack.amount -= deductAmount * timesToDeduct;
+                    parallel -= deductAmount;
+                }
+            }
+        }
+        for (MTEHatchInput tHatch : validMTEList(mWaterInputHatches)) tHatch.updateSlots();
+    }
+
     public boolean depleteWaterInput(FluidStack fluidStack) {
         for (MTEHatchInput tHatch : validMTEList(mWaterInputHatches)) {
-            setHatchRecipeMap(tHatch);
             FluidStack tLiquid = tHatch.drain(ForgeDirection.UNKNOWN, fluidStack, false);
             if (tLiquid != null && tLiquid.amount >= fluidStack.amount) {
                 tLiquid = tHatch.drain(ForgeDirection.UNKNOWN, fluidStack, true);
@@ -591,9 +630,21 @@ public class PCBFactory extends GTMMultiMachineBase<PCBFactory>
         return built;
     }
 
+    public boolean addWaterInputHatchToMachineList(IGregTechTileEntity aTileEntity, int aBaseCasingIndex) {
+        if (aTileEntity == null) return false;
+        IMetaTileEntity aMetaTileEntity = aTileEntity.getMetaTileEntity();
+        if (aMetaTileEntity == null) return false;
+        if (aMetaTileEntity instanceof MTEHatchInput hatch) {
+            hatch.updateTexture(aBaseCasingIndex);
+            hatch.updateCraftingIcon(this.getMachineCraftingIcon());
+            return mWaterInputHatches.add(hatch);
+        }
+        return false;
+    }
+
     public enum CustomHatchElement implements IHatchElement<PCBFactory> {
 
-        WaterInputHatch("GT5U.MBTT.InputHatch", PCBFactory::addInputHatchToMachineList, MTEHatchInput.class) {
+        WaterInputHatch("GT5U.MBTT.InputHatch", PCBFactory::addWaterInputHatchToMachineList, MTEHatchInput.class) {
 
             @Override
             public long count(PCBFactory t) {
