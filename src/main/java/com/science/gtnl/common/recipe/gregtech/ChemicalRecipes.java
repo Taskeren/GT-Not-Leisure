@@ -569,8 +569,9 @@ public class ChemicalRecipes implements IRecipePool {
             .addTo(UC);
 
         RecipeBuilder.builder()
-            .itemInputs(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Glowstone, 7))
-            .itemInputs(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Thorium, 1))
+            .itemInputs(
+                GTOreDictUnificator.get(OrePrefixes.dust, Materials.Glowstone, 7),
+                GTOreDictUnificator.get(OrePrefixes.dust, Materials.Thorium, 1))
             .fluidInputs(GGMaterial.thoriumNitrate.getFluidOrGas(1000))
             .fluidOutputs(MaterialPool.GlowThorium.getFluidOrGas(1000))
             .fluidOutputs(Materials.NitrogenDioxide.getGas(2000))

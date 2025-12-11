@@ -3,7 +3,6 @@ package com.science.gtnl.loader;
 import java.util.Collection;
 import java.util.Map;
 
-import com.science.gtnl.common.recipe.gregtech.NuclearSaltProcessingPlantRecipes;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
@@ -53,6 +52,7 @@ import com.science.gtnl.common.recipe.gregtech.HammerRecipes;
 import com.science.gtnl.common.recipe.gregtech.LaserEngraverRecipes;
 import com.science.gtnl.common.recipe.gregtech.MixerRecipes;
 import com.science.gtnl.common.recipe.gregtech.NanoForgeRecipes;
+import com.science.gtnl.common.recipe.gregtech.NuclearSaltProcessingPlantRecipes;
 import com.science.gtnl.common.recipe.gregtech.PCBFactoryRecipes;
 import com.science.gtnl.common.recipe.gregtech.PlasmaForgeRecipes;
 import com.science.gtnl.common.recipe.gregtech.PreciseAssemblerRecipes;
@@ -215,7 +215,8 @@ public class RecipeLoader {
             new BotaniaManaInfusionRecipes(), new FormingPressRecipes(), new HammerRecipes(), new CyclotronRecipes(),
             new RuneAltarRecipes(), new IndustrialRockCrusherRecipes(), new PrecisionLaserEngraver(),
             new NanitesIntegratedProcessingRecipes(), new NanoForgeRecipes(), new SteamWeatherModuleRecipes(),
-            new ElectricNeutronActivatorRecipes(), new ReactorProcessingUnitRecipes(),new NuclearSaltProcessingPlantRecipes() };
+            new ElectricNeutronActivatorRecipes(), new ReactorProcessingUnitRecipes(),
+            new NuclearSaltProcessingPlantRecipes() };
 
         for (IRecipePool recipePool : recipePools) {
             recipePool.loadRecipes();

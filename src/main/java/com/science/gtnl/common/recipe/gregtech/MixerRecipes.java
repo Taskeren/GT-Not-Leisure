@@ -190,8 +190,7 @@ public class MixerRecipes implements IRecipePool {
 
         RecipeBuilder.builder()
             .itemInputs(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Graphite, 1))
-            .fluidInputs(Materials.Uranium235.getMolten(432))
-            .fluidInputs(Materials.Uranium.getMolten(1008))
+            .fluidInputs(Materials.Uranium235.getMolten(432), Materials.Uranium.getMolten(1008))
             .fluidOutputs(MaterialPool.UraniumFuel.getFluidOrGas(1440))
             .duration(10 * SECONDS)
             .eut(TierEU.RECIPE_IV)
