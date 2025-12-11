@@ -4658,23 +4658,23 @@ public class MachineLoader {
                 16777216));
         addItemTooltip(GTNLItemList.WirelessEnergyHatchMAX16777216A.get(1), AnimatedText.SCIENCE_NOT_LEISURE);
 
-        GTNLItemList.LegendaryWirelessEnergyHatch.set(
+        GTNLItemList.HumongousWirelessEnergyHatch.set(
             new MTEHatchWirelessMulti(
-                LEGENDARY_WIRELESS_ENERGY_HATCH.ID,
-                "LegendaryWirelessEnergyHatch",
-                StatCollector.translateToLocal("LegendaryWirelessEnergyHatch"),
+                HUMONGOUS_WIRELESS_ENERGY_HATCH.ID,
+                "HumongousWirelessEnergyHatch",
+                StatCollector.translateToLocal("HumongousWirelessEnergyHatch"),
                 14,
                 Integer.MAX_VALUE));
-        addItemTooltip(GTNLItemList.LegendaryWirelessEnergyHatch.get(1), AnimatedText.SCIENCE_NOT_LEISURE);
+        addItemTooltip(GTNLItemList.HumongousWirelessEnergyHatch.get(1), AnimatedText.SCIENCE_NOT_LEISURE);
 
-        GTNLItemList.LegendaryWirelessDynamoHatch.set(
+        GTNLItemList.HumongousWirelessDynamoHatch.set(
             new WirelessMultiDynamoHatch(
-                LEGENDARY_WIRELESS_DYNAMO_HATCH.ID,
-                "LegendaryWirelessDynamoHatch",
-                StatCollector.translateToLocal("LegendaryWirelessDynamoHatch"),
+                HUMONGOUS_WIRELESS_DYNAMO_HATCH.ID,
+                "HumongousWirelessDynamoHatch",
+                StatCollector.translateToLocal("HumongousWirelessDynamoHatch"),
                 14,
                 Integer.MAX_VALUE));
-        addItemTooltip(GTNLItemList.LegendaryWirelessDynamoHatch.get(1), AnimatedText.SCIENCE_NOT_LEISURE);
+        addItemTooltip(GTNLItemList.HumongousWirelessDynamoHatch.get(1), AnimatedText.SCIENCE_NOT_LEISURE);
     }
 
     public static void registerBasicMachine() {

@@ -580,9 +580,9 @@ WirelessEnergyHatchMAX1048576A=1048576安MAX无线能源仓
 WirelessEnergyHatchMAX4194304A=4194304安MAX无线能源仓
 WirelessEnergyHatchMAX16777216A=16777216安MAX无线能源仓
 
-LegendaryWirelessEnergyHatch=传奇无线能源仓
+HumongousWirelessEnergyHatch=鸿蒙无线能源仓
 
-LegendaryWirelessDynamoHatch=传奇无线动力仓
+HumongousWirelessDynamoHatch=鸿蒙无线动力仓
 Tooltip_WirelessMultiDynamoHatch_00=§7将能量存储于全局网络中，上限为2^(2^31)EU.
 Tooltip_WirelessMultiDynamoHatch_01=§7不连接导线，此方块可以为网络接收EU.
 Tooltip_WirelessMultiDynamoHatch_02=支持激光和线缆连接

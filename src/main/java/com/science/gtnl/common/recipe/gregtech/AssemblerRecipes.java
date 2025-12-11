@@ -3331,7 +3331,7 @@ public class AssemblerRecipes implements IRecipePool {
                 GTOreDictUnificator.get(OrePrefixes.circuit, Materials.LV, 4),
                 GTOreDictUnificator.get(OrePrefixes.spring, Materials.Iron, 4),
                 GTOreDictUnificator.get(OrePrefixes.foil, Materials.Steel, 16))
-            .itemOutputs(GTNLItemList.LegendaryWirelessDynamoHatch.get(1))
+            .itemOutputs(GTNLItemList.HumongousWirelessDynamoHatch.get(1))
             .fluidInputs(Materials.SolderingAlloy.getMolten(144))
             .duration(400)
             .eut(TierEU.RECIPE_LV)

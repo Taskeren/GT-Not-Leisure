@@ -1133,8 +1133,8 @@ public enum GTNLItemList implements IItemContainer {
     WirelessEnergyHatchMAX4194304A,
     WirelessEnergyHatchMAX16777216A,
 
-    LegendaryWirelessEnergyHatch,
-    LegendaryWirelessDynamoHatch,
+    HumongousWirelessEnergyHatch,
+    HumongousWirelessDynamoHatch,
 
     AdvancedSuperDualInputHatchME,
     SuperDualInputHatchME,

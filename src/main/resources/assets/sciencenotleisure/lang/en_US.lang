@@ -580,9 +580,9 @@ WirelessEnergyHatchMAX1048576A=1048576A MAX Wireless Energy Hatch
 WirelessEnergyHatchMAX4194304A=4194304A MAX Wireless Energy Hatch
 WirelessEnergyHatchMAX16777216A=16777216A MAX Wireless Energy Hatch
 
-LegendaryWirelessEnergyHatch=Legendary Wireless Energy Hatch
+HumongousWirelessEnergyHatch=Humongous Wireless Energy Hatch
 
-LegendaryWirelessDynamoHatch=Legendary Wireless Dynamo Hatch
+HumongousWirelessDynamoHatch=Humongous Wireless Dynamo Hatch
 Tooltip_WirelessMultiDynamoHatch_00=§7Stores energy globally in a network, up to 2^(2^31) EU.
 Tooltip_WirelessMultiDynamoHatch_01=§7Does not connect to wires. This block accepts EU into the network.
 Tooltip_WirelessMultiDynamoHatch_02=Supports laser and cable connections
