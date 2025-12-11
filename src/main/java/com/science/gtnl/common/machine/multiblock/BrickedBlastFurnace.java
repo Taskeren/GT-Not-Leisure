@@ -202,6 +202,7 @@ public class BrickedBlastFurnace extends SteamMultiMachineBase<BrickedBlastFurna
     @Override
     public CheckRecipeResult checkProcessing() {
         CheckRecipeResult result = super.checkProcessing();
+        if (!result.wasSuccessful()) return result;
         mMaxProgresstime = 128;
         return result;
     }

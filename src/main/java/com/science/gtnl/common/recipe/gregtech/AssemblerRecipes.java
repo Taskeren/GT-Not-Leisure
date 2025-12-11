@@ -3323,6 +3323,20 @@ public class AssemblerRecipes implements IRecipePool {
             .eut(TierEU.RECIPE_ZPM)
             .addTo(As);
 
+        RecipeBuilder.builder()
+            .itemInputs(
+                ItemList.Hatch_Energy_LV.get(1),
+                ItemList.Cover_Wireless_Energy_LV.get(1),
+                new ItemStack(Items.ender_pearl, 16),
+                GTOreDictUnificator.get(OrePrefixes.circuit, Materials.LV, 4),
+                GTOreDictUnificator.get(OrePrefixes.spring, Materials.Iron, 4),
+                GTOreDictUnificator.get(OrePrefixes.foil, Materials.Steel, 16))
+            .itemOutputs(GTNLItemList.LegendaryWirelessDynamoHatch.get(1))
+            .fluidInputs(Materials.SolderingAlloy.getMolten(144))
+            .duration(400)
+            .eut(TierEU.RECIPE_LV)
+            .addTo(As);
+
         loadLamp();
         loadWirelessHatch();
         loadLaserHatch();
