@@ -1,7 +1,6 @@
 package com.science.gtnl.utils.item;
 
 import static com.science.gtnl.utils.enums.ModList.Baubles;
-import static gregtech.api.enums.Mods.AE2FluidCraft;
 import static gregtech.api.enums.Mods.Botania;
 import static gregtech.api.util.GTModHandler.getModItem;
 
@@ -27,7 +26,6 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTUtil;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.StringUtils;
-import net.minecraftforge.fluids.FluidStack;
 
 import com.google.common.collect.Iterables;
 import com.gtnewhorizons.modularui.api.drawable.UITexture;
@@ -258,26 +256,6 @@ public class ItemUtils {
 
         tag.setString("type", typeName);
         return stack;
-    }
-
-    public static ItemStack getFluidPacket(FluidStack fluid, int amount) {
-        if (fluid == null) return new ItemStack(Blocks.fire);
-        ItemStack packet = GTModHandler.getModItem(AE2FluidCraft.ID, "fluid_packet", 1);
-        NBTTagCompound tag = packet.getTagCompound();
-        if (tag == null) {
-            tag = new NBTTagCompound();
-            packet.setTagCompound(tag);
-        }
-
-        NBTTagCompound fluidTag = new NBTTagCompound();
-        String fluidName = fluid.getFluid()
-            .getName();
-
-        fluidTag.setString("FluidName", fluidName);
-        fluidTag.setInteger("Amount", amount);
-
-        tag.setTag("FluidStack", fluidTag);
-        return packet;
     }
 
     public static ItemStack getIntegratedCircuitPlus(int config) {

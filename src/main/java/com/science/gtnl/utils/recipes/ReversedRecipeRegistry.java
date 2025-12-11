@@ -1,7 +1,5 @@
 package com.science.gtnl.utils.recipes;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
 
 import net.minecraft.item.ItemStack;
@@ -10,13 +8,12 @@ import com.science.gtnl.ScienceNotLeisure;
 
 import gregtech.api.util.GTRecipe;
 import gregtech.api.util.GTUtility;
+import it.unimi.dsi.fastutil.objects.ObjectArrayList;
+import it.unimi.dsi.fastutil.objects.ObjectList;
 
 public class ReversedRecipeRegistry {
 
-    /**
-     * List to store all manually registered GT crafting recipes.
-     */
-    private static final List<GTCraftingRecipe> REGISTRY = new ArrayList<>(2048);
+    public static ObjectList<GTCraftingRecipe> REGISTRY = new ObjectArrayList<>();
 
     public interface GTCraftingRecipe {
 

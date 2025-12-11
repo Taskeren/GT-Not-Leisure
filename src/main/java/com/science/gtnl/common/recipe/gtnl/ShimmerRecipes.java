@@ -1,11 +1,6 @@
 package com.science.gtnl.common.recipe.gtnl;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 import java.util.Objects;
-import java.util.stream.Collectors;
 
 import javax.annotation.Nullable;
 
@@ -16,9 +11,13 @@ import com.science.gtnl.api.IRecipePool;
 import com.science.gtnl.utils.recipes.DisassemblerHelper;
 import com.science.gtnl.utils.recipes.ReversedRecipeRegistry;
 
+import it.unimi.dsi.fastutil.objects.Object2ObjectOpenHashMap;
+import it.unimi.dsi.fastutil.objects.ObjectArrayList;
+import it.unimi.dsi.fastutil.objects.ObjectList;
+
 public class ShimmerRecipes implements IRecipePool {
 
-    public static Map<Item, List<ConversionEntry>> conversionMap = new HashMap<>();
+    public static Object2ObjectOpenHashMap<Item, ObjectArrayList<ConversionEntry>> conversionMap = new Object2ObjectOpenHashMap<>();
 
     @Override
     public void loadRecipes() {
@@ -26,25 +25,26 @@ public class ShimmerRecipes implements IRecipePool {
         ReversedRecipeRegistry.registerAllReversedRecipes();
     }
 
-    public static void registerConversion(ItemStack input, List<ItemStack> outputs) {
+    public static void registerConversion(ItemStack input, ObjectList<ItemStack> outputs) {
         if (input == null || outputs == null || outputs.isEmpty()) return;
 
-        List<ItemStack> filteredOutputs = outputs.stream()
+        // Filter non-null outputs
+        ObjectArrayList<ItemStack> filteredOutputs = outputs.stream()
             .filter(Objects::nonNull)
-            .collect(Collectors.toList());
+            .collect(ObjectArrayList::new, ObjectArrayList::add, ObjectArrayList::addAll);
 
         if (filteredOutputs.isEmpty()) return;
 
         ConversionEntry entry = new ConversionEntry(input, filteredOutputs);
 
-        conversionMap.computeIfAbsent(input.getItem(), k -> new ArrayList<>())
+        conversionMap.computeIfAbsent(input.getItem(), k -> new ObjectArrayList<>())
             .add(entry);
     }
 
     @Nullable
-    public static List<ItemStack> getConversionResult(ItemStack input) {
+    public static ObjectList<ItemStack> getConversionResult(ItemStack input) {
         if (input == null || input.stackSize <= 0) return null;
-        List<ConversionEntry> entries = conversionMap.get(input.getItem());
+        ObjectList<ConversionEntry> entries = conversionMap.get(input.getItem());
         if (entries == null) return null;
 
         for (ConversionEntry entry : entries) {
@@ -58,7 +58,7 @@ public class ShimmerRecipes implements IRecipePool {
 
     public static boolean isInConversions(ItemStack input) {
         if (input == null) return false;
-        List<ConversionEntry> entries = conversionMap.get(input.getItem());
+        ObjectList<ConversionEntry> entries = conversionMap.get(input.getItem());
         if (entries == null) return false;
         for (ConversionEntry entry : entries) {
             if (entry.matches(input)) return true;
@@ -69,27 +69,27 @@ public class ShimmerRecipes implements IRecipePool {
     public static class ConversionEntry {
 
         final ItemStack input;
-        final List<ItemStack> outputs;
+        final ObjectArrayList<ItemStack> outputs;
 
-        public ConversionEntry(ItemStack input, List<ItemStack> outputs) {
+        public ConversionEntry(ItemStack input, ObjectArrayList<ItemStack> outputs) {
             this.input = input.copy();
             this.outputs = outputs.stream()
                 .map(ItemStack::copy)
-                .collect(Collectors.toList());
+                .collect(ObjectArrayList::new, ObjectArrayList::add, ObjectArrayList::addAll);
         }
 
         boolean matches(ItemStack stack) {
             return stack != null && stack.isItemEqual(input) && stack.stackSize > 0;
         }
 
-        public List<ItemStack> getScaledOutputs(int scale) {
+        public ObjectArrayList<ItemStack> getScaledOutputs(int scale) {
             return outputs.stream()
                 .map(out -> {
                     ItemStack scaled = out.copy();
                     scaled.stackSize = scaled.stackSize * scale;
                     return scaled;
                 })
-                .collect(Collectors.toList());
+                .collect(ObjectArrayList::new, ObjectArrayList::add, ObjectArrayList::addAll);
         }
     }
 }
