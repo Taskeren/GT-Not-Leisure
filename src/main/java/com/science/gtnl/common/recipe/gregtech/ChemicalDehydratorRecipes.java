@@ -100,5 +100,18 @@ public class ChemicalDehydratorRecipes implements IRecipePool {
             .eut(480)
             .addTo(CDNCR)
             .addTo(CDR);
+
+        RecipeBuilder.builder()
+            .fluidInputs(MaterialPool.ErLuOxidesSolution.getFluidOrGas(4000))
+            .itemOutputs(
+                MaterialPool.ErbiumOxide.get(OrePrefixes.dust, 5),
+                MaterialPool.ThuliumOxide.get(OrePrefixes.dust, 5),
+                MaterialPool.YtterbiumOxide.get(OrePrefixes.dust, 5),
+                MaterialPool.LutetiumOxide.get(OrePrefixes.dust, 5))
+            .outputChances(5000, 5000, 5000, 5000)
+            .duration(220)
+            .eut(480)
+            .addTo(CDNCR)
+            .addTo(CDR);
     }
 }

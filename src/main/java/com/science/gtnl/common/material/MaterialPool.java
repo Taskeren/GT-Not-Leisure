@@ -1599,6 +1599,35 @@ public class MaterialPool implements Runnable {
         offsetID + 125,
         TextureSet.SET_FLUID);
 
+    public static final Werkstoff GlowThorium = new Werkstoff(
+        new short[] { 232, 255, 134 },
+        "Glow Thorium",
+        new Werkstoff.Stats(),
+        Werkstoff.Types.MIXTURE,
+        new Werkstoff.GenerationFeatures().disable()
+            .addCells(),
+        offsetID + 126,
+        TextureSet.SET_FLUID);
+
+    public static final Werkstoff UraniumFuel = new Werkstoff(
+        new short[] { 151, 231, 151 },
+        "Mixed Uranium Fuel",
+        new Werkstoff.Stats(),
+        Werkstoff.Types.MIXTURE,
+        new Werkstoff.GenerationFeatures().disable()
+            .addCells(),
+        offsetID + 127,
+        TextureSet.SET_FLUID);
+
+    public static final Werkstoff UraniumWaste = new Werkstoff(
+        new short[] { 114, 178, 114 },
+        "Uranium Waste",
+        new Werkstoff.Stats(),
+        Werkstoff.Types.ELEMENT,
+        new Werkstoff.GenerationFeatures().disable()
+            .addCells(),
+        offsetID + 128,
+        TextureSet.SET_FLUID);
     // Special
 
     public static final Werkstoff Periodicium = new Werkstoff(

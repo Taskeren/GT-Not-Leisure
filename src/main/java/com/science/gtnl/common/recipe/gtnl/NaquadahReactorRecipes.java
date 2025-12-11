@@ -17,17 +17,17 @@ public class NaquadahReactorRecipes implements IRecipePool {
     @Override
     public void loadRecipes() {
         RecipeBuilder.builder()
-            .fluidInputs(GGMaterial.naquadahBasedFuelMkI.getFluidOrGas(20), Materials.Hydrogen.getGas(1600))
-            .fluidOutputs(GGMaterial.naquadahBasedFuelMkIDepleted.getFluidOrGas(20))
-            .duration(900)
+            .fluidInputs(GGMaterial.naquadahBasedFuelMkI.getFluidOrGas(16), Materials.Hydrogen.getGas(1600))
+            .fluidOutputs(GGMaterial.naquadahBasedFuelMkIDepleted.getFluidOrGas(16))
+            .duration(1000)
             .eut(0)
             .specialValue(524288)
             .addTo(NRR);
 
         RecipeBuilder.builder()
-            .fluidInputs(GGMaterial.naquadahBasedFuelMkI.getFluidOrGas(160), Materials.Oxygen.getPlasma(72))
-            .fluidOutputs(GGMaterial.naquadahBasedFuelMkIDepleted.getFluidOrGas(160))
-            .duration(14000)
+            .fluidInputs(GGMaterial.naquadahBasedFuelMkI.getFluidOrGas(100), Materials.Oxygen.getPlasma(72))
+            .fluidOutputs(GGMaterial.naquadahBasedFuelMkIDepleted.getFluidOrGas(100))
+            .duration(20000)
             .eut(0)
             .specialValue(524288)
             .addTo(NRR);
@@ -41,9 +41,9 @@ public class NaquadahReactorRecipes implements IRecipePool {
             .addTo(NRR);
 
         RecipeBuilder.builder()
-            .fluidInputs(GGMaterial.naquadahBasedFuelMkII.getFluidOrGas(160), Materials.Nitrogen.getPlasma(120))
-            .fluidOutputs(GGMaterial.naquadahBasedFuelMkIIDepleted.getFluidOrGas(160))
-            .duration(20000)
+            .fluidInputs(GGMaterial.naquadahBasedFuelMkII.getFluidOrGas(125), Materials.Nitrogen.getPlasma(120))
+            .fluidOutputs(GGMaterial.naquadahBasedFuelMkIIDepleted.getFluidOrGas(125))
+            .duration(30000)
             .eut(0)
             .specialValue(524288)
             .addTo(NRR);
