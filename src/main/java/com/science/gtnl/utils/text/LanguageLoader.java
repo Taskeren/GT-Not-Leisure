@@ -143,9 +143,9 @@ public class LanguageLoader {
         addWerkstoffLocalization(MaterialPool.QuantumInfusion, "量子灌输液", false);
         addWerkstoffLocalization(MaterialPool.Periodicium, "錭錤錶", false);
         addWerkstoffLocalization(MaterialPool.Stargate, "星门", false);
-        addWerkstoffLocalization(MaterialPool.GlowThorium, "<荧光钍燃料>", false);
-        addWerkstoffLocalization(MaterialPool.UraniumFuel, "<混合铀燃料>", false);
-        addWerkstoffLocalization(MaterialPool.UraniumWaste, "<铀废料>", false);
+        addWerkstoffLocalization(MaterialPool.GlowThorium, "荧光钍燃料", false);
+        addWerkstoffLocalization(MaterialPool.UraniumFuel, "混合铀燃料", false);
+        addWerkstoffLocalization(MaterialPool.UraniumWaste, "铀废料", false);
 
         addGTMaterialLocalization(Materials.BlueAlloy, "蓝色合金", true);
 
