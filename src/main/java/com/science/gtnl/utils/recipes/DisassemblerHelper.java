@@ -580,7 +580,7 @@ public class DisassemblerHelper {
         if (!shouldDisassemble(inputs)) return;
 
         ItemStack input = inputs[0];
-        if (ShimmerRecipes.getConversionResult(input) != null) return;
+        if (ShimmerRecipes.isInConversions(input)) return;
 
         try {
             ObjectList<ItemStack> outputs = handleRecipeTransformation(revRecipe.mOutputs, null);

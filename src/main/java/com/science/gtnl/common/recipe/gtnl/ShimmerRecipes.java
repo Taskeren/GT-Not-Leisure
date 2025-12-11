@@ -11,6 +11,7 @@ import com.science.gtnl.api.IRecipePool;
 import com.science.gtnl.utils.recipes.DisassemblerHelper;
 import com.science.gtnl.utils.recipes.ReversedRecipeRegistry;
 
+import gregtech.api.util.GTUtility;
 import it.unimi.dsi.fastutil.objects.Object2ObjectOpenHashMap;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import it.unimi.dsi.fastutil.objects.ObjectList;
@@ -79,7 +80,7 @@ public class ShimmerRecipes implements IRecipePool {
         }
 
         boolean matches(ItemStack stack) {
-            return stack != null && stack.isItemEqual(input) && stack.stackSize > 0;
+            return stack != null && stack.stackSize > 0 && GTUtility.areStacksEqual(stack, input, true);
         }
 
         public ObjectArrayList<ItemStack> getScaledOutputs(int scale) {
