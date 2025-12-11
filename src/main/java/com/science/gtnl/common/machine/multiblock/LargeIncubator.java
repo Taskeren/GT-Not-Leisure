@@ -149,7 +149,7 @@ public class LargeIncubator extends MultiMachineBase<LargeIncubator> implements 
                     onElementPass(e -> e.mCountCasing++, ofBlock(sBlockReinforced, 2))))
             .addElement(
                 'F',
-                ofBlock(
+                ofBlockAnyMeta(
                     EtFuturumRequiem.isModLoaded() ? GameRegistry.findBlock(EtFuturumRequiem.ID, "sponge")
                         : Blocks.sponge,
                     1))

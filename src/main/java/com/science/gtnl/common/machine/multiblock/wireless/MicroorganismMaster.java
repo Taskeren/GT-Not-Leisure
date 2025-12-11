@@ -6,6 +6,8 @@ import static com.science.gtnl.common.machine.multiMachineBase.MultiMachineBase.
 import static gregtech.api.GregTechAPI.*;
 import static gregtech.api.enums.GTValues.*;
 import static gregtech.api.enums.HatchElement.*;
+import static gregtech.api.enums.Mods.*;
+import static gregtech.api.enums.Mods.EtFuturumRequiem;
 import static gregtech.api.util.GTStructureUtility.*;
 import static tectech.thing.casing.TTCasingsContainer.*;
 
@@ -32,6 +34,7 @@ import com.science.gtnl.utils.recipes.GTNL_ProcessingLogic;
 
 import bartworks.API.recipe.BartWorksRecipeMaps;
 import bartworks.util.BWUtil;
+import cpw.mods.fml.common.registry.GameRegistry;
 import gregtech.api.enums.Materials;
 import gregtech.api.enums.Textures;
 import gregtech.api.interfaces.ITexture;
@@ -157,7 +160,12 @@ public class MicroorganismMaster extends WirelessEnergyMultiMachineBase<Microorg
                     .buildAndChain(onElementPass(x -> ++x.mCountCasing, ofBlock(sBlockCasings8, 0))))
             .addElement('N', chainAllGlasses(-1, (te, t) -> te.mGlassTier = t, te -> te.mGlassTier))
             .addElement('O', ofBlock(sBlockCasings10, 7))
-            .addElement('P', ofBlock(Blocks.sponge, 0))
+            .addElement(
+                'P',
+                ofBlockAnyMeta(
+                    EtFuturumRequiem.isModLoaded() ? GameRegistry.findBlock(EtFuturumRequiem.ID, "sponge")
+                        : Blocks.sponge,
+                    1))
             .addElement('Q', ofFrame(Materials.Naquadria))
             .build();
     }

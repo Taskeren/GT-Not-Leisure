@@ -168,7 +168,7 @@ public class RecipeLoader {
         RecipeUtil.copyAllRecipes(RecipePool.ConvertToCircuitAssembler, RecipeMaps.circuitAssemblerRecipes);
     }
 
-    public static void loadRecipesServerStart() {
+    public static void loadServerStart() {
         RecipeUtil.removeMatchingRecipes(RecipePool.ConvertToCircuitAssembler, RecipeMaps.circuitAssemblerRecipes);
         if (recipesAdded) return;
         if (MainConfig.enableDeleteRecipe) {
@@ -227,8 +227,19 @@ public class RecipeLoader {
         }
 
         RecipeUtil.generateRecipesBioLab(BartWorksRecipeMaps.bioLabRecipes, RecipePool.LargeBioLabRecipes, true, 1.1);
+
         TCResearches.register();
 
+        loadPlasmaCentrifugeRecipes();
+
+        if (ModList.TwistSpaceTechnology.isModLoaded()) {
+            loadTSTMegaAssemblyLineRecipes();
+        }
+
+        recipesAdded = true;
+    }
+
+    public static void loadPlasmaCentrifugeRecipes() {
         for (RecipeMap<?> map : new RecipeMap<?>[] { RecipeMaps.transcendentPlasmaMixerRecipes,
             RecipeMaps.fusionRecipes }) {
             for (GTRecipe recipe : map.getAllRecipes()) {
@@ -256,16 +267,68 @@ public class RecipeLoader {
                 RecipePool.PlasmaCentrifugeRecipes.add(copiedRecipe);
             }
         }
-
-        if (ModList.TwistSpaceTechnology.isModLoaded()) {
-            loadTSTMegaAssemblyLineRecipes();
-        }
-
-        recipesAdded = true;
     }
 
     public static void loadCircuitNanitesData(long worldSeed) {
         new CircuitNanitesDataRecipes(worldSeed).loadRecipes();
+    }
+
+    public static void loadCircuitRelatedRecipes() {
+        RecipeUtil.copyAllRecipes(RecipePool.ConvertToCircuitAssembler, RecipeMaps.circuitAssemblerRecipes);
+
+        new CircuitAssemblyLineRecipes().loadRecipes();
+
+        if (ModList.TwistSpaceTechnology.isModLoaded()) {
+            loadTSTAdvCircuitAssemblyLineRecipes();
+        }
+    }
+
+    public static void registerBuffTargetChamberRecipe() {
+        Collection<GTRecipe> targetChamberRecipe = LanthanidesRecipeMaps.targetChamberRecipes.getAllRecipes();
+        LanthanidesRecipeMaps.targetChamberRecipes.getBackend()
+            .clearRecipes();
+
+        Object2IntMap<ItemStack> waferMultiplier = new Object2IntOpenHashMap<>() {
+
+            {
+                put(ItemList.Circuit_Silicon_Wafer2.get(1), 1);
+                put(ItemList.Circuit_Silicon_Wafer3.get(1), 2);
+                put(ItemList.Circuit_Silicon_Wafer4.get(1), 4);
+                put(ItemList.Circuit_Silicon_Wafer5.get(1), 8);
+                put(ItemList.Circuit_Silicon_Wafer6.get(1), 16);
+                put(ItemList.Circuit_Silicon_Wafer7.get(1), 32);
+            }
+        };
+        for (GTRecipe recipe : targetChamberRecipe) {
+            for (Map.Entry<ItemStack, Integer> entry : waferMultiplier.entrySet()) {
+                if (recipe.mInputs[1].isItemEqual(entry.getKey())) {
+                    int multiplier = entry.getValue();
+                    for (ItemStack itemStack : recipe.mOutputs) {
+                        itemStack.stackSize *= multiplier;
+                    }
+                } else {
+                    for (ItemStack itemStack : recipe.mOutputs) {
+                        itemStack.stackSize *= 4;
+                    }
+                }
+                break;
+            }
+            LanthanidesRecipeMaps.targetChamberRecipes.add(recipe);
+        }
+    }
+
+    @Optional.Method(modid = "TwistSpaceTechnology")
+    public static void loadTSTMegaAssemblyLineRecipes() {
+        AssemblyLineWithoutResearchRecipePool.loadRecipes();
+        System.out.println("[GTNL] Register TwistSpaceTechnology MegaAssemblyLine recipes");
+    }
+
+    @Optional.Method(modid = "TwistSpaceTechnology")
+    public static void loadTSTAdvCircuitAssemblyLineRecipes() {
+        GTCMRecipe.advCircuitAssemblyLineRecipes.getBackend()
+            .clearRecipes();
+        CircuitAssemblyLineWithoutImprintRecipePool.loadRecipes();
+        System.out.println("[GTNL] Register TwistSpaceTechnology AdvCircuitAssemblyLine recipes");
     }
 
     public static void loadVillageTrade() {
@@ -422,63 +485,5 @@ public class RecipeLoader {
                                 GTModHandler.getModItem(Mods.EternalSingularity.ID, "eternal_singularity", 1))));
                 }
             });
-    }
-
-    public static void loadCircuitRelatedRecipes() {
-        RecipeUtil.copyAllRecipes(RecipePool.ConvertToCircuitAssembler, RecipeMaps.circuitAssemblerRecipes);
-
-        new CircuitAssemblyLineRecipes().loadRecipes();
-
-        if (ModList.TwistSpaceTechnology.isModLoaded()) {
-            loadTSTAdvCircuitAssemblyLineRecipes();
-        }
-    }
-
-    @Optional.Method(modid = "TwistSpaceTechnology")
-    public static void loadTSTMegaAssemblyLineRecipes() {
-        AssemblyLineWithoutResearchRecipePool.loadRecipes();
-        System.out.println("[GTNL] Register TwistSpaceTechnology MegaAssemblyLine recipes");
-    }
-
-    @Optional.Method(modid = "TwistSpaceTechnology")
-    public static void loadTSTAdvCircuitAssemblyLineRecipes() {
-        GTCMRecipe.advCircuitAssemblyLineRecipes.getBackend()
-            .clearRecipes();
-        CircuitAssemblyLineWithoutImprintRecipePool.loadRecipes();
-        System.out.println("[GTNL] Register TwistSpaceTechnology AdvCircuitAssemblyLine recipes");
-    }
-
-    public static void registerBuffTargetChamberRecipe() {
-        Collection<GTRecipe> targetChamberRecipe = LanthanidesRecipeMaps.targetChamberRecipes.getAllRecipes();
-        LanthanidesRecipeMaps.targetChamberRecipes.getBackend()
-            .clearRecipes();
-
-        Object2IntMap<ItemStack> waferMultiplier = new Object2IntOpenHashMap<>() {
-
-            {
-                put(ItemList.Circuit_Silicon_Wafer2.get(1), 1);
-                put(ItemList.Circuit_Silicon_Wafer3.get(1), 2);
-                put(ItemList.Circuit_Silicon_Wafer4.get(1), 4);
-                put(ItemList.Circuit_Silicon_Wafer5.get(1), 8);
-                put(ItemList.Circuit_Silicon_Wafer6.get(1), 16);
-                put(ItemList.Circuit_Silicon_Wafer7.get(1), 32);
-            }
-        };
-        for (GTRecipe recipe : targetChamberRecipe) {
-            for (Map.Entry<ItemStack, Integer> entry : waferMultiplier.entrySet()) {
-                if (recipe.mInputs[1].isItemEqual(entry.getKey())) {
-                    int multiplier = entry.getValue();
-                    for (ItemStack itemStack : recipe.mOutputs) {
-                        itemStack.stackSize *= multiplier;
-                    }
-                } else {
-                    for (ItemStack itemStack : recipe.mOutputs) {
-                        itemStack.stackSize *= 4;
-                    }
-                }
-                break;
-            }
-            LanthanidesRecipeMaps.targetChamberRecipes.add(recipe);
-        }
     }
 }

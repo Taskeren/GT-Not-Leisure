@@ -28,7 +28,7 @@ public class SyncRecipePacket implements IMessage {
 
         @Override
         public IMessage onMessage(SyncRecipePacket message, MessageContext ctx) {
-            RecipeLoader.loadRecipesServerStart();
+            RecipeLoader.loadServerStart();
             if (Mods.NEICustomDiagrams.isModLoaded()) {
                 loadNEICustomDiagram();
             }

@@ -174,7 +174,7 @@ public class Incubator extends MultiMachineBase<Incubator> implements ISurvivalC
                     onElementPass(e -> e.mCountCasing++, ofBlock(sBlockReinforced, 2))))
             .addElement(
                 'D',
-                ofBlock(
+                ofBlockAnyMeta(
                     EtFuturumRequiem.isModLoaded() ? GameRegistry.findBlock(EtFuturumRequiem.ID, "sponge")
                         : Blocks.sponge,
                     1))

@@ -110,7 +110,7 @@ public class ScienceNotLeisure {
         event.registerServerCommand(new CommandEnergyNetwork());
         event.registerServerCommand(new CommandPlaySound());
         event.registerServerCommand(new CommandSudo());
-        RecipeLoader.loadRecipesServerStart();
+        RecipeLoader.loadServerStart();
     }
 
     @Mod.EventHandler
