@@ -192,7 +192,7 @@ public class MixerRecipes implements IRecipePool {
             .itemInputs(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Graphite, 1))
             .fluidInputs(Materials.Uranium235.getMolten(432), Materials.Uranium.getMolten(1008))
             .fluidOutputs(MaterialPool.UraniumFuel.getFluidOrGas(1440))
-            .duration(10 * SECONDS)
+            .duration(15 * SECONDS)
             .eut(TierEU.RECIPE_IV)
             .addTo(MNCR);
 
