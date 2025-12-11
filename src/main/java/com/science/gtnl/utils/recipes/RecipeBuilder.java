@@ -175,6 +175,14 @@ public class RecipeBuilder {
         return this;
     }
 
+    public RecipeBuilder itemInputsAllowNulls(ItemStack... inputs) {
+        if (skip) return this;
+        inputItems = fix(inputs, false);
+        inputsOreDict = null;
+        alts = null;
+        return this;
+    }
+
     public RecipeBuilder itemOutputs(ItemStack... outputItems) {
         if (outputItems != null && outputItems.length > 0) {
             this.outputItems = outputItems;
@@ -278,14 +286,6 @@ public class RecipeBuilder {
 
     public RecipeBuilder invalidate() {
         valid = false;
-        return this;
-    }
-
-    public RecipeBuilder itemInputsAllowNulls(ItemStack... inputs) {
-        if (skip) return this;
-        inputItems = fix(inputs, false);
-        inputsOreDict = null;
-        alts = null;
         return this;
     }
 
