@@ -79,6 +79,18 @@ public class PlatinumBasedTreatmentRecipes implements IRecipePool {
             .eut(TierEU.RECIPE_LuV)
             .addTo(PBTR);
 
+        // 二氧化铱粉处理
+        RecipeBuilder.builder()
+            .itemInputs(WerkstoffLoader.IridiumDioxide.get(OrePrefixes.dust, 2))
+            .itemOutputs(
+                GTOreDictUnificator.get(OrePrefixes.dust, Materials.Iridium, 2),
+                GTOreDictUnificator.get(OrePrefixes.dust, Materials.Nickel, 1),
+                GTOreDictUnificator.get(OrePrefixes.dust, Materials.Copper, 1))
+            .fluidOutputs(Materials.Oxygen.getGas(4000))
+            .duration(45)
+            .eut(TierEU.RECIPE_LuV)
+            .addTo(PBTR);
+
         // 浸出渣处理
         RecipeBuilder.builder()
             .itemInputs(

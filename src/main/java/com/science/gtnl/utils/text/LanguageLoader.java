@@ -161,6 +161,7 @@ public class LanguageLoader {
         String unlocalizedName = aWerkstoff.getDefaultName()
             .toLowerCase();
         String mName = unlocalizedName.replace(" ", "");
+        String mPipeName = unlocalizedName.replace(" ", "_");
 
         addStringLocalization("Material." + mName, localizedName);
         addStringLocalization("bw.werkstoff." + aWerkstoff.getmID() + ".name", localizedName);
@@ -189,17 +190,17 @@ public class LanguageLoader {
         }
         if (aWerkstoff.hasItemType(OrePrefixes.pipe)) {
             if (isItemPipe) {
-                addStringLocalization("gt.blockmachines.gt_pipe_" + unlocalizedName + ".name", "%material物品管道");
-                addStringLocalization("gt.blockmachines.gt_pipe_" + unlocalizedName + "_huge.name", "巨型%material物品管道");
-                addStringLocalization("gt.blockmachines.gt_pipe_" + unlocalizedName + "_large.name", "大型%material物品管道");
-                addStringLocalization("gt.blockmachines.gt_pipe_" + unlocalizedName + "_small.name", "小型%material物品管道");
-                addStringLocalization("gt.blockmachines.gt_pipe_" + unlocalizedName + "_tiny.name", "微型%material物品管道");
+                addStringLocalization("gt.blockmachines.gt_pipe_" + mPipeName + ".name", "%material物品管道");
+                addStringLocalization("gt.blockmachines.gt_pipe_" + mPipeName + "_huge.name", "巨型%material物品管道");
+                addStringLocalization("gt.blockmachines.gt_pipe_" + mPipeName + "_large.name", "大型%material物品管道");
+                addStringLocalization("gt.blockmachines.gt_pipe_" + mPipeName + "_small.name", "小型%material物品管道");
+                addStringLocalization("gt.blockmachines.gt_pipe_" + mPipeName + "_tiny.name", "微型%material物品管道");
             } else {
-                addStringLocalization("gt.blockmachines.gt_pipe_" + unlocalizedName + ".name", "%material流体管道");
-                addStringLocalization("gt.blockmachines.gt_pipe_" + unlocalizedName + "_huge.name", "巨型%material流体管道");
-                addStringLocalization("gt.blockmachines.gt_pipe_" + unlocalizedName + "_large.name", "大型%material流体管道");
-                addStringLocalization("gt.blockmachines.gt_pipe_" + unlocalizedName + "_small.name", "小型%material流体管道");
-                addStringLocalization("gt.blockmachines.gt_pipe_" + unlocalizedName + "_tiny.name", "微型%material流体管道");
+                addStringLocalization("gt.blockmachines.gt_pipe_" + mPipeName + ".name", "%material流体管道");
+                addStringLocalization("gt.blockmachines.gt_pipe_" + mPipeName + "_huge.name", "巨型%material流体管道");
+                addStringLocalization("gt.blockmachines.gt_pipe_" + mPipeName + "_large.name", "大型%material流体管道");
+                addStringLocalization("gt.blockmachines.gt_pipe_" + mPipeName + "_small.name", "小型%material流体管道");
+                addStringLocalization("gt.blockmachines.gt_pipe_" + mPipeName + "_tiny.name", "微型%material流体管道");
             }
         }
     }

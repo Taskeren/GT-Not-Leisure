@@ -16,6 +16,7 @@ public class MainConfig {
     public static final String CATEGORY_TICK_RATE = "tickrate";
     public static final String CATEGORY_SUPER_CREEPER = "super_creeper";
     public static final String CATEGORY_MESSAGE = "message";
+    public static final String CATEGORY_EFFECT = "effect";
     public static final String CATEGORY_OTHER = "other";
     public static final String CATEGORY_ITEM = "item";
     public static final String CATEGORY_DEBUG = "debug";
@@ -139,6 +140,8 @@ public class MainConfig {
     public static int shimmerEffect = 82;
     public static int ghostlyShapeEffect = 83;
     public static int battleEffect = 84;
+
+    public static boolean enableGhostlyShape = true;
 
     // Steam Rocket
     public static int idSchematicRocketSteam = 114514;
@@ -711,6 +714,14 @@ public class MainConfig {
             Integer.MAX_VALUE,
             "Ticks before Creeper explodes due to burning.",
             "config.super_creeper.burningExplosionTimer");
+
+        // Effect
+        enableGhostlyShape = config.getBoolean(
+            "enableGhostlyShape",
+            CATEGORY_EFFECT,
+            enableGhostlyShape,
+            "When the player dies and respawns, give the player Ghost Shape effect",
+            "config.effect.enableGhostlyShape");
 
         // Other
         enableSaturationHeal = config.getBoolean(

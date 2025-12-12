@@ -122,7 +122,6 @@ import com.science.gtnl.common.recipe.oreDictionary.PortalToAlfheimOreRecipes;
 import com.science.gtnl.common.recipe.thaumcraft.TCRecipePool;
 import com.science.gtnl.common.recipe.thaumcraft.TCResearches;
 import com.science.gtnl.config.MainConfig;
-import com.science.gtnl.utils.enums.GTNLItemList;
 import com.science.gtnl.utils.enums.ModList;
 import com.science.gtnl.utils.machine.ProcessingArrayRecipeLoader;
 import com.science.gtnl.utils.machine.oreProcessing.CheatOreProcessingRecipes;
@@ -132,7 +131,6 @@ import com.science.gtnl.utils.recipes.RemoveRecipes;
 import bartworks.API.recipe.BartWorksRecipeMaps;
 import cpw.mods.fml.common.Optional;
 import cpw.mods.fml.common.registry.VillagerRegistry;
-import goodgenerator.loader.Loaders;
 import goodgenerator.util.CrackRecipeAdder;
 import gregtech.api.enums.ItemList;
 import gregtech.api.enums.Materials;
@@ -144,7 +142,6 @@ import gregtech.api.recipe.RecipeMaps;
 import gregtech.api.util.GTModHandler;
 import gregtech.api.util.GTOreDictUnificator;
 import gregtech.api.util.GTRecipe;
-import gtPlusPlus.xmod.gregtech.api.enums.GregtechItemList;
 import gtnhlanth.api.recipe.LanthanidesRecipeMaps;
 import it.unimi.dsi.fastutil.objects.Object2IntMap;
 import it.unimi.dsi.fastutil.objects.Object2IntOpenHashMap;
@@ -347,34 +344,6 @@ public class RecipeLoader {
             .registerVillageTradeHandler(villagerId, (villager, recipeList, random) -> {
                 recipeList.add(
                     new MerchantRecipe(
-                        new ItemStack(Items.diamond, 3),
-                        Stick.setDisguisedStack(
-                            GTOreDictUnificator.get(OrePrefixes.plate, Materials.Diamond, 1),
-                            9,
-                            false)));
-                recipeList.add(
-                    new MerchantRecipe(
-                        new ItemStack(Items.emerald, 4),
-                        Stick.setDisguisedStack(new ItemStack(Blocks.diamond_block, 1))));
-                recipeList.add(
-                    new MerchantRecipe(
-                        new ItemStack(Items.diamond, 1),
-                        Stick.setDisguisedStack(new ItemStack(Items.emerald, 1))));
-                recipeList.add(
-                    new MerchantRecipe(
-                        new ItemStack(Items.emerald, 1),
-                        Stick.setDisguisedStack(new ItemStack(Items.ender_eye, 1), 2, false)));
-                recipeList.add(
-                    new MerchantRecipe(
-                        new ItemStack(Items.diamond, 1),
-                        Stick.setDisguisedStack(GTNLItemList.SatietyRing.get(1))));
-                recipeList.add(
-                    new MerchantRecipe(
-                        new ItemStack(Items.diamond, 1),
-                        new ItemStack(Items.emerald, 1),
-                        Stick.setDisguisedStack(GTNLItemList.VeinMiningPickaxe.get(1), 1, true)));
-                recipeList.add(
-                    new MerchantRecipe(
                         new ItemStack(Blocks.snow, 1),
                         Stick.setDisguisedStack(
                             GTOreDictUnificator.get(OrePrefixes.nanite, MaterialsUEVplus.MagMatter, 1))));
@@ -384,18 +353,6 @@ public class RecipeLoader {
                         GTModHandler.getModItem(Mods.Botania.ID, "bifrostPermPane", 1),
                         Stick.setDisguisedStack(
                             GTOreDictUnificator.get(GTModHandler.getModItem(Mods.Avaritia.ID, "Resource", 1, 6)))));
-                recipeList.add(
-                    new MerchantRecipe(
-                        new ItemStack(Items.nether_star, 1),
-                        Stick.setDisguisedStack(CustomItemList.astralArrayFabricator.get(1))));
-                recipeList.add(
-                    new MerchantRecipe(
-                        new ItemStack(Items.compass, 1),
-                        Stick.setDisguisedStack(ItemList.Transdimensional_Alignment_Matrix.get(1))));
-                recipeList.add(
-                    new MerchantRecipe(
-                        new ItemStack(Items.redstone, 1),
-                        Stick.setDisguisedStack(GregtechItemList.Laser_Lens_Special.get(1))));
                 recipeList.add(
                     new MerchantRecipe(
                         new ItemStack(Blocks.redstone_block, 1),
@@ -408,24 +365,6 @@ public class RecipeLoader {
                     new MerchantRecipe(
                         new ItemStack(Blocks.furnace, 1),
                         Stick.setDisguisedStack(CustomItemList.Machine_Multi_ForgeOfGods.get(1))));
-                recipeList.add(
-                    new MerchantRecipe(new ItemStack(Blocks.coal_block, 1), Stick.setDisguisedStack(Loaders.AMForge)));
-                recipeList.add(
-                    new MerchantRecipe(
-                        new ItemStack(Blocks.tnt, 1),
-                        Stick.setDisguisedStack(GTModHandler.getModItem(Mods.IndustrialCraft2.ID, "blockNuke", 1))));
-                recipeList.add(
-                    new MerchantRecipe(
-                        new ItemStack(Items.brick, 1),
-                        Stick.setDisguisedStack(ItemList.Circuit_TranscendentMainframe.get(1))));
-                recipeList.add(
-                    new MerchantRecipe(
-                        new ItemStack(Items.bucket, 1),
-                        Stick.setDisguisedStack(ReAvaItemList.InfinityBucket.get(1))));
-                recipeList.add(
-                    new MerchantRecipe(
-                        new ItemStack(Items.clock, 1),
-                        Stick.setDisguisedStack(ReAvaItemList.ChronarchsClock.get(1))));
                 recipeList.add(
                     new MerchantRecipe(
                         new ItemStack(Items.wooden_sword, 1),
@@ -462,28 +401,6 @@ public class RecipeLoader {
                     new MerchantRecipe(
                         new ItemStack(Items.leather_boots, 1),
                         Stick.setDisguisedStack(GTModHandler.getModItem(Mods.Avaritia.ID, "Infinity_Shoes", 1))));
-
-                if (Mods.SGCraft.isModLoaded()) {
-                    recipeList.add(
-                        new MerchantRecipe(
-                            GTOreDictUnificator.get(OrePrefixes.ingot, Materials.Naquadah, 9),
-                            Stick.setDisguisedStack(GTModHandler.getModItem(Mods.SGCraft.ID, "stargateRing", 1, 0))));
-                    recipeList.add(
-                        new MerchantRecipe(
-                            GTOreDictUnificator.get(OrePrefixes.ingot, Materials.NaquadahEnriched, 9),
-                            Stick.setDisguisedStack(GTModHandler.getModItem(Mods.SGCraft.ID, "stargateRing", 1, 1))));
-                    recipeList.add(
-                        new MerchantRecipe(
-                            GTOreDictUnificator.get(OrePrefixes.ingot, Materials.Naquadria, 9),
-                            Stick.setDisguisedStack(GTModHandler.getModItem(Mods.SGCraft.ID, "stargateBase", 1))));
-                }
-                if (Mods.EternalSingularity.isModLoaded()) {
-                    recipeList.add(
-                        new MerchantRecipe(
-                            new ItemStack(Blocks.beacon, 1),
-                            Stick.setDisguisedStack(
-                                GTModHandler.getModItem(Mods.EternalSingularity.ID, "eternal_singularity", 1))));
-                }
             });
     }
 }
