@@ -215,7 +215,7 @@ nei.bookmark.ae_retrieve_item=自AE取出物品
 nei.bookmark.ae_start_craft=向AE请求合成
 nei.bookmark.ae_no_craft=此物品无对应合成
 
-error.rc.cpu=§6这个CPU正在工作!
+error.rc.cpu=§6这个CPU正在工作！
 
 death.attack.damage.gtnl.crushing=%1$s 被绞碎了
 death.attack.damage.gtnl.infinity=%1$s 被抹杀了存在
