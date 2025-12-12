@@ -1,7 +1,6 @@
 package com.science.gtnl.loader;
 
 import java.util.Collection;
-import java.util.Map;
 
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
@@ -133,10 +132,7 @@ import cpw.mods.fml.common.Optional;
 import cpw.mods.fml.common.registry.VillagerRegistry;
 import goodgenerator.util.CrackRecipeAdder;
 import gregtech.api.enums.ItemList;
-import gregtech.api.enums.Materials;
-import gregtech.api.enums.MaterialsUEVplus;
 import gregtech.api.enums.Mods;
-import gregtech.api.enums.OrePrefixes;
 import gregtech.api.recipe.RecipeMap;
 import gregtech.api.recipe.RecipeMaps;
 import gregtech.api.util.GTModHandler;
@@ -203,17 +199,16 @@ public class RecipeLoader {
             new AdvancedCircuitAssemblyLineRecipes(), new FallingTowerRecipes(), new AssemblingLineRecipes(),
             new GasCollectorRecipes(), new EternalGregTechWorkshopUpgradeRecipes(), new FluidCannerRecipes(),
             new VacuumFreezerRecipes(), new MeteorsRecipes(), new CheatOreProcessingRecipes(),
-            new ShapedArcaneCraftingRecipes(), new InfusionCraftingRecipes(), new ShimmerRecipes(),
-            new SteamManufacturerRecipes(), new SteamCarpenterRecipe(), new LavaMakerRecipes(),
-            new SteamWoodcutterRecipes(), new SteamGateAssemblerRecipes(), new CactusWonderFakeRecipes(),
-            new InfernalCokeRecipes(), new SteamFusionReactorRecipes(), new SteamExtractinatorRecipes(),
-            new RockBreakerRecipes(), new PrimitiveBrickKilnRecipes(), new TargetChamberRecipes(),
-            new ElectrocellGeneratorRecipes(), new RocketAssemblerRecipes(), new FluidSolidifierRecipes(),
-            new BotaniaManaInfusionRecipes(), new FormingPressRecipes(), new HammerRecipes(), new CyclotronRecipes(),
-            new RuneAltarRecipes(), new IndustrialRockCrusherRecipes(), new PrecisionLaserEngraver(),
-            new NanitesIntegratedProcessingRecipes(), new NanoForgeRecipes(), new SteamWeatherModuleRecipes(),
-            new ElectricNeutronActivatorRecipes(), new ReactorProcessingUnitRecipes(),
-            new NuclearSaltProcessingPlantRecipes() };
+            new ShapedArcaneCraftingRecipes(), new InfusionCraftingRecipes(), new SteamManufacturerRecipes(),
+            new SteamCarpenterRecipe(), new LavaMakerRecipes(), new SteamWoodcutterRecipes(),
+            new SteamGateAssemblerRecipes(), new CactusWonderFakeRecipes(), new InfernalCokeRecipes(),
+            new SteamFusionReactorRecipes(), new SteamExtractinatorRecipes(), new RockBreakerRecipes(),
+            new PrimitiveBrickKilnRecipes(), new TargetChamberRecipes(), new ElectrocellGeneratorRecipes(),
+            new RocketAssemblerRecipes(), new FluidSolidifierRecipes(), new BotaniaManaInfusionRecipes(),
+            new FormingPressRecipes(), new HammerRecipes(), new CyclotronRecipes(), new RuneAltarRecipes(),
+            new IndustrialRockCrusherRecipes(), new PrecisionLaserEngraver(), new NanitesIntegratedProcessingRecipes(),
+            new NanoForgeRecipes(), new SteamWeatherModuleRecipes(), new ElectricNeutronActivatorRecipes(),
+            new ReactorProcessingUnitRecipes(), new NuclearSaltProcessingPlantRecipes() };
 
         for (IRecipePool recipePool : recipePools) {
             recipePool.loadRecipes();
@@ -226,6 +221,8 @@ public class RecipeLoader {
         RecipeUtil.generateRecipesBioLab(BartWorksRecipeMaps.bioLabRecipes, RecipePool.LargeBioLabRecipes, true, 1.1);
 
         TCResearches.register();
+
+        ShimmerRecipes.loadRecipes();
 
         loadPlasmaCentrifugeRecipes();
 
@@ -297,9 +294,9 @@ public class RecipeLoader {
             }
         };
         for (GTRecipe recipe : targetChamberRecipe) {
-            for (Map.Entry<ItemStack, Integer> entry : waferMultiplier.entrySet()) {
+            for (Object2IntMap.Entry<ItemStack> entry : waferMultiplier.object2IntEntrySet()) {
                 if (recipe.mInputs[1].isItemEqual(entry.getKey())) {
-                    int multiplier = entry.getValue();
+                    int multiplier = entry.getIntValue();
                     for (ItemStack itemStack : recipe.mOutputs) {
                         itemStack.stackSize *= multiplier;
                     }
@@ -344,47 +341,18 @@ public class RecipeLoader {
             .registerVillageTradeHandler(villagerId, (villager, recipeList, random) -> {
                 recipeList.add(
                     new MerchantRecipe(
-                        new ItemStack(Blocks.snow, 1),
-                        Stick.setDisguisedStack(
-                            GTOreDictUnificator.get(OrePrefixes.nanite, MaterialsUEVplus.MagMatter, 1))));
-                recipeList.add(
-                    new MerchantRecipe(
                         new ItemStack(Items.iron_ingot, 1),
                         GTModHandler.getModItem(Mods.Botania.ID, "bifrostPermPane", 1),
                         Stick.setDisguisedStack(
                             GTOreDictUnificator.get(GTModHandler.getModItem(Mods.Avaritia.ID, "Resource", 1, 6)))));
                 recipeList.add(
                     new MerchantRecipe(
-                        new ItemStack(Blocks.redstone_block, 1),
-                        Stick.setDisguisedStack(CustomItemList.Machine_DebugGenny.get(1))));
-                recipeList.add(
-                    new MerchantRecipe(
                         new ItemStack(Blocks.dispenser, 1),
                         Stick.setDisguisedStack(CustomItemList.Machine_Multi_EyeOfHarmony.get(1))));
                 recipeList.add(
                     new MerchantRecipe(
-                        new ItemStack(Blocks.furnace, 1),
-                        Stick.setDisguisedStack(CustomItemList.Machine_Multi_ForgeOfGods.get(1))));
-                recipeList.add(
-                    new MerchantRecipe(
                         new ItemStack(Items.wooden_sword, 1),
                         Stick.setDisguisedStack(ReAvaItemList.InfinitySword.get(1))));
-                recipeList.add(
-                    new MerchantRecipe(
-                        new ItemStack(Items.wooden_pickaxe, 1),
-                        Stick.setDisguisedStack(ReAvaItemList.InfinityPickaxe.get(1))));
-                recipeList.add(
-                    new MerchantRecipe(
-                        new ItemStack(Items.wooden_axe, 1),
-                        Stick.setDisguisedStack(ReAvaItemList.InfinityAxe.get(1))));
-                recipeList.add(
-                    new MerchantRecipe(
-                        new ItemStack(Items.wooden_shovel, 1),
-                        Stick.setDisguisedStack(ReAvaItemList.InfinityShovel.get(1))));
-                recipeList.add(
-                    new MerchantRecipe(
-                        new ItemStack(Items.wooden_hoe, 1),
-                        Stick.setDisguisedStack(ReAvaItemList.InfinityHoe.get(1))));
                 recipeList.add(
                     new MerchantRecipe(
                         new ItemStack(Items.leather_helmet, 1),

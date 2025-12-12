@@ -7,7 +7,7 @@ import javax.annotation.Nullable;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 
-import com.science.gtnl.api.IRecipePool;
+import com.github.bsideup.jabel.Desugar;
 import com.science.gtnl.utils.recipes.DisassemblerHelper;
 import com.science.gtnl.utils.recipes.ReversedRecipeRegistry;
 
@@ -16,12 +16,12 @@ import it.unimi.dsi.fastutil.objects.Object2ObjectOpenHashMap;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import it.unimi.dsi.fastutil.objects.ObjectList;
 
-public class ShimmerRecipes implements IRecipePool {
+public class ShimmerRecipes {
 
-    public static Object2ObjectOpenHashMap<Item, ObjectArrayList<ConversionEntry>> conversionMap = new Object2ObjectOpenHashMap<>();
+    public static Object2ObjectOpenHashMap<Item, ObjectList<ConversionEntry>> conversionMap = new Object2ObjectOpenHashMap<>();
 
-    @Override
-    public void loadRecipes() {
+    public static void loadRecipes() {
+        DisassemblerHelper.loadHardOverrideRecipes();
         DisassemblerHelper.loadAssemblerRecipesToDisassembler();
         ReversedRecipeRegistry.registerAllReversedRecipes();
     }
@@ -67,10 +67,8 @@ public class ShimmerRecipes implements IRecipePool {
         return false;
     }
 
-    public static class ConversionEntry {
-
-        final ItemStack input;
-        final ObjectArrayList<ItemStack> outputs;
+    @Desugar
+    public record ConversionEntry(ItemStack input, ObjectArrayList<ItemStack> outputs) {
 
         public ConversionEntry(ItemStack input, ObjectArrayList<ItemStack> outputs) {
             this.input = input.copy();
@@ -79,7 +77,7 @@ public class ShimmerRecipes implements IRecipePool {
                 .collect(ObjectArrayList::new, ObjectArrayList::add, ObjectArrayList::addAll);
         }
 
-        boolean matches(ItemStack stack) {
+        public boolean matches(ItemStack stack) {
             return stack != null && stack.stackSize > 0 && GTUtility.areStacksEqual(stack, input, true);
         }
 

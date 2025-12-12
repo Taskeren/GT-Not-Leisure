@@ -57,6 +57,7 @@ import appeng.api.storage.data.IAEItemStack;
 import appeng.api.storage.data.IItemList;
 import appeng.util.item.AEFluidStack;
 import appeng.util.item.AEItemStack;
+import gregtech.api.enums.GTValues;
 import gregtech.api.enums.Textures;
 import gregtech.api.enums.TierEU;
 import gregtech.api.interfaces.ITexture;
@@ -170,7 +171,7 @@ public class SingularityDataHub extends MultiMachineBase<SingularityDataHub>
     public @NotNull CheckRecipeResult checkProcessing() {
         mEfficiency = 10000;
         mEfficiencyIncrease = 10000;
-        lEUt = TierEU.RECIPE_MAX / 20;
+        lEUt = GTValues.VP[9] / 20L;
         mMaxProgresstime = 20;
 
         ArrayList<ItemStack> inputItems = getStoredInputs();

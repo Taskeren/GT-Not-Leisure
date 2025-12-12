@@ -414,12 +414,31 @@ public class DisassemblerHelper {
         return copy;
     }
 
-    public static Object2ObjectMap<GTItemStack, ObjectArrayList<ItemStack>> getOutputHardOverride() {
-        Object2ObjectMap<GTItemStack, ObjectArrayList<ItemStack>> map = new Object2ObjectArrayMap<>();
-        ObjectArrayList<ItemStack> list = new ObjectArrayList<>();
-        list.add(new ItemStack(Items.stick));
-        map.put(new GTItemStack(new ItemStack(Blocks.torch, 6)), list);
-        return map;
+    public static void loadHardOverrideRecipes() {
+        for (GTRecipe recipe : RecipePool.HardOverrideRecipes.getAllRecipes()) {
+            if (recipe == null || recipe.mOutputs == null) continue;
+
+            ItemStack input = recipe.mOutputs[0];
+
+            ObjectArrayList<ItemStack> outputs = new ObjectArrayList<>(recipe.mInputs);
+            if (recipe.mFluidInputs != null) {
+                for (FluidStack fluid : recipe.mFluidInputs) {
+                    outputs.add(ItemFluidPacket.newStack(fluid));
+                }
+            }
+
+            RecipeBuilder.builder()
+                .itemInputs(input)
+                .itemOutputs(outputs.toArray(new ItemStack[0]))
+                .duration(100)
+                .eut(0)
+                .fake()
+                .setNEIDesc("Generated from Assembler Recipe (Hard-overriden)")
+                .addTo(RecipePool.ShimmerRecipes);
+            ShimmerRecipes.registerConversion(input, outputs);
+        }
+        RecipePool.HardOverrideRecipes.getBackend()
+            .clearRecipes();
     }
 
     public static void loadAssemblerRecipesToDisassembler() {
@@ -427,8 +446,10 @@ public class DisassemblerHelper {
 
         for (GTRecipe recipe : RecipeMaps.assemblerRecipes.getAllRecipes()) {
             if (recipe.mOutputs == null || recipe.mInputs == null || !shouldDisassemble(recipe.mOutputs)) continue;
+            ItemStack input = recipe.mOutputs[0];
+            if (ShimmerRecipes.isInConversions(input)) continue;
 
-            GTItemStack key = new GTItemStack(recipe.mOutputs[0]);
+            GTItemStack key = new GTItemStack(input);
             assemblerRecipes.computeIfAbsent(key, k -> new ObjectArrayList<>())
                 .add(recipe);
         }
@@ -450,32 +471,6 @@ public class DisassemblerHelper {
 
                 GTRecipe reversedFirst = reversedRecipes.remove(0);
                 ItemStack revInput = reversedFirst.mInputs[0];
-
-                for (Object2ObjectMap.Entry<GTItemStack, ObjectArrayList<ItemStack>> hardOverride : getOutputHardOverride()
-                    .object2ObjectEntrySet()) {
-                    if (hardOverride.getKey()
-                        .isStackEqual(revInput)) {
-
-                        ObjectArrayList<ItemStack> outputs = new ObjectArrayList<>();
-                        if (reversedFirst.mFluidInputs != null) {
-                            for (FluidStack fluid : reversedFirst.mFluidInputs) {
-                                outputs.add(ItemFluidPacket.newStack(fluid));
-                            }
-                        }
-                        outputs.addAll(hardOverride.getValue());
-
-                        RecipeBuilder builder = RecipeBuilder.builder()
-                            .itemInputs(revInput)
-                            .itemOutputs(outputs.toArray(new ItemStack[0]))
-                            .duration(100)
-                            .eut(0)
-                            .fake()
-                            .setNEIDesc("Generated from Assembler Recipe (Hard-overriden)");
-                        applyDebugAssembler(builder, recipes, true);
-                        builder.addTo(RecipePool.ShimmerRecipes);
-                        ShimmerRecipes.registerConversion(revInput, outputs);
-                    }
-                }
 
                 ObjectArrayList<ItemStack> transformedOutputs = handleRecipeTransformation(
                     reversedFirst.mOutputs,

@@ -19,6 +19,7 @@ import com.dreammaster.item.NHItemList;
 import com.reavaritia.ReAvaItemList;
 import com.science.gtnl.api.IRecipePool;
 import com.science.gtnl.common.material.MaterialPool;
+import com.science.gtnl.common.material.RecipePool;
 import com.science.gtnl.config.MainConfig;
 import com.science.gtnl.loader.BlockLoader;
 import com.science.gtnl.utils.enums.GTNLItemList;
@@ -52,6 +53,7 @@ import gtnhlanth.common.register.LanthItemList;
 public class AssemblerRecipes implements IRecipePool {
 
     public RecipeMap<?> As = RecipeMaps.assemblerRecipes;
+    public RecipeMap<?> HOR = RecipePool.HardOverrideRecipes;
 
     @Override
     public void loadRecipes() {
@@ -3433,7 +3435,8 @@ public class AssemblerRecipes implements IRecipePool {
                 .fluidInputs(Materials.SolderingAlloy.getMolten(144))
                 .duration(200)
                 .eut(GTValues.VP[i + 1])
-                .addTo(As);
+                .addTo(As)
+                .addTo(HOR);
 
             RecipeBuilder.builder()
                 .itemInputs(
@@ -3489,7 +3492,8 @@ public class AssemblerRecipes implements IRecipePool {
                     .fluidInputs(Materials.SolderingAlloy.getMolten(144))
                     .duration(50 << i)
                     .eut(GTValues.VP[j + 5])
-                    .addTo(As);
+                    .addTo(As)
+                    .addTo(HOR);
 
                 RecipeBuilder.builder()
                     .itemInputs(
@@ -3505,7 +3509,8 @@ public class AssemblerRecipes implements IRecipePool {
                     .fluidInputs(Materials.SolderingAlloy.getMolten(144))
                     .duration(50 << i)
                     .eut(GTValues.VP[j + 5])
-                    .addTo(As);
+                    .addTo(As)
+                    .addTo(HOR);
             }
         }
     }

@@ -4,6 +4,7 @@ import java.util.Optional;
 
 import net.minecraft.item.ItemStack;
 
+import com.github.bsideup.jabel.Desugar;
 import com.science.gtnl.ScienceNotLeisure;
 
 import gregtech.api.util.GTRecipe;
@@ -41,20 +42,11 @@ public class ReversedRecipeRegistry {
         }
     }
 
-    public static class Shaped implements GTCraftingRecipe {
-
-        private final Object[] inputs;
-        private final ItemStack output;
-        private final Throwable adderStackTrace;
+    @Desugar
+    public record Shaped(Object[] inputs, ItemStack output, Throwable adderStackTrace) implements GTCraftingRecipe {
 
         public Shaped(Object[] inputs, ItemStack output) {
             this(inputs, output, new Exception());
-        }
-
-        public Shaped(Object[] inputs, ItemStack output, Throwable adderStackTrace) {
-            this.inputs = inputs;
-            this.output = output;
-            this.adderStackTrace = adderStackTrace;
         }
 
         @Override
@@ -78,20 +70,11 @@ public class ReversedRecipeRegistry {
         }
     }
 
-    public static class Shapeless implements GTCraftingRecipe {
-
-        private final Object[] inputs;
-        private final ItemStack output;
-        private final Throwable adderStackTrace;
+    @Desugar
+    public record Shapeless(Object[] inputs, ItemStack output, Throwable adderStackTrace) implements GTCraftingRecipe {
 
         public Shapeless(Object[] inputs, ItemStack output) {
             this(inputs, output, new Exception());
-        }
-
-        public Shapeless(Object[] inputs, ItemStack output, Throwable adderStackTrace) {
-            this.inputs = inputs;
-            this.output = output;
-            this.adderStackTrace = adderStackTrace;
         }
 
         @Override
