@@ -3327,16 +3327,16 @@ public class AssemblerRecipes implements IRecipePool {
 
         RecipeBuilder.builder()
             .itemInputs(
-                ItemList.Hatch_Energy_LV.get(1),
-                ItemList.Cover_Wireless_Energy_LV.get(1),
-                new ItemStack(Items.ender_pearl, 16),
-                GTOreDictUnificator.get(OrePrefixes.circuit, Materials.LV, 4),
-                GTOreDictUnificator.get(OrePrefixes.spring, Materials.Iron, 4),
-                GTOreDictUnificator.get(OrePrefixes.foil, Materials.Steel, 16))
+                ItemList.Hatch_Energy_LuV.get(6),
+                ItemList.Cover_Wireless_Energy_ZPM.get(6),
+                ItemList.Casing_Coil_Superconductor.get(12L),
+                GTOreDictUnificator.get(OrePrefixes.circuit, Materials.ZPM, 6),
+                GTOreDictUnificator.get(OrePrefixes.spring, Materials.Naquadah,16),
+                GTOreDictUnificator.get(OrePrefixes.foil, Materials.NaquadahAlloy, 32))
             .itemOutputs(GTNLItemList.HumongousWirelessDynamoHatch.get(1))
-            .fluidInputs(Materials.SolderingAlloy.getMolten(144))
-            .duration(400)
-            .eut(TierEU.RECIPE_LV)
+            .fluidInputs(Materials.SolderingAlloy.getMolten(1440))
+            .duration(800)
+            .eut(TierEU.RECIPE_ZPM)
             .addTo(As);
 
         loadLamp();
@@ -3376,21 +3376,21 @@ public class AssemblerRecipes implements IRecipePool {
     }
 
     public void loadWirelessHatch() {
-        ItemStack[] COIL = { ItemList.LV_Coil.get(1), ItemList.MV_Coil.get(1), ItemList.HV_Coil.get(1),
-            ItemList.EV_Coil.get(1), ItemList.IV_Coil.get(1), ItemList.LuV_Coil.get(1), ItemList.ZPM_Coil.get(1),
-            ItemList.UV_Coil.get(1), ItemList.UHV_Coil.get(1), ItemList.UHV_Coil.get(2), ItemList.UHV_Coil.get(4),
-            ItemList.UHV_Coil.get(8), ItemList.UHV_Coil.get(16), ItemList.UHV_Coil.get(32) };
+        ItemStack[] COIL = { ItemList.LV_Coil.get(1), ItemList.MV_Coil.get(2), ItemList.HV_Coil.get(3),
+            ItemList.EV_Coil.get(3), ItemList.IV_Coil.get(4), ItemList.LuV_Coil.get(8), ItemList.ZPM_Coil.get(8),
+            ItemList.UV_Coil.get(8), ItemList.UHV_Coil.get(8), ItemList.UHV_Coil.get(8), ItemList.UHV_Coil.get(12),
+            ItemList.UHV_Coil.get(12), ItemList.UHV_Coil.get(16), ItemList.UHV_Coil.get(32) };
 
-        ItemStack[] COIL_4A = { ItemList.LV_Coil.get(2), ItemList.MV_Coil.get(2), ItemList.HV_Coil.get(2),
-            ItemList.EV_Coil.get(2), ItemList.IV_Coil.get(2), ItemList.LuV_Coil.get(2), ItemList.ZPM_Coil.get(1),
-            ItemList.UV_Coil.get(2), ItemList.UHV_Coil.get(2), ItemList.UHV_Coil.get(4), ItemList.UHV_Coil.get(8),
-            ItemList.UHV_Coil.get(16), ItemList.UHV_Coil.get(32), ItemList.UHV_Coil.get(64) };
+        ItemStack[] COIL_4A = { ItemList.LV_Coil.get(2), ItemList.MV_Coil.get(3), ItemList.HV_Coil.get(3),
+            ItemList.EV_Coil.get(3), ItemList.IV_Coil.get(4), ItemList.LuV_Coil.get(8), ItemList.ZPM_Coil.get(8),
+            ItemList.UV_Coil.get(8), ItemList.UHV_Coil.get(8), ItemList.UHV_Coil.get(8), ItemList.UHV_Coil.get(12),
+            ItemList.UHV_Coil.get(12), ItemList.UHV_Coil.get(32), ItemList.UHV_Coil.get(64) };
 
-        ItemStack[] CHIP = { GTOreDictUnificator.get(OrePrefixes.spring, Materials.Tin, 1),
-            ItemList.Circuit_Chip_ULPIC.get(1), ItemList.Circuit_Chip_LPIC.get(1), ItemList.Circuit_Chip_PIC.get(1),
-            ItemList.Circuit_Chip_HPIC.get(1), ItemList.Circuit_Chip_UHPIC.get(1), ItemList.Circuit_Chip_NPIC.get(1),
-            ItemList.Circuit_Chip_PPIC.get(1), ItemList.Circuit_Chip_QPIC.get(1), ItemList.Circuit_Chip_QPIC.get(2),
-            ItemList.Circuit_Chip_QPIC.get(4), ItemList.Circuit_Chip_QPIC.get(8), ItemList.Circuit_Chip_QPIC.get(16),
+        ItemStack[] CHIP = { GTOreDictUnificator.get(OrePrefixes.spring, Materials.Tin, 16),
+            ItemList.Circuit_Chip_ULPIC.get(2), ItemList.Circuit_Chip_LPIC.get(2), ItemList.Circuit_Chip_PIC.get(3),
+            ItemList.Circuit_Chip_HPIC.get(3), ItemList.Circuit_Chip_UHPIC.get(4), ItemList.Circuit_Chip_NPIC.get(4),
+            ItemList.Circuit_Chip_PPIC.get(6), ItemList.Circuit_Chip_QPIC.get(6), ItemList.Circuit_Chip_QPIC.get(8),
+            ItemList.Circuit_Chip_QPIC.get(8), ItemList.Circuit_Chip_QPIC.get(12), ItemList.Circuit_Chip_QPIC.get(16),
             ItemList.Circuit_Chip_QPIC.get(32) };
 
         ItemStack[] INDUCTOR = { ItemList.Circuit_Parts_Coil.get(4), ItemList.Circuit_Parts_Coil.get(8),
@@ -3424,13 +3424,13 @@ public class AssemblerRecipes implements IRecipePool {
             RecipeBuilder.builder()
                 .itemInputs(
                     ItemUtils.SENSOR[i].get(1),
-                    GTOreDictUnificator.get(OrePrefixes.plate, Materials.EnderPearl, 4),
-                    GTOreDictUnificator.get(OrePrefixes.circuit, ItemUtils.TIER[i], 1),
+                    GTOreDictUnificator.get(OrePrefixes.plate, Materials.EnderPearl, 12),
+                    GTOreDictUnificator.get(OrePrefixes.circuit, ItemUtils.TIER[i], 4),
                     COIL[i],
                     CHIP[i],
-                    GTOreDictUnificator.get(cable01, ItemUtils.CABLE[i], 2),
-                    GTOreDictUnificator.get(cable01, Materials.RedAlloy, 2),
-                    GTOreDictUnificator.get(OrePrefixes.plate, ItemUtils.TIER_MATERIAL[i], 2))
+                    GTOreDictUnificator.get(cable01, ItemUtils.CABLE[i], 8),
+                    GTOreDictUnificator.get(cable01, Materials.RedAlloy, 32),
+                    GTOreDictUnificator.get(OrePrefixes.plate, ItemUtils.TIER_MATERIAL[i], 12))
                 .itemOutputs(GTNLItemList.WIRELESS_ENERGY_COVER[i].get(1))
                 .fluidInputs(Materials.SolderingAlloy.getMolten(144))
                 .duration(200)
