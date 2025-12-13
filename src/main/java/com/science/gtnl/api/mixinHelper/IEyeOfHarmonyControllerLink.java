@@ -34,4 +34,10 @@ public interface IEyeOfHarmonyControllerLink {
     long gtnl$getHeliumStored();
 
     long gtnl$getStellarPlasmaStored();
+
+    void gtnl$setHydrogenStored(long amount);
+
+    void gtnl$setHeliumStored(long amount);
+
+    void gtnl$setStellarPlasmaStored(long amount);
 }

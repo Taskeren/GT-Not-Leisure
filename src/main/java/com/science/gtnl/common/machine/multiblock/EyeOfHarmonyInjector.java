@@ -566,11 +566,7 @@ public class EyeOfHarmonyInjector extends TTMultiblockBase
 
             MTEEyeOfHarmony core = unit.mMetaTileEntity;
             if (core == null) continue;
-
-            core.onMachineBlockUpdate();
-
-            NBTTagCompound nbt = new NBTTagCompound();
-            core.saveNBTData(nbt);
+            IEyeOfHarmonyControllerLink link = (IEyeOfHarmonyControllerLink) core;
 
             long heliumMaxAmount = unit.maxHeliumAmount != -1 ? unit.maxHeliumAmount
                 : (long) Math.min(maxFluidAmount, maxHeliumAmountSetting.get());
@@ -579,11 +575,15 @@ public class EyeOfHarmonyInjector extends TTMultiblockBase
             long rawstarmatterMaxAmount = unit.maxRawStarMatterSAmount != -1 ? unit.maxRawStarMatterSAmount
                 : (long) Math.min(maxFluidAmount, maxRawStarMatterAmountSetting.get());
 
-            long helium = nbt.getLong("stored.fluid.helium");
-            long hydrogen = nbt.getLong("stored.fluid.hydrogen");
-            long rawstarmatter = nbt.getLong("stored.fluid.rawstarmatter");
+            long storedHelium = link.gtnl$getHeliumStored();
+            long storedHydrogen = link.gtnl$getHydrogenStored();
+            long storedRawstarmatter = link.gtnl$getStellarPlasmaStored();
+            long workingHelium = storedHelium;
+            long workingHydrogen = storedHydrogen;
+            long workingRawstarmatter = storedRawstarmatter;
 
-            if (helium >= heliumMaxAmount && hydrogen >= hydrogenMaxAmount && rawstarmatter >= rawstarmatterMaxAmount) {
+            if (storedHelium >= heliumMaxAmount && storedHydrogen >= hydrogenMaxAmount
+                && storedRawstarmatter >= rawstarmatterMaxAmount) {
                 continue;
             }
 
@@ -595,21 +595,21 @@ public class EyeOfHarmonyInjector extends TTMultiblockBase
                 long amount = fluidNBT.getLong("Amount");
 
                 switch (fluidName) {
-                    case "helium" -> helium = handleFluidInput(
+                    case "helium" -> workingHelium = handleFluidInput(
                         Materials.Helium.mGas,
-                        helium,
+                        workingHelium,
                         amount,
                         heliumMaxAmount,
                         outputFluidStack);
-                    case "hydrogen" -> hydrogen = handleFluidInput(
+                    case "hydrogen" -> workingHydrogen = handleFluidInput(
                         Materials.Hydrogen.mGas,
-                        hydrogen,
+                        workingHydrogen,
                         amount,
                         hydrogenMaxAmount,
                         outputFluidStack);
-                    case "rawstarmatter" -> rawstarmatter = handleFluidInput(
+                    case "rawstarmatter" -> workingRawstarmatter = handleFluidInput(
                         MaterialsUEVplus.RawStarMatter.mFluid,
-                        rawstarmatter,
+                        workingRawstarmatter,
                         amount,
                         rawstarmatterMaxAmount,
                         outputFluidStack);
@@ -617,35 +617,37 @@ public class EyeOfHarmonyInjector extends TTMultiblockBase
                 stack.stackSize--;
             }
 
-            helium = tryConsumeFluidLong(inputFluidStack, Materials.Helium.mGas, helium, heliumMaxAmount);
-            hydrogen = tryConsumeFluidLong(inputFluidStack, Materials.Hydrogen.mGas, hydrogen, hydrogenMaxAmount);
-            rawstarmatter = tryConsumeFluidLong(
+            workingHelium = tryConsumeFluidLong(inputFluidStack, Materials.Helium.mGas, workingHelium, heliumMaxAmount);
+            workingHydrogen = tryConsumeFluidLong(
+                inputFluidStack,
+                Materials.Hydrogen.mGas,
+                workingHydrogen,
+                hydrogenMaxAmount);
+            workingRawstarmatter = tryConsumeFluidLong(
                 inputFluidStack,
                 MaterialsUEVplus.RawStarMatter.mFluid,
-                rawstarmatter,
+                workingRawstarmatter,
                 rawstarmatterMaxAmount);
 
             updateSlots();
 
-            unit.heliumAmount = helium;
-            unit.hydrogenAmount = hydrogen;
-            unit.rawStarMatterSAmount = rawstarmatter;
+            unit.heliumAmount = workingHelium;
+            unit.hydrogenAmount = workingHydrogen;
+            unit.rawStarMatterSAmount = workingRawstarmatter;
 
-            if (!outputFluidStack.isEmpty() || helium != nbt.getLong("stored.fluid.helium")
-                || hydrogen != nbt.getLong("stored.fluid.hydrogen")
-                || rawstarmatter != nbt.getLong("stored.fluid.rawstarmatter")) {
+            if (!outputFluidStack.isEmpty() || storedHelium != workingHelium
+                || storedHydrogen != workingHydrogen
+                || storedRawstarmatter != workingRawstarmatter) {
 
-                nbt.setLong("stored.fluid.helium", helium);
-                nbt.setLong("stored.fluid.hydrogen", hydrogen);
-                nbt.setLong("stored.fluid.rawstarmatter", rawstarmatter);
+                link.gtnl$setHeliumStored(workingHelium);
+                link.gtnl$setHydrogenStored(workingHydrogen);
+                link.gtnl$setStellarPlasmaStored(workingRawstarmatter);
 
                 if (!isLast) {
                     mergeFluidStacks(inputFluidStack, outputFluidStack);
                     outputFluidStack.clear();
                 }
 
-                core.loadNBTData(nbt);
-                core.onMachineBlockUpdate();
                 hasUpdate = true;
             }
         }

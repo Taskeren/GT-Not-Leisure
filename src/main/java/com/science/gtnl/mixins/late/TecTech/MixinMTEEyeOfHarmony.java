@@ -28,6 +28,8 @@ import com.science.gtnl.api.mixinHelper.IEyeOfHarmonyControllerLink;
 import com.science.gtnl.common.machine.multiblock.EyeOfHarmonyInjector;
 
 import gregtech.api.enums.ItemList;
+import gregtech.api.enums.Materials;
+import gregtech.api.enums.MaterialsUEVplus;
 import gregtech.api.interfaces.tileentity.IGregTechTileEntity;
 import lombok.Getter;
 import lombok.Setter;
@@ -85,6 +87,21 @@ public abstract class MixinMTEEyeOfHarmony extends TTMultiblockBase implements I
     @Override
     public long gtnl$getStellarPlasmaStored() {
         return getStellarPlasmaStored();
+    }
+
+    @Override
+    public void gtnl$setHydrogenStored(long amount) {
+        validFluidMap.put(Materials.Hydrogen.mGas, amount);
+    }
+
+    @Override
+    public void gtnl$setHeliumStored(long amount) {
+        validFluidMap.put(Materials.Helium.mGas, amount);
+    }
+
+    @Override
+    public void gtnl$setStellarPlasmaStored(long amount) {
+        validFluidMap.put(MaterialsUEVplus.RawStarMatter.mFluid, amount);
     }
 
     @Override
