@@ -55,6 +55,7 @@ public class DisassemblerHelper {
         inputBlacklist.add(new GTItemStack(Materials.Graphene.getDust(1)));
         inputBlacklist.add(new GTItemStack(ItemList.Circuit_Parts_Vacuum_Tube.get(1)));
         inputBlacklist.add(new GTItemStack(ItemList.Schematic.get(1)));
+        inputBlacklist.add(new GTItemStack(ItemList.ZPM.get(1)));
         inputBlacklist.add(new GTItemStack(CustomItemList.hatch_CreativeMaintenance.get(1)));
 
         if (Mods.Railcraft.isModLoaded()) {
