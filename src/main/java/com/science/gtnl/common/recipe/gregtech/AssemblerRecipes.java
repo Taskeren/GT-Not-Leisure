@@ -3331,7 +3331,7 @@ public class AssemblerRecipes implements IRecipePool {
                 ItemList.Cover_Wireless_Energy_ZPM.get(6),
                 ItemList.Casing_Coil_Superconductor.get(12L),
                 GTOreDictUnificator.get(OrePrefixes.circuit, Materials.ZPM, 6),
-                GTOreDictUnificator.get(OrePrefixes.spring, Materials.Naquadah,16),
+                GTOreDictUnificator.get(OrePrefixes.spring, Materials.Naquadah, 16),
                 GTOreDictUnificator.get(OrePrefixes.foil, Materials.NaquadahAlloy, 32))
             .itemOutputs(GTNLItemList.HumongousWirelessDynamoHatch.get(1))
             .fluidInputs(Materials.SolderingAlloy.getMolten(1440))

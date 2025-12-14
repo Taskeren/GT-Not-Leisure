@@ -66,7 +66,7 @@ public class ChemicalDehydratorRecipes implements IRecipePool {
             .fluidInputs(MaterialPool.SmGdOxidesSolution.getFluidOrGas(4000))
             .itemOutputs(
                 MaterialPool.ScandiumOxide.get(OrePrefixes.dust, 5),
-                WerkstoffMaterialPool.SamariumOxalate.get(OrePrefixes.dust, 5),
+                WerkstoffMaterialPool.SamariumOxide.get(OrePrefixes.dust, 5),
                 WerkstoffMaterialPool.EuropiumIIIOxide.get(OrePrefixes.dust, 5),
                 MaterialPool.GadoliniumOxide.get(OrePrefixes.dust, 5))
             .outputChances(5000, 5000, 5000, 5000)

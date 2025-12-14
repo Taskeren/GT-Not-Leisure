@@ -102,7 +102,6 @@ public class MixerRecipes implements IRecipePool {
             .fluidOutputs(MaterialPool.NeutralisedRedMud.getFluidOrGas(2000))
             .duration(100)
             .eut(TierEU.RECIPE_MV)
-            .addTo(MCR)
             .addTo(MNCR);
 
         RecipeBuilder.builder()
@@ -206,7 +205,6 @@ public class MixerRecipes implements IRecipePool {
             .fluidOutputs(Materials.PrismarineSolution.getFluid(8000))
             .duration(20 * SECONDS)
             .eut(TierEU.RECIPE_IV)
-            .addTo(MCR)
             .addTo(MNCR);
 
         // 海晶晶体 -> 海晶酸
@@ -217,7 +215,6 @@ public class MixerRecipes implements IRecipePool {
             .duration(20 * SECONDS)
             .eut(TierEU.RECIPE_IV)
             .metadata(COIL_HEAT, 7200)
-            .addTo(MCR)
             .addTo(MNCR);
 
         // 海晶石溶液 循环配方
@@ -232,7 +229,6 @@ public class MixerRecipes implements IRecipePool {
             .fluidOutputs(Materials.PrismarineSolution.getFluid(8000))
             .duration(20 * SECONDS)
             .eut(TierEU.RECIPE_IV)
-            .addTo(MCR)
             .addTo(MNCR);
 
         RecipeBuilder.builder()
