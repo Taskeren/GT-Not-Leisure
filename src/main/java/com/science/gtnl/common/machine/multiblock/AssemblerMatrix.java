@@ -945,23 +945,21 @@ public class AssemblerMatrix extends MultiMachineBase<AssemblerMatrix>
                     if (!(input.getItem() instanceof ICraftingPatternItem i)) continue;
                     int slot = inventory.getFirstEmptySlot();
                     if (slot == -1) continue;
-                    ItemStack pattern = input.copy();
-                    pattern.stackSize = 1;
-                    inventory.setInventorySlotContents(slot, pattern);
                     var p = i.getPatternForItem(
                         input,
                         this.getBaseMetaTileEntity()
                             .getWorld());
                     if (!(p.isCraftable() || p instanceof DireCraftingPatternDetails)) continue;
+                    ItemStack pattern = input.copy();
+                    pattern.stackSize = 1;
+                    inventory.setInventorySlotContents(slot, pattern);
                     patterns.put(pattern, p);
                     possibleOutputs.add(p.getCondensedOutputs()[0]);
-
                     input.stackSize--;
                     updated = true;
                     if (inventory.size() >= mMaxSlots) break;
                 }
                 if (updated) {
-                    updateSlots();
                     try {
                         this.getProxy()
                             .getGrid()
