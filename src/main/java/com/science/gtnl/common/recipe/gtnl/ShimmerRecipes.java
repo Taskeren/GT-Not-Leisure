@@ -49,7 +49,7 @@ public class ShimmerRecipes {
         if (entries == null) return null;
 
         for (ConversionEntry entry : entries) {
-            if (entry.matches(input)) {
+            if (entry.matches(input, false)) {
                 return entry.getScaledOutputs(input.stackSize);
             }
         }
@@ -78,7 +78,11 @@ public class ShimmerRecipes {
         }
 
         public boolean matches(ItemStack stack) {
-            return stack != null && stack.stackSize > 0 && GTUtility.areStacksEqual(stack, input, true);
+            return matches(stack, true);
+        }
+
+        public boolean matches(ItemStack stack, boolean ignoreNBT) {
+            return stack != null && stack.stackSize > 0 && GTUtility.areStacksEqual(stack, input, ignoreNBT);
         }
 
         public ObjectArrayList<ItemStack> getScaledOutputs(int scale) {
