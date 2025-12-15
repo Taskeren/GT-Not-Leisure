@@ -163,7 +163,7 @@ public class AssemblerMatrix extends MultiMachineBase<AssemblerMatrix>
     private AENetworkProxy gridProxy;
     private DualityInterface di;
     private final MachineSource source = new MachineSource(this);
-    private final Map<ItemStack, ICraftingPatternDetails> patterns = new Reference2ObjectOpenHashMap<>();
+    private final Map<ItemStack, DireCraftingPatternDetails> patterns = new Reference2ObjectOpenHashMap<>();
     @Getter
     private final Set<IAEItemStack> possibleOutputs = new ObjectOpenHashSet<>();
     @Getter
@@ -183,6 +183,19 @@ public class AssemblerMatrix extends MultiMachineBase<AssemblerMatrix>
 
     public AssemblerMatrix(String aName) {
         super(aName);
+    }
+
+    public void setPatternMultiply(int patternMultiply) {
+        this.patternMultiply = patternMultiply;
+        if (Platform.isServer()) {
+            for (DireCraftingPatternDetails pattern : patterns.values()) {
+                pattern.setMultiply(this.patternMultiply);
+            }
+        }
+    }
+
+    public void setPatternMultiply(double patternMultiply) {
+        setPatternMultiply((int) patternMultiply);
     }
 
     @Override
@@ -282,13 +295,17 @@ public class AssemblerMatrix extends MultiMachineBase<AssemblerMatrix>
         }
         if (newStack != null) {
             if (newStack.getItem() instanceof ICraftingPatternItem ic) {
-                var p = ic.getPatternForItem(
+                var pattern = ic.getPatternForItem(
                     newStack,
                     this.getBaseMetaTileEntity()
                         .getWorld());
-                if (p.isCraftable() || p instanceof DireCraftingPatternDetails) {
-                    patterns.put(newStack, p);
-                    possibleOutputs.add(p.getCondensedOutputs()[0]);
+                if (pattern.isCraftable()) {
+                    pattern = new DireCraftingPatternDetails(pattern);
+                }
+                if (pattern instanceof DireCraftingPatternDetails d) {
+                    d.setMultiply(patternMultiply);
+                    patterns.put(newStack, d);
+                    possibleOutputs.add(d.getCondensedOutputs()[0]);
                     work = true;
                 }
             }
@@ -323,7 +340,7 @@ public class AssemblerMatrix extends MultiMachineBase<AssemblerMatrix>
                 if (c != null) {
                     inputs.add(
                         AEItemStack.create(c)
-                            .setStackSize(p));
+                            .setStackSize(p * stack.stackSize));
                 }
                 stack.stackSize = 1;
             }
@@ -428,7 +445,7 @@ public class AssemblerMatrix extends MultiMachineBase<AssemblerMatrix>
             new TextWidget(EnumChatFormatting.UNDERLINE + translateToLocal("Info_AssemblerMatrix_01")).setPos(0, 2)
                 .setSize(100, 18));
 
-        builder.widget(new FakeSyncWidget.IntegerSyncer(() -> patternMultiply, val -> patternMultiply = val));
+        builder.widget(new FakeSyncWidget.IntegerSyncer(() -> patternMultiply, this::setPatternMultiply));
 
         builder.widget(
             TextWidget.localised("Info_AssemblerMatrix_02")
@@ -436,7 +453,7 @@ public class AssemblerMatrix extends MultiMachineBase<AssemblerMatrix>
                 .setSize(100, 18));
 
         builder.widget(
-            new NumericWidget().setSetter(val -> patternMultiply = (int) val)
+            new NumericWidget().setSetter(this::setPatternMultiply)
                 .setGetter(() -> patternMultiply)
                 .setDefaultValue(powerPanelMaxParallel)
                 .setMinValue(1)
@@ -880,15 +897,19 @@ public class AssemblerMatrix extends MultiMachineBase<AssemblerMatrix>
         patterns.clear();
         possibleOutputs.clear();
 
-        for (var newStack : this.inventory.getAllItemsCopy()) {
+        for (var newStack : this.inventory) {
             if (newStack.getItem() instanceof ICraftingPatternItem ic) {
-                var p = ic.getPatternForItem(
+                var pattern = ic.getPatternForItem(
                     newStack,
-                    AssemblerMatrix.this.getBaseMetaTileEntity()
+                    this.getBaseMetaTileEntity()
                         .getWorld());
-                if (p.isCraftable() || p instanceof DireCraftingPatternDetails) {
-                    patterns.put(newStack, p);
-                    possibleOutputs.add(p.getCondensedOutputs()[0]);
+                if (pattern.isCraftable()) {
+                    pattern = new DireCraftingPatternDetails(pattern);
+                }
+                if (pattern instanceof DireCraftingPatternDetails d) {
+                    d.setMultiply(patternMultiply);
+                    patterns.put(newStack, d);
+                    possibleOutputs.add(d.getCondensedOutputs()[0]);
                 }
             }
         }
@@ -897,8 +918,8 @@ public class AssemblerMatrix extends MultiMachineBase<AssemblerMatrix>
                 .getGrid()
                 .postEvent(
                     new MENetworkCraftingPatternChange(
-                        AssemblerMatrix.this,
-                        AssemblerMatrix.this.getProxy()
+                        this,
+                        this.getProxy()
                             .getNode()));
         } catch (GridAccessException ignored) {
 
@@ -1032,12 +1053,17 @@ public class AssemblerMatrix extends MultiMachineBase<AssemblerMatrix>
                         input,
                         this.getBaseMetaTileEntity()
                             .getWorld());
-                    if (!(p.isCraftable() || p instanceof DireCraftingPatternDetails)) continue;
+
+                    if (p.isCraftable()) {
+                        p = new DireCraftingPatternDetails(p);
+                    }
+                    if (!(p instanceof DireCraftingPatternDetails d)) continue;
                     ItemStack pattern = input.copy();
                     pattern.stackSize = 1;
                     inventory.setInventorySlotContents(slot, pattern);
-                    patterns.put(pattern, p);
-                    possibleOutputs.add(p.getCondensedOutputs()[0]);
+                    d.setMultiply(patternMultiply);
+                    patterns.put(pattern, d);
+                    possibleOutputs.add(d.getCondensedOutputs()[0]);
                     input.stackSize--;
                     updated = true;
                     if (inventory.size() >= mMaxSlots) break;

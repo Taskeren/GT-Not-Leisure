@@ -43,6 +43,32 @@ public class DireCraftingPatternDetails implements ICraftingPatternDetails {
         }
     }
 
+    public DireCraftingPatternDetails(ICraftingPatternDetails is) {
+        pattern = is.getPattern()
+            .copy();
+        inputs = is.getCondensedInputs()
+            .clone();
+        condensedInputs = inputs;
+        output = is.getCondensedOutputs()
+            .clone();
+
+        for (var i = 0; i < inputs.length; i++) {
+            inputs[i] = inputs[i].copy();
+        }
+        for (var i = 0; i < output.length; i++) {
+            output[i] = output[i].copy();
+        }
+    }
+
+    public void setMultiply(int multiply) {
+        for (var input : condensedInputs) {
+            input.setStackSize(multiply);
+        }
+        for (var stack : output) {
+            stack.setStackSize(multiply);
+        }
+    }
+
     private static AEItemStack fromTagCreateAEItem(final NBTTagCompound i) {
         if (ContainerDirePatternEncoder.empty.equals(i)) return null;
         return AEItemStack.create(Platform.loadItemStackFromNBT(i));
