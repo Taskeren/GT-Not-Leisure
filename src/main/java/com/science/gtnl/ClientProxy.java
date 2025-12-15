@@ -165,12 +165,14 @@ public class ClientProxy extends CommonProxy {
     public void preInit(FMLPreInitializationEvent event) {
         super.preInit(event);
         MinecraftForge.EVENT_BUS.register(new SubscribeEventClientUtils());
-        MinecraftForge.EVENT_BUS.register(GTNLInputHandler.INSTANCE);
         FMLCommonHandler.instance()
             .bus()
             .register(new SubscribeEventClientUtils());
+        MinecraftForge.EVENT_BUS.register(GTNLInputHandler.INSTANCE);
+        FMLCommonHandler.instance()
+            .bus()
+            .register(GTNLInputHandler.INSTANCE);
         GuiContainerManager.addTooltipHandler(new GTNLTooltipManager());
-
     }
 
     @Override

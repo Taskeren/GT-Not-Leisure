@@ -562,7 +562,7 @@ public class GTNL_ProcessingLogic extends ProcessingLogic {
      * <p>
      * Override {@link #validateRecipe} to have custom check.
      * <p>
-     * Override this method if it doesn't work with normal recipemaps.
+     * Override this method if it doesn't startAEWork with normal recipemaps.
      */
     @Nonnull
     @Override
