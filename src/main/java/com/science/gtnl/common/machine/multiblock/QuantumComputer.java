@@ -922,6 +922,10 @@ public class QuantumComputer extends MTETooltipMultiBlockBase
         builder.widget(
             new DrawableWidget().setDrawable(ItemUtils.PICTURE_CIRCULATION)
                 .setSize(18, 18)
+                .setPos(172, 49));
+        builder.widget(
+            new DrawableWidget().setDrawable(ItemUtils.PICTURE_GTNL_LOGO)
+                .setSize(18, 18)
                 .setPos(172, 67));
     }
 
