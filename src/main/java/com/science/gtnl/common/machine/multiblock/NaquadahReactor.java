@@ -2,6 +2,7 @@ package com.science.gtnl.common.machine.multiblock;
 
 import static com.gtnewhorizon.structurelib.structure.StructureUtility.*;
 import static com.science.gtnl.ScienceNotLeisure.RESOURCE_ROOT_ID;
+import static com.science.gtnl.common.machine.multiMachineBase.MultiMachineBase.CustomHatchElement.*;
 import static gregtech.api.GregTechAPI.*;
 import static gregtech.api.enums.HatchElement.*;
 import static gregtech.api.enums.Textures.BlockIcons.NAQUADAH_REACTOR_SOLID_FRONT;
@@ -19,7 +20,6 @@ import javax.annotation.Nonnull;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
-import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
@@ -37,31 +37,24 @@ import com.gtnewhorizon.structurelib.alignment.constructable.ISurvivalConstructa
 import com.gtnewhorizon.structurelib.structure.IStructureDefinition;
 import com.gtnewhorizon.structurelib.structure.ISurvivalBuildEnvironment;
 import com.gtnewhorizon.structurelib.structure.StructureDefinition;
-import com.gtnewhorizons.modularui.api.screen.ModularWindow;
-import com.gtnewhorizons.modularui.common.widget.DrawableWidget;
-import com.science.gtnl.api.IConfigurationMaintenance;
+import com.science.gtnl.common.machine.multiMachineBase.MultiMachineBase;
 import com.science.gtnl.common.material.RecipePool;
 import com.science.gtnl.common.render.tile.AdvancedHyperNaquadahReactorRenderer;
 import com.science.gtnl.loader.BlockLoader;
 import com.science.gtnl.utils.StructureUtils;
-import com.science.gtnl.utils.item.ItemUtils;
 import com.science.gtnl.utils.recipes.GTNL_OverclockCalculator;
 import com.science.gtnl.utils.recipes.GTNL_ProcessingLogic;
 import com.science.gtnl.utils.recipes.metadata.NaquadahReactorMetadata;
 
 import goodgenerator.items.GGMaterial;
-import gregtech.api.GregTechAPI;
-import gregtech.api.enums.GTValues;
 import gregtech.api.enums.Materials;
 import gregtech.api.enums.MaterialsUEVplus;
-import gregtech.api.enums.SoundResource;
 import gregtech.api.enums.Textures;
 import gregtech.api.interfaces.ITexture;
 import gregtech.api.interfaces.metatileentity.IMetaTileEntity;
 import gregtech.api.interfaces.tileentity.IGregTechTileEntity;
 import gregtech.api.logic.ProcessingLogic;
 import gregtech.api.metatileentity.GregTechTileClientEvents;
-import gregtech.api.metatileentity.implementations.MTEHatchMaintenance;
 import gregtech.api.recipe.RecipeMap;
 import gregtech.api.recipe.check.CheckRecipeResult;
 import gregtech.api.recipe.check.CheckRecipeResultRegistry;
@@ -73,22 +66,18 @@ import gregtech.api.util.shutdown.ShutDownReasonRegistry;
 import gregtech.common.render.IMTERenderer;
 import mcp.mobius.waila.api.IWailaConfigHandler;
 import mcp.mobius.waila.api.IWailaDataAccessor;
-import tectech.thing.metaTileEntity.multi.base.TTMultiblockBase;
 
-public abstract class NaquadahReactor extends TTMultiblockBase implements IConstructable, ISurvivalConstructable {
+public abstract class NaquadahReactor<T extends NaquadahReactor<T>> extends MultiMachineBase<T>
+    implements IConstructable, ISurvivalConstructable {
 
-    public int mCountCasing;
-    public double mConfigSpeedBoost = 1;
     public boolean useExtraGas = false;
 
     public NaquadahReactor(int aID, String aName, String aNameRegional) {
         super(aID, aName, aNameRegional);
-        useLongPower = true;
     }
 
     public NaquadahReactor(String aName) {
         super(aName);
-        useLongPower = true;
     }
 
     @Override
@@ -112,14 +101,6 @@ public abstract class NaquadahReactor extends TTMultiblockBase implements IConst
     public abstract int getCasingTextureID();
 
     @Override
-    public void addGregTechLogo(ModularWindow.Builder builder) {
-        builder.widget(
-            new DrawableWidget().setDrawable(ItemUtils.PICTURE_GTNL_LOGO)
-                .setSize(18, 18)
-                .setPos(172, 67));
-    }
-
-    @Override
     public RecipeMap<?> getRecipeMap() {
         return RecipePool.NaquadahReactorRecipes;
     }
@@ -140,9 +121,9 @@ public abstract class NaquadahReactor extends TTMultiblockBase implements IConst
             @Override
             @Nonnull
             public GTNL_OverclockCalculator createOverclockCalculator(@NotNull GTRecipe recipe) {
-                return super.createOverclockCalculator(recipe).setNoOverclock(true);
+                return GTNL_OverclockCalculator.ofNoOverclock(recipe);
             }
-        }.setMaxParallelSupplier(this::getMaxParallelRecipes);
+        }.setMaxParallelSupplier(this::getTrueParallel);
     }
 
     public abstract int getReactorTier();
@@ -153,11 +134,25 @@ public abstract class NaquadahReactor extends TTMultiblockBase implements IConst
 
     public abstract FluidStack getExtraGas();
 
+    @Override
+    public boolean isBatchModeEnabled() {
+        return false;
+    }
+
+    @Override
+    public boolean supportsBatchMode() {
+        return false;
+    }
+
     @Nonnull
     @Override
-    public CheckRecipeResult checkProcessing_EM() {
+    public CheckRecipeResult checkProcessing() {
         useExtraGas = false;
-        CheckRecipeResult result = super.checkProcessing_EM();
+
+        setupProcessingLogic(processingLogic);
+
+        CheckRecipeResult result = doCheckRecipe();
+        result = postCheckRecipe(result, processingLogic);
         // inputs are consumed at this point
         updateSlots();
         if (!result.wasSuccessful()) return result;
@@ -167,9 +162,6 @@ public abstract class NaquadahReactor extends TTMultiblockBase implements IConst
         mMaxProgresstime = (int) (processingLogic.getDuration() * mConfigSpeedBoost);
         lEUt = (long) ((GTNL_ProcessingLogic) processingLogic).getLastRecipe().mSpecialValue
             * processingLogic.getCurrentParallels();
-
-        mOutputItems = processingLogic.getOutputItems();
-        mOutputFluids = processingLogic.getOutputFluids();
 
         List<FluidStack> tFluids = getStoredFluids();
         for (FluidStack fs : tFluids) {
@@ -181,27 +173,10 @@ public abstract class NaquadahReactor extends TTMultiblockBase implements IConst
             }
         }
 
-        return result;
-    }
+        mOutputItems = processingLogic.getOutputItems();
+        mOutputFluids = processingLogic.getOutputFluids();
 
-    @Override
-    public void onPostTick(IGregTechTileEntity aBaseMetaTileEntity, long aTick) {
-        super.onPostTick(aBaseMetaTileEntity, aTick);
-        if (aBaseMetaTileEntity.isServerSide()) {
-            if (aTick % 20 == 0) {
-                boolean found = false;
-                for (MTEHatchMaintenance module : mMaintenanceHatches) {
-                    if (module instanceof IConfigurationMaintenance customMaintenanceHatch
-                        && customMaintenanceHatch.isConfiguration()) {
-                        mConfigSpeedBoost = customMaintenanceHatch.getConfigTime() / 100d;
-                        found = true;
-                    }
-                }
-                if (!found) {
-                    mConfigSpeedBoost = 1;
-                }
-            }
-        }
+        return result;
     }
 
     @Override
@@ -219,18 +194,6 @@ public abstract class NaquadahReactor extends TTMultiblockBase implements IConst
             endRecipeProcessing();
         }
         return super.onRunningTick(stack);
-    }
-
-    @Override
-    public void doExplosion(long aExplosionPower) {
-        float tStrength = GTValues.getExplosionPowerForVoltage(aExplosionPower);
-        final int tX = getBaseMetaTileEntity().getXCoord();
-        final int tY = getBaseMetaTileEntity().getYCoord();
-        final int tZ = getBaseMetaTileEntity().getZCoord();
-        final World tWorld = getBaseMetaTileEntity().getWorld();
-        GTUtility.sendSoundToPlayers(tWorld, SoundResource.IC2_MACHINES_MACHINE_OVERLOAD, 1.0F, -1, tX, tY, tZ);
-        tWorld.setBlock(tX, tY, tZ, Blocks.air);
-        if (GregTechAPI.sMachineExplosions) tWorld.createExplosion(null, tX + 0.5, tY + 0.5, tZ + 0.5, tStrength, true);
     }
 
     @Override
@@ -284,7 +247,7 @@ public abstract class NaquadahReactor extends TTMultiblockBase implements IConst
         useExtraGas = aNBT.getBoolean("useExtraGas");
     }
 
-    public static class LargeNaquadahReactor extends NaquadahReactor {
+    public static class LargeNaquadahReactor extends NaquadahReactor<LargeNaquadahReactor> {
 
         private static final String STRUCTURE_PIECE_MAIN = "main";
         private static final String LNR_STRUCTURE_FILE_PATH = RESOURCE_ROOT_ID + ":"
@@ -308,7 +271,7 @@ public abstract class NaquadahReactor extends TTMultiblockBase implements IConst
         }
 
         @Override
-        public IStructureDefinition<LargeNaquadahReactor> getStructure_EM() {
+        public IStructureDefinition<LargeNaquadahReactor> getStructureDefinition() {
             return StructureDefinition.<LargeNaquadahReactor>builder()
                 .addShape(STRUCTURE_PIECE_MAIN, transpose(shape))
                 .addElement('A', ofBlock(BlockLoader.metaCasing, 4))
@@ -317,7 +280,7 @@ public abstract class NaquadahReactor extends TTMultiblockBase implements IConst
                     'C',
                     buildHatchAdder(LargeNaquadahReactor.class).casingIndex(getCasingTextureID())
                         .dot(1)
-                        .atLeast(Maintenance, InputHatch, OutputHatch, Energy.or(EnergyMulti), Dynamo.or(DynamoMulti))
+                        .atLeast(Maintenance, InputHatch, OutputHatch, Dynamo.or(ExoticDynamo))
                         .buildAndChain(onElementPass(x -> ++x.mCountCasing, ofBlock(sBlockCasings8, 10))))
                 .addElement('D', ofBlock(sBlockCasingsTT, 0))
                 .addElement('E', ofFrame(Materials.Naquadria))
@@ -384,7 +347,7 @@ public abstract class NaquadahReactor extends TTMultiblockBase implements IConst
         }
 
         @Override
-        public boolean checkMachine_EM(IGregTechTileEntity aBaseMetaTileEntity, ItemStack aStack) {
+        public boolean checkMachine(IGregTechTileEntity aBaseMetaTileEntity, ItemStack aStack) {
             return checkPiece(STRUCTURE_PIECE_MAIN, HORIZONTAL_OFF_SET, VERTICAL_OFF_SET, DEPTH_OFF_SET)
                 && mMaintenanceHatches.size() <= 1
                 && mCountCasing >= 50;
@@ -411,7 +374,7 @@ public abstract class NaquadahReactor extends TTMultiblockBase implements IConst
         }
     }
 
-    public static class HyperNaquadahReactor extends NaquadahReactor {
+    public static class HyperNaquadahReactor extends NaquadahReactor<HyperNaquadahReactor> {
 
         private static final String STRUCTURE_PIECE_MAIN = "main";
         private static final String HNR_STRUCTURE_FILE_PATH = RESOURCE_ROOT_ID + ":"
@@ -435,7 +398,7 @@ public abstract class NaquadahReactor extends TTMultiblockBase implements IConst
         }
 
         @Override
-        public IStructureDefinition<HyperNaquadahReactor> getStructure_EM() {
+        public IStructureDefinition<HyperNaquadahReactor> getStructureDefinition() {
             return StructureDefinition.<HyperNaquadahReactor>builder()
                 .addShape(STRUCTURE_PIECE_MAIN, transpose(shape))
                 .addElement('A', ofBlock(sBlockCasingsTT, 0))
@@ -448,7 +411,7 @@ public abstract class NaquadahReactor extends TTMultiblockBase implements IConst
                     'G',
                     buildHatchAdder(HyperNaquadahReactor.class).casingIndex(getCasingTextureID())
                         .dot(1)
-                        .atLeast(Maintenance, InputHatch, OutputHatch, Energy.or(EnergyMulti), Dynamo.or(DynamoMulti))
+                        .atLeast(Maintenance, InputHatch, OutputHatch, Dynamo.or(ExoticDynamo))
                         .buildAndChain(onElementPass(x -> ++x.mCountCasing, ofBlock(defcCasingBlock, 7))))
                 .addElement('H', ofBlock(BlockLoader.metaBlockGlass, 2))
                 .addElement('I', ofFrame(Materials.Neutronium))
@@ -513,7 +476,7 @@ public abstract class NaquadahReactor extends TTMultiblockBase implements IConst
         }
 
         @Override
-        public boolean checkMachine_EM(IGregTechTileEntity aBaseMetaTileEntity, ItemStack aStack) {
+        public boolean checkMachine(IGregTechTileEntity aBaseMetaTileEntity, ItemStack aStack) {
             return checkPiece(STRUCTURE_PIECE_MAIN, HORIZONTAL_OFF_SET, VERTICAL_OFF_SET, DEPTH_OFF_SET)
                 && mMaintenanceHatches.size() <= 1
                 && mCountCasing >= 50;
@@ -540,7 +503,8 @@ public abstract class NaquadahReactor extends TTMultiblockBase implements IConst
         }
     }
 
-    public static class AdvancedHyperNaquadahReactor extends NaquadahReactor implements IMTERenderer {
+    public static class AdvancedHyperNaquadahReactor extends NaquadahReactor<AdvancedHyperNaquadahReactor>
+        implements IMTERenderer {
 
         private static final String STRUCTURE_PIECE_MAIN = "main";
         private static final String STRUCTURE_PIECE_SPHERE = "sphere";
@@ -583,7 +547,7 @@ public abstract class NaquadahReactor extends TTMultiblockBase implements IConst
         }
 
         @Override
-        public IStructureDefinition<AdvancedHyperNaquadahReactor> getStructure_EM() {
+        public IStructureDefinition<AdvancedHyperNaquadahReactor> getStructureDefinition() {
             return StructureDefinition.<AdvancedHyperNaquadahReactor>builder()
                 .addShape(STRUCTURE_PIECE_MAIN, transpose(shape))
                 .addShape(STRUCTURE_PIECE_SPHERE, transpose(shapeSphere))
@@ -597,7 +561,7 @@ public abstract class NaquadahReactor extends TTMultiblockBase implements IConst
                     'F',
                     buildHatchAdder(AdvancedHyperNaquadahReactor.class).casingIndex(getCasingTextureID())
                         .dot(1)
-                        .atLeast(Maintenance, InputHatch, OutputHatch, Energy.or(EnergyMulti), Dynamo.or(DynamoMulti))
+                        .atLeast(Maintenance, InputHatch, OutputHatch, Dynamo.or(ExoticDynamo))
                         .buildAndChain(onElementPass(x -> ++x.mCountCasing, ofBlock(defcCasingBlock, 7))))
                 .addElement('G', ofFrame(Materials.Naquadria))
                 .addElement('H', ofBlock(BlockLoader.metaCasing, 18))
@@ -731,7 +695,7 @@ public abstract class NaquadahReactor extends TTMultiblockBase implements IConst
         }
 
         @Override
-        public boolean checkMachine_EM(IGregTechTileEntity aBaseMetaTileEntity, ItemStack aStack) {
+        public boolean checkMachine(IGregTechTileEntity aBaseMetaTileEntity, ItemStack aStack) {
             if (isRenderActive) {
                 if (!checkPiece(STRUCTURE_PIECE_MAIN, HORIZONTAL_OFF_SET, VERTICAL_OFF_SET, DEPTH_OFF_SET)
                     || !checkPiece(
