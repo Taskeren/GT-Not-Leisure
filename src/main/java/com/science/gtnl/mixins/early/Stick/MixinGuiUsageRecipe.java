@@ -2,7 +2,9 @@ package com.science.gtnl.mixins.early.Stick;
 
 import static codechicken.nei.recipe.GuiUsageRecipe.*;
 
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiScreen;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 
 import org.spongepowered.asm.mixin.Mixin;
@@ -12,6 +14,8 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import com.science.gtnl.common.item.items.Stick;
 
+import appeng.api.implementations.ICraftingPatternItem;
+import appeng.api.networking.crafting.ICraftingPatternDetails;
 import codechicken.nei.recipe.GuiRecipe;
 import codechicken.nei.recipe.GuiUsageRecipe;
 import codechicken.nei.recipe.IUsageHandler;
@@ -32,12 +36,25 @@ public abstract class MixinGuiUsageRecipe extends GuiRecipe<IUsageHandler> {
     private static void afterNormalizeItemStack(String inputId, Object[] ingredients,
         CallbackInfoReturnable<Boolean> cir) {
         for (int i = 0; i < ingredients.length; i++) {
-            Object ingredient = ingredients[i];
-            if (ingredient instanceof ItemStack itemStack && itemStack.getItem() instanceof Stick) {
-                ItemStack fakeItem = Stick.getDisguisedStack(itemStack);
-                if (fakeItem != null) {
-                    ingredients[i] = fakeItem;
-                }
+            Object obj = ingredients[i];
+            if (!(obj instanceof ItemStack stack)) continue;
+
+            Item item = stack.getItem();
+            if (item == null) continue;
+
+            if (item instanceof ICraftingPatternItem pattern) {
+                ICraftingPatternDetails details = pattern.getPatternForItem(stack, Minecraft.getMinecraft().theWorld);
+                if (details == null) continue;
+
+                ItemStack output = details.getCondensedOutputs()[0].getItemStack();
+                ingredients[i] = output;
+            }
+
+            if (item instanceof Stick) {
+                ItemStack fake = Stick.getDisguisedStack(stack);
+                if (fake == null) continue;
+
+                ingredients[i] = fake;
             }
         }
     }
