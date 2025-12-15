@@ -4791,7 +4791,7 @@ public class MachineLoader {
                 LOOT_BAG_REDEMPTION.ID,
                 "LootBagRedemption",
                 StatCollector.translateToLocal("LootBagRedemption"),
-                1));
+                14));
         addItemTooltip(GTNLItemList.LootBagRedemption.get(1), AnimatedText.SCIENCE_NOT_LEISURE);
 
         GTNLItemList.SuperOredictInputBusME.set(

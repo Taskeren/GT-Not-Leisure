@@ -1,5 +1,7 @@
 package com.science.gtnl.common.machine.basicMachine;
 
+import static gregtech.api.enums.GTValues.*;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -245,5 +247,10 @@ public class LootBagRedemption extends MTEBasicMachine {
     @Override
     public void startProcess() {
         sendLoopStart((byte) 1);
+    }
+
+    @Override
+    public long maxEUStore() {
+        return Math.max(getEUVar(), V[6]);
     }
 }
