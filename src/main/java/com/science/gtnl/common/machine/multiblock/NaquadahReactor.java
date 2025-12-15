@@ -149,6 +149,14 @@ public abstract class NaquadahReactor<T extends NaquadahReactor<T>> extends Mult
     public CheckRecipeResult checkProcessing() {
         useExtraGas = false;
 
+        List<FluidStack> tFluids = getStoredFluids();
+        for (FluidStack fs : tFluids) {
+            if (GTUtility.areFluidsEqual(fs, getExtraGas())) {
+                useExtraGas = true;
+                break;
+            }
+        }
+
         setupProcessingLogic(processingLogic);
 
         CheckRecipeResult result = doCheckRecipe();
@@ -163,14 +171,9 @@ public abstract class NaquadahReactor<T extends NaquadahReactor<T>> extends Mult
         lEUt = (long) ((GTNL_ProcessingLogic) processingLogic).getLastRecipe().mSpecialValue
             * processingLogic.getCurrentParallels();
 
-        List<FluidStack> tFluids = getStoredFluids();
-        for (FluidStack fs : tFluids) {
-            if (GTUtility.areFluidsEqual(fs, getExtraGas())) {
-                mMaxProgresstime /= getDurationMultiple();
-                lEUt *= getEUtMultiple();
-                useExtraGas = true;
-                break;
-            }
+        if (useExtraGas) {
+            mMaxProgresstime /= getDurationMultiple();
+            lEUt *= getEUtMultiple();
         }
 
         mOutputItems = processingLogic.getOutputItems();
