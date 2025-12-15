@@ -38,7 +38,7 @@
   - [🌸 Botania \& Twilight Forest](#-botania--twilight-forest)
 - [📥 Downloads \& Compatibility](#-downloads--compatibility)
 - [⚠️ Installation \& Update Instructions](#️-installation--update-instructions)
-- [💬 Community \& Credits](#-community--credits)
+- [📜 Credits \& Attributions](#-credits--attributions)
 
 <hr>
 
@@ -142,16 +142,18 @@ GTNL provides industrial-grade automation for your favorite magic mods.
 
 <hr>
 
-## 💬 Community & Credits
+## 📜 Credits & Attributions
 
-* **Discord:** [Join our Server](https://discord.gg/3sADCeCsjA)
-* **QQ Group:** [751870756](https://qm.qq.com/q/Vip7TXmaac)
+We gratefully acknowledge the use of code and assets from the open-source community:
 
-**Special Thanks & Assets:**
-* *Lobotomy Corporation* (Project Moon) for the White Night concept.
-* *Nova-Committee* (Re-Avaritia)
-* *Liansishen* (GTMThings)
-* *Nxer* (Twist Space Technology)
+| Project | Author | License |
+| :--- | :--- | :--- |
+| **Re-Avaritia Assets** | [Nova-Committee](https://github.com/Nova-Committee/Re-Avaritia) | [CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/) |
+| **GTMthings Assets** | [liansishen](https://github.com/liansishen/GTMThings) | [MIT](https://mit-license.org/) |
+| **Avaritia-GTNH Code** | [GTNewHorizons](https://github.com/GTNewHorizons/Avaritia) | [MIT](https://mit-license.org/) |
+| **Occultism Assets** | [klikli-dev](https://github.com/klikli-dev/occultism) | [MIT](https://mit-license.org/) |
+| **Mekanism Assets** | [mekanism](https://github.com/mekanism/Mekanism) | [MIT](https://mit-license.org/) |
+| **Twist-Space-Tech** | [Nxer](https://github.com/Nxer/Twist-Space-Technology-Mod) | [GPLv3](https://www.gnu.org/licenses/gpl-3.0.html) |
 
 ---
 
