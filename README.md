@@ -1,7 +1,8 @@
 <div align="center">
-  <img src="https://github.com/ABKQPO/GT-Not-Leisure/raw/dev-280/src/main/resources/assets/sciencenotleisure/textures/logo.png" width="200" height="200" alt="GT-Not-Leisure Logo">
+  <img src="./src/main/resources/assets/sciencenotleisure/textures/logo.png" width="225" height="225" alt="GT-Not-Leisure Logo">
 
-  <h1>GT: Science Not Leisure</h1>
+  <h1>GT: Not Leisure</h1>
+  <h2><em>Science Not Leisure</em></h2>
 
   <p>
     <strong>The Ultimate Magic-Tech Expansion for GregTech New Horizons</strong>
@@ -14,8 +15,12 @@
     <a href="https://www.gnu.org/licenses/gpl-3.0.html">
       <img src="https://img.shields.io/badge/License-GPLv3-blue?style=for-the-badge" alt="License">
     </a>
+    <br>
     <a href="https://discord.gg/3sADCeCsjA">
       <img src="https://img.shields.io/discord/1437641632077054055?color=5865F2&label=Discord&style=for-the-badge&logo=discord&logoColor=white" alt="Discord">
+    </a>
+    <a href="https://qm.qq.com/q/Gu9uCNx84w">
+      <img src="https://img.shields.io/badge/QQ-751870756-12B7F5?style=for-the-badge&logo=qq&logoColor=white" alt="QQ">
     </a>
   </p>
 
@@ -126,10 +131,10 @@ GTNL provides industrial-grade automation for your favorite magic mods.
 
 ## 📥 Downloads & Compatibility
 
-| GTNH Version | Mod Version | Status | Download |
-| :---: | :---: | :---: | :--- |
-| **2.8.0** | `0.2.0+` | ✅ **Recommended** | [![Latest](https://img.shields.io/badge/Download-Latest-success)](https://github.com/ABKQPO/GT-Not-Leisure/releases/latest) |
-| **2.7.x** | `0.1.9.1` | ❌ EOL | [![v0.1.9.1](https://img.shields.io/badge/Download-v0.1.9.1-orange)](https://github.com/ABKQPO/GT-Not-Leisure/releases/v0.1.9.1) |
+| GTNH Version | Mod Version |      Status       | Download                                                                                                                         |
+|:------------:|:-----------:|:-----------------:|:---------------------------------------------------------------------------------------------------------------------------------|
+|  **2.8.0**   |  `0.2.0+`   | ✅ **Recommended** | [![Latest](https://img.shields.io/badge/Download-Latest-success)](https://github.com/ABKQPO/GT-Not-Leisure/releases/latest)      |
+|  **2.7.x**   |  `0.1.9.1`  |       ❌ EOL       | [![v0.1.9.1](https://img.shields.io/badge/Download-v0.1.9.1-orange)](https://github.com/ABKQPO/GT-Not-Leisure/releases/v0.1.9.1) |
 
 ## ⚠️ Installation & Update Instructions
 
@@ -146,14 +151,14 @@ GTNL provides industrial-grade automation for your favorite magic mods.
 
 We gratefully acknowledge the use of code and assets from the open-source community:
 
-| Project | Author | License |
-| :--- | :--- | :--- |
+| Project                | Author                                                          | License                                                               |
+|:-----------------------|:----------------------------------------------------------------|:----------------------------------------------------------------------|
 | **Re-Avaritia Assets** | [Nova-Committee](https://github.com/Nova-Committee/Re-Avaritia) | [CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/) |
-| **GTMthings Assets** | [liansishen](https://github.com/liansishen/GTMThings) | [MIT](https://mit-license.org/) |
-| **Avaritia-GTNH Code** | [GTNewHorizons](https://github.com/GTNewHorizons/Avaritia) | [MIT](https://mit-license.org/) |
-| **Occultism Assets** | [klikli-dev](https://github.com/klikli-dev/occultism) | [MIT](https://mit-license.org/) |
-| **Mekanism Assets** | [mekanism](https://github.com/mekanism/Mekanism) | [MIT](https://mit-license.org/) |
-| **Twist-Space-Tech** | [Nxer](https://github.com/Nxer/Twist-Space-Technology-Mod) | [GPLv3](https://www.gnu.org/licenses/gpl-3.0.html) |
+| **GTMthings Assets**   | [liansishen](https://github.com/liansishen/GTMThings)           | [MIT](https://mit-license.org/)                                       |
+| **Avaritia-GTNH Code** | [GTNewHorizons](https://github.com/GTNewHorizons/Avaritia)      | [MIT](https://mit-license.org/)                                       |
+| **Occultism Assets**   | [klikli-dev](https://github.com/klikli-dev/occultism)           | [MIT](https://mit-license.org/)                                       |
+| **Mekanism Assets**    | [mekanism](https://github.com/mekanism/Mekanism)                | [MIT](https://mit-license.org/)                                       |
+| **Twist-Space-Tech**   | [Nxer](https://github.com/Nxer/Twist-Space-Technology-Mod)      | [GPLv3](https://www.gnu.org/licenses/gpl-3.0.html)                    |
 
 ---
 
