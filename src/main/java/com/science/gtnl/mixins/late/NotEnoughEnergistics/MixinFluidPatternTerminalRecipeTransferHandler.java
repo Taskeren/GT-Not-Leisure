@@ -16,6 +16,7 @@ import com.glodblock.github.nei.object.OrderStack;
 import com.glodblock.github.nei.recipes.FluidRecipe;
 
 import codechicken.nei.recipe.IRecipeHandler;
+import gregtech.api.util.GTOreDictUnificator;
 
 @Mixin(value = FluidPatternTerminalRecipeTransferHandler.class, remap = false)
 public abstract class MixinFluidPatternTerminalRecipeTransferHandler {
@@ -50,7 +51,7 @@ public abstract class MixinFluidPatternTerminalRecipeTransferHandler {
                 ItemStack replacement = cooledStacks.get(0);
                 if (replacement == null) continue;
 
-                ItemStack result = replacement.copy();
+                ItemStack result = GTOreDictUnificator.setStack(replacement.copy());
                 result.stackSize = stack.stackSize;
 
                 if (stack.stackTagCompound != null) {

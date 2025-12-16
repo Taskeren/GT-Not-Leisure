@@ -12,6 +12,8 @@ import org.spongepowered.asm.mixin.injection.Redirect;
 
 import com.github.vfyjxf.nee.nei.NEEPatternTerminalHandler;
 
+import gregtech.api.util.GTOreDictUnificator;
+
 @Mixin(value = NEEPatternTerminalHandler.class, remap = false)
 public abstract class MixinNEEPatternTerminalHandler {
 
@@ -37,7 +39,7 @@ public abstract class MixinNEEPatternTerminalHandler {
             ItemStack replacement = cooledStacks.get(0);
             if (replacement == null) continue;
 
-            ItemStack result = replacement.copy();
+            ItemStack result = GTOreDictUnificator.setStack(replacement.copy());
             result.stackSize = instance.stackSize;
 
             if (instance.stackTagCompound != null) {
