@@ -797,6 +797,8 @@ public class AssemblerMatrix extends MultiMachineBase<AssemblerMatrix>
         wirelessMode = aNBT.getBoolean("wirelessMode");
         showPattern = aNBT.getBoolean("showPattern");
 
+        patternMultiply = GTUtility.max(0, patternMultiply);
+
         NBTTagCompound storeRoot = null;
 
         if (aNBT.hasKey("storeUUID")) {
