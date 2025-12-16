@@ -95,12 +95,12 @@ public class ElectrocellGeneratorRecipes implements IRecipePool {
                 GTOreDictUnificator.get(OrePrefixes.stick, Materials.TungstenSteel, 1),
                 GTOreDictUnificator.get(OrePrefixes.dust, Materials.Molybdenum, 3))
             .itemOutputs(GTOreDictUnificator.get(OrePrefixes.dustSmall, Materials.Uranium235, 1))
-            .fluidInputs(MaterialPool.UraniumFuel.getFluidOrGas(12))
-            .fluidOutputs(MaterialPool.UraniumWaste.getFluidOrGas(12))
+            .fluidInputs(MaterialPool.UraniumFuel.getFluidOrGas(8))
+            .fluidOutputs(MaterialPool.UraniumWaste.getFluidOrGas(8))
             .outputChances(8000)
             .eut(0)
             .specialValue(110)
-            .metadata(GENERATOR_EUT, 40960L)
+            .metadata(GENERATOR_EUT, 49152L)
             .duration(900)
             .addTo(EGR);
     }

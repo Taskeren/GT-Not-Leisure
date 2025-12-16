@@ -186,7 +186,7 @@ public class AssemblerMatrix extends MultiMachineBase<AssemblerMatrix>
     }
 
     public void setPatternMultiply(int patternMultiply) {
-        this.patternMultiply = patternMultiply;
+        this.patternMultiply = Math.max(1, patternMultiply);
         if (Platform.isServer()) {
             for (DireCraftingPatternDetails pattern : patterns.values()) {
                 pattern.setMultiply(this.patternMultiply);
@@ -791,13 +791,11 @@ public class AssemblerMatrix extends MultiMachineBase<AssemblerMatrix>
         mCountSingularityCrafterCasing = aNBT.getInteger("mCountSingularityCrafterCasing");
         mCountCrafterCasing = aNBT.getInteger("mCountCrafterCasing");
         mCountPatternCasing = aNBT.getInteger("mCountPatternCasing");
-        patternMultiply = aNBT.getInteger("patternMultiply");
+        patternMultiply = Math.max(1, aNBT.getInteger("patternMultiply"));
         usedParallel = aNBT.getLong("usedParallel");
         mMaxParallelLong = aNBT.getLong("mMaxParallelLong");
         wirelessMode = aNBT.getBoolean("wirelessMode");
         showPattern = aNBT.getBoolean("showPattern");
-
-        patternMultiply = GTUtility.max(0, patternMultiply);
 
         NBTTagCompound storeRoot = null;
 
