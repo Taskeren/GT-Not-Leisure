@@ -18,8 +18,9 @@ public class DireCraftingPatternDetails implements ICraftingPatternDetails {
 
     private final ItemStack pattern;
     private final IAEItemStack[] inputs;
-    private final IAEItemStack[] condensedInputs;
+    private IAEItemStack[] condensedInputs;
     private final IAEItemStack[] output;
+    private final long baseOutput;
 
     public DireCraftingPatternDetails(ItemStack is) {
         pattern = is;
@@ -29,15 +30,16 @@ public class DireCraftingPatternDetails implements ICraftingPatternDetails {
             output = new IAEItemStack[1];
             var list = new ItemList();
             var tag = is.getTagCompound();
-            var in = ((GTNLNBTTagList) tag.getTagList("in", Constants.NBT.TAG_COMPOUND)).snl$getNbtList();
-            for (var i = 0; i < in.length; i++) {
-                var item = fromTagCreateAEItem((NBTTagCompound) in[i]);
+            var in = tag.getTagList("in", Constants.NBT.TAG_COMPOUND);
+            for (var i = 0; i < in.tagCount(); i++) {
+                var item = fromTagCreateAEItem(in.getCompoundTagAt(i));
                 inputs[i] = item;
                 list.addStorage(item);
             }
             output[0] = fromTagCreateAEItem(tag.getCompoundTag("out"));
 
             this.condensedInputs = list.toArray(new IAEItemStack[0]);
+            this.baseOutput = output[0].getStackSize();
         } else {
             throw new IllegalArgumentException("No pattern here!");
         }
@@ -46,27 +48,38 @@ public class DireCraftingPatternDetails implements ICraftingPatternDetails {
     public DireCraftingPatternDetails(ICraftingPatternDetails is) {
         pattern = is.getPattern()
             .copy();
-        inputs = is.getCondensedInputs()
+        inputs = is.getInputs()
             .clone();
-        condensedInputs = inputs;
+        var list = new ItemList();
+        for (var i = 0; i < inputs.length; i++) {
+            var ii = inputs[i];
+            if (ii == null) continue;
+            inputs[i] = ii.copy();
+            list.addStorage(ii);
+        }
+        condensedInputs = list.toArray(new IAEItemStack[0]);
         output = is.getCondensedOutputs()
             .clone();
-
-        for (var i = 0; i < inputs.length; i++) {
-            inputs[i] = inputs[i].copy();
-        }
         for (var i = 0; i < output.length; i++) {
             output[i] = output[i].copy();
         }
+        this.baseOutput = output[0].getStackSize();
     }
 
     public void setMultiply(int multiply) {
-        for (var input : condensedInputs) {
+        for (var input : inputs) {
+            if (input == null) continue;
             input.setStackSize(multiply);
         }
-        for (var stack : output) {
-            stack.setStackSize(multiply);
+        var list = new ItemList();
+        for (var i = 0; i < inputs.length; i++) {
+            var ii = inputs[i];
+            if (ii == null) continue;
+            inputs[i] = ii.copy();
+            list.addStorage(ii);
         }
+        condensedInputs = list.toArray(new IAEItemStack[0]);
+        output[0].setStackSize(baseOutput * multiply);
     }
 
     private static AEItemStack fromTagCreateAEItem(final NBTTagCompound i) {
