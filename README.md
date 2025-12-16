@@ -25,7 +25,7 @@
   </p>
 
   <p>
-    <b>GT: Science Not Leisure</b> (GTNL) is a massive content overhaul for <b>GregTech New Horizons</b>.
+    <b>GT: Not Leisure</b> (GTNL) is a massive content overhaul for <b>GregTech New Horizons</b>.
     <br>
     It bridges the gap between <b>Arcane Arts</b> and <b>High-Voltage Industry</b>, introducing over <strong>217 Multiblocks</strong>, unique boss-level mechanics, and massive Quality of Life improvements for the endgame.
   </p>
