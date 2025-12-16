@@ -25,7 +25,6 @@ import com.gtnewhorizon.structurelib.alignment.constructable.ISurvivalConstructa
 import com.gtnewhorizon.structurelib.structure.IStructureDefinition;
 import com.gtnewhorizon.structurelib.structure.ISurvivalBuildEnvironment;
 import com.gtnewhorizon.structurelib.structure.StructureDefinition;
-import com.science.gtnl.ScienceNotLeisure;
 import com.science.gtnl.common.machine.multiMachineBase.GTMMultiMachineBase;
 import com.science.gtnl.utils.StructureUtils;
 import com.science.gtnl.utils.recipes.GTNL_OverclockCalculator;
@@ -310,12 +309,6 @@ public class Digester extends GTMMultiMachineBase<Digester> implements ISurvival
             }
         }
 
-        boolean isValidFluid = tAmount >= 42;
-        if (isValidFluid) {
-            ScienceNotLeisure.LOG.warn("Filled structure.");
-        } else {
-            ScienceNotLeisure.LOG.warn("Did not fill structure.");
-        }
-        return isValidFluid;
+        return tAmount >= 42;
     }
 }

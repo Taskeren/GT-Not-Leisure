@@ -4,14 +4,17 @@ import static com.gtnewhorizon.structurelib.structure.StructureUtility.*;
 import static com.science.gtnl.ScienceNotLeisure.*;
 import static com.science.gtnl.utils.Utils.*;
 import static gregtech.api.enums.HatchElement.*;
+import static gregtech.api.gui.modularui.GTUITextures.*;
 import static gregtech.api.metatileentity.BaseTileEntity.*;
 import static gregtech.api.util.GTStructureUtility.*;
 import static gregtech.api.util.GTUtility.*;
+import static net.minecraft.util.StatCollector.*;
 
 import java.io.File;
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayDeque;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
@@ -50,7 +53,10 @@ import com.gtnewhorizon.structurelib.structure.ISurvivalBuildEnvironment;
 import com.gtnewhorizon.structurelib.structure.StructureDefinition;
 import com.gtnewhorizons.modularui.api.drawable.IDrawable;
 import com.gtnewhorizons.modularui.api.drawable.ItemDrawable;
+import com.gtnewhorizons.modularui.api.drawable.UITexture;
 import com.gtnewhorizons.modularui.api.math.Alignment;
+import com.gtnewhorizons.modularui.api.math.Color;
+import com.gtnewhorizons.modularui.api.math.Size;
 import com.gtnewhorizons.modularui.api.screen.ModularWindow;
 import com.gtnewhorizons.modularui.api.screen.UIBuildContext;
 import com.gtnewhorizons.modularui.api.widget.IWidgetBuilder;
@@ -63,6 +69,7 @@ import com.gtnewhorizons.modularui.common.widget.FakeSyncWidget;
 import com.gtnewhorizons.modularui.common.widget.MultiChildWidget;
 import com.gtnewhorizons.modularui.common.widget.SlotWidget;
 import com.gtnewhorizons.modularui.common.widget.TextWidget;
+import com.gtnewhorizons.modularui.common.widget.textfield.NumericWidget;
 import com.science.gtnl.common.machine.multiMachineBase.MultiMachineBase;
 import com.science.gtnl.loader.BlockLoader;
 import com.science.gtnl.utils.DireCraftingPatternDetails;
@@ -156,11 +163,12 @@ public class AssemblerMatrix extends MultiMachineBase<AssemblerMatrix>
     private AENetworkProxy gridProxy;
     private DualityInterface di;
     private final MachineSource source = new MachineSource(this);
-    private final Map<ItemStack, ICraftingPatternDetails> patterns = new Reference2ObjectOpenHashMap<>();
+    private final Map<ItemStack, DireCraftingPatternDetails> patterns = new Reference2ObjectOpenHashMap<>();
     @Getter
     private final Set<IAEItemStack> possibleOutputs = new ObjectOpenHashSet<>();
     @Getter
     private final CombinationPatternsIInventory inventory = new CombinationPatternsIInventory();
+    private int patternMultiply = 1;
 
     private static final String STRUCTURE_PIECE_MAIN = "main";
     private static final String AM_STRUCTURE_FILE_PATH = RESOURCE_ROOT_ID + ":" + "multiblock/assembler_matrix";
@@ -175,6 +183,19 @@ public class AssemblerMatrix extends MultiMachineBase<AssemblerMatrix>
 
     public AssemblerMatrix(String aName) {
         super(aName);
+    }
+
+    public void setPatternMultiply(int patternMultiply) {
+        this.patternMultiply = Math.max(1, patternMultiply);
+        if (Platform.isServer()) {
+            for (DireCraftingPatternDetails pattern : patterns.values()) {
+                pattern.setMultiply(this.patternMultiply);
+            }
+        }
+    }
+
+    public void setPatternMultiply(double patternMultiply) {
+        setPatternMultiply((int) patternMultiply);
     }
 
     @Override
@@ -274,13 +295,17 @@ public class AssemblerMatrix extends MultiMachineBase<AssemblerMatrix>
         }
         if (newStack != null) {
             if (newStack.getItem() instanceof ICraftingPatternItem ic) {
-                var p = ic.getPatternForItem(
+                var pattern = ic.getPatternForItem(
                     newStack,
                     this.getBaseMetaTileEntity()
                         .getWorld());
-                if (p.isCraftable() || p instanceof DireCraftingPatternDetails) {
-                    patterns.put(newStack, p);
-                    possibleOutputs.add(p.getCondensedOutputs()[0]);
+                if (pattern.isCraftable()) {
+                    pattern = new DireCraftingPatternDetails(pattern);
+                }
+                if (pattern instanceof DireCraftingPatternDetails d) {
+                    d.setMultiply(patternMultiply);
+                    patterns.put(newStack, d);
+                    possibleOutputs.add(d.getCondensedOutputs()[0]);
                     work = true;
                 }
             }
@@ -315,7 +340,7 @@ public class AssemblerMatrix extends MultiMachineBase<AssemblerMatrix>
                 if (c != null) {
                     inputs.add(
                         AEItemStack.create(c)
-                            .setStackSize(p));
+                            .setStackSize(p * stack.stackSize));
                 }
                 stack.stackSize = 1;
             }
@@ -377,9 +402,82 @@ public class AssemblerMatrix extends MultiMachineBase<AssemblerMatrix>
     }
 
     @Override
+    public ButtonWidget createPowerPanelButton(IWidgetBuilder<?> builder) {
+        Widget button = new ButtonWidget().setOnClick((clickData, widget) -> {
+            if (supportsPowerPanel()) {
+                if (!widget.isClient()) widget.getContext()
+                    .openSyncedWindow(POWER_PANEL_WINDOW_ID);
+            }
+        })
+            .setPlayClickSound(true)
+            .setBackground(() -> {
+                List<UITexture> ret = new ArrayList<>();
+                ret.add(GTUITextures.BUTTON_STANDARD);
+                ret.add(OVERLAY_BUTTON_POWER_PANEL);
+                return ret.toArray(new IDrawable[0]);
+            })
+            .addTooltip(StatCollector.translateToLocal("Info_AssemblerMatrix_01"))
+            .setTooltipShowUpDelay(TOOLTIP_DELAY)
+            .setPos(getPowerPanelButtonPos())
+            .setSize(16, 16);
+        return (ButtonWidget) button;
+    }
+
+    @Override
+    public ModularWindow createPowerPanel(EntityPlayer player) {
+        final int w = 100;
+        final int h = 80;
+        final int parentW = getGUIWidth();
+        final int parentH = getGUIHeight();
+
+        ModularWindow.Builder builder = ModularWindow.builder(w, h);
+
+        builder.setBackground(GTUITextures.BACKGROUND_SINGLEBLOCK_DEFAULT);
+        builder.setGuiTint(getGUIColorization());
+        builder.setDraggable(true);
+        builder.setPos(
+            (size, window) -> Alignment.Center.getAlignedPos(size, new Size(parentW, parentH))
+                .add(
+                    Alignment.TopRight.getAlignedPos(new Size(parentW, parentH), new Size(w, h))
+                        .add(w - 3, 0)));
+
+        builder.widget(
+            new TextWidget(EnumChatFormatting.UNDERLINE + translateToLocal("Info_AssemblerMatrix_01")).setPos(0, 2)
+                .setSize(100, 18));
+
+        builder.widget(new FakeSyncWidget.IntegerSyncer(() -> patternMultiply, this::setPatternMultiply));
+
+        builder.widget(
+            TextWidget.localised("Info_AssemblerMatrix_02")
+                .setPos(0, 24)
+                .setSize(100, 18));
+
+        builder.widget(
+            new NumericWidget().setSetter(this::setPatternMultiply)
+                .setGetter(() -> patternMultiply)
+                .setDefaultValue(powerPanelMaxParallel)
+                .setMinValue(1)
+                .setMaxValue(Integer.MAX_VALUE)
+                .setScrollValues(1, 4, 64)
+                .setTextAlignment(Alignment.Center)
+                .setTextColor(Color.WHITE.normal)
+                .addTooltip(StatCollector.translateToLocalFormatted("GT5U.gui.text.rangedvalue", 1, Integer.MAX_VALUE))
+                .setTooltipShowUpDelay(TOOLTIP_DELAY)
+                .setSize(70, 18)
+                .setPos(15, 40)
+                .setBackground(GTUITextures.BACKGROUND_TEXT_FIELD));
+
+        return builder.build();
+    }
+
+    @Override
     public void addGregTechLogo(ModularWindow.Builder builder) {
         builder.widget(
             new DrawableWidget().setDrawable(ItemUtils.PICTURE_CIRCULATION)
+                .setSize(18, 18)
+                .setPos(172, 49));
+        builder.widget(
+            new DrawableWidget().setDrawable(ItemUtils.PICTURE_GTNL_LOGO)
                 .setSize(18, 18)
                 .setPos(172, 67));
     }
@@ -611,6 +709,7 @@ public class AssemblerMatrix extends MultiMachineBase<AssemblerMatrix>
         aNBT.setInteger("mCountSingularityCrafterCasing", mCountSingularityCrafterCasing);
         aNBT.setInteger("mCountPatternCasing", mCountPatternCasing);
         aNBT.setInteger("mCountSpeedCasing", mCountSpeedCasing);
+        aNBT.setInteger("patternMultiply", patternMultiply);
         aNBT.setLong("mMaxParallelLong", mMaxParallelLong);
         aNBT.setBoolean("wirelessMode", wirelessMode);
         aNBT.setBoolean("showPattern", showPattern);
@@ -692,6 +791,7 @@ public class AssemblerMatrix extends MultiMachineBase<AssemblerMatrix>
         mCountSingularityCrafterCasing = aNBT.getInteger("mCountSingularityCrafterCasing");
         mCountCrafterCasing = aNBT.getInteger("mCountCrafterCasing");
         mCountPatternCasing = aNBT.getInteger("mCountPatternCasing");
+        patternMultiply = Math.max(1, aNBT.getInteger("patternMultiply"));
         usedParallel = aNBT.getLong("usedParallel");
         mMaxParallelLong = aNBT.getLong("mMaxParallelLong");
         wirelessMode = aNBT.getBoolean("wirelessMode");
@@ -797,15 +897,19 @@ public class AssemblerMatrix extends MultiMachineBase<AssemblerMatrix>
         patterns.clear();
         possibleOutputs.clear();
 
-        for (var newStack : this.inventory.getAllItemsCopy()) {
+        for (var newStack : this.inventory) {
             if (newStack.getItem() instanceof ICraftingPatternItem ic) {
-                var p = ic.getPatternForItem(
+                var pattern = ic.getPatternForItem(
                     newStack,
-                    AssemblerMatrix.this.getBaseMetaTileEntity()
+                    this.getBaseMetaTileEntity()
                         .getWorld());
-                if (p.isCraftable() || p instanceof DireCraftingPatternDetails) {
-                    patterns.put(newStack, p);
-                    possibleOutputs.add(p.getCondensedOutputs()[0]);
+                if (pattern.isCraftable()) {
+                    pattern = new DireCraftingPatternDetails(pattern);
+                }
+                if (pattern instanceof DireCraftingPatternDetails d) {
+                    d.setMultiply(patternMultiply);
+                    patterns.put(newStack, d);
+                    possibleOutputs.add(d.getCondensedOutputs()[0]);
                 }
             }
         }
@@ -814,8 +918,8 @@ public class AssemblerMatrix extends MultiMachineBase<AssemblerMatrix>
                 .getGrid()
                 .postEvent(
                     new MENetworkCraftingPatternChange(
-                        AssemblerMatrix.this,
-                        AssemblerMatrix.this.getProxy()
+                        this,
+                        this.getProxy()
                             .getNode()));
         } catch (GridAccessException ignored) {
 
@@ -949,12 +1053,17 @@ public class AssemblerMatrix extends MultiMachineBase<AssemblerMatrix>
                         input,
                         this.getBaseMetaTileEntity()
                             .getWorld());
-                    if (!(p.isCraftable() || p instanceof DireCraftingPatternDetails)) continue;
+
+                    if (p.isCraftable()) {
+                        p = new DireCraftingPatternDetails(p);
+                    }
+                    if (!(p instanceof DireCraftingPatternDetails d)) continue;
                     ItemStack pattern = input.copy();
                     pattern.stackSize = 1;
                     inventory.setInventorySlotContents(slot, pattern);
-                    patterns.put(pattern, p);
-                    possibleOutputs.add(p.getCondensedOutputs()[0]);
+                    d.setMultiply(patternMultiply);
+                    patterns.put(pattern, d);
+                    possibleOutputs.add(d.getCondensedOutputs()[0]);
                     input.stackSize--;
                     updated = true;
                     if (inventory.size() >= mMaxSlots) break;

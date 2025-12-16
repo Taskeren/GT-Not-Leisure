@@ -22,5 +22,12 @@ public class FluidExtractorRecipes implements IRecipePool {
             .duration(20)
             .eut(TierEU.RECIPE_EV)
             .addTo(FER);
+
+        RecipeBuilder.builder()
+            .itemInputs(MaterialsElements.getInstance().HAFNIUM.getDust(1))
+            .fluidOutputs(new FluidStack(MaterialsElements.getInstance().HAFNIUM.getFluid(), 144))
+            .duration(54)
+            .eut(TierEU.RECIPE_MV)
+            .addTo(FER);
     }
 }
