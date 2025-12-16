@@ -64,6 +64,8 @@
     "NEICustomDiagram.MixinNeiCustomDiagram",
     "NHCoreMod.MixinBacteriaRegistry",
     "NotEnoughItems.MixinGuiContainerManager",
+    "NotEnoughEnergistics.MixinNEEPatternTerminalHandler",
+    "NotEnoughEnergistics.MixinFluidPatternTerminalRecipeTransferHandler",
     "TConstruct.MixinSmelteryLogic",
     "TecTech.MixinMTEEyeOfHarmony",
     "TecTech.MixinMTEResearchStation",
