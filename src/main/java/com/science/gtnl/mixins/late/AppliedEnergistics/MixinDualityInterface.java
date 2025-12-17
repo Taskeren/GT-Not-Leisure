@@ -16,7 +16,10 @@ public class MixinDualityInterface {
 
     @Inject(
         method = "getTermName",
-        at = @At(value = "INVOKE", target = "Lnet/minecraft/item/ItemStack;getUnlocalizedName()Ljava/lang/String;"),
+        at = @At(
+            value = "INVOKE",
+            target = "Lnet/minecraft/item/ItemStack;getUnlocalizedName()Ljava/lang/String;",
+            remap = true),
         cancellable = true)
     private void gtnl$injectBeforeItemReturn(CallbackInfoReturnable<String> cir,
         @Local(name = "item") ItemStack itemStack) {
