@@ -10,6 +10,7 @@ import static gtPlusPlus.core.block.ModBlocks.blockCasingsMisc;
 import static gtPlusPlus.xmod.gregtech.common.blocks.textures.TexturesGtBlock.oMCDAlloyBlastSmelter;
 import static gtPlusPlus.xmod.gregtech.common.blocks.textures.TexturesGtBlock.oMCDAlloyBlastSmelterActive;
 
+import java.util.ArrayList;
 import java.util.Random;
 
 import javax.annotation.Nonnull;
@@ -25,6 +26,7 @@ import com.gtnewhorizon.structurelib.structure.ISurvivalBuildEnvironment;
 import com.gtnewhorizon.structurelib.structure.StructureDefinition;
 import com.science.gtnl.common.machine.multiMachineBase.GTMMultiMachineBase;
 import com.science.gtnl.utils.StructureUtils;
+import com.science.gtnl.utils.recipes.GTNL_ParallelHelper;
 
 import bartworks.util.BWUtil;
 import gregtech.api.enums.HeatingCoilLevel;
@@ -33,9 +35,9 @@ import gregtech.api.enums.Textures;
 import gregtech.api.interfaces.ITexture;
 import gregtech.api.interfaces.metatileentity.IMetaTileEntity;
 import gregtech.api.interfaces.tileentity.IGregTechTileEntity;
+import gregtech.api.objects.XSTR;
 import gregtech.api.recipe.RecipeMap;
 import gregtech.api.recipe.check.CheckRecipeResult;
-import gregtech.api.recipe.check.CheckRecipeResultRegistry;
 import gregtech.api.render.TextureFactory;
 import gregtech.api.util.MultiblockTooltipBuilder;
 import gregtech.common.misc.GTStructureChannels;
@@ -51,6 +53,8 @@ public class MegaAlloyBlastSmelter extends GTMMultiMachineBase<MegaAlloyBlastSme
     private static final int VERTICAL_OFF_SET = 15;
     private static final int DEPTH_OFF_SET = 0;
     private static final String[][] shape = StructureUtils.readStructureFromFile(MABS_STRUCTURE_FILE_PATH);
+
+    public static final Random random = new XSTR();
 
     public MegaAlloyBlastSmelter(int aID, String aName, String aNameRegional) {
         super(aID, aName, aNameRegional);
@@ -229,50 +233,56 @@ public class MegaAlloyBlastSmelter extends GTMMultiMachineBase<MegaAlloyBlastSme
     @Nonnull
     @Override
     public CheckRecipeResult checkProcessing() {
-        ItemStack controllerItem = getControllerSlot();
-        this.mParallelTier = getParallelTier(controllerItem);
-        if (processingLogic == null) {
-            return checkRecipe(mInventory[1]) ? CheckRecipeResultRegistry.SUCCESSFUL
-                : CheckRecipeResultRegistry.NO_RECIPE;
-        }
-
-        setupProcessingLogic(processingLogic);
-
-        CheckRecipeResult result = doCheckRecipe();
-        result = postCheckRecipe(result, processingLogic);
-        updateSlots();
+        CheckRecipeResult result = super.checkProcessing();
         if (!result.wasSuccessful()) return result;
 
-        mEfficiency = 10000;
-        mEfficiencyIncrease = 10000;
-        mMaxProgresstime = processingLogic.getDuration();
-        setEnergyUsage(processingLogic);
+        ArrayList<ItemStack> itemList = new ArrayList<>();
 
-        Random random = new Random();
+        for (ItemStack itemStack : mOutputItems) {
+            if (itemStack == null) continue;
 
-        ItemStack[] outputItems = processingLogic.getOutputItems();
-        if (outputItems != null) {
-            for (ItemStack itemStack : outputItems) {
-                if (itemStack != null) {
-                    if (random.nextInt(101) < (mGlassTier * 2)) {
-                        itemStack.stackSize *= 2;
-                    }
+            if (random.nextInt(101) < (mGlassTier * 2)) {
+
+                long doubledAmount = (long) itemStack.stackSize * 2L;
+
+                if (itemStack.stackSize > Integer.MAX_VALUE / 2) {
+                    GTNL_ParallelHelper.addItemsLong(itemList, itemStack, doubledAmount);
+                } else {
+                    ItemStack copy = itemStack.copy();
+                    copy.stackSize = (int) doubledAmount;
+                    itemList.add(copy);
                 }
+
+            } else {
+                itemList.add(itemStack.copy());
             }
         }
-        mOutputItems = outputItems;
 
-        FluidStack[] outputFluids = processingLogic.getOutputFluids();
-        if (outputFluids != null) {
-            for (FluidStack fluidStack : outputFluids) {
-                if (fluidStack != null) {
-                    if (random.nextInt(101) < (mGlassTier * 2)) {
-                        fluidStack.amount *= 2;
-                    }
+        mOutputItems = itemList.toArray(new ItemStack[0]);
+
+        ArrayList<FluidStack> fluidList = new ArrayList<>();
+
+        for (FluidStack fluidStack : mOutputFluids) {
+            if (fluidStack == null) continue;
+
+            if (random.nextInt(101) < (mGlassTier * 2)) {
+
+                long doubledAmount = (long) fluidStack.amount * 2L;
+
+                if (fluidStack.amount > Integer.MAX_VALUE / 2) {
+                    GTNL_ParallelHelper.addFluidsLong(fluidList, fluidStack, doubledAmount);
+                } else {
+                    FluidStack copy = fluidStack.copy();
+                    copy.amount = (int) doubledAmount;
+                    fluidList.add(copy);
                 }
+
+            } else {
+                fluidList.add(fluidStack.copy());
             }
         }
-        mOutputFluids = outputFluids;
+
+        mOutputFluids = fluidList.toArray(new FluidStack[0]);
 
         return result;
     }
