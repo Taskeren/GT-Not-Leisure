@@ -8,6 +8,7 @@
   "mixins": [
     "AEFluidCraft.MixinItemFluidPacket",
     "AppliedEnergistics.MixinAdaptorIInventory",
+    "AppliedEnergistics.MixinDualityInterface",
     "AppliedEnergistics.MixinEntityTinyTNTPrimed",
     "AppliedEnergistics.MixinTileIOPort",
     "AppliedEnergistics.assembler.AccessorContainerPatternTerm",

@@ -1,9 +1,15 @@
 package com.science.gtnl.mixins.late.Gregtech;
 
+import net.minecraft.item.ItemStack;
+
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
 import org.spongepowered.asm.mixin.Shadow;
+import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.ModifyVariable;
 
+import appeng.helpers.ICustomNameObject;
+import gregtech.api.interfaces.IConfigurationCircuitSupport;
 import gregtech.api.interfaces.ITexture;
 import gregtech.api.interfaces.tileentity.IGregTechTileEntity;
 import gregtech.api.metatileentity.implementations.MTEBasicTank;
@@ -22,6 +28,17 @@ public abstract class MixinMTEHatch extends MTEBasicTank {
     public MixinMTEHatch(int aID, String aName, String aNameRegional, int aTier, int aInvSlotCount, String aDescription,
         ITexture... aTextures) {
         super(aID, aName, aNameRegional, aTier, aInvSlotCount, aDescription, aTextures);
+    }
+
+    @ModifyVariable(method = "updateCraftingIcon", at = @At("HEAD"), argsOnly = true, index = 1)
+    private ItemStack gtnl$modifyCraftingIcon(ItemStack value) {
+        if (!(this instanceof IConfigurationCircuitSupport circuitHatch) || this instanceof ICustomNameObject)
+            return value;
+        ItemStack circuit = getStackInSlot(circuitHatch.getCircuitSlot());
+        if (circuit == null) return value;
+        ItemStack modified = value.copy();
+        modified.setStackDisplayName(modified.getDisplayName() + " - " + circuit.getItemDamage());
+        return modified;
     }
 
     /**
