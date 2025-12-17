@@ -236,53 +236,57 @@ public class MegaAlloyBlastSmelter extends GTMMultiMachineBase<MegaAlloyBlastSme
         CheckRecipeResult result = super.checkProcessing();
         if (!result.wasSuccessful()) return result;
 
-        ArrayList<ItemStack> itemList = new ArrayList<>();
+        if (mOutputItems != null) {
+            ArrayList<ItemStack> itemList = new ArrayList<>();
 
-        for (ItemStack itemStack : mOutputItems) {
-            if (itemStack == null) continue;
+            for (ItemStack itemStack : mOutputItems) {
+                if (itemStack == null) continue;
 
-            if (random.nextInt(101) < (mGlassTier * 2)) {
+                if (random.nextInt(101) < (mGlassTier * 2)) {
 
-                long doubledAmount = (long) itemStack.stackSize * 2L;
+                    long doubledAmount = (long) itemStack.stackSize * 2L;
 
-                if (itemStack.stackSize > Integer.MAX_VALUE / 2) {
-                    GTNL_ParallelHelper.addItemsLong(itemList, itemStack, doubledAmount);
+                    if (itemStack.stackSize > Integer.MAX_VALUE / 2) {
+                        GTNL_ParallelHelper.addItemsLong(itemList, itemStack, doubledAmount);
+                    } else {
+                        ItemStack copy = itemStack.copy();
+                        copy.stackSize = (int) doubledAmount;
+                        itemList.add(copy);
+                    }
+
                 } else {
-                    ItemStack copy = itemStack.copy();
-                    copy.stackSize = (int) doubledAmount;
-                    itemList.add(copy);
+                    itemList.add(itemStack.copy());
                 }
-
-            } else {
-                itemList.add(itemStack.copy());
             }
+
+            mOutputItems = itemList.toArray(new ItemStack[0]);
         }
 
-        mOutputItems = itemList.toArray(new ItemStack[0]);
+        if (mOutputFluids != null) {
+            ArrayList<FluidStack> fluidList = new ArrayList<>();
 
-        ArrayList<FluidStack> fluidList = new ArrayList<>();
+            for (FluidStack fluidStack : mOutputFluids) {
+                if (fluidStack == null) continue;
 
-        for (FluidStack fluidStack : mOutputFluids) {
-            if (fluidStack == null) continue;
+                if (random.nextInt(101) < (mGlassTier * 2)) {
 
-            if (random.nextInt(101) < (mGlassTier * 2)) {
+                    long doubledAmount = (long) fluidStack.amount * 2L;
 
-                long doubledAmount = (long) fluidStack.amount * 2L;
+                    if (fluidStack.amount > Integer.MAX_VALUE / 2) {
+                        GTNL_ParallelHelper.addFluidsLong(fluidList, fluidStack, doubledAmount);
+                    } else {
+                        FluidStack copy = fluidStack.copy();
+                        copy.amount = (int) doubledAmount;
+                        fluidList.add(copy);
+                    }
 
-                if (fluidStack.amount > Integer.MAX_VALUE / 2) {
-                    GTNL_ParallelHelper.addFluidsLong(fluidList, fluidStack, doubledAmount);
                 } else {
-                    FluidStack copy = fluidStack.copy();
-                    copy.amount = (int) doubledAmount;
-                    fluidList.add(copy);
+                    fluidList.add(fluidStack.copy());
                 }
-
-            } else {
-                fluidList.add(fluidStack.copy());
             }
-        }
 
-        mOutputFluids = fluidList.toArray(new FluidStack[0]);
+            mOutputFluids = fluidList.toArray(new FluidStack[0]);
+        }
 
         return result;
     }
