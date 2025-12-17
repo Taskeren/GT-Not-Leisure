@@ -23,6 +23,9 @@ public class MixinDualityInterface {
         cancellable = true)
     private void gtnl$injectBeforeItemReturn(CallbackInfoReturnable<String> cir,
         @Local(name = "item") ItemStack itemStack) {
-        if (itemStack.hasDisplayName()) cir.setReturnValue(itemStack.getDisplayName());
+        if (!itemStack.hasDisplayName()) return;
+        String name = itemStack.getDisplayName();
+        if (!name.startsWith("gt_circuit_")) return;
+        cir.setReturnValue(itemStack.getDisplayName() + itemStack.getUnlocalizedName());
     }
 }

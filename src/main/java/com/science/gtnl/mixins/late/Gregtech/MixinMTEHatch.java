@@ -37,7 +37,7 @@ public abstract class MixinMTEHatch extends MTEBasicTank {
         ItemStack circuit = getStackInSlot(circuitHatch.getCircuitSlot());
         if (circuit == null) return value;
         ItemStack modified = value.copy();
-        modified.setStackDisplayName(modified.getDisplayName() + " - " + circuit.getItemDamage());
+        modified.setStackDisplayName("gt_circuit_" + circuit.getItemDamage() + "_");
         return modified;
     }
 

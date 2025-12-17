@@ -625,22 +625,30 @@ public class SuperCraftingInputHatchME extends MTEHatchInputBus
         if (hasCustomName()) {
             return customName;
         }
-        StringBuilder name = new StringBuilder();
-        if (getCrafterIcon() != null) {
-            name.append(getCrafterIcon().getDisplayName());
-        } else {
-            name.append(getLocalName());
-        }
+
+        StringBuilder sb = new StringBuilder();
 
         if (mInventory[SLOT_CIRCUIT] != null) {
-            name.append(" - ");
-            name.append(mInventory[SLOT_CIRCUIT].getItemDamage());
+            sb.append("gt_circuit_")
+                .append(mInventory[SLOT_CIRCUIT].getItemDamage())
+                .append('_');
         }
+
         if (mInventory[SLOT_MANUAL_START] != null) {
-            name.append(" - ");
-            name.append(mInventory[SLOT_MANUAL_START].getDisplayName());
+            sb.append("extra_start_")
+                .append(mInventory[SLOT_MANUAL_START].getUnlocalizedName())
+                .append("_extra_end_");
         }
-        return name.toString();
+
+        if (getCrafterIcon() != null) {
+            sb.append(getCrafterIcon().getUnlocalizedName());
+        } else {
+            sb.append("gt.blockmachines.")
+                .append(mName)
+                .append(".name");
+        }
+
+        return sb.toString();
     }
 
     @Override
