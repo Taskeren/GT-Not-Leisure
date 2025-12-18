@@ -4,7 +4,7 @@ import static gregtech.api.enums.Mods.Forestry;
 import static gregtech.api.util.GTRecipeBuilder.INGOTS;
 import static gregtech.api.util.GTRecipeBuilder.NUGGETS;
 import static gregtech.api.util.GTRecipeBuilder.SECONDS;
-import static gregtech.api.util.GTRecipeConstants.COIL_HEAT;
+import static gregtech.api.util.GTRecipeConstants.*;
 
 import net.minecraft.item.ItemStack;
 
@@ -18,9 +18,11 @@ import gregtech.api.enums.ItemList;
 import gregtech.api.enums.Materials;
 import gregtech.api.enums.OrePrefixes;
 import gregtech.api.enums.TierEU;
+import gregtech.api.interfaces.IRecipeMap;
 import gregtech.api.recipe.RecipeMap;
 import gregtech.api.recipe.RecipeMaps;
 import gregtech.api.util.GTOreDictUnificator;
+import gregtech.api.util.GTRecipeConstants;
 import gregtech.api.util.GTUtility;
 import gregtech.common.items.CombType;
 import gregtech.loaders.misc.GTBees;
@@ -29,6 +31,7 @@ import gtPlusPlus.core.item.ModItems;
 public class BlastFurnaceRecipes implements IRecipePool {
 
     public RecipeMap<?> BFR = RecipeMaps.blastFurnaceRecipes;
+    public IRecipeMap BFWG = GTRecipeConstants.BlastFurnaceWithGas;
 
     @Override
     public void loadRecipes() {
@@ -40,23 +43,25 @@ public class BlastFurnaceRecipes implements IRecipePool {
                 GTOreDictUnificator.get(OrePrefixes.ingot, Materials.Neutronium, 4),
                 GTUtility.getIntegratedCircuit(3))
             .itemOutputs(GTNLItemList.NeutroniumBoule.get(1))
-            .fluidInputs(Materials.Radon.getGas(32000))
             .duration(18000)
             .eut(TierEU.RECIPE_LuV)
             .metadata(COIL_HEAT, 10000)
-            .addTo(BFR);
+            .metadata(ADDITIVE_AMOUNT, 32000)
+            .metadata(NO_GAS, false)
+            .addTo(BFWG);
 
         RecipeBuilder.builder()
-            .setNEIDesc("Remove Change by GTNotLeisure")
             .itemInputs(
                 GTOreDictUnificator.get(OrePrefixes.dust, Materials.Europium, 1),
                 GTUtility.getIntegratedCircuit(11))
             .itemOutputs(GTOreDictUnificator.get(OrePrefixes.ingot, Materials.Europium, 1))
-            .fluidInputs(Materials.Helium.getGas(1000))
-            .duration(120)
+            .duration(400)
             .eut(TierEU.RECIPE_IV)
             .metadata(COIL_HEAT, 8300)
-            .addTo(BFR);
+            .metadata(ADDITIVE_AMOUNT, 1000)
+            .metadata(NO_GAS, true)
+            .metadata(NO_GAS_CIRCUIT_CONFIG, 1)
+            .addTo(BFWG);
 
         RecipeBuilder.builder()
             .itemInputs(
