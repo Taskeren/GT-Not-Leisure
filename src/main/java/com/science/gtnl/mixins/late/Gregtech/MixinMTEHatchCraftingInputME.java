@@ -7,12 +7,15 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
+import com.science.gtnl.api.mixinHelper.IMultiblockRecipeMap;
+
 import appeng.api.networking.crafting.ICraftingMedium;
 import gregtech.api.metatileentity.implementations.MTEHatchInputBus;
 import gregtech.common.tileentities.machines.MTEHatchCraftingInputME;
 
 @Mixin(value = MTEHatchCraftingInputME.class, remap = false)
-public abstract class MixinMTEHatchCraftingInputME extends MTEHatchInputBus implements ICraftingMedium {
+public abstract class MixinMTEHatchCraftingInputME extends MTEHatchInputBus
+    implements ICraftingMedium, IMultiblockRecipeMap {
 
     @Shadow
     @Final
@@ -41,6 +44,12 @@ public abstract class MixinMTEHatchCraftingInputME extends MTEHatchInputBus impl
             sb.append("gt_circuit_")
                 .append(mInventory[SLOT_CIRCUIT].getItemDamage())
                 .append('_');
+        }
+
+        if (getRecipeMapName() != null) {
+            sb.append("extra_start_")
+                .append(getRecipeMapName())
+                .append("_extra_end_");
         }
 
         if (mInventory[SLOT_MANUAL_START] != null) {

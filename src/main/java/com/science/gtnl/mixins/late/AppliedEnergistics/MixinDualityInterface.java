@@ -25,7 +25,7 @@ public class MixinDualityInterface {
         @Local(name = "item") ItemStack itemStack) {
         if (!itemStack.hasDisplayName()) return;
         String name = itemStack.getDisplayName();
-        if (!name.startsWith("gt_circuit_")) return;
-        cir.setReturnValue(itemStack.getDisplayName() + itemStack.getUnlocalizedName());
+        if (!name.startsWith("gt_circuit_") && !name.contains("extra_start_")) return;
+        cir.setReturnValue(name + itemStack.getUnlocalizedName());
     }
 }

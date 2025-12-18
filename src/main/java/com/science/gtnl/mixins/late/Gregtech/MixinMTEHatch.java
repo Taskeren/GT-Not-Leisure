@@ -5,8 +5,11 @@ import net.minecraft.item.ItemStack;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
 import org.spongepowered.asm.mixin.Shadow;
+import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.ModifyVariable;
+
+import com.science.gtnl.api.mixinHelper.IMultiblockRecipeMap;
 
 import appeng.helpers.ICustomNameObject;
 import gregtech.api.interfaces.IConfigurationCircuitSupport;
@@ -14,10 +17,12 @@ import gregtech.api.interfaces.ITexture;
 import gregtech.api.interfaces.tileentity.IGregTechTileEntity;
 import gregtech.api.metatileentity.implementations.MTEBasicTank;
 import gregtech.api.metatileentity.implementations.MTEHatch;
+import gregtech.api.metatileentity.implementations.MTEHatchInput;
+import gregtech.api.metatileentity.implementations.MTEHatchInputBus;
 
 @Deprecated
 @Mixin(value = MTEHatch.class, remap = false)
-public abstract class MixinMTEHatch extends MTEBasicTank {
+public abstract class MixinMTEHatch extends MTEBasicTank implements IMultiblockRecipeMap {
 
     @Shadow
     private int texturePage;
@@ -25,20 +30,63 @@ public abstract class MixinMTEHatch extends MTEBasicTank {
     @Shadow
     private int textureIndex;
 
+    @Unique
+    private String multiBlockRecipeMapName = null;
+
     public MixinMTEHatch(int aID, String aName, String aNameRegional, int aTier, int aInvSlotCount, String aDescription,
         ITexture... aTextures) {
         super(aID, aName, aNameRegional, aTier, aInvSlotCount, aDescription, aTextures);
     }
 
+    @Override
+    public String getRecipeMapName() {
+        return multiBlockRecipeMapName;
+    }
+
+    @Override
+    public void setRecipeMapName(String recipeMap) {
+        multiBlockRecipeMapName = recipeMap;
+    }
+
     @ModifyVariable(method = "updateCraftingIcon", at = @At("HEAD"), argsOnly = true, index = 1)
     private ItemStack gtnl$modifyCraftingIcon(ItemStack value) {
-        if (!(this instanceof IConfigurationCircuitSupport circuitHatch) || this instanceof ICustomNameObject)
-            return value;
-        ItemStack circuit = getStackInSlot(circuitHatch.getCircuitSlot());
-        if (circuit == null) return value;
-        ItemStack modified = value.copy();
-        modified.setStackDisplayName("gt_circuit_" + circuit.getItemDamage() + "_");
-        return modified;
+        if (value.hasDisplayName()) return value;
+        MTEHatch hatch = (MTEHatch) (Object) this;
+        StringBuilder sb = null;
+        if (hatch instanceof IConfigurationCircuitSupport circuitHatch && !(hatch instanceof ICustomNameObject)) {
+            ItemStack circuit = getStackInSlot(circuitHatch.getCircuitSlot());
+            if (circuit != null) {
+                sb = new StringBuilder();
+                sb.append("gt_circuit_")
+                    .append(circuit.getItemDamage())
+                    .append("_");
+            }
+        }
+        if (hatch instanceof MTEHatchInput inputHatch
+            && (multiBlockRecipeMapName != null || inputHatch.mRecipeMap != null)) {
+            if (sb == null) {
+                sb = new StringBuilder();
+            }
+            sb.append("extra_start_")
+                .append(
+                    multiBlockRecipeMapName != null ? multiBlockRecipeMapName : inputHatch.mRecipeMap.unlocalizedName)
+                .append("_extra_end_");
+        }
+        if (hatch instanceof MTEHatchInputBus inputBus
+            && (multiBlockRecipeMapName != null || inputBus.mRecipeMap != null)) {
+            if (sb == null) {
+                sb = new StringBuilder();
+            }
+            sb.append("extra_start_")
+                .append(multiBlockRecipeMapName != null ? multiBlockRecipeMapName : inputBus.mRecipeMap.unlocalizedName)
+                .append("_extra_end_");
+        }
+        if (sb != null && sb.length() > 0) {
+            ItemStack modified = value.copy();
+            modified.setStackDisplayName(sb.toString());
+            return modified;
+        }
+        return value;
     }
 
     /**

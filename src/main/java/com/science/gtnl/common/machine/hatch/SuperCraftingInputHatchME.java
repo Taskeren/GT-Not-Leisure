@@ -59,6 +59,7 @@ import com.gtnewhorizons.modularui.common.widget.Scrollable;
 import com.gtnewhorizons.modularui.common.widget.SlotGroup;
 import com.gtnewhorizons.modularui.common.widget.SlotWidget;
 import com.science.gtnl.ScienceNotLeisure;
+import com.science.gtnl.api.mixinHelper.IMultiblockRecipeMap;
 import com.science.gtnl.utils.enums.GTNLItemList;
 
 import appeng.api.AEApi;
@@ -123,9 +124,9 @@ import lombok.Getter;
 import mcp.mobius.waila.api.IWailaConfigHandler;
 import mcp.mobius.waila.api.IWailaDataAccessor;
 
-public class SuperCraftingInputHatchME extends MTEHatchInputBus
-    implements IConfigurationCircuitSupport, IAddGregtechLogo, IAddUIWidgets, IPowerChannelState, ICraftingProvider,
-    IGridProxyable, IDualInputHatchWithPattern, ICustomNameObject, IInterfaceViewable, IMEConnectable {
+public class SuperCraftingInputHatchME extends MTEHatchInputBus implements IConfigurationCircuitSupport,
+    IAddGregtechLogo, IAddUIWidgets, IPowerChannelState, ICraftingProvider, IGridProxyable, IDualInputHatchWithPattern,
+    ICustomNameObject, IInterfaceViewable, IMEConnectable, IMultiblockRecipeMap {
 
     // Each pattern slot in the crafting input hatch has its own internal inventory
     public static class PatternSlot<P extends IMetaTileEntity & IDualInputHatch>
@@ -632,6 +633,12 @@ public class SuperCraftingInputHatchME extends MTEHatchInputBus
             sb.append("gt_circuit_")
                 .append(mInventory[SLOT_CIRCUIT].getItemDamage())
                 .append('_');
+        }
+
+        if (getRecipeMapName() != null) {
+            sb.append("extra_start_")
+                .append(getRecipeMapName())
+                .append("_extra_end_");
         }
 
         if (mInventory[SLOT_MANUAL_START] != null) {

@@ -1,5 +1,8 @@
 package com.science.gtnl.mixins.late.AppliedEnergistics;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import net.minecraft.util.StatCollector;
 
 import org.spongepowered.asm.mixin.Mixin;
@@ -43,21 +46,24 @@ public abstract class MixinInterfaceTerminalEntry {
             afterPrefix = name;
         }
 
-        String extraKey = null;
-        String mainKey;
+        final String extraStart = "extra_start_";
+        final String extraEnd = "_extra_end_";
 
-        String extraStart = "extra_start_";
-        String extraEnd = "_extra_end_";
+        List<String> extraKeys = new ArrayList<>();
 
-        int startIdx = afterPrefix.indexOf(extraStart);
-        int endIdx = afterPrefix.indexOf(extraEnd);
+        while (afterPrefix.startsWith(extraStart)) {
+            int endIdx = afterPrefix.indexOf(extraEnd);
+            if (endIdx <= extraStart.length()) {
+                break;
+            }
 
-        if (startIdx == 0 && endIdx > extraStart.length()) {
-            extraKey = afterPrefix.substring(extraStart.length(), endIdx);
-            mainKey = afterPrefix.substring(endIdx + extraEnd.length());
-        } else {
-            mainKey = afterPrefix;
+            String extraKey = afterPrefix.substring(extraStart.length(), endIdx);
+            extraKeys.add(extraKey);
+
+            afterPrefix = afterPrefix.substring(endIdx + extraEnd.length());
         }
+
+        String mainKey = afterPrefix;
 
         String mainText;
         if (StatCollector.canTranslate(mainKey)) {
@@ -68,14 +74,14 @@ public abstract class MixinInterfaceTerminalEntry {
             mainText = StatCollector.translateToFallback(mainKey);
         }
 
-        String extraText = null;
-        if (extraKey != null) {
+        List<String> extraTexts = new ArrayList<>();
+        for (String extraKey : extraKeys) {
             if (StatCollector.canTranslate(extraKey)) {
-                extraText = StatCollector.translateToLocal(extraKey);
+                extraTexts.add(StatCollector.translateToLocal(extraKey));
             } else if (StatCollector.canTranslate(extraKey + ".name")) {
-                extraText = StatCollector.translateToLocal(extraKey + ".name");
+                extraTexts.add(StatCollector.translateToLocal(extraKey + ".name"));
             } else {
-                extraText = StatCollector.translateToFallback(extraKey);
+                extraTexts.add(StatCollector.translateToFallback(extraKey));
             }
         }
 
@@ -86,7 +92,7 @@ public abstract class MixinInterfaceTerminalEntry {
                 .append(numberPart);
         }
 
-        if (extraText != null) {
+        for (String extraText : extraTexts) {
             sb.append(" - ")
                 .append(extraText);
         }

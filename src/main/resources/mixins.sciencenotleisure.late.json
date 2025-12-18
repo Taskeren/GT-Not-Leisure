@@ -53,6 +53,7 @@
     "Gregtech.MixinMTEHatchSteamBusOutput",
     "Gregtech.MixinMTELightningRod",
     "Gregtech.MixinMTEMultiBlockBase",
+    "Gregtech.MixinMTEMultiBlockBaseRecipeProcessing",
     "Gregtech.MixinMTETreeFarm",
     "Gregtech.MixinMTEVoidMinerBase",
     "Gregtech.MixinMTEVoidMiners",
