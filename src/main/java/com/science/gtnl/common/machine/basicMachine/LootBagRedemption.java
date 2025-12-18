@@ -253,4 +253,9 @@ public class LootBagRedemption extends MTEBasicMachine {
     public long maxEUStore() {
         return Math.max(getEUVar(), V[6]);
     }
+
+    @Override
+    public boolean hasEnoughEnergyToCheckRecipe() {
+        return getBaseMetaTileEntity().getStoredEU() > TierEU.RECIPE_LV;
+    }
 }
