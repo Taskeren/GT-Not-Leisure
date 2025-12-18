@@ -10,6 +10,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.ModifyVariable;
 
 import com.science.gtnl.api.mixinHelper.IMultiblockRecipeMap;
+import com.science.gtnl.config.MainConfig;
 
 import appeng.helpers.ICustomNameObject;
 import gregtech.api.interfaces.IConfigurationCircuitSupport;
@@ -50,6 +51,7 @@ public abstract class MixinMTEHatch extends MTEBasicTank implements IMultiblockR
 
     @ModifyVariable(method = "updateCraftingIcon", at = @At("HEAD"), argsOnly = true, index = 1)
     private ItemStack gtnl$modifyCraftingIcon(ItemStack value) {
+        if (!MainConfig.enableHatchInterfaceTerminalEnhance) return value;
         if (value.hasDisplayName()) return value;
         MTEHatch hatch = (MTEHatch) (Object) this;
         StringBuilder sb = null;

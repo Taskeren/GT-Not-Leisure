@@ -64,6 +64,8 @@ public class MainConfig {
     public static boolean enableIntegratedOreFactoryChange = true;
     public static boolean enablePurificationPlantBuff = false;
 
+    public static boolean enableHatchInterfaceTerminalEnhance = true;
+
     // Recipe
     public static boolean enableDeleteRecipe = true;
     public static boolean enableShowDelRecipeTitle = true;
@@ -331,6 +333,13 @@ public class MainConfig {
             enablePurificationPlantBuff,
             "Enable Purification Plant Buff, add Wireless mode and max long parallels",
             "config.machine.enablePurificationPlantBuff");
+
+        enableHatchInterfaceTerminalEnhance = config.getBoolean(
+            "enableHatchInterfaceTerminalEnhance",
+            CATEGORY_MACHINE,
+            enableHatchInterfaceTerminalEnhance,
+            "Enhance the display of input hatch bus in interface terminal to support the machine current recipe map and virtual programming circuit",
+            "config.machine.enableHatchInterfaceTerminalEnhance");
 
         // Recipe
         enableSomethingRecipe = config.getBoolean(

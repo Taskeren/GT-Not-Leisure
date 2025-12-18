@@ -8,6 +8,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import com.llamalad7.mixinextras.sugar.Local;
+import com.science.gtnl.config.MainConfig;
 
 import appeng.helpers.DualityInterface;
 
@@ -23,6 +24,7 @@ public class MixinDualityInterface {
         cancellable = true)
     private void gtnl$injectBeforeItemReturn(CallbackInfoReturnable<String> cir,
         @Local(name = "item") ItemStack itemStack) {
+        if (!MainConfig.enableHatchInterfaceTerminalEnhance) return;
         if (!itemStack.hasDisplayName()) return;
         String name = itemStack.getDisplayName();
         if (!name.startsWith("gt_circuit_") && !name.contains("extra_start_")) return;

@@ -60,6 +60,7 @@ import com.gtnewhorizons.modularui.common.widget.SlotGroup;
 import com.gtnewhorizons.modularui.common.widget.SlotWidget;
 import com.science.gtnl.ScienceNotLeisure;
 import com.science.gtnl.api.mixinHelper.IMultiblockRecipeMap;
+import com.science.gtnl.config.MainConfig;
 import com.science.gtnl.utils.enums.GTNLItemList;
 
 import appeng.api.AEApi;
@@ -627,35 +628,52 @@ public class SuperCraftingInputHatchME extends MTEHatchInputBus implements IConf
             return customName;
         }
 
-        StringBuilder sb = new StringBuilder();
+        StringBuilder name = new StringBuilder();
 
-        if (mInventory[SLOT_CIRCUIT] != null) {
-            sb.append("gt_circuit_")
-                .append(mInventory[SLOT_CIRCUIT].getItemDamage())
-                .append('_');
-        }
+        if (MainConfig.enableHatchInterfaceTerminalEnhance) {
+            if (mInventory[SLOT_CIRCUIT] != null) {
+                name.append("gt_circuit_")
+                    .append(mInventory[SLOT_CIRCUIT].getItemDamage())
+                    .append('_');
+            }
 
-        if (getRecipeMapName() != null) {
-            sb.append("extra_start_")
-                .append(getRecipeMapName())
-                .append("_extra_end_");
-        }
+            if (getRecipeMapName() != null) {
+                name.append("extra_start_")
+                    .append(getRecipeMapName())
+                    .append("_extra_end_");
+            }
 
-        if (mInventory[SLOT_MANUAL_START] != null) {
-            sb.append("extra_start_")
-                .append(mInventory[SLOT_MANUAL_START].getUnlocalizedName())
-                .append("_extra_end_");
-        }
+            if (mInventory[SLOT_MANUAL_START] != null) {
+                name.append("extra_start_")
+                    .append(mInventory[SLOT_MANUAL_START].getUnlocalizedName())
+                    .append("_extra_end_");
+            }
 
-        if (getCrafterIcon() != null) {
-            sb.append(getCrafterIcon().getUnlocalizedName());
+            if (getCrafterIcon() != null) {
+                name.append(getCrafterIcon().getUnlocalizedName());
+            } else {
+                name.append("gt.blockmachines.")
+                    .append(mName)
+                    .append(".name");
+            }
         } else {
-            sb.append("gt.blockmachines.")
-                .append(mName)
-                .append(".name");
+            if (getCrafterIcon() != null) {
+                name.append(getCrafterIcon().getDisplayName());
+            } else {
+                name.append(getLocalName());
+            }
+
+            if (mInventory[SLOT_CIRCUIT] != null) {
+                name.append(" - ");
+                name.append(mInventory[SLOT_CIRCUIT].getItemDamage());
+            }
+            if (mInventory[SLOT_MANUAL_START] != null) {
+                name.append(" - ");
+                name.append(mInventory[SLOT_MANUAL_START].getDisplayName());
+            }
         }
 
-        return sb.toString();
+        return name.toString();
     }
 
     @Override

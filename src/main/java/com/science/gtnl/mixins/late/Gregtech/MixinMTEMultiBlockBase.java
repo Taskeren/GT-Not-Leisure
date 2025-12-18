@@ -7,6 +7,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import com.science.gtnl.api.mixinHelper.IMultiblockRecipeMap;
+import com.science.gtnl.config.MainConfig;
 
 import gregtech.api.interfaces.metatileentity.IMetaTileEntity;
 import gregtech.api.interfaces.tileentity.IGregTechTileEntity;
@@ -24,6 +25,7 @@ public abstract class MixinMTEMultiBlockBase {
     @Inject(method = "addInputBusToMachineList", at = @At(value = "HEAD"))
     private void gtnl$InputBusCheck(IGregTechTileEntity aTileEntity, int aBaseCasingIndex,
         CallbackInfoReturnable<Boolean> cir) {
+        if (!MainConfig.enableHatchInterfaceTerminalEnhance) return;
         if (aTileEntity == null) return;
         if (getRecipeMap() == null) return;
         IMetaTileEntity aMetaTileEntity = aTileEntity.getMetaTileEntity();
@@ -35,6 +37,7 @@ public abstract class MixinMTEMultiBlockBase {
     @Inject(method = "addInputHatchToMachineList", at = @At(value = "HEAD"))
     private void gtnl$InputHatchCheck(IGregTechTileEntity aTileEntity, int aBaseCasingIndex,
         CallbackInfoReturnable<Boolean> cir) {
+        if (!MainConfig.enableHatchInterfaceTerminalEnhance) return;
         if (aTileEntity == null) return;
         if (getRecipeMap() == null) return;
         IMetaTileEntity aMetaTileEntity = aTileEntity.getMetaTileEntity();

@@ -8,6 +8,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import com.science.gtnl.api.mixinHelper.IMultiblockRecipeMap;
+import com.science.gtnl.config.MainConfig;
 
 import appeng.api.networking.crafting.ICraftingMedium;
 import gregtech.api.metatileentity.implementations.MTEHatchInputBus;
@@ -31,6 +32,7 @@ public abstract class MixinMTEHatchCraftingInputME extends MTEHatchInputBus
 
     @Inject(method = "getName", at = @At("HEAD"), cancellable = true)
     private void gtnl$overrideGetName(CallbackInfoReturnable<String> cir) {
+        if (!MainConfig.enableHatchInterfaceTerminalEnhance) return;
         MTEHatchCraftingInputME self = (MTEHatchCraftingInputME) (Object) this;
 
         if (self.hasCustomName()) {
