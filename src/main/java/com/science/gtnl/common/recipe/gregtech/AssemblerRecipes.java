@@ -571,7 +571,7 @@ public class AssemblerRecipes implements IRecipePool {
         RecipeBuilder.builder()
             .itemInputs(
                 GTUtility.getIntegratedCircuit(17),
-                ItemList.Machine_IV_Assembler.get(1L),
+                GregtechItemList.GT4_Multi_Crafter.get(1L),
                 GTOreDictUnificator.get(OrePrefixes.frameGt, Materials.TungstenSteel, 4L),
                 new ItemStack(ModItems.itemCircuitLFTR, 1),
                 GregtechItemList.TransmissionComponent_IV.get(4),

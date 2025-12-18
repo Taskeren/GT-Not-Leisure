@@ -102,7 +102,6 @@ public class ElectricBlastFurnace extends MultiMachineBase<ElectricBlastFurnace>
             .addInfo(StatCollector.translateToLocal("Tooltip_ElectricBlastFurnace_03"))
             .addInfo(StatCollector.translateToLocal("Tooltip_ElectricBlastFurnace_04"))
             .addInfo(StatCollector.translateToLocal("Tooltip_ElectricBlastFurnace_05"))
-            .addInfo(StatCollector.translateToLocal("Tooltip_HighAmp_Hatch"))
             .addSeparator()
             .addInfo(StatCollector.translateToLocal("StructureTooComplex"))
             .addInfo(StatCollector.translateToLocal("BLUE_PRINT_INFO"))
