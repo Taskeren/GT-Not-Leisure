@@ -813,6 +813,32 @@ public class AssemblerRecipes implements IRecipePool {
 
         RecipeBuilder.builder()
             .itemInputs(
+                ItemList.Hatch_Output_HV.get(1L),
+                GTModHandler.getModItem(AppliedEnergistics2.ID, "tile.BlockQuantumRing", 2),
+                GTModHandler.getModItem(AppliedEnergistics2.ID, "tile.BlockQuantumLinkChamber", 1),
+                GTModHandler.getModItem(AppliedEnergistics2.ID,"tile.BlockTinyTNT"),
+                GTModHandler.getModItem(AppliedEnergistics2.ID,"tile.BlockCraftUnit",1,1))
+            .itemOutputs(
+                GTNLItemList.OutputHatchMEProxy.get(1L))
+            .duration(300)
+            .eut(480)
+            .addTo(As);
+
+        RecipeBuilder.builder()
+            .itemInputs(
+                ItemList.Hatch_Output_Bus_HV.get(1L),
+                GTModHandler.getModItem(AppliedEnergistics2.ID, "tile.BlockQuantumRing", 2),
+                GTModHandler.getModItem(AppliedEnergistics2.ID, "tile.BlockQuantumLinkChamber", 1),
+                GTModHandler.getModItem(AppliedEnergistics2.ID,"tile.BlockTinyTNT"),
+                GTModHandler.getModItem(AppliedEnergistics2.ID,"tile.BlockCraftUnit",1,1))
+            .itemOutputs(
+                GTNLItemList.OutputBusMEProxy.get(1L))
+            .duration(300)
+            .eut(480)
+            .addTo(As);
+
+        RecipeBuilder.builder()
+            .itemInputs(
                 ItemList.Hatch_Output_EV.get(1L),
                 GTModHandler.getModItem(AE2FluidCraft.ID, "part_fluid_interface", 1),
                 GTModHandler.getModItem(AppliedEnergistics2.ID, "item.ItemMultiMaterial", 2, 30))
