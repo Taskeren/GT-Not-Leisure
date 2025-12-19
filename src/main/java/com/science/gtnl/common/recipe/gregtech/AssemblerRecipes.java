@@ -813,7 +813,7 @@ public class AssemblerRecipes implements IRecipePool {
 
         RecipeBuilder.builder()
             .itemInputs(
-                ItemList.Hatch_Output_HV.get(1L),
+                ItemList.Hatch_Output_ME.get(1L),
                 GTModHandler.getModItem(AppliedEnergistics2.ID, "tile.BlockQuantumRing", 2),
                 GTModHandler.getModItem(AppliedEnergistics2.ID, "tile.BlockQuantumLinkChamber", 1),
                 GTModHandler.getModItem(AppliedEnergistics2.ID,"tile.BlockTinyTNT"),
@@ -826,7 +826,7 @@ public class AssemblerRecipes implements IRecipePool {
 
         RecipeBuilder.builder()
             .itemInputs(
-                ItemList.Hatch_Output_Bus_HV.get(1L),
+                ItemList.Hatch_Output_Bus_ME.get(1L),
                 GTModHandler.getModItem(AppliedEnergistics2.ID, "tile.BlockQuantumRing", 2),
                 GTModHandler.getModItem(AppliedEnergistics2.ID, "tile.BlockQuantumLinkChamber", 1),
                 GTModHandler.getModItem(AppliedEnergistics2.ID,"tile.BlockTinyTNT"),
