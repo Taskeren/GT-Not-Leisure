@@ -405,7 +405,6 @@ public class ElectrocellGenerator extends MultiMachineBase<ElectrocellGenerator>
         if (aTileEntity != null) {
             final IMetaTileEntity aMetaTileEntity = aTileEntity.getMetaTileEntity();
             if (aMetaTileEntity instanceof MTEHatchInputBus inputBus) {
-                if (inputBus.getTierForStructure() > 0) return false;
                 if (mLeftInputBusses != null) return false;
                 mLeftInputBusses = inputBus;
                 mLeftInputBusses.updateTexture(aBaseCasingIndex);
@@ -419,7 +418,6 @@ public class ElectrocellGenerator extends MultiMachineBase<ElectrocellGenerator>
         if (aTileEntity != null) {
             final IMetaTileEntity aMetaTileEntity = aTileEntity.getMetaTileEntity();
             if (aMetaTileEntity instanceof MTEHatchInputBus inputBus) {
-                if (inputBus.getTierForStructure() > 0) return false;
                 if (mRightInputBusses != null) return false;
                 mRightInputBusses = inputBus;
                 mRightInputBusses.updateTexture(aBaseCasingIndex);
