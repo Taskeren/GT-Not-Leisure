@@ -34,6 +34,7 @@ import net.minecraft.server.management.UserListOpsEntry;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.MathHelper;
 import net.minecraft.util.MovingObjectPosition;
+import net.minecraft.util.StatCollector;
 import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
 import net.minecraftforge.fluids.FluidStack;
@@ -152,6 +153,83 @@ public class Utils {
         }
 
         return formatted + UNITS[unitIndex];
+    }
+
+    public static String getExtraInterfaceName(String name) {
+        boolean hasCircuit = name.startsWith("gt_circuit_");
+        boolean hasExtra = name.contains("extra_start_");
+
+        if (!hasCircuit && !hasExtra) {
+            return name;
+        }
+
+        String numberPart = null;
+        String afterPrefix;
+
+        if (hasCircuit) {
+            String rest = name.substring("gt_circuit_".length());
+            int firstSplit = rest.indexOf('_');
+            if (firstSplit <= 0 || firstSplit >= rest.length() - 1) {
+                afterPrefix = name;
+            } else {
+                numberPart = rest.substring(0, firstSplit);
+                afterPrefix = rest.substring(firstSplit + 1);
+            }
+        } else {
+            afterPrefix = name;
+        }
+
+        final String extraStart = "extra_start_";
+        final String extraEnd = "_extra_end_";
+
+        List<String> extraKeys = new ArrayList<>();
+
+        while (afterPrefix.startsWith(extraStart)) {
+            int endIdx = afterPrefix.indexOf(extraEnd);
+            if (endIdx <= extraStart.length()) {
+                break;
+            }
+
+            String extraKey = afterPrefix.substring(extraStart.length(), endIdx);
+            extraKeys.add(extraKey);
+
+            afterPrefix = afterPrefix.substring(endIdx + extraEnd.length());
+        }
+
+        String mainKey = afterPrefix;
+
+        String mainText;
+        if (StatCollector.canTranslate(mainKey)) {
+            mainText = StatCollector.translateToLocal(mainKey);
+        } else if (StatCollector.canTranslate(mainKey + ".name")) {
+            mainText = StatCollector.translateToLocal(mainKey + ".name");
+        } else {
+            mainText = StatCollector.translateToFallback(mainKey);
+        }
+
+        List<String> extraTexts = new ArrayList<>();
+        for (String extraKey : extraKeys) {
+            if (StatCollector.canTranslate(extraKey)) {
+                extraTexts.add(StatCollector.translateToLocal(extraKey));
+            } else if (StatCollector.canTranslate(extraKey + ".name")) {
+                extraTexts.add(StatCollector.translateToLocal(extraKey + ".name"));
+            } else {
+                extraTexts.add(StatCollector.translateToFallback(extraKey));
+            }
+        }
+
+        StringBuilder sb = new StringBuilder(mainText);
+
+        if (numberPart != null) {
+            sb.append(" - ")
+                .append(numberPart);
+        }
+
+        for (String extraText : extraTexts) {
+            sb.append(" - ")
+                .append(extraText);
+        }
+        return sb.toString();
     }
 
     public static boolean addStacksToList(@NotNull Collection<ItemStack> list, @NotNull ItemStack itemStack,

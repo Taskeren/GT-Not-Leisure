@@ -437,7 +437,7 @@ public class PCBFactory extends WirelessEnergyMultiMachineBase<PCBFactory>
     @Override
     public void onPostTick(IGregTechTileEntity aBaseMetaTileEntity, long aTick) {
         super.onPostTick(aBaseMetaTileEntity, aTick);
-        if (!getBaseMetaTileEntity().isServerSide()) return;
+        if (mStartUpCheck > 0 || !getBaseMetaTileEntity().isServerSide()) return;
         if (isAllowedToWork() && aTick % 100 == 0) {
             startRecipeProcessing();
             if (!depleteWaterInput(distilledWater)) {

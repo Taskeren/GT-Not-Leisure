@@ -61,6 +61,7 @@ import com.gtnewhorizons.modularui.common.widget.SlotWidget;
 import com.science.gtnl.ScienceNotLeisure;
 import com.science.gtnl.api.mixinHelper.IMultiblockRecipeMap;
 import com.science.gtnl.config.MainConfig;
+import com.science.gtnl.utils.Utils;
 import com.science.gtnl.utils.enums.GTNLItemList;
 
 import appeng.api.AEApi;
@@ -1048,8 +1049,14 @@ public class SuperCraftingInputHatchME extends MTEHatchInputBus implements IConf
     public void getWailaBody(ItemStack itemStack, List<String> currenttip, IWailaDataAccessor accessor,
         IWailaConfigHandler config) {
         NBTTagCompound tag = accessor.getNBTData();
-        if (tag.hasKey("name"))
-            currenttip.add(EnumChatFormatting.AQUA + tag.getString("name") + EnumChatFormatting.RESET);
+        if (tag.hasKey("name")) {
+            currenttip.add(
+                EnumChatFormatting.AQUA
+                    + (MainConfig.enableHatchInterfaceTerminalEnhance
+                        ? Utils.getExtraInterfaceName(tag.getString("name"))
+                        : tag.getString("name"))
+                    + EnumChatFormatting.RESET);
+        }
         currenttip.add(StatCollector.translateToLocal("Info_ShowPattern_" + (showPattern ? "Enabled" : "Disabled")));
         if (tag.hasKey("inventory")) {
             NBTTagList inventory = tag.getTagList("inventory", Constants.NBT.TAG_COMPOUND);

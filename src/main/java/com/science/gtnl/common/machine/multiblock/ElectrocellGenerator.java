@@ -189,7 +189,7 @@ public class ElectrocellGenerator extends MultiMachineBase<ElectrocellGenerator>
     @Override
     public void onPostTick(IGregTechTileEntity aBaseMetaTileEntity, long aTick) {
         super.onPostTick(aBaseMetaTileEntity, aTick);
-        if (!aBaseMetaTileEntity.isServerSide()) return;
+        if (mStartUpCheck > 0 || !aBaseMetaTileEntity.isServerSide()) return;
         if (mMaxProgresstime > 0 && aTick % 20 == 0) {
             FluidStack matchedFluidExtra = matchedFluid.copy();
             matchedFluidExtra.amount = (int) (matchedFluidExtra.amount * generatorValue);
