@@ -816,11 +816,12 @@ public class AssemblerRecipes implements IRecipePool {
                 ItemList.Hatch_Output_ME.get(1L),
                 GTModHandler.getModItem(AppliedEnergistics2.ID, "tile.BlockQuantumRing", 2),
                 GTModHandler.getModItem(AppliedEnergistics2.ID, "tile.BlockQuantumLinkChamber", 1),
-                GTModHandler.getModItem(AppliedEnergistics2.ID, "item.ItemMultiMaterial", 2,47),
-                GTModHandler.getModItem(AppliedEnergistics2.ID,"tile.BlockTinyTNT",1),
-                GTModHandler.getModItem(AppliedEnergistics2.ID,"tile.BlockCraftUnit",1,1))
+                GTModHandler.getModItem(AppliedEnergistics2.ID, "item.ItemMultiMaterial", 2, 47),
+                GTModHandler.getModItem(AppliedEnergistics2.ID, "tile.BlockTinyTNT", 1),
+                GTModHandler.getModItem(AppliedEnergistics2.ID, "tile.BlockCraftUnit", 1, 1))
             .itemOutputs(
-                GTNLItemList.OutputHatchMEProxy.get(1L))
+                ItemUtils
+                    .getItemStack(GTNLItemList.OutputHatchMEProxy.get(1L), "{baseCapacity:9223372036854775807L}", null))
             .duration(300)
             .eut(480)
             .addTo(As);
@@ -830,11 +831,12 @@ public class AssemblerRecipes implements IRecipePool {
                 ItemList.Hatch_Output_Bus_ME.get(1L),
                 GTModHandler.getModItem(AppliedEnergistics2.ID, "tile.BlockQuantumRing", 2),
                 GTModHandler.getModItem(AppliedEnergistics2.ID, "tile.BlockQuantumLinkChamber", 1),
-                GTModHandler.getModItem(AppliedEnergistics2.ID, "item.ItemMultiMaterial", 2,47),
-                GTModHandler.getModItem(AppliedEnergistics2.ID,"tile.BlockTinyTNT",1),
-                GTModHandler.getModItem(AppliedEnergistics2.ID,"tile.BlockCraftUnit",1,1))
+                GTModHandler.getModItem(AppliedEnergistics2.ID, "item.ItemMultiMaterial", 2, 47),
+                GTModHandler.getModItem(AppliedEnergistics2.ID, "tile.BlockTinyTNT", 1),
+                GTModHandler.getModItem(AppliedEnergistics2.ID, "tile.BlockCraftUnit", 1, 1))
             .itemOutputs(
-                GTNLItemList.OutputBusMEProxy.get(1L))
+                ItemUtils
+                    .getItemStack(GTNLItemList.OutputBusMEProxy.get(1L), "{baseCapacity:9223372036854775807L}", null))
             .duration(300)
             .eut(480)
             .addTo(As);
