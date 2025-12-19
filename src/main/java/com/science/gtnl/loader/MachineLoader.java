@@ -43,6 +43,8 @@ import com.science.gtnl.common.machine.hatch.NinefoldInputHatch;
 import com.science.gtnl.common.machine.hatch.OredictInputBusME;
 import com.science.gtnl.common.machine.hatch.OriginalInputHatch;
 import com.science.gtnl.common.machine.hatch.OriginalOutputHatch;
+import com.science.gtnl.common.machine.hatch.OutputBusMEProxy;
+import com.science.gtnl.common.machine.hatch.OutputHatchMEProxy;
 import com.science.gtnl.common.machine.hatch.ParallelControllerHatch;
 import com.science.gtnl.common.machine.hatch.SuperCraftingInputHatchME;
 import com.science.gtnl.common.machine.hatch.SuperCraftingInputProxy;
@@ -4809,6 +4811,20 @@ public class MachineLoader {
                 StatCollector.translateToLocal("SuperTypeFilteredInputBusME"),
                 true));
         addItemTooltip(GTNLItemList.SuperTypeFilteredInputBusME.get(1), AnimatedText.SCIENCE_NOT_LEISURE);
+
+        GTNLItemList.OutputBusMEProxy.set(
+            new OutputBusMEProxy(
+                OUTPUT_BUS_ME_PROXY.ID,
+                "OutputBusMEProxy",
+                StatCollector.translateToLocal("OutputBusMEProxy")));
+        addItemTooltip(GTNLItemList.OutputBusMEProxy.get(1), AnimatedText.SCIENCE_NOT_LEISURE);
+
+        GTNLItemList.OutputHatchMEProxy.set(
+            new OutputHatchMEProxy(
+                OUTPUT_HATCH_ME_PROXY.ID,
+                "OutputHatchMEProxy",
+                StatCollector.translateToLocal("OutputHatchMEProxy")));
+        addItemTooltip(GTNLItemList.OutputHatchMEProxy.get(1), AnimatedText.SCIENCE_NOT_LEISURE);
     }
 
     public static void registerWireAndPipe() {

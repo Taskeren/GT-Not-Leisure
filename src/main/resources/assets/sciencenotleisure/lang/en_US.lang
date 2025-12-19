@@ -676,6 +676,24 @@ Tooltip_TapDynamoHatch_01=Click to generate EU
 BigSteamInputHatch=Large Steam Hatch
 AllSteamCapacity=All Steam Capacity: 
 
+OutputBusMEProxy=Output Bus Proxy (ME)
+Tooltip_OutputBusMEProxy_00=Item Output for Multiblocks
+Tooltip_OutputBusMEProxy_01=Stores directly into ME
+Tooltip_OutputBusMEProxy_02=Can cache 1600 items by default
+Tooltip_OutputBusMEProxy_03=Change cache size by inserting a fluid storage cell
+Tooltip_OutputBusMEProxy_04=Change ME connection behavior by right-clicking with wire cutter
+Tooltip_OutputBusMEProxy_05=Partition the inserted Storage Cell to filter accepted outputs
+Tooltip_OutputBusMEProxy_06=Use data stick to link target Output Bus (ME)
+
+OutputHatchMEProxy=Output Hatch Proxy (ME)
+Tooltip_OutputHatchMEProxy_00=Fluid Output for Multiblocks
+Tooltip_OutputHatchMEProxy_01=Stores directly into ME
+Tooltip_OutputHatchMEProxy_02=Can cache up to 128kL of fluids by default
+Tooltip_OutputHatchMEProxy_03=Change cache size by inserting a fluid storage cell
+Tooltip_OutputHatchMEProxy_04=Change ME connection behavior by right-clicking with wire cutter
+Tooltip_OutputHatchMEProxy_05=Partition the inserted Storage Cell to filter accepted outputs
+Tooltip_OutputHatchMEProxy_06=Use data stick to link target Output Hatch (ME)
+
 SuperCraftingInputHatchME=Super Pattern Input Assembly (ME)
 SuperCraftingInputBusME=Super Pattern Input Bus (ME)
 Tooltip_SuperCraftingInputHatchME_00=Input items for multiblock machines

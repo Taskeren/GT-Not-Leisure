@@ -676,6 +676,24 @@ Tooltip_TapDynamoHatch_01=点击推动动力仓发电
 BigSteamInputHatch=大型蒸汽仓
 AllSteamCapacity=总蒸汽数量：
 
+OutputBusMEProxy=输出总线镜像(ME)
+Tooltip_OutputBusMEProxy_00=从多方块机器输出物品
+Tooltip_OutputBusMEProxy_01=直接存储到ME系统
+Tooltip_OutputBusMEProxy_02=默认能够缓存1600个物品
+Tooltip_OutputBusMEProxy_03=插入存储元件以改变缓存大小
+Tooltip_OutputBusMEProxy_04=手持剪线钳右键以改变仓室与ME网络的连接模式
+Tooltip_OutputBusMEProxy_05=对插入的存储元件进行分区以对可接受的输出进行过滤
+Tooltip_OutputBusMEProxy_06=使用闪存链接到目标输出总线(ME)
+
+OutputHatchMEProxy=输出仓镜像(ME)
+Tooltip_OutputHatchMEProxy_00=从多方块机器输出流体
+Tooltip_OutputHatchMEProxy_01=直接存储到ME系统
+Tooltip_OutputHatchMEProxy_02=默认能够缓存128kL流体
+Tooltip_OutputHatchMEProxy_03=插入流体存储元件以改变缓存大小
+Tooltip_OutputHatchMEProxy_04=手持剪线钳右键以改变仓室与ME网络的连接模式
+Tooltip_OutputHatchMEProxy_05=对插入的存储元件进行分区以对可接受的输出进行过滤
+Tooltip_OutputHatchMEProxy_06=使用闪存链接到目标输出仓(ME)
+
 SuperCraftingInputHatchME=超级样板输入总成 (ME)
 SuperCraftingInputBusME=超级样板输入总线 (ME)
 Tooltip_SuperCraftingInputHatchME_00=为多方块机器输入物品

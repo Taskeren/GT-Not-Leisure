@@ -35,9 +35,13 @@ public abstract class MixinMTEPreciseAssembler extends MTEExtendedPowerMultiBloc
         if (getRecipeMap() == null) return;
         IMetaTileEntity aMetaTileEntity = aTileEntity.getMetaTileEntity();
         if (aMetaTileEntity == null) return;
-        if (aMetaTileEntity instanceof MTEHatchInputBus)
+        if (aMetaTileEntity instanceof MTEHatchInputBus hatch) {
             ((IMultiblockRecipeMap) aMetaTileEntity).setRecipeMapName(getRecipeMap().unlocalizedName);
-        if (aMetaTileEntity instanceof MTEHatchInput)
+            hatch.updateCraftingIcon(getMachineCraftingIcon());
+        }
+        if (aMetaTileEntity instanceof MTEHatchInput hatch) {
             ((IMultiblockRecipeMap) aMetaTileEntity).setRecipeMapName(getRecipeMap().unlocalizedName);
+            hatch.updateCraftingIcon(getMachineCraftingIcon());
+        }
     }
 }

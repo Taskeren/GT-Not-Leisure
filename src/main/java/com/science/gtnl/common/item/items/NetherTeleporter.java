@@ -77,24 +77,23 @@ public class NetherTeleporter extends Item implements SubtitleDisplay {
     private void transferPlayer(EntityPlayerMP player, int targetDim) {
         WorldServer targetWorld = player.mcServer.worldServerForDimension(targetDim);
 
-        double x = player.posX;
-        double z = player.posZ;
-        double y = player.posY;
+        int x = (int) player.posX;
+        int z = (int) player.posZ;
+        int y = (int) player.posY;
 
         if (targetDim == -1) {
-            x = Math.floor(x / 8);
-            z = Math.floor(z / 8);
+            x = x / 8;
+            z = z / 8;
         } else {
             x = x * 8;
             z = z * 8;
         }
 
-        int baseX = (int) x;
-        int baseY = (int) y;
-        int baseZ = (int) z;
+        int baseX = x;
+        int baseZ = z;
 
         int safeX = baseX;
-        int safeY = baseY;
+        int safeY = y;
         int safeZ = baseZ;
 
         int maxY = (targetDim == -1) ? 128 : 253;
@@ -104,7 +103,7 @@ public class NetherTeleporter extends Item implements SubtitleDisplay {
             for (int dz = -25; dz <= 25; dz++) {
                 for (int dy = -25; dy <= 25; dy++) {
                     int cx = baseX + dx;
-                    int cy = MathHelper.clamp_int(baseY + dy, 1, maxY);
+                    int cy = MathHelper.clamp_int(y + dy, 1, maxY);
                     int cz = baseZ + dz;
 
                     if (targetWorld.isAirBlock(cx, cy, cz) && targetWorld.isAirBlock(cx, cy + 1, cz)) {
