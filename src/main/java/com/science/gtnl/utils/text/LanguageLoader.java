@@ -1,9 +1,10 @@
 package com.science.gtnl.utils.text;
 
 import com.science.gtnl.common.material.MaterialPool;
-import com.science.gtnl.mixins.late.Gregtech.AccessorGTLanguageManager;
+import com.science.gtnl.utils.Utils;
 
 import bartworks.system.material.Werkstoff;
+import bartworks.system.material.WerkstoffLoader;
 import cpw.mods.fml.common.FMLCommonHandler;
 import gregtech.api.enums.Materials;
 import gregtech.api.enums.OrePrefixes;
@@ -172,35 +173,85 @@ public class LanguageLoader {
         if (aWerkstoff.hasItemType(OrePrefixes.cell)) {
             addStringLocalization("fluid." + unlocalizedName, localizedName);
         }
-        if (aWerkstoff.hasItemType(OrePrefixes.wire)) {
+
+        if (WerkstoffLoader.getCorrespondingItemStackUnsafe(OrePrefixes.wireGt01, aWerkstoff, 1) != null) {
             addStringLocalization("gt.blockmachines.wire." + unlocalizedName + ".01.name", "1x%material导线");
+        }
+        if (WerkstoffLoader.getCorrespondingItemStackUnsafe(OrePrefixes.wireGt02, aWerkstoff, 1) != null) {
             addStringLocalization("gt.blockmachines.wire." + unlocalizedName + ".02.name", "2x%material导线");
+        }
+        if (WerkstoffLoader.getCorrespondingItemStackUnsafe(OrePrefixes.wireGt04, aWerkstoff, 1) != null) {
             addStringLocalization("gt.blockmachines.wire." + unlocalizedName + ".04.name", "4x%material导线");
+        }
+        if (WerkstoffLoader.getCorrespondingItemStackUnsafe(OrePrefixes.wireGt08, aWerkstoff, 1) != null) {
             addStringLocalization("gt.blockmachines.wire." + unlocalizedName + ".08.name", "8x%material导线");
+        }
+        if (WerkstoffLoader.getCorrespondingItemStackUnsafe(OrePrefixes.wireGt12, aWerkstoff, 1) != null) {
             addStringLocalization("gt.blockmachines.wire." + unlocalizedName + ".12.name", "12x%material导线");
+        }
+        if (WerkstoffLoader.getCorrespondingItemStackUnsafe(OrePrefixes.wireGt16, aWerkstoff, 1) != null) {
             addStringLocalization("gt.blockmachines.wire." + unlocalizedName + ".16.name", "16x%material导线");
         }
-        if (aWerkstoff.hasItemType(OrePrefixes.cable)) {
+
+        if (WerkstoffLoader.getCorrespondingItemStackUnsafe(OrePrefixes.cableGt01, aWerkstoff, 1) != null) {
             addStringLocalization("gt.blockmachines.cable." + unlocalizedName + ".01.name", "1x%material线缆");
+        }
+        if (WerkstoffLoader.getCorrespondingItemStackUnsafe(OrePrefixes.cableGt02, aWerkstoff, 1) != null) {
             addStringLocalization("gt.blockmachines.cable." + unlocalizedName + ".02.name", "2x%material线缆");
+        }
+        if (WerkstoffLoader.getCorrespondingItemStackUnsafe(OrePrefixes.cableGt04, aWerkstoff, 1) != null) {
             addStringLocalization("gt.blockmachines.cable." + unlocalizedName + ".04.name", "4x%material线缆");
+        }
+        if (WerkstoffLoader.getCorrespondingItemStackUnsafe(OrePrefixes.cableGt08, aWerkstoff, 1) != null) {
             addStringLocalization("gt.blockmachines.cable." + unlocalizedName + ".08.name", "8x%material线缆");
+        }
+        if (WerkstoffLoader.getCorrespondingItemStackUnsafe(OrePrefixes.cableGt12, aWerkstoff, 1) != null) {
             addStringLocalization("gt.blockmachines.cable." + unlocalizedName + ".12.name", "12x%material线缆");
+        }
+        if (WerkstoffLoader.getCorrespondingItemStackUnsafe(OrePrefixes.cableGt16, aWerkstoff, 1) != null) {
             addStringLocalization("gt.blockmachines.cable." + unlocalizedName + ".16.name", "16x%material线缆");
         }
-        if (aWerkstoff.hasItemType(OrePrefixes.pipe)) {
+
+        if (WerkstoffLoader.getCorrespondingItemStackUnsafe(OrePrefixes.pipeTiny, aWerkstoff, 1) != null) {
             if (isItemPipe) {
                 addStringLocalization("gt.blockmachines.gt_pipe_" + mPipeName + ".name", "%material物品管道");
-                addStringLocalization("gt.blockmachines.gt_pipe_" + mPipeName + "_huge.name", "巨型%material物品管道");
-                addStringLocalization("gt.blockmachines.gt_pipe_" + mPipeName + "_large.name", "大型%material物品管道");
-                addStringLocalization("gt.blockmachines.gt_pipe_" + mPipeName + "_small.name", "小型%material物品管道");
-                addStringLocalization("gt.blockmachines.gt_pipe_" + mPipeName + "_tiny.name", "微型%material物品管道");
             } else {
                 addStringLocalization("gt.blockmachines.gt_pipe_" + mPipeName + ".name", "%material流体管道");
-                addStringLocalization("gt.blockmachines.gt_pipe_" + mPipeName + "_huge.name", "巨型%material流体管道");
-                addStringLocalization("gt.blockmachines.gt_pipe_" + mPipeName + "_large.name", "大型%material流体管道");
-                addStringLocalization("gt.blockmachines.gt_pipe_" + mPipeName + "_small.name", "小型%material流体管道");
-                addStringLocalization("gt.blockmachines.gt_pipe_" + mPipeName + "_tiny.name", "微型%material流体管道");
+            }
+        }
+        if (WerkstoffLoader.getCorrespondingItemStackUnsafe(OrePrefixes.pipeTiny, aWerkstoff, 1) != null) {
+            if (isItemPipe) {
+                addStringLocalization("gt.blockmachines.gt_pipe_" + mPipeName + "_tiny.name", "%material物品管道");
+            } else {
+                addStringLocalization("gt.blockmachines.gt_pipe_" + mPipeName + "_tiny.name", "%material流体管道");
+            }
+        }
+        if (WerkstoffLoader.getCorrespondingItemStackUnsafe(OrePrefixes.pipeSmall, aWerkstoff, 1) != null) {
+            if (isItemPipe) {
+                addStringLocalization("gt.blockmachines.gt_pipe_" + mPipeName + "_small.name", "%material物品管道");
+            } else {
+                addStringLocalization("gt.blockmachines.gt_pipe_" + mPipeName + "_small.name", "%material流体管道");
+            }
+        }
+        if (WerkstoffLoader.getCorrespondingItemStackUnsafe(OrePrefixes.pipeMedium, aWerkstoff, 1) != null) {
+            if (isItemPipe) {
+                addStringLocalization("gt.blockmachines.gt_pipe_" + mPipeName + "_medium.name", "%material物品管道");
+            } else {
+                addStringLocalization("gt.blockmachines.gt_pipe_" + mPipeName + "_medium.name", "%material流体管道");
+            }
+        }
+        if (WerkstoffLoader.getCorrespondingItemStackUnsafe(OrePrefixes.pipeLarge, aWerkstoff, 1) != null) {
+            if (isItemPipe) {
+                addStringLocalization("gt.blockmachines.gt_pipe_" + mPipeName + "_large.name", "%material物品管道");
+            } else {
+                addStringLocalization("gt.blockmachines.gt_pipe_" + mPipeName + "_large.name", "%material流体管道");
+            }
+        }
+        if (WerkstoffLoader.getCorrespondingItemStackUnsafe(OrePrefixes.pipeHuge, aWerkstoff, 1) != null) {
+            if (isItemPipe) {
+                addStringLocalization("gt.blockmachines.gt_pipe_" + mPipeName + "_huge.name", "%material物品管道");
+            } else {
+                addStringLocalization("gt.blockmachines.gt_pipe_" + mPipeName + "_huge.name", "%material流体管道");
             }
         }
     }
@@ -312,6 +363,6 @@ public class LanguageLoader {
     }
 
     public static String addStringLocalization(String trimmedKey, String text) {
-        return AccessorGTLanguageManager.callStoreTranslation(trimmedKey, text);
+        return Utils.storeTranslation(trimmedKey, text);
     }
 }

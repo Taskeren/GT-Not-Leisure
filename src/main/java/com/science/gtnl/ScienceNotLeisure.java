@@ -7,6 +7,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import com.science.gtnl.common.command.CommandEnergyNetwork;
+import com.science.gtnl.common.command.CommandItemInfo;
 import com.science.gtnl.common.command.CommandPlaySound;
 import com.science.gtnl.common.command.CommandReloadConfig;
 import com.science.gtnl.common.command.CommandSteamNetwork;
@@ -111,6 +112,7 @@ public class ScienceNotLeisure {
         event.registerServerCommand(new CommandSteamNetwork());
         event.registerServerCommand(new CommandEnergyNetwork());
         event.registerServerCommand(new CommandPlaySound());
+        event.registerServerCommand(new CommandItemInfo());
         event.registerServerCommand(new CommandSudo());
         RecipeLoader.loadServerStart();
     }

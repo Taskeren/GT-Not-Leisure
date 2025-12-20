@@ -1588,8 +1588,8 @@ InfinityCell.stone.name=stone
 Tooltip_InfinityCell_Contents=Contains Item:
 
 item.milledNaquadahEnriched.name=Milled Enriched Naquadah
-item.FrothNaquadahEnrichedflotation=Enriched Naquadah Flotation Froth Unit
-item.FrothNaquadahEnrichedflotation.name=Enriched Naquadah Flotation Froth Unit
+item.FrothNaquadahenrichedflotation=Enriched Naquadah Flotation Froth Cell
+item.FrothNaquadahenrichedflotation.name=Enriched Naquadah Flotation Froth Cell
 gtplusplus.fluid.naquadahenrichedfroth=Enriched Naquadah Froth
 fluid.froth.naquadahenrichedflotation=Enriched Naquadah Froth
 

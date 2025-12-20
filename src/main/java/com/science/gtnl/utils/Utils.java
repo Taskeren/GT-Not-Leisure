@@ -12,6 +12,7 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 import java.util.Objects;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -37,18 +38,24 @@ import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.util.StatCollector;
 import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
+import net.minecraftforge.common.config.Property;
 import net.minecraftforge.fluids.FluidStack;
 
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 
 import com.mojang.authlib.GameProfile;
+import com.science.gtnl.mixins.early.Minecraft.AccessorStringTranslate;
+import com.science.gtnl.mixins.late.Gregtech.AccessorGTLanguageManager;
 import com.science.gtnl.utils.machine.FluidTankG;
 import com.science.gtnl.utils.machine.ItemStackG;
 
 import appeng.api.storage.data.IAEItemStack;
 import cpw.mods.fml.common.FMLCommonHandler;
+import cpw.mods.fml.common.registry.LanguageRegistry;
+import gregtech.api.GregTechAPI;
 import gregtech.api.metatileentity.MetaTileEntity;
+import gregtech.api.util.GTLanguageManager;
 import gregtech.api.util.GTUtility;
 import it.unimi.dsi.fastutil.objects.Object2LongOpenHashMap;
 
@@ -479,6 +486,47 @@ public class Utils {
             sb.append('!');
         }
         return sb.toString();
+    }
+
+    public static synchronized String storeTranslation(String trimmedKey, String text) {
+        return storeTranslation(trimmedKey, text, "en_US");
+    }
+
+    public static synchronized String storeTranslation(String trimmedKey, String text, String language) {
+        String translation = writeToLangFile(trimmedKey, text);
+        AccessorGTLanguageManager.getLangMap()
+            .put(trimmedKey, translation);
+        Map<String, String> langList = ((AccessorStringTranslate) AccessorStringTranslate.getInstance())
+            .getLanguageList();
+        if (langList != null) langList.put(trimmedKey, translation);
+        AccessorGTLanguageManager.getTempMap()
+            .put(trimmedKey, translation);
+        LanguageRegistry.instance()
+            // If we use the actual user configured locale here, switching lang to others while running game
+            // turns everything into unlocalized string. So we make it "default" and call it a day.
+            .injectLanguage(language, AccessorGTLanguageManager.getTempMap());
+        AccessorGTLanguageManager.getTempMap()
+            .clear();
+        return translation;
+    }
+
+    public static synchronized String writeToLangFile(String trimmedKey, String text) {
+        Property tProperty = GTLanguageManager.sEnglishFile.get("LanguageFile", trimmedKey, text);
+        if (AccessorGTLanguageManager.getHasUnsavedEntry() && GregTechAPI.sPostloadFinished) {
+            GTLanguageManager.sEnglishFile.save();
+            AccessorGTLanguageManager.setHasUnsavedEntry(false);
+        }
+        String translation = tProperty.getString();
+        if (tProperty.wasRead()) {
+            if (!text.equals(translation)) {
+                tProperty.set(text);
+                AccessorGTLanguageManager.callMarkFileDirty();
+                return text;
+            }
+        } else {
+            AccessorGTLanguageManager.callMarkFileDirty();
+        }
+        return translation;
     }
 
     public static String ensureUUID(NBTTagCompound aNBT) {
