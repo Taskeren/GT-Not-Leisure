@@ -17,6 +17,7 @@ import com.science.gtnl.loader.MaterialLoader;
 import com.science.gtnl.loader.RecipeLoader;
 import com.science.gtnl.utils.enums.ModList;
 import com.science.gtnl.utils.item.MissingMappingsHandler;
+import com.science.gtnl.utils.text.LanguageLoader;
 
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.SidedProxy;
@@ -98,6 +99,7 @@ public class ScienceNotLeisure {
     @Mod.EventHandler
     public void completeInit(FMLLoadCompleteEvent event) {
         proxy.completeInit(event);
+        LanguageLoader.registry();
     }
 
     // register server commands in this event handler (Remove if not needed)

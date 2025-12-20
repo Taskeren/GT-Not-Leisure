@@ -26,7 +26,6 @@ import com.science.gtnl.utils.gui.portableWorkbench.ContainerPortableAdvancedWor
 import com.science.gtnl.utils.gui.portableWorkbench.ContainerPortableAvaritiaddonsChest;
 import com.science.gtnl.utils.gui.portableWorkbench.ContainerPortableChest;
 import com.science.gtnl.utils.machine.greenHouseManager.GreenHouseBucket;
-import com.science.gtnl.utils.text.LanguageLoader;
 
 import bartworks.API.WerkstoffAdderRegistry;
 import cpw.mods.fml.common.Optional;
@@ -81,8 +80,6 @@ public class MaterialLoader {
         if (Mods.InventoryBogoSorter.isModLoaded()) {
             loadCraftTweak();
         }
-
-        LanguageLoader.registry();
     }
 
     public static void loadCompleteInit() {
