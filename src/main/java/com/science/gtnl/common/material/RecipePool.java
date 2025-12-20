@@ -102,7 +102,7 @@ public class RecipePool {
         .frontend(GeneralFrontend::new)
         .neiHandlerInfo(
             builder -> builder.setDisplayStack(GTNLItemList.TeleportationArrayToAlfheim.get(1))
-                .setMultipleWidgetsAllowed(false))
+                .setMaxRecipesPerPage(1))
         .build();
 
     public static final RecipeMap<RecipeMapBackend> RuneAltarRecipes = RecipeMapBuilder
