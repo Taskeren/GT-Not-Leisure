@@ -434,15 +434,7 @@ public class ChemicalRecipes implements IRecipePool {
             .fluidOutputs(GGMaterial.fluoroantimonicAcid.getFluidOrGas(1000), Materials.Hydrogen.getGas(2000))
             .duration(300)
             .eut(TierEU.RECIPE_HV)
-            .addTo(UC);
-
-        RecipeBuilder.builder()
-            .itemInputs(MaterialPool.AntimonyTrifluoride.get(OrePrefixes.dust, 4))
-            .fluidInputs(Materials.Fluorine.getGas(2000))
-            .fluidOutputs(GGMaterial.antimonyPentafluoride.getFluidOrGas(1000))
-            .duration(100)
-            .eut(TierEU.RECIPE_HV)
-            .addTo(UC);
+            .addTo(MCRR);
 
         RecipeBuilder.builder()
             .itemInputs(GTUtility.getIntegratedCircuit(2))
