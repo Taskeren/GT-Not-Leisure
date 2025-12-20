@@ -100,7 +100,9 @@ public class RecipePool {
         .maxIO(4, 36, 1, 0)
         .progressBar(GTUITextures.PROGRESSBAR_ARROW_MULTIPLE)
         .frontend(GeneralFrontend::new)
-        .neiHandlerInfo(builder -> builder.setDisplayStack(GTNLItemList.TeleportationArrayToAlfheim.get(1)))
+        .neiHandlerInfo(
+            builder -> builder.setDisplayStack(GTNLItemList.TeleportationArrayToAlfheim.get(1))
+                .setMultipleWidgetsAllowed(false))
         .build();
 
     public static final RecipeMap<RecipeMapBackend> RuneAltarRecipes = RecipeMapBuilder
