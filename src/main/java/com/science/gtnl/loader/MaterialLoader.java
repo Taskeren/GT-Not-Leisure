@@ -52,8 +52,6 @@ public class MaterialLoader {
 
         loadOreDictionaryRecipes();
 
-        LanguageLoader.registry();
-
         if (Mods.InventoryBogoSorter.isModLoaded()) {
             BogoSortAPI.INSTANCE.addGenericCompat(ContainerPortableChest.class);
             BogoSortAPI.INSTANCE.addGenericCompat(ContainerPortableAvaritiaddonsChest.class);
@@ -64,6 +62,8 @@ public class MaterialLoader {
         MachineLoader.registerGlasses();
         WailaLoader.register();
         TickrateAPI.changeTickrate(MainConfig.defaultTickrate);
+
+        LanguageLoader.registry();
     }
 
     public static void loadPostInit() {
