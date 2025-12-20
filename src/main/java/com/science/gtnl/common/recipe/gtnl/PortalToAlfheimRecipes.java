@@ -3,23 +3,25 @@ package com.science.gtnl.common.recipe.gtnl;
 import static com.dreammaster.scripts.IScriptLoader.missing;
 import static gregtech.api.enums.Mods.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.StatCollector;
+import net.minecraftforge.oredict.OreDictionary;
 
 import com.science.gtnl.api.IRecipePool;
 import com.science.gtnl.common.material.RecipePool;
 import com.science.gtnl.utils.enums.GTNLItemList;
 import com.science.gtnl.utils.recipes.RecipeBuilder;
 
-import gregtech.api.enums.ItemList;
-import gregtech.api.enums.Materials;
-import gregtech.api.enums.OrePrefixes;
 import gregtech.api.recipe.RecipeMap;
 import gregtech.api.util.GTModHandler;
-import gregtech.api.util.GTOreDictUnificator;
 import gregtech.api.util.GTUtility;
+import vazkii.botania.api.BotaniaAPI;
+import vazkii.botania.api.recipe.RecipeElvenTrade;
 
 public class PortalToAlfheimRecipes implements IRecipePool {
 
@@ -36,49 +38,63 @@ public class PortalToAlfheimRecipes implements IRecipePool {
                         .setStackDisplayName(StatCollector.translateToLocal("PTARRecipes.1"))))
             .duration(1200)
             .eut(0)
+            .fake()
             .addTo(PTAR);
 
-        RecipeBuilder.builder()
-            .itemInputs(GTModHandler.getModItem(AdvancedSolarPanel.ID, "asp_crafting_items", 1, 9, missing))
-            .itemOutputs(GTModHandler.getModItem(Botania.ID, "manaResource", 1, 8, missing))
-            .duration(20)
-            .eut(2048)
-            .addTo(PTAR);
+        for (RecipeElvenTrade recipe : BotaniaAPI.elvenTradeRecipes) {
 
-        RecipeBuilder.builder()
-            .itemInputs(GTOreDictUnificator.get(OrePrefixes.circuit, Materials.IV, 1L))
-            .itemOutputs(GTModHandler.getModItem(Botania.ID, "manaResource", 1, 9, missing))
-            .duration(20)
-            .eut(2048)
-            .addTo(PTAR);
+            List<Object> originInputs = recipe.getInputs();
+            ItemStack output = recipe.getOutput()
+                .copy();
 
-        RecipeBuilder.builder()
-            .itemInputs(GTModHandler.getModItem(IndustrialCraft2.ID, "blockAlloyGlass", 1, 0, missing))
-            .itemOutputs(GTModHandler.getModItem(Botania.ID, "elfGlass", 1, 0, missing))
-            .duration(20)
-            .eut(2048)
-            .addTo(PTAR);
+            List<List<ItemStack>> combinations = new ArrayList<>();
+            combinations.add(new ArrayList<>());
 
-        RecipeBuilder.builder()
-            .itemInputs(new ItemStack(Items.quartz, 1))
-            .itemOutputs(GTModHandler.getModItem(Botania.ID, "quartz", 1, 5, missing))
-            .duration(20)
-            .eut(2048)
-            .addTo(PTAR);
+            for (Object input : originInputs) {
 
-        RecipeBuilder.builder()
-            .itemInputs(ItemList.Casing_CleanStainlessSteel.get(1))
-            .itemOutputs(GTModHandler.getModItem(Botania.ID, "dreamwood", 1, 0, missing))
-            .duration(20)
-            .eut(2048)
-            .addTo(PTAR);
+                List<List<ItemStack>> nextCombinations = new ArrayList<>();
 
-        RecipeBuilder.builder()
-            .itemInputs(GTOreDictUnificator.get(OrePrefixes.gearGtSmall, Materials.TungstenSteel, 1L))
-            .itemOutputs(GTModHandler.getModItem(Botania.ID, "manaResource", 1, 7, missing))
-            .duration(20)
-            .eut(2048)
-            .addTo(PTAR);
+                if (input instanceof String oreName) {
+                    List<ItemStack> ores = OreDictionary.getOres(oreName);
+
+                    for (ItemStack oreStack : ores) {
+                        ItemStack stack = oreStack.copy();
+                        if (stack.getItemDamage() == Short.MAX_VALUE) {
+                            stack.setItemDamage(0);
+                        }
+
+                        for (List<ItemStack> prev : combinations) {
+                            List<ItemStack> next = new ArrayList<>(prev);
+                            next.add(stack);
+                            nextCombinations.add(next);
+                        }
+                    }
+
+                } else if (input instanceof ItemStack itemStack) {
+                    ItemStack stack = itemStack.copy();
+                    if (stack.getItemDamage() == Short.MAX_VALUE) {
+                        stack.setItemDamage(0);
+                    }
+
+                    for (List<ItemStack> prev : combinations) {
+                        List<ItemStack> next = new ArrayList<>(prev);
+                        next.add(stack);
+                        nextCombinations.add(next);
+                    }
+                }
+
+                combinations = nextCombinations;
+            }
+
+            for (List<ItemStack> inputs : combinations) {
+                RecipeBuilder.builder()
+                    .itemInputs(inputs)
+                    .itemOutputs(output)
+                    .duration(20)
+                    .eut(2048)
+                    .addTo(PTAR);
+            }
+        }
 
         RecipeBuilder.builder()
             .itemInputs(

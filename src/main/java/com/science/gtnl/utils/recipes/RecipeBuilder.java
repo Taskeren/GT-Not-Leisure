@@ -3,6 +3,7 @@ package com.science.gtnl.utils.recipes;
 import static gregtech.api.util.GTRecipeMapUtil.*;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 import javax.annotation.Nullable;
@@ -113,6 +114,10 @@ public class RecipeBuilder {
         inputsOreDict = null;
         alts = null;
         return this;
+    }
+
+    public RecipeBuilder itemInputs(List<ItemStack> inputItems) {
+        return itemInputs(inputItems.toArray(new ItemStack[0]));
     }
 
     public RecipeBuilder itemInputs(ItemStack... inputItems) {

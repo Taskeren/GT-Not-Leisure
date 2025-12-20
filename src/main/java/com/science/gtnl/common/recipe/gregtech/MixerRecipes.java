@@ -6,6 +6,7 @@ import static gregtech.api.util.GTRecipeConstants.*;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
+import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
 
 import com.science.gtnl.api.IRecipePool;
@@ -14,10 +15,12 @@ import com.science.gtnl.config.MainConfig;
 import com.science.gtnl.utils.enums.GTNLItemList;
 import com.science.gtnl.utils.recipes.RecipeBuilder;
 
+import crazypants.enderio.fluid.Fluids;
 import goodgenerator.items.GGMaterial;
 import gregtech.api.enums.ItemList;
 import gregtech.api.enums.Materials;
 import gregtech.api.enums.MaterialsGTNH;
+import gregtech.api.enums.Mods;
 import gregtech.api.enums.OrePrefixes;
 import gregtech.api.enums.TierEU;
 import gregtech.api.recipe.RecipeMap;
@@ -243,6 +246,91 @@ public class MixerRecipes implements IRecipePool {
             .fluidOutputs(MaterialPool.QuantumInfusion.getFluidOrGas(1000))
             .duration(10)
             .eut(TierEU.RECIPE_EV)
+            .addTo(MCR)
+            .addTo(MNCR);
+
+        RecipeBuilder.builder()
+            .itemInputs(
+                GTUtility.getIntegratedCircuit(4),
+                GTOreDictUnificator.get(OrePrefixes.dust, Materials.MeatRaw, 1))
+            .itemOutputs(new ItemStack(Items.sugar, 1))
+            .fluidInputs(Materials.Water.getFluid(1000))
+            .fluidOutputs(FluidRegistry.getFluidStack(Fluids.NUTRIENT_DISTILLATION, 500))
+            .duration(80)
+            .eut(TierEU.RECIPE_LV)
+            .addTo(MCR)
+            .addTo(MNCR);
+
+        RecipeBuilder.builder()
+            .itemInputs(GTUtility.getIntegratedCircuit(4), new ItemStack(Items.wheat, 1))
+            .itemOutputs(new ItemStack(Items.sugar, 1))
+            .fluidInputs(Materials.Water.getFluid(2000))
+            .fluidOutputs(FluidRegistry.getFluidStack(Fluids.HOOTCH, 1000))
+            .duration(80)
+            .eut(TierEU.RECIPE_LV)
+            .addTo(MCR)
+            .addTo(MNCR);
+
+        RecipeBuilder.builder()
+            .itemInputs(GTUtility.getIntegratedCircuit(4), new ItemStack(Items.blaze_powder, 1))
+            .itemOutputs(new ItemStack(Items.redstone, 1))
+            .fluidInputs(FluidRegistry.getFluidStack(Fluids.HOOTCH, 1000))
+            .fluidOutputs(FluidRegistry.getFluidStack(Fluids.FIRE_WATER, 1000))
+            .duration(80)
+            .eut(TierEU.RECIPE_LV)
+            .addTo(MCR)
+            .addTo(MNCR);
+
+        RecipeBuilder.builder()
+            .itemInputs(GTUtility.getIntegratedCircuit(4), new ItemStack(Items.glowstone_dust, 1))
+            .itemOutputs(new ItemStack(Blocks.double_plant, 1))
+            .fluidInputs(FluidRegistry.getFluidStack(Fluids.FIRE_WATER, 250))
+            .fluidOutputs(FluidRegistry.getFluidStack(Fluids.LIQUID_SUNSHINE, 250))
+            .duration(80)
+            .eut(TierEU.RECIPE_LV)
+            .addTo(MCR)
+            .addTo(MNCR);
+
+        RecipeBuilder.builder()
+            .itemInputs(
+                GTUtility.getIntegratedCircuit(4),
+                GTModHandler.getModItem(Mods.EnderIO.ID, "itemMaterial", 1, 14))
+            .itemOutputs(GTModHandler.getModItem(Mods.EnderIO.ID, "itemMaterial", 1, 16))
+            .fluidInputs(FluidRegistry.getFluidStack(Fluids.NUTRIENT_DISTILLATION, 4000))
+            .fluidOutputs(FluidRegistry.getFluidStack(Fluids.ENDER_DISTILLATION, 4000))
+            .duration(125)
+            .eut(TierEU.RECIPE_LV)
+            .addTo(MCR)
+            .addTo(MNCR);
+
+        RecipeBuilder.builder()
+            .itemInputs(
+                GTUtility.getIntegratedCircuit(4),
+                GTModHandler.getModItem(Mods.EnderIO.ID, "itemMaterial", 1, 14))
+            .itemOutputs(GTModHandler.getModItem(Mods.EnderIO.ID, "itemMaterial", 1, 17))
+            .fluidInputs(FluidRegistry.getFluidStack(Fluids.ENDER_DISTILLATION, 1000))
+            .fluidOutputs(FluidRegistry.getFluidStack(Fluids.VAPOR_OF_LEVITY, 1000))
+            .duration(125)
+            .eut(TierEU.RECIPE_LV)
+            .addTo(MCR)
+            .addTo(MNCR);
+
+        RecipeBuilder.builder()
+            .itemInputs(GTUtility.getIntegratedCircuit(4), new ItemStack(Items.clay_ball, 1))
+            .itemOutputs(new ItemStack(Items.snowball, 1))
+            .fluidInputs(Materials.Water.getFluid(250))
+            .fluidOutputs(FluidRegistry.getFluidStack(Fluids.CLOUD_SEED, 250))
+            .duration(80)
+            .eut(TierEU.RECIPE_LV)
+            .addTo(MCR)
+            .addTo(MNCR);
+
+        RecipeBuilder.builder()
+            .itemInputs(GTUtility.getIntegratedCircuit(4), new ItemStack(Items.clay_ball, 1))
+            .fluidInputs(FluidRegistry.getFluidStack(Fluids.CLOUD_SEED, 500))
+            .fluidOutputs(FluidRegistry.getFluidStack(Fluids.CLOUD_SEED_CONCENTRATED, 500))
+            .duration(125)
+            .eut(TierEU.RECIPE_LV)
             .addTo(MCR)
             .addTo(MNCR);
 

@@ -7,7 +7,6 @@ import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.village.MerchantRecipe;
 import net.minecraftforge.fluids.FluidStack;
-import net.minecraftforge.oredict.OreDictionary;
 
 import com.Nxer.TwistSpaceTechnology.common.recipeMap.GTCMRecipe;
 import com.Nxer.TwistSpaceTechnology.recipe.machineRecipe.expanded.AssemblyLineWithoutResearchRecipePool;
@@ -117,7 +116,6 @@ import com.science.gtnl.common.recipe.gtnl.SteamManufacturerRecipes;
 import com.science.gtnl.common.recipe.gtnl.SteamWeatherModuleRecipes;
 import com.science.gtnl.common.recipe.gtnl.SteamWoodcutterRecipes;
 import com.science.gtnl.common.recipe.gtnl.TheTwilightForestRecipes;
-import com.science.gtnl.common.recipe.oreDictionary.PortalToAlfheimOreRecipes;
 import com.science.gtnl.common.recipe.thaumcraft.TCRecipePool;
 import com.science.gtnl.common.recipe.thaumcraft.TCResearches;
 import com.science.gtnl.config.MainConfig;
@@ -178,17 +176,18 @@ public class RecipeLoader {
             registerBuffTargetChamberRecipe();
         }
 
-        IRecipePool[] recipePools = new IRecipePool[] { new TCRecipePool(), new ChemicalRecipes(),
-            new ElectrolyzerRecipes(), new MixerRecipes(), new AssemblerRecipes(), new AutoclaveRecipes(),
-            new AlloyBlastSmelterRecipes(), new CompressorRecipes(), new ReFusionReactorRecipes(),
-            new RealArtificialStarRecipes(), new PortalToAlfheimRecipes(), new NatureSpiritArrayRecipes(),
-            new ManaInfusionRecipes(), new TranscendentPlasmaMixerRecipes(), new PlasmaForgeRecipes(),
-            new CraftingTableRecipes(), new ChemicalBathRecipes(), new SteamCrackerRecipes(), new DesulfurizerRecipes(),
-            new PetrochemicalPlantRecipes(), new FusionReactorRecipes(), new SmeltingMixingFurnaceRecipes(),
-            new FluidExtraction(), new DigesterRecipes(), new DissolutionTankRecipes(), new CentrifugeRecipes(),
-            new ChemicalDehydratorRecipes(), new ChemicalPlantRecipes(), new RareEarthCentrifugalRecipes(),
-            new MatterFabricatorRecipes(), new TheTwilightForestRecipes(), new IsaMillRecipes(),
-            new CellRegulatorRecipes(), new VacuumFurnaceRecipes(), new FishingGroundRecipes(), new DistilleryRecipes(),
+        IRecipePool[] recipePools = new IRecipePool[] { new BotaniaManaInfusionRecipes(), new TCRecipePool(),
+            new ChemicalRecipes(), new ElectrolyzerRecipes(), new MixerRecipes(), new AssemblerRecipes(),
+            new AutoclaveRecipes(), new AlloyBlastSmelterRecipes(), new CompressorRecipes(),
+            new ReFusionReactorRecipes(), new RealArtificialStarRecipes(), new PortalToAlfheimRecipes(),
+            new NatureSpiritArrayRecipes(), new ManaInfusionRecipes(), new TranscendentPlasmaMixerRecipes(),
+            new PlasmaForgeRecipes(), new CraftingTableRecipes(), new ChemicalBathRecipes(), new SteamCrackerRecipes(),
+            new DesulfurizerRecipes(), new PetrochemicalPlantRecipes(), new FusionReactorRecipes(),
+            new SmeltingMixingFurnaceRecipes(), new FluidExtraction(), new DigesterRecipes(),
+            new DissolutionTankRecipes(), new CentrifugeRecipes(), new ChemicalDehydratorRecipes(),
+            new ChemicalPlantRecipes(), new RareEarthCentrifugalRecipes(), new MatterFabricatorRecipes(),
+            new TheTwilightForestRecipes(), new IsaMillRecipes(), new CellRegulatorRecipes(),
+            new VacuumFurnaceRecipes(), new FishingGroundRecipes(), new DistilleryRecipes(),
             new ElementCopyingRecipes(), new AlloySmelterRecipes(), new MolecularTransformerRecipes(),
             new NaquadahReactorRecipes(), new DragonEvolutionFusionCraftingRecipes(), new LaserEngraverRecipes(),
             new BacterialVatRecipes(), new CuttingRecipes(), new BlastFurnaceRecipes(), new FluidExtractorRecipes(),
@@ -204,18 +203,14 @@ public class RecipeLoader {
             new SteamGateAssemblerRecipes(), new CactusWonderFakeRecipes(), new InfernalCokeRecipes(),
             new SteamFusionReactorRecipes(), new SteamExtractinatorRecipes(), new RockBreakerRecipes(),
             new PrimitiveBrickKilnRecipes(), new TargetChamberRecipes(), new ElectrocellGeneratorRecipes(),
-            new RocketAssemblerRecipes(), new FluidSolidifierRecipes(), new BotaniaManaInfusionRecipes(),
-            new FormingPressRecipes(), new HammerRecipes(), new CyclotronRecipes(), new RuneAltarRecipes(),
-            new IndustrialRockCrusherRecipes(), new PrecisionLaserEngraver(), new NanitesIntegratedProcessingRecipes(),
-            new NanoForgeRecipes(), new SteamWeatherModuleRecipes(), new ElectricNeutronActivatorRecipes(),
-            new ReactorProcessingUnitRecipes(), new NuclearSaltProcessingPlantRecipes() };
+            new RocketAssemblerRecipes(), new FluidSolidifierRecipes(), new FormingPressRecipes(), new HammerRecipes(),
+            new CyclotronRecipes(), new RuneAltarRecipes(), new IndustrialRockCrusherRecipes(),
+            new PrecisionLaserEngraver(), new NanitesIntegratedProcessingRecipes(), new NanoForgeRecipes(),
+            new SteamWeatherModuleRecipes(), new ElectricNeutronActivatorRecipes(), new ReactorProcessingUnitRecipes(),
+            new NuclearSaltProcessingPlantRecipes() };
 
         for (IRecipePool recipePool : recipePools) {
             recipePool.loadRecipes();
-        }
-
-        for (ItemStack stone : OreDictionary.getOres("stone")) {
-            PortalToAlfheimOreRecipes.addManaInfusionOreRecipes(stone);
         }
 
         RecipeUtil.generateRecipesBioLab(BartWorksRecipeMaps.bioLabRecipes, RecipePool.LargeBioLabRecipes, true, 1.1);

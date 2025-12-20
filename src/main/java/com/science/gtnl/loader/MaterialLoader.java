@@ -18,7 +18,6 @@ import com.science.gtnl.common.item.steamRocket.SchematicSteamRocket;
 import com.science.gtnl.common.material.MaterialPool;
 import com.science.gtnl.common.recipe.gtnl.RocketAssemblerRecipes;
 import com.science.gtnl.common.recipe.oreDictionary.LaserEngraverOreRecipes;
-import com.science.gtnl.common.recipe.oreDictionary.PortalToAlfheimOreRecipes;
 import com.science.gtnl.common.recipe.oreDictionary.SteamCarpenterOreRecipe;
 import com.science.gtnl.common.recipe.oreDictionary.WoodDistillationRecipes;
 import com.science.gtnl.config.MainConfig;
@@ -113,7 +112,6 @@ public class MaterialLoader {
     public static void loadOreDictionaryRecipes() {
         ScienceNotLeisure.LOG.info("GTNL: Register Ore Dictionary Recipe.");
         new WoodDistillationRecipes();
-        new PortalToAlfheimOreRecipes();
         new LaserEngraverOreRecipes();
         new SteamCarpenterOreRecipe();
     }
