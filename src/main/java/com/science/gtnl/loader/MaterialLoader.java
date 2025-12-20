@@ -62,8 +62,6 @@ public class MaterialLoader {
         MachineLoader.registerGlasses();
         WailaLoader.register();
         TickrateAPI.changeTickrate(MainConfig.defaultTickrate);
-
-        LanguageLoader.registry();
     }
 
     public static void loadPostInit() {
@@ -83,6 +81,8 @@ public class MaterialLoader {
         if (Mods.InventoryBogoSorter.isModLoaded()) {
             loadCraftTweak();
         }
+
+        LanguageLoader.registry();
     }
 
     public static void loadCompleteInit() {
@@ -93,8 +93,6 @@ public class MaterialLoader {
         }
 
         loadCardBoardBoxBlackList();
-
-        LanguageLoader.registry();
 
         if (MainConfig.enableStickItem) {
             RecipeLoader.loadVillageTrade();
