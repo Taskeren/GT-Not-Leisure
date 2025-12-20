@@ -62,6 +62,7 @@ import gregtech.api.interfaces.ITexture;
 import gregtech.api.interfaces.metatileentity.IMetaTileEntity;
 import gregtech.api.interfaces.tileentity.IGregTechTileEntity;
 import gregtech.api.metatileentity.GregTechTileClientEvents;
+import gregtech.api.metatileentity.implementations.MTEHatch;
 import gregtech.api.metatileentity.implementations.MTEHatchEnergy;
 import gregtech.api.metatileentity.implementations.MTEHatchInputBus;
 import gregtech.api.objects.ItemData;
@@ -709,12 +710,16 @@ public class MeteorMiner extends MultiMachineBase<MeteorMiner> implements ISurvi
             .setExtraDurationModifier(mConfigSpeedBoost);
         calculator.calculate();
         this.mMaxProgresstime = (isWaiting) ? 200 : calculator.getDuration();
-        this.lEUt = -calculator.getConsumption() / ((isWaiting) ? 8 : 1);
+        this.lEUt = calculator.getConsumption() / ((isWaiting) ? 8 : 1);
     }
 
     public boolean isEnergyEnough() {
         long requiredEnergy = 512 + getMaxInputVoltage() * 4;
         for (MTEHatchEnergy energyHatch : mEnergyHatches) {
+            requiredEnergy -= energyHatch.getEUVar();
+            if (requiredEnergy <= 0) return true;
+        }
+        for (MTEHatch energyHatch : mExoticEnergyHatches) {
             requiredEnergy -= energyHatch.getEUVar();
             if (requiredEnergy <= 0) return true;
         }
