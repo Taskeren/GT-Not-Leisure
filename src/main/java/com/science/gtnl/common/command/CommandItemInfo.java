@@ -34,16 +34,26 @@ public class CommandItemInfo extends CommandBase {
             return;
         }
 
+        Item item = stack.getItem();
+
+        if (item == null) {
+            player.addChatMessage(new ChatComponentText("You are not holding any item."));
+            return;
+        }
+
         player.addChatMessage(new ChatComponentText("===== Item Info ====="));
         player.addChatMessage(new ChatComponentText(stack.toString()));
         player.addChatMessage(new ChatComponentText("Display Name: " + stack.getDisplayName()));
+        player.addChatMessage(new ChatComponentText("ItemStack Display Name: " + item.getItemStackDisplayName(stack)));
+        player.addChatMessage(
+            new ChatComponentText("Unlocalized Inefficiently Name: " + item.getUnlocalizedNameInefficiently(stack)));
         player.addChatMessage(new ChatComponentText("Unlocalized Name: " + stack.getUnlocalizedName()));
+        player.addChatMessage(new ChatComponentText("ItemStack Unlocalized Name: " + item.getUnlocalizedName(stack)));
         player.addChatMessage(
             new ChatComponentText(
-                "Class: " + stack.getItem()
-                    .getClass()
+                "Class: " + item.getClass()
                     .getName()));
-        player.addChatMessage(new ChatComponentText("ID: " + Item.getIdFromItem(stack.getItem())));
+        player.addChatMessage(new ChatComponentText("ID: " + Item.getIdFromItem(item)));
         player.addChatMessage(new ChatComponentText("Stack Size: " + stack.stackSize));
         player.addChatMessage(new ChatComponentText("Damage: " + stack.getItemDamage()));
         player.addChatMessage(new ChatComponentText("Max Damage: " + stack.getMaxDamage()));
