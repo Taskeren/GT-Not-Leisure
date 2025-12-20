@@ -323,6 +323,7 @@ public class ElectrocellGenerator extends MultiMachineBase<ElectrocellGenerator>
         super.saveNBTData(aNBT);
 
         aNBT.setDouble("generatorValue", generatorValue);
+        aNBT.setLong("lastEUt", lastEUt);
 
         if (matchedFluid != null) {
             NBTTagCompound fluidTag = new NBTTagCompound();
@@ -342,6 +343,7 @@ public class ElectrocellGenerator extends MultiMachineBase<ElectrocellGenerator>
         super.loadNBTData(aNBT);
 
         generatorValue = aNBT.getDouble("generatorValue");
+        lastEUt = aNBT.getLong("lastEUt");
 
         if (aNBT.hasKey("matchedFluid")) {
             matchedFluid = FluidStack.loadFluidStackFromNBT(aNBT.getCompoundTag("matchedFluid"));
