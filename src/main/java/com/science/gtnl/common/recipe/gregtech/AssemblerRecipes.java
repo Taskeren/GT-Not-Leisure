@@ -3231,7 +3231,7 @@ public class AssemblerRecipes implements IRecipePool {
                 GTUtility.getIntegratedCircuit(11),
                 GTNLItemList.QuantumComputerCasing.get(4),
                 GTNLItemList.QuantumComputerUnit.get(4),
-                GTModHandler.getModItem(AppliedEnergistics2.ID, "item.ItemMaterial", 4, 33),
+                GTModHandler.getModItem(AppliedEnergistics2.ID, "item.ItemMultiMaterial", 4, 33),
                 GTModHandler.getModItem(AppliedEnergistics2.ID, "tile.BlockController", 4),
                 GTNLItemList.ShatteredSingularity.get(4),
                 ItemList.Emitter_LuV.get(4),
