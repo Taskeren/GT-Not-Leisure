@@ -52,6 +52,8 @@ public class MaterialLoader {
 
         loadOreDictionaryRecipes();
 
+        LanguageLoader.registry();
+
         if (Mods.InventoryBogoSorter.isModLoaded()) {
             BogoSortAPI.INSTANCE.addGenericCompat(ContainerPortableChest.class);
             BogoSortAPI.INSTANCE.addGenericCompat(ContainerPortableAvaritiaddonsChest.class);
