@@ -3050,8 +3050,8 @@ public class AssemblerRecipes implements IRecipePool {
             .itemInputs(
                 GTUtility.getIntegratedCircuit(7),
                 ItemList.Casing_RobustTungstenSteel.get(1),
-                GTOreDictUnificator.get(OrePrefixes.plateDouble, Materials.Iridium, 4),
-                GGMaterial.adamantiumAlloy.get(OrePrefixes.plate, 4))
+                GTOreDictUnificator.get(OrePrefixes.plate, Materials.Iridium, 4),
+                GTOreDictUnificator.get(OrePrefixes.plate, Materials.StainlessSteel, 4))
             .itemOutputs(GTNLItemList.AssemblerMatrixWall.get(1))
             .duration(100)
             .eut(TierEU.RECIPE_IV)
@@ -3061,8 +3061,8 @@ public class AssemblerRecipes implements IRecipePool {
             .itemInputs(
                 GTUtility.getIntegratedCircuit(11),
                 GTNLItemList.AssemblerMatrixWall.get(1),
-                GTOreDictUnificator.get(OrePrefixes.plateDouble, Materials.Osmiridium, 4),
-                GTOreDictUnificator.get(OrePrefixes.screw, Materials.Adamantium, 4))
+                GTOreDictUnificator.get(OrePrefixes.plate, Materials.Osmiridium, 4),
+                GTOreDictUnificator.get(OrePrefixes.screw, Materials.StainlessSteel, 4))
             .itemOutputs(GTNLItemList.AssemblerMatrixFrame.get(1))
             .duration(100)
             .eut(TierEU.RECIPE_IV)
