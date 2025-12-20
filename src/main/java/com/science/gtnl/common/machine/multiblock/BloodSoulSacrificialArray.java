@@ -18,6 +18,7 @@ import javax.annotation.Nonnull;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumChatFormatting;
@@ -42,6 +43,7 @@ import com.science.gtnl.utils.recipes.GTNL_ParallelHelper;
 import com.science.gtnl.utils.recipes.GTNL_ProcessingLogic;
 
 import WayofTime.alchemicalWizardry.ModBlocks;
+import WayofTime.alchemicalWizardry.api.items.interfaces.IBindable;
 import WayofTime.alchemicalWizardry.api.soulNetwork.SoulNetworkHandler;
 import WayofTime.alchemicalWizardry.common.entity.projectile.EntityMeteor;
 import goodgenerator.loader.Loaders;
@@ -324,8 +326,6 @@ public class BloodSoulSacrificialArray extends GTMMultiMachineBase<BloodSoulSacr
     @Nonnull
     @Override
     public CheckRecipeResult checkProcessing() {
-        ItemStack controllerItem = getControllerSlot();
-        this.mParallelTier = getParallelTier(controllerItem);
         isCreativeOrb = false;
 
         ItemStack requiredItem = GTModHandler.getModItem(Avaritia.ID, "Orb_Armok", 1);
@@ -473,6 +473,14 @@ public class BloodSoulSacrificialArray extends GTMMultiMachineBase<BloodSoulSacr
     }
 
     public String getOwner() {
+        ItemStack stack = getControllerSlot();
+        if (stack != null) {
+            Item item = stack.getItem();
+            if (item instanceof IBindable && !IBindable.getOwnerName(stack)
+                .isEmpty()) {
+                return IBindable.getOwnerName(stack);
+            }
+        }
         return this.getBaseMetaTileEntity()
             .getOwnerName();
     }
