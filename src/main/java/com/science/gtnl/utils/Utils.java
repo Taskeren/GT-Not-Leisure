@@ -47,6 +47,7 @@ import com.science.gtnl.utils.machine.FluidTankG;
 import com.science.gtnl.utils.machine.ItemStackG;
 
 import appeng.api.storage.data.IAEItemStack;
+import appeng.me.cluster.implementations.CraftingCPUCluster;
 import cpw.mods.fml.common.FMLCommonHandler;
 import gregtech.api.metatileentity.MetaTileEntity;
 import gregtech.api.util.GTUtility;
@@ -160,7 +161,7 @@ public class Utils {
         boolean hasExtra = name.contains("extra_start_");
 
         if (!hasCircuit && !hasExtra) {
-            return name;
+            return CraftingCPUCluster.translateFromNetwork(name);
         }
 
         String numberPart = null;
