@@ -1,6 +1,5 @@
 package com.science.gtnl.utils;
 
-import lombok.Getter;
 import net.minecraft.inventory.InventoryCrafting;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -14,6 +13,7 @@ import appeng.api.storage.data.IAEItemStack;
 import appeng.util.Platform;
 import appeng.util.item.AEItemStack;
 import appeng.util.item.ItemList;
+import lombok.Getter;
 
 public class DireCraftingPatternDetails implements ICraftingPatternDetails {
 

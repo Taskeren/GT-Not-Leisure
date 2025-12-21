@@ -1086,7 +1086,8 @@ public class QuantumComputer extends MTETooltipMultiBlockBase
     public void setCustomName(String name) {
         customName = name;
         if (this.virtualCPU != null) {
-            ECPUCluster.from(virtualCPU).ec$setName(customName);
+            ECPUCluster.from(virtualCPU)
+                .ec$setName(customName);
         }
     }
 
