@@ -1,5 +1,6 @@
 package com.science.gtnl.utils;
 
+import lombok.Getter;
 import net.minecraft.inventory.InventoryCrafting;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -21,6 +22,8 @@ public class DireCraftingPatternDetails implements ICraftingPatternDetails {
     private IAEItemStack[] condensedInputs;
     private final IAEItemStack[] output;
     private final long baseOutput;
+    @Getter
+    private int multiply = 1;
 
     public DireCraftingPatternDetails(ItemStack is) {
         pattern = is;
@@ -67,6 +70,7 @@ public class DireCraftingPatternDetails implements ICraftingPatternDetails {
     }
 
     public void setMultiply(int multiply) {
+        this.multiply = multiply;
         for (var input : inputs) {
             if (input == null) continue;
             input.setStackSize(multiply);

@@ -341,6 +341,7 @@ public class AssemblerMatrix extends MultiMachineBase<AssemblerMatrix>
     public boolean pushPattern(ICraftingPatternDetails patternDetails, InventoryCrafting table) {
         final var out = patternDetails.getCondensedOutputs()[0];
         final var p = ((LargeInventoryCrafting) table).getAssemblerSize();
+        if (!(patternDetails instanceof DireCraftingPatternDetails d)) return false;
         for (int i = 0; i < table.getSizeInventory(); i++) {
             final var stack = table.getStackInSlot(i);
             if (stack != null) {
@@ -348,7 +349,7 @@ public class AssemblerMatrix extends MultiMachineBase<AssemblerMatrix>
                 if (c != null) {
                     inputs.add(
                         AEItemStack.create(c)
-                            .setStackSize(p * stack.stackSize));
+                            .setStackSize(p * d.getMultiply()));
                 }
                 stack.stackSize = 1;
             }
