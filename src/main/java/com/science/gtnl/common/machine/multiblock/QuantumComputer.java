@@ -330,7 +330,7 @@ public class QuantumComputer extends MTETooltipMultiBlockBase
         this.maximumParallel = aNBT.getInteger("maximumParallel");
         this.enabledSingularityCore = aNBT.getBoolean("enabledSingularityCore");
 
-        if (aNBT.hasKey("customName")) customName = aNBT.getString("customName");
+        if (aNBT.hasKey("customName")) setCustomName(aNBT.getString("customName"));
 
         getProxy().readFromNBT(aNBT);
         readCPUNBT(aNBT);
@@ -1085,6 +1085,9 @@ public class QuantumComputer extends MTETooltipMultiBlockBase
     @Override
     public void setCustomName(String name) {
         customName = name;
+        if (this.virtualCPU != null) {
+            ECPUCluster.from(virtualCPU).ec$setName(customName);
+        }
     }
 
     public static final EnumSet<ForgeDirection> upDirection = EnumSet.of(ForgeDirection.UP);
