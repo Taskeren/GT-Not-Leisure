@@ -481,11 +481,6 @@ public class AssemblerMatrix extends MultiMachineBase<AssemblerMatrix>
     }
 
     @Override
-    public Pos2d getPowerPanelButtonPos() {
-        return new Pos2d(8, 91);
-    }
-
-    @Override
     public ModularWindow createPowerPanel(EntityPlayer player) {
         final int w = 100;
         final int h = 80;
