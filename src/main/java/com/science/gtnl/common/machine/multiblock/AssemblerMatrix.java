@@ -1001,11 +1001,9 @@ public class AssemblerMatrix extends MultiMachineBase<AssemblerMatrix>
             .addShape(STRUCTURE_PIECE_MAIN, transpose(shape))
             .addElement(
                 'A',
-                buildHatchAdder(AssemblerMatrix.class)
-                    .atLeast(Maintenance, InputBus, OutputBus, Energy.or(ExoticEnergy))
-                    .adder(AssemblerMatrix::addToMachineList)
+                buildHatchAdder(AssemblerMatrix.class).casingIndex(getCasingTextureID())
                     .dot(1)
-                    .casingIndex(getCasingTextureID())
+                    .atLeast(Maintenance, InputBus, OutputBus, Energy.or(ExoticEnergy))
                     .buildAndChain(BlockLoader.metaCasing02, 4))
             .addElement('B', ofChain(chainAllGlasses(), ofBlock(BlockLoader.metaCasing02, 5)))
             .addElement(
