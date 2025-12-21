@@ -1293,7 +1293,7 @@ public class SuperCraftingInputHatchME extends MTEHatchInputBus implements IConf
 
     @Override
     public boolean hasCustomName() {
-        return customName != null;
+        return customName != null && !this.customName.isEmpty();
     }
 
     @Override

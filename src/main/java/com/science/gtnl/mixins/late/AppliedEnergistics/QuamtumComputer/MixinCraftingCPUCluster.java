@@ -65,6 +65,9 @@ public abstract class MixinCraftingCPUCluster implements ECPUCluster {
     @Shadow
     public abstract void cancel();
 
+    @Shadow
+    private String myName;
+
     @Inject(
         method = "submitJob",
         at = @At(
@@ -191,5 +194,10 @@ public abstract class MixinCraftingCPUCluster implements ECPUCluster {
     @Override
     public QuantumComputer ec$getVirtualCPUOwner() {
         return ec$virtualCPUOwner;
+    }
+
+    @Override
+    public void ec$setName(String name) {
+        this.myName = name;
     }
 }

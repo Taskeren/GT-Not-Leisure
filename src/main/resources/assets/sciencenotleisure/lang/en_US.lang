@@ -1754,6 +1754,7 @@ Tooltip_QuantumComputer_12=§cWhen controller destroyed, it will try to return m
 Info_QuantumComputer_00=Multiblock size: %sx%sx%s
 Info_QuantumComputer_01=Co-processors: %s / Used: %s (%s)
 Info_QuantumComputer_02=Storage: %s / Used: %s (%s)
+Info_QuantumComputer_03=Set Quantum Computer custom name
 
 NameAssemblerMatrix=Assembler Matrix
 AssemblerMatrixRecipeType=Molecular Assembler
@@ -1767,6 +1768,7 @@ Tooltip_AssemblerMatrix_06=Allows placing dire craft pattern to craft Xtreme Cra
 Info_AssemblerMatrix_00=§7Pattern storage: %s/%s
 Info_AssemblerMatrix_01=Pattern Multiplier Control Panel
 Info_AssemblerMatrix_02=Current Multiplier
+Info_AssemblerMatrix_03=Set Assembler Matrix custom name
 AssemblerMatrix_Mode_0=Input Mode
 AssemblerMatrix_Mode_1=Output Mode
 AssemblerMatrix_Mode_2=Operating Mode

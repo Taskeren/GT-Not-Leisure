@@ -22,4 +22,5 @@ public interface ECPUCluster {
 
     void ec$markDestroyed();
 
+    void ec$setName(String name);
 }

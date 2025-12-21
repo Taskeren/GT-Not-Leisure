@@ -56,6 +56,8 @@ import com.gtnewhorizons.modularui.api.drawable.ItemDrawable;
 import com.gtnewhorizons.modularui.api.drawable.UITexture;
 import com.gtnewhorizons.modularui.api.math.Alignment;
 import com.gtnewhorizons.modularui.api.math.Color;
+import com.gtnewhorizons.modularui.api.math.MainAxisAlignment;
+import com.gtnewhorizons.modularui.api.math.Pos2d;
 import com.gtnewhorizons.modularui.api.math.Size;
 import com.gtnewhorizons.modularui.api.screen.ModularWindow;
 import com.gtnewhorizons.modularui.api.screen.UIBuildContext;
@@ -63,14 +65,18 @@ import com.gtnewhorizons.modularui.api.widget.IWidgetBuilder;
 import com.gtnewhorizons.modularui.api.widget.Widget;
 import com.gtnewhorizons.modularui.common.widget.ButtonWidget;
 import com.gtnewhorizons.modularui.common.widget.ChangeableWidget;
+import com.gtnewhorizons.modularui.common.widget.Column;
 import com.gtnewhorizons.modularui.common.widget.DrawableWidget;
 import com.gtnewhorizons.modularui.common.widget.DynamicPositionedColumn;
 import com.gtnewhorizons.modularui.common.widget.FakeSyncWidget;
 import com.gtnewhorizons.modularui.common.widget.MultiChildWidget;
+import com.gtnewhorizons.modularui.common.widget.Scrollable;
 import com.gtnewhorizons.modularui.common.widget.SlotWidget;
 import com.gtnewhorizons.modularui.common.widget.TextWidget;
 import com.gtnewhorizons.modularui.common.widget.textfield.NumericWidget;
+import com.gtnewhorizons.modularui.common.widget.textfield.TextFieldWidget;
 import com.science.gtnl.common.machine.multiMachineBase.MultiMachineBase;
+import com.science.gtnl.config.MainConfig;
 import com.science.gtnl.loader.BlockLoader;
 import com.science.gtnl.utils.DireCraftingPatternDetails;
 import com.science.gtnl.utils.LargeInventoryCrafting;
@@ -101,6 +107,7 @@ import appeng.api.util.DimensionalCoord;
 import appeng.api.util.IConfigManager;
 import appeng.core.localization.WailaText;
 import appeng.helpers.DualityInterface;
+import appeng.helpers.ICustomNameObject;
 import appeng.helpers.IInterfaceHost;
 import appeng.me.GridAccessException;
 import appeng.me.helpers.AENetworkProxy;
@@ -138,7 +145,7 @@ import mcp.mobius.waila.api.IWailaConfigHandler;
 import mcp.mobius.waila.api.IWailaDataAccessor;
 
 public class AssemblerMatrix extends MultiMachineBase<AssemblerMatrix>
-    implements IInterfaceHost, IGridProxyable, IAEAppEngInventory, IMEConnectable {
+    implements IInterfaceHost, IGridProxyable, IAEAppEngInventory, IMEConnectable, ICustomNameObject {
 
     public static int eachPatternCasingCapacity = 72;
     public static int eachCraftingCasingParallel = 2048;
@@ -160,6 +167,7 @@ public class AssemblerMatrix extends MultiMachineBase<AssemblerMatrix>
     public boolean showPattern = true;
     public String costingEUText = ZERO_STRING;
 
+    private String customName = "";
     private AENetworkProxy gridProxy;
     private DualityInterface di;
     private final MachineSource source = new MachineSource(this);
@@ -377,7 +385,44 @@ public class AssemblerMatrix extends MultiMachineBase<AssemblerMatrix>
 
     @Override
     public void addUIWidgets(ModularWindow.Builder builder, UIBuildContext buildContext) {
-        super.addUIWidgets(builder, buildContext);
+        builder.widget(
+            new DrawableWidget().setDrawable(GTUITextures.PICTURE_SCREEN_BLACK)
+                .setPos(4, 4)
+                .setSize(190, 85));
+
+        slotWidgets.clear();
+        createInventorySlots();
+
+        Column slotsColumn = new Column();
+        for (int i = slotWidgets.size() - 1; i >= 0; i--) {
+            slotsColumn.widget(slotWidgets.get(i));
+        }
+        builder.widget(
+            slotsColumn.setAlignment(MainAxisAlignment.END)
+                .setPos(173, 167 - 1));
+
+        final DynamicPositionedColumn screenElements = new DynamicPositionedColumn();
+        drawTexts(screenElements, !slotWidgets.isEmpty() ? slotWidgets.get(0) : null);
+        builder.widget(
+            new Scrollable().setVerticalScroll()
+                .widget(screenElements.setPos(10, 0))
+                .setPos(0, 7)
+                .setSize(190, 79));
+
+        if (supportsMachineModeSwitch() && machineModeIcons == null) {
+            machineModeIcons = new ArrayList<>(4);
+            setMachineModeIcons();
+        }
+        builder.widget(createPowerSwitchButton(builder))
+            .widget(createStructureUpdateButton(builder))
+            .widget(createModeSwitchButton(builder))
+            .widget(createMuffleButton(builder));
+
+        if (supportsPowerPanel()) {
+            builder.widget(createPowerPanelButton(builder));
+            buildContext.addSyncedWindow(POWER_PANEL_WINDOW_ID, this::createPowerPanel);
+        }
+
         builder.widget(
             new ButtonWidget().setOnClick((clickData, widget) -> showPattern = !showPattern)
                 .setPlayClickSoundResource(
@@ -397,8 +442,20 @@ public class AssemblerMatrix extends MultiMachineBase<AssemblerMatrix>
                         StatCollector.translateToLocal("Info_ShowPattern_" + (showPattern ? "Enabled" : "Disabled"))))
                 .setTooltipShowUpDelay(TOOLTIP_DELAY)
                 .setUpdateTooltipEveryTick(true)
-                .setPos(98, 91)
+                .setPos(26, 91)
                 .setSize(16, 16));
+
+        builder.widget(
+            new TextFieldWidget().setSetter((value) -> customName = value)
+                .setGetter(() -> hasCustomName() ? customName : getMachineCraftingIcon().getDisplayName())
+                .setTextAlignment(Alignment.Center)
+                .setScrollBar()
+                .setTextColor(Color.WHITE.normal)
+                .addTooltip(StatCollector.translateToLocal("Info_AssemblerMatrix_03"))
+                .setBackground(GTUITextures.BACKGROUND_TEXT_FIELD)
+                .setPos(43, 90)
+                .setSize(126, 18)
+                .attachSyncer(new FakeSyncWidget.StringSyncer(this::getCustomName, this::setCustomName), builder));
     }
 
     @Override
@@ -421,6 +478,11 @@ public class AssemblerMatrix extends MultiMachineBase<AssemblerMatrix>
             .setPos(getPowerPanelButtonPos())
             .setSize(16, 16);
         return (ButtonWidget) button;
+    }
+
+    @Override
+    public Pos2d getPowerPanelButtonPos() {
+        return new Pos2d(8, 91);
     }
 
     @Override
@@ -642,6 +704,11 @@ public class AssemblerMatrix extends MultiMachineBase<AssemblerMatrix>
     }
 
     @Override
+    public Pos2d getMachineModeSwitchButtonPos() {
+        return new Pos2d(8, 91);
+    }
+
+    @Override
     public boolean supportsSingleRecipeLocking() {
         return false;
     }
@@ -713,6 +780,7 @@ public class AssemblerMatrix extends MultiMachineBase<AssemblerMatrix>
         aNBT.setLong("mMaxParallelLong", mMaxParallelLong);
         aNBT.setBoolean("wirelessMode", wirelessMode);
         aNBT.setBoolean("showPattern", showPattern);
+        if (customName != null) aNBT.setString("customName", customName);
         getProxy().writeToNBT(aNBT);
         saveInvData(aNBT, false);
     }
@@ -796,6 +864,7 @@ public class AssemblerMatrix extends MultiMachineBase<AssemblerMatrix>
         mMaxParallelLong = aNBT.getLong("mMaxParallelLong");
         wirelessMode = aNBT.getBoolean("wirelessMode");
         showPattern = aNBT.getBoolean("showPattern");
+        if (aNBT.hasKey("customName")) customName = aNBT.getString("customName");
 
         NBTTagCompound storeRoot = null;
 
@@ -1442,8 +1511,45 @@ public class AssemblerMatrix extends MultiMachineBase<AssemblerMatrix>
     }
 
     @Override
+    public String getCustomName() {
+        return customName != null ? customName : getMachineCraftingIcon().getDisplayName();
+    }
+
+    @Override
+    public boolean hasCustomName() {
+        return customName != null && !this.customName.isEmpty();
+    }
+
+    @Override
+    public void setCustomName(String name) {
+        customName = name;
+    }
+
+    @Override
     public String getName() {
-        return getCrafterIcon().getDisplayName();
+        if (hasCustomName()) {
+            return customName;
+        }
+
+        StringBuilder name = new StringBuilder();
+        if (MainConfig.enableHatchInterfaceTerminalEnhance) {
+
+            if (getCrafterIcon() != null) {
+                name.append(getCrafterIcon().getUnlocalizedName());
+            } else {
+                name.append("gt.blockmachines.")
+                    .append(mName)
+                    .append(".name");
+            }
+        } else {
+            if (getCrafterIcon() != null) {
+                name.append(getCrafterIcon().getDisplayName());
+            } else {
+                name.append(getLocalName());
+            }
+        }
+
+        return name.toString();
     }
 
     @Override

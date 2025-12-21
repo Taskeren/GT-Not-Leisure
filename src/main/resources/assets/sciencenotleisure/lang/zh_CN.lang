@@ -1754,6 +1754,7 @@ Tooltip_QuantumComputer_12=§c量子计算机被破坏时会尝试获取上方AE
 Info_QuantumComputer_00=结构大小：%sx%sx%s
 Info_QuantumComputer_01=并行线程：%s / 已使用：%s (%s)
 Info_QuantumComputer_02=可存储：%s / 已使用：%s (%s)
+Info_QuantumComputer_03=设置量子计算机自定义名称
 
 NameAssemblerMatrix=装配矩阵
 AssemblerMatrixRecipeType=分子装配室
@@ -1767,6 +1768,7 @@ Tooltip_AssemblerMatrix_06=可放置终极合成样板来合成终极合成配�
 Info_AssemblerMatrix_00=§7当前样板数量：%s/%s
 Info_AssemblerMatrix_01=样板倍率控制面板
 Info_AssemblerMatrix_02=当前倍率
+Info_AssemblerMatrix_03=设置装配矩阵自定义名称
 AssemblerMatrix_Mode_0=输入模式
 AssemblerMatrix_Mode_1=输出模式
 AssemblerMatrix_Mode_2=运行模式
