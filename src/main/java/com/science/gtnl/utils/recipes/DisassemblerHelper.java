@@ -434,7 +434,7 @@ public class DisassemblerHelper {
                 .duration(100)
                 .eut(0)
                 .fake()
-                .setNEIDesc("Generated from Assembler Recipe (Hard-overriden)")
+                .setNEIDesc("Generated from Hard-Override Recipe")
                 .addTo(RecipePool.ShimmerRecipes);
             ShimmerRecipes.registerConversion(input, outputs);
         }

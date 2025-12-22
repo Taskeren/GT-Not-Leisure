@@ -1513,7 +1513,7 @@ public class AssemblerRecipes implements IRecipePool {
         RecipeBuilder.builder()
             .itemInputs(
                 GTUtility.getIntegratedCircuit(17),
-                ItemRefer.Large_Naquadah_Reactor.get(1),
+                ItemList.Generator_Naquadah_Mark_II.get(1),
                 GTOreDictUnificator.get(OrePrefixes.circuit, Materials.UV, 2L),
                 ItemList.Electric_Pump_ZPM.get(8),
                 ItemList.Field_Generator_ZPM.get(2),
