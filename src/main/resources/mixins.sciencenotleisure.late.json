@@ -51,6 +51,7 @@
     "Gregtech.MixinMTEHatchOutputBusME",
     "Gregtech.MixinMTEHatchOutputME",
     "Gregtech.MixinMTEHatchCraftingInputME",
+    "Gregtech.MixinMTEHatchOutputBeamline",
     "Gregtech.MixinMTEDigitalTankBase",
     "Gregtech.MixinMTEHatchDataAccess",
     "Gregtech.MixinMTEHatchSteamBusOutput",

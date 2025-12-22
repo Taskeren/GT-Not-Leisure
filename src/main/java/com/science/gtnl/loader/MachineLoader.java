@@ -25,6 +25,7 @@ import com.science.gtnl.common.machine.basicMachine.SteamTurbine;
 import com.science.gtnl.common.machine.cover.VoidCover;
 import com.science.gtnl.common.machine.cover.WirelessMultiEnergyCover;
 import com.science.gtnl.common.machine.cover.WirelessSteamCover;
+import com.science.gtnl.common.machine.hatch.BeamlinePipeMirror;
 import com.science.gtnl.common.machine.hatch.CustomFluidHatch;
 import com.science.gtnl.common.machine.hatch.CustomMaintenanceHatch;
 import com.science.gtnl.common.machine.hatch.DebugDataAccessHatch;
@@ -4677,6 +4678,13 @@ public class MachineLoader {
                 14,
                 Integer.MAX_VALUE));
         addItemTooltip(GTNLItemList.HumongousWirelessDynamoHatch.get(1), AnimatedText.SCIENCE_NOT_LEISURE);
+
+        GTNLItemList.BeamlinePipeMirror.set(
+            new BeamlinePipeMirror(
+                BEAMLINE_PIPE_MIRROR.ID,
+                "BeamlinePipeMirror",
+                StatCollector.translateToLocal("BeamlinePipeMirror")));
+        addItemTooltip(GTNLItemList.BeamlinePipeMirror.get(1), AnimatedText.SCIENCE_NOT_LEISURE);
     }
 
     public static void registerBasicMachine() {

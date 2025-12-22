@@ -1136,6 +1136,7 @@ public enum GTNLItemList implements IItemContainer {
     HumongousWirelessEnergyHatch,
     HumongousWirelessDynamoHatch,
 
+    BeamlinePipeMirror,
     OutputHatchMEProxy,
     OutputBusMEProxy,
     AdvancedSuperDualInputHatchME,

@@ -261,6 +261,10 @@ Tooltip_PurificationPlant_00=当连接绝对重子完美净化单元且不安装
 Tooltip_PurificationPlant_01=在无线模式下，所有连接此净水厂的净化单元最大并行提升为Long
 Tooltip_PurificationPlant_02=同时可以从总成获取物品和流体
 
+BeamlinePipeMirror=束流波导管
+Tooltip_BeamlinePipeMirror_00=粒子偏转管道
+Tooltip_BeamlinePipeMirror_01=§b允许拐弯
+
 EnergyTransferNode=万用通量传输节点
 Tooltip_EnergyTransferNode_00=§9有源变压器的好帮手！
 Tooltip_EnergyTransferNode_01=将能量进行分流/合流

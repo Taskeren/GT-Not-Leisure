@@ -261,6 +261,10 @@ Tooltip_PurificationPlant_00=Enters Wireless Mode when linked to an Absolute Bar
 Tooltip_PurificationPlant_01=In Wireless Mode, all linked units gain Long parallel capacity.
 Tooltip_PurificationPlant_02=Allows item and fluid access from the assembly hatch.
 
+BeamlinePipeMirror=Beamline Pipe Mirror
+Tooltip_BeamlinePipeMirror_00=Deflection for particles
+Tooltip_BeamlinePipeMirror_01=§bAllows Bending
+
 EnergyTransferNode=Universal Flux Transfer Node
 Tooltip_EnergyTransferNode_00=§9A great helper for Active Transformers!
 Tooltip_EnergyTransferNode_01=Splits or merges energy flows
