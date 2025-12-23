@@ -2132,7 +2132,7 @@ NameLargeDistillery=大型分馏蒸馏厂
 LargeDistilleryRecipeType=蒸馏塔 / 蒸馏室
 LargeDistillery_Mode_0=蒸馏塔
 LargeDistillery_Mode_1=蒸馏室
-Tooltip_LargeDistillery_00=比相同电压的机器快300%
+Tooltip_LargeDistillery_00=比相同电压的机器快400%
 Tooltip_LargeDistillery_01=只需要使用配方要求功率的50%
 Tooltip_LargeDistillery_Casing=任意储罐拓展方块
 

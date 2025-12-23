@@ -2132,7 +2132,7 @@ NameLargeDistillery=Large Distillation Plant
 LargeDistilleryRecipeType=Distillation Tower / Distillation Chamber
 LargeDistillery_Mode_0=Distillation Tower
 LargeDistillery_Mode_1=Distillation Chamber
-Tooltip_LargeDistillery_00=300% faster than machines of the same voltage
+Tooltip_LargeDistillery_00=400% faster than machines of the same voltage
 Tooltip_LargeDistillery_01=Only requires 50% of the recipe's power demand
 Tooltip_LargeDistillery_Casing=Any tank expansion block
 
