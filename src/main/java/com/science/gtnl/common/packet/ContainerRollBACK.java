@@ -43,13 +43,13 @@ public class ContainerRollBACK implements IMessage, IMessageHandler<ContainerRol
                 }
                 ScienceNotLeisure.network.sendTo(message, entityPlayerMP);
             }
-            case CLIENT -> ClientRun();
+            case CLIENT -> clientRun();
         }
         return null;
     }
 
     @SideOnly(Side.CLIENT)
-    public void ClientRun() {
+    public void clientRun() {
         if (GTNLInputHandler.delayMethod != null) {
             GTNLInputHandler.delayMethod.run();
             GTNLInputHandler.delayMethod = null;

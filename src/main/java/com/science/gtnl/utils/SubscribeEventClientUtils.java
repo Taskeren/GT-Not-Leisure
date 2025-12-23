@@ -11,10 +11,8 @@ import java.util.Random;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityClientPlayerMP;
-import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.GuiChat;
 import net.minecraft.client.gui.GuiIngameMenu;
-import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.client.gui.inventory.GuiInventory;
 import net.minecraft.client.renderer.EntityRenderer;
 import net.minecraft.entity.player.EntityPlayer;
@@ -26,7 +24,6 @@ import net.minecraft.util.StatCollector;
 import net.minecraftforge.client.IItemRenderer;
 import net.minecraftforge.client.event.GuiOpenEvent;
 import net.minecraftforge.client.event.MouseEvent;
-import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.client.event.RenderItemInFrameEvent;
 import net.minecraftforge.client.event.RenderLivingEvent;
 import net.minecraftforge.client.event.TextureStitchEvent;
@@ -215,39 +212,6 @@ public class SubscribeEventClientUtils {
         if (stack != null && stack.getItem() instanceof NullPointerException) {
             ItemNullPointerExceptionRender.renderItem(IItemRenderer.ItemRenderType.ENTITY, event.item, true);
             event.setCanceled(true);
-        }
-    }
-
-    @SideOnly(Side.CLIENT)
-    @SubscribeEvent
-    public void onRender(RenderGameOverlayEvent.Text event) {
-        if (ticksRemaining > 0 && currentTitle != null && !currentTitle.isEmpty()) {
-            GL11.glPushMatrix();
-            Minecraft mc = Minecraft.getMinecraft();
-            ScaledResolution res = new ScaledResolution(mc, mc.displayWidth, mc.displayHeight);
-            FontRenderer fr = mc.fontRenderer;
-
-            int stringWidth = fr.getStringWidth(currentTitle);
-            int stringHeight = 9;
-
-            double scale = scaleText;
-            int x = (res.getScaledWidth() - (int) (stringWidth * scale)) / 2;
-            int y = (res.getScaledHeight() - (int) (stringHeight * scale)) / 2;
-
-            if (StatCollector.canTranslate(currentTitle)) {
-                currentTitle = StatCollector.translateToLocal(currentTitle);
-            }
-
-            int argb = getArgb();
-
-            GL11.glTranslated(x, y, 0);
-            GL11.glScaled(scale, scale, 1);
-
-            fr.drawStringWithShadow(currentTitle, 0, 0, argb);
-
-            GL11.glPopMatrix();
-
-            ticksRemaining--;
         }
     }
 

@@ -1,5 +1,14 @@
 package com.science.gtnl.common.packet.client;
 
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.FontRenderer;
+import net.minecraft.client.gui.ScaledResolution;
+import net.minecraft.util.StatCollector;
+import net.minecraftforge.client.event.RenderGameOverlayEvent;
+
+import org.lwjgl.opengl.GL11;
+
+import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
@@ -44,5 +53,37 @@ public class TitleDisplayHandler {
         int b = colorText & 0xFF;
         int a = (int) (alpha * 255);
         return (a << 24) | (r << 16) | (g << 8) | b;
+    }
+
+    @SubscribeEvent
+    public void onRender(RenderGameOverlayEvent.Text event) {
+        if (ticksRemaining > 0 && currentTitle != null && !currentTitle.isEmpty()) {
+            GL11.glPushMatrix();
+            Minecraft mc = Minecraft.getMinecraft();
+            ScaledResolution res = new ScaledResolution(mc, mc.displayWidth, mc.displayHeight);
+            FontRenderer fr = mc.fontRenderer;
+
+            int stringWidth = fr.getStringWidth(currentTitle);
+            int stringHeight = 9;
+
+            double scale = scaleText;
+            int x = (res.getScaledWidth() - (int) (stringWidth * scale)) / 2;
+            int y = (res.getScaledHeight() - (int) (stringHeight * scale)) / 2;
+
+            if (StatCollector.canTranslate(currentTitle)) {
+                currentTitle = StatCollector.translateToLocal(currentTitle);
+            }
+
+            int argb = getArgb();
+
+            GL11.glTranslated(x, y, 0);
+            GL11.glScaled(scale, scale, 1);
+
+            fr.drawStringWithShadow(currentTitle, 0, 0, argb);
+
+            GL11.glPopMatrix();
+
+            ticksRemaining--;
+        }
     }
 }
