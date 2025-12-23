@@ -46,7 +46,7 @@ public class ChemicalPlantRecipes implements IRecipePool {
                 new FluidStack(GTPPFluids.Anthracene, 100),
                 Materials.Naphtha.getFluid(200))
             .duration(300)
-            .metadata(CHEMPLANT_CASING_TIER, 6)
+            .metadata(CHEMPLANT_CASING_TIER, 4)
             .eut(TierEU.RECIPE_LuV)
             .addTo(CPR);
 
