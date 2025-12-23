@@ -1,8 +1,8 @@
 package com.science.gtnl.utils;
 
 import static com.science.gtnl.ScienceNotLeisure.*;
-import static com.science.gtnl.common.packet.ClientSoundHandler.PLAYING_SOUNDS;
-import static com.science.gtnl.common.packet.ClientTitleDisplayHandler.*;
+import static com.science.gtnl.common.packet.client.SoundHandler.PLAYING_SOUNDS;
+import static com.science.gtnl.common.packet.client.TitleDisplayHandler.*;
 import static com.science.gtnl.common.render.PlayerDollRenderManagerClient.textureCache;
 import static com.science.gtnl.common.render.tile.MeteorMinerRenderer.visualStateMap;
 
@@ -38,8 +38,8 @@ import org.lwjgl.opengl.GL11;
 import com.reavaritia.common.render.CustomEntityRenderer;
 import com.science.gtnl.common.item.TimeStopManager;
 import com.science.gtnl.common.item.items.NullPointerException;
-import com.science.gtnl.common.packet.ClientTitleDisplayHandler;
 import com.science.gtnl.common.packet.NBTUpdatePacket;
+import com.science.gtnl.common.packet.client.TitleDisplayHandler;
 import com.science.gtnl.common.render.item.ItemNullPointerExceptionRender;
 import com.science.gtnl.config.MainConfig;
 import com.science.gtnl.loader.EffectLoader;
@@ -175,7 +175,7 @@ public class SubscribeEventClientUtils {
             PotionEffect effect = player.getActivePotionEffect(EffectLoader.awe);
 
             if (effect != null && event.gui instanceof GuiIngameMenu) {
-                ClientTitleDisplayHandler
+                TitleDisplayHandler
                     .displayTitle(StatCollector.translateToLocal("Awe_Cancel_01"), 100, 0xFFFFFF, 3, 10, 20);
                 event.setCanceled(true);
             }
@@ -193,8 +193,7 @@ public class SubscribeEventClientUtils {
             if (effect != null && event.gui instanceof GuiInventory) {
                 String[] messages = { "Awe_Cancel_02_01", "Awe_Cancel_02_02" };
                 String message = messages[random.nextInt(messages.length)];
-                ClientTitleDisplayHandler
-                    .displayTitle(StatCollector.translateToLocal(message), 100, 0xFFFFFF, 3, 10, 20);
+                TitleDisplayHandler.displayTitle(StatCollector.translateToLocal(message), 100, 0xFFFFFF, 3, 10, 20);
 
                 event.setCanceled(true);
             }

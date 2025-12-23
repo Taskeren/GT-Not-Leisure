@@ -1,10 +1,10 @@
-package com.science.gtnl.common.packet;
+package com.science.gtnl.common.packet.client;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
 @SideOnly(Side.CLIENT)
-public class ClientTitleDisplayHandler {
+public class TitleDisplayHandler {
 
     public static String currentTitle = "";
     public static int ticksRemaining = 0;

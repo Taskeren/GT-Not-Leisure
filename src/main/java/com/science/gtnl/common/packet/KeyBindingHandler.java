@@ -61,9 +61,9 @@ import io.netty.buffer.ByteBuf;
 
 public class KeyBindingHandler implements IMessage, IMessageHandler<KeyBindingHandler, IMessage> {
 
-    ItemStack stack;
-    String key;
-    boolean isAE = false;
+    public ItemStack stack;
+    public String key;
+    public boolean isAE = false;
 
     public KeyBindingHandler() {
 

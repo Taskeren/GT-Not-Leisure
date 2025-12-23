@@ -1,4 +1,4 @@
-package com.science.gtnl.common.packet;
+package com.science.gtnl.common.packet.client;
 
 import java.util.UUID;
 
@@ -13,7 +13,7 @@ import cpw.mods.fml.relauncher.SideOnly;
 import gregtech.api.interfaces.tileentity.IGregTechTileEntity;
 
 @SideOnly(Side.CLIENT)
-public class ClientSyncHPCAVariablesHandler {
+public class SyncHPCAVariablesHandler {
 
     public static void apply(int x, int y, int z, UUID uuid, int totalLens, boolean mMachine) {
         World world = Minecraft.getMinecraft().theWorld;

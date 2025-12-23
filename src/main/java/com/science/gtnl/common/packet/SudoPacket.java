@@ -7,9 +7,11 @@ import net.minecraft.client.Minecraft;
 import cpw.mods.fml.common.network.simpleimpl.IMessage;
 import cpw.mods.fml.common.network.simpleimpl.IMessageHandler;
 import cpw.mods.fml.common.network.simpleimpl.MessageContext;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import io.netty.buffer.ByteBuf;
 
-public class SudoPacket implements IMessage {
+public class SudoPacket implements IMessage, IMessageHandler<SudoPacket, IMessage> {
 
     public String message;
 
@@ -34,15 +36,16 @@ public class SudoPacket implements IMessage {
         buf.writeBytes(bytes);
     }
 
-    public static class Handler implements IMessageHandler<SudoPacket, IMessage> {
+    @Override
+    public IMessage onMessage(SudoPacket message, MessageContext ctx) {
+        if (ctx.side.isServer()) return null;
+        sendChatMessage(message.message);
+        return null;
+    }
 
-        @Override
-        public IMessage onMessage(SudoPacket message, MessageContext ctx) {
-            if (ctx.side.isClient()) {
-                Minecraft mc = Minecraft.getMinecraft();
-                mc.thePlayer.sendChatMessage(message.message);
-            }
-            return null;
-        }
+    @SideOnly(Side.CLIENT)
+    public void sendChatMessage(String message) {
+        Minecraft mc = Minecraft.getMinecraft();
+        mc.thePlayer.sendChatMessage(message);
     }
 }

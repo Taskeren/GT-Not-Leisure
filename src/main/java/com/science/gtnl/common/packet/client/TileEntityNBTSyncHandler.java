@@ -1,4 +1,4 @@
-package com.science.gtnl.common.packet;
+package com.science.gtnl.common.packet.client;
 
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
@@ -14,9 +14,9 @@ import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
 @SideOnly(Side.CLIENT)
-public class TileEntityNBTPacketHandler {
+public class TileEntityNBTSyncHandler {
 
-    public static void apply(int blockId, int metadata, NBTTagCompound tileEntityNBT) {
+    public void apply(int blockId, int metadata, NBTTagCompound tileEntityNBT) {
         Minecraft mc = Minecraft.getMinecraft();
         EntityClientPlayerMP player = mc.thePlayer;
         if (player != null) {

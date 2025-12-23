@@ -5,13 +5,16 @@ import java.util.Map;
 
 import net.minecraft.util.ResourceLocation;
 
+import com.github.bsideup.jabel.Desugar;
+import com.science.gtnl.common.packet.client.SoundHandler;
+
 import cpw.mods.fml.common.network.ByteBufUtils;
 import cpw.mods.fml.common.network.simpleimpl.IMessage;
 import cpw.mods.fml.common.network.simpleimpl.IMessageHandler;
 import cpw.mods.fml.common.network.simpleimpl.MessageContext;
 import io.netty.buffer.ByteBuf;
 
-public class SoundPacket implements IMessage {
+public class SoundPacket implements IMessage, IMessageHandler<SoundPacket, IMessage> {
 
     public ResourceLocation soundResource;
     public float volume;
@@ -115,29 +118,16 @@ public class SoundPacket implements IMessage {
         }
     }
 
-    public static class SoundInfo {
-
-        public final ResourceLocation resourceLocation;
-        public final float volume;
-        public final float pitch;
-        public final long seekMs;
-
-        public SoundInfo(ResourceLocation resourceLocation, float volume, float pitch, long seekMs) {
-            this.resourceLocation = resourceLocation;
-            this.volume = volume;
-            this.pitch = pitch;
-            this.seekMs = seekMs;
+    @Override
+    public IMessage onMessage(SoundPacket message, MessageContext ctx) {
+        if (ctx.side.isClient()) {
+            SoundHandler.handleSoundPacket(message);
         }
+        return null;
     }
 
-    public static class Handler implements IMessageHandler<SoundPacket, IMessage> {
+    @Desugar
+    public record SoundInfo(ResourceLocation resourceLocation, float volume, float pitch, long seekMs) {
 
-        @Override
-        public IMessage onMessage(SoundPacket message, MessageContext ctx) {
-            if (ctx.side.isClient()) {
-                ClientSoundHandler.handleSoundPacket(message);
-            }
-            return null;
-        }
     }
 }

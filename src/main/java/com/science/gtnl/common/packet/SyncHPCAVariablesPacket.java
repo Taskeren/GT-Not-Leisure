@@ -2,12 +2,14 @@ package com.science.gtnl.common.packet;
 
 import java.util.UUID;
 
+import com.science.gtnl.common.packet.client.SyncHPCAVariablesHandler;
+
 import cpw.mods.fml.common.network.simpleimpl.IMessage;
 import cpw.mods.fml.common.network.simpleimpl.IMessageHandler;
 import cpw.mods.fml.common.network.simpleimpl.MessageContext;
 import io.netty.buffer.ByteBuf;
 
-public class SyncHPCAVariablesPacket implements IMessage {
+public class SyncHPCAVariablesPacket implements IMessage, IMessageHandler<SyncHPCAVariablesPacket, IMessage> {
 
     private UUID uuid;
     private int totalLens;
@@ -48,14 +50,11 @@ public class SyncHPCAVariablesPacket implements IMessage {
         mMachine = buf.readBoolean();
     }
 
-    public static class Handler implements IMessageHandler<SyncHPCAVariablesPacket, IMessage> {
-
-        @Override
-        public IMessage onMessage(SyncHPCAVariablesPacket message, MessageContext ctx) {
-            ClientSyncHPCAVariablesHandler
-                .apply(message.x, message.y, message.z, message.uuid, message.totalLens, message.mMachine);
-            return null;
-        }
+    @Override
+    public IMessage onMessage(SyncHPCAVariablesPacket message, MessageContext ctx) {
+        SyncHPCAVariablesHandler
+            .apply(message.x, message.y, message.z, message.uuid, message.totalLens, message.mMachine);
+        return null;
     }
 
 }
