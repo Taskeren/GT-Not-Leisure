@@ -132,6 +132,13 @@ public class ChemicalRecipes implements IRecipePool {
             .addTo(MCRR);
 
         RecipeBuilder.builder()
+            .fluidInputs(MaterialPool.Benzaldehyde.getFluidOrGas(1000), Materials.Hydrogen.getGas(2000))
+            .fluidOutputs(Materials.Toluene.getFluid(1000), Materials.Water.getFluid(1000))
+            .duration(100)
+            .eut(TierEU.RECIPE_HV)
+            .addTo(MCRR);
+
+        RecipeBuilder.builder()
             .itemInputs()
             .fluidInputs(
                 MaterialPool.BoronFluoride.getFluidOrGas(2000),

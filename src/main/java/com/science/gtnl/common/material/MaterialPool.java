@@ -171,7 +171,7 @@ public class MaterialPool implements Runnable {
     public static final Werkstoff Benzaldehyde = new Werkstoff(
         new short[] { 142, 89, 27 },
         "Benzaldehyde",
-        subscriptNumbers("C7H6O"),
+        subscriptNumbers("C7H8O"),
         new Werkstoff.Stats(),
         Werkstoff.Types.ELEMENT,
         new Werkstoff.GenerationFeatures().disable()
