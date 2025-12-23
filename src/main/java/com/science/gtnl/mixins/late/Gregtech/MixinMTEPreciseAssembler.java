@@ -17,6 +17,7 @@ import gregtech.api.metatileentity.implementations.MTEHatchInput;
 import gregtech.api.metatileentity.implementations.MTEHatchInputBus;
 import gregtech.api.recipe.RecipeMap;
 
+@Deprecated
 @Mixin(value = MTEPreciseAssembler.class, remap = false)
 public abstract class MixinMTEPreciseAssembler extends MTEExtendedPowerMultiBlockBase<MixinMTEPreciseAssembler> {
 
