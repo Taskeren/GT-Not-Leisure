@@ -315,7 +315,7 @@ public class EnergyInfuser extends TTMultiblockBase implements IConstructable {
     }
 
     @Override
-    public final void onScrewdriverRightClick(ForgeDirection side, EntityPlayer aPlayer, float aX, float aY, float aZ,
+    public void onScrewdriverRightClick(ForgeDirection side, EntityPlayer aPlayer, float aX, float aY, float aZ,
         ItemStack aTool) {
         outputAllItems = true;
         GTUtility.sendChatToPlayer(aPlayer, StatCollector.translateToLocal("Info_EnergyInfuser_00" + this.machineMode));
