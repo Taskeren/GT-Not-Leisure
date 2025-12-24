@@ -49,7 +49,7 @@ import org.spongepowered.asm.mixin.injection.Redirect;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import com.reavaritia.common.render.CustomEntityRenderer;
-import com.science.gtnl.common.item.TimeStopManager;
+import com.science.gtnl.common.item.items.TimeStopPocketWatch;
 import com.science.gtnl.utils.ClientUtils;
 
 import cpw.mods.fml.common.FMLCommonHandler;
@@ -112,9 +112,10 @@ public abstract class MixinMinecraft {
         return new CustomEntityRenderer(mc, resourceManager);
     }
 
+    @SuppressWarnings("DataFlowIssue")
     @Inject(method = "runTick", at = @At("HEAD"), cancellable = true)
     private void mixin$runTick(CallbackInfo ci) {
-        boolean isStop = TimeStopManager.isTimeStopped();
+        boolean isStop = TimeStopPocketWatch.isTimeStopped();
         if (!isStop) {
             return;
         } else {
@@ -185,7 +186,7 @@ public abstract class MixinMinecraft {
             } catch (Throwable throwable1) {
                 crashreport = CrashReport.makeCrashReport(throwable1, "Updating screen events");
                 crashreportcategory = crashreport.makeCategory("Affected screen");
-                crashreportcategory.addCrashSectionCallable("Screen name", new Callable() {
+                crashreportcategory.addCrashSectionCallable("Screen name", new Callable<>() {
 
                     public String call() {
                         return ((Minecraft) ((Object) this)).currentScreen.getClass()
@@ -201,7 +202,7 @@ public abstract class MixinMinecraft {
                 } catch (Throwable throwable) {
                     crashreport = CrashReport.makeCrashReport(throwable, "Ticking screen");
                     crashreportcategory = crashreport.makeCategory("Affected screen");
-                    crashreportcategory.addCrashSectionCallable("Screen name", new Callable() {
+                    crashreportcategory.addCrashSectionCallable("Screen name", new Callable<>() {
 
                         public String call() {
                             return ((Minecraft) ((Object) this)).currentScreen.getClass()
@@ -410,7 +411,7 @@ public abstract class MixinMinecraft {
                 while (true) {
                     if (!this.gameSettings.keyBindAttack.isPressed()) {
                         while (this.gameSettings.keyBindUseItem.isPressed()) {
-                            ;
+
                         }
 
                         while (true) {
@@ -530,9 +531,10 @@ public abstract class MixinMinecraft {
         this.systemTime = Minecraft.getSystemTime();
     }
 
+    @SuppressWarnings("DataFlowIssue")
     @Inject(method = "runGameLoop", at = @At("HEAD"), cancellable = true)
     private void mixin$runGameLoop(CallbackInfo ci) {
-        if (TimeStopManager.isTimeStopped()) {
+        if (TimeStopPocketWatch.isTimeStopped()) {
             ci.cancel();
         } else return;
 

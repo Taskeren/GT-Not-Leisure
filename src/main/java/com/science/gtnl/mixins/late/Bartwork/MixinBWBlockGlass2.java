@@ -15,6 +15,7 @@ import bartworks.common.blocks.BWBlocksGlass2;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
+@Deprecated
 @Mixin(value = BWBlocksGlass2.class, remap = false)
 public abstract class MixinBWBlockGlass2 extends BWBlocks {
 

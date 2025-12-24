@@ -147,7 +147,7 @@ public class DetravScannerGUI extends GuiScreen {
             prevH = height;
         }
 
-        // draw back for ores
+        // gtnl$draw back for ores
         drawRect(aX, aY, aX + currentWidth + 100, aY + currentHeight, 0xFFC6C6C6);
         map.glBindTexture();
         map.draw(aX, aY);
@@ -156,13 +156,13 @@ public class DetravScannerGUI extends GuiScreen {
             .bindTexture(back);
         GL11.glColor4f(0xFF, 0xFF, 0xFF, 0xFF);
 
-        // draw corners
+        // gtnl$draw corners
         drawTexturedModalRect(aX - 5, aY - 5, 0, 0, 5, 5);// leftTop
         drawTexturedModalRect(aX + currentWidth + 100, aY - 5, 171, 0, 5, 5);// RightTop
         drawTexturedModalRect(aX - 5, aY + currentHeight, 0, 161, 5, 5);// leftDown
         drawTexturedModalRect(aX + currentWidth + 100, aY + currentHeight, 171, 161, 5, 5);// RightDown
 
-        // draw edges
+        // gtnl$draw edges
         for (int i = aX; i < aX + currentWidth + 100; i += 128)
             drawTexturedModalRect(i, aY - 5, 5, 0, Math.min(128, aX + currentWidth + 100 - i), 5); // top
         for (int i = aX; i < aX + currentWidth + 100; i += 128)

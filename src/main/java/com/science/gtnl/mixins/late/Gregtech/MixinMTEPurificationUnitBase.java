@@ -81,19 +81,19 @@ public abstract class MixinMTEPurificationUnitBase extends MTEExtendedPowerMulti
     implements IWirelessMode {
 
     @Shadow
-    public ArrayList<FluidStack> storedFluids;
+    protected ArrayList<FluidStack> storedFluids;
 
     @Shadow
     public abstract CheckRecipeResult overrideRecipeCheck();
 
     @Shadow
-    public GTRecipe currentRecipe;
+    protected GTRecipe currentRecipe;
 
     @Shadow
-    public int effectiveParallel;
+    protected int effectiveParallel;
 
     @Shadow
-    public int maxParallel;
+    protected int maxParallel;
 
     @Shadow
     public abstract long getBasePowerUsage();
@@ -111,7 +111,7 @@ public abstract class MixinMTEPurificationUnitBase extends MTEExtendedPowerMulti
     @Shadow
     private int controllerZ;
     @Shadow
-    public float currentRecipeChance;
+    protected float currentRecipeChance;
 
     @Shadow
     public abstract float calculateFinalSuccessChance();
@@ -124,24 +124,24 @@ public abstract class MixinMTEPurificationUnitBase extends MTEExtendedPowerMulti
     public static float WATER_BOOST_NEEDED_FLUID;
 
     @Unique
-    public long maxParallelLong = 1;
+    public long gtnl$maxParallelLong = 1;
 
     @Unique
-    public long effectiveParallelLong = 1;
+    public long gtnl$effectiveParallelLong = 1;
 
     @Unique
-    public BigInteger costingEU = BigInteger.ZERO;
+    public BigInteger gtnl$costingEU = BigInteger.ZERO;
 
     @Unique
-    public String costingEUText = ZERO_STRING;
+    public String gtnl$costingEUText = ZERO_STRING;
 
     @Getter
     @Setter
     @Unique
-    public boolean wirelessMode;
+    public boolean gtnl$wirelessMode;
 
     @Unique
-    public UUID ownerUUID;
+    public UUID gtnl$ownerUUID;
 
     public MixinMTEPurificationUnitBase(int aID, String aName, String aNameRegional) {
         super(aID, aName, aNameRegional);
@@ -150,24 +150,24 @@ public abstract class MixinMTEPurificationUnitBase extends MTEExtendedPowerMulti
     @Override
     public void onFirstTick(IGregTechTileEntity aBaseMetaTileEntity) {
         super.onFirstTick(aBaseMetaTileEntity);
-        this.ownerUUID = aBaseMetaTileEntity.getOwnerUuid();
+        this.gtnl$ownerUUID = aBaseMetaTileEntity.getOwnerUuid();
     }
 
     @Override
     public boolean supportsCraftingMEBuffer() {
-        return wirelessMode;
+        return gtnl$wirelessMode;
     }
 
     @Inject(method = "checkProcessing", at = @At("HEAD"), cancellable = true)
     public void checkProcessing(CallbackInfoReturnable<CheckRecipeResult> cir) {
-        if (controller != null) this.wirelessMode = ((IWirelessMode) controller).isWirelessMode();
-        if (!wirelessMode) return;
+        if (controller != null) this.gtnl$wirelessMode = ((IWirelessMode) controller).isGtnl$wirelessMode();
+        if (!gtnl$wirelessMode) return;
         this.storedFluids = this.getStoredFluids();
-        costingEU = BigInteger.ZERO;
-        costingEUText = ZERO_STRING;
+        gtnl$costingEU = BigInteger.ZERO;
+        gtnl$costingEUText = ZERO_STRING;
 
         CheckRecipeResult result = overrideRecipeCheck();
-        if (result == null) result = findRecipeForInputsLong(storedFluids.toArray(new FluidStack[] {}));
+        if (result == null) result = gtnl$findRecipeForInputsLong(storedFluids.toArray(new FluidStack[] {}));
 
         if (result.wasSuccessful()) {
             FluidStack waterInput = this.currentRecipe.mFluidInputs[0];
@@ -180,22 +180,23 @@ public abstract class MixinMTEPurificationUnitBase extends MTEExtendedPowerMulti
             }
 
             // Determine effective parallel
-            effectiveParallelLong = Math.min(maxParallelLong, Math.floorDiv(amountAvailable, waterInput.amount));
+            gtnl$effectiveParallelLong = Math
+                .min(gtnl$maxParallelLong, Math.floorDiv(amountAvailable, (long) waterInput.amount));
             // This should not happen, throw an error
-            if (effectiveParallelLong == 0) {
+            if (gtnl$effectiveParallelLong == 0) {
                 cir.setReturnValue(CheckRecipeResultRegistry.INTERNAL_ERROR);
                 return;
             }
 
-            BigInteger costEU = BigInteger.valueOf(effectiveParallelLong)
+            BigInteger costEU = BigInteger.valueOf(gtnl$effectiveParallelLong)
                 .multiply(BigInteger.valueOf(getBasePowerUsage()));
 
-            if (!addEUToGlobalEnergyMap(ownerUUID, costEU.multiply(NEGATIVE_ONE))) {
+            if (!addEUToGlobalEnergyMap(gtnl$ownerUUID, costEU.multiply(NEGATIVE_ONE))) {
                 cir.setReturnValue(CheckRecipeResultRegistry.insufficientPower(costEU.longValue()));
                 return;
             }
-            costingEU = costingEU.add(costEU);
-            costingEUText = GTUtility.formatNumbers(costingEU);
+            gtnl$costingEU = gtnl$costingEU.add(costEU);
+            gtnl$costingEUText = GTUtility.formatNumbers(gtnl$costingEU);
         }
 
         cir.setReturnValue(result);
@@ -203,12 +204,12 @@ public abstract class MixinMTEPurificationUnitBase extends MTEExtendedPowerMulti
 
     @Inject(method = "doPurificationRecipeCheck", at = @At("HEAD"))
     public void doPurificationRecipeCheck(CallbackInfoReturnable<Boolean> cir) {
-        effectiveParallelLong = 1;
+        gtnl$effectiveParallelLong = 1;
     }
 
     @Inject(method = "startCycle", at = @At("HEAD"), cancellable = true)
     public void startCycle(int cycleTime, int progressTime, CallbackInfo ci) {
-        if (!wirelessMode) return;
+        if (!gtnl$wirelessMode) return;
         ThreadLocalRandom random = ThreadLocalRandom.current();
         startRecipeProcessing();
         // Important to calculate this before depleting inputs, otherwise we may get issues with boost items
@@ -216,14 +217,14 @@ public abstract class MixinMTEPurificationUnitBase extends MTEExtendedPowerMulti
         this.currentRecipeChance = this.calculateBoostedSuccessChance();
 
         // Deplete inputs from water boost if enabled.
-        if (isWaterBoostedList(this.currentRecipe)) {
-            ArrayList<FluidStack> inputWater = this.getWaterBoostAmountList(this.currentRecipe);
-            this.depleteInputList(inputWater, false);
+        if (gtnl$isWaterBoostedList(this.currentRecipe)) {
+            ArrayList<FluidStack> inputWater = this.gtnl$getWaterBoostAmountList(this.currentRecipe);
+            this.gtnl$depleteInputList(inputWater, false);
         }
 
         // Consume inputs, only if debug mode is off
         if (!getController().debugModeOn()) {
-            this.depleteRecipeInputsLong();
+            this.gtnl$depleteRecipeInputsLong();
         }
         // Initialize recipe and progress information.
         this.mMaxProgresstime = cycleTime;
@@ -236,9 +237,9 @@ public abstract class MixinMTEPurificationUnitBase extends MTEExtendedPowerMulti
         ArrayList<FluidStack> fluidOutputList = new ArrayList<>();
         for (int i = 0; i < this.currentRecipe.mFluidOutputs.length; ++i) {
             FluidStack output = this.currentRecipe.mFluidOutputs[i].copy();
-            long scaledAmount = effectiveParallelLong * output.amount;
+            long scaledAmount = gtnl$effectiveParallelLong * output.amount;
 
-            fluidOutputList.addAll(splitLongToFluidStacks(output, scaledAmount));
+            fluidOutputList.addAll(gtnl$splitLongToFluidStacks(output, scaledAmount));
         }
 
         ItemStack[] recipeOutputs = this.currentRecipe.mOutputs;
@@ -274,18 +275,18 @@ public abstract class MixinMTEPurificationUnitBase extends MTEExtendedPowerMulti
     }
 
     @Unique
-    public ArrayList<FluidStack> getWaterBoostAmountList(GTRecipe recipe) {
+    public ArrayList<FluidStack> gtnl$getWaterBoostAmountList(GTRecipe recipe) {
 
         // Recipes should always be constructed so that output water is always the first fluid output
         FluidStack outputWater = recipe.mFluidOutputs[0];
         long totalAmount = Math
-            .round((double) outputWater.amount * WATER_BOOST_NEEDED_FLUID * this.effectiveParallelLong);
+            .round((double) outputWater.amount * WATER_BOOST_NEEDED_FLUID * this.gtnl$effectiveParallelLong);
 
-        return new ArrayList<>(splitLongToFluidStacks(outputWater, totalAmount));
+        return new ArrayList<>(gtnl$splitLongToFluidStacks(outputWater, totalAmount));
     }
 
     @Unique
-    private ArrayList<FluidStack> splitLongToFluidStacks(FluidStack template, long amount) {
+    private ArrayList<FluidStack> gtnl$splitLongToFluidStacks(FluidStack template, long amount) {
         ArrayList<FluidStack> list = new ArrayList<>();
         long remaining = amount;
         while (remaining > 0) {
@@ -298,11 +299,11 @@ public abstract class MixinMTEPurificationUnitBase extends MTEExtendedPowerMulti
 
     @Inject(method = "endCycle", at = @At("TAIL"))
     private void onEndCycle(CallbackInfo ci) {
-        this.effectiveParallelLong = 1;
+        this.gtnl$effectiveParallelLong = 1;
     }
 
     @Unique
-    public CheckRecipeResult findRecipeForInputsLong(FluidStack[] fluidInputs, ItemStack... itemInputs) {
+    public CheckRecipeResult gtnl$findRecipeForInputsLong(FluidStack[] fluidInputs, ItemStack... itemInputs) {
         RecipeMap<?> recipeMap = this.getRecipeMap();
 
         // Grab a stream of recipes and find the one with the highest success chance
@@ -323,27 +324,27 @@ public abstract class MixinMTEPurificationUnitBase extends MTEExtendedPowerMulti
     }
 
     @Unique
-    public void depleteRecipeInputsLong() {
+    public void gtnl$depleteRecipeInputsLong() {
         for (int i = 0; i < this.currentRecipe.mFluidInputs.length; ++i) {
             FluidStack input = this.currentRecipe.mFluidInputs[i];
             ArrayList<FluidStack> fluidStacks = new ArrayList<>();
             fluidStacks.add(input);
             if (i == 0) {
-                fluidStacks = splitLongToFluidStacks(input, input.amount * effectiveParallelLong);
+                fluidStacks = gtnl$splitLongToFluidStacks(input, input.amount * gtnl$effectiveParallelLong);
             }
-            this.depleteInputList(fluidStacks, false);
+            this.gtnl$depleteInputList(fluidStacks, false);
         }
     }
 
     @Unique
-    public boolean isWaterBoostedList(GTRecipe recipe) {
-        ArrayList<FluidStack> inputWater = getWaterBoostAmountList(recipe);
+    public boolean gtnl$isWaterBoostedList(GTRecipe recipe) {
+        ArrayList<FluidStack> inputWater = gtnl$getWaterBoostAmountList(recipe);
         // Simulate input drain to see if we can water boost
-        return depleteInputList(inputWater, true);
+        return gtnl$depleteInputList(inputWater, true);
     }
 
     @Unique
-    public boolean depleteInputList(ArrayList<FluidStack> fluids, boolean simulate) {
+    public boolean gtnl$depleteInputList(ArrayList<FluidStack> fluids, boolean simulate) {
         if (fluids == null || fluids.isEmpty()) return false;
 
         Map<Fluid, Long> mergedStorage = new HashMap<>();
@@ -372,8 +373,8 @@ public abstract class MixinMTEPurificationUnitBase extends MTEExtendedPowerMulti
             while (remaining > 0) {
                 int drainedThisRound = 0;
 
-                for (MTEHatch hatch : getAllInputHatches()) {
-                    int drained = drainFluid(hatch, new FluidStack(needed.getFluid(), remaining), true);
+                for (MTEHatch hatch : gtnl$getAllInputHatches()) {
+                    int drained = gtnl$drainFluid(hatch, new FluidStack(needed.getFluid(), remaining), true);
                     drainedThisRound += drained;
                 }
 
@@ -389,7 +390,7 @@ public abstract class MixinMTEPurificationUnitBase extends MTEExtendedPowerMulti
     }
 
     @Unique
-    public int drainFluid(MTEHatch hatch, FluidStack fluid, boolean doDrain) {
+    public int gtnl$drainFluid(MTEHatch hatch, FluidStack fluid, boolean doDrain) {
         if (fluid == null || hatch == null) return 0;
 
         if (supportsCraftingMEBuffer() && hatch instanceof IDualInputHatch tHatch && tHatch.supportsFluids()) {
@@ -422,7 +423,7 @@ public abstract class MixinMTEPurificationUnitBase extends MTEExtendedPowerMulti
     }
 
     @Unique
-    private List<MTEHatch> getAllInputHatches() {
+    private List<MTEHatch> gtnl$getAllInputHatches() {
         List<MTEHatch> dualHatches = mDualInputHatches.stream()
             .map(h -> (MTEHatch) h)
             .collect(Collectors.toList());
@@ -518,12 +519,14 @@ public abstract class MixinMTEPurificationUnitBase extends MTEExtendedPowerMulti
 
     @Inject(method = "getActualPowerUsage", at = @At("TAIL"), cancellable = true)
     public void getActualPowerUsage(CallbackInfoReturnable<Long> cir) {
-        if (wirelessMode) cir.setReturnValue(0L);
+        if (gtnl$wirelessMode) cir.setReturnValue(0L);
     }
 
     @Inject(method = "addUIWidgets", at = @At("HEAD"))
     public void addUIWidgets(ModularWindow.Builder builder, UIBuildContext buildContext, CallbackInfo ci) {
-        builder.widget(new FakeSyncWidget.BooleanSyncer(() -> wirelessMode, val -> wirelessMode = val));
+        builder.widget(new FakeSyncWidget.BooleanSyncer(() -> gtnl$wirelessMode, val -> gtnl$wirelessMode = val));
+        builder.widget(new FakeSyncWidget.IntegerSyncer(() -> maxParallel, (val) -> maxParallel = val));
+        builder.widget(new FakeSyncWidget.LongSyncer(() -> gtnl$maxParallelLong, (val) -> gtnl$maxParallelLong = val));
     }
 
     /**
@@ -543,9 +546,9 @@ public abstract class MixinMTEPurificationUnitBase extends MTEExtendedPowerMulti
         builder.setDraggable(true);
 
         Widget parallelWindow;
-        if (wirelessMode) {
-            parallelWindow = new NumericWidget().setSetter(val -> maxParallelLong = (long) val)
-                .setGetter(() -> maxParallelLong)
+        if (gtnl$wirelessMode) {
+            parallelWindow = new NumericWidget().setSetter(val -> gtnl$maxParallelLong = (long) val)
+                .setGetter(() -> gtnl$maxParallelLong)
                 .setBounds(1, Long.MAX_VALUE)
                 .setDefaultValue(1)
                 .setScrollValues(1, 1000, 10000)
@@ -553,10 +556,7 @@ public abstract class MixinMTEPurificationUnitBase extends MTEExtendedPowerMulti
                 .setTextColor(Color.WHITE.normal)
                 .setSize(150, 18)
                 .setPos(4, 25)
-                .setBackground(GTUITextures.BACKGROUND_TEXT_FIELD)
-                .attachSyncer(
-                    new FakeSyncWidget.LongSyncer(() -> maxParallelLong, (val) -> maxParallelLong = val),
-                    builder);
+                .setBackground(GTUITextures.BACKGROUND_TEXT_FIELD);
         } else {
             parallelWindow = new NumericWidget().setSetter(val -> maxParallel = (int) val)
                 .setGetter(() -> maxParallel)
@@ -567,8 +567,7 @@ public abstract class MixinMTEPurificationUnitBase extends MTEExtendedPowerMulti
                 .setTextColor(Color.WHITE.normal)
                 .setSize(150, 18)
                 .setPos(4, 25)
-                .setBackground(GTUITextures.BACKGROUND_TEXT_FIELD)
-                .attachSyncer(new FakeSyncWidget.IntegerSyncer(() -> maxParallel, (val) -> maxParallel = val), builder);
+                .setBackground(GTUITextures.BACKGROUND_TEXT_FIELD);
         }
 
         builder.setPos(
@@ -587,10 +586,10 @@ public abstract class MixinMTEPurificationUnitBase extends MTEExtendedPowerMulti
 
     @Inject(method = "loadNBTData", at = @At("TAIL"))
     public void loadNBTData(NBTTagCompound aNBT, CallbackInfo ci) {
-        wirelessMode = aNBT.getBoolean("wirelessMode");
-        if (wirelessMode) {
-            maxParallelLong = aNBT.getLong("configuredParallel");
-            effectiveParallelLong = aNBT.getLong("effectiveParallel");
+        gtnl$wirelessMode = aNBT.getBoolean("wirelessMode");
+        if (gtnl$wirelessMode) {
+            gtnl$maxParallelLong = aNBT.getLong("configuredParallel");
+            gtnl$effectiveParallelLong = aNBT.getLong("effectiveParallel");
         } else {
             maxParallel = (int) Math.min(Integer.MAX_VALUE, aNBT.getLong("configuredParallel"));
             effectiveParallel = (int) Math.min(Integer.MAX_VALUE, aNBT.getLong("effectiveParallel"));
@@ -599,10 +598,10 @@ public abstract class MixinMTEPurificationUnitBase extends MTEExtendedPowerMulti
 
     @Inject(method = "saveNBTData", at = @At("TAIL"))
     public void saveNBTData(NBTTagCompound aNBT, CallbackInfo ci) {
-        aNBT.setBoolean("wirelessMode", wirelessMode);
-        if (wirelessMode) {
-            aNBT.setLong("configuredParallel", maxParallelLong);
-            aNBT.setLong("effectiveParallel", effectiveParallelLong);
+        aNBT.setBoolean("wirelessMode", gtnl$wirelessMode);
+        if (gtnl$wirelessMode) {
+            aNBT.setLong("configuredParallel", gtnl$maxParallelLong);
+            aNBT.setLong("effectiveParallel", gtnl$effectiveParallelLong);
         } else {
             aNBT.setInteger("configuredParallel", maxParallel);
             aNBT.setInteger("effectiveParallel", effectiveParallel);
@@ -636,15 +635,15 @@ public abstract class MixinMTEPurificationUnitBase extends MTEExtendedPowerMulti
             StatCollector.translateToLocalFormatted(
                 "GT5U.infodata.parallel.current",
                 "" + EnumChatFormatting.YELLOW
-                    + (this.wirelessMode ? this.effectiveParallelLong : this.effectiveParallel)));
-        if (wirelessMode) {
+                    + (this.gtnl$wirelessMode ? this.gtnl$effectiveParallelLong : this.effectiveParallel)));
+        if (gtnl$wirelessMode) {
             ret.add(EnumChatFormatting.LIGHT_PURPLE + StatCollector.translateToLocal("Waila_WirelessMode"));
             ret.add(
                 EnumChatFormatting.AQUA + StatCollector.translateToLocal("Waila_CurrentEuCost")
                     + EnumChatFormatting.RESET
                     + ": "
                     + EnumChatFormatting.GOLD
-                    + costingEUText
+                    + gtnl$costingEUText
                     + EnumChatFormatting.RESET
                     + " EU");
         }
@@ -672,8 +671,8 @@ public abstract class MixinMTEPurificationUnitBase extends MTEExtendedPowerMulti
     public void getWailaNBTData(EntityPlayerMP player, TileEntity tile, NBTTagCompound tag, World world, int x, int y,
         int z, CallbackInfo ci) {
         if (getBaseMetaTileEntity() != null) {
-            tag.setBoolean("wirelessMode", wirelessMode);
-            if (wirelessMode) tag.setString("costingEUText", costingEUText);
+            tag.setBoolean("wirelessMode", gtnl$wirelessMode);
+            if (gtnl$wirelessMode) tag.setString("costingEUText", gtnl$costingEUText);
         }
     }
 

@@ -10,6 +10,7 @@ import org.spongepowered.asm.mixin.Shadow;
 
 import com.glodblock.github.common.item.ItemFluidPacket;
 
+@SuppressWarnings("AddedMixinMembersNamePattern")
 @Mixin(value = ItemFluidPacket.class, remap = false)
 public abstract class MixinItemFluidPacket implements IFluidContainerItem {
 

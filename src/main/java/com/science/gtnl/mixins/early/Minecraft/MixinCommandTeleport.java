@@ -8,6 +8,7 @@ import net.minecraft.server.MinecraftServer;
 import net.minecraft.world.WorldServer;
 
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
@@ -28,13 +29,13 @@ public abstract class MixinCommandTeleport {
                     target = playerMP;
                 }
             } else {
-                target = getPlayer(sender, args[0]);
+                target = gtnl$getPlayer(sender, args[0]);
             }
 
             if (target == null) return;
 
             if (args.length == 1 || args.length == 2) {
-                EntityPlayerMP dest = getPlayer(sender, args[args.length - 1]);
+                EntityPlayerMP dest = gtnl$getPlayer(sender, args[args.length - 1]);
                 if (dest == null) throw new PlayerNotFoundException();
 
                 if (dest.dimension != target.dimension) {
@@ -60,7 +61,8 @@ public abstract class MixinCommandTeleport {
         } catch (Exception ignored) {}
     }
 
-    private EntityPlayerMP getPlayer(ICommandSender sender, String name) {
+    @Unique
+    private EntityPlayerMP gtnl$getPlayer(ICommandSender sender, String name) {
         return MinecraftServer.getServer()
             .getConfigurationManager()
             .func_152612_a(name);

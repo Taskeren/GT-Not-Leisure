@@ -53,7 +53,7 @@ public abstract class MixinMTEVoidMinerBase extends MTEEnhancedMultiBlockBase<Mi
     @Final
     protected byte TIER_MULTIPLIER;
     @Unique
-    public long lEUt;
+    public long gtnl$lEUt;
 
     @Shadow
     protected abstract int getMinTier();
@@ -67,7 +67,7 @@ public abstract class MixinMTEVoidMinerBase extends MTEEnhancedMultiBlockBase<Mi
     private int multiplier;
 
     @Unique
-    private static final boolean GTNL$enableMixin = !ModList.VMTweak.isModLoaded() && MainConfig.enableVoidMinerTweak;
+    private static boolean gtnl$enableMixin = !ModList.VMTweak.isModLoaded() && MainConfig.enableVoidMinerTweak;
 
     public MixinMTEVoidMinerBase(String aName) {
         super(aName);
@@ -75,21 +75,21 @@ public abstract class MixinMTEVoidMinerBase extends MTEEnhancedMultiBlockBase<Mi
 
     @ModifyVariable(method = "handleExtraDrops", at = @At("HEAD"), require = 1, remap = false, argsOnly = true)
     private int vmTweak$mapDimensionIdForExtraDrops(int id) {
-        if (!GTNL$enableMixin) return id;
+        if (!gtnl$enableMixin) return id;
         return VMTweakHelper.dimMapping.inverse()
             .getOrDefault(vmTweak$resolveDimensionKey(), id);
     }
 
     @ModifyVariable(method = "handleModDimDef", at = @At("HEAD"), require = 1, remap = false, argsOnly = true)
     private int vmTweak$mapDimensionIdForModDef(int id) {
-        if (!GTNL$enableMixin) return id;
+        if (!gtnl$enableMixin) return id;
         return vmTweak$dim = VMTweakHelper.dimMapping.inverse()
             .getOrDefault(vmTweak$resolveDimensionKey(), id);
     }
 
     @ModifyVariable(method = "handleModDimDef", at = @At("STORE"), require = 1, remap = false)
     private String vmTweak$mapDimensionChunkProviderName(String id) {
-        if (!GTNL$enableMixin) return id;
+        if (!gtnl$enableMixin) return id;
         return VMTweakHelper.cache.getOrDefault(vmTweak$dim, id);
     }
 
@@ -98,7 +98,7 @@ public abstract class MixinMTEVoidMinerBase extends MTEEnhancedMultiBlockBase<Mi
 
     @Unique
     private String vmTweak$resolveDimensionKey() {
-        if (!GTNL$enableMixin) return "None";
+        if (!gtnl$enableMixin) return "None";
         return Optional.ofNullable(this.mInventory[1])
             .filter(s -> s.getItem() instanceof ItemDimensionDisplay)
             .map(ItemDimensionDisplay::getDimension)
@@ -110,19 +110,19 @@ public abstract class MixinMTEVoidMinerBase extends MTEEnhancedMultiBlockBase<Mi
 
     @Inject(method = "saveNBTData", at = @At("HEAD"), require = 1, remap = false)
     public void vmTweak$saveNBT(NBTTagCompound aNBT, CallbackInfo c) {
-        if (!GTNL$enableMixin) return;
+        if (!gtnl$enableMixin) return;
         aNBT.setString("mLastDimensionOverride", this.vmTweak$mLastDimensionOverride);
     }
 
     @Inject(method = "loadNBTData", at = @At("HEAD"), require = 1, remap = false)
     public void vmTweak$loadNBT(NBTTagCompound aNBT, CallbackInfo c) {
-        if (!GTNL$enableMixin) return;
+        if (!gtnl$enableMixin) return;
         this.vmTweak$mLastDimensionOverride = aNBT.getString("mLastDimensionOverride");
     }
 
     @Inject(method = "working", at = @At("HEAD"), remap = false)
     public void vmTweak$onWorkingTick(CallbackInfoReturnable<Boolean> cir) {
-        if (!GTNL$enableMixin) return;
+        if (!gtnl$enableMixin) return;
         String dim = Optional.ofNullable(this.mInventory[1])
             .filter(s -> s.getItem() instanceof ItemDimensionDisplay)
             .map(ItemDimensionDisplay::getDimension)
@@ -136,7 +136,7 @@ public abstract class MixinMTEVoidMinerBase extends MTEEnhancedMultiBlockBase<Mi
 
     @Unique
     private String vmTweak$getDimensionDisplayName() {
-        if (!GTNL$enableMixin) return "";
+        if (!gtnl$enableMixin) return "";
         String ext = null;
         try {
             Block block = ModBlocks.getBlock(vmTweak$mLastDimensionOverride);
@@ -166,12 +166,12 @@ public abstract class MixinMTEVoidMinerBase extends MTEEnhancedMultiBlockBase<Mi
 
     @Override
     public boolean onRunningTick(ItemStack aStack) {
-        if (GTNL$enableMixin) {
-            if (this.lEUt > 0) {
-                addEnergyOutput((this.lEUt * mEfficiency) / 10000);
+        if (gtnl$enableMixin) {
+            if (this.gtnl$lEUt > 0) {
+                addEnergyOutput((this.gtnl$lEUt * mEfficiency) / 10000);
                 return true;
             }
-            if (this.lEUt < 0) {
+            if (this.gtnl$lEUt < 0) {
                 if (!drainEnergyInput(getActualEnergyUsage())) {
                     stopMachine(ShutDownReasonRegistry.POWER_LOSS);
                     return false;
@@ -195,15 +195,15 @@ public abstract class MixinMTEVoidMinerBase extends MTEEnhancedMultiBlockBase<Mi
     @Override
     public void loadNBTData(NBTTagCompound aNBT) {
         super.loadNBTData(aNBT);
-        if (!GTNL$enableMixin) return;
-        this.lEUt = aNBT.getLong("mEUt");
+        if (!gtnl$enableMixin) return;
+        this.gtnl$lEUt = aNBT.getLong("mEUt");
     }
 
     @Override
     public void saveNBTData(NBTTagCompound aNBT) {
         super.saveNBTData(aNBT);
-        if (!GTNL$enableMixin) return;
-        aNBT.setLong("mEUt", this.lEUt);
+        if (!gtnl$enableMixin) return;
+        aNBT.setLong("mEUt", this.gtnl$lEUt);
     }
 
     @Override
@@ -238,7 +238,7 @@ public abstract class MixinMTEVoidMinerBase extends MTEEnhancedMultiBlockBase<Mi
 
     @Inject(method = "consumeNobleGas", at = @At("HEAD"), remap = false, cancellable = true)
     public void consumeNobleGas(FluidStack gasToConsume, CallbackInfoReturnable<Boolean> cir) {
-        if (!GTNL$enableMixin) return;
+        if (!gtnl$enableMixin) return;
         for (FluidStack s : this.getStoredFluids()) {
             if (s.isFluidEqual(gasToConsume) && s.amount >= 20) {
                 s.amount -= 20;
@@ -257,15 +257,15 @@ public abstract class MixinMTEVoidMinerBase extends MTEEnhancedMultiBlockBase<Mi
 
     @Inject(method = "setElectricityStats", at = @At("HEAD"), cancellable = true)
     private void injectSetElectricityStats(CallbackInfo ci) {
-        if (!GTNL$enableMixin) return;
-        this.lEUt = -Math.abs(Math.toIntExact(GTValues.V[this.getMinTier()]));
+        if (!gtnl$enableMixin) return;
+        this.gtnl$lEUt = -Math.abs(Math.toIntExact(GTValues.V[this.getMinTier()]));
         long useEU = getMaxInputEu();
 
         if (batchMode) {
             this.mMaxProgresstime = 128;
         } else {
             GTNL_OverclockCalculator calculator = new GTNL_OverclockCalculator().setEUt(useEU)
-                .setRecipeEUt(-lEUt)
+                .setRecipeEUt(-gtnl$lEUt)
                 .setDuration(10)
                 .setParallel(1);
             if (TIER_MULTIPLIER == 3) calculator.enablePerfectOC();
@@ -278,13 +278,13 @@ public abstract class MixinMTEVoidMinerBase extends MTEEnhancedMultiBlockBase<Mi
         this.mProgresstime = 0;
         this.mEfficiency = this.getCurrentEfficiency(null);
         this.mEfficiencyIncrease = 10000;
-        this.lEUt = useEU > 0 ? -useEU : useEU;
+        this.gtnl$lEUt = useEU > 0 ? -useEU : useEU;
         ci.cancel();
     }
 
     @Inject(method = "handleOutputs", at = @At("HEAD"), cancellable = true)
     private void injectHandleOutputs(CallbackInfo ci) {
-        if (!GTNL$enableMixin) return;
+        if (!gtnl$enableMixin) return;
 
         List<ItemStack> inputOres = this.getStoredInputs()
             .stream()
@@ -333,7 +333,7 @@ public abstract class MixinMTEVoidMinerBase extends MTEEnhancedMultiBlockBase<Mi
     @Override
     public void drawTexts(DynamicPositionedColumn screenElements, SlotWidget inventorySlot) {
         super.drawTexts(screenElements, inventorySlot);
-        if (!GTNL$enableMixin) return;
+        if (!gtnl$enableMixin) return;
         screenElements.widget(
             TextWidget.dynamicString(this::vmTweak$getDimensionDisplayName)
                 .setSynced(true)

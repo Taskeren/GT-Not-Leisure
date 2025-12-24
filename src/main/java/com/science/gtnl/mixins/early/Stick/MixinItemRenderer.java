@@ -90,16 +90,10 @@ public abstract class MixinItemRenderer {
                 texturemanager.bindTexture(texturemanager.getResourceLocation(0));
                 if (block.getRenderBlockPass() != 0) {
                     GL11.glDepthMask(false);
-                    this.renderBlocksIr.renderBlockAsItem(
-                        block,
-                        fakeItemStack != null ? fakeItemStack.getItemDamage() : itemStack.getItemDamage(),
-                        1.0F);
+                    this.renderBlocksIr.renderBlockAsItem(block, fakeItemStack.getItemDamage(), 1.0F);
                     GL11.glDepthMask(true);
                 } else {
-                    this.renderBlocksIr.renderBlockAsItem(
-                        block,
-                        fakeItemStack != null ? fakeItemStack.getItemDamage() : itemStack.getItemDamage(),
-                        1.0F);
+                    this.renderBlocksIr.renderBlockAsItem(block, fakeItemStack.getItemDamage(), 1.0F);
                 }
             } else {
                 IIcon iicon = entityLivingBase

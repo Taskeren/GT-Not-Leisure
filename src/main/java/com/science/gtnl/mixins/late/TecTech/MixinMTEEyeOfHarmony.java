@@ -44,16 +44,16 @@ public abstract class MixinMTEEyeOfHarmony extends TTMultiblockBase implements I
     @Unique
     @Getter
     @Setter
-    private int controllerX, controllerY, controllerZ;
+    private int gtnl$controllerX, gtnl$controllerY, gtnl$controllerZ;
 
     @Unique
     @Getter
     @Setter
-    private boolean controllerSet = false;
+    private boolean gtnl$controllerSet = false;
 
     @Unique
     @Setter
-    private EyeOfHarmonyInjector controller = null;
+    private EyeOfHarmonyInjector gtnl$controller = null;
 
     @Final
     @Shadow
@@ -108,8 +108,8 @@ public abstract class MixinMTEEyeOfHarmony extends TTMultiblockBase implements I
     public void onPostTick(IGregTechTileEntity aBaseMetaTileEntity, long aTimer) {
         super.onPostTick(aBaseMetaTileEntity, aTimer);
         // Try to re-link to controller periodically, for example on game load.
-        if (aTimer % 100 == 5 && controllerSet && getController() == null) {
-            trySetControllerFromCoord(controllerX, controllerY, controllerZ);
+        if (aTimer % 100 == 5 && gtnl$controllerSet && getGtnl$controller() == null) {
+            gtnl$trySetControllerFromCoord(gtnl$controllerX, gtnl$controllerY, gtnl$controllerZ);
         }
     }
 
@@ -117,32 +117,33 @@ public abstract class MixinMTEEyeOfHarmony extends TTMultiblockBase implements I
     public void loadNBTData(NBTTagCompound aNBT, CallbackInfo ci) {
         if (aNBT.hasKey("controller")) {
             NBTTagCompound controllerNBT = aNBT.getCompoundTag("controller");
-            controllerX = controllerNBT.getInteger("x");
-            controllerY = controllerNBT.getInteger("y");
-            controllerZ = controllerNBT.getInteger("z");
-            controllerSet = true;
+            gtnl$controllerX = controllerNBT.getInteger("x");
+            gtnl$controllerY = controllerNBT.getInteger("y");
+            gtnl$controllerZ = controllerNBT.getInteger("z");
+            gtnl$controllerSet = true;
         }
     }
 
-    public NBTTagCompound saveLinkDataToNBT() {
+    @Unique
+    public NBTTagCompound gtnl$saveLinkDataToNBT() {
         NBTTagCompound controllerNBT = new NBTTagCompound();
-        controllerNBT.setInteger("x", controllerX);
-        controllerNBT.setInteger("y", controllerY);
-        controllerNBT.setInteger("z", controllerZ);
+        controllerNBT.setInteger("x", gtnl$controllerX);
+        controllerNBT.setInteger("y", gtnl$controllerY);
+        controllerNBT.setInteger("z", gtnl$controllerZ);
         return controllerNBT;
     }
 
     @Inject(method = "saveNBTData", at = @At("HEAD"))
     public void saveNBTData(NBTTagCompound aNBT, CallbackInfo ci) {
         super.saveNBTData(aNBT);
-        if (controllerSet) {
-            NBTTagCompound controllerNBT = saveLinkDataToNBT();
+        if (gtnl$controllerSet) {
+            NBTTagCompound controllerNBT = gtnl$saveLinkDataToNBT();
             aNBT.setTag("controller", controllerNBT);
         }
     }
 
     @Unique
-    private boolean trySetControllerFromCoord(int x, int y, int z) {
+    private boolean gtnl$trySetControllerFromCoord(int x, int y, int z) {
         // First check whether the controller we try to link to is within range. The range is defined
         // as a max distance in each axis.
 
@@ -156,24 +157,24 @@ public abstract class MixinMTEEyeOfHarmony extends TTMultiblockBase implements I
 
         // Before linking, unlink from current controller, so we don't end up with units linked to multiple
         // controllers.
-        EyeOfHarmonyInjector oldController = getController();
+        EyeOfHarmonyInjector oldController = getGtnl$controller();
         if (oldController != null) {
             oldController.unregisterLinkedUnit((MTEEyeOfHarmony) (Object) this);
-            this.unlinkController();
+            this.gtnl$unlinkController();
         }
 
         // Now link to new controller
-        controllerX = x;
-        controllerY = y;
-        controllerZ = z;
-        controllerSet = true;
-        controller = injector;
-        controller.registerLinkedUnit((MTEEyeOfHarmony) (Object) this);
+        gtnl$controllerX = x;
+        gtnl$controllerY = y;
+        gtnl$controllerZ = z;
+        gtnl$controllerSet = true;
+        gtnl$controller = injector;
+        gtnl$controller.registerLinkedUnit((MTEEyeOfHarmony) (Object) this);
         return true;
     }
 
     @Unique
-    public boolean tryLinkDataStick(EntityPlayer aPlayer) {
+    public boolean gtnl$tryLinkDataStick(EntityPlayer aPlayer) {
         // Make sure the held item is a data stick
         ItemStack dataStick = aPlayer.inventory.getCurrentItem();
         if (!ItemList.Tool_DataStick.isStackEqual(dataStick, false, true)) {
@@ -193,7 +194,7 @@ public abstract class MixinMTEEyeOfHarmony extends TTMultiblockBase implements I
         int z = nbt.getInteger("z");
 
         // Try to link, and report the result back to the player.
-        boolean result = trySetControllerFromCoord(x, y, z);
+        boolean result = gtnl$trySetControllerFromCoord(x, y, z);
         if (result) {
             aPlayer.addChatMessage(new ChatComponentText("Link successful"));
         } else {
@@ -204,7 +205,7 @@ public abstract class MixinMTEEyeOfHarmony extends TTMultiblockBase implements I
     }
 
     @Unique
-    public Widget makeSyncerWidgets() {
+    public Widget gtnl$makeSyncerWidgets() {
         return new MultiChildWidget()
             .addChild(new FakeSyncWidget.BooleanSyncer(() -> this.mMachine, machine -> this.mMachine = machine))
             .addChild(new FakeSyncWidget.BooleanSyncer(this::isAllowedToWork, _work -> {}));
@@ -213,35 +214,35 @@ public abstract class MixinMTEEyeOfHarmony extends TTMultiblockBase implements I
     @Override
     public boolean onRightclick(IGregTechTileEntity aBaseMetaTileEntity, EntityPlayer aPlayer) {
         // Right-clicking could be a data stick linking action, so try this first.
-        if (aBaseMetaTileEntity.isServerSide() && tryLinkDataStick(aPlayer)) {
+        if (aBaseMetaTileEntity.isServerSide() && gtnl$tryLinkDataStick(aPlayer)) {
             return true;
         }
         return super.onRightclick(aBaseMetaTileEntity, aPlayer);
     }
 
     @Unique
-    public EyeOfHarmonyInjector getController() {
-        if (controller == null) return null;
+    public EyeOfHarmonyInjector getGtnl$controller() {
+        if (gtnl$controller == null) return null;
         // Controller disappeared
-        if (controller.getBaseMetaTileEntity() == null) return null;
-        return controller;
+        if (gtnl$controller.getBaseMetaTileEntity() == null) return null;
+        return gtnl$controller;
     }
 
     // If the controller is broken this can be called to explicitly unlink the controller, so we don't have any
     // references lingering around
     @Unique
-    public void unlinkController() {
-        this.controllerSet = false;
-        this.controller = null;
-        this.controllerX = 0;
-        this.controllerY = 0;
-        this.controllerZ = 0;
+    public void gtnl$unlinkController() {
+        this.gtnl$controllerSet = false;
+        this.gtnl$controller = null;
+        this.gtnl$controllerX = 0;
+        this.gtnl$controllerY = 0;
+        this.gtnl$controllerZ = 0;
     }
 
     @Override
     public void onBlockDestroyed() {
         // When this block is destroyed, explicitly unlink it from the controller if there is any.
-        EyeOfHarmonyInjector controller = getController();
+        EyeOfHarmonyInjector controller = getGtnl$controller();
         if (controller != null) {
             controller.unregisterLinkedUnit((MTEEyeOfHarmony) (Object) this);
         }
@@ -275,11 +276,11 @@ public abstract class MixinMTEEyeOfHarmony extends TTMultiblockBase implements I
     public void getWailaNBTData(EntityPlayerMP player, TileEntity tile, NBTTagCompound tag, World world, int x, int y,
         int z) {
 
-        tag.setBoolean("linked", getController() != null);
-        if (getController() != null) {
-            tag.setInteger("controllerX", controllerX);
-            tag.setInteger("controllerY", controllerY);
-            tag.setInteger("controllerZ", controllerZ);
+        tag.setBoolean("linked", getGtnl$controller() != null);
+        if (getGtnl$controller() != null) {
+            tag.setInteger("controllerX", gtnl$controllerX);
+            tag.setInteger("controllerY", gtnl$controllerY);
+            tag.setInteger("controllerZ", gtnl$controllerZ);
         }
 
         super.getWailaNBTData(player, tile, tag, world, x, y, z);

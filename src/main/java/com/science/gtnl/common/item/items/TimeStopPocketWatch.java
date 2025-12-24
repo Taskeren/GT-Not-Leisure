@@ -13,13 +13,18 @@ import net.minecraft.world.World;
 import com.reavaritia.common.render.CustomEntityRenderer;
 import com.science.gtnl.ScienceNotLeisure;
 import com.science.gtnl.client.GTNLCreativeTabs;
-import com.science.gtnl.common.item.TimeStopManager;
 import com.science.gtnl.utils.enums.GTNLItemList;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import lombok.Getter;
+import lombok.Setter;
 
 public class TimeStopPocketWatch extends Item {
+
+    @Getter
+    @Setter
+    public static boolean timeStopped = false;
 
     private boolean playSound = false;
 
@@ -49,7 +54,7 @@ public class TimeStopPocketWatch extends Item {
                 nbt.setBoolean("WatchActive", false);
                 playSound = false;
             }
-            TimeStopManager.setTimeStopped(false);
+            setTimeStopped(false);
         } else {
             if (player.worldObj.isRemote) {
                 EntityRenderer renderer = Minecraft.getMinecraft().entityRenderer;
@@ -64,7 +69,7 @@ public class TimeStopPocketWatch extends Item {
                 }
                 nbt.setBoolean("WatchActive", true);
             }
-            TimeStopManager.setTimeStopped(true);
+            setTimeStopped(true);
         }
 
         return stack;

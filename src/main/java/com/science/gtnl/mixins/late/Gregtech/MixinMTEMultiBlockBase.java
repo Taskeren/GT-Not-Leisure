@@ -31,7 +31,7 @@ public abstract class MixinMTEMultiBlockBase {
         IMetaTileEntity aMetaTileEntity = aTileEntity.getMetaTileEntity();
         if (aMetaTileEntity == null) return;
         if (aMetaTileEntity instanceof MTEHatchInputBus)
-            ((IMultiblockRecipeMap) aMetaTileEntity).setRecipeMapName(getRecipeMap().unlocalizedName);
+            ((IMultiblockRecipeMap) aMetaTileEntity).gtnl$setRecipeMapName(getRecipeMap().unlocalizedName);
     }
 
     @Inject(method = "addInputHatchToMachineList", at = @At(value = "HEAD"))
@@ -43,7 +43,7 @@ public abstract class MixinMTEMultiBlockBase {
         IMetaTileEntity aMetaTileEntity = aTileEntity.getMetaTileEntity();
         if (aMetaTileEntity == null) return;
         if (aMetaTileEntity instanceof MTEHatchInput)
-            ((IMultiblockRecipeMap) aMetaTileEntity).setRecipeMapName(getRecipeMap().unlocalizedName);
+            ((IMultiblockRecipeMap) aMetaTileEntity).gtnl$setRecipeMapName(getRecipeMap().unlocalizedName);
     }
 
 }

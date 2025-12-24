@@ -638,9 +638,9 @@ public class SuperCraftingInputHatchME extends MTEHatchInputBus implements IConf
                     .append('_');
             }
 
-            if (getRecipeMapName() != null) {
+            if (gtnl$getRecipeMapName() != null) {
                 name.append("extra_start_")
-                    .append(getRecipeMapName())
+                    .append(gtnl$getRecipeMapName())
                     .append("_extra_end_");
             }
 

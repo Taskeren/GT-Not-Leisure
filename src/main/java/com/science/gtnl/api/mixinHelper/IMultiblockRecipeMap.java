@@ -4,9 +4,9 @@ import gregtech.api.recipe.RecipeMap;
 
 public interface IMultiblockRecipeMap {
 
-    default void setRecipeMapName(String recipeMap) {};
+    default void gtnl$setRecipeMapName(String recipeMap) {};
 
-    default String getRecipeMapName() {
+    default String gtnl$getRecipeMapName() {
         return "";
     };
 

@@ -60,9 +60,9 @@ public abstract class MixinMTEHatchCraftingInputME extends MTEHatchInputBus
                 .append('_');
         }
 
-        if (getRecipeMapName() != null) {
+        if (gtnl$getRecipeMapName() != null) {
             sb.append("extra_start_")
-                .append(getRecipeMapName())
+                .append(gtnl$getRecipeMapName())
                 .append("_extra_end_");
         }
 

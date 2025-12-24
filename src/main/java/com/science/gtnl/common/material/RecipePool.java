@@ -551,6 +551,7 @@ public class RecipePool {
         .frontend(RocketAssemblerFrontend::new)
         .useSpecialSlot()
         .neiHandlerInfo(builder -> builder.setDisplayStack(GTNLItemList.RocketAssembler.get(1)))
+        .disableRegisterNEI()
         .build();
 
     public static final RecipeMap<RecipeMapBackend> CircuitNanitesDataRecipes = RecipeMapBuilder

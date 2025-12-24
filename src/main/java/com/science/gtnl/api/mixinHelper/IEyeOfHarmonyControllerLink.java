@@ -23,9 +23,9 @@ public interface IEyeOfHarmonyControllerLink {
 
     boolean isControllerSet();
 
-    void unlinkController();
+    void gtnl$unlinkController();
 
-    Widget makeSyncerWidgets();
+    Widget gtnl$makeSyncerWidgets();
 
     Map<Fluid, Long> getValidFluidMap();
 

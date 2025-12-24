@@ -47,7 +47,7 @@ public class EntityPlayerLeashKnot extends EntityLeashKnot {
         if (leashedPlayer == null || leashedPlayer.isDead) return;
         if (!(leashedPlayer instanceof ILeashedToEntity iLeashedPlayer)) return;
 
-        iLeashedPlayer.setLeashedToEntity(this, true);
+        iLeashedPlayer.gtnl$setLeashedToEntity(this, true);
 
         double dx = leashedPlayer.posX - posX;
         double dy = leashedPlayer.posY - posY;

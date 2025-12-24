@@ -45,6 +45,7 @@ import com.reavaritia.ReAvaItemList;
 import com.reavaritia.common.SubtitleDisplay;
 import com.science.gtnl.common.entity.EntitySaddleSlime;
 import com.science.gtnl.config.MainConfig;
+import com.science.gtnl.mixins.late.Botania.AccessorEntityDoppleganger;
 import com.science.gtnl.utils.Utils;
 
 import cpw.mods.fml.common.FMLCommonHandler;
@@ -67,10 +68,7 @@ import vazkii.botania.common.entity.EntityDoppleganger;
 
 public class InfinitySword extends ItemSword implements ICosmicRenderItem, SubtitleDisplay {
 
-    public static boolean cancelBloodSword = false;
-    public static boolean cancelDragonArmor = false;
-    private static final long COOLDOWN = 1000;
-    private static final ToolMaterial INFINITY = EnumHelper.addToolMaterial("INFINITY", 32, 9999, 9999F, 9999F, 200);
+    public static long COOLDOWN = 1000;
     private IIcon cosmicMask;
     private IIcon pommel;
     public static final DamageSource INFINITY_DAMAGE = new DamageSource("damage.gtnl.infinity").setExplosion()
@@ -86,7 +84,7 @@ public class InfinitySword extends ItemSword implements ICosmicRenderItem, Subti
     public static final int MAX_ENTITY_PROCESS_PER_TICK = 100;
 
     public InfinitySword() {
-        super(INFINITY);
+        super(ToolHelper.INFINITY);
         setUnlocalizedName("InfinitySword");
         setTextureName(RESOURCE_ROOT_ID + ":" + "InfinitySword");
         setCreativeTab(ReAvaCreativeTabs.ReAvaritia);
@@ -100,8 +98,6 @@ public class InfinitySword extends ItemSword implements ICosmicRenderItem, Subti
         if (player.worldObj.isRemote) return true;
 
         if (victim instanceof EntityPlayer targetPlayer) {
-            if (MainConfig.enableInfinitySwordBypassMechanism) cancelDragonArmor = player.isSneaking();
-
             boolean wearingInfinityArmor = false;
             for (ItemStack armorStack : targetPlayer.inventory.armorInventory) {
                 if (armorStack != null && (armorStack.getItem() == LudicrousItems.infinity_helm
@@ -122,25 +118,19 @@ public class InfinitySword extends ItemSword implements ICosmicRenderItem, Subti
         }
 
         if (victim instanceof EntityDoppleganger livingTarget) {
-            try {
-                Field playersField = EntityDoppleganger.class.getDeclaredField("playersWhoAttacked");
-                playersField.setAccessible(true);
-
-                List<String> playersWhoAttacked = (List<String>) playersField.get(livingTarget);
-                String playerName = player.getCommandSenderName();
-                if (!playersWhoAttacked.contains(playerName)) {
-                    playersWhoAttacked.add(playerName);
-                }
-                livingTarget.recentlyHit = 100;
-                DamageSource playerSource = DamageSource.causePlayerDamage((EntityPlayer) player);
-                livingTarget.attackEntityFrom(playerSource, Float.POSITIVE_INFINITY);
-                livingTarget.setHealth(0);
-                livingTarget.onDeath(playerSource);
-                livingTarget.setDead();
-                livingTarget.worldObj.removeEntity(livingTarget);
-                return true;
-
-            } catch (NoSuchFieldException | IllegalAccessException ignored) {}
+            List<String> playersWhoAttacked = ((AccessorEntityDoppleganger) livingTarget).getPlayersWhoAttacked();
+            String playerName = player.getCommandSenderName();
+            if (!playersWhoAttacked.contains(playerName)) {
+                playersWhoAttacked.add(playerName);
+            }
+            livingTarget.recentlyHit = 100;
+            DamageSource playerSource = DamageSource.causePlayerDamage((EntityPlayer) player);
+            livingTarget.attackEntityFrom(playerSource, Float.POSITIVE_INFINITY);
+            livingTarget.setHealth(0);
+            livingTarget.onDeath(playerSource);
+            livingTarget.setDead();
+            livingTarget.worldObj.removeEntity(livingTarget);
+            return true;
         }
 
         if (victim instanceof EntityDragon) {
@@ -229,7 +219,6 @@ public class InfinitySword extends ItemSword implements ICosmicRenderItem, Subti
             }
         }
 
-        cancelDragonArmor = false;
         handleSwordAttack(stack, world, player);
         player.setItemInUse(stack, this.getMaxItemUseDuration(stack));
         return stack;
@@ -283,24 +272,19 @@ public class InfinitySword extends ItemSword implements ICosmicRenderItem, Subti
             }
 
             if (target instanceof EntityDoppleganger livingTarget) {
-                try {
-                    Field playersField = EntityDoppleganger.class.getDeclaredField("playersWhoAttacked");
-                    playersField.setAccessible(true);
-
-                    List<String> playersWhoAttacked = (List<String>) playersField.get(livingTarget);
-                    String playerName = player.getCommandSenderName();
-                    if (!playersWhoAttacked.contains(playerName)) {
-                        playersWhoAttacked.add(playerName);
-                    }
-                    livingTarget.recentlyHit = 100;
-                    DamageSource playerSource = DamageSource.causePlayerDamage(player);
-                    livingTarget.attackEntityFrom(playerSource, Float.POSITIVE_INFINITY);
-                    livingTarget.setHealth(0);
-                    livingTarget.onDeath(playerSource);
-                    livingTarget.setDead();
-                    livingTarget.worldObj.removeEntity(livingTarget);
-                    iterator.remove();
-                } catch (NoSuchFieldException | IllegalAccessException ignored) {}
+                List<String> playersWhoAttacked = ((AccessorEntityDoppleganger) livingTarget).getPlayersWhoAttacked();
+                String playerName = player.getCommandSenderName();
+                if (!playersWhoAttacked.contains(playerName)) {
+                    playersWhoAttacked.add(playerName);
+                }
+                livingTarget.recentlyHit = 100;
+                DamageSource playerSource = DamageSource.causePlayerDamage(player);
+                livingTarget.attackEntityFrom(playerSource, Float.POSITIVE_INFINITY);
+                livingTarget.setHealth(0);
+                livingTarget.onDeath(playerSource);
+                livingTarget.setDead();
+                livingTarget.worldObj.removeEntity(livingTarget);
+                iterator.remove();
             }
 
             if (target instanceof EntityDragon) {
@@ -419,9 +403,6 @@ public class InfinitySword extends ItemSword implements ICosmicRenderItem, Subti
         if (player.worldObj.isRemote) return true;
         if (victim instanceof EntityLivingBase entity) {
             if (entity instanceof EntityPlayer targetPlayer) {
-                cancelDragonArmor = false;
-                if (MainConfig.enableInfinitySwordBypassMechanism) cancelDragonArmor = player.isSneaking();
-
                 boolean wearingInfinityArmor = false;
                 for (ItemStack armorStack : targetPlayer.inventory.armorInventory) {
                     if (armorStack != null && (armorStack.getItem() == LudicrousItems.infinity_helm
@@ -442,25 +423,19 @@ public class InfinitySword extends ItemSword implements ICosmicRenderItem, Subti
             }
 
             if (entity instanceof EntityDoppleganger livingTarget) {
-                try {
-                    Field playersField = EntityDoppleganger.class.getDeclaredField("playersWhoAttacked");
-                    playersField.setAccessible(true);
-
-                    List<String> playersWhoAttacked = (List<String>) playersField.get(livingTarget);
-                    String playerName = player.getCommandSenderName();
-                    if (!playersWhoAttacked.contains(playerName)) {
-                        playersWhoAttacked.add(playerName);
-                    }
-                    livingTarget.recentlyHit = 100;
-                    DamageSource playerSource = DamageSource.causePlayerDamage(player);
-                    livingTarget.attackEntityFrom(playerSource, Float.POSITIVE_INFINITY);
-                    livingTarget.setHealth(0);
-                    livingTarget.onDeath(playerSource);
-                    livingTarget.setDead();
-                    livingTarget.worldObj.removeEntity(livingTarget);
-                    return true;
-
-                } catch (NoSuchFieldException | IllegalAccessException ignored) {}
+                List<String> playersWhoAttacked = ((AccessorEntityDoppleganger) livingTarget).getPlayersWhoAttacked();
+                String playerName = player.getCommandSenderName();
+                if (!playersWhoAttacked.contains(playerName)) {
+                    playersWhoAttacked.add(playerName);
+                }
+                livingTarget.recentlyHit = 100;
+                DamageSource playerSource = DamageSource.causePlayerDamage(player);
+                livingTarget.attackEntityFrom(playerSource, Float.POSITIVE_INFINITY);
+                livingTarget.setHealth(0);
+                livingTarget.onDeath(playerSource);
+                livingTarget.setDead();
+                livingTarget.worldObj.removeEntity(livingTarget);
+                return true;
             }
 
             if (entity instanceof EntityDragon) {
@@ -496,15 +471,12 @@ public class InfinitySword extends ItemSword implements ICosmicRenderItem, Subti
         if (entity instanceof EntityPlayer player) {
             if (player.getCurrentEquippedItem() == stack && player.swingProgress == 0.5F && !world.isRemote) {
                 MovingObjectPosition rayTraceResult = Utils.rayTrace(player, false, true, false, 100);
-                cancelDragonArmor = false;
 
                 if (rayTraceResult != null && rayTraceResult.entityHit != null) {
                     Entity hitEntity = rayTraceResult.entityHit;
 
                     if (hitEntity instanceof EntityLivingBase livingEntity) {
                         hitEntity(stack, livingEntity, player);
-                        cancelDragonArmor = false;
-                        if (MainConfig.enableInfinitySwordBypassMechanism) cancelDragonArmor = player.isSneaking();
 
                     } else if (hitEntity instanceof EntityDragonPart dragonPart) {
                         EntityDragon dragon = (EntityDragon) dragonPart.entityDragonObj;
@@ -526,15 +498,6 @@ public class InfinitySword extends ItemSword implements ICosmicRenderItem, Subti
     @SubscribeEvent(priority = EventPriority.HIGHEST)
     public void onPlayerUpdate(LivingEvent.LivingUpdateEvent event) {
         if (!(event.entity instanceof EntityPlayer player)) return;
-
-        ItemStack held = player.getHeldItem();
-
-        if (held == null || held.getItem() != this) {
-            cancelBloodSword = false;
-            return;
-        }
-
-        cancelBloodSword = MainConfig.enableInfinitySwordBypassMechanism;
 
         if (player.isBurning()) {
             player.extinguish();

@@ -32,7 +32,7 @@ public abstract class MixinMTEPurificationPlant extends MTEExtendedPowerMultiBlo
     @Getter
     @Setter
     @Unique
-    public boolean wirelessMode;
+    public boolean gtnl$wirelessMode;
 
     @Shadow
     @Final
@@ -49,7 +49,7 @@ public abstract class MixinMTEPurificationPlant extends MTEExtendedPowerMultiBlo
         for (LinkedPurificationUnit unit : mLinkedUnits) {
             if (unit.metaTileEntity() instanceof MTEPurificationUnitBaryonicPerfection) {
                 if (mExoticEnergyHatches.isEmpty() && mEnergyHatches.isEmpty()) {
-                    wirelessMode = true;
+                    gtnl$wirelessMode = true;
                 }
                 t8water = true;
                 break;
@@ -57,7 +57,7 @@ public abstract class MixinMTEPurificationPlant extends MTEExtendedPowerMultiBlo
         }
 
         for (LinkedPurificationUnit unit : mLinkedUnits) {
-            ((IWirelessMode) unit.metaTileEntity()).setWirelessMode(wirelessMode);
+            ((IWirelessMode) unit.metaTileEntity()).setGtnl$wirelessMode(gtnl$wirelessMode);
         }
 
         if (t8water) return true;
@@ -66,24 +66,24 @@ public abstract class MixinMTEPurificationPlant extends MTEExtendedPowerMultiBlo
 
     @Override
     public void clearHatches() {
-        wirelessMode = false;
+        gtnl$wirelessMode = false;
         super.clearHatches();
     }
 
     @Inject(method = "loadNBTData", at = @At("TAIL"))
     public void loadNBTData(NBTTagCompound aNBT, CallbackInfo ci) {
-        wirelessMode = aNBT.getBoolean("wirelessMode");
+        gtnl$wirelessMode = aNBT.getBoolean("wirelessMode");
     }
 
     @Inject(method = "saveNBTData", at = @At("TAIL"))
     public void saveNBTData(NBTTagCompound aNBT, CallbackInfo ci) {
-        aNBT.setBoolean("wirelessMode", wirelessMode);
+        aNBT.setBoolean("wirelessMode", gtnl$wirelessMode);
     }
 
     @Override
     public String[] getInfoData() {
         List<String> ret = new ArrayList<>(Arrays.asList(super.getInfoData()));
-        if (wirelessMode)
+        if (gtnl$wirelessMode)
             ret.add(EnumChatFormatting.LIGHT_PURPLE + StatCollector.translateToLocal("Waila_WirelessMode"));
         return ret.toArray(new String[0]);
     }

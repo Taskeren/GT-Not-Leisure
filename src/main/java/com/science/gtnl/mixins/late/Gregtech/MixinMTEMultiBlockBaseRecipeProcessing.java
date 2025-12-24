@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Pseudo;
+import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
@@ -30,7 +31,8 @@ public abstract class MixinMTEMultiBlockBaseRecipeProcessing {
     // @Shadow
     // public abstract void setResultIfFailure(CheckRecipeResult result) ;
 
-    private MTEMultiBlockBase cast() {
+    @Unique
+    private MTEMultiBlockBase gtnl$cast() {
         Object o = this;
         return (MTEMultiBlockBase) o;
     }
@@ -78,7 +80,7 @@ public abstract class MixinMTEMultiBlockBaseRecipeProcessing {
 
         @SuppressWarnings({ "unchecked", "rawtypes" })
         Iterable<IDualInputHatch> l = (Iterable<IDualInputHatch>) (Iterable) GTUtility
-            .validMTEList((List<MetaTileEntity>) (Object) (cast().mDualInputHatches));
+            .validMTEList((List<MetaTileEntity>) (Object) (gtnl$cast().mDualInputHatches));
         for (IDualInputHatch hatch : l) {
 
             if (hatch instanceof IRecipeProcessingAwareDualHatch dualHatch) {
@@ -94,10 +96,10 @@ public abstract class MixinMTEMultiBlockBaseRecipeProcessing {
          * (!result.wasSuccessful()) { this.checkRecipeResult = result; } };
          */
 
-        for (IDualInputHatch hatch : (cast().mDualInputHatches)) {
+        for (IDualInputHatch hatch : (gtnl$cast().mDualInputHatches)) {
             if (hatch == null || !((MetaTileEntity) hatch).isValid()) continue;
             if (hatch instanceof IRecipeProcessingAwareDualHatch dualHatch) {
-                cast().setResultIfFailure(dualHatch.endRecipeProcessing((MTEMultiBlockBase) (Object) this));
+                gtnl$cast().setResultIfFailure(dualHatch.endRecipeProcessing((MTEMultiBlockBase) (Object) this));
             }
         }
     }
