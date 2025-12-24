@@ -586,7 +586,7 @@ public class SuperInputHatchME extends MTEHatchInputME implements IPowerChannelS
     }
 
     @Override
-    public void onScrewdriverRightClick(ForgeDirection side, EntityPlayer aPlayer, float aX, float aY, float aZ,
+    public void onModeChangeByScrewdriver(ForgeDirection side, EntityPlayer aPlayer, float aX, float aY, float aZ,
         ItemStack aTool) {
         if (!autoPullAvailable) {
             return;

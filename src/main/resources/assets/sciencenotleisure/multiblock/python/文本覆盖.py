@@ -17,8 +17,10 @@ def replace_text_in_java_files(root_folder, old_text, new_text):
 if __name__ == "__main__":
     target_folder = "E:/Github/GT-Not-Leisure/src/main/java/com"
 
-    text_to_replace = """public final void onScrewdriverRightClick("""
+    text_to_replace = """    public void onScrewdriverRightClick(ForgeDirection side, EntityPlayer aPlayer, float aX, float aY, float aZ,
+        ItemStack aTool) {"""
 
-    replacement_text = """public void onScrewdriverRightClick("""
+    replacement_text = """    public void onModeChangeByScrewdriver(ForgeDirection side, EntityPlayer aPlayer, float aX, float aY, float aZ,
+        ItemStack aTool) {"""
 
     replace_text_in_java_files(target_folder, text_to_replace, replacement_text)

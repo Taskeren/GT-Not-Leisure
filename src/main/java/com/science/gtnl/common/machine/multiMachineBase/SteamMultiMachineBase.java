@@ -1426,6 +1426,19 @@ public abstract class SteamMultiMachineBase<T extends SteamMultiMachineBase<T>> 
                 .setEnabled(w -> uiSteamStored == 0));
     }
 
+    @Override
+    public void onMachineModeSwitchClick() {
+        super.onMachineModeSwitchClick();
+        if (getBaseMetaTileEntity().isClientSide()) return;
+        clearRecipeMapForAllInputHatches();
+        onModeChangeByButton();
+        resetRecipeMapForAllInputHatches();
+    }
+
+    public void onModeChangeByButton() {
+
+    }
+
     public boolean supportsSteamOC() {
         return true;
     }

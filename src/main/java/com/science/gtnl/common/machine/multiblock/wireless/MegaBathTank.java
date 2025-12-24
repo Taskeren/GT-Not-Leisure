@@ -214,7 +214,7 @@ public class MegaBathTank extends WirelessEnergyMultiMachineBase<MegaBathTank> {
     }
 
     @Override
-    public void onScrewdriverRightClick(ForgeDirection side, EntityPlayer aPlayer, float aX, float aY, float aZ,
+    public void onModeChangeByScrewdriver(ForgeDirection side, EntityPlayer aPlayer, float aX, float aY, float aZ,
         ItemStack aTool) {
         this.machineMode = (this.machineMode + 1) % 3;
         GTUtility.sendChatToPlayer(aPlayer, StatCollector.translateToLocal("MegaBathTank_Mode_" + this.machineMode));
