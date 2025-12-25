@@ -65,6 +65,8 @@ public abstract class MixinMTEVoidMinerBase extends MTEEnhancedMultiBlockBase<Mi
     private boolean mBlacklist;
     @Shadow
     private int multiplier;
+    @Shadow
+    private float totalWeight;
 
     @Unique
     private static boolean gtnl$enableMixin = !ModList.VMTweak.isModLoaded() && MainConfig.enableVoidMinerTweak;
@@ -149,16 +151,28 @@ public abstract class MixinMTEVoidMinerBase extends MTEEnhancedMultiBlockBase<Mi
 
     @Override
     public long getMaxInputVoltage() {
+        if (!gtnl$enableMixin) return super.getMaxInputVoltage();
+        return gtnl$getMaxInputVoltage();
+    }
+
+    @Unique
+    private long gtnl$getMaxInputVoltage() {
         long rVoltage = 0;
-        for (MTEHatchEnergy tHatch : validMTEList(mEnergyHatches)) rVoltage += tHatch.getBaseMetaTileEntity()
+        for (MTEHatchEnergy h : validMTEList(mEnergyHatches)) rVoltage += h.getBaseMetaTileEntity()
             .getInputVoltage();
-        for (MTEHatch tHatch : validMTEList(mExoticEnergyHatches)) rVoltage += tHatch.getBaseMetaTileEntity()
+        for (MTEHatch h : validMTEList(mExoticEnergyHatches)) rVoltage += h.getBaseMetaTileEntity()
             .getInputVoltage();
         return rVoltage;
     }
 
     @Override
     public long getMaxInputEu() {
+        if (!gtnl$enableMixin) return super.getMaxInputEu();
+        return gtnl$getMaxInputEu();
+    }
+
+    @Unique
+    public long gtnl$getMaxInputEu() {
         long exoticEu = ExoticEnergyInputHelper.getTotalEuMulti(mExoticEnergyHatches);
         long normalEu = ExoticEnergyInputHelper.getTotalEuMulti(mEnergyHatches);
         return Math.max(exoticEu, normalEu);
@@ -166,48 +180,56 @@ public abstract class MixinMTEVoidMinerBase extends MTEEnhancedMultiBlockBase<Mi
 
     @Override
     public boolean onRunningTick(ItemStack aStack) {
-        if (gtnl$enableMixin) {
-            if (this.gtnl$lEUt > 0) {
-                addEnergyOutput((this.gtnl$lEUt * mEfficiency) / 10000);
-                return true;
-            }
-            if (this.gtnl$lEUt < 0) {
-                if (!drainEnergyInput(getActualEnergyUsage())) {
-                    stopMachine(ShutDownReasonRegistry.POWER_LOSS);
-                    return false;
-                }
-            }
-        } else {
-            if (mEUt > 0) {
-                addEnergyOutput(((long) mEUt * mEfficiency) / 10000);
-                return true;
-            }
-            if (mEUt < 0) {
-                if (!drainEnergyInput(getActualEnergyUsage())) {
-                    stopMachine(ShutDownReasonRegistry.POWER_LOSS);
-                    return false;
-                }
+        if (!gtnl$enableMixin) return super.onRunningTick(aStack);
+        return gtnl$onRunningTick(aStack);
+    }
+
+    @Unique
+    public boolean gtnl$onRunningTick(ItemStack aStack) {
+        if (this.gtnl$lEUt > 0) {
+            addEnergyOutput((this.gtnl$lEUt * mEfficiency) / 10000);
+            return true;
+        }
+        if (this.gtnl$lEUt < 0) {
+            if (!drainEnergyInput(getActualEnergyUsage())) {
+                stopMachine(ShutDownReasonRegistry.POWER_LOSS);
+                return false;
             }
         }
         return true;
     }
 
     @Override
-    public void loadNBTData(NBTTagCompound aNBT) {
-        super.loadNBTData(aNBT);
+    public long getActualEnergyUsage() {
+        if (!gtnl$enableMixin) return super.getActualEnergyUsage();
+        return gtnl$getActualEnergyUsage();
+    }
+
+    @Unique
+    public long gtnl$getActualEnergyUsage() {
+        return (-gtnl$lEUt * 10_000) / Math.max(1000, mEfficiency);
+    }
+
+    @Inject(method = "loadNBTData", at = @At("TAIL"))
+    private void gtnl$injectLoadNBT(NBTTagCompound aNBT, CallbackInfo ci) {
         if (!gtnl$enableMixin) return;
         this.gtnl$lEUt = aNBT.getLong("mEUt");
     }
 
-    @Override
-    public void saveNBTData(NBTTagCompound aNBT) {
-        super.saveNBTData(aNBT);
+    @Inject(method = "saveNBTData", at = @At("TAIL"))
+    private void gtnl$injectSaveNBT(NBTTagCompound aNBT, CallbackInfo ci) {
         if (!gtnl$enableMixin) return;
         aNBT.setLong("mEUt", this.gtnl$lEUt);
     }
 
     @Override
     public boolean drainEnergyInput(long aEU) {
+        if (!gtnl$enableMixin) return super.drainEnergyInput(aEU);
+        return gtnl$drainEnergyInput(aEU);
+    }
+
+    @Unique
+    public boolean gtnl$drainEnergyInput(long aEU) {
         if (aEU <= 0) return true;
 
         for (MTEHatchEnergy tHatch : validMTEList(mEnergyHatches)) {
@@ -341,7 +363,4 @@ public abstract class MixinMTEVoidMinerBase extends MTEEnhancedMultiBlockBase<Mi
                 .setTextAlignment(Alignment.CenterLeft)
                 .setEnabled(true));
     }
-
-    @Shadow
-    private float totalWeight;
 }
