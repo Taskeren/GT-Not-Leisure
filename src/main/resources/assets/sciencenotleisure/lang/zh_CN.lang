@@ -1298,6 +1298,9 @@ item.MetaItem.61.name=MAX并行控制核心
 Tooltip_MAXParallelControllerCore_00=§d速度：+26%
 Tooltip_MAXParallelControllerCore_01=§5EU消耗：-28%
 Tooltip_MAXParallelControllerCore_02=§b并行：16777216
+Tooltip_ParallelControllerCore_Deprecated_00=已弃用！请使用并行控制仓
+Tooltip_ParallelControllerCore_Deprecated_01=如果你遇到部分无法安装并行控制仓的机器，请提交issue
+
 item.MetaItem.62.name=§7传闻 - 娜迦之书
 item.MetaItem.63.name=§b都市之星 - 暮色之书
 item.MetaItem.64.name=§6都市怪谈 - 巫妖之书
