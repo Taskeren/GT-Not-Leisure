@@ -3554,7 +3554,7 @@ public class AssemblerRecipes implements IRecipePool {
                 GregtechItemList.Hatch_Buffer_Dynamo_IV.get(2),
                 GTOreDictUnificator.get(OrePrefixes.wireGt16, Materials.VanadiumGallium, 2),
                 GTOreDictUnificator.get(OrePrefixes.plate, Materials.Naquadah, 4),
-                ItemList.Energy_LapotronicOrb.get(2))
+                ItemList.Energy_LapotronicOrb2.get(2))
             .itemOutputs(ItemList.Machine_EV_LightningRod.get(1))
             .fluidInputs(MaterialsAlloy.INDALLOY_140.getFluidStack(1152))
             .duration(300)
@@ -3569,7 +3569,7 @@ public class AssemblerRecipes implements IRecipePool {
                 GregtechItemList.Hatch_Buffer_Dynamo_LuV.get(2),
                 GTOreDictUnificator.get(OrePrefixes.wireGt16, Materials.Naquadah, 2),
                 GTOreDictUnificator.get(OrePrefixes.plate, Materials.Osmium, 4),
-                ItemList.Energy_LapotronicOrb.get(4))
+                ItemList.Energy_Module.get(1))
             .itemOutputs(ItemList.Machine_IV_LightningRod.get(1))
             .fluidInputs(MaterialsAlloy.INDALLOY_140.getFluidStack(1152))
             .duration(300)
