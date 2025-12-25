@@ -37,6 +37,7 @@ import com.science.gtnl.common.packet.WirelessPickBlock;
 import com.science.gtnl.utils.enums.GTNLItemList;
 import com.science.gtnl.utils.enums.ModList;
 
+import baubles.api.BaubleType;
 import baubles.api.BaublesApi;
 import gregtech.api.enums.ItemList;
 import gregtech.api.enums.Materials;
@@ -147,6 +148,18 @@ public class ItemUtils {
         Materials.BlackPlutonium, // UXV
         Materials.DraconiumAwakened, // MAX
     };
+
+    public static BaubleType UNIVERSAL_TYPE;
+
+    static {
+        BaubleType type;
+        try {
+            type = Enum.valueOf(BaubleType.class, "UNIVERSAL");
+        } catch (Throwable ignored) {
+            type = BaubleType.RING;
+        }
+        UNIVERSAL_TYPE = type;
+    }
 
     public static NBTTagCompound writeItemStackToNBT(ItemStack stack) {
         NBTTagCompound compound = new NBTTagCompound();
