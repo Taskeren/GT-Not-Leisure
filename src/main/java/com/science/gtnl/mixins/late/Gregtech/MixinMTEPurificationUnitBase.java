@@ -31,7 +31,6 @@ import net.minecraftforge.fluids.FluidStack;
 
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Overwrite;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
@@ -45,7 +44,6 @@ import com.gtnewhorizons.modularui.api.math.Color;
 import com.gtnewhorizons.modularui.api.math.Size;
 import com.gtnewhorizons.modularui.api.screen.ModularWindow;
 import com.gtnewhorizons.modularui.api.screen.UIBuildContext;
-import com.gtnewhorizons.modularui.api.widget.Widget;
 import com.gtnewhorizons.modularui.common.widget.FakeSyncWidget;
 import com.gtnewhorizons.modularui.common.widget.TextWidget;
 import com.gtnewhorizons.modularui.common.widget.textfield.NumericWidget;
@@ -525,17 +523,11 @@ public abstract class MixinMTEPurificationUnitBase extends MTEExtendedPowerMulti
     @Inject(method = "addUIWidgets", at = @At("HEAD"))
     public void addUIWidgets(ModularWindow.Builder builder, UIBuildContext buildContext, CallbackInfo ci) {
         builder.widget(new FakeSyncWidget.BooleanSyncer(() -> gtnl$wirelessMode, val -> gtnl$wirelessMode = val));
-        builder.widget(new FakeSyncWidget.IntegerSyncer(() -> maxParallel, (val) -> maxParallel = val));
-        builder.widget(new FakeSyncWidget.LongSyncer(() -> gtnl$maxParallelLong, (val) -> gtnl$maxParallelLong = val));
     }
 
-    /**
-     * @reason Overwrites the original {@code createParallelWindow} method to provide a custom GUI for setting
-     *         the parallel processing level of the purification unit.
-     * @author GTNotLeisure
-     */
-    @Overwrite
-    public ModularWindow createParallelWindow(final EntityPlayer player) {
+    @Inject(method = "createParallelWindow", at = @At("RETURN"), cancellable = true)
+    public void createParallelWindow(EntityPlayer player, CallbackInfoReturnable<ModularWindow> cir) {
+        if (!gtnl$wirelessMode) return;
         final int WIDTH = 158;
         final int HEIGHT = 52;
         final int PARENT_WIDTH = getGUIWidth();
@@ -544,32 +536,6 @@ public abstract class MixinMTEPurificationUnitBase extends MTEExtendedPowerMulti
         builder.setBackground(GTUITextures.BACKGROUND_SINGLEBLOCK_DEFAULT);
         builder.setGuiTint(getGUIColorization());
         builder.setDraggable(true);
-
-        Widget parallelWindow;
-        if (gtnl$wirelessMode) {
-            parallelWindow = new NumericWidget().setSetter(val -> gtnl$maxParallelLong = (long) val)
-                .setGetter(() -> gtnl$maxParallelLong)
-                .setBounds(1, Long.MAX_VALUE)
-                .setDefaultValue(1)
-                .setScrollValues(1, 1000, 10000)
-                .setTextAlignment(Alignment.Center)
-                .setTextColor(Color.WHITE.normal)
-                .setSize(150, 18)
-                .setPos(4, 25)
-                .setBackground(GTUITextures.BACKGROUND_TEXT_FIELD);
-        } else {
-            parallelWindow = new NumericWidget().setSetter(val -> maxParallel = (int) val)
-                .setGetter(() -> maxParallel)
-                .setBounds(1, Integer.MAX_VALUE)
-                .setDefaultValue(1)
-                .setScrollValues(1, 4, 64)
-                .setTextAlignment(Alignment.Center)
-                .setTextColor(Color.WHITE.normal)
-                .setSize(150, 18)
-                .setPos(4, 25)
-                .setBackground(GTUITextures.BACKGROUND_TEXT_FIELD);
-        }
-
         builder.setPos(
             (size, window) -> Alignment.Center.getAlignedPos(size, new Size(PARENT_WIDTH, PARENT_HEIGHT))
                 .add(
@@ -580,37 +546,40 @@ public abstract class MixinMTEPurificationUnitBase extends MTEExtendedPowerMulti
             TextWidget.localised("GTPP.CC.parallel")
                 .setPos(3, 4)
                 .setSize(150, 20))
-            .widget(parallelWindow);
-        return builder.build();
+            .widget(
+                new NumericWidget().setSetter(val -> gtnl$maxParallelLong = (long) val)
+                    .setGetter(() -> gtnl$maxParallelLong)
+                    .setBounds(1, Long.MAX_VALUE)
+                    .setDefaultValue(1)
+                    .setScrollValues(1, 1024, 65536)
+                    .setTextAlignment(Alignment.Center)
+                    .setTextColor(Color.WHITE.normal)
+                    .setSize(150, 18)
+                    .setPos(4, 25)
+                    .setBackground(GTUITextures.BACKGROUND_TEXT_FIELD)
+                    .attachSyncer(
+                        new FakeSyncWidget.LongSyncer(() -> gtnl$maxParallelLong, (val) -> gtnl$maxParallelLong = val),
+                        builder));
+        cir.setReturnValue(builder.build());
     }
 
     @Inject(method = "loadNBTData", at = @At("TAIL"))
     public void loadNBTData(NBTTagCompound aNBT, CallbackInfo ci) {
         gtnl$wirelessMode = aNBT.getBoolean("wirelessMode");
-        if (gtnl$wirelessMode) {
-            gtnl$maxParallelLong = aNBT.getLong("configuredParallel");
-            gtnl$effectiveParallelLong = aNBT.getLong("effectiveParallel");
-        } else {
-            maxParallel = (int) Math.min(Integer.MAX_VALUE, aNBT.getLong("configuredParallel"));
-            effectiveParallel = (int) Math.min(Integer.MAX_VALUE, aNBT.getLong("effectiveParallel"));
-        }
+        gtnl$maxParallelLong = aNBT.getLong("configuredParallelLong");
+        gtnl$effectiveParallelLong = aNBT.getLong("effectiveParallelLong");
     }
 
     @Inject(method = "saveNBTData", at = @At("TAIL"))
     public void saveNBTData(NBTTagCompound aNBT, CallbackInfo ci) {
         aNBT.setBoolean("wirelessMode", gtnl$wirelessMode);
-        if (gtnl$wirelessMode) {
-            aNBT.setLong("configuredParallel", gtnl$maxParallelLong);
-            aNBT.setLong("effectiveParallel", gtnl$effectiveParallelLong);
-        } else {
-            aNBT.setInteger("configuredParallel", maxParallel);
-            aNBT.setInteger("effectiveParallel", effectiveParallel);
-        }
+        aNBT.setLong("configuredParallelLong", gtnl$maxParallelLong);
+        aNBT.setLong("effectiveParallelLong", gtnl$effectiveParallelLong);
     }
 
     @Override
     public String[] getInfoData() {
-        List<String> ret = new ArrayList<>(Arrays.asList(super.getInfoData()));
+        List<String> ret = Arrays.asList(super.getInfoData());
         // If this purification unit is linked to a controller, add this info to the scanner output.
         if (getController() != null) {
             ret.add(

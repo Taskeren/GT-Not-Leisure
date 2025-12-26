@@ -2,6 +2,7 @@ package com.science.gtnl.mixins.late.Gregtech;
 
 import java.util.List;
 
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
@@ -21,6 +22,7 @@ import com.science.gtnl.utils.Utils;
 
 import appeng.api.networking.crafting.ICraftingMedium;
 import appeng.util.ReadableNumberConverter;
+import cpw.mods.fml.common.registry.GameRegistry;
 import gregtech.api.metatileentity.implementations.MTEHatchInputBus;
 import gregtech.common.tileentities.machines.MTEHatchCraftingInputME;
 import mcp.mobius.waila.api.IWailaConfigHandler;
@@ -52,35 +54,49 @@ public abstract class MixinMTEHatchCraftingInputME extends MTEHatchInputBus
             return;
         }
 
-        StringBuilder sb = new StringBuilder();
+        StringBuilder name = new StringBuilder();
 
         if (mInventory[SLOT_CIRCUIT] != null) {
-            sb.append("gt_circuit_")
+            name.append("gt_circuit_")
                 .append(mInventory[SLOT_CIRCUIT].getItemDamage())
                 .append('_');
         }
 
         if (gtnl$getRecipeMapName() != null) {
-            sb.append("extra_start_")
+            name.append("extra_start_")
                 .append(gtnl$getRecipeMapName())
                 .append("_extra_end_");
         }
 
         if (mInventory[SLOT_MANUAL_START] != null) {
-            sb.append("extra_start_")
-                .append(mInventory[SLOT_MANUAL_START].getUnlocalizedName())
-                .append("_extra_end_");
+            ItemStack stack = mInventory[SLOT_MANUAL_START];
+            Item item = stack.getItem();
+            String registryName = GameRegistry.findUniqueIdentifierFor(item)
+                .toString();
+
+            name.append("extra_item_start_")
+                .append(registryName)
+                .append("@")
+                .append(stack.getItemDamage());
+
+            if (stack.hasDisplayName()) {
+                name.append("{")
+                    .append(stack.getDisplayName())
+                    .append("}");
+            }
+
+            name.append("extra_item_end_");
         }
 
         if (getCrafterIcon() != null) {
-            sb.append(getCrafterIcon().getUnlocalizedName());
+            name.append(getCrafterIcon().getUnlocalizedName());
         } else {
-            sb.append("gt.blockmachines.")
+            name.append("gt.blockmachines.")
                 .append(mName)
                 .append(".name");
         }
 
-        cir.setReturnValue(sb.toString());
+        cir.setReturnValue(name.toString());
     }
 
     @Override

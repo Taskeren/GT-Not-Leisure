@@ -26,6 +26,7 @@ import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.InventoryCrafting;
 import net.minecraft.inventory.Slot;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
@@ -96,6 +97,7 @@ import appeng.util.IWideReadableNumberConverter;
 import appeng.util.PatternMultiplierHelper;
 import appeng.util.Platform;
 import appeng.util.ReadableNumberConverter;
+import cpw.mods.fml.common.registry.GameRegistry;
 import gregtech.api.enums.Dyes;
 import gregtech.api.enums.GTValues;
 import gregtech.api.enums.ItemList;
@@ -645,9 +647,23 @@ public class SuperCraftingInputHatchME extends MTEHatchInputBus implements IConf
             }
 
             if (mInventory[SLOT_MANUAL_START] != null) {
-                name.append("extra_start_")
-                    .append(mInventory[SLOT_MANUAL_START].getUnlocalizedName())
-                    .append("_extra_end_");
+                ItemStack stack = mInventory[SLOT_MANUAL_START];
+                Item item = stack.getItem();
+                String registryName = GameRegistry.findUniqueIdentifierFor(item)
+                    .toString();
+
+                name.append("extra_item_start_")
+                    .append(registryName)
+                    .append("@")
+                    .append(stack.getItemDamage());
+
+                if (stack.hasDisplayName()) {
+                    name.append("{")
+                        .append(stack.getDisplayName())
+                        .append("}");
+                }
+
+                name.append("extra_item_end_");
             }
 
             if (getCrafterIcon() != null) {

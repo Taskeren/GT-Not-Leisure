@@ -52,6 +52,7 @@ import com.science.gtnl.utils.machine.ItemStackG;
 
 import appeng.api.storage.data.IAEItemStack;
 import cpw.mods.fml.common.FMLCommonHandler;
+import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.common.registry.LanguageRegistry;
 import gregtech.api.GregTechAPI;
 import gregtech.api.metatileentity.MetaTileEntity;
@@ -163,55 +164,70 @@ public class Utils {
     }
 
     public static String getExtraInterfaceName(String name) {
+
         boolean hasCircuit = name.startsWith("gt_circuit_");
         boolean hasExtra = name.contains("extra_start_");
+        boolean hasExtraItem = name.contains("extra_item_start_");
 
-        if (!hasCircuit && !hasExtra) {
+        // 无任何增强前缀，直接走原逻辑
+        if (!hasCircuit && !hasExtra && !hasExtraItem) {
             String dispName;
             if (StatCollector.canTranslate(name)) {
                 dispName = StatCollector.translateToLocal(name);
+            } else if (StatCollector.canTranslate(name + ".name")) {
+                dispName = StatCollector.translateToLocal(name + ".name");
             } else {
-                String fallback = name + ".name";
-                if (StatCollector.canTranslate(fallback)) {
-                    dispName = StatCollector.translateToLocal(fallback);
-                } else {
-                    dispName = StatCollector.translateToFallback(name);
-                }
+                dispName = StatCollector.translateToFallback(name);
             }
             return dispName;
         }
 
         String numberPart = null;
-        String afterPrefix;
+        String afterPrefix = name;
 
         if (hasCircuit) {
             String rest = name.substring("gt_circuit_".length());
             int firstSplit = rest.indexOf('_');
-            if (firstSplit <= 0 || firstSplit >= rest.length() - 1) {
-                afterPrefix = name;
-            } else {
+            if (firstSplit > 0 && firstSplit < rest.length() - 1) {
                 numberPart = rest.substring(0, firstSplit);
                 afterPrefix = rest.substring(firstSplit + 1);
             }
-        } else {
-            afterPrefix = name;
         }
 
-        final String extraStart = "extra_start_";
-        final String extraEnd = "_extra_end_";
+        final String EXTRA_START = "extra_start_";
+        final String EXTRA_END = "_extra_end_";
 
-        List<String> extraKeys = new ArrayList<>();
+        final String EXTRA_ITEM_START = "extra_item_start_";
+        final String EXTRA_ITEM_END = "extra_item_end_";
 
-        while (afterPrefix.startsWith(extraStart)) {
-            int endIdx = afterPrefix.indexOf(extraEnd);
-            if (endIdx <= extraStart.length()) {
-                break;
+        List<String> recipeExtraKeys = new ArrayList<>();
+        List<String> itemExtraKeys = new ArrayList<>();
+
+        while (true) {
+
+            if (afterPrefix.startsWith(EXTRA_START)) {
+                int endIdx = afterPrefix.indexOf(EXTRA_END);
+                if (endIdx <= EXTRA_START.length()) break;
+
+                String key = afterPrefix.substring(EXTRA_START.length(), endIdx);
+                recipeExtraKeys.add(key);
+
+                afterPrefix = afterPrefix.substring(endIdx + EXTRA_END.length());
+                continue;
             }
 
-            String extraKey = afterPrefix.substring(extraStart.length(), endIdx);
-            extraKeys.add(extraKey);
+            if (afterPrefix.startsWith(EXTRA_ITEM_START)) {
+                int endIdx = afterPrefix.indexOf(EXTRA_ITEM_END);
+                if (endIdx <= EXTRA_ITEM_START.length()) break;
 
-            afterPrefix = afterPrefix.substring(endIdx + extraEnd.length());
+                String key = afterPrefix.substring(EXTRA_ITEM_START.length(), endIdx);
+                itemExtraKeys.add(key);
+
+                afterPrefix = afterPrefix.substring(endIdx + EXTRA_ITEM_END.length());
+                continue;
+            }
+
+            break;
         }
 
         String mainKey = afterPrefix;
@@ -225,14 +241,69 @@ public class Utils {
             mainText = StatCollector.translateToFallback(mainKey);
         }
 
-        List<String> extraTexts = new ArrayList<>();
-        for (String extraKey : extraKeys) {
-            if (StatCollector.canTranslate(extraKey)) {
-                extraTexts.add(StatCollector.translateToLocal(extraKey));
-            } else if (StatCollector.canTranslate(extraKey + ".name")) {
-                extraTexts.add(StatCollector.translateToLocal(extraKey + ".name"));
+        List<String> recipeExtraTexts = new ArrayList<>();
+        for (String key : recipeExtraKeys) {
+            if (StatCollector.canTranslate(key)) {
+                recipeExtraTexts.add(StatCollector.translateToLocal(key));
+            } else if (StatCollector.canTranslate(key + ".name")) {
+                recipeExtraTexts.add(StatCollector.translateToLocal(key + ".name"));
             } else {
-                extraTexts.add(StatCollector.translateToFallback(extraKey));
+                recipeExtraTexts.add(StatCollector.translateToFallback(key));
+            }
+        }
+
+        List<String> itemExtraTexts = new ArrayList<>();
+
+        for (String itemKey : itemExtraKeys) {
+
+            String customName = null;
+
+            int braceStart = itemKey.indexOf('{');
+            int braceEnd = itemKey.lastIndexOf('}');
+
+            if (braceStart > 0 && braceEnd > braceStart) {
+                customName = itemKey.substring(braceStart + 1, braceEnd);
+                itemKey = itemKey.substring(0, braceStart);
+            }
+
+            int at = itemKey.indexOf('@');
+            if (at <= 0) {
+                itemExtraTexts.add(itemKey);
+                continue;
+            }
+
+            String itemId = itemKey.substring(0, at);
+            String metaStr = itemKey.substring(at + 1);
+
+            try {
+                int meta = Integer.parseInt(metaStr);
+
+                int colon = itemId.indexOf(':');
+                if (colon <= 0) {
+                    itemExtraTexts.add(itemKey);
+                    continue;
+                }
+
+                String mod = itemId.substring(0, colon);
+                String id = itemId.substring(colon + 1);
+
+                Item item = GameRegistry.findItem(mod, id);
+                if (item == null) {
+                    itemExtraTexts.add(itemKey);
+                    continue;
+                }
+
+                ItemStack stack = new ItemStack(item, 1, meta);
+                String displayName = stack.getDisplayName();
+
+                if (customName != null && !customName.isEmpty()) {
+                    displayName = displayName + " (" + customName + ")";
+                }
+
+                itemExtraTexts.add(displayName);
+
+            } catch (NumberFormatException e) {
+                itemExtraTexts.add(itemKey);
             }
         }
 
@@ -243,10 +314,16 @@ public class Utils {
                 .append(numberPart);
         }
 
-        for (String extraText : extraTexts) {
+        for (String text : recipeExtraTexts) {
             sb.append(" - ")
-                .append(extraText);
+                .append(text);
         }
+
+        for (String text : itemExtraTexts) {
+            sb.append(" - ")
+                .append(text);
+        }
+
         return sb.toString();
     }
 
