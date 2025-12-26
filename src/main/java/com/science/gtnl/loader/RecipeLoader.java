@@ -274,35 +274,37 @@ public class RecipeLoader {
     }
 
     public static void registerBuffTargetChamberRecipe() {
-        Collection<GTRecipe> targetChamberRecipe = LanthanidesRecipeMaps.targetChamberRecipes.getAllRecipes();
+        Collection<GTRecipe> recipes = LanthanidesRecipeMaps.targetChamberRecipes.getAllRecipes();
+
         LanthanidesRecipeMaps.targetChamberRecipes.getBackend()
             .clearRecipes();
 
-        Object2IntMap<ItemStack> waferMultiplier = new Object2IntOpenHashMap<>() {
+        Object2IntMap<ItemStack> waferMultiplier = new Object2IntOpenHashMap<>();
+        waferMultiplier.put(ItemList.Circuit_Silicon_Wafer2.get(1), 1);
+        waferMultiplier.put(ItemList.Circuit_Silicon_Wafer3.get(1), 2);
+        waferMultiplier.put(ItemList.Circuit_Silicon_Wafer4.get(1), 4);
+        waferMultiplier.put(ItemList.Circuit_Silicon_Wafer5.get(1), 8);
+        waferMultiplier.put(ItemList.Circuit_Silicon_Wafer6.get(1), 16);
+        waferMultiplier.put(ItemList.Circuit_Silicon_Wafer7.get(1), 32);
 
-            {
-                put(ItemList.Circuit_Silicon_Wafer2.get(1), 1);
-                put(ItemList.Circuit_Silicon_Wafer3.get(1), 2);
-                put(ItemList.Circuit_Silicon_Wafer4.get(1), 4);
-                put(ItemList.Circuit_Silicon_Wafer5.get(1), 8);
-                put(ItemList.Circuit_Silicon_Wafer6.get(1), 16);
-                put(ItemList.Circuit_Silicon_Wafer7.get(1), 32);
-            }
-        };
-        for (GTRecipe recipe : targetChamberRecipe) {
+        for (GTRecipe recipe : recipes) {
+
+            int multiplier = 4;
+
             for (Object2IntMap.Entry<ItemStack> entry : waferMultiplier.object2IntEntrySet()) {
                 if (recipe.mInputs[1].isItemEqual(entry.getKey())) {
-                    int multiplier = entry.getIntValue();
-                    for (ItemStack itemStack : recipe.mOutputs) {
-                        itemStack.stackSize *= multiplier;
-                    }
-                } else {
-                    for (ItemStack itemStack : recipe.mOutputs) {
-                        itemStack.stackSize *= 4;
-                    }
+                    multiplier = entry.getIntValue();
+                    break;
                 }
-                break;
             }
+
+            ItemStack[] newOutputs = new ItemStack[recipe.mOutputs.length];
+            for (int i = 0; i < recipe.mOutputs.length; i++) {
+                newOutputs[i] = recipe.mOutputs[i].copy();
+                newOutputs[i].stackSize *= multiplier;
+            }
+
+            recipe.mOutputs = newOutputs;
             LanthanidesRecipeMaps.targetChamberRecipes.add(recipe);
         }
     }
