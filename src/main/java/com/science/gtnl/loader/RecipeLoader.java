@@ -137,6 +137,7 @@ import gregtech.api.recipe.RecipeMaps;
 import gregtech.api.util.GTModHandler;
 import gregtech.api.util.GTOreDictUnificator;
 import gregtech.api.util.GTRecipe;
+import gregtech.api.util.GTUtility;
 import gtnhlanth.api.recipe.LanthanidesRecipeMaps;
 import it.unimi.dsi.fastutil.objects.Object2IntMap;
 import it.unimi.dsi.fastutil.objects.Object2IntOpenHashMap;
@@ -274,39 +275,43 @@ public class RecipeLoader {
     }
 
     public static void registerBuffTargetChamberRecipe() {
-        Collection<GTRecipe> recipes = LanthanidesRecipeMaps.targetChamberRecipes.getAllRecipes();
-
+        Collection<GTRecipe> targetChamberRecipe = LanthanidesRecipeMaps.targetChamberRecipes.getAllRecipes();
         LanthanidesRecipeMaps.targetChamberRecipes.getBackend()
             .clearRecipes();
 
-        Object2IntMap<ItemStack> waferMultiplier = new Object2IntOpenHashMap<>();
-        waferMultiplier.put(ItemList.Circuit_Silicon_Wafer2.get(1), 1);
-        waferMultiplier.put(ItemList.Circuit_Silicon_Wafer3.get(1), 2);
-        waferMultiplier.put(ItemList.Circuit_Silicon_Wafer4.get(1), 4);
-        waferMultiplier.put(ItemList.Circuit_Silicon_Wafer5.get(1), 8);
-        waferMultiplier.put(ItemList.Circuit_Silicon_Wafer6.get(1), 16);
-        waferMultiplier.put(ItemList.Circuit_Silicon_Wafer7.get(1), 32);
+        Object2IntMap<ItemStack> waferMultiplier = new Object2IntOpenHashMap<>() {
 
-        for (GTRecipe recipe : recipes) {
+            {
+                put(ItemList.Circuit_Silicon_Wafer2.get(1), 1);
+                put(ItemList.Circuit_Silicon_Wafer3.get(1), 2);
+                put(ItemList.Circuit_Silicon_Wafer4.get(1), 4);
+                put(ItemList.Circuit_Silicon_Wafer5.get(1), 8);
+                put(ItemList.Circuit_Silicon_Wafer6.get(1), 16);
+                put(ItemList.Circuit_Silicon_Wafer7.get(1), 32);
+            }
+        };
+        for (GTRecipe recipe : targetChamberRecipe) {
 
             int multiplier = 4;
 
-            for (Object2IntMap.Entry<ItemStack> entry : waferMultiplier.object2IntEntrySet()) {
-                if (recipe.mInputs[1].isItemEqual(entry.getKey())) {
-                    multiplier = entry.getIntValue();
-                    break;
+            outer: for (ItemStack input : recipe.mInputs) {
+                if (input == null) continue;
+
+                for (Object2IntMap.Entry<ItemStack> entry : waferMultiplier.object2IntEntrySet()) {
+                    if (GTUtility.areStacksEqual(input, entry.getKey(), true)) {
+                        multiplier = entry.getIntValue();
+                        break outer;
+                    }
                 }
             }
 
-            ItemStack[] newOutputs = new ItemStack[recipe.mOutputs.length];
-            for (int i = 0; i < recipe.mOutputs.length; i++) {
-                newOutputs[i] = recipe.mOutputs[i].copy();
-                newOutputs[i].stackSize *= multiplier;
+            for (ItemStack output : recipe.mOutputs) {
+                output.stackSize *= multiplier;
             }
 
-            recipe.mOutputs = newOutputs;
             LanthanidesRecipeMaps.targetChamberRecipes.add(recipe);
         }
+
     }
 
     @Optional.Method(modid = "TwistSpaceTechnology")

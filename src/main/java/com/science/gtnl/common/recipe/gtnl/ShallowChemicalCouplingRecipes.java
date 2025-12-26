@@ -1198,8 +1198,7 @@ public class ShallowChemicalCouplingRecipes implements IRecipePool {
                     Materials.Nitrogen.getGas(2000),
                     Materials.Hydrogen.getGas(12000))
                 .fluidOutputs(MaterialPool.Polyimide.getMolten(144))
-                .specialValue(9500)
-                .metadata(COIL_HEAT, 9500)
+                .metadata(COIL_HEAT, 10800)
                 .duration(20)
                 .eut(TierEU.RECIPE_UV)
                 .addTo(SCCR);
@@ -1215,8 +1214,7 @@ public class ShallowChemicalCouplingRecipes implements IRecipePool {
                     Materials.Nitrogen.getGas(250000),
                     Materials.Hydrogen.getGas(1500000))
                 .fluidOutputs(MaterialPool.Polyimide.getMolten(18000))
-                .specialValue(10700)
-                .metadata(COIL_HEAT, 10700)
+                .metadata(COIL_HEAT, 11700)
                 .duration(200)
                 .eut(TierEU.RECIPE_UHV)
                 .addTo(SCCR);
@@ -1231,8 +1229,7 @@ public class ShallowChemicalCouplingRecipes implements IRecipePool {
                     GTOreDictUnificator.get(OrePrefixes.dust, Materials.Carbon, 45))
                 .fluidInputs(Materials.Oxygen.getGas(54000), Materials.Hydrogen.getGas(216000))
                 .fluidOutputs(MaterialPool.Polyetheretherketone.getMolten(2592))
-                .specialValue(9500)
-                .metadata(COIL_HEAT, 9500)
+                .metadata(COIL_HEAT, 11700)
                 .duration(200)
                 .eut(TierEU.RECIPE_UHV)
                 .addTo(SCCR);
@@ -1247,7 +1244,7 @@ public class ShallowChemicalCouplingRecipes implements IRecipePool {
                 .fluidInputs(Materials.Oxygen.getGas(1728000), Materials.Hydrogen.getGas(6912000))
                 .fluidOutputs(MaterialPool.Polyetheretherketone.getMolten(82944))
                 .specialValue(10700)
-                .metadata(COIL_HEAT, 10700)
+                .metadata(COIL_HEAT, 13500)
                 .duration(400)
                 .eut(TierEU.RECIPE_UEV)
                 .addTo(SCCR);
