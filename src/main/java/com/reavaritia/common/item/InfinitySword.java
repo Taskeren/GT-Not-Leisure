@@ -2,7 +2,6 @@ package com.reavaritia.common.item;
 
 import static com.reavaritia.ReAvaritia.RESOURCE_ROOT_ID;
 
-import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -46,6 +45,7 @@ import com.reavaritia.common.SubtitleDisplay;
 import com.science.gtnl.common.entity.EntitySaddleSlime;
 import com.science.gtnl.config.MainConfig;
 import com.science.gtnl.mixins.late.Botania.AccessorEntityDoppleganger;
+import com.science.gtnl.mixins.late.DraconicEvolution.AccessorCustomArmorHandler;
 import com.science.gtnl.utils.Utils;
 
 import cpw.mods.fml.common.FMLCommonHandler;
@@ -69,8 +69,8 @@ import vazkii.botania.common.entity.EntityDoppleganger;
 public class InfinitySword extends ItemSword implements ICosmicRenderItem, SubtitleDisplay {
 
     public static long COOLDOWN = 1000;
-    private IIcon cosmicMask;
-    private IIcon pommel;
+    public IIcon cosmicMask;
+    public IIcon pommel;
     public static final DamageSource INFINITY_DAMAGE = new DamageSource("damage.gtnl.infinity").setExplosion()
         .setDamageBypassesArmor()
         .setDamageIsAbsolute()
@@ -145,7 +145,7 @@ public class InfinitySword extends ItemSword implements ICosmicRenderItem, Subti
         return true;
     }
 
-    private void applyInfinityDamage(EntityLivingBase target, EntityLivingBase attacker) {
+    public void applyInfinityDamage(EntityLivingBase target, EntityLivingBase attacker) {
         if (target instanceof EntitySaddleSlime) return;
         if (target instanceof EntityDragon) {
             target.attackEntityFrom(INFINITY_DAMAGE, Float.POSITIVE_INFINITY);
@@ -168,7 +168,7 @@ public class InfinitySword extends ItemSword implements ICosmicRenderItem, Subti
                     }
                 }
             }
-            target.attackEntityFrom(getAdminKill(), Float.POSITIVE_INFINITY);
+            target.attackEntityFrom(AccessorCustomArmorHandler.getAdminKill(), Float.POSITIVE_INFINITY);
         }
 
         DamageSource playerSource = DamageSource.causePlayerDamage((EntityPlayer) attacker);
@@ -224,7 +224,7 @@ public class InfinitySword extends ItemSword implements ICosmicRenderItem, Subti
         return stack;
     }
 
-    private void handleSwordAttack(ItemStack stack, World world, EntityPlayer player) {
+    public void handleSwordAttack(ItemStack stack, World world, EntityPlayer player) {
         NBTTagCompound nbt = stack.getTagCompound();
         if (nbt == null) {
             nbt = new NBTTagCompound();
@@ -258,7 +258,7 @@ public class InfinitySword extends ItemSword implements ICosmicRenderItem, Subti
         nbt.setLong("LastUsed", System.currentTimeMillis());
     }
 
-    private void tickSweepAttack(World world, EntityPlayer player) {
+    public void tickSweepAttack(World world, EntityPlayer player) {
         if (world.isRemote || sweepAttackTargets.isEmpty()) return;
 
         int processed = 0;
@@ -306,7 +306,7 @@ public class InfinitySword extends ItemSword implements ICosmicRenderItem, Subti
         }
     }
 
-    private void handlePlayerTarget(EntityPlayer target, EntityPlayer attacker, World world) {
+    public void handlePlayerTarget(EntityPlayer target, EntityPlayer attacker, World world) {
         if (LudicrousItems.isInfinite(target)) {
             target.attackEntityFrom(DamageSource.causePlayerDamage(attacker), 20.0F);
 
@@ -326,7 +326,7 @@ public class InfinitySword extends ItemSword implements ICosmicRenderItem, Subti
         }
     }
 
-    private void applyDoubleSweepDamage(EntityLivingBase target, EntityPlayer attacker) {
+    public void applyDoubleSweepDamage(EntityLivingBase target, EntityPlayer attacker) {
         if (target instanceof EntitySaddleSlime) return;
         if (!attacker.isSneaking() && target instanceof EntityPlayer) {
             return;
@@ -367,7 +367,7 @@ public class InfinitySword extends ItemSword implements ICosmicRenderItem, Subti
         }
     }
 
-    private void tickMagnetEffect(World world, EntityPlayer player) {
+    public void tickMagnetEffect(World world, EntityPlayer player) {
         if (world.isRemote || magnetTargets.isEmpty()) return;
 
         double centerX = player.posX;
@@ -498,6 +498,7 @@ public class InfinitySword extends ItemSword implements ICosmicRenderItem, Subti
     @SubscribeEvent(priority = EventPriority.HIGHEST)
     public void onPlayerUpdate(LivingEvent.LivingUpdateEvent event) {
         if (!(event.entity instanceof EntityPlayer player)) return;
+        if (!isHoldingInfinitySword(player)) return;
 
         if (player.isBurning()) {
             player.extinguish();
@@ -515,12 +516,12 @@ public class InfinitySword extends ItemSword implements ICosmicRenderItem, Subti
 
         player.addPotionEffect(new PotionEffect(Potion.nightVision.id, 220, 0));
 
-        if (player.posY < 0 && player.motionY < 0) {
+        if (player.posY < -10) {
             player.setPositionAndUpdate(player.posX, 255, player.posZ);
         }
     }
 
-    private boolean isBadEffect(PotionEffect effect) {
+    public boolean isBadEffect(PotionEffect effect) {
         if (FMLCommonHandler.instance()
             .getSide()
             .isClient()) {
@@ -531,35 +532,28 @@ public class InfinitySword extends ItemSword implements ICosmicRenderItem, Subti
     }
 
     @SideOnly(Side.CLIENT)
-    private boolean isBadEffectClient(PotionEffect effect) {
+    public boolean isBadEffectClient(PotionEffect effect) {
         return net.minecraft.potion.Potion.potionTypes[effect.getPotionID()].isBadEffect();
     }
 
-    private boolean isBadEffectServer(PotionEffect effect) {
+    public boolean isBadEffectServer(PotionEffect effect) {
         int potionID = effect.getPotionID();
         return potionID >= 1 && potionID < 256;
     }
 
     @SubscribeEvent(priority = EventPriority.LOWEST)
     public void onPlayerAttacked(LivingAttackEvent event) {
-        if (event.entity instanceof EntityPlayer player) {
-            if (player.isUsingItem() && player.getHeldItem() != null
-                && player.getHeldItem()
-                    .getItem() == this) {
-                event.setCanceled(true);
-            }
-        }
+        if (!(event.entity instanceof EntityPlayer player)) return;
+        if (!isHoldingInfinitySword(player)) return;
+        event.setCanceled(true);
     }
 
     @SubscribeEvent(priority = EventPriority.LOWEST)
     public void onPlayerDeath(LivingDeathEvent event) {
-        if (event.entity instanceof EntityPlayer player) {
-            if (player.getHeldItem() != null && player.getHeldItem()
-                .getItem() == this) {
-                event.setCanceled(true);
-                player.setHealth(player.getMaxHealth());
-            }
-        }
+        if (!(event.entity instanceof EntityPlayer player)) return;
+        if (!isHoldingInfinitySword(player)) return;
+        event.setCanceled(true);
+        player.setHealth(player.getMaxHealth());
     }
 
     @Override
@@ -620,14 +614,12 @@ public class InfinitySword extends ItemSword implements ICosmicRenderItem, Subti
         return false;
     }
 
-    public static DamageSource getAdminKill() {
-        try {
-            Class<?> clazz = Class.forName("com.brandon3055.draconicevolution.common.items.armor.CustomArmorHandler");
-            Field field = clazz.getDeclaredField("ADMIN_KILL");
-            field.setAccessible(true);
-            return (DamageSource) field.get(null);
-        } catch (Exception e) {
-            return null;
-        }
+    public static boolean isHoldingInfinitySword(EntityPlayer player) {
+        if (player == null) return false;
+
+        ItemStack held = player.getHeldItem();
+        if (held == null) return false;
+
+        return held.getItem() instanceof InfinitySword;
     }
 }

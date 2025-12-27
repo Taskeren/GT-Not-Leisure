@@ -29,6 +29,7 @@
     "Bartwork.MixinWerkstoffLoader",
     "Bartwork.MixinMoltenCellLoader",
     "Botania.AccessorEntityDoppleganger",
+    "DraconicEvolution.AccessorCustomArmorHandler",
     "DraconicEvolution.MixinMinecraftForgeEventHandler",
     "DraconicEvolution.MixinReactorExplosion",
     "EnhancedLootBags.AccessorItemLootBag",
