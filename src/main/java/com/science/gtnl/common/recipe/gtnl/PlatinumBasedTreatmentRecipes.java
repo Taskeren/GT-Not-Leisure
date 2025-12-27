@@ -147,11 +147,11 @@ public class PlatinumBasedTreatmentRecipes implements IRecipePool {
 
         // 钯金属粉处理
         RecipeBuilder.builder()
-            .itemInputs(GTUtility.copyAmountUnsafe(90, WerkstoffLoader.PDMetallicPowder.get(OrePrefixes.dust, 1)))
+            .itemInputs(GTUtility.copyAmountUnsafe(90, WerkstoffLoader.PDMetallicPowder.get(OrePrefixes.dust, 1)),GTOreDictUnificator.get(OrePrefixes.dust, Materials.Carbon, 64))
             .itemOutputs(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Palladium, 64))
             .fluidInputs(
                 Materials.Hydrogen.getGas(130000),
-                Materials.CarbonMonoxide.getGas(64000),
+                Materials.Oxygen.getGas(64000),
                 Materials.Ammonia.getGas(224000))
             .fluidOutputs(Materials.Ethylene.getGas(64000))
             .duration(2400)
