@@ -1,7 +1,6 @@
 package com.science.gtnl.utils.gui.recipe;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.function.Supplier;
 
@@ -67,7 +66,7 @@ public class RocketAssemblerFrontend extends RecipeMapFrontend {
 
     @Override
     public List<Pos2d> getItemOutputPositions(int itemOutputCount) {
-        return Collections.singletonList(new Pos2d(-1000, -1000));
+        return new ArrayList<>();
     }
 
     public static final int[][] rocketT1Inputs = new int[][] { { 121, 3 }, // 1 Lander
@@ -448,7 +447,7 @@ public class RocketAssemblerFrontend extends RecipeMapFrontend {
         // Override regular createNEITemplate method, so we can remove the background texture with the ugly border.
         ModularWindow.Builder builder = ModularWindow.builder(neiProperties.recipeBackgroundSize);
 
-        // First draw progress bar in background
+        // First gtnl$draw progress bar in background
         if (uiProperties.useProgressBar) {
             addProgressBar(builder, progressSupplier, windowOffset);
         }

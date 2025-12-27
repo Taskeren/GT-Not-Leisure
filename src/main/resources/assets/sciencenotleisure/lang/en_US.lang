@@ -1298,6 +1298,9 @@ item.MetaItem.61.name=MAX Parallel Controller Core
 Tooltip_MAXParallelControllerCore_00=§dSpeed: +26%
 Tooltip_MAXParallelControllerCore_01=§5EU Consumption: -28%
 Tooltip_MAXParallelControllerCore_02=§bParallel: 16777216
+Tooltip_ParallelControllerCore_Deprecated_00=Deprecated! Use Parallel Controller Hatch
+Tooltip_ParallelControllerCore_Deprecated_01=If you encounter machines that cannot use Parallel Controller Hatch, please submit issue
+
 item.MetaItem.62.name=§7Rumor - Naga's Book
 item.MetaItem.63.name=§bUrban Star - Twilight Book
 item.MetaItem.64.name=§6Urban Legend - Lich's Book

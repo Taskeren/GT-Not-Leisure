@@ -2,7 +2,6 @@ package com.science.gtnl.utils;
 
 import static com.science.gtnl.ScienceNotLeisure.*;
 import static com.science.gtnl.common.packet.client.SoundHandler.PLAYING_SOUNDS;
-import static com.science.gtnl.common.packet.client.TitleDisplayHandler.*;
 import static com.science.gtnl.common.render.PlayerDollRenderManagerClient.textureCache;
 import static com.science.gtnl.common.render.tile.MeteorMinerRenderer.visualStateMap;
 
@@ -33,8 +32,8 @@ import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.GL11;
 
 import com.reavaritia.common.render.CustomEntityRenderer;
-import com.science.gtnl.common.item.TimeStopManager;
 import com.science.gtnl.common.item.items.NullPointerException;
+import com.science.gtnl.common.item.items.TimeStopPocketWatch;
 import com.science.gtnl.common.packet.NBTUpdatePacket;
 import com.science.gtnl.common.packet.client.TitleDisplayHandler;
 import com.science.gtnl.common.render.item.ItemNullPointerExceptionRender;
@@ -277,6 +276,6 @@ public class SubscribeEventClientUtils {
                 customEntityRenderer.resetShader();
             }
         }
-        TimeStopManager.setTimeStopped(false);
+        TimeStopPocketWatch.setTimeStopped(false);
     }
 }

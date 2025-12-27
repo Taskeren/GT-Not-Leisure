@@ -330,7 +330,7 @@ public class MeteorMiner extends MultiMachineBase<MeteorMiner> implements ISurvi
     }
 
     @Override
-    public void onScrewdriverRightClick(ForgeDirection side, EntityPlayer aPlayer, float aX, float aY, float aZ,
+    public void onModeChangeByScrewdriver(ForgeDirection side, EntityPlayer aPlayer, float aX, float aY, float aZ,
         ItemStack aTool) {
         enableRender = !enableRender;
         GTUtility.sendChatToPlayer(
@@ -436,7 +436,7 @@ public class MeteorMiner extends MultiMachineBase<MeteorMiner> implements ISurvi
     public void startReset() {
         this.isResetting = true;
         stopMachine(ShutDownReasonRegistry.NONE);
-        checkMachine(this.getBaseMetaTileEntity(), mInventory[1]);
+        checkStructure(true);
         enableWorking();
     }
 
@@ -513,7 +513,7 @@ public class MeteorMiner extends MultiMachineBase<MeteorMiner> implements ISurvi
             if (queueEmpty) {
                 hasFinished = true;
                 if (renderer != null) renderer.setShouldRender(false);
-                checkMachine(this.getBaseMetaTileEntity(), mInventory[1]);
+                checkStructure(true);
             } else {
                 if (renderer != null) {
                     renderer.setShouldRender(true);

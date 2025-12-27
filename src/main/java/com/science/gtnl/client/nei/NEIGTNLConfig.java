@@ -8,6 +8,7 @@ import com.science.gtnl.utils.gui.GuiDirePatternEncoder;
 import com.science.gtnl.utils.gui.portableWorkbench.GuiPortableAdvancedWorkbench;
 import com.science.gtnl.utils.gui.portableWorkbench.GuiPortableBasicWorkbench;
 import com.science.gtnl.utils.gui.portableWorkbench.GuiPortableFurnace;
+import com.science.gtnl.utils.gui.recipe.RocketAssemblerHandler;
 
 import bartworks.system.material.Werkstoff;
 import codechicken.nei.api.API;
@@ -18,6 +19,8 @@ import gregtech.api.enums.OrePrefixes;
 
 @SuppressWarnings("unused")
 public class NEIGTNLConfig implements IConfigureNEI {
+
+    public static boolean isAdded = true;
 
     @Override
     public String getName() {
@@ -31,6 +34,11 @@ public class NEIGTNLConfig implements IConfigureNEI {
 
     @Override
     public void loadConfig() {
+
+        isAdded = false;
+        new RocketAssemblerHandler(RecipePool.RocketAssemblerRecipes.getDefaultRecipeCategory());
+        isAdded = true;
+
         API.registerGuiOverlay(GuiPortableAdvancedWorkbench.class, "crafting");
         API.registerGuiOverlay(GuiPortableBasicWorkbench.class, "crafting");
         API.registerGuiOverlay(GuiPortableFurnace.class, "smelting");

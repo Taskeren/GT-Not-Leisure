@@ -231,7 +231,7 @@ public class GreenHouseDynamicInventory<T> {
                         GlStateManager.colorMask(true, true, true, true);
                         GL11.glDisable(GL11.GL_BLEND);
                     }
-                    // Copied from SlotWidget#draw
+                    // Copied from SlotWidget#gtnl$draw
                     else if (isHovering() && !getContext().getCursor()
                         .hasDraggable()) {
                             GL11.glDisable(GL11.GL_LIGHTING);
@@ -352,7 +352,7 @@ public class GreenHouseDynamicInventory<T> {
                         GlStateManager.colorMask(true, true, true, true);
                         GL11.glDisable(GL11.GL_BLEND);
                     }
-                    // Copied from SlotWidget#draw
+                    // Copied from SlotWidget#gtnl$draw
                     else if (isHovering() && !getContext().getCursor()
                         .hasDraggable()) {
                             GL11.glDisable(GL11.GL_LIGHTING);

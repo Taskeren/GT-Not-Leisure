@@ -191,38 +191,38 @@ public abstract class MixinMTEIntegratedOreFactory
 
         switch (machineMode) {
             case 0 -> {
-                doMac(isOre);
-                doWash(isCrushedOre);
-                doThermal(isCrushedPureOre, isCrushedOre);
-                doMac(isThermal, isOre, isCrushedOre, isCrushedPureOre);
+                gtnl$doMac(isOre);
+                gtnl$doWash(isCrushedOre);
+                gtnl$doThermal(isCrushedPureOre, isCrushedOre);
+                gtnl$doMac(isThermal, isOre, isCrushedOre, isCrushedPureOre);
             }
             case 1 -> {
-                doMac(isOre);
-                doWash(isCrushedOre);
-                doMac(isOre, isCrushedOre, isCrushedPureOre);
-                doCentrifuge(isImpureDust, isPureDust);
+                gtnl$doMac(isOre);
+                gtnl$doWash(isCrushedOre);
+                gtnl$doMac(isOre, isCrushedOre, isCrushedPureOre);
+                gtnl$doCentrifuge(isImpureDust, isPureDust);
             }
             case 2 -> {
-                doMac(isOre);
-                doMac(isThermal, isOre, isCrushedOre, isCrushedPureOre);
-                doCentrifuge(isImpureDust, isPureDust);
+                gtnl$doMac(isOre);
+                gtnl$doMac(isThermal, isOre, isCrushedOre, isCrushedPureOre);
+                gtnl$doCentrifuge(isImpureDust, isPureDust);
             }
             case 3 -> {
-                doMac(isOre);
-                doWash(isCrushedOre);
-                doSift(isCrushedPureOre);
+                gtnl$doMac(isOre);
+                gtnl$doWash(isCrushedOre);
+                gtnl$doSift(isCrushedPureOre);
             }
             case 4 -> {
-                doMac(isOre);
-                doChemWash(isCrushedOre, isCrushedPureOre);
-                doMac(isCrushedOre, isCrushedPureOre);
-                doCentrifuge(isImpureDust, isPureDust);
+                gtnl$doMac(isOre);
+                gtnl$doChemWash(isCrushedOre, isCrushedPureOre);
+                gtnl$doMac(isCrushedOre, isCrushedPureOre);
+                gtnl$doCentrifuge(isImpureDust, isPureDust);
             }
             case 5 -> {
-                doMac(isOre);
-                doChemWash(isCrushedOre, isCrushedPureOre);
-                doThermal(isCrushedPureOre, isCrushedOre);
-                doMac(isThermal, isOre, isCrushedOre, isCrushedPureOre);
+                gtnl$doMac(isOre);
+                gtnl$doChemWash(isCrushedOre, isCrushedPureOre);
+                gtnl$doThermal(isCrushedPureOre, isCrushedOre);
+                gtnl$doMac(isThermal, isOre, isCrushedOre, isCrushedPureOre);
             }
             default -> {
                 return CheckRecipeResultRegistry.NO_RECIPE;
@@ -271,7 +271,7 @@ public abstract class MixinMTEIntegratedOreFactory
     }
 
     @Unique
-    public void doMac(IntOpenHashSet... aTables) {
+    public void gtnl$doMac(IntOpenHashSet... aTables) {
         ObjectArrayList<ItemStack> tProduct = new ObjectArrayList<>();
         if (sMidProduct != null) {
             for (ItemStack aStack : sMidProduct) {
@@ -286,7 +286,7 @@ public abstract class MixinMTEIntegratedOreFactory
                             .items(aStack)
                             .find());
                     if (tRecipe != null) {
-                        tProduct.addAll(getOutputStack(tRecipe, aStack.stackSize));
+                        tProduct.addAll(gtnl$getOutputStack(tRecipe, aStack.stackSize));
                     } else {
                         tProduct.add(aStack);
                     }
@@ -295,11 +295,11 @@ public abstract class MixinMTEIntegratedOreFactory
                 }
             }
         }
-        doCompress(tProduct);
+        gtnl$doCompress(tProduct);
     }
 
     @Unique
-    public void doWash(IntOpenHashSet... aTables) {
+    public void gtnl$doWash(IntOpenHashSet... aTables) {
         ObjectArrayList<ItemStack> tProduct = new ObjectArrayList<>();
         if (sMidProduct != null) {
             for (ItemStack aStack : sMidProduct) {
@@ -314,7 +314,7 @@ public abstract class MixinMTEIntegratedOreFactory
                             .fluids(GTModHandler.getDistilledWater(Integer.MAX_VALUE))
                             .find());
                     if (tRecipe != null) {
-                        tProduct.addAll(getOutputStack(tRecipe, aStack.stackSize));
+                        tProduct.addAll(gtnl$getOutputStack(tRecipe, aStack.stackSize));
                     } else {
                         tProduct.add(aStack);
                     }
@@ -323,11 +323,11 @@ public abstract class MixinMTEIntegratedOreFactory
                 }
             }
         }
-        doCompress(tProduct);
+        gtnl$doCompress(tProduct);
     }
 
     @Unique
-    public void doThermal(IntOpenHashSet... aTables) {
+    public void gtnl$doThermal(IntOpenHashSet... aTables) {
         ObjectArrayList<ItemStack> tProduct = new ObjectArrayList<>();
         if (sMidProduct != null) {
             for (ItemStack aStack : sMidProduct) {
@@ -341,7 +341,7 @@ public abstract class MixinMTEIntegratedOreFactory
                             .items(aStack)
                             .find());
                     if (tRecipe != null) {
-                        tProduct.addAll(getOutputStack(tRecipe, aStack.stackSize));
+                        tProduct.addAll(gtnl$getOutputStack(tRecipe, aStack.stackSize));
                     } else {
                         tProduct.add(aStack);
                     }
@@ -350,11 +350,11 @@ public abstract class MixinMTEIntegratedOreFactory
                 }
             }
         }
-        doCompress(tProduct);
+        gtnl$doCompress(tProduct);
     }
 
     @Unique
-    public void doCentrifuge(IntOpenHashSet... aTables) {
+    public void gtnl$doCentrifuge(IntOpenHashSet... aTables) {
         ObjectArrayList<ItemStack> tProduct = new ObjectArrayList<>();
         if (sMidProduct != null) {
             for (ItemStack aStack : sMidProduct) {
@@ -367,7 +367,7 @@ public abstract class MixinMTEIntegratedOreFactory
                             .items(aStack)
                             .find());
                     if (tRecipe != null) {
-                        tProduct.addAll(getOutputStack(tRecipe, aStack.stackSize));
+                        tProduct.addAll(gtnl$getOutputStack(tRecipe, aStack.stackSize));
                     } else {
                         tProduct.add(aStack);
                     }
@@ -376,11 +376,11 @@ public abstract class MixinMTEIntegratedOreFactory
                 }
             }
         }
-        doCompress(tProduct);
+        gtnl$doCompress(tProduct);
     }
 
     @Unique
-    public void doSift(IntOpenHashSet... aTables) {
+    public void gtnl$doSift(IntOpenHashSet... aTables) {
         ObjectArrayList<ItemStack> tProduct = new ObjectArrayList<>();
         if (sMidProduct != null) {
             for (ItemStack aStack : sMidProduct) {
@@ -393,7 +393,7 @@ public abstract class MixinMTEIntegratedOreFactory
                             .items(aStack)
                             .find());
                     if (tRecipe != null) {
-                        tProduct.addAll(getOutputStack(tRecipe, aStack.stackSize));
+                        tProduct.addAll(gtnl$getOutputStack(tRecipe, aStack.stackSize));
                     } else {
                         tProduct.add(aStack);
                     }
@@ -402,11 +402,11 @@ public abstract class MixinMTEIntegratedOreFactory
                 }
             }
         }
-        doCompress(tProduct);
+        gtnl$doCompress(tProduct);
     }
 
     @Unique
-    public void doChemWash(IntOpenHashSet... aTables) {
+    public void gtnl$doChemWash(IntOpenHashSet... aTables) {
         ObjectArrayList<ItemStack> tProduct = new ObjectArrayList<>();
         if (sMidProduct != null) {
             for (ItemStack aStack : sMidProduct) {
@@ -422,10 +422,10 @@ public abstract class MixinMTEIntegratedOreFactory
                     if (tRecipe != null && tRecipe.getRepresentativeFluidInput(0) != null) {
                         FluidStack tInputFluid = tRecipe.getRepresentativeFluidInput(0)
                             .copy();
-                        int tStored = getFluidAmount(tInputFluid);
+                        int tStored = gtnl$getFluidAmount(tInputFluid);
                         int tWashed = Math.min(tStored / tInputFluid.amount, aStack.stackSize);
                         depleteInput(new FluidStack(tInputFluid.getFluid(), tWashed * tInputFluid.amount), false);
-                        tProduct.addAll(getOutputStack(tRecipe, tWashed));
+                        tProduct.addAll(gtnl$getOutputStack(tRecipe, tWashed));
                         if (tWashed < aStack.stackSize) {
                             tProduct.add(GTUtility.copyAmountUnsafe(aStack.stackSize - tWashed, aStack));
                         }
@@ -437,11 +437,11 @@ public abstract class MixinMTEIntegratedOreFactory
                 }
             }
         }
-        doCompress(tProduct);
+        gtnl$doCompress(tProduct);
     }
 
     @Unique
-    public int getFluidAmount(FluidStack aFluid) {
+    public int gtnl$getFluidAmount(FluidStack aFluid) {
         int tAmt = 0;
         if (aFluid == null) return 0;
         for (FluidStack fluid : getStoredFluids()) {
@@ -453,7 +453,7 @@ public abstract class MixinMTEIntegratedOreFactory
     }
 
     @Unique
-    public List<ItemStack> getOutputStack(GTRecipe aRecipe, int aTime) {
+    public List<ItemStack> gtnl$getOutputStack(GTRecipe aRecipe, int aTime) {
         ObjectArrayList<ItemStack> tOutput = new ObjectArrayList<>();
         Random random = RAND.get();
         for (int i = 0; i < aRecipe.mOutputs.length; i++) {
@@ -478,7 +478,7 @@ public abstract class MixinMTEIntegratedOreFactory
     }
 
     @Unique
-    public void doCompress(List<ItemStack> aList) {
+    public void gtnl$doCompress(List<ItemStack> aList) {
         Int2IntOpenHashMap rProduct = new Int2IntOpenHashMap();
         for (ItemStack stack : aList) {
             int tID = GTUtility.stackToInt(stack);

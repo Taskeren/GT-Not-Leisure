@@ -1,10 +1,7 @@
 package com.science.gtnl.mixins.late.ThaumicTinkerer;
 
-import static com.reavaritia.common.item.InfinitySword.cancelBloodSword;
-
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.item.ItemStack;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraftforge.event.entity.living.LivingAttackEvent;
 
 import org.spongepowered.asm.mixin.Mixin;
@@ -13,6 +10,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import com.reavaritia.common.item.InfinitySword;
+import com.science.gtnl.config.MainConfig;
 
 import thaumic.tinkerer.common.item.ItemBloodSword;
 
@@ -21,12 +19,11 @@ public abstract class MixinItemBloodSword {
 
     @Inject(method = "onDamageTaken", at = @At("HEAD"), cancellable = true)
     public void onDamageTaken(LivingAttackEvent event, CallbackInfo ci) {
-        Entity source = event.source.getSourceOfDamage();
-        if (source instanceof EntityLivingBase entityLivingBase) {
-            ItemStack itemInUse = entityLivingBase.getHeldItem();
-            if (cancelBloodSword && itemInUse != null && itemInUse.getItem() instanceof InfinitySword) {
-                ci.cancel();
-            }
-        }
+        if (!MainConfig.enableInfinitySwordBypassMechanism) return;
+        Entity entity = event.source.getSourceOfDamage();
+        if (!(entity instanceof EntityPlayer player)) return;
+        if (!player.isSneaking()) return;
+        if (!event.source.damageType.contains(InfinitySword.INFINITY_DAMAGE.damageType)) return;
+        ci.cancel();
     }
 }

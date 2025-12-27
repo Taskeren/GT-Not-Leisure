@@ -3,7 +3,6 @@ package com.science.gtnl.mixins.late.AppliedEnergistics.QuamtumComputer;
 import net.minecraft.world.World;
 
 import org.jetbrains.annotations.Nullable;
-import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
@@ -55,9 +54,6 @@ public abstract class MixinCraftingCPUCluster implements ECPUCluster {
 
     @Shadow
     private MachineSource machineSrc;
-    @Final
-    @Shadow
-    private int[] usedOps;
 
     @Shadow
     public abstract void destroy();

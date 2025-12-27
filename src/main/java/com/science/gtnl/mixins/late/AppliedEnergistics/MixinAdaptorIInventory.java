@@ -33,13 +33,14 @@ public class MixinAdaptorIInventory {
     private boolean skipStackSizeCheck;
 
     @Unique
-    private static Function<Object, Object> get;
+    private static Function<Object, Object> gtnl$get;
 
-    private static Function<Object, Object> init() {
-        if (get == null) try {
+    @Unique
+    private static Function<Object, Object> gtnl$init() {
+        if (gtnl$get == null) try {
             Field f = WrapperMCISidedInventory.class.getDeclaredField("side");
             f.setAccessible(true);
-            get = s -> {
+            gtnl$get = s -> {
                 try {
                     return f.get(s);
                 } catch (Exception e) {
@@ -50,28 +51,27 @@ public class MixinAdaptorIInventory {
             throw new RuntimeException(e);
         }
 
-        return get;
+        return gtnl$get;
     }
 
-    @Inject(method = "<init>", at = @At(value = "RETURN"), require = 1)
+    @Inject(method = "<init>*", at = @At(value = "RETURN"), require = 1)
     public void constructor(IInventory s, CallbackInfo a) {
-
         if (wrapperEnabled) {
-            if (i instanceof WrapperMCISidedInventory) {
-                WrapperMCISidedInventory wrap = (WrapperMCISidedInventory) i;
-                Object wrapped = init().apply(wrap);
-                skipStackSizeCheck = skipStackSizeCheck || check(wrapped);
+            if (i instanceof WrapperMCISidedInventory wrap) {
+                Object wrapped = gtnl$init().apply(wrap);
+                skipStackSizeCheck = skipStackSizeCheck || gtnl$check(wrapped);
                 return;
             }
 
         }
 
-        skipStackSizeCheck = skipStackSizeCheck || check(s);
+        skipStackSizeCheck = skipStackSizeCheck || gtnl$check(s);
     }
 
-    private static boolean check(Object s) {
-        if (s != null && s instanceof IGregTechTileEntity) {
-            return Optional.ofNullable(((IGregTechTileEntity) s).getMetaTileEntity())
+    @Unique
+    private static boolean gtnl$check(Object s) {
+        if (s instanceof IGregTechTileEntity gtTE) {
+            return Optional.ofNullable(gtTE.getMetaTileEntity())
                 .map(ss -> ss instanceof ISkipStackSizeCheck ? (ISkipStackSizeCheck) ss : null)
                 .isPresent();
         }

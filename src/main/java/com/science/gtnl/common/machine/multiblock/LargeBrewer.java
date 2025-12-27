@@ -156,7 +156,7 @@ public class LargeBrewer extends GTMMultiMachineBase<LargeBrewer> implements ISu
     }
 
     @Override
-    public final void onScrewdriverRightClick(ForgeDirection side, EntityPlayer aPlayer, float aX, float aY, float aZ,
+    public void onModeChangeByScrewdriver(ForgeDirection side, EntityPlayer aPlayer, float aX, float aY, float aZ,
         ItemStack aTool) {
         this.machineMode = (this.machineMode + 1) % 3;
         GTUtility.sendChatToPlayer(aPlayer, StatCollector.translateToLocal("LargeBrewer_Mode_" + this.machineMode));

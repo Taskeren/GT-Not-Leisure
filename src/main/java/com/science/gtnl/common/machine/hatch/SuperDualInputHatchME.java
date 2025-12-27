@@ -868,7 +868,7 @@ public class SuperDualInputHatchME extends MTEHatchInputBus
         for (int ii = 0; ii < 100; ii++) {
             int i = ii;
             builder.widget(new FakeSyncWidget.LongSyncer(() -> {
-                // f_client[i]=f_shadow[i].getFluidAmount();
+                // f_client[i]=f_shadow[i].gtnl$getFluidAmount();
                 return f_client[i];
             }, s -> f_client[i] = s).setSynced(false, true));
         }

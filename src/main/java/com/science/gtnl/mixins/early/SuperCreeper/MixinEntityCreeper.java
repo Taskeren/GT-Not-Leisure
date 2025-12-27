@@ -32,11 +32,11 @@ public abstract class MixinEntityCreeper extends EntityMob {
     public int explosionRadius;
 
     @Unique
-    private int delayedExplosionTimer = 0;
+    private int gtnl$delayedExplosionTimer = 0;
     @Unique
-    private boolean isCreeperExplosionDelayed = false;
+    private boolean gtnl$isCreeperExplosionDelayed = false;
     @Unique
-    private int burningExplosionTimer = 0;
+    private int gtnl$burningExplosionTimer = 0;
     @Shadow
     public int timeSinceIgnited;
     @Shadow
@@ -44,14 +44,14 @@ public abstract class MixinEntityCreeper extends EntityMob {
 
     @Inject(method = "writeEntityToNBT", at = @At("TAIL"))
     private void writeCustomData(NBTTagCompound tag, CallbackInfo ci) {
-        tag.setBoolean("creeperExplosionDelayed", this.isCreeperExplosionDelayed);
-        tag.setInteger("creeperExplosionDelay", this.delayedExplosionTimer);
+        tag.setBoolean("creeperExplosionDelayed", this.gtnl$isCreeperExplosionDelayed);
+        tag.setInteger("creeperExplosionDelay", this.gtnl$delayedExplosionTimer);
     }
 
     @Inject(method = "readEntityFromNBT", at = @At("TAIL"))
     private void readCustomData(NBTTagCompound tagCompund, CallbackInfo ci) {
-        this.isCreeperExplosionDelayed = tagCompund.getBoolean("creeperExplosionDelayed");
-        this.delayedExplosionTimer = tagCompund.getInteger("creeperExplosionDelay");
+        this.gtnl$isCreeperExplosionDelayed = tagCompund.getBoolean("creeperExplosionDelayed");
+        this.gtnl$delayedExplosionTimer = tagCompund.getInteger("creeperExplosionDelay");
     }
 
     @Inject(method = "onDeath", at = @At("HEAD"))
@@ -69,24 +69,24 @@ public abstract class MixinEntityCreeper extends EntityMob {
 
     @Inject(method = "onUpdate", at = @At("TAIL"))
     private void onUpdate(CallbackInfo ci) {
-        if (isCreeperExplosionDelayed && MainConfig.enableCreeperHurtByCreeperExplosion) {
-            delayedExplosionTimer--;
-            if (delayedExplosionTimer <= 0) {
+        if (gtnl$isCreeperExplosionDelayed && MainConfig.enableCreeperHurtByCreeperExplosion) {
+            gtnl$delayedExplosionTimer--;
+            if (gtnl$delayedExplosionTimer <= 0) {
                 this.func_146077_cc();
                 this.setDead();
-                isCreeperExplosionDelayed = false;
+                gtnl$isCreeperExplosionDelayed = false;
             }
         }
 
         if (this.isBurning() && MainConfig.enableCreeperBurningExplosion) {
-            burningExplosionTimer++;
-            if (burningExplosionTimer >= MainConfig.burningExplosionTimer) {
+            gtnl$burningExplosionTimer++;
+            if (gtnl$burningExplosionTimer >= MainConfig.burningExplosionTimer) {
                 this.func_146077_cc();
                 this.extinguish();
-                burningExplosionTimer = 0;
+                gtnl$burningExplosionTimer = 0;
             }
         } else {
-            burningExplosionTimer = 0;
+            gtnl$burningExplosionTimer = 0;
         }
     }
 

@@ -311,7 +311,7 @@ public class EyeOfHarmonyInjector extends TTMultiblockBase
     public void onBlockDestroyed() {
         // When the controller is destroyed we want to notify all currently linked units
         for (LinkedEyeOfHarmonyUnit unit : this.mLinkedUnits) {
-            ((IEyeOfHarmonyControllerLink) unit.mMetaTileEntity).unlinkController();
+            ((IEyeOfHarmonyControllerLink) unit.mMetaTileEntity).gtnl$unlinkController();
         }
         super.onBlockDestroyed();
     }

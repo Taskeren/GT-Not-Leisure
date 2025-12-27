@@ -4,13 +4,13 @@ import net.minecraft.entity.Entity;
 
 public interface ILeashedToEntity {
 
-    void setLeashedToEntity(Entity entityIn, boolean sendAttachNotification);
+    void gtnl$setLeashedToEntity(Entity entityIn, boolean sendAttachNotification);
 
-    boolean getLeashed();
+    boolean gtnl$getLeashed();
 
-    Entity getLeashedToEntity();
+    Entity gtnl$getLeashedToEntity();
 
-    void updateLeashedState();
+    void gtnl$updateLeashedState();
 
-    void clearLeashed(boolean p_110160_1_, boolean p_110160_2_);
+    void gtnl$clearLeashed(boolean p_110160_1_, boolean p_110160_2_);
 }

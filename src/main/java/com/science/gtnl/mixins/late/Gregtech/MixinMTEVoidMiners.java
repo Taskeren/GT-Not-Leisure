@@ -54,7 +54,7 @@ public abstract class MixinMTEVoidMiners extends MTEVoidMinerBase<MixinMTEVoidMi
     @Inject(method = "checkMachine", at = @At(value = "RETURN"), cancellable = true)
     private void checkMachine(IGregTechTileEntity aBaseMetaTileEntity, ItemStack aStack,
         CallbackInfoReturnable<Boolean> cir) {
-        int amp = 0;
+        long amp = 0;
 
         for (MTEHatch tHatch : validMTEList(mEnergyHatches)) {
             amp += tHatch.maxWorkingAmperesIn();

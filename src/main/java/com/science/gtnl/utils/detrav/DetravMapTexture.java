@@ -73,13 +73,13 @@ public class DetravMapTexture extends AbstractTexture {
                         image.setRGB(i, j, ((meta & 0xFF) << 16) + ((meta & 0xFF) << 8) + ((meta & 0xFF)) | 0XFF000000);
                     }
                 }
-                // draw player pos
+                // gtnl$draw player pos
                 if (i == playerI || j == playerJ) {
                     raster.setSample(i, j, 0, (raster.getSample(i, j, 0) + 255) / 2);
                     raster.setSample(i, j, 1, raster.getSample(i, j, 1) / 2);
                     raster.setSample(i, j, 2, raster.getSample(i, j, 2) / 2);
                 }
-                // draw grid
+                // gtnl$draw grid
                 if ((i) % 16 == 0 || (j) % 16 == 0) {
                     raster.setSample(i, j, 0, raster.getSample(i, j, 0) / 2);
                     raster.setSample(i, j, 1, raster.getSample(i, j, 1) / 2);

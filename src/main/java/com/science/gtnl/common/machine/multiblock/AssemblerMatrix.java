@@ -657,7 +657,7 @@ public class AssemblerMatrix extends MultiMachineBase<AssemblerMatrix>
     }
 
     @Override
-    public void onScrewdriverRightClick(ForgeDirection side, EntityPlayer aPlayer, float aX, float aY, float aZ,
+    public void onModeChangeByScrewdriver(ForgeDirection side, EntityPlayer aPlayer, float aX, float aY, float aZ,
         ItemStack aTool) {
         super.onScrewdriverRightClick(side, aPlayer, aX, aY, aZ, aTool);
         if (this.mMaxProgresstime > 0) {

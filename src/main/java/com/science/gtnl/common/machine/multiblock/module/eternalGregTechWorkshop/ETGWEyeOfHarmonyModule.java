@@ -172,7 +172,7 @@ public class ETGWEyeOfHarmonyModule extends EternalGregTechWorkshopModule {
     }
 
     @Override
-    public final void onScrewdriverRightClick(ForgeDirection side, EntityPlayer aPlayer, float aX, float aY, float aZ,
+    public void onModeChangeByScrewdriver(ForgeDirection side, EntityPlayer aPlayer, float aX, float aY, float aZ,
         ItemStack aTool) {
         enableRawStarMatter = !enableRawStarMatter;
         aPlayer.addChatMessage(

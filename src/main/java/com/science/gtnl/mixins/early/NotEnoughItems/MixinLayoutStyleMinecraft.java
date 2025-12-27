@@ -28,7 +28,7 @@ public class MixinLayoutStyleMinecraft {
             if ("nei:textures/items/cheat_speical.png".equals(rl.toString()) && MainConfig.enableSpecialCheatIcon) {
                 final int iconX = b.x + (b.w - icon.width) / 2;
                 final int iconY = b.y + (b.h - icon.height) / 2;
-                dr.draw(iconX, iconY, MainConfig.specialIconType);
+                dr.gtnl$draw(iconX, iconY, MainConfig.specialIconType);
                 ci.cancel();
             }
         }

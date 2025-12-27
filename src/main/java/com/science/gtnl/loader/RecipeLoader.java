@@ -48,6 +48,7 @@ import com.science.gtnl.common.recipe.gregtech.FormingPressRecipes;
 import com.science.gtnl.common.recipe.gregtech.FusionReactorRecipes;
 import com.science.gtnl.common.recipe.gregtech.HammerRecipes;
 import com.science.gtnl.common.recipe.gregtech.LaserEngraverRecipes;
+import com.science.gtnl.common.recipe.gregtech.MaceratorRecipes;
 import com.science.gtnl.common.recipe.gregtech.MixerRecipes;
 import com.science.gtnl.common.recipe.gregtech.NanoForgeRecipes;
 import com.science.gtnl.common.recipe.gregtech.NuclearSaltProcessingPlantRecipes;
@@ -136,6 +137,7 @@ import gregtech.api.recipe.RecipeMaps;
 import gregtech.api.util.GTModHandler;
 import gregtech.api.util.GTOreDictUnificator;
 import gregtech.api.util.GTRecipe;
+import gregtech.api.util.GTUtility;
 import gtnhlanth.api.recipe.LanthanidesRecipeMaps;
 import it.unimi.dsi.fastutil.objects.Object2IntMap;
 import it.unimi.dsi.fastutil.objects.Object2IntOpenHashMap;
@@ -207,7 +209,7 @@ public class RecipeLoader {
             new CyclotronRecipes(), new RuneAltarRecipes(), new IndustrialRockCrusherRecipes(),
             new PrecisionLaserEngraver(), new NanitesIntegratedProcessingRecipes(), new NanoForgeRecipes(),
             new SteamWeatherModuleRecipes(), new ElectricNeutronActivatorRecipes(), new ReactorProcessingUnitRecipes(),
-            new NuclearSaltProcessingPlantRecipes() };
+            new NuclearSaltProcessingPlantRecipes(), new MaceratorRecipes() };
 
         for (IRecipePool recipePool : recipePools) {
             recipePool.loadRecipes();
@@ -289,21 +291,27 @@ public class RecipeLoader {
             }
         };
         for (GTRecipe recipe : targetChamberRecipe) {
-            for (Object2IntMap.Entry<ItemStack> entry : waferMultiplier.object2IntEntrySet()) {
-                if (recipe.mInputs[1].isItemEqual(entry.getKey())) {
-                    int multiplier = entry.getIntValue();
-                    for (ItemStack itemStack : recipe.mOutputs) {
-                        itemStack.stackSize *= multiplier;
-                    }
-                } else {
-                    for (ItemStack itemStack : recipe.mOutputs) {
-                        itemStack.stackSize *= 4;
+
+            int multiplier = 4;
+
+            outer: for (ItemStack input : recipe.mInputs) {
+                if (input == null) continue;
+
+                for (Object2IntMap.Entry<ItemStack> entry : waferMultiplier.object2IntEntrySet()) {
+                    if (GTUtility.areStacksEqual(input, entry.getKey(), true)) {
+                        multiplier = entry.getIntValue();
+                        break outer;
                     }
                 }
-                break;
             }
+
+            for (ItemStack output : recipe.mOutputs) {
+                output.stackSize *= multiplier;
+            }
+
             LanthanidesRecipeMaps.targetChamberRecipes.add(recipe);
         }
+
     }
 
     @Optional.Method(modid = "TwistSpaceTechnology")

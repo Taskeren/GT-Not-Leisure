@@ -2,8 +2,8 @@ package com.science.gtnl.api.mixinHelper;
 
 public interface IAccelerationState {
 
-    boolean getMachineAccelerationState();
+    boolean gtnl$getMachineAccelerationState();
 
-    void setAccelerationState(boolean state);
+    void gtnl$setIsAccelerationState(boolean state);
 
 }

@@ -22,7 +22,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-import com.science.gtnl.common.item.TimeStopManager;
+import com.science.gtnl.common.item.items.TimeStopPocketWatch;
 
 import cpw.mods.fml.common.FMLLog;
 
@@ -37,21 +37,23 @@ public abstract class MixinWorld {
     @Shadow
     public List<Entity> loadedEntityList;
     @Shadow
-    public List<Entity> unloadedEntityList;
+    protected List<Entity> unloadedEntityList;
     @Shadow
     private boolean field_147481_N;
     @Shadow
     public List<TileEntity> loadedTileEntityList;
+    @SuppressWarnings("rawtypes")
     @Shadow
     private List field_147483_b;
+    @SuppressWarnings("rawtypes")
     @Shadow
     private List addedTileEntityList;
     @Shadow
-    public IChunkProvider chunkProvider;
+    protected IChunkProvider chunkProvider;
 
-    @Inject(method = "updateEntities", at = @At("HEAD"), cancellable = true, remap = true)
+    @Inject(method = "updateEntities", at = @At("HEAD"), cancellable = true)
     public void mixin$updateEntities(CallbackInfo ci) {
-        boolean isStop = TimeStopManager.isTimeStopped();
+        boolean isStop = TimeStopPocketWatch.isTimeStopped();
         if (!isStop) return;
 
         this.theProfiler.startSection("entities");
@@ -172,10 +174,10 @@ public abstract class MixinWorld {
         if (!isStop) {
             this.theProfiler.endStartSection("blockEntities");
             this.field_147481_N = true;
-            Iterator iterator = this.loadedTileEntityList.iterator();
+            Iterator<TileEntity> iterator = this.loadedTileEntityList.iterator();
 
             while (iterator.hasNext()) {
-                TileEntity tileentity = (TileEntity) iterator.next();
+                TileEntity tileentity = iterator.next();
 
                 if (!tileentity.isInvalid() && tileentity.hasWorldObj()
                     && ((World) ((Object) this)).blockExists(tileentity.xCoord, tileentity.yCoord, tileentity.zCoord)) {
@@ -227,8 +229,8 @@ public abstract class MixinWorld {
             this.theProfiler.endStartSection("pendingBlockEntities");
 
             if (!this.addedTileEntityList.isEmpty()) {
-                for (int k = 0; k < this.addedTileEntityList.size(); ++k) {
-                    TileEntity tileentity1 = (TileEntity) this.addedTileEntityList.get(k);
+                for (Object o : this.addedTileEntityList) {
+                    TileEntity tileentity1 = (TileEntity) o;
 
                     if (!tileentity1.isInvalid()) {
                         if (!this.loadedTileEntityList.contains(tileentity1)) {
@@ -261,7 +263,7 @@ public abstract class MixinWorld {
 
     @Inject(method = "tick", at = @At("HEAD"), cancellable = true)
     public void mixin$tick(CallbackInfo ci) {
-        boolean isStop = TimeStopManager.isTimeStopped();
+        boolean isStop = TimeStopPocketWatch.isTimeStopped();
         if (isStop) {
             ci.cancel();
         }

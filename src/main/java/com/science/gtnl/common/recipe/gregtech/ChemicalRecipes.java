@@ -570,5 +570,12 @@ public class ChemicalRecipes implements IRecipePool {
             .duration(40)
             .eut(TierEU.RECIPE_EV)
             .addTo(MCRR);
+
+        RecipeBuilder.builder()
+            .fluidInputs(Materials.Hydrogen.getGas(2000), Materials.Oxygen.getGas(2000))
+            .fluidOutputs(new FluidStack(GTPPFluids.HydrogenPeroxide, 1000))
+            .duration(40)
+            .eut(TierEU.RECIPE_LuV)
+            .addTo(MCRR);
     }
 }

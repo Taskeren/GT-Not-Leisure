@@ -21,7 +21,6 @@ import gregtech.api.metatileentity.implementations.MTEHatch;
 import gregtech.api.metatileentity.implementations.MTEHatchInput;
 import gregtech.api.metatileentity.implementations.MTEHatchInputBus;
 
-@Deprecated
 @Mixin(value = MTEHatch.class, remap = false)
 public abstract class MixinMTEHatch extends MTEBasicTank implements IMultiblockRecipeMap {
 
@@ -32,7 +31,7 @@ public abstract class MixinMTEHatch extends MTEBasicTank implements IMultiblockR
     private int textureIndex;
 
     @Unique
-    private String multiBlockRecipeMapName = null;
+    private String gtnl$multiBlockRecipeMapName = null;
 
     public MixinMTEHatch(int aID, String aName, String aNameRegional, int aTier, int aInvSlotCount, String aDescription,
         ITexture... aTextures) {
@@ -40,13 +39,13 @@ public abstract class MixinMTEHatch extends MTEBasicTank implements IMultiblockR
     }
 
     @Override
-    public String getRecipeMapName() {
-        return multiBlockRecipeMapName;
+    public String gtnl$getRecipeMapName() {
+        return gtnl$multiBlockRecipeMapName;
     }
 
     @Override
-    public void setRecipeMapName(String recipeMap) {
-        multiBlockRecipeMapName = recipeMap;
+    public void gtnl$setRecipeMapName(String recipeMap) {
+        gtnl$multiBlockRecipeMapName = recipeMap;
     }
 
     @ModifyVariable(method = "updateCraftingIcon", at = @At("HEAD"), argsOnly = true, index = 1)
@@ -65,22 +64,25 @@ public abstract class MixinMTEHatch extends MTEBasicTank implements IMultiblockR
             }
         }
         if (hatch instanceof MTEHatchInput inputHatch
-            && (multiBlockRecipeMapName != null || inputHatch.mRecipeMap != null)) {
+            && (gtnl$multiBlockRecipeMapName != null || inputHatch.mRecipeMap != null)) {
             if (sb == null) {
                 sb = new StringBuilder();
             }
             sb.append("extra_start_")
                 .append(
-                    multiBlockRecipeMapName != null ? multiBlockRecipeMapName : inputHatch.mRecipeMap.unlocalizedName)
+                    gtnl$multiBlockRecipeMapName != null ? gtnl$multiBlockRecipeMapName
+                        : inputHatch.mRecipeMap.unlocalizedName)
                 .append("_extra_end_");
         }
         if (hatch instanceof MTEHatchInputBus inputBus
-            && (multiBlockRecipeMapName != null || inputBus.mRecipeMap != null)) {
+            && (gtnl$multiBlockRecipeMapName != null || inputBus.mRecipeMap != null)) {
             if (sb == null) {
                 sb = new StringBuilder();
             }
             sb.append("extra_start_")
-                .append(multiBlockRecipeMapName != null ? multiBlockRecipeMapName : inputBus.mRecipeMap.unlocalizedName)
+                .append(
+                    gtnl$multiBlockRecipeMapName != null ? gtnl$multiBlockRecipeMapName
+                        : inputBus.mRecipeMap.unlocalizedName)
                 .append("_extra_end_");
         }
         if (sb != null && sb.length() > 0) {
@@ -108,6 +110,7 @@ public abstract class MixinMTEHatch extends MTEBasicTank implements IMultiblockR
      *         and scalable system will replace this method.
      * @author GTNotLeisure
      */
+    @Deprecated
     @Overwrite
     public final void updateTexture(int id) {
         int newTexturePage = id >> 7;

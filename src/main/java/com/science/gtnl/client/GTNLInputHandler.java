@@ -40,6 +40,7 @@ import cpw.mods.fml.common.gameevent.InputEvent;
 import cpw.mods.fml.common.gameevent.TickEvent;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import gregtech.api.util.AssemblyLineUtils;
 
 @SideOnly(Side.CLIENT)
 public class GTNLInputHandler implements IContainerInputHandler {
@@ -83,6 +84,9 @@ public class GTNLInputHandler implements IContainerInputHandler {
 
             stack = fake;
         }
+
+        ItemStack dataStickOutput = AssemblyLineUtils.getDataStickOutput(stack);
+        if (dataStickOutput != null) stack = dataStickOutput;
 
         if (NEIClientConfig.isKeyHashDown("gui.recipe")) {
             return GuiCraftingRecipe.openRecipeGui("item", stack);

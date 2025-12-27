@@ -2332,5 +2332,20 @@ public class AssemblingLineRecipes implements IRecipePool {
             GTNLItemList.QuantumComputerSingularityCore.get(1),
             18000,
             (int) TierEU.RECIPE_UMV);
+
+        TTRecipeAdder.addResearchableAssemblylineRecipe(
+            LanthItemList.BEAMLINE_PIPE,
+            20000,
+            16,
+            (int) TierEU.RECIPE_ZPM,
+            1,
+            new Object[] { new ItemStack(LanthItemList.FOCUS_MANIPULATION_CASING, 1),
+                GTUtility.copyAmount(4, LanthItemList.BEAMLINE_PIPE),
+                GTOreDictUnificator.get(OrePrefixes.plateDense, Materials.Bedrockium, 1),
+                ItemList.Circuit_Chip_QuantumCPU.get(2), new Object[] { OrePrefixes.circuit.get(Materials.UHV), 1L } },
+            new FluidStack[] { Materials.Grade4PurifiedWater.getFluid(4000) },
+            GTNLItemList.BeamlinePipeMirror.get(1),
+            200,
+            (int) TierEU.RECIPE_UHV);
     }
 }

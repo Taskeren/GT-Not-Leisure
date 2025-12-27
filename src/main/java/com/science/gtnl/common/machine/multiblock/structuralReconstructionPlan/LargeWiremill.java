@@ -122,7 +122,7 @@ public class LargeWiremill extends GTMMultiMachineBase<LargeWiremill> implements
             return false;
         }
         setupParameters();
-        return mCountCasing >= 25;
+        return mCountCasing >= 10;
     }
 
     @Override

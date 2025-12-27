@@ -23,23 +23,23 @@ public class GasCollectorRecipes implements IRecipePool {
 
         RecipeBuilder.builder()
             .itemInputs(GTUtility.getIntegratedCircuit(1))
-            .fluidOutputs(Materials.Air.getGas(10000))
+            .fluidOutputs(Materials.Air.getGas(100000))
             .duration(200)
-            .eut(TierEU.RECIPE_LV)
+            .eut(TierEU.RECIPE_MV)
             .addTo(GCR);
 
         RecipeBuilder.builder()
             .itemInputs(GTUtility.getIntegratedCircuit(2), ItemList.Machine_Multi_VacuumFreezer.get(0))
-            .fluidOutputs(Materials.LiquidAir.getFluid(10000))
+            .fluidOutputs(Materials.LiquidAir.getFluid(100000))
             .duration(200)
             .eut(TierEU.RECIPE_HV)
             .addTo(GCR);
 
         RecipeBuilder.builder()
             .itemInputs(GTUtility.getIntegratedCircuit(3), new ItemStack(ModBlocks.getBlock("ED"), 0))
-            .fluidOutputs(MaterialPool.EnderAir.getFluidOrGas(10000))
+            .fluidOutputs(MaterialPool.EnderAir.getFluidOrGas(100000))
             .duration(200)
-            .eut(TierEU.RECIPE_HV)
+            .eut(TierEU.RECIPE_IV)
             .addTo(GCR);
 
         RecipeBuilder.builder()
@@ -47,14 +47,14 @@ public class GasCollectorRecipes implements IRecipePool {
                 GTUtility.getIntegratedCircuit(4),
                 new ItemStack(ModBlocks.getBlock("ED"), 0),
                 ItemList.Machine_Multi_VacuumFreezer.get(0))
-            .fluidOutputs(MaterialPool.LiquidEnderAir.getFluidOrGas(10000))
+            .fluidOutputs(MaterialPool.LiquidEnderAir.getFluidOrGas(100000))
             .duration(200)
-            .eut(TierEU.RECIPE_IV)
+            .eut(TierEU.RECIPE_ZPM)
             .addTo(GCR);
 
         RecipeBuilder.builder()
             .itemInputs(GTUtility.getIntegratedCircuit(5), new ItemStack(ModBlocks.getBlock("Ne"), 0))
-            .fluidOutputs(Materials.NetherAir.getFluid(10000))
+            .fluidOutputs(Materials.NetherAir.getFluid(100000))
             .duration(200)
             .eut(TierEU.RECIPE_EV)
             .addTo(GCR);
@@ -64,14 +64,14 @@ public class GasCollectorRecipes implements IRecipePool {
                 GTUtility.getIntegratedCircuit(6),
                 new ItemStack(ModBlocks.getBlock("Ne"), 0),
                 ItemList.Machine_Multi_VacuumFreezer.get(0))
-            .fluidOutputs(Materials.NetherSemiFluid.getFluid(10000))
+            .fluidOutputs(Materials.NetherSemiFluid.getFluid(100000))
             .duration(200)
             .eut(TierEU.RECIPE_LuV)
             .addTo(GCR);
 
         RecipeBuilder.builder()
             .itemInputs(GTUtility.getIntegratedCircuit(7), new ItemStack(ModBlocks.getBlock("Ne"), 0))
-            .fluidOutputs(Materials.NefariousGas.getFluid(5000))
+            .fluidOutputs(Materials.NefariousGas.getFluid(50000))
             .duration(200)
             .eut(TierEU.RECIPE_LuV)
             .addTo(GCR);

@@ -28,65 +28,47 @@ public abstract class MixinEntityAICreeperSwell {
     EntityCreeper swellingCreeper;
 
     @Unique
-    private EntitySpider targetSpider;
+    private EntitySpider gtnl$targetSpider;
     @Unique
-    private final int spiderTargetInterval = MainConfig.spiderTargetInterval;
-    @Unique
-    private long lastSpiderTargetUpdateTick = 0;
-    @Unique
-    private final int spiderFindRadius = MainConfig.spiderFindRadius;
+    private long gtnl$lastSpiderTargetUpdateTick = 0;
 
     @Unique
-    private Utils.TargetInfo cachedBlockTarget = null;
+    private Utils.TargetInfo gtnl$cachedBlockTarget = null;
     @Unique
-    private Utils.TargetInfo cachedPlayerTarget = null;
+    private Utils.TargetInfo gtnl$cachedPlayerTarget = null;
 
     @Unique
-    private long lastBlockTargetUpdateTick = 0;
+    private long gtnl$lastBlockTargetUpdateTick = 0;
     @Unique
-    private long lastPlayerTargetUpdateTick = 0;
+    private long gtnl$lastPlayerTargetUpdateTick = 0;
 
     @Unique
-    private final int blockTargetInterval = MainConfig.blockTargetInterval;
-    @Unique
-    private final int playerTargetInterval = MainConfig.playerTargetInterval;
-    @Unique
-    private final int blockFindRadius = MainConfig.blockFindRadius;
-    @Unique
-    private final int playerFindRadius = MainConfig.playerFindRadius;
-    @Unique
-    private final int explosionPower = MainConfig.explosionPower;
-    @Unique
-    private final double moveSpeed = MainConfig.moveSpeed;
-    @Unique
-    private final double explosionTriggerRange = MainConfig.explosionTriggerRange;
-
-    @Unique
-    public Utils.TargetInfo findNearestTarget() {
+    public Utils.TargetInfo gtnl$findNearestTarget() {
         long currentTick = this.swellingCreeper.worldObj.getTotalWorldTime();
 
-        if (currentTick - lastBlockTargetUpdateTick >= blockTargetInterval) {
-            cachedBlockTarget = findNearestTargetBlock();
-            lastBlockTargetUpdateTick = currentTick;
+        if (currentTick - gtnl$lastBlockTargetUpdateTick >= MainConfig.blockTargetInterval) {
+            gtnl$cachedBlockTarget = gtnl$findNearestTargetBlock();
+            gtnl$lastBlockTargetUpdateTick = currentTick;
         }
 
-        if (currentTick - lastPlayerTargetUpdateTick >= playerTargetInterval) {
-            cachedPlayerTarget = findNearestTargetPlayer();
-            lastPlayerTargetUpdateTick = currentTick;
+        if (currentTick - gtnl$lastPlayerTargetUpdateTick >= MainConfig.playerTargetInterval) {
+            gtnl$cachedPlayerTarget = gtnl$findNearestTargetPlayer();
+            gtnl$lastPlayerTargetUpdateTick = currentTick;
         }
 
-        if (cachedBlockTarget == null) return cachedPlayerTarget;
-        if (cachedPlayerTarget == null) return cachedBlockTarget;
+        if (gtnl$cachedBlockTarget == null) return gtnl$cachedPlayerTarget;
+        if (gtnl$cachedPlayerTarget == null) return gtnl$cachedBlockTarget;
 
-        return cachedBlockTarget.distance < cachedPlayerTarget.distance ? cachedBlockTarget : cachedPlayerTarget;
+        return gtnl$cachedBlockTarget.distance < gtnl$cachedPlayerTarget.distance ? gtnl$cachedBlockTarget
+            : gtnl$cachedPlayerTarget;
     }
 
     @Unique
-    private Utils.TargetInfo findNearestTargetBlock() {
+    private Utils.TargetInfo gtnl$findNearestTargetBlock() {
         double minDistance = Double.MAX_VALUE;
         Utils.TargetInfo closestTarget = null;
 
-        int radius = blockFindRadius;
+        int radius = MainConfig.blockFindRadius;
 
         for (int x = MathHelper.floor_double(this.swellingCreeper.posX) - radius; x
             <= MathHelper.floor_double(this.swellingCreeper.posX) + radius; ++x) {
@@ -111,11 +93,11 @@ public abstract class MixinEntityAICreeperSwell {
     }
 
     @Unique
-    private Utils.TargetInfo findNearestTargetPlayer() {
+    private Utils.TargetInfo gtnl$findNearestTargetPlayer() {
         double minDistance = Double.MAX_VALUE;
         Utils.TargetInfo closestTarget = null;
 
-        int radius = playerFindRadius;
+        int radius = MainConfig.playerFindRadius;
 
         List<EntityPlayer> players = this.swellingCreeper.worldObj
             .getEntitiesWithinAABB(EntityPlayer.class, this.swellingCreeper.boundingBox.expand(radius, radius, radius));
@@ -134,11 +116,11 @@ public abstract class MixinEntityAICreeperSwell {
     }
 
     @Unique
-    public boolean executeSpider() {
+    public boolean gtnl$executeSpider() {
         long currentTick = this.swellingCreeper.worldObj.getTotalWorldTime();
 
-        if (currentTick - lastSpiderTargetUpdateTick >= spiderTargetInterval) {
-            lastSpiderTargetUpdateTick = currentTick;
+        if (currentTick - gtnl$lastSpiderTargetUpdateTick >= MainConfig.spiderTargetInterval) {
+            gtnl$lastSpiderTargetUpdateTick = currentTick;
 
             if (this.swellingCreeper.ridingEntity != null || this.swellingCreeper.isRiding()) {
                 return false;
@@ -146,10 +128,11 @@ public abstract class MixinEntityAICreeperSwell {
 
             List<EntitySpider> nearbySpiders = this.swellingCreeper.worldObj.getEntitiesWithinAABB(
                 EntitySpider.class,
-                this.swellingCreeper.boundingBox.expand(spiderFindRadius, spiderFindRadius, spiderFindRadius));
+                this.swellingCreeper.boundingBox
+                    .expand(MainConfig.spiderFindRadius, MainConfig.spiderFindRadius, MainConfig.spiderFindRadius));
 
             EntitySpider closestSpider = null;
-            double closestDistance = spiderFindRadius;
+            double closestDistance = MainConfig.spiderFindRadius;
 
             for (EntitySpider spider : nearbySpiders) {
                 if (spider.isEntityAlive() && spider.riddenByEntity == null) {
@@ -162,7 +145,7 @@ public abstract class MixinEntityAICreeperSwell {
             }
 
             if (closestSpider != null) {
-                this.targetSpider = closestSpider;
+                this.gtnl$targetSpider = closestSpider;
                 return true;
             }
         }
@@ -172,20 +155,20 @@ public abstract class MixinEntityAICreeperSwell {
 
     @Inject(method = "shouldExecute", at = @At("HEAD"), cancellable = true)
     public void shouldExecute(CallbackInfoReturnable<Boolean> cir) {
-        Utils.TargetInfo customTarget = findNearestTarget();
-        if (MainConfig.enableCreeperFindSpider) executeSpider();
+        Utils.TargetInfo customTarget = gtnl$findNearestTarget();
+        if (MainConfig.enableCreeperFindSpider) gtnl$executeSpider();
         double customTargetDistance = 0;
         double spiderDistance = 0;
 
         if (customTarget != null) {
             customTargetDistance = customTarget.distance;
         }
-        if (this.targetSpider != null) {
-            spiderDistance = this.swellingCreeper.getDistanceToEntity(this.targetSpider);
+        if (this.gtnl$targetSpider != null) {
+            spiderDistance = this.swellingCreeper.getDistanceToEntity(this.gtnl$targetSpider);
         }
 
         if (this.swellingCreeper.getCreeperState() < 0) {
-            if (spiderDistance < spiderFindRadius || customTargetDistance < blockFindRadius) {
+            if (spiderDistance < MainConfig.spiderFindRadius || customTargetDistance < MainConfig.blockFindRadius) {
                 cir.setReturnValue(true);
             }
         } else {
@@ -194,36 +177,36 @@ public abstract class MixinEntityAICreeperSwell {
         cir.cancel();
     }
 
-    @Inject(method = "resetTask", at = @At("HEAD"), cancellable = true)
+    @Inject(method = "resetTask", at = @At("HEAD"))
     public void resetTask(CallbackInfo ci) {
-        this.targetSpider = null;
+        this.gtnl$targetSpider = null;
     }
 
     @Inject(method = "updateTask", at = @At("HEAD"), cancellable = true)
     public void updateTask(CallbackInfo ci) {
-        Utils.TargetInfo customTarget = findNearestTarget();
+        Utils.TargetInfo customTarget = gtnl$findNearestTarget();
         double customTargetDistance = Double.MAX_VALUE;
         double spiderDistance = 0;
 
         if (customTarget != null) {
             customTargetDistance = customTarget.distance;
         }
-        if (this.targetSpider != null) {
-            spiderDistance = this.swellingCreeper.getDistanceToEntity(this.targetSpider);
+        if (this.gtnl$targetSpider != null) {
+            spiderDistance = this.swellingCreeper.getDistanceToEntity(this.gtnl$targetSpider);
         }
 
-        if (MainConfig.enableCreeperFindSpider && this.targetSpider != null
+        if (MainConfig.enableCreeperFindSpider && this.gtnl$targetSpider != null
             && spiderDistance < customTargetDistance
             && this.swellingCreeper.ridingEntity == null
             && !this.swellingCreeper.isRiding()) {
             if (spiderDistance < 2.0D) {
-                this.swellingCreeper.mountEntity(this.targetSpider);
+                this.swellingCreeper.mountEntity(this.gtnl$targetSpider);
             }
             this.swellingCreeper.getNavigator()
-                .tryMoveToEntityLiving(this.targetSpider, 1.0D);
+                .tryMoveToEntityLiving(this.gtnl$targetSpider, 1.0D);
             return;
         } else {
-            this.targetSpider = null;
+            this.gtnl$targetSpider = null;
         }
 
         if (customTarget == null) {
@@ -233,10 +216,10 @@ public abstract class MixinEntityAICreeperSwell {
             double targetY = customTarget.y + 0.5;
             double targetZ = customTarget.z + 0.5;
 
-            if (customTargetDistance <= explosionTriggerRange) {
+            if (customTargetDistance <= MainConfig.explosionTriggerRange) {
                 if (this.swellingCreeper.getCreeperState() < 1) {
                     this.swellingCreeper.setCreeperState(1);
-                    ((AccessorEntityCreeper) this.swellingCreeper).setExplosionRadius(explosionPower);
+                    ((AccessorEntityCreeper) this.swellingCreeper).setExplosionRadius(MainConfig.explosionPower);
                 }
                 this.swellingCreeper.getNavigator()
                     .clearPathEntity();
@@ -248,14 +231,18 @@ public abstract class MixinEntityAICreeperSwell {
                             targetX,
                             targetY,
                             targetZ,
-                            Math.max(2, moveSpeed + (MainConfig.creeperSpeedBonusScale / customTarget.distance)));
+                            Math.max(
+                                2,
+                                MainConfig.moveSpeed + (MainConfig.creeperSpeedBonusScale / customTarget.distance)));
                 } else {
                     this.swellingCreeper.getNavigator()
                         .tryMoveToXYZ(
                             targetX,
                             targetY,
                             targetZ,
-                            Math.max(2, moveSpeed + (MainConfig.creeperSpeedBonusScale / customTarget.distance)));
+                            Math.max(
+                                2,
+                                MainConfig.moveSpeed + (MainConfig.creeperSpeedBonusScale / customTarget.distance)));
                 }
 
                 boolean canSeeTarget = true;

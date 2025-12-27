@@ -18,7 +18,7 @@ import net.minecraft.world.GameRules;
 
 import com.science.gtnl.api.TickrateAPI;
 import com.science.gtnl.asm.GTNLEarlyCoreMod;
-import com.science.gtnl.common.item.TimeStopManager;
+import com.science.gtnl.common.item.items.TimeStopPocketWatch;
 import com.science.gtnl.config.MainConfig;
 
 /**
@@ -249,11 +249,11 @@ public class CommandTickrate extends CommandBase {
             chat(sender, c("Map tickrate successfully changed to", 'a'), c(" " + ticksPerSecond, 'f'), c(".", 'a'));
             return;
         } else if (args[0].equalsIgnoreCase("freeze")) {
-            if (TimeStopManager.isTimeStopped()) {
-                TimeStopManager.setTimeStopped(false);
+            if (TimeStopPocketWatch.isTimeStopped()) {
+                TimeStopPocketWatch.setTimeStopped(false);
                 sender.addChatMessage(new ChatComponentText("Tickrate Unfreeze!"));
             } else {
-                TimeStopManager.setTimeStopped(true);
+                TimeStopPocketWatch.setTimeStopped(true);
                 sender.addChatMessage(new ChatComponentText("Tickrate Freeze!"));
             }
             return;
