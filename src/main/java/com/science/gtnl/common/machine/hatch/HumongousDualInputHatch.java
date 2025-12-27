@@ -292,7 +292,7 @@ public class HumongousDualInputHatch extends DualInputHatch implements ISkipStac
         }
 
         builder.widget(new ButtonWidget().setOnClick((clickData, widget) -> {
-            if (clickData.mouseButton == 0) {
+            if (clickData.mouseButton == 0 && !widget.isClient()) {
                 refundAll();
             }
         })
