@@ -1802,7 +1802,7 @@ public class AssemblingLineRecipes implements IRecipePool {
             new Object[] { GTModHandler.getModItem(AppliedEnergistics2.ID, "tile.BlockDrive", 64),
                 GTModHandler.getModItem(AppliedEnergistics2.ID, "tile.BlockCreativeEnergyController", 16),
                 GTNLItemList.QuantumComputerCore.get(16), ItemList.Quantum_Chest_EV.get(64),
-                ItemList.Quantum_Chest_EV.get(64), ItemList.Field_Generator_UV.get(32),
+                ItemList.Quantum_Tank_EV.get(64), ItemList.Field_Generator_UV.get(32),
                 new Object[] { OrePrefixes.circuit.get(Materials.UHV), 48L },
                 GTModHandler.getModItem(AppliedEnergistics2.ID, "item.ItemMultiMaterial", 64, 47),
                 GTModHandler.getModItem(AppliedEnergistics2.ID, "item.ItemMultiMaterial", 64, 60),
