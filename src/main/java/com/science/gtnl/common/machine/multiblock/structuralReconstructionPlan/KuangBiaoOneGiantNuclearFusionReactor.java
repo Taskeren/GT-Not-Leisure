@@ -253,13 +253,6 @@ public abstract class KuangBiaoOneGiantNuclearFusionReactor
     }
 
     @Override
-    public boolean onRunningTick(ItemStack aStack) {
-        prevRotation = rotation;
-        rotation = (rotation + ROTATION_SPEED) % 360f;
-        return super.onRunningTick(aStack);
-    }
-
-    @Override
     public void onFirstTick(IGregTechTileEntity aBaseMetaTileEntity) {
         super.onFirstTick(aBaseMetaTileEntity);
         getBaseMetaTileEntity().sendBlockEvent(GregTechTileClientEvents.CHANGE_CUSTOM_DATA, getUpdateData());
@@ -267,6 +260,8 @@ public abstract class KuangBiaoOneGiantNuclearFusionReactor
 
     @Override
     public void onPostTick(IGregTechTileEntity aBaseMetaTileEntity, long aTick) {
+        prevRotation = rotation;
+        rotation = (rotation + ROTATION_SPEED) % 360f;
         if (aBaseMetaTileEntity.isServerSide()) {
             mTotalRunTime++;
             if (mEfficiency < 0) mEfficiency = 0;
@@ -927,11 +922,7 @@ public abstract class KuangBiaoOneGiantNuclearFusionReactor
                     }
                     return super.createOverclockCalculator(recipe).setExtraDurationModifier(mConfigSpeedBoost)
                         .setAmperageOC(!wirelessMode)
-                        .setDurationDecreasePerOC(4)
-                        .setEUtIncreasePerOC(4)
-                        .setAmperage(availableAmperage)
-                        .setRecipeEUt(recipe.mEUt)
-                        .setEUt(availableVoltage)
+                        .setPerfectOC(getPerfectOC())
                         .setEUtDiscount(0.4 - (mParallelTier / 50.0))
                         .setDurationModifier(1.0 / 10.0 * Math.pow(0.75, mParallelTier));
                 }

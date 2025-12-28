@@ -71,7 +71,7 @@ import cpw.mods.fml.relauncher.SideOnly;
 
 public class ItemInfinityCell extends ItemCreativeStorageCell implements IStorageFluidCell {
 
-    public static final long StorageSIZE = 1L << 53 - 1;
+    public static final long StorageSIZE = Long.MAX_VALUE / 2;
     public static final Map<String, IIcon> ICON_MAP = new HashMap<>();
     public static final Set<String> REGISTERED_TEXTURES = new HashSet<>();
     public static final List<ItemStack> REGISTERED_CELLS = new ArrayList<>();
