@@ -118,7 +118,6 @@ public class MassFabricator extends GTMMultiMachineBase<MassFabricator> implemen
                 buildHatchAdder(MassFabricator.class).casingIndex(getCasingTextureID())
                     .dot(1)
                     .atLeast(
-                        Maintenance,
                         InputHatch,
                         OutputHatch,
                         InputBus,
