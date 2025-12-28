@@ -962,7 +962,7 @@ public class AssemblingLineRecipes implements IRecipePool {
                 GTOreDictUnificator.get(OrePrefixes.nanite, Materials.Carbon, 8), ItemList.Field_Generator_ZPM.get(8),
                 ItemList.Electric_Pump_ZPM.get(16), ItemList.Emitter_ZPM.get(16),
                 GTOreDictUnificator.get(OrePrefixes.foil, Materials.Europium, 48) },
-            new FluidStack[] { Materials.Grade4PurifiedWater.getFluid(64000),
+            new FluidStack[] { Materials.Grade4PurifiedWater.getFluid(16000),
                 MaterialPool.Polyetheretherketone.getMolten(4608), MaterialsAlloy.INDALLOY_140.getFluidStack(16000) },
             GTNLItemList.ShallowChemicalCoupling.get(1),
             2400,

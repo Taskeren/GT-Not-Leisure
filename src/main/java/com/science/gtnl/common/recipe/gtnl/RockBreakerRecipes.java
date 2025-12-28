@@ -87,5 +87,12 @@ public class RockBreakerRecipes implements IRecipePool {
             .duration(16 * TICKS)
             .eut(TierEU.RECIPE_EV)
             .addTo(RBR);
+
+        RecipeBuilder.builder()
+            .itemInputs(GTUtility.getIntegratedCircuit(8), new ItemStack(Blocks.end_stone, 0))
+            .itemOutputs(new ItemStack(Blocks.end_stone, 1))
+            .duration(16 * TICKS)
+            .eut(TierEU.RECIPE_MV)
+            .addTo(RBR);
     }
 }
