@@ -32,10 +32,10 @@ public class ShallowChemicalCouplingRecipes implements IRecipePool {
             .itemInputs(
                 GTOreDictUnificator.get(OrePrefixes.nanite, Materials.Carbon, 0),
                 GTUtility.getIntegratedCircuit(1),
-                GTUtility.copyAmountUnsafe(72, GTOreDictUnificator.get(OrePrefixes.dust, Materials.Carbon, 0)),
                 Materials.Potassiumdichromate.getDust(0),
-                Materials.Copper.getDust(1),
-                Materials.Zinc.getDust(9))
+                Materials.Copper.getDust(0),
+                Materials.Zinc.getDust(0),
+                GTUtility.copyAmountUnsafe(72, GTOreDictUnificator.get(OrePrefixes.dust, Materials.Carbon, 1)))
             .fluidInputs(
                 Materials.Oxygen.getGas(54000),
                 Materials.Hydrogen.getGas(144000),
@@ -230,7 +230,7 @@ public class ShallowChemicalCouplingRecipes implements IRecipePool {
                 Materials.Hydrogen.getGas(120000))
             .fluidOutputs(MaterialPool.Polyimide.getMolten(1440))
             .metadata(COIL_HEAT, 10800)
-            .duration(20)
+            .duration(400)
             .eut(TierEU.RECIPE_UV)
             .addTo(SCCR);
 
@@ -242,11 +242,11 @@ public class ShallowChemicalCouplingRecipes implements IRecipePool {
                 GTNLItemList.ZnFeAlClCatalyst.get(0),
                 GTNLItemList.BlackLight.get(0),
                 MaterialPool.CoAcAbCatalyst.get(OrePrefixes.dust, 0),
-                GTOreDictUnificator.get(OrePrefixes.dust, Materials.Carbon, 45))
-            .fluidInputs(Materials.Oxygen.getGas(54000), Materials.Hydrogen.getGas(216000))
-            .fluidOutputs(MaterialPool.Polyetheretherketone.getMolten(2592))
+                GTUtility.copyAmountUnsafe(400, GTOreDictUnificator.get(OrePrefixes.dust, Materials.Carbon, 1)))
+            .fluidInputs(Materials.Oxygen.getGas(60000), Materials.Hydrogen.getGas(240000))
+            .fluidOutputs(MaterialPool.Polyetheretherketone.getMolten(2880))
             .metadata(COIL_HEAT, 11700)
-            .duration(200)
+            .duration(600)
             .eut(TierEU.RECIPE_UHV)
             .addTo(SCCR);
 
