@@ -265,6 +265,19 @@ public class ShallowChemicalCouplingRecipes implements IRecipePool {
             .eut(TierEU.RECIPE_UV)
             .addTo(SCCR);
 
+        RecipeBuilder.builder()
+            .itemInputs(
+                GTOreDictUnificator.get(OrePrefixes.nanite, Materials.Carbon, 0),
+                GTUtility.getIntegratedCircuit(12),
+                GTOreDictUnificator.get(OrePrefixes.dust, Materials.Carbon, 45),
+                GTOreDictUnificator.get(OrePrefixes.dust, Materials.Sulfur, 13))
+            .fluidInputs(Materials.Hydrogen.getGas(72000))
+            .fluidOutputs(Materials.Rubber.getMolten(16848))
+            .metadata(COIL_HEAT, 4500)
+            .duration(200)
+            .eut(TierEU.RECIPE_HV)
+            .addTo(SCCR);
+
         if (Forestry.isModLoaded()) loadCombsRecipes();
     }
 
@@ -275,7 +288,6 @@ public class ShallowChemicalCouplingRecipes implements IRecipePool {
                 GTOreDictUnificator.get(OrePrefixes.dust, Materials.Lignite, 12L),
                 GTOreDictUnificator.get(OrePrefixes.dust, Materials.Lignite, 4L))
             .outputChances(10000, 7500)
-            .specialValue(3500)
             .metadata(COIL_HEAT, 3500)
             .duration(2 * SECONDS + 10 * TICKS)
             .eut(TierEU.RECIPE_MV)
@@ -287,7 +299,6 @@ public class ShallowChemicalCouplingRecipes implements IRecipePool {
                 GTOreDictUnificator.get(OrePrefixes.dust, Materials.Coal, 12L),
                 GTOreDictUnificator.get(OrePrefixes.dust, Materials.Coal, 4L))
             .outputChances(10000, 7500)
-            .specialValue(3500)
             .metadata(COIL_HEAT, 3500)
             .duration(2 * SECONDS + 10 * TICKS)
             .eut(TierEU.RECIPE_MV)
@@ -299,7 +310,6 @@ public class ShallowChemicalCouplingRecipes implements IRecipePool {
                 GTOreDictUnificator.get(OrePrefixes.dust, Materials.Oilsands, 12L),
                 GTOreDictUnificator.get(OrePrefixes.dust, Materials.Oilsands, 4L))
             .outputChances(10000, 7500)
-            .specialValue(3500)
             .metadata(COIL_HEAT, 3500)
             .duration(2 * SECONDS + 10 * TICKS)
             .eut(TierEU.RECIPE_MV)
@@ -311,7 +321,6 @@ public class ShallowChemicalCouplingRecipes implements IRecipePool {
                 GTOreDictUnificator.get(OrePrefixes.dust, Materials.Apatite, 12L),
                 GTOreDictUnificator.get(OrePrefixes.dust, Materials.Apatite, 4L))
             .outputChances(10000, 7500)
-            .specialValue(3500)
             .metadata(COIL_HEAT, 3500)
             .duration(2 * SECONDS + 10 * TICKS)
             .eut(TierEU.RECIPE_MV)
@@ -323,7 +332,6 @@ public class ShallowChemicalCouplingRecipes implements IRecipePool {
                 GTOreDictUnificator.get(OrePrefixes.dust, Materials.Amber, 12L),
                 GTOreDictUnificator.get(OrePrefixes.dust, Materials.Amber, 4L))
             .outputChances(10000, 7500)
-            .specialValue(3500)
             .metadata(COIL_HEAT, 3500)
             .duration(2 * SECONDS + 10 * TICKS)
             .eut(TierEU.RECIPE_MV)
@@ -335,7 +343,6 @@ public class ShallowChemicalCouplingRecipes implements IRecipePool {
                 GTOreDictUnificator.get(OrePrefixes.dust, Materials.Cinnabar, 12L),
                 GTOreDictUnificator.get(OrePrefixes.dust, Materials.Cinnabar, 4L))
             .outputChances(10000, 7500)
-            .specialValue(3500)
             .metadata(COIL_HEAT, 3500)
             .duration(2 * SECONDS + 10 * TICKS)
             .eut(TierEU.RECIPE_MV)
@@ -347,7 +354,6 @@ public class ShallowChemicalCouplingRecipes implements IRecipePool {
                 GTOreDictUnificator.get(OrePrefixes.dust, Materials.Soapstone, 12L),
                 GTOreDictUnificator.get(OrePrefixes.dust, Materials.Soapstone, 4L))
             .outputChances(10000, 7500)
-            .specialValue(3500)
             .metadata(COIL_HEAT, 3500)
             .duration(2 * SECONDS + 10 * TICKS)
             .eut(TierEU.RECIPE_MV)
@@ -359,7 +365,6 @@ public class ShallowChemicalCouplingRecipes implements IRecipePool {
                 GTOreDictUnificator.get(OrePrefixes.dust, Materials.CertusQuartz, 12L),
                 GTOreDictUnificator.get(OrePrefixes.dust, Materials.CertusQuartzCharged, 4L))
             .outputChances(10000, 7500)
-            .specialValue(3500)
             .metadata(COIL_HEAT, 3500)
             .duration(2 * SECONDS + 10 * TICKS)
             .eut(TierEU.RECIPE_MV)
@@ -371,7 +376,6 @@ public class ShallowChemicalCouplingRecipes implements IRecipePool {
                 GTOreDictUnificator.get(OrePrefixes.dust, Materials.Redstone, 12L),
                 GTOreDictUnificator.get(OrePrefixes.dust, Materials.Redstone, 4L))
             .outputChances(10000, 7500)
-            .specialValue(3500)
             .metadata(COIL_HEAT, 3500)
             .duration(2 * SECONDS + 10 * TICKS)
             .eut(TierEU.RECIPE_MV)
@@ -383,7 +387,6 @@ public class ShallowChemicalCouplingRecipes implements IRecipePool {
                 GTOreDictUnificator.get(OrePrefixes.dust, Materials.Lapis, 12L),
                 GTOreDictUnificator.get(OrePrefixes.dust, Materials.Lapis, 4L))
             .outputChances(10000, 7500)
-            .specialValue(3500)
             .metadata(COIL_HEAT, 3500)
             .duration(2 * SECONDS + 10 * TICKS)
             .eut(TierEU.RECIPE_MV)
@@ -395,7 +398,6 @@ public class ShallowChemicalCouplingRecipes implements IRecipePool {
                 GTOreDictUnificator.get(OrePrefixes.dust, Materials.Ruby, 12L),
                 GTOreDictUnificator.get(OrePrefixes.dust, Materials.Ruby, 4L))
             .outputChances(10000, 7500)
-            .specialValue(3500)
             .metadata(COIL_HEAT, 3500)
             .duration(2 * SECONDS + 10 * TICKS)
             .eut(TierEU.RECIPE_MV)
@@ -407,7 +409,6 @@ public class ShallowChemicalCouplingRecipes implements IRecipePool {
                 GTOreDictUnificator.get(OrePrefixes.dust, Materials.GarnetRed, 12L),
                 GTOreDictUnificator.get(OrePrefixes.dust, Materials.GarnetRed, 4L))
             .outputChances(10000, 7500)
-            .specialValue(3500)
             .metadata(COIL_HEAT, 3500)
             .duration(2 * SECONDS + 10 * TICKS)
             .eut(TierEU.RECIPE_MV)
@@ -419,7 +420,6 @@ public class ShallowChemicalCouplingRecipes implements IRecipePool {
                 GTOreDictUnificator.get(OrePrefixes.dust, Materials.GarnetYellow, 12L),
                 GTOreDictUnificator.get(OrePrefixes.dust, Materials.GarnetYellow, 4L))
             .outputChances(10000, 7500)
-            .specialValue(3500)
             .metadata(COIL_HEAT, 3500)
             .duration(2 * SECONDS + 10 * TICKS)
             .eut(TierEU.RECIPE_MV)
@@ -431,7 +431,6 @@ public class ShallowChemicalCouplingRecipes implements IRecipePool {
                 GTOreDictUnificator.get(OrePrefixes.dust, Materials.Sapphire, 12L),
                 GTOreDictUnificator.get(OrePrefixes.dust, Materials.Sapphire, 4L))
             .outputChances(10000, 7500)
-            .specialValue(3500)
             .metadata(COIL_HEAT, 3500)
             .duration(2 * SECONDS + 10 * TICKS)
             .eut(TierEU.RECIPE_MV)
@@ -443,7 +442,6 @@ public class ShallowChemicalCouplingRecipes implements IRecipePool {
                 GTOreDictUnificator.get(OrePrefixes.dust, Materials.Diamond, 12L),
                 GTOreDictUnificator.get(OrePrefixes.dust, Materials.Diamond, 4L))
             .outputChances(10000, 7500)
-            .specialValue(3500)
             .metadata(COIL_HEAT, 3500)
             .duration(2 * SECONDS + 10 * TICKS)
             .eut(TierEU.RECIPE_MV)
@@ -455,7 +453,6 @@ public class ShallowChemicalCouplingRecipes implements IRecipePool {
                 GTOreDictUnificator.get(OrePrefixes.dust, Materials.Olivine, 12L),
                 GTOreDictUnificator.get(OrePrefixes.dust, Materials.Olivine, 4L))
             .outputChances(10000, 7500)
-            .specialValue(3500)
             .metadata(COIL_HEAT, 3500)
             .duration(2 * SECONDS + 10 * TICKS)
             .eut(TierEU.RECIPE_MV)
@@ -467,7 +464,6 @@ public class ShallowChemicalCouplingRecipes implements IRecipePool {
                 GTOreDictUnificator.get(OrePrefixes.dust, Materials.Emerald, 12L),
                 GTOreDictUnificator.get(OrePrefixes.dust, Materials.Emerald, 4L))
             .outputChances(10000, 7500)
-            .specialValue(3500)
             .metadata(COIL_HEAT, 3500)
             .duration(2 * SECONDS + 10 * TICKS)
             .eut(TierEU.RECIPE_MV)
@@ -479,7 +475,6 @@ public class ShallowChemicalCouplingRecipes implements IRecipePool {
                 GTOreDictUnificator.get(OrePrefixes.dust, Materials.Firestone, 12L),
                 GTOreDictUnificator.get(OrePrefixes.dust, Materials.Firestone, 4L))
             .outputChances(10000, 7500)
-            .specialValue(3500)
             .metadata(COIL_HEAT, 3500)
             .duration(2 * SECONDS + 10 * TICKS)
             .eut(TierEU.RECIPE_MV)
@@ -491,7 +486,6 @@ public class ShallowChemicalCouplingRecipes implements IRecipePool {
                 GTOreDictUnificator.get(OrePrefixes.dust, Materials.Pyrope, 12L),
                 GTOreDictUnificator.get(OrePrefixes.dust, Materials.Pyrope, 4L))
             .outputChances(10000, 7500)
-            .specialValue(3500)
             .metadata(COIL_HEAT, 3500)
             .duration(2 * SECONDS + 10 * TICKS)
             .eut(TierEU.RECIPE_MV)
@@ -503,7 +497,6 @@ public class ShallowChemicalCouplingRecipes implements IRecipePool {
                 GTOreDictUnificator.get(OrePrefixes.dust, Materials.Grossular, 12L),
                 GTOreDictUnificator.get(OrePrefixes.dust, Materials.Grossular, 4L))
             .outputChances(10000, 7500)
-            .specialValue(3500)
             .metadata(COIL_HEAT, 3500)
             .duration(2 * SECONDS + 10 * TICKS)
             .eut(TierEU.RECIPE_MV)
@@ -515,7 +508,6 @@ public class ShallowChemicalCouplingRecipes implements IRecipePool {
                 GTOreDictUnificator.get(OrePrefixes.dust, Materials.Copper, 12L),
                 GTOreDictUnificator.get(OrePrefixes.dust, Materials.Copper, 4L))
             .outputChances(10000, 7500)
-            .specialValue(3500)
             .metadata(COIL_HEAT, 3500)
             .duration(2 * SECONDS + 10 * TICKS)
             .eut(TierEU.RECIPE_MV)
@@ -527,7 +519,6 @@ public class ShallowChemicalCouplingRecipes implements IRecipePool {
                 GTOreDictUnificator.get(OrePrefixes.dust, Materials.Tin, 12L),
                 GTOreDictUnificator.get(OrePrefixes.dust, Materials.Tin, 4L))
             .outputChances(10000, 7500)
-            .specialValue(3500)
             .metadata(COIL_HEAT, 3500)
             .duration(2 * SECONDS + 10 * TICKS)
             .eut(TierEU.RECIPE_MV)
@@ -539,7 +530,6 @@ public class ShallowChemicalCouplingRecipes implements IRecipePool {
                 GTOreDictUnificator.get(OrePrefixes.dust, Materials.Lead, 12L),
                 GTOreDictUnificator.get(OrePrefixes.dust, Materials.Lead, 4L))
             .outputChances(10000, 7500)
-            .specialValue(3500)
             .metadata(COIL_HEAT, 3500)
             .duration(2 * SECONDS + 10 * TICKS)
             .eut(TierEU.RECIPE_MV)
@@ -551,7 +541,6 @@ public class ShallowChemicalCouplingRecipes implements IRecipePool {
                 GTOreDictUnificator.get(OrePrefixes.dust, Materials.Nickel, 12L),
                 GTOreDictUnificator.get(OrePrefixes.dust, Materials.Nickel, 4L))
             .outputChances(10000, 7500)
-            .specialValue(3500)
             .metadata(COIL_HEAT, 3500)
             .duration(2 * SECONDS + 10 * TICKS)
             .eut(TierEU.RECIPE_MV)
@@ -563,7 +552,6 @@ public class ShallowChemicalCouplingRecipes implements IRecipePool {
                 GTOreDictUnificator.get(OrePrefixes.dust, Materials.Zinc, 12L),
                 GTOreDictUnificator.get(OrePrefixes.dust, Materials.Zinc, 4L))
             .outputChances(10000, 7500)
-            .specialValue(3500)
             .metadata(COIL_HEAT, 3500)
             .duration(2 * SECONDS + 10 * TICKS)
             .eut(TierEU.RECIPE_MV)
@@ -575,7 +563,6 @@ public class ShallowChemicalCouplingRecipes implements IRecipePool {
                 GTOreDictUnificator.get(OrePrefixes.dust, Materials.Silver, 12L),
                 GTOreDictUnificator.get(OrePrefixes.dust, Materials.Silver, 4L))
             .outputChances(10000, 7500)
-            .specialValue(3500)
             .metadata(COIL_HEAT, 3500)
             .duration(2 * SECONDS + 10 * TICKS)
             .eut(TierEU.RECIPE_MV)
@@ -587,7 +574,6 @@ public class ShallowChemicalCouplingRecipes implements IRecipePool {
                 GTOreDictUnificator.get(OrePrefixes.dust, Materials.Cryolite, 12L),
                 GTOreDictUnificator.get(OrePrefixes.dust, Materials.Cryolite, 4L))
             .outputChances(10000, 7500)
-            .specialValue(3500)
             .metadata(COIL_HEAT, 3500)
             .duration(2 * SECONDS + 10 * TICKS)
             .eut(TierEU.RECIPE_MV)
@@ -599,7 +585,6 @@ public class ShallowChemicalCouplingRecipes implements IRecipePool {
                 GTOreDictUnificator.get(OrePrefixes.dust, Materials.Gold, 12L),
                 GTOreDictUnificator.get(OrePrefixes.dust, Materials.Gold, 4L))
             .outputChances(10000, 7500)
-            .specialValue(3500)
             .metadata(COIL_HEAT, 3500)
             .duration(2 * SECONDS + 10 * TICKS)
             .eut(TierEU.RECIPE_MV)
@@ -611,7 +596,6 @@ public class ShallowChemicalCouplingRecipes implements IRecipePool {
                 GTOreDictUnificator.get(OrePrefixes.dust, Materials.Sulfur, 12L),
                 GTOreDictUnificator.get(OrePrefixes.dust, Materials.Sulfur, 4L))
             .outputChances(10000, 7500)
-            .specialValue(3500)
             .metadata(COIL_HEAT, 3500)
             .duration(2 * SECONDS + 10 * TICKS)
             .eut(TierEU.RECIPE_MV)
@@ -623,7 +607,6 @@ public class ShallowChemicalCouplingRecipes implements IRecipePool {
                 GTOreDictUnificator.get(OrePrefixes.dust, Materials.Gallium, 12L),
                 GTOreDictUnificator.get(OrePrefixes.dust, Materials.Gallium, 4L))
             .outputChances(10000, 7500)
-            .specialValue(3500)
             .metadata(COIL_HEAT, 3500)
             .duration(2 * SECONDS + 10 * TICKS)
             .eut(TierEU.RECIPE_MV)
@@ -635,7 +618,6 @@ public class ShallowChemicalCouplingRecipes implements IRecipePool {
                 GTOreDictUnificator.get(OrePrefixes.dust, Materials.Arsenic, 12L),
                 GTOreDictUnificator.get(OrePrefixes.dust, Materials.Arsenic, 4L))
             .outputChances(10000, 7500)
-            .specialValue(3500)
             .metadata(COIL_HEAT, 3500)
             .duration(2 * SECONDS + 10 * TICKS)
             .eut(TierEU.RECIPE_MV)
@@ -647,7 +629,6 @@ public class ShallowChemicalCouplingRecipes implements IRecipePool {
                 GTOreDictUnificator.get(OrePrefixes.dust, Materials.Iron, 12L),
                 GTOreDictUnificator.get(OrePrefixes.dust, Materials.Iron, 4L))
             .outputChances(10000, 7500)
-            .specialValue(3500)
             .metadata(COIL_HEAT, 3500)
             .duration(2 * SECONDS + 10 * TICKS)
             .eut(TierEU.RECIPE_MV)
@@ -659,7 +640,6 @@ public class ShallowChemicalCouplingRecipes implements IRecipePool {
                 GTOreDictUnificator.get(OrePrefixes.dust, Materials.Bauxite, 12L),
                 GTOreDictUnificator.get(OrePrefixes.dust, Materials.Bauxite, 4L))
             .outputChances(10000, 7500)
-            .specialValue(3500)
             .metadata(COIL_HEAT, 3500)
             .duration(2 * SECONDS + 10 * TICKS)
             .eut(TierEU.RECIPE_MV)
@@ -671,7 +651,6 @@ public class ShallowChemicalCouplingRecipes implements IRecipePool {
                 GTOreDictUnificator.get(OrePrefixes.dust, Materials.Aluminium, 12L),
                 GTOreDictUnificator.get(OrePrefixes.dust, Materials.Aluminium, 4L))
             .outputChances(10000, 7500)
-            .specialValue(3500)
             .metadata(COIL_HEAT, 3500)
             .duration(2 * SECONDS + 10 * TICKS)
             .eut(TierEU.RECIPE_MV)
@@ -683,7 +662,6 @@ public class ShallowChemicalCouplingRecipes implements IRecipePool {
                 GTOreDictUnificator.get(OrePrefixes.dust, Materials.Manganese, 12L),
                 GTOreDictUnificator.get(OrePrefixes.dust, Materials.Manganese, 4L))
             .outputChances(10000, 7500)
-            .specialValue(3500)
             .metadata(COIL_HEAT, 3500)
             .duration(2 * SECONDS + 10 * TICKS)
             .eut(TierEU.RECIPE_MV)
@@ -695,7 +673,6 @@ public class ShallowChemicalCouplingRecipes implements IRecipePool {
                 GTOreDictUnificator.get(OrePrefixes.dust, Materials.Magnesium, 12L),
                 GTOreDictUnificator.get(OrePrefixes.dust, Materials.Magnesium, 4L))
             .outputChances(10000, 7500)
-            .specialValue(3500)
             .metadata(COIL_HEAT, 3500)
             .duration(2 * SECONDS + 10 * TICKS)
             .eut(TierEU.RECIPE_MV)
@@ -707,7 +684,6 @@ public class ShallowChemicalCouplingRecipes implements IRecipePool {
                 GTOreDictUnificator.get(OrePrefixes.dust, Materials.Molybdenum, 12L),
                 GTOreDictUnificator.get(OrePrefixes.dust, Materials.Molybdenum, 4L))
             .outputChances(10000, 7500)
-            .specialValue(3500)
             .metadata(COIL_HEAT, 3500)
             .duration(2 * SECONDS + 10 * TICKS)
             .eut(TierEU.RECIPE_MV)
@@ -719,7 +695,6 @@ public class ShallowChemicalCouplingRecipes implements IRecipePool {
                 GTOreDictUnificator.get(OrePrefixes.dust, Materials.Almandine, 12L),
                 GTOreDictUnificator.get(OrePrefixes.dust, Materials.Almandine, 4L))
             .outputChances(10000, 7500)
-            .specialValue(3500)
             .metadata(COIL_HEAT, 3500)
             .duration(2 * SECONDS + 10 * TICKS)
             .eut(TierEU.RECIPE_MV)
@@ -731,7 +706,6 @@ public class ShallowChemicalCouplingRecipes implements IRecipePool {
                 GTOreDictUnificator.get(OrePrefixes.dust, Materials.Neodymium, 12L),
                 GTOreDictUnificator.get(OrePrefixes.dust, Materials.Neodymium, 4L))
             .outputChances(10000, 7500)
-            .specialValue(3602)
             .metadata(COIL_HEAT, 3602)
             .duration(4 * SECONDS + 10 * TICKS)
             .eut(TierEU.RECIPE_HV)
@@ -743,7 +717,6 @@ public class ShallowChemicalCouplingRecipes implements IRecipePool {
                 GTOreDictUnificator.get(OrePrefixes.dust, Materials.Lithium, 12L),
                 GTOreDictUnificator.get(OrePrefixes.dust, Materials.Lithium, 4L))
             .outputChances(10000, 7500)
-            .specialValue(3602)
             .metadata(COIL_HEAT, 3602)
             .duration(4 * SECONDS + 10 * TICKS)
             .eut(TierEU.RECIPE_HV)
@@ -755,7 +728,6 @@ public class ShallowChemicalCouplingRecipes implements IRecipePool {
                 GTOreDictUnificator.get(OrePrefixes.dust, Materials.Electrotine, 12L),
                 GTOreDictUnificator.get(OrePrefixes.dust, Materials.Electrotine, 4L))
             .outputChances(10000, 7500)
-            .specialValue(3602)
             .metadata(COIL_HEAT, 3602)
             .duration(4 * SECONDS + 10 * TICKS)
             .eut(TierEU.RECIPE_HV)
@@ -767,7 +739,6 @@ public class ShallowChemicalCouplingRecipes implements IRecipePool {
                 GTOreDictUnificator.get(OrePrefixes.dust, Materials.Thorium, 12L),
                 GTOreDictUnificator.get(OrePrefixes.dust, Materials.Thorium, 4L))
             .outputChances(10000, 7500)
-            .specialValue(3602)
             .metadata(COIL_HEAT, 3602)
             .duration(4 * SECONDS + 10 * TICKS)
             .eut(TierEU.RECIPE_MV)
@@ -779,7 +750,6 @@ public class ShallowChemicalCouplingRecipes implements IRecipePool {
                 GTOreDictUnificator.get(OrePrefixes.dust, Materials.Mithril, 12L),
                 GTOreDictUnificator.get(OrePrefixes.dust, Materials.Mithril, 4L))
             .outputChances(10000, 7500)
-            .specialValue(3900)
             .metadata(COIL_HEAT, 3900)
             .duration(6 * SECONDS + 10 * TICKS)
             .eut(TierEU.RECIPE_EV)
@@ -791,7 +761,6 @@ public class ShallowChemicalCouplingRecipes implements IRecipePool {
                 GTOreDictUnificator.get(OrePrefixes.dust, Materials.Shadow, 12L),
                 GTOreDictUnificator.get(OrePrefixes.dust, Materials.Shadow, 4L))
             .outputChances(10000, 7500)
-            .specialValue(3900)
             .metadata(COIL_HEAT, 3900)
             .duration(6 * SECONDS + 10 * TICKS)
             .eut(TierEU.RECIPE_EV)
@@ -803,7 +772,6 @@ public class ShallowChemicalCouplingRecipes implements IRecipePool {
                 GTOreDictUnificator.get(OrePrefixes.dust, Materials.Unstable, 12L),
                 GTOreDictUnificator.get(OrePrefixes.dust, Materials.Unstable, 4L))
             .outputChances(10000, 7500)
-            .specialValue(3900)
             .metadata(COIL_HEAT, 3900)
             .duration(6 * SECONDS + 10 * TICKS)
             .eut(TierEU.RECIPE_EV)
@@ -815,7 +783,6 @@ public class ShallowChemicalCouplingRecipes implements IRecipePool {
                 GTOreDictUnificator.get(OrePrefixes.dust, Materials.Chrome, 12L),
                 GTOreDictUnificator.get(OrePrefixes.dust, Materials.Chrome, 4L))
             .outputChances(10000, 7500)
-            .specialValue(3900)
             .metadata(COIL_HEAT, 3900)
             .duration(6 * SECONDS + 10 * TICKS)
             .eut(TierEU.RECIPE_EV)
@@ -827,7 +794,6 @@ public class ShallowChemicalCouplingRecipes implements IRecipePool {
                 GTOreDictUnificator.get(OrePrefixes.dust, Materials.HeeEndium, 12L),
                 GTOreDictUnificator.get(OrePrefixes.dust, Materials.HeeEndium, 4L))
             .outputChances(10000, 7500)
-            .specialValue(3900)
             .metadata(COIL_HEAT, 3900)
             .duration(6 * SECONDS + 10 * TICKS)
             .eut(TierEU.RECIPE_EV)
@@ -839,7 +805,6 @@ public class ShallowChemicalCouplingRecipes implements IRecipePool {
                 GTOreDictUnificator.get(OrePrefixes.dust, Materials.MeteoricIron, 12L),
                 GTOreDictUnificator.get(OrePrefixes.dust, Materials.MeteoricIron, 4L))
             .outputChances(10000, 7500)
-            .specialValue(3900)
             .metadata(COIL_HEAT, 3900)
             .duration(6 * SECONDS + 10 * TICKS)
             .eut(TierEU.RECIPE_EV)
@@ -851,7 +816,6 @@ public class ShallowChemicalCouplingRecipes implements IRecipePool {
                 GTOreDictUnificator.get(OrePrefixes.dust, Materials.Platinum, 4L),
                 GTOreDictUnificator.get(OrePrefixes.dust, Materials.Platinum, 2L))
             .outputChances(10000, 7500)
-            .specialValue(3900)
             .metadata(COIL_HEAT, 3900)
             .duration(6 * SECONDS + 10 * TICKS)
             .eut(TierEU.RECIPE_EV)
@@ -863,7 +827,6 @@ public class ShallowChemicalCouplingRecipes implements IRecipePool {
                 GTOreDictUnificator.get(OrePrefixes.dust, Materials.Bedrockium, 12L),
                 GTOreDictUnificator.get(OrePrefixes.dust, Materials.Bedrockium, 4L))
             .outputChances(10000, 7500)
-            .specialValue(4300)
             .metadata(COIL_HEAT, 4300)
             .duration(7 * SECONDS + 10 * TICKS)
             .eut(TierEU.RECIPE_IV)
@@ -875,7 +838,6 @@ public class ShallowChemicalCouplingRecipes implements IRecipePool {
                 GTOreDictUnificator.get(OrePrefixes.dust, Materials.NetherStar, 12L),
                 GTOreDictUnificator.get(OrePrefixes.dust, Materials.NetherStar, 4L))
             .outputChances(10000, 7500)
-            .specialValue(4300)
             .metadata(COIL_HEAT, 4300)
             .duration(7 * SECONDS + 10 * TICKS)
             .eut(TierEU.RECIPE_IV)
@@ -887,7 +849,6 @@ public class ShallowChemicalCouplingRecipes implements IRecipePool {
                 GTOreDictUnificator.get(OrePrefixes.dust, Materials.Titanium, 12L),
                 GTOreDictUnificator.get(OrePrefixes.dust, Materials.Titanium, 4L))
             .outputChances(10000, 7500)
-            .specialValue(4300)
             .metadata(COIL_HEAT, 4300)
             .duration(7 * SECONDS + 10 * TICKS)
             .eut(TierEU.RECIPE_IV)
@@ -899,7 +860,6 @@ public class ShallowChemicalCouplingRecipes implements IRecipePool {
                 GTOreDictUnificator.get(OrePrefixes.dust, Materials.Uranium, 12L),
                 GTOreDictUnificator.get(OrePrefixes.dust, Materials.Uranium, 4L))
             .outputChances(10000, 7500)
-            .specialValue(4300)
             .metadata(COIL_HEAT, 4300)
             .duration(7 * SECONDS + 10 * TICKS)
             .eut(TierEU.RECIPE_IV)
@@ -911,7 +871,6 @@ public class ShallowChemicalCouplingRecipes implements IRecipePool {
                 GTOreDictUnificator.get(OrePrefixes.dust, Materials.Plutonium, 12L),
                 GTOreDictUnificator.get(OrePrefixes.dust, Materials.Plutonium, 4L))
             .outputChances(10000, 7500)
-            .specialValue(4300)
             .metadata(COIL_HEAT, 4300)
             .duration(7 * SECONDS + 10 * TICKS)
             .eut(TierEU.RECIPE_IV)
@@ -923,7 +882,6 @@ public class ShallowChemicalCouplingRecipes implements IRecipePool {
                 GTOreDictUnificator.get(OrePrefixes.dust, Materials.Desh, 12L),
                 GTOreDictUnificator.get(OrePrefixes.dust, Materials.Desh, 4L))
             .outputChances(10000, 7500)
-            .specialValue(4300)
             .metadata(COIL_HEAT, 4300)
             .duration(7 * SECONDS + 10 * TICKS)
             .eut(TierEU.RECIPE_IV)
@@ -935,7 +893,6 @@ public class ShallowChemicalCouplingRecipes implements IRecipePool {
                 GTOreDictUnificator.get(OrePrefixes.dust, Materials.Ledox, 12L),
                 GTOreDictUnificator.get(OrePrefixes.dust, Materials.Ledox, 4L))
             .outputChances(10000, 7500)
-            .specialValue(4300)
             .metadata(COIL_HEAT, 4300)
             .duration(7 * SECONDS + 10 * TICKS)
             .eut(TierEU.RECIPE_IV)
@@ -947,7 +904,6 @@ public class ShallowChemicalCouplingRecipes implements IRecipePool {
                 GTOreDictUnificator.get(OrePrefixes.dust, Materials.Tungsten, 12L),
                 GTOreDictUnificator.get(OrePrefixes.dust, Materials.Tungsten, 4L))
             .outputChances(10000, 7500)
-            .specialValue(5200)
             .metadata(COIL_HEAT, 5200)
             .duration(7 * SECONDS + 10 * TICKS)
             .eut(TierEU.RECIPE_IV)
@@ -959,7 +915,6 @@ public class ShallowChemicalCouplingRecipes implements IRecipePool {
                 GTOreDictUnificator.get(OrePrefixes.dust, Materials.Palladium, 12L),
                 GTOreDictUnificator.get(OrePrefixes.dust, Materials.Palladium, 4L))
             .outputChances(10000, 7500)
-            .specialValue(5200)
             .metadata(COIL_HEAT, 5200)
             .duration(7 * SECONDS + 10 * TICKS)
             .eut(TierEU.RECIPE_IV)
@@ -971,7 +926,6 @@ public class ShallowChemicalCouplingRecipes implements IRecipePool {
                 GTOreDictUnificator.get(OrePrefixes.dust, Materials.Draconium, 12L),
                 GTOreDictUnificator.get(OrePrefixes.dust, Materials.Draconium, 4L))
             .outputChances(10000, 7500)
-            .specialValue(5200)
             .metadata(COIL_HEAT, 5200)
             .duration(7 * SECONDS + 10 * TICKS)
             .eut(TierEU.RECIPE_IV)
@@ -983,7 +937,6 @@ public class ShallowChemicalCouplingRecipes implements IRecipePool {
                 GTOreDictUnificator.get(OrePrefixes.dust, Materials.Naquadah, 12L),
                 GTOreDictUnificator.get(OrePrefixes.dust, Materials.Naquadah, 4L))
             .outputChances(10000, 7500)
-            .specialValue(5200)
             .metadata(COIL_HEAT, 5200)
             .duration(7 * SECONDS + 10 * TICKS)
             .eut(TierEU.RECIPE_IV)
@@ -995,7 +948,6 @@ public class ShallowChemicalCouplingRecipes implements IRecipePool {
                 GTOreDictUnificator.get(OrePrefixes.dust, Materials.Lutetium, 12L),
                 GTOreDictUnificator.get(OrePrefixes.dust, Materials.Lutetium, 4L))
             .outputChances(10000, 7500)
-            .specialValue(5200)
             .metadata(COIL_HEAT, 5200)
             .duration(7 * SECONDS + 10 * TICKS)
             .eut(TierEU.RECIPE_IV)
@@ -1007,7 +959,6 @@ public class ShallowChemicalCouplingRecipes implements IRecipePool {
                 GTOreDictUnificator.get(OrePrefixes.dust, Materials.CallistoIce, 12L),
                 GTOreDictUnificator.get(OrePrefixes.dust, Materials.CallistoIce, 4L))
             .outputChances(10000, 7500)
-            .specialValue(5200)
             .metadata(COIL_HEAT, 5200)
             .duration(7 * SECONDS + 10 * TICKS)
             .eut(TierEU.RECIPE_IV)
@@ -1019,7 +970,6 @@ public class ShallowChemicalCouplingRecipes implements IRecipePool {
                 GTOreDictUnificator.get(OrePrefixes.dust, Materials.Mytryl, 12L),
                 GTOreDictUnificator.get(OrePrefixes.dust, Materials.Mytryl, 4L))
             .outputChances(10000, 7500)
-            .specialValue(5200)
             .metadata(COIL_HEAT, 5200)
             .duration(7 * SECONDS + 10 * TICKS)
             .eut(TierEU.RECIPE_IV)
@@ -1031,7 +981,6 @@ public class ShallowChemicalCouplingRecipes implements IRecipePool {
                 GTOreDictUnificator.get(OrePrefixes.dust, Materials.Quantium, 12L),
                 GTOreDictUnificator.get(OrePrefixes.dust, Materials.Quantium, 4L))
             .outputChances(10000, 7500)
-            .specialValue(5200)
             .metadata(COIL_HEAT, 5200)
             .duration(7 * SECONDS + 10 * TICKS)
             .eut(TierEU.RECIPE_IV)
@@ -1043,7 +992,6 @@ public class ShallowChemicalCouplingRecipes implements IRecipePool {
                 GTOreDictUnificator.get(OrePrefixes.dust, Materials.Oriharukon, 12L),
                 GTOreDictUnificator.get(OrePrefixes.dust, Materials.Oriharukon, 4L))
             .outputChances(10000, 7500)
-            .specialValue(5200)
             .metadata(COIL_HEAT, 5200)
             .duration(7 * SECONDS + 10 * TICKS)
             .eut(TierEU.RECIPE_IV)
@@ -1055,7 +1003,6 @@ public class ShallowChemicalCouplingRecipes implements IRecipePool {
                 GTOreDictUnificator.get(OrePrefixes.dust, Materials.InfusedGold, 12L),
                 GTOreDictUnificator.get(OrePrefixes.dust, Materials.InfusedGold, 4L))
             .outputChances(10000, 7500)
-            .specialValue(5200)
             .metadata(COIL_HEAT, 5200)
             .duration(7 * SECONDS + 10 * TICKS)
             .eut(TierEU.RECIPE_IV)
@@ -1067,7 +1014,6 @@ public class ShallowChemicalCouplingRecipes implements IRecipePool {
                 GTOreDictUnificator.get(OrePrefixes.dust, Materials.Iridium, 4L),
                 GTOreDictUnificator.get(OrePrefixes.dust, Materials.Iridium, 2L))
             .outputChances(10000, 7500)
-            .specialValue(5200)
             .metadata(COIL_HEAT, 5200)
             .duration(7 * SECONDS + 10 * TICKS)
             .eut(TierEU.RECIPE_IV)
@@ -1079,7 +1025,6 @@ public class ShallowChemicalCouplingRecipes implements IRecipePool {
                 GTOreDictUnificator.get(OrePrefixes.dust, Materials.Osmium, 4L),
                 GTOreDictUnificator.get(OrePrefixes.dust, Materials.Osmium, 2L))
             .outputChances(10000, 7500)
-            .specialValue(5200)
             .metadata(COIL_HEAT, 5200)
             .duration(7 * SECONDS + 10 * TICKS)
             .eut(TierEU.RECIPE_IV)
@@ -1091,7 +1036,6 @@ public class ShallowChemicalCouplingRecipes implements IRecipePool {
                 GTOreDictUnificator.get(OrePrefixes.dust, Materials.Indium, 12L),
                 GTOreDictUnificator.get(OrePrefixes.dust, Materials.Indium, 4L))
             .outputChances(10000, 7500)
-            .specialValue(5200)
             .metadata(COIL_HEAT, 5200)
             .duration(7 * SECONDS + 10 * TICKS)
             .eut(TierEU.RECIPE_IV)
@@ -1103,7 +1047,6 @@ public class ShallowChemicalCouplingRecipes implements IRecipePool {
                 GTOreDictUnificator.get(OrePrefixes.dust, Materials.Europium, 12L),
                 GTOreDictUnificator.get(OrePrefixes.dust, Materials.Europium, 4L))
             .outputChances(10000, 7500)
-            .specialValue(6100)
             .metadata(COIL_HEAT, 6100)
             .duration(8 * SECONDS)
             .eut(TierEU.RECIPE_LuV)
@@ -1115,7 +1058,6 @@ public class ShallowChemicalCouplingRecipes implements IRecipePool {
                 GTOreDictUnificator.get(OrePrefixes.dust, Materials.Naquadria, 12L),
                 GTOreDictUnificator.get(OrePrefixes.dust, Materials.Naquadria, 4L))
             .outputChances(10000, 7500)
-            .specialValue(6100)
             .metadata(COIL_HEAT, 6100)
             .duration(8 * SECONDS)
             .eut(TierEU.RECIPE_LuV)
@@ -1127,7 +1069,6 @@ public class ShallowChemicalCouplingRecipes implements IRecipePool {
                 GTOreDictUnificator.get(OrePrefixes.dust, Materials.Americium, 12L),
                 GTOreDictUnificator.get(OrePrefixes.dust, Materials.Americium, 4L))
             .outputChances(10000, 7500)
-            .specialValue(6100)
             .metadata(COIL_HEAT, 6100)
             .duration(8 * SECONDS)
             .eut(TierEU.RECIPE_LuV)
@@ -1139,7 +1080,6 @@ public class ShallowChemicalCouplingRecipes implements IRecipePool {
                 GTOreDictUnificator.get(OrePrefixes.dust, Materials.MysteriousCrystal, 12L),
                 GTOreDictUnificator.get(OrePrefixes.dust, Materials.MysteriousCrystal, 4L))
             .outputChances(10000, 7500)
-            .specialValue(6100)
             .metadata(COIL_HEAT, 6100)
             .duration(8 * SECONDS)
             .eut(TierEU.RECIPE_LuV)
@@ -1151,7 +1091,6 @@ public class ShallowChemicalCouplingRecipes implements IRecipePool {
                 GTOreDictUnificator.get(OrePrefixes.dust, Materials.BlackPlutonium, 12L),
                 GTOreDictUnificator.get(OrePrefixes.dust, Materials.BlackPlutonium, 4L))
             .outputChances(10000, 7500)
-            .specialValue(6100)
             .metadata(COIL_HEAT, 6100)
             .duration(8 * SECONDS)
             .eut(TierEU.RECIPE_LuV)
@@ -1163,7 +1102,6 @@ public class ShallowChemicalCouplingRecipes implements IRecipePool {
                 GTOreDictUnificator.get(OrePrefixes.dust, Materials.DraconiumAwakened, 12L),
                 GTOreDictUnificator.get(OrePrefixes.dust, Materials.DraconiumAwakened, 4L))
             .outputChances(10000, 7500)
-            .specialValue(7200)
             .metadata(COIL_HEAT, 7200)
             .duration(8 * SECONDS + 10 * TICKS)
             .eut(TierEU.RECIPE_LuV)
@@ -1175,7 +1113,6 @@ public class ShallowChemicalCouplingRecipes implements IRecipePool {
                 GTOreDictUnificator.get(OrePrefixes.dust, Materials.Trinium, 12L),
                 GTOreDictUnificator.get(OrePrefixes.dust, Materials.Trinium, 4L))
             .outputChances(10000, 7500)
-            .specialValue(7200)
             .metadata(COIL_HEAT, 7200)
             .duration(8 * SECONDS + 10 * TICKS)
             .eut(TierEU.RECIPE_LuV)
@@ -1186,7 +1123,6 @@ public class ShallowChemicalCouplingRecipes implements IRecipePool {
             .itemOutputs(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Neutronium, 4L))
             .fluidOutputs(Materials.Neutronium.getMolten(1152))
             .outputChances(5000)
-            .specialValue(8000)
             .metadata(COIL_HEAT, 8000)
             .duration(8 * SECONDS + 10 * TICKS)
             .eut(TierEU.RECIPE_ZPM)

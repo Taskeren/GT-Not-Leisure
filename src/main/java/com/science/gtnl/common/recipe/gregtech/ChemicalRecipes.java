@@ -572,10 +572,21 @@ public class ChemicalRecipes implements IRecipePool {
             .addTo(MCRR);
 
         RecipeBuilder.builder()
+            .itemInputs(GTUtility.getIntegratedCircuit(2))
             .fluidInputs(Materials.Hydrogen.getGas(2000), Materials.Oxygen.getGas(2000))
             .fluidOutputs(new FluidStack(GTPPFluids.HydrogenPeroxide, 1000))
             .duration(40)
             .eut(TierEU.RECIPE_LuV)
+            .addTo(MCRR);
+
+        RecipeBuilder.builder()
+            .itemInputs(
+                GTUtility.getIntegratedCircuit(2),
+                GTOreDictUnificator.get(OrePrefixes.dust, Materials.Carbon, 6))
+            .fluidInputs(Materials.Hydrogen.getGas(6000))
+            .fluidOutputs(Materials.Benzene.getFluid(1000))
+            .duration(10)
+            .eut(TierEU.RECIPE_IV)
             .addTo(MCRR);
     }
 }
