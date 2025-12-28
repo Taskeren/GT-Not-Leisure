@@ -71,11 +71,13 @@ import gregtech.api.util.GTUtility;
 import gregtech.api.util.MultiblockTooltipBuilder;
 import gregtech.common.tileentities.machines.MTEHatchCraftingInputME;
 import gregtech.common.tileentities.machines.MTEHatchInputBusME;
+import gtPlusPlus.core.block.ModBlocks;
 import lombok.Getter;
 import lombok.Setter;
 import mcp.mobius.waila.api.IWailaConfigHandler;
 import mcp.mobius.waila.api.IWailaDataAccessor;
 import tectech.thing.block.BlockQuantumGlass;
+import tectech.thing.casing.BlockGTCasingsTT;
 
 public class SingularityDataHub extends MultiMachineBase<SingularityDataHub>
     implements ISurvivalConstructable, IItemVault {
@@ -268,15 +270,14 @@ public class SingularityDataHub extends MultiMachineBase<SingularityDataHub>
                         .casingIndex(getCasingTextureID())
                         .dot(1)
                         .build(),
-                    onElementPass(x -> x.mCountCasing++, ofBlock(sBlockCasings1, 12))))
-            .addElement('C', ofBlock(sBlockCasings1, 13))
-            .addElement('D', ofBlock(sBlockCasings1, 14))
+                    onElementPass(x -> x.mCountCasing++, ofBlock(sBlockCasingsTT, 4))))
+            .addElement('C', ofBlock(sBlockCasingsTT, 0))
+            .addElement('D', ofBlock(ModBlocks.blockCasings3Misc, 10))
             .addElement('E', ofBlock(sBlockCasings10, 7))
-            .addElement('F', ofBlock(sBlockCasings9, 14))
-            .addElement('G', ofBlock(sBlockCasings9, 15))
+            .addElement('F', ofBlock(sBlockCasingsTT, 8))
+            .addElement('G', ofBlock(sBlockCasingsTT, 4))
             .addElement('H', ofBlock(sBlockCasingsTT, 6))
-            .addElement('I', ofBlock(sBlockGlass1, 3))
-            .addElement('J', ofBlock(BlockQuantumGlass.INSTANCE, 0))
+            .addElement('I', ofBlock(BlockQuantumGlass.INSTANCE, 0))
             .build();
     }
 
@@ -312,7 +313,7 @@ public class SingularityDataHub extends MultiMachineBase<SingularityDataHub>
 
     @Override
     public int getCasingTextureID() {
-        return StructureUtils.getTextureIndex(sBlockCasings1, 12);
+        return BlockGTCasingsTT.textureOffset + 4;
     }
 
     @Override

@@ -101,8 +101,8 @@ public class KeyBindingHandler implements IMessage, IMessageHandler<KeyBindingHa
         var container = player.openContainer;
         var item = message.stack;
         switch (message.key) {
-            case "RetrieveItem" -> retrieveItem(player, container, item, message.isAE);
-            case "StartCraft" -> ServerThreadUtil
+            case "gui.ae_retrieve_item" -> retrieveItem(player, container, item, message.isAE);
+            case "gui.ae_start_craft" -> ServerThreadUtil
                 .addScheduledTask(() -> startCraft(player, container, item, message.isAE));
         }
         return null;

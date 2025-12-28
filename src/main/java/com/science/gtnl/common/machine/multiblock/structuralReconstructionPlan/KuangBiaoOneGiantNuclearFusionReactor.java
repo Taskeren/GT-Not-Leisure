@@ -49,6 +49,7 @@ import com.science.gtnl.common.render.tile.KuangBiaoOneGiantNuclearFusionReactor
 import com.science.gtnl.loader.BlockLoader;
 import com.science.gtnl.utils.StructureUtils;
 import com.science.gtnl.utils.recipes.GTNL_OverclockCalculator;
+import com.science.gtnl.utils.recipes.GTNL_ParallelHelper;
 import com.science.gtnl.utils.recipes.GTNL_ProcessingLogic;
 
 import cpw.mods.fml.relauncher.Side;
@@ -399,19 +400,43 @@ public abstract class KuangBiaoOneGiantNuclearFusionReactor
                 CheckRecipeResult result = super.process();
                 if (mRunningOnLoad) mRunningOnLoad = false;
                 if (result.wasSuccessful()) {
-                    KuangBiaoOneGiantNuclearFusionReactor.this.mLastRecipe = lastRecipe;
+                    mLastRecipe = lastRecipe;
                 } else {
-                    KuangBiaoOneGiantNuclearFusionReactor.this.mLastRecipe = null;
+                    mLastRecipe = null;
                 }
                 return result;
             }
 
+            @Nonnull
+            @Override
+            public CalculationResult validateAndCalculateRecipe(@Nonnull GTRecipe recipe) {
+                CheckRecipeResult result = validateRecipe(recipe);
+                if (!result.wasSuccessful()) {
+                    return CalculationResult.ofFailure(result);
+                }
+
+                GTRecipe newRecipe = recipe.copy();
+
+                newRecipe.mEUt = (int) (newRecipe.mEUt * getMachineEUtDiscount());
+
+                GTNL_ParallelHelper helper = createParallelHelper(recipe);
+                GTNL_OverclockCalculator calculator = createOverclockCalculator(recipe);
+                helper.setCalculator(calculator);
+                helper.build();
+
+                if (!helper.getResult()
+                    .wasSuccessful()) {
+                    return CalculationResult.ofFailure(helper.getResult());
+                }
+
+                return CalculationResult.ofSuccess(applyRecipe(recipe, helper, calculator, result));
+            }
         }.setMaxParallelSupplier(this::getTrueParallel);
     }
 
     @Override
     public double getEUtDiscount() {
-        return getMachineEUtDiscount() - (mParallelTier / 12.5);
+        return 1 - (mParallelTier / 12.5);
     }
 
     @Override

@@ -31,6 +31,7 @@ import bartworks.API.WerkstoffAdderRegistry;
 import cpw.mods.fml.common.Optional;
 import gregtech.api.enums.Mods;
 import gregtech.api.util.GTModHandler;
+import gregtech.common.misc.WirelessNetworkManager;
 import micdoodle8.mods.galacticraft.api.recipe.RocketFuels;
 import micdoodle8.mods.galacticraft.api.recipe.SchematicRegistry;
 
@@ -94,6 +95,8 @@ public class MaterialLoader {
         if (MainConfig.enableStickItem) {
             RecipeLoader.loadVillageTrade();
         }
+
+        WirelessNetworkManager.number_of_energy_additions = 40L;
     }
 
     @Optional.Method(modid = "bogosorter")

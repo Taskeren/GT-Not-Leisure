@@ -105,6 +105,7 @@ public class OutputHatchMEProxy extends MTEHatchOutputME {
                     "proxy",
                     GTNLItemList.OutputHatchMEProxy.get(1),
                     true);
+                outputME.setGridProxy(gridProxy);
                 gridProxy.setFlags(GridFlags.REQUIRE_CHANNEL);
                 outputME.gtnl$updateValidGridProxySides();
                 if (getBaseMetaTileEntity().getWorld() != null) gridProxy.setOwner(
