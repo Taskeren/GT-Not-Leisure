@@ -216,7 +216,8 @@ public class Incubator extends MultiMachineBase<Incubator> implements ISurvivalC
                 int sievert = data.sievert;
                 boolean isExact = data.isExact;
                 int glass = recipe.getMetadataOrDefault(GLASS, 0);
-                if (!BWUtil.areStacksEqualOrNull((ItemStack) recipe.mSpecialItems, getControllerSlot()))
+                ItemStack culture = (ItemStack) recipe.mSpecialItems;
+                if (culture != null && !BWUtil.areStacksEqualOrNull(culture, getControllerSlot()))
                     return CheckRecipeResultRegistry.NO_RECIPE;
                 mNeededSievert = sievert;
 

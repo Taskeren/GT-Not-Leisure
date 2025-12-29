@@ -17,6 +17,7 @@ import com.science.gtnl.utils.recipes.RecipeBuilder;
 import gregtech.api.enums.ItemList;
 import gregtech.api.enums.Materials;
 import gregtech.api.enums.OrePrefixes;
+import gregtech.api.enums.TierEU;
 import gregtech.api.recipe.RecipeMap;
 import gregtech.api.util.GTModHandler;
 import gregtech.api.util.GTOreDictUnificator;
@@ -39,8 +40,8 @@ public class FishingGroundRecipes implements IRecipePool {
                 new ItemStack(Items.fish, 8, 3))
             .fluidInputs(FluidRegistry.getFluidStack("water", 10000))
             .outputChances(2500, 2500, 2500, 1000)
-            .duration(1000)
-            .eut(512)
+            .duration(200)
+            .eut(TierEU.RECIPE_MV)
             .addTo(FGR);
 
         RecipeBuilder.builder()
@@ -55,8 +56,8 @@ public class FishingGroundRecipes implements IRecipePool {
                 new ItemStack(Items.fish, 16, 3))
             .fluidInputs(FluidRegistry.getFluidStack("water", 10000))
             .outputChances(7500, 7500, 7500, 5000)
-            .duration(1000)
-            .eut(512)
+            .duration(200)
+            .eut(TierEU.RECIPE_MV)
             .addTo(FGR);
 
         RecipeBuilder.builder()
@@ -71,8 +72,8 @@ public class FishingGroundRecipes implements IRecipePool {
                 new ItemStack(Items.fish, 64, 3))
             .fluidInputs(FluidRegistry.getFluidStack("water", 10000))
             .outputChances(9000, 9000, 9000, 9000)
-            .duration(2000)
-            .eut(512)
+            .duration(200)
+            .eut(TierEU.RECIPE_MV)
             .addTo(FGR);
 
         RecipeBuilder.builder()
@@ -144,8 +145,8 @@ public class FishingGroundRecipes implements IRecipePool {
                 500,
                 100,
                 5)
-            .duration(3000)
-            .eut(2048)
+            .duration(400)
+            .eut(TierEU.RECIPE_EV)
             .addTo(FGR);
 
         RecipeBuilder.builder()
@@ -169,8 +170,8 @@ public class FishingGroundRecipes implements IRecipePool {
                 GTModHandler.getModItem(PamsHarvestCraft.ID, "cranberryItem", 16, missing))
             .fluidInputs(FluidRegistry.getFluidStack("water", 10000))
             .outputChances(6000, 6000, 3000, 4000, 4000, 4000, 2500, 2500, 2500, 2500, 7500, 5000, 5000, 5000)
-            .duration(1500)
-            .eut(2048)
+            .duration(500)
+            .eut(TierEU.RECIPE_EV)
             .addTo(FGR);
 
         RecipeBuilder.builder()
@@ -183,7 +184,7 @@ public class FishingGroundRecipes implements IRecipePool {
                 GregtechItemList.RedAlgaeBiomass.get(64))
             .fluidInputs(FluidRegistry.getFluidStack("water", 10000))
             .duration(200)
-            .eut(2048)
+            .eut(TierEU.RECIPE_EV)
             .addTo(FGR);
 
         RecipeBuilder.builder()
@@ -198,9 +199,9 @@ public class FishingGroundRecipes implements IRecipePool {
                 GTModHandler.getModItem(GalaxySpace.ID, "tcetiedandelions", 64, 3, missing),
                 GTModHandler.getModItem(GalaxySpace.ID, "tcetiedandelions", 64, 4, missing),
                 GTModHandler.getModItem(GalaxySpace.ID, "tcetiedandelions", 64, 5, missing))
-            .fluidInputs(FluidRegistry.getFluidStack("unknownnutrientagar", 4000))
+            .fluidInputs(FluidRegistry.getFluidStack("unknownnutrientagar", 1000))
             .duration(1000)
-            .eut(122880)
+            .eut(TierEU.RECIPE_LuV)
             .addTo(FGR);
 
         if (PamsHarvestCraft.isModLoaded()) {
@@ -264,8 +265,8 @@ public class FishingGroundRecipes implements IRecipePool {
                     2500,
                     2500,
                     2500)
-                .duration(1000)
-                .eut(512)
+                .duration(300)
+                .eut(TierEU.RECIPE_HV)
                 .addTo(FGR);
 
             RecipeBuilder.builder()
@@ -330,8 +331,8 @@ public class FishingGroundRecipes implements IRecipePool {
                     7500,
                     7500,
                     7500)
-                .duration(1000)
-                .eut(512)
+                .duration(300)
+                .eut(TierEU.RECIPE_HV)
                 .addTo(FGR);
 
             RecipeBuilder.builder()
@@ -396,8 +397,8 @@ public class FishingGroundRecipes implements IRecipePool {
                     9000,
                     9000,
                     9000)
-                .duration(1000)
-                .eut(512)
+                .duration(300)
+                .eut(TierEU.RECIPE_HV)
                 .addTo(FGR);
 
         }

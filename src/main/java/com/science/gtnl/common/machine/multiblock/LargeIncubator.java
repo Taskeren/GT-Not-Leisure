@@ -189,7 +189,8 @@ public class LargeIncubator extends MultiMachineBase<LargeIncubator> implements 
             public CheckRecipeResult validateRecipe(@NotNull GTRecipe recipe) {
                 Sievert data = recipe.getMetadataOrDefault(GTRecipeConstants.SIEVERT, defaultSievertData);
                 int sievert = data.sievert;
-                if (!BWUtil.areStacksEqualOrNull((ItemStack) recipe.mSpecialItems, getControllerSlot()))
+                ItemStack culture = (ItemStack) recipe.mSpecialItems;
+                if (culture != null && !BWUtil.areStacksEqualOrNull(culture, getControllerSlot()))
                     return CheckRecipeResultRegistry.NO_RECIPE;
                 mNeededSievert = sievert;
 
