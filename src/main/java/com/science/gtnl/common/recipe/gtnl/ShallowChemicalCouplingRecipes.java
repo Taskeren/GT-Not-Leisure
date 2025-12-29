@@ -278,6 +278,18 @@ public class ShallowChemicalCouplingRecipes implements IRecipePool {
             .eut(TierEU.RECIPE_HV)
             .addTo(SCCR);
 
+        RecipeBuilder.builder()
+            .itemInputs(
+                GTOreDictUnificator.get(OrePrefixes.nanite, Materials.Carbon, 0),
+                GTUtility.getIntegratedCircuit(13),
+                GTOreDictUnificator.get(OrePrefixes.dust, Materials.Carbon, 20))
+            .fluidInputs(Materials.Hydrogen.getGas(30000), Materials.Chlorine.getGas(10000))
+            .fluidOutputs(Materials.PolyvinylChloride.getMolten(12960))
+            .metadata(COIL_HEAT, 6300)
+            .duration(200)
+            .eut(TierEU.RECIPE_EV)
+            .addTo(SCCR);
+
         if (Forestry.isModLoaded()) loadCombsRecipes();
     }
 

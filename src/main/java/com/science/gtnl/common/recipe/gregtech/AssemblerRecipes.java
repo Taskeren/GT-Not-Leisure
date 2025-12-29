@@ -3427,8 +3427,8 @@ public class AssemblerRecipes implements IRecipePool {
             ItemList.Circuit_Parts_InductorSMD.get(4), ItemList.Circuit_Parts_InductorSMD.get(8),
             ItemList.Circuit_Parts_InductorSMD.get(16), ItemList.Circuit_Parts_InductorSMD.get(32),
             ItemList.Circuit_Parts_InductorASMD.get(4), ItemList.Circuit_Parts_InductorASMD.get(8),
-            ItemList.Circuit_Parts_InductorXSMD.get(4), ItemList.Circuit_Parts_InductorXSMD.get(8),
-            ItemList.Circuit_Parts_InductorXSMD.get(16), ItemList.Circuit_Parts_InductorXSMD.get(32),
+            ItemList.Circuit_Parts_InductorASMD.get(16), ItemList.Circuit_Parts_InductorXSMD.get(4),
+            ItemList.Circuit_Parts_InductorXSMD.get(8), ItemList.Circuit_Parts_InductorXSMD.get(16),
             GTNLItemList.BiowareSMDInductor.get(8), GTNLItemList.BiowareSMDInductor.get(16) };
 
         ItemStack[] SUPER_CHEST = { ItemList.Super_Chest_LV.get(1), ItemList.Super_Chest_MV.get(1),
