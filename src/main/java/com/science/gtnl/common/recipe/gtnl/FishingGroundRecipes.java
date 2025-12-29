@@ -193,6 +193,8 @@ public class FishingGroundRecipes implements IRecipePool {
                 GTModHandler.getModItem(PamsHarvestCraft.ID, "seaweedItem", 64, missing))
             .itemOutputs(
                 GTModHandler.getModItem(GalaxySpace.ID, "tcetiedandelions", 64, 0, missing),
+                GTModHandler.getModItem(GalaxySpace.ID, "tcetiedandelions", 64, 1, missing),
+                GTModHandler.getModItem(GalaxySpace.ID, "tcetiedandelions", 64, 2, missing),
                 GTModHandler.getModItem(GalaxySpace.ID, "tcetiedandelions", 64, 3, missing),
                 GTModHandler.getModItem(GalaxySpace.ID, "tcetiedandelions", 64, 4, missing),
                 GTModHandler.getModItem(GalaxySpace.ID, "tcetiedandelions", 64, 5, missing))
