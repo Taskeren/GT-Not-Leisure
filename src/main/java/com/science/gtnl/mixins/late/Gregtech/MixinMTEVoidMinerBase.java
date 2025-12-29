@@ -290,9 +290,9 @@ public abstract class MixinMTEVoidMinerBase extends MTEEnhancedMultiBlockBase<Mi
                 .setRecipeEUt(-gtnl$lEUt)
                 .setDuration(10)
                 .setParallel(1);
-            if (TIER_MULTIPLIER == 3) calculator.enablePerfectOC();
+            if (TIER_MULTIPLIER == 3) calculator = calculator.enablePerfectOC();
 
-            calculator.calculate();
+            calculator = calculator.calculate();
             this.mMaxProgresstime = calculator.getDuration();
         }
 
@@ -318,13 +318,13 @@ public abstract class MixinMTEVoidMinerBase extends MTEEnhancedMultiBlockBase<Mi
             .setRecipeEUt(Math.abs(Math.toIntExact(GTValues.V[this.getMinTier()])))
             .setDuration(10 * (batchMode ? 16 : 1))
             .setParallel(1);
-        if (TIER_MULTIPLIER == 3) calculator.enablePerfectOC();
-        calculator.calculate();
+        if (TIER_MULTIPLIER == 3) calculator = calculator.enablePerfectOC();
+        calculator = calculator.calculate();
 
         double parallel = calculator.calculateMultiplierUnderOneTick();
         if (batchMode) {
             double multiplierParallel = 128d / calculator.getDuration();
-            parallel = (int) (parallel * multiplierParallel);
+            parallel = (int) Math.max(1, parallel * multiplierParallel);
         }
 
         long totalCount = (long) (multiplier * parallel);
