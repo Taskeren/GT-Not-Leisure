@@ -6,6 +6,7 @@ import static gregtech.api.enums.Textures.BlockIcons.OVERLAY_ME_CRAFTING_INPUT_B
 import static gregtech.api.metatileentity.BaseTileEntity.*;
 import static gregtech.api.objects.XSTR.XSTR_INSTANCE;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -30,6 +31,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
+import net.minecraft.network.PacketBuffer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ChatComponentTranslation;
 import net.minecraft.util.EnumChatFormatting;
@@ -142,20 +144,23 @@ public class SuperCraftingInputHatchME extends MTEHatchInputBus implements IConf
         public final ICraftingPatternDetails patternDetails;
         public final GTUtility.ItemId patternItemId;
 
+        public final int slotIndex;
+
         public final List<ItemStack> itemInventory;
         public final List<FluidStack> fluidInventory;
 
-        public PatternSlot(ItemStack pattern, P parent) {
-            this(pattern, null, parent);
+        public PatternSlot(ItemStack pattern, P parent, int index) {
+            this(pattern, null, parent, index);
         }
 
-        public PatternSlot(ItemStack pattern, NBTTagCompound nbt, P parent) {
+        public PatternSlot(ItemStack pattern, NBTTagCompound nbt, P parent, int index) {
             this.pattern = pattern;
             this.parentMTE = parent;
             this.patternDetails = ((ICraftingPatternItem) Objects.requireNonNull(pattern.getItem())).getPatternForItem(
                 pattern,
                 parent.getBaseMetaTileEntity()
                     .getWorld());
+            this.slotIndex = index;
             this.itemInventory = new ArrayList<>();
             this.fluidInventory = new ArrayList<>();
             this.patternItemId = GTUtility.ItemId.create(pattern);
@@ -189,6 +194,30 @@ public class SuperCraftingInputHatchME extends MTEHatchInputBus implements IConf
                         tagFluidStack);
                 }
             }
+        }
+
+        public ItemStack[] getNonNullManualInventory() {
+            int base = MAX_INV_COUNT + this.slotIndex * 9;
+
+            int nonNullCount = 0;
+            for (int i = 0; i < 9; i++) {
+                ItemStack stack = parentMTE.getRealInventory()[base + i];
+                if (stack != null && stack.stackSize > 0) {
+                    nonNullCount++;
+                }
+            }
+
+            if (nonNullCount == 0) return GTValues.emptyItemStackArray;
+
+            ItemStack[] res = new ItemStack[nonNullCount];
+            int current = 0;
+            for (int i = 0; i < 9; i++) {
+                ItemStack stack = parentMTE.getRealInventory()[base + i];
+                if (stack != null && stack.stackSize > 0) {
+                    res[current++] = stack;
+                }
+            }
+            return res;
         }
 
         public boolean hasChanged(ItemStack newPattern, World world) {
@@ -234,7 +263,7 @@ public class SuperCraftingInputHatchME extends MTEHatchInputBus implements IConf
         @Override
         public ItemStack[] getItemInputs() {
             if (isItemEmpty()) return GTValues.emptyItemStackArray;
-            return itemInventory.toArray(new ItemStack[0]);
+            return ArrayUtils.addAll(itemInventory.toArray(new ItemStack[0]), getNonNullManualInventory());
         }
 
         @Override
@@ -260,6 +289,8 @@ public class SuperCraftingInputHatchME extends MTEHatchInputBus implements IConf
                     inputItems = ArrayUtils.addAll(inputItems, singleInputItemStack);
                 }
             }
+
+            inputItems = ArrayUtils.addAll(inputItems, getNonNullManualInventory());
 
             dualInputs.inputItems = inputItems;
             dualInputs.inputFluid = inputFluids;
@@ -437,7 +468,7 @@ public class SuperCraftingInputHatchME extends MTEHatchInputBus implements IConf
     public static int MAX_INV_COUNT = MAX_PATTERN_COUNT + SLOT_MANUAL_SIZE + 1;
     public static int SLOT_CIRCUIT = MAX_PATTERN_COUNT;
     public static int SLOT_MANUAL_START = SLOT_CIRCUIT + 1;
-    public static int MANUAL_SLOT_WINDOW = 82;
+    public static int MANUAL_SLOT_WINDOW = 400;
     public BaseActionSource requestSource = null;
     public @Nullable AENetworkProxy gridProxy = null;
     public List<ProcessingLogic> processingLogics = new ArrayList<>();
@@ -465,7 +496,7 @@ public class SuperCraftingInputHatchME extends MTEHatchInputBus implements IConf
             aName,
             aNameRegional,
             supportFluids ? 11 : 6,
-            MAX_INV_COUNT,
+            MAX_INV_COUNT + MAX_PATTERN_COUNT * 9,
             new String[] { StatCollector.translateToLocal("Tooltip_SuperCraftingInputHatchME_00"),
                 StatCollector.translateToLocal("Tooltip_SuperCraftingInputHatchME_01"),
                 supportFluids ? StatCollector.translateToLocal("Tooltip_SuperCraftingInputHatchME_01_00")
@@ -480,7 +511,7 @@ public class SuperCraftingInputHatchME extends MTEHatchInputBus implements IConf
 
     public SuperCraftingInputHatchME(String aName, int aTier, String[] aDescription, ITexture[][][] aTextures,
         boolean supportFluids) {
-        super(aName, aTier, MAX_INV_COUNT, aDescription, aTextures);
+        super(aName, aTier, MAX_INV_COUNT + MAX_PATTERN_COUNT * 9, aDescription, aTextures);
         this.supportFluids = supportFluids;
         disableSort = true;
     }
@@ -757,7 +788,7 @@ public class SuperCraftingInputHatchME extends MTEHatchInputBus implements IConf
             NBTTagCompound patternSlotNBT = internalInventorySlotNBT.getCompoundTag("patternSlotNBT");
             ItemStack pattern = ItemStack.loadItemStackFromNBT(patternSlotNBT.getCompoundTag("pattern"));
             if (pattern != null) {
-                internalInventory[patternSlot] = new PatternSlot<>(pattern, patternSlotNBT, this);
+                internalInventory[patternSlot] = new PatternSlot<>(pattern, patternSlotNBT, this, i);
             } else {
                 ScienceNotLeisure.LOG.warn(
                     "An error occurred while loading contents of ME Crafting Input Bus. This pattern has been voided: {}",
@@ -897,12 +928,42 @@ public class SuperCraftingInputHatchME extends MTEHatchInputBus implements IConf
     public void addUIWidgets(ModularWindow.@NotNull Builder builder, UIBuildContext buildContext) {
         final Scrollable scrollable = new Scrollable().setVerticalScroll();
         buildContext.addSyncedWindow(MANUAL_SLOT_WINDOW, this::createSlotManualWindow);
+        for (int i = 15; i < MAX_PATTERN_COUNT + 15; i++) {
+            int slotID = i;
+            buildContext.addSyncedWindow(i, (player) -> createPatternSlotManualWindow(player, slotID - 15));
+        }
         SlotGroup slotGroup = (SlotGroup) SlotGroup.ofItemHandler(inventoryHandler, 9)
             .startFromSlot(0)
             .endAtSlot(MAX_PATTERN_COUNT - 1)
             .phantom(false)
             .background(getGUITextureSet().getItemSlot(), GTUITextures.OVERLAY_SLOT_PATTERN_ME)
             .widgetCreator(slot -> new SlotWidget(slot) {
+
+                @Override
+                public ClickResult onClick(int buttonId, boolean doubleClick) {
+                    // vanilla slot interaction is handled on mouseMovedOrUp, so we need to hold the state
+                    // of this widget being clicked and prevent further interaction
+                    if (interactionDisabled || !getMcSlot().isEnabled()) return ClickResult.ACCEPT;
+                    if (buttonId == 2) {
+                        ClickData clickData = ClickData.create(buttonId, doubleClick);
+                        syncToServer(15, clickData::writeToPacket);
+                        return ClickResult.SUCCESS;
+                    }
+                    return ClickResult.DELEGATE;
+                }
+
+                @Override
+                public void readOnServer(int id, PacketBuffer buf) throws IOException {
+                    if (id == 15) click(ClickData.readPacket(buf));
+                    super.readOnServer(id, buf);
+                }
+
+                public void click(ClickData clickData) {
+                    if (interactionDisabled || !getMcSlot().isEnabled()) return;
+                    if (clickData.mouseButton == 2) {
+                        getContext().openSyncedWindow(getMcSlot().slotNumber - 21);
+                    }
+                }
 
                 @Override
                 public ItemStack getItemStackForRendering(Slot slotIn) {
@@ -998,6 +1059,9 @@ public class SuperCraftingInputHatchME extends MTEHatchInputBus implements IConf
         for (int slotId = SLOT_MANUAL_START; slotId < SLOT_MANUAL_START + SLOT_MANUAL_SIZE; ++slotId) {
             if (mInventory[slotId] != null && mInventory[slotId].stackSize <= 0) mInventory[slotId] = null;
         }
+        for (int slotId = MAX_INV_COUNT; slotId < MAX_INV_COUNT + MAX_PATTERN_COUNT * 9; ++slotId) {
+            if (mInventory[slotId] != null && mInventory[slotId].stackSize <= 0) mInventory[slotId] = null;
+        }
     }
 
     public BaseActionSource getRequest() {
@@ -1030,7 +1094,7 @@ public class SuperCraftingInputHatchME extends MTEHatchInputBus implements IConf
         // original does not exist or has changed
         if (newItem == null || !(newItem.getItem() instanceof ICraftingPatternItem)) return;
 
-        PatternSlot<SuperCraftingInputHatchME> patternSlot = new PatternSlot<>(newItem, this);
+        PatternSlot<SuperCraftingInputHatchME> patternSlot = new PatternSlot<>(newItem, this, index);
         internalInventory[index] = patternSlot;
         patternDetailsPatternSlotMap.put(patternSlot.getPatternDetails(), patternSlot);
 
@@ -1291,6 +1355,36 @@ public class SuperCraftingInputHatchME extends MTEHatchInputBus implements IConf
             scrollable.setSize(18 * 9 + 4, 18 * 4)
                 .setPos(7, 7));
 
+        return builder.build();
+    }
+
+    protected ModularWindow createPatternSlotManualWindow(final EntityPlayer player, int slotID) {
+        final int WIDTH = 68;
+        final int HEIGHT = 68;
+        final int PARENT_WIDTH = getGUIWidth();
+        final int PARENT_HEIGHT = getGUIHeight();
+        ModularWindow.Builder builder = ModularWindow.builder(WIDTH, HEIGHT);
+        builder.setBackground(GTUITextures.BACKGROUND_SINGLEBLOCK_DEFAULT);
+        builder.setGuiTint(getGUIColorization());
+        builder.setDraggable(true);
+        // make sure the manual window is within the parent window
+        // otherwise picking up manual items would toss them
+        // See GuiContainer.java flag1
+
+        int base = MAX_INV_COUNT + slotID * 9;
+
+        builder.setPos(
+            (size, window) -> Alignment.Center.getAlignedPos(size, new Size(PARENT_WIDTH, PARENT_HEIGHT))
+                .add(Alignment.TopRight.getAlignedPos(new Size(PARENT_WIDTH, PARENT_HEIGHT), new Size(WIDTH, HEIGHT))));
+        builder.widget(
+            SlotGroup.ofItemHandler(inventoryHandler, 3)
+                .startFromSlot(base)
+                .endAtSlot(base + 8)
+                .phantom(false)
+                .background(getGUITextureSet().getItemSlot())
+                .widgetCreator(SlotWidget::new)
+                .build()
+                .setPos(7, 7));
         return builder.build();
     }
 
