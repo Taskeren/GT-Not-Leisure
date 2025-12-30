@@ -8,6 +8,8 @@ import javax.annotation.Nonnull;
 
 import net.minecraft.util.StatCollector;
 
+import org.apache.commons.lang3.tuple.Pair;
+
 import com.gtnewhorizons.modularui.api.drawable.UITexture;
 import com.gtnewhorizons.modularui.api.math.Pos2d;
 import com.gtnewhorizons.modularui.common.widget.ProgressBar;
@@ -295,8 +297,8 @@ public class RecipePool {
         .neiHandlerInfo(builder -> builder.setDisplayStack(GTNLItemList.LargeNaquadahReactor.get(1)))
         .neiRecipeComparator(
             Comparator
-                .<GTRecipe, Integer>comparing(
-                    recipe -> recipe.getMetadataOrDefault(NaquadahReactorMetadata.INSTANCE, 0))
+                .<GTRecipe, Pair<Integer, Long>>comparing(
+                    recipe -> recipe.getMetadataOrDefault(NaquadahReactorMetadata.INSTANCE, Pair.of(0, 0L)))
                 .thenComparing(GTRecipe::compareTo))
         .addSpecialTexture(59, 20, 58, 42, GGUITextures.PICTURE_NAQUADAH_REACTOR)
         .build();

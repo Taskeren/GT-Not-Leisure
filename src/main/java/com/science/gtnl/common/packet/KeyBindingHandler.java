@@ -331,6 +331,7 @@ public class KeyBindingHandler implements IMessage, IMessageHandler<KeyBindingHa
                         cca.getCraftingItem()
                             .putStack(item0);
                         cca.setItemToCraft(aeItem);
+                        cca.setInitialCraftAmount(exItem.stackSize);
                         cca.detectAndSendChanges();
                     }
                 }

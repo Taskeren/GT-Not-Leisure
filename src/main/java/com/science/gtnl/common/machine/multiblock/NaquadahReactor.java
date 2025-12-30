@@ -12,7 +12,6 @@ import static gregtech.api.util.GTStructureUtility.ofFrame;
 import static gtPlusPlus.core.block.ModBlocks.blockCasings4Misc;
 import static kubatech.loaders.BlockLoader.*;
 import static tectech.thing.casing.TTCasingsContainer.sBlockCasingsTT;
-import static tectech.thing.metaTileEntity.multi.base.TTMultiblockBase.HatchElement.*;
 
 import java.util.List;
 
@@ -30,6 +29,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;
 import net.minecraftforge.fluids.FluidStack;
 
+import org.apache.commons.lang3.tuple.Pair;
 import org.jetbrains.annotations.NotNull;
 
 import com.gtnewhorizon.structurelib.alignment.constructable.IConstructable;
@@ -111,7 +111,8 @@ public abstract class NaquadahReactor<T extends NaquadahReactor<T>> extends Mult
 
             @Override
             public @NotNull CheckRecipeResult validateRecipe(@NotNull GTRecipe recipe) {
-                int recipeReq = recipe.getMetadataOrDefault(NaquadahReactorMetadata.INSTANCE, 0);
+                int recipeReq = recipe.getMetadataOrDefault(NaquadahReactorMetadata.INSTANCE, Pair.of(0, 0L))
+                    .getKey();
                 if (recipeReq > getReactorTier()) {
                     return CheckRecipeResultRegistry.insufficientMachineTier(recipeReq);
                 }
@@ -168,8 +169,9 @@ public abstract class NaquadahReactor<T extends NaquadahReactor<T>> extends Mult
         mEfficiency = 10000;
         mEfficiencyIncrease = 10000;
         mMaxProgresstime = (int) (processingLogic.getDuration() * mConfigSpeedBoost);
-        lEUt = (long) ((GTNL_ProcessingLogic) processingLogic).getLastRecipe().mSpecialValue
-            * processingLogic.getCurrentParallels();
+        lEUt = ((GTNL_ProcessingLogic) processingLogic).getLastRecipe()
+            .getMetadataOrDefault(NaquadahReactorMetadata.INSTANCE, Pair.of(0, 0L))
+            .getValue() * processingLogic.getCurrentParallels();
 
         if (useExtraGas) {
             mMaxProgresstime /= getDurationMultiple();
@@ -415,7 +417,7 @@ public abstract class NaquadahReactor<T extends NaquadahReactor<T>> extends Mult
                     buildHatchAdder(HyperNaquadahReactor.class).casingIndex(getCasingTextureID())
                         .dot(1)
                         .atLeast(Maintenance, InputHatch, OutputHatch, Dynamo.or(ExoticDynamo))
-                        .buildAndChain(onElementPass(x -> ++x.mCountCasing, ofBlock(defcCasingBlock, 7))))
+                        .buildAndChain(onElementPass(x -> ++x.mCountCasing, ofBlock(sBlockCasings8, 10))))
                 .addElement('H', ofBlock(BlockLoader.metaBlockGlass, 2))
                 .addElement('I', ofFrame(Materials.Neutronium))
                 .build();
@@ -423,7 +425,7 @@ public abstract class NaquadahReactor<T extends NaquadahReactor<T>> extends Mult
 
         @Override
         public int getCasingTextureID() {
-            return (1 << 7) + (15 + 48);
+            return StructureUtils.getTextureIndex(sBlockCasings8, 10);
         }
 
         @Override
@@ -475,7 +477,7 @@ public abstract class NaquadahReactor<T extends NaquadahReactor<T>> extends Mult
 
         @Override
         public FluidStack getExtraGas() {
-            return GGMaterial.naquadahGas.getFluidOrGas(100);
+            return GGMaterial.naquadahGas.getFluidOrGas(50);
         }
 
         @Override
