@@ -26,10 +26,7 @@ import appeng.api.networking.crafting.ICraftingPatternDetails;
 import appeng.client.gui.implementations.GuiMEMonitorable;
 import appeng.container.implementations.ContainerCraftAmount;
 import appeng.container.implementations.ContainerCraftConfirm;
-import codechicken.nei.BookmarkPanel;
-import codechicken.nei.LayoutManager;
 import codechicken.nei.NEIClientConfig;
-import codechicken.nei.Widget;
 import codechicken.nei.guihook.GuiContainerManager;
 import codechicken.nei.guihook.IContainerInputHandler;
 import codechicken.nei.recipe.GuiCraftingRecipe;
@@ -139,10 +136,6 @@ public class GTNLInputHandler implements IContainerInputHandler {
         for (Map.Entry<String, BooleanSupplier> key : keys.entrySet()) {
             if (!key.getValue()
                 .getAsBoolean()) continue;
-            final Widget focused = LayoutManager.instance()
-                .getWidgetUnderMouse(mouseX, mouseY);
-
-            if (!(focused instanceof BookmarkPanel)) return false;
             final var oldGui = Minecraft.getMinecraft().currentScreen;
             ScienceNotLeisure.network.sendToServer(
                 new KeyBindingHandler(
