@@ -15,6 +15,7 @@ import com.science.gtnl.config.MainConfig;
 import com.science.gtnl.utils.enums.GTNLItemList;
 import com.science.gtnl.utils.recipes.RecipeBuilder;
 
+import bartworks.system.material.WerkstoffLoader;
 import crazypants.enderio.fluid.Fluids;
 import goodgenerator.items.GGMaterial;
 import gregtech.api.enums.ItemList;
@@ -32,6 +33,7 @@ import gtPlusPlus.api.recipe.GTPPRecipeMaps;
 import gtPlusPlus.core.fluids.GTPPFluids;
 import gtPlusPlus.core.material.MaterialMisc;
 import gtPlusPlus.core.material.MaterialsAlloy;
+import gtPlusPlus.core.material.MaterialsElements;
 import gtPlusPlus.core.util.minecraft.FluidUtils;
 import gtPlusPlus.xmod.gregtech.api.enums.GregtechItemList;
 import gtnhlanth.common.register.WerkstoffMaterialPool;
@@ -331,6 +333,17 @@ public class MixerRecipes implements IRecipePool {
             .fluidOutputs(FluidRegistry.getFluidStack(Fluids.CLOUD_SEED_CONCENTRATED, 500))
             .duration(125)
             .eut(TierEU.RECIPE_LV)
+            .addTo(MCR)
+            .addTo(MNCR);
+
+        RecipeBuilder.builder()
+            .itemInputs(
+                GTUtility.getIntegratedCircuit(1),
+                GTOreDictUnificator.get(OrePrefixes.dust, Materials.Carbon, 1),
+                MaterialsElements.getInstance().HAFNIUM.getDust(1))
+            .itemOutputs(WerkstoffLoader.TantalumHafniumCarbide.get(OrePrefixes.dust, 2))
+            .duration(200)
+            .eut(TierEU.RECIPE_IV)
             .addTo(MCR)
             .addTo(MNCR);
 
