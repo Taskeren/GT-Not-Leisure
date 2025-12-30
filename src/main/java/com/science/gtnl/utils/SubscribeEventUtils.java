@@ -193,6 +193,7 @@ public class SubscribeEventUtils {
     public void onPlayerLoginOut(PlayerEvent.PlayerLoggedOutEvent event) {
         TimeStopPocketWatch.setTimeStopped(false);
         BaubleItem.removePlayer(event.player.getUniqueID());
+        circuitNanitesDataLoad = false;
     }
 
     @SubscribeEvent

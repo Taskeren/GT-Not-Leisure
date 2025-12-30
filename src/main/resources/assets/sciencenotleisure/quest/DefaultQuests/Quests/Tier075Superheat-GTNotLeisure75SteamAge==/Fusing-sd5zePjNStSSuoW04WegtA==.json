@@ -8,7 +8,7 @@
   "properties:10": {
     "betterquesting:10": {
       "autoClaim:1": 0,
-      "desc:8": "Alloying is getting slow in those tiny alloy smelters of yours. You\u0027re due for an upgrade.\n\n[note]The steam fuser can perform recipes which require too much steam for a normal alloy smelter to handle, as well as recipes with more than 2 inputs.[/note]",
+      "desc:8": "Alloying is getting slow in those tiny alloy smelters of yours. You're due for an upgrade.\n\n[note]The steam fuser can perform recipes which require too much steam for a normal alloy smelter to handle, as well as recipes with more than 2 inputs.[/note]",
       "globalShare:1": 0,
       "icon:10": {
         "Count:3": 1,

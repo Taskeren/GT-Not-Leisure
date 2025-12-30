@@ -8,7 +8,7 @@
   "properties:10": {
     "betterquesting:10": {
       "autoClaim:1": 0,
-      "desc:8": "I just don\u0027t feel like giving you new quests, but some hard currency might convince me.",
+      "desc:8": "I just don't feel like giving you new quests, but some hard currency might convince me.",
       "globalShare:1": 0,
       "icon:10": {
         "Count:3": 1,
@@ -19,7 +19,7 @@
       "isMain:1": 0,
       "isSilent:1": 0,
       "lockedProgress:1": 0,
-      "name:8": "This time it\u0027s not hunger or thirst",
+      "name:8": "This time it's not hunger or thirst",
       "questLogic:8": "AND",
       "repeatTime:3": -1,
       "repeat_relative:1": 1,

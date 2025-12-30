@@ -8,7 +8,7 @@
   "properties:10": {
     "betterquesting:10": {
       "autoClaim:1": 0,
-      "desc:8": "You thought that just because we were staying in the steam age, you\u0027d be free from component crafting? Don\u0027t be silly.\n\nThese hydraulic components do seem to be quite powerful...",
+      "desc:8": "You thought that just because we were staying in the steam age, you'd be free from component crafting? Don't be silly.\n\nThese hydraulic components do seem to be quite powerful...",
       "globalShare:1": 0,
       "icon:10": {
         "Count:3": 1,
@@ -19,7 +19,7 @@
       "isMain:1": 0,
       "isSilent:1": 0,
       "lockedProgress:1": 0,
-      "name:8": "You\u0027re going to LOVE this",
+      "name:8": "You're going to LOVE this",
       "questLogic:8": "AND",
       "repeatTime:3": -1,
       "repeat_relative:1": 1,

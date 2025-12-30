@@ -30,6 +30,7 @@ import com.science.gtnl.utils.machine.greenHouseManager.GreenHouseBucket;
 import bartworks.API.WerkstoffAdderRegistry;
 import cpw.mods.fml.common.Optional;
 import gregtech.api.enums.Mods;
+import gregtech.api.enums.OrePrefixes;
 import gregtech.api.util.GTModHandler;
 import gregtech.common.misc.WirelessNetworkManager;
 import micdoodle8.mods.galacticraft.api.recipe.RocketFuels;
@@ -81,6 +82,11 @@ public class MaterialLoader {
         if (Mods.InventoryBogoSorter.isModLoaded()) {
             loadCraftTweak();
         }
+
+        OrePrefixes.nugget.addFamiliarPrefix(OrePrefixes.ingotHot);
+        OrePrefixes.ingot.addFamiliarPrefix(OrePrefixes.ingotHot);
+        OrePrefixes.ingotHot.addFamiliarPrefix(OrePrefixes.nugget);
+        OrePrefixes.ingotHot.addFamiliarPrefix(OrePrefixes.ingot);
     }
 
     public static void loadCompleteInit() {
