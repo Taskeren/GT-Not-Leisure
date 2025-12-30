@@ -13,6 +13,7 @@ import com.science.gtnl.utils.recipes.RecipeBuilder;
 
 import gregtech.api.enums.ItemList;
 import gregtech.api.enums.Materials;
+import gregtech.api.enums.MaterialsKevlar;
 import gregtech.api.enums.OrePrefixes;
 import gregtech.api.enums.TierEU;
 import gregtech.api.recipe.RecipeMap;
@@ -30,7 +31,7 @@ public class ShallowChemicalCouplingRecipes implements IRecipePool {
     public void loadRecipes() {
         RecipeBuilder.builder()
             .itemInputs(
-                GTOreDictUnificator.get(OrePrefixes.nanite, Materials.Carbon, 0),
+                GTOreDictUnificator.get(OrePrefixes.nanite, Materials.Neutronium, 0),
                 GTUtility.getIntegratedCircuit(1),
                 Materials.Potassiumdichromate.getDust(0),
                 Materials.Copper.getDust(0),
@@ -57,9 +58,9 @@ public class ShallowChemicalCouplingRecipes implements IRecipePool {
                 Materials.Silicon.getDust(1))
             .fluidInputs(Materials.Hydrogen.getGas(8000), Materials.Chlorine.getGas(4000))
             .fluidOutputs(
+                Materials.Silicone.getMolten(1296),
                 Materials.HydrochloricAcid.getFluid(11520),
-                Materials.Water.getFluid(2000),
-                Materials.Silicone.getMolten(1296))
+                Materials.Water.getFluid(2000))
             .metadata(COIL_HEAT, 8000)
             .duration(30 * SECONDS + 10 * TICKS)
             .eut(TierEU.RECIPE_IV)
@@ -219,7 +220,7 @@ public class ShallowChemicalCouplingRecipes implements IRecipePool {
         // 单步聚酰亚胺
         RecipeBuilder.builder()
             .itemInputs(
-                GTOreDictUnificator.get(OrePrefixes.nanite, Materials.Carbon, 0),
+                GTOreDictUnificator.get(OrePrefixes.nanite, Materials.Neutronium, 0),
                 GTUtility.getIntegratedCircuit(9),
                 GTOreDictUnificator.get(OrePrefixes.dust, Materials.Tin, 0),
                 GTOreDictUnificator.get(OrePrefixes.dust, Materials.Palladium, 0),
@@ -237,7 +238,7 @@ public class ShallowChemicalCouplingRecipes implements IRecipePool {
         // 单步聚醚醚酮
         RecipeBuilder.builder()
             .itemInputs(
-                GTOreDictUnificator.get(OrePrefixes.nanite, Materials.Carbon, 0),
+                GTOreDictUnificator.get(OrePrefixes.nanite, Materials.Silver, 0),
                 GTUtility.getIntegratedCircuit(10),
                 GTNLItemList.ZnFeAlClCatalyst.get(0),
                 GTNLItemList.BlackLight.get(0),
@@ -252,7 +253,7 @@ public class ShallowChemicalCouplingRecipes implements IRecipePool {
 
         RecipeBuilder.builder()
             .itemInputs(
-                GTOreDictUnificator.get(OrePrefixes.nanite, Materials.Carbon, 0),
+                GTOreDictUnificator.get(OrePrefixes.nanite, Materials.Neutronium, 0),
                 GTUtility.getIntegratedCircuit(11),
                 GTOreDictUnificator.get(OrePrefixes.dust, Materials.Carbon, 60))
             .fluidInputs(
@@ -288,6 +289,25 @@ public class ShallowChemicalCouplingRecipes implements IRecipePool {
             .metadata(COIL_HEAT, 6300)
             .duration(200)
             .eut(TierEU.RECIPE_EV)
+            .addTo(SCCR);
+
+        RecipeBuilder.builder()
+            .itemInputs(
+                GTOreDictUnificator.get(OrePrefixes.nanite, Materials.Silver, 0),
+                GTUtility.getIntegratedCircuit(14),
+                ItemList.Spinneret.get(0),
+                GTUtility.copyAmountUnsafe(65, GTOreDictUnificator.get(OrePrefixes.dust, Materials.Carbon, 1)))
+            .fluidInputs(
+                Materials.Hydrogen.getGas(52000),
+                Materials.Nitrogen.getGas(8000),
+                Materials.Oxygen.getGas(14000))
+            .fluidOutputs(
+                MaterialsKevlar.LiquidCrystalKevlar.getFluid(1000),
+                MaterialsKevlar.PolyurethaneResin.getFluid(1000),
+                MaterialsKevlar.Kevlar.getMolten(144))
+            .metadata(COIL_HEAT, 11700)
+            .duration(200)
+            .eut(TierEU.RECIPE_UEV)
             .addTo(SCCR);
 
         if (Forestry.isModLoaded()) loadCombsRecipes();
