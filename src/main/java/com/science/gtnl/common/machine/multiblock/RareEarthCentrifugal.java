@@ -89,10 +89,7 @@ public class RareEarthCentrifugal extends MultiMachineBase<RareEarthCentrifugal>
     public MultiblockTooltipBuilder createTooltip() {
         MultiblockTooltipBuilder tt = new MultiblockTooltipBuilder();
         tt.addMachineType(StatCollector.translateToLocal("RareEarthCentrifugalRecipeType"))
-            .addInfo(StatCollector.translateToLocal("Tooltip_GTMMultiMachine_04"))
-            .addSeparator()
-            .addInfo(StatCollector.translateToLocal("StructureTooComplex"))
-            .addInfo(StatCollector.translateToLocal("BLUE_PRINT_INFO"))
+            .addMultiAmpHatchInfo()
             .beginStructureBlock(5, 5, 5, true)
             .addInputHatch(StatCollector.translateToLocal("Tooltip_RareEarthCentrifugal_Casing"))
             .addOutputHatch(StatCollector.translateToLocal("Tooltip_RareEarthCentrifugal_Casing"))

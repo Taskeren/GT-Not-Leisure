@@ -106,7 +106,7 @@ public class LargeIncubator extends MultiMachineBase<LargeIncubator> implements 
             .addInfo(StatCollector.translateToLocal("Tooltip_LargeIncubator_03"))
             .addInfo(StatCollector.translateToLocal("Tooltip_LargeIncubator_04"))
             .addInfo(StatCollector.translateToLocal("Tooltip_PerfectOverclock"))
-            .addInfo(StatCollector.translateToLocal("Tooltip_Tectech_Hatch"))
+            .addTecTechHatchInfo()
             .beginStructureBlock(13, 9, 13, false)
             .addMaintenanceHatch(StatCollector.translateToLocal("Tooltip_LargeIncubator_Casing"), 1)
             .addOtherStructurePart(

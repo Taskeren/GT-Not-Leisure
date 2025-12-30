@@ -349,9 +349,6 @@ public class EternalGregTechWorkshop extends MultiMachineBase<EternalGregTechWor
     public MultiblockTooltipBuilder createTooltip() {
         MultiblockTooltipBuilder tt = new MultiblockTooltipBuilder();
         tt.addMachineType(StatCollector.translateToLocal("EternalGregTechWorkshopRecipeType"))
-            .addSeparator()
-            .addInfo(StatCollector.translateToLocal("StructureTooComplex"))
-            .addInfo(StatCollector.translateToLocal("BLUE_PRINT_INFO"))
             .beginStructureBlock(75, 96, 75, true)
             .addInputBus(StatCollector.translateToLocal("Tooltip_EternalGregTechWorkshop_Casing"), 1)
             .addOutputBus(StatCollector.translateToLocal("Tooltip_EternalGregTechWorkshop_Casing"), 1)

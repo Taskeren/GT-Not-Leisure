@@ -318,9 +318,6 @@ public class WhiteNightGenerator extends MultiMachineBase<WhiteNightGenerator> {
             .addInfo(StatCollector.translateToLocal("Tooltip_WhiteNightGenerator_49"))
             .addInfo(StatCollector.translateToLocal("Tooltip_WhiteNightGenerator_50"))
             .addInfo(StatCollector.translateToLocal("Tooltip_WhiteNightGenerator_51"))
-            .addSeparator()
-            .addInfo(StatCollector.translateToLocal("StructureTooComplex"))
-            .addInfo(StatCollector.translateToLocal("BLUE_PRINT_INFO"))
             .beginStructureBlock(99, 84, 48, false)
             .addStructureInfo(StatCollector.translateToLocal("Tooltip_RealArtificialStar_02_01"))
             .toolTipFinisher();

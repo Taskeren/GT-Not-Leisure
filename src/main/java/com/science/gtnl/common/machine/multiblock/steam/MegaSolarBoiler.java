@@ -226,9 +226,6 @@ public class MegaSolarBoiler extends SteamMultiMachineBase<MegaSolarBoiler> impl
             .addInfo(StatCollector.translateToLocal("Tooltip_MegaSolarBoiler_00"))
             .addInfo(StatCollector.translateToLocal("Tooltip_MegaSolarBoiler_01"))
             .addInfo(StatCollector.translateToLocal("Tooltip_MegaSolarBoiler_02"))
-            .addSeparator()
-            .addInfo(StatCollector.translateToLocal("StructureTooComplex"))
-            .addInfo(StatCollector.translateToLocal("BLUE_PRINT_INFO"))
             .beginStructureBlock(21, 5, 7, true)
             .addSubChannelUsage(GTStructureChannels.BOROGLASS)
             .toolTipFinisher();

@@ -425,10 +425,7 @@ public class HighPerformanceComputationArray extends TTMultiblockBase implements
             .addInfo(StatCollector.translateToLocal("Tooltip_HighPerformanceComputationArray_02"))
             .addInfo(StatCollector.translateToLocal("Tooltip_HighPerformanceComputationArray_03"))
             .addInfo(StatCollector.translateToLocal("Tooltip_HighPerformanceComputationArray_04"))
-            .addInfo(StatCollector.translateToLocal("Tooltip_Tectech_Hatch"))
-            .addSeparator()
-            .addInfo(StatCollector.translateToLocal("StructureTooComplex"))
-            .addInfo(StatCollector.translateToLocal("BLUE_PRINT_INFO"))
+            .addTecTechHatchInfo()
             .beginVariableStructureBlock(2, 2, 4, 4, 5, 16, false)
             .addOtherStructurePart(
                 StatCollector.translateToLocal("Tooltip_HighPerformanceComputationArray_Casing_00"),

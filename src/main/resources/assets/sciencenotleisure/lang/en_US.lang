@@ -28,8 +28,6 @@ Tooltip_Adder=Add Mod:
 Tooltip_ChangeAdder=Change Mod: 
 Tooltip_NoMobsSpawnInThisBlock=Mobs cannot Spawn on this Block
 Tooltip_NoTileEntitySpawnInThisBlock=This is NOT a TileEntity!
-Tooltip_Tectech_Hatch=Supports §9Tec§1Tech§r laser hatches!
-Tooltip_HighAmp_Hatch=Supports §9Tec§1Tech§r high amp hatches!
 Tooltip_PerfectOverclock=Machine can perform §cPerfect Overclock§r
 Tooltip_PressShift=§rHold §6Shift §rfor more information
 Tooltip_PressCtrl=§rHold §6Ctrl §rfor more information
@@ -1646,15 +1644,10 @@ ParallelTooltip=Parallel:
 HighPressureTooltipNotice=High pressure mode doubles processing speed and steam consumption
 Info_SteamMachine_00=Overclocking count
 
-StructureTooComplex=Structure is too complex!
-BLUE_PRINT_INFO=Please refer to §9Structure§1Lib§7 hologram to build the main structure
-textUseBlueprint=Use §9Blueprint§r to preview
-
 Tooltip_GTMMultiMachine_00=67% faster than machines of the same voltage
 Tooltip_GTMMultiMachine_01=Only requires 80% of the recipe's power
 Tooltip_GTMMultiMachine_02=Initial parallelism is 8
 Tooltip_GTMMultiMachine_03=Place a parallel control core in the controller to increase max parallelism and reduce power consumption!
-Tooltip_GTMMultiMachine_04=Supports §9Tec§1Tech§r multi-energy storage!
 
 Tooltip_WirelessEnergyMultiMachine_00=400% faster than machines of the same voltage
 Tooltip_WirelessEnergyMultiMachine_01=Only requires 60% of the recipe's power

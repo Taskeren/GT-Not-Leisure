@@ -381,11 +381,8 @@ public abstract class LargeBoiler extends MTEEnhancedMultiBlockBase<LargeBoiler>
         public MultiblockTooltipBuilder createTooltip() {
             MultiblockTooltipBuilder tt = new MultiblockTooltipBuilder();
             tt.addMachineType(StatCollector.translateToLocal("LargeBoilerRecipeType"))
-                .addSeparator()
                 .addInfo(StatCollector.translateToLocal("Tooltip_LargeBoilerBronze_00"))
                 .addInfo(StatCollector.translateToLocal("Tooltip_LargeBoiler_00"))
-                .addInfo(StatCollector.translateToLocal("StructureTooComplex"))
-                .addInfo(StatCollector.translateToLocal("BLUE_PRINT_INFO"))
                 .beginStructureBlock(3, 5, 3, false)
                 .addOutputHatch(StatCollector.translateToLocal("Tooltip_LargeBoiler_Casing_00"), 1)
                 .addInputBus(StatCollector.translateToLocal("Tooltip_LargeBoiler_Casing_01"), 1)
@@ -465,11 +462,8 @@ public abstract class LargeBoiler extends MTEEnhancedMultiBlockBase<LargeBoiler>
         public MultiblockTooltipBuilder createTooltip() {
             MultiblockTooltipBuilder tt = new MultiblockTooltipBuilder();
             tt.addMachineType(StatCollector.translateToLocal("LargeBoilerRecipeType"))
-                .addSeparator()
                 .addInfo(StatCollector.translateToLocal("Tooltip_LargeBoilerSteel_00"))
                 .addInfo(StatCollector.translateToLocal("Tooltip_LargeBoiler_00"))
-                .addInfo(StatCollector.translateToLocal("StructureTooComplex"))
-                .addInfo(StatCollector.translateToLocal("BLUE_PRINT_INFO"))
                 .beginStructureBlock(3, 5, 3, false)
                 .addOutputHatch(StatCollector.translateToLocal("Tooltip_LargeBoiler_Casing_00"), 1)
                 .addInputBus(StatCollector.translateToLocal("Tooltip_LargeBoiler_Casing_01"), 1)
@@ -549,11 +543,8 @@ public abstract class LargeBoiler extends MTEEnhancedMultiBlockBase<LargeBoiler>
         public MultiblockTooltipBuilder createTooltip() {
             MultiblockTooltipBuilder tt = new MultiblockTooltipBuilder();
             tt.addMachineType(StatCollector.translateToLocal("LargeBoilerRecipeType"))
-                .addSeparator()
                 .addInfo(StatCollector.translateToLocal("Tooltip_LargeBoilerTitanium_00"))
                 .addInfo(StatCollector.translateToLocal("Tooltip_LargeBoiler_00"))
-                .addInfo(StatCollector.translateToLocal("StructureTooComplex"))
-                .addInfo(StatCollector.translateToLocal("BLUE_PRINT_INFO"))
                 .beginStructureBlock(3, 5, 3, false)
                 .addOutputHatch(StatCollector.translateToLocal("Tooltip_LargeBoiler_Casing_00"), 1)
                 .addInputBus(StatCollector.translateToLocal("Tooltip_LargeBoiler_Casing_01"), 1)
@@ -633,11 +624,8 @@ public abstract class LargeBoiler extends MTEEnhancedMultiBlockBase<LargeBoiler>
         public MultiblockTooltipBuilder createTooltip() {
             MultiblockTooltipBuilder tt = new MultiblockTooltipBuilder();
             tt.addMachineType(StatCollector.translateToLocal("LargeBoilerRecipeType"))
-                .addSeparator()
                 .addInfo(StatCollector.translateToLocal("Tooltip_LargeBoilerTungstenSteel_00"))
                 .addInfo(StatCollector.translateToLocal("Tooltip_LargeBoiler_00"))
-                .addInfo(StatCollector.translateToLocal("StructureTooComplex"))
-                .addInfo(StatCollector.translateToLocal("BLUE_PRINT_INFO"))
                 .beginStructureBlock(3, 5, 3, false)
                 .addOutputHatch(StatCollector.translateToLocal("Tooltip_LargeBoiler_Casing_00"), 1)
                 .addInputBus(StatCollector.translateToLocal("Tooltip_LargeBoiler_Casing_01"), 1)

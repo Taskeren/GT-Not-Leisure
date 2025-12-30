@@ -530,7 +530,7 @@ public abstract class MixinMTEIntegratedOreFactory
             .addInfo(StatCollector.translateToLocal("Tooltip_IntegratedOreFactory_06"))
             .addInfo(StatCollector.translateToLocal("Tooltip_IntegratedOreFactory_07"))
             .addInfo(StatCollector.translateToLocal("Tooltip_PerfectOverclock"))
-            .addInfo(StatCollector.translateToLocal("Tooltip_Tectech_Hatch"))
+            .addTecTechHatchInfo()
             .beginStructureBlock(6, 12, 11, false)
             .addController(StatCollector.translateToLocal("Tooltip_IntegratedOreFactory_08"))
             .addCasingInfoExactly(StatCollector.translateToLocal("Tooltip_IntegratedOreFactory_Casing_00"), 128, false)

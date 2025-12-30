@@ -313,9 +313,6 @@ public abstract class NaquadahReactor<T extends NaquadahReactor<T>> extends Mult
                         getEUtMultiple()))
                 .addInfo(
                     StatCollector.translateToLocalFormatted("Tooltip_LargeNaquadahReactor_03", getExtraGas().amount))
-                .addSeparator()
-                .addInfo(StatCollector.translateToLocal("StructureTooComplex"))
-                .addInfo(StatCollector.translateToLocal("BLUE_PRINT_INFO"))
                 .beginStructureBlock(25, 25, 9, true)
                 .addInputHatch(StatCollector.translateToLocal("Tooltip_LargeNaquadahReactor_Casing"))
                 .addOutputHatch(StatCollector.translateToLocal("Tooltip_LargeNaquadahReactor_Casing"))
@@ -442,9 +439,6 @@ public abstract class NaquadahReactor<T extends NaquadahReactor<T>> extends Mult
                         getEUtMultiple()))
                 .addInfo(
                     StatCollector.translateToLocalFormatted("Tooltip_HyperNaquadahReactor_03", getExtraGas().amount))
-                .addSeparator()
-                .addInfo(StatCollector.translateToLocal("StructureTooComplex"))
-                .addInfo(StatCollector.translateToLocal("BLUE_PRINT_INFO"))
                 .beginStructureBlock(27, 21, 21, true)
                 .addInputHatch(StatCollector.translateToLocal("Tooltip_HyperNaquadahReactor_Casing"))
                 .addOutputHatch(StatCollector.translateToLocal("Tooltip_HyperNaquadahReactor_Casing"))
@@ -661,9 +655,6 @@ public abstract class NaquadahReactor<T extends NaquadahReactor<T>> extends Mult
                 .addInfo(
                     StatCollector
                         .translateToLocalFormatted("Tooltip_AdvancedHyperNaquadahReactor_03", getExtraGas().amount))
-                .addSeparator()
-                .addInfo(StatCollector.translateToLocal("StructureTooComplex"))
-                .addInfo(StatCollector.translateToLocal("BLUE_PRINT_INFO"))
                 .beginStructureBlock(35, 19, 36, true)
                 .addInputHatch(StatCollector.translateToLocal("Tooltip_AdvancedHyperNaquadahReactor_Casing"))
                 .addOutputHatch(StatCollector.translateToLocal("Tooltip_AdvancedHyperNaquadahReactor_Casing"))

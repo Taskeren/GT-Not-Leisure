@@ -135,9 +135,6 @@ public class MegaSteamCompressor extends SteamMultiMachineBase<MegaSteamCompress
             .addInfo(StatCollector.translateToLocal("Tooltip_MegaSteamCompressor_01"))
             .addInfo(StatCollector.translateToLocal("Tooltip_MegaSteamCompressor_02"))
             .addInfo(StatCollector.translateToLocal("Tooltip_MegaSteamCompressor_03"))
-            .addSeparator()
-            .addInfo(StatCollector.translateToLocal("StructureTooComplex"))
-            .addInfo(StatCollector.translateToLocal("BLUE_PRINT_INFO"))
             .beginStructureBlock(35, 33, 35, true)
             .addSubChannelUsage(GTStructureChannels.BOROGLASS)
             .toolTipFinisher();

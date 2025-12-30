@@ -936,10 +936,7 @@ public class AssemblerMatrix extends MultiMachineBase<AssemblerMatrix>
             .addInfo(StatCollector.translateToLocal("Tooltip_AssemblerMatrix_04"))
             .addInfo(StatCollector.translateToLocal("Tooltip_AssemblerMatrix_05"))
             .addInfo(StatCollector.translateToLocal("Tooltip_AssemblerMatrix_06"))
-            .addInfo(StatCollector.translateToLocal("Tooltip_Tectech_Hatch"))
-            .addSeparator()
-            .addInfo(StatCollector.translateToLocal("StructureTooComplex"))
-            .addInfo(StatCollector.translateToLocal("BLUE_PRINT_INFO"))
+            .addTecTechHatchInfo()
             .beginStructureBlock(9, 9, 9, false)
             .toolTipFinisher();
         return tt;

@@ -134,7 +134,7 @@ public class Incubator extends MultiMachineBase<Incubator> implements ISurvivalC
             .addInfo(StatCollector.translateToLocal("Tooltip_Incubator_00"))
             .addInfo(StatCollector.translateToLocal("Tooltip_Incubator_01"))
             .addInfo(StatCollector.translateToLocal("Tooltip_Incubator_02"))
-            .addInfo(StatCollector.translateToLocal("Tooltip_GTMMultiMachine_04"))
+            .addMultiAmpHatchInfo()
             .beginStructureBlock(5, 5, 5, false)
             .addMaintenanceHatch(StatCollector.translateToLocal("Tooltip_Incubator_Casing"), 1)
             .addOtherStructurePart(

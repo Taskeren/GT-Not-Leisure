@@ -47,9 +47,6 @@ public class SteamWeatherModule extends SteamElevatorModule {
             .addInfo(StatCollector.translateToLocal("Tooltip_SteamWeatherModule_00"))
             .addInfo(StatCollector.translateToLocal("Tooltip_SteamWeatherModule_01"))
             .addInfo(StatCollector.translateToLocal("Tooltip_SteamWeatherModule_02"))
-            .addSeparator()
-            .addInfo(StatCollector.translateToLocal("StructureTooComplex"))
-            .addInfo(StatCollector.translateToLocal("BLUE_PRINT_INFO"))
             .beginStructureBlock(1, 5, 2, false)
             .toolTipFinisher();
         return tt;

@@ -28,8 +28,6 @@ Tooltip_Adder=添加模组：
 Tooltip_ChangeAdder=修改模组：
 Tooltip_NoMobsSpawnInThisBlock=生物不会在这个方块上生成
 Tooltip_NoTileEntitySpawnInThisBlock=这不是一个实体！
-Tooltip_Tectech_Hatch=支持§9Tec§1Tech§r§7激光仓！ 
-Tooltip_HighAmp_Hatch=支持§9Tec§1Tech§r§7多安能源仓！
 Tooltip_PerfectOverclock=机器可进行§c无损超频§7
 Tooltip_PressShift=§r按住 §6Shift §r查看更多信息
 Tooltip_PressCtrl=§r按住 §6Ctrl §r查看更多信息
@@ -1646,15 +1644,10 @@ ParallelTooltip=并行：
 HighPressureTooltipNotice=高压模式下处理速度和蒸汽消耗翻倍
 Info_SteamMachine_00=超频次数
 
-StructureTooComplex=结构太复杂了！ 
-BLUE_PRINT_INFO=请参考§9Structure§1Lib§7全息投影，构建主体结构
-textUseBlueprint=用§9蓝§b图§r预览
-
 Tooltip_GTMMultiMachine_00=比相同电压的机器快67%
 Tooltip_GTMMultiMachine_01=只需要使用配方要求功率的80%
 Tooltip_GTMMultiMachine_02=初始并行为8
 Tooltip_GTMMultiMachine_03=在控制器内放入并行控制核心来提升最大并行数和减少耗电！ 
-Tooltip_GTMMultiMachine_04=支持§9Tec§1Tech§r§7多安能源仓！ 
 
 Tooltip_WirelessEnergyMultiMachine_00=比相同电压的机器快400%
 Tooltip_WirelessEnergyMultiMachine_01=只需要使用配方要求功率的60%

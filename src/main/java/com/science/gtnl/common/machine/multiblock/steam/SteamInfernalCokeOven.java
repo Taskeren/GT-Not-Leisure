@@ -202,9 +202,6 @@ public class SteamInfernalCokeOven extends SteamMultiMachineBase<SteamInfernalCo
             .addInfo(StatCollector.translateToLocal("Tooltip_SteamInfernalCokeOven_00"))
             .addInfo(StatCollector.translateToLocal("Tooltip_SteamInfernalCokeOven_01"))
             .addInfo(StatCollector.translateToLocal("Tooltip_SteamInfernalCokeOven_02"))
-            .addSeparator()
-            .addInfo(StatCollector.translateToLocal("StructureTooComplex"))
-            .addInfo(StatCollector.translateToLocal("BLUE_PRINT_INFO"))
             .beginStructureBlock(5, 5, 5, true)
             .toolTipFinisher();
         return tt;

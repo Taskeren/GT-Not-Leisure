@@ -80,7 +80,7 @@ public class ColdIceFreezer extends MultiMachineBase<ColdIceFreezer> implements 
             .addInfo(StatCollector.translateToLocal("Tooltip_ColdIceFreezer_01"))
             .addInfo(StatCollector.translateToLocal("Tooltip_ColdIceFreezer_02"))
             .addInfo(StatCollector.translateToLocal("Tooltip_ColdIceFreezer_03"))
-            .addInfo(StatCollector.translateToLocal("Tooltip_GTMMultiMachine_04"))
+            .addMultiAmpHatchInfo()
             .beginStructureBlock(5, 5, 9, true)
             .addInputBus(StatCollector.translateToLocal("Tooltip_ColdIceFreezer_Casing_00"), 1)
             .addOutputBus(StatCollector.translateToLocal("Tooltip_ColdIceFreezer_Casing_00"), 1)

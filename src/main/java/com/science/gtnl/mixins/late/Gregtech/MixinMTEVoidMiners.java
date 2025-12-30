@@ -113,7 +113,7 @@ public abstract class MixinMTEVoidMiners extends MTEVoidMinerBase<MixinMTEVoidMi
 
         if (TIER_MULTIPLIER == 3) tt.addInfo(StatCollector.translateToLocal("Tooltip_PerfectOverclock"));
 
-        tt.addInfo(StatCollector.translateToLocal("Tooltip_Tectech_Hatch"))
+        tt.addTecTechHatchInfo()
             .beginStructureBlock(structureBlock[0], structureBlock[1], structureBlock[2], false);
 
         switch (TIER_MULTIPLIER) {

@@ -124,9 +124,6 @@ public class SteamWoodcutter extends SteamMultiMachineBase<SteamWoodcutter> impl
         tt.addMachineType(getMachineType())
             .addInfo(StatCollector.translateToLocal("Tooltip_SteamWoodcutter_00"))
             .addInfo(StatCollector.translateToLocal("Tooltip_SteamWoodcutter_01"))
-            .addSeparator()
-            .addInfo(StatCollector.translateToLocal("StructureTooComplex"))
-            .addInfo(StatCollector.translateToLocal("BLUE_PRINT_INFO"))
             .beginStructureBlock(7, 8, 7, true)
             .addSubChannelUsage(GTStructureChannels.BOROGLASS)
             .toolTipFinisher();

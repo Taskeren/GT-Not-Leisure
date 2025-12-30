@@ -121,9 +121,6 @@ public class SteamCarpenter extends SteamMultiMachineBase<SteamCarpenter> implem
         tt.addMachineType(getMachineType())
             .addInfo(StatCollector.translateToLocal("Tooltip_SteamCarpenter_00"))
             .addInfo(StatCollector.translateToLocal("Tooltip_SteamCarpenter_01"))
-            .addSeparator()
-            .addInfo(StatCollector.translateToLocal("StructureTooComplex"))
-            .addInfo(StatCollector.translateToLocal("BLUE_PRINT_INFO"))
             .beginStructureBlock(3, 3, 3, true)
             .toolTipFinisher();
         return tt;
