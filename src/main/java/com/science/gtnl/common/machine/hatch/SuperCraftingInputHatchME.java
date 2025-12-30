@@ -553,6 +553,11 @@ public class SuperCraftingInputHatchME extends MTEHatchInputBus implements IConf
     }
 
     @Override
+    public ItemStack getSelfRep() {
+        return this.getStackForm(1);
+    }
+
+    @Override
     public IGridNode getGridNode(ForgeDirection dir) {
         return getProxy().getNode();
     }
