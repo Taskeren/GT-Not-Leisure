@@ -2194,8 +2194,6 @@ NaquadahReactorMetadata.0=需要超能硅岩反应堆
 NaquadahReactorMetadata.1=需要进阶超能硅岩反应堆
 NaquadahReactorRecipeType=硅岩反应
 NEI.NaquadahReactorRecipes.specialValue=产能功率：
-NaquadahReactor.Generates.0=产能功率：
-NaquadahReactor.Generates.1=使用额外气体加速
 Tooltip_LargeNaquadahReactor_00=固定并行为%s
 Tooltip_LargeNaquadahReactor_01=可以在配方开始的时候输入氧气
 Tooltip_LargeNaquadahReactor_02=这会让时间减少%s倍，功率翻%s倍
@@ -2211,6 +2209,8 @@ Tooltip_AdvancedHyperNaquadahReactor_01=可以在配方开始的时候输入熔�
 Tooltip_AdvancedHyperNaquadahReactor_02=这会让时间减少%s倍，功率翻%s倍
 Tooltip_AdvancedHyperNaquadahReactor_03=代价是每秒会消耗%sL的熔融时空
 Tooltip_AdvancedHyperNaquadahReactor_Casing=任意硅岩合金聚合机械方块
+Info_NaquadahReactor_00=产能功率：
+Info_NaquadahReactor_01=使用额外气体加速
 
 NameGrandAssemblyLine=大型装配线
 GrandAssemblyLineRecipeType=无序装配线

@@ -814,7 +814,8 @@ public abstract class KuangBiaoOneGiantNuclearFusionReactor
                         (int) (getMachineEUtDiscount() * 100)))
                 .addInfo(StatCollector.translateToLocal("Tooltip_KuangBiaoOneGiantNuclearFusionReactor_03"))
                 .addInfo(
-                    StatCollector.translateToLocal("Tooltip_KuangBiaoOneGiantNuclearFusionReactor_04") + maxEUStore()
+                    StatCollector.translateToLocal("Tooltip_KuangBiaoOneGiantNuclearFusionReactor_04")
+                        + GTUtility.formatNumbers(maxEUStore())
                         + " EU")
                 .addInfo(
                     StatCollector.translateToLocalFormatted(

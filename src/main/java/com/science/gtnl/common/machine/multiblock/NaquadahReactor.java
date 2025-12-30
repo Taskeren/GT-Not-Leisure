@@ -208,13 +208,13 @@ public abstract class NaquadahReactor<T extends NaquadahReactor<T>> extends Mult
         final NBTTagCompound tag = accessor.getNBTData();
         if (tag.hasKey("mEUt")) {
             currentTip.add(
-                StatCollector.translateToLocal("NaquadahReactor.Generates.0") + EnumChatFormatting.WHITE
+                StatCollector.translateToLocal("Info_NaquadahReactor_00") + EnumChatFormatting.WHITE
                     + tag.getLong("mEUt")
                     + " EU/t"
                     + EnumChatFormatting.RESET);
         }
         if (tag.getBoolean("useExtraGas")) {
-            currentTip.add(StatCollector.translateToLocal("NaquadahReactor.Generates.1"));
+            currentTip.add(StatCollector.translateToLocal("Info_NaquadahReactor_01"));
         }
     }
 

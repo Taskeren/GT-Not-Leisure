@@ -2194,8 +2194,6 @@ NaquadahReactorMetadata.0=Requires Hyper Naquadah Reactor
 NaquadahReactorMetadata.1=Requires Advanced Hyper Naquadah Reactor
 NaquadahReactorRecipeType=Naquadah Reaction
 NEI.NaquadahReactorRecipes.specialValue=Power Output:
-NaquadahReactor.Generates.0=Power Output:
-NaquadahReactor.Generates.1=Extra Gas Boost
 Tooltip_LargeNaquadahReactor_00=Fixed parallelism of %s
 Tooltip_LargeNaquadahReactor_01=Can input oxygen at the start of the recipe
 Tooltip_LargeNaquadahReactor_02=This will make time %s times shorter and power %s times greater
@@ -2211,6 +2209,8 @@ Tooltip_AdvancedHyperNaquadahReactor_01=Can input spacetime at the start of the 
 Tooltip_AdvancedHyperNaquadahReactor_02=This will make time %s times shorter and power %s times greater
 Tooltip_AdvancedHyperNaquadahReactor_03=The cost is %sL of spacetime consumed per second
 Tooltip_AdvancedHyperNaquadahReactor_Casing=Any Naquadah Alloy Fusion Casing
+Info_NaquadahReactor_00=Power Output:
+Info_NaquadahReactor_01=Extra Gas Boost
 
 NameGrandAssemblyLine=Grand Assembly Line
 GrandAssemblyLineRecipeType=Disordered Assembly Line

@@ -10,6 +10,7 @@ import org.jetbrains.annotations.NotNull;
 
 import com.science.gtnl.utils.recipes.metadata.NaquadahReactorMetadata;
 
+import gregtech.api.util.GTUtility;
 import gregtech.nei.RecipeDisplayInfo;
 import gregtech.nei.formatter.INEISpecialInfoFormatter;
 
@@ -20,8 +21,9 @@ public class NaquadahReactorFormat implements INEISpecialInfoFormatter {
     public List<String> format(RecipeDisplayInfo recipeInfo) {
         List<String> msgs = new ArrayList<>();
         msgs.add(
-            StatCollector.translateToLocal("NEI.NaquadahReactorRecipes.specialValue")
-                + recipeInfo.recipe.getMetadataOrDefault(NaquadahReactorMetadata.INSTANCE, Pair.of(0, 0L))
+            StatCollector.translateToLocal("NEI.NaquadahReactorRecipes.specialValue") + GTUtility.formatNumbers(
+                recipeInfo.recipe.getMetadataOrDefault(NaquadahReactorMetadata.INSTANCE, Pair.of(0, 0L))
+                    .getValue())
                 + " EU/t");
         return msgs;
     }
