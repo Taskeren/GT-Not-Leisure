@@ -381,6 +381,8 @@ Tooltip_AdvancedSuperInputHatchME_00=Auto-Pull from ME mode will automatically s
 Tooltip_AdvancedSuperInputHatchME_01=Toggle by right-clicking with screwdriver, or use the GUI.
 Tooltip_AdvancedSuperInputHatchME_02=Use the GUI to limit the minimum stack size for Auto-Pulling, adjust the slot refresh timer and enable fast recipe checks.
 Tooltip_AdvancedSuperInputHatchME_03=WARNING: Fast recipe checks can be laggy. Use with caution.
+Info_SuperInputHatchME_00=Configure extraction amount
+Info_SuperInputHatchME_01=Slot: 
 
 EnergyHatchMAX=MAX Energy Hatch
 

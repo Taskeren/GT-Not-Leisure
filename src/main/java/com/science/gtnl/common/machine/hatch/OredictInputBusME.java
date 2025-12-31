@@ -762,7 +762,6 @@ public class OredictInputBusME extends MTEHatchInputBusME implements IRecipeProc
                     .setPos(53, 87)
                     .setSize(16, 16)
                     .addTooltip(StatCollector.translateToLocal("GT5U.machines.stocking_bus.hatch_warning")));
-
         builder.widget(
             TextWidget.localised("Info_OredictInputBusME_Oredict")
                 .setPos(3, 120)

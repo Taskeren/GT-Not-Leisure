@@ -381,6 +381,8 @@ Tooltip_AdvancedSuperInputHatchME_00=ME自动拉取模式将会自动标记ME网
 Tooltip_AdvancedSuperInputHatchME_01=使用螺丝刀切换，或在GUI配置.
 Tooltip_AdvancedSuperInputHatchME_02=在GUI配置 "自动拉取" 的最小堆叠数与快速配方检查，调整流体槽位刷新时间并启用快速配方检查.
 Tooltip_AdvancedSuperInputHatchME_03=警告：快速配方检查可能会很卡. 请谨慎使用.
+Info_SuperInputHatchME_00=设置指定抽取数量
+Info_SuperInputHatchME_01=槽位：
 
 EnergyHatchMAX=MAX能源仓
 

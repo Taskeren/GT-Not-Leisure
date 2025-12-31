@@ -1363,7 +1363,7 @@ public class SuperCraftingInputHatchME extends MTEHatchInputBus implements IConf
         return builder.build();
     }
 
-    protected ModularWindow createPatternSlotManualWindow(final EntityPlayer player, int slotID) {
+    public ModularWindow createPatternSlotManualWindow(final EntityPlayer player, int slotID) {
         final int WIDTH = 68;
         final int HEIGHT = 68;
         final int PARENT_WIDTH = getGUIWidth();

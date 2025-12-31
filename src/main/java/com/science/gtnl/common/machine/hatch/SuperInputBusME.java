@@ -3,8 +3,10 @@ package com.science.gtnl.common.machine.hatch;
 import static gregtech.api.enums.GTValues.TIER_COLORS;
 import static gregtech.api.enums.GTValues.VN;
 
+import java.io.IOException;
 import java.text.MessageFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
@@ -13,6 +15,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
+import net.minecraft.network.PacketBuffer;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.StatCollector;
 
@@ -20,6 +23,7 @@ import com.cleanroommc.modularui.utils.item.ItemStackHandler;
 import com.gtnewhorizons.modularui.api.ModularUITextures;
 import com.gtnewhorizons.modularui.api.drawable.IDrawable;
 import com.gtnewhorizons.modularui.api.math.Alignment;
+import com.gtnewhorizons.modularui.api.math.Color;
 import com.gtnewhorizons.modularui.api.math.Size;
 import com.gtnewhorizons.modularui.api.screen.ModularWindow;
 import com.gtnewhorizons.modularui.api.screen.UIBuildContext;
@@ -31,6 +35,7 @@ import com.gtnewhorizons.modularui.common.widget.Scrollable;
 import com.gtnewhorizons.modularui.common.widget.SlotGroup;
 import com.gtnewhorizons.modularui.common.widget.SlotWidget;
 import com.gtnewhorizons.modularui.common.widget.TextWidget;
+import com.gtnewhorizons.modularui.common.widget.textfield.NumericWidget;
 import com.science.gtnl.mixins.late.Gregtech.AccessorCommonMetaTileEntity;
 import com.science.gtnl.mixins.late.Gregtech.AccessorMetaTileEntity;
 import com.science.gtnl.utils.enums.GTNLItemList;
@@ -72,6 +77,7 @@ public class SuperInputBusME extends MTEHatchInputBusME implements IConfiguratio
     public static int SIDE_SLOT_COUNT = 100;
     public static int ALL_SLOT_COUNT = SIDE_SLOT_COUNT * 2 + 1 + 9 * 9;
     public ItemStack[] shadowInventory = new ItemStack[SIDE_SLOT_COUNT];
+    public int[] storedStackSizes = new int[SIDE_SLOT_COUNT];
     public int[] savedStackSizes = new int[SIDE_SLOT_COUNT];
     public static final int CONFIG_WINDOW_ID = 10;
     public static final int MANUAL_SLOT_WINDOW = 11;
@@ -131,11 +137,29 @@ public class SuperInputBusME extends MTEHatchInputBusME implements IConfiguratio
     }
 
     @Override
+    public void onFirstTick(IGregTechTileEntity aBaseMetaTileEntity) {
+        super.onFirstTick(aBaseMetaTileEntity);
+        Arrays.fill(storedStackSizes, Integer.MAX_VALUE);
+    }
+
+    @Override
     public void saveNBTData(NBTTagCompound aNBT) {
         super.saveNBTData(aNBT);
         int[] sizes = new int[100];
         for (int i = 0; i < 100; ++i) sizes[i] = mInventory[i + 100] == null ? 0 : mInventory[i + 100].stackSize;
         aNBT.setIntArray("sizes", sizes);
+
+        NBTTagList stackSizeList = new NBTTagList();
+        for (int i = 0; i < SLOT_COUNT; i++) {
+            int size = storedStackSizes[i];
+            if (size != Integer.MAX_VALUE) continue;
+            NBTTagCompound tag = new NBTTagCompound();
+            tag.setInteger("slot", i);
+            tag.setInteger("size", size);
+            stackSizeList.appendTag(tag);
+        }
+
+        aNBT.setTag("storedStackSizes", stackSizeList);
     }
 
     @Override
@@ -170,6 +194,18 @@ public class SuperInputBusME extends MTEHatchInputBusME implements IConfiguratio
                 }
             }
         }
+
+        if (aNBT.hasKey("storedStackSizes")) {
+            NBTTagList list = aNBT.getTagList("storedStackSizes", 10);
+            for (int i = 0; i < list.tagCount(); i++) {
+                NBTTagCompound tag = list.getCompoundTagAt(i);
+                int slot = tag.getInteger("slot");
+                int size = tag.getInteger("size");
+                if (slot < SLOT_COUNT) {
+                    storedStackSizes[slot] = size;
+                }
+            }
+        }
     }
 
     @Override
@@ -198,6 +234,17 @@ public class SuperInputBusME extends MTEHatchInputBusME implements IConfiguratio
             expediteRecipeCheck = nbt.getBoolean("expediteRecipeCheck");
         }
 
+        NBTTagList list = nbt.getTagList("storedStackSizes", 10);
+        for (int i = 0; i < list.tagCount(); i++) {
+            NBTTagCompound tag = list.getCompoundTagAt(i);
+            int slot = tag.getInteger("slot");
+            int size = tag.getInteger("size");
+
+            if (slot < SLOT_COUNT) {
+                storedStackSizes[slot] = size;
+            }
+        }
+
         additionalConnection = nbt.getBoolean("additionalConnection");
         if (!autoPullItemList) {
             NBTTagList stockingItems = nbt.getTagList("itemsToStock", 10);
@@ -218,8 +265,18 @@ public class SuperInputBusME extends MTEHatchInputBusME implements IConfiguratio
     public NBTTagCompound getCopiedData(EntityPlayer player) {
         NBTTagCompound nbt = super.getCopiedData(player);
 
-        NBTTagList stockingItems = new NBTTagList();
+        NBTTagList stackSizeList = new NBTTagList();
+        for (int i = 0; i < SLOT_COUNT; i++) {
+            int size = storedStackSizes[i];
+            if (size == Integer.MAX_VALUE) continue;
+            NBTTagCompound tag = new NBTTagCompound();
+            tag.setInteger("slot", i);
+            tag.setInteger("size", size);
+            stackSizeList.appendTag(tag);
+        }
+        nbt.setTag("storedStackSizes", stackSizeList);
 
+        NBTTagList stockingItems = new NBTTagList();
         if (!autoPullItemList) {
             for (int index = 0; index < SIDE_SLOT_COUNT; index++) {
                 stockingItems.appendTag(GTUtility.saveItem(mInventory[index]));
@@ -317,7 +374,9 @@ public class SuperInputBusME extends MTEHatchInputBusME implements IConfiguratio
             while (iterator.hasNext() && index < SIDE_SLOT_COUNT) {
                 IAEItemStack currItem = iterator.next();
                 if (currItem.getStackSize() >= minAutoPullStackSize) {
-                    ItemStack itemstack = GTUtility.copyAmount(1, currItem.getItemStack());
+                    ItemStack itemstack = GTUtility.copyAmount(
+                        storedStackSizes[index] == Integer.MAX_VALUE ? 1 : storedStackSizes[index],
+                        currItem.getItemStack());
                     if (expediteRecipeCheck) {
                         ItemStack previous = this.mInventory[index];
                         if (itemstack != null) {
@@ -408,7 +467,7 @@ public class SuperInputBusME extends MTEHatchInputBusME implements IConfiguratio
                     IMEMonitor<IAEItemStack> sg = proxy.getStorage()
                         .getItemInventory();
                     IAEItemStack request = AEItemStack.create(mInventory[aIndex]);
-                    request.setStackSize(Integer.MAX_VALUE);
+                    request.setStackSize(storedStackSizes[aIndex]);
                     IAEItemStack result = sg.extractItems(request, Actionable.SIMULATE, getRequestSource());
                     ItemStack s = (result != null) ? result.getItemStack() : null;
                     // We want to track changes in any ItemStack to notify any connected controllers to make a recipe
@@ -475,12 +534,16 @@ public class SuperInputBusME extends MTEHatchInputBusME implements IConfiguratio
 
     @Override
     public void addUIWidgets(ModularWindow.Builder builder, UIBuildContext buildContext) {
-
         buildContext.addSyncedWindow(MANUAL_SLOT_WINDOW, this::createSlotManualWindow);
         final SlotWidget[] aeSlotWidgets = new SlotWidget[100];
 
         if (autoPullAvailable) {
             buildContext.addSyncedWindow(CONFIG_WINDOW_ID, this::createStackSizeConfigurationWindow);
+        }
+
+        for (int i = 15; i < SLOT_COUNT + 15; i++) {
+            int slotID = i;
+            buildContext.addSyncedWindow(i, (player) -> createStroedStackSizeWindow(player, slotID - 15));
         }
 
         final Scrollable scrollable = new Scrollable().setVerticalScroll();
@@ -498,6 +561,32 @@ public class SuperInputBusME extends MTEHatchInputBusME implements IConfiguratio
             .widgetCreator(slot -> (SlotWidget) new SlotWidget(slot) {
 
                 @Override
+                public ClickResult onClick(int buttonId, boolean doubleClick) {
+                    // vanilla slot interaction is handled on mouseMovedOrUp, so we need to hold the state
+                    // of this widget being clicked and prevent further interaction
+                    if (interactionDisabled || !getMcSlot().isEnabled()) return ClickResult.ACCEPT;
+                    if (buttonId == 2) {
+                        ClickData clickData = ClickData.create(buttonId, doubleClick);
+                        syncToServer(15, clickData::writeToPacket);
+                        return ClickResult.SUCCESS;
+                    }
+                    return super.onClick(buttonId, doubleClick);
+                }
+
+                @Override
+                public void readOnServer(int id, PacketBuffer buf) throws IOException {
+                    if (id == 15) click(ClickData.readPacket(buf));
+                    super.readOnServer(id, buf);
+                }
+
+                public void click(ClickData clickData) {
+                    if (interactionDisabled || !getMcSlot().isEnabled()) return;
+                    if (clickData.mouseButton == 2) {
+                        getContext().openSyncedWindow(getMcSlot().slotNumber - 21);
+                    }
+                }
+
+                @Override
                 public void phantomClick(ClickData clickData, ItemStack cursorStack) {
                     if (clickData.mouseButton != 0 || !getMcSlot().isEnabled()) return;
                     final int aSlotIndex = getMcSlot().getSlotIndex();
@@ -512,6 +601,11 @@ public class SuperInputBusME extends MTEHatchInputBusME implements IConfiguratio
                         aeSlotWidgets[getMcSlot().getSlotIndex()].getMcSlot()
                             .putStack(newInfo);
                     }
+                }
+
+                @Override
+                public boolean onMouseScroll(int direction) {
+                    return false;
                 }
 
                 @Override
@@ -650,6 +744,46 @@ public class SuperInputBusME extends MTEHatchInputBusME implements IConfiguratio
         builder.widget(
             scrollable.setSize(18 * 9 + 4, 18 * 4)
                 .setPos(7, 7));
+        return builder.build();
+    }
+
+    public ModularWindow createStroedStackSizeWindow(EntityPlayer player, int slotID) {
+        final int WIDTH = 78;
+        final int HEIGHT = 66;
+        final int PARENT_WIDTH = getGUIWidth();
+        final int PARENT_HEIGHT = getGUIHeight();
+        ModularWindow.Builder builder = ModularWindow.builder(WIDTH, HEIGHT);
+        builder.setBackground(GTUITextures.BACKGROUND_SINGLEBLOCK_DEFAULT);
+        builder.setGuiTint(getGUIColorization());
+        builder.setDraggable(true);
+        builder.setPos(
+            (size, window) -> Alignment.Center.getAlignedPos(size, new Size(PARENT_WIDTH, PARENT_HEIGHT))
+                .add(
+                    Alignment.TopRight.getAlignedPos(new Size(PARENT_WIDTH, PARENT_HEIGHT), new Size(WIDTH, HEIGHT))
+                        .add(WIDTH - 3, 0)));
+
+        builder.widget(
+            TextWidget.localised("Info_SuperInputHatchME_00")
+                .setPos(3, 6)
+                .setSize(74, 14))
+            .widget(
+                new TextWidget(StatCollector.translateToLocal("Info_SuperInputHatchME_01") + slotID).setPos(3, 20)
+                    .setSize(74, 14))
+            .widget(
+                new NumericWidget().setSetter(val -> storedStackSizes[slotID] = (int) val)
+                    .setGetter(() -> storedStackSizes[slotID])
+                    .setBounds(1, Integer.MAX_VALUE)
+                    .setScrollValues(1, 1000, 10000)
+                    .setTextAlignment(Alignment.Center)
+                    .setTextColor(Color.WHITE.normal)
+                    .setSize(70, 18)
+                    .setPos(3, 36)
+                    .setBackground(GTUITextures.BACKGROUND_TEXT_FIELD)
+                    .attachSyncer(
+                        new FakeSyncWidget.IntegerSyncer(
+                            () -> storedStackSizes[slotID],
+                            i -> storedStackSizes[slotID] = i),
+                        builder));
         return builder.build();
     }
 

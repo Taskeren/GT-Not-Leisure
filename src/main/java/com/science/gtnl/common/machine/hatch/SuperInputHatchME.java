@@ -46,25 +46,19 @@ import com.science.gtnl.utils.item.ItemUtils;
 
 import appeng.api.config.Actionable;
 import appeng.api.config.PowerMultiplier;
-import appeng.api.implementations.IPowerChannelState;
 import appeng.api.networking.GridFlags;
 import appeng.api.networking.security.BaseActionSource;
 import appeng.api.networking.security.IActionHost;
 import appeng.api.networking.security.MachineSource;
 import appeng.api.storage.IMEMonitor;
 import appeng.api.storage.data.IAEFluidStack;
-import appeng.api.util.AECableType;
 import appeng.core.localization.WailaText;
 import appeng.me.GridAccessException;
 import appeng.me.helpers.AENetworkProxy;
 import appeng.me.helpers.IGridProxyable;
 import appeng.util.item.AEFluidStack;
 import gregtech.api.gui.modularui.GTUITextures;
-import gregtech.api.interfaces.IDataCopyable;
-import gregtech.api.interfaces.IMEConnectable;
 import gregtech.api.interfaces.ITexture;
-import gregtech.api.interfaces.modularui.IAddGregtechLogo;
-import gregtech.api.interfaces.modularui.IAddUIWidgets;
 import gregtech.api.interfaces.tileentity.IGregTechTileEntity;
 import gregtech.api.metatileentity.MetaTileEntity;
 import gregtech.api.metatileentity.implementations.MTEMultiBlockBase;
@@ -73,17 +67,15 @@ import gregtech.api.recipe.check.CheckRecipeResultRegistry;
 import gregtech.api.recipe.check.SimpleCheckRecipeResult;
 import gregtech.api.util.GTUtility;
 import gregtech.api.util.shutdown.ShutDownReasonRegistry;
-import gregtech.common.tileentities.machines.IRecipeProcessingAwareHatch;
-import gregtech.common.tileentities.machines.ISmartInputHatch;
 import gregtech.common.tileentities.machines.MTEHatchInputME;
 
-public class SuperInputHatchME extends MTEHatchInputME implements IPowerChannelState, IAddGregtechLogo, IAddUIWidgets,
-    IRecipeProcessingAwareHatch, ISmartInputHatch, IDataCopyable, IMEConnectable {
+public class SuperInputHatchME extends MTEHatchInputME {
 
     public static int SLOT_COUNT = 100;
 
     public FluidStack[] storedFluids = new FluidStack[SLOT_COUNT];
     public FluidStack[] storedInformationFluids = new FluidStack[SLOT_COUNT];
+    public int[] storedStackSizes = new int[SLOT_COUNT];
 
     // these two fields should ALWAYS be mutated simultaneously
     // in most cases, you should call setSavedFluid() instead of trying to write to the array directly
@@ -167,7 +159,9 @@ public class SuperInputHatchME extends MTEHatchInputME implements IPowerChannelS
             while (iterator.hasNext() && index < SLOT_COUNT) {
                 IAEFluidStack currItem = iterator.next();
                 if (currItem.getStackSize() >= minAutoPullAmount) {
-                    FluidStack fluidStack = GTUtility.copyAmount(1, currItem.getFluidStack());
+                    FluidStack fluidStack = GTUtility.copyAmount(
+                        storedStackSizes[index] == Integer.MAX_VALUE ? 1 : storedStackSizes[index],
+                        currItem.getFluidStack());
                     if (expediteRecipeCheck) {
                         FluidStack previous = storedFluids[index];
                         if (fluidStack != null && previous != null) {
@@ -291,12 +285,8 @@ public class SuperInputHatchME extends MTEHatchInputME implements IPowerChannelS
     @Override
     public void onFirstTick(IGregTechTileEntity aBaseMetaTileEntity) {
         super.onFirstTick(aBaseMetaTileEntity);
+        Arrays.fill(storedStackSizes, Integer.MAX_VALUE);
         getProxy().onReady();
-    }
-
-    @Override
-    public AECableType getCableConnectionType(ForgeDirection forgeDirection) {
-        return isOutputFacing(forgeDirection) ? AECableType.SMART : AECableType.NONE;
     }
 
     public void updateValidGridProxySides() {
@@ -415,7 +405,7 @@ public class SuperInputHatchME extends MTEHatchInputME implements IPowerChannelS
             IMEMonitor<IAEFluidStack> sg = proxy.getStorage()
                 .getFluidInventory();
             IAEFluidStack request = AEFluidStack.create(fluidStack);
-            request.setStackSize(Integer.MAX_VALUE);
+            request.setStackSize(storedStackSizes[index]);
             IAEFluidStack result = sg.extractItems(request, Actionable.SIMULATE, getRequestSource());
             FluidStack resultFluid = (result != null) ? result.getFluidStack() : null;
             // We want to track if any FluidStack is modified to notify any connected controllers to make a recipe check
@@ -538,8 +528,17 @@ public class SuperInputHatchME extends MTEHatchInputME implements IPowerChannelS
     public void saveNBTData(NBTTagCompound aNBT) {
         super.saveNBTData(aNBT);
 
+        NBTTagList stackSizeList = new NBTTagList();
         NBTTagList nbtTagList = new NBTTagList();
         for (int i = 0; i < SLOT_COUNT; i++) {
+            int size = storedStackSizes[i];
+            if (size != Integer.MAX_VALUE) {
+                NBTTagCompound tag = new NBTTagCompound();
+                tag.setInteger("slot", i);
+                tag.setInteger("size", size);
+                stackSizeList.appendTag(tag);
+            }
+
             FluidStack fluidStack = storedFluids[i];
             if (fluidStack == null) {
                 continue;
@@ -550,7 +549,8 @@ public class SuperInputHatchME extends MTEHatchInputME implements IPowerChannelS
             nbtTagList.appendTag(fluidTag);
         }
 
-        aNBT.setTag("storedFluidsSuper", nbtTagList);
+        aNBT.setTag("storedStackSizes", stackSizeList);
+        aNBT.setTag("storedFluids", nbtTagList);
         aNBT.setInteger("refreshTime", autoPullRefreshTime);
         aNBT.setBoolean("additionalConnection", additionalConnection);
         aNBT.setBoolean("expediteRecipeCheck", expediteRecipeCheck);
@@ -560,8 +560,21 @@ public class SuperInputHatchME extends MTEHatchInputME implements IPowerChannelS
     @Override
     public void loadNBTData(NBTTagCompound aNBT) {
         super.loadNBTData(aNBT);
-        if (aNBT.hasKey("storedFluidsSuper")) {
-            NBTTagList nbtTagList = aNBT.getTagList("storedFluidsSuper", 10);
+
+        if (aNBT.hasKey("storedStackSizes")) {
+            NBTTagList list = aNBT.getTagList("storedStackSizes", 10);
+            for (int i = 0; i < list.tagCount(); i++) {
+                NBTTagCompound tag = list.getCompoundTagAt(i);
+                int slot = tag.getInteger("slot");
+                int size = tag.getInteger("size");
+                if (slot < SLOT_COUNT) {
+                    storedStackSizes[slot] = size;
+                }
+            }
+        }
+
+        if (aNBT.hasKey("storedFluids")) {
+            NBTTagList nbtTagList = aNBT.getTagList("storedFluids", 10);
             int c = Math.min(nbtTagList.tagCount(), SLOT_COUNT);
             for (int i = 0; i < c; i++) {
                 NBTTagCompound nbtTagCompound = nbtTagList.getCompoundTagAt(i);
@@ -604,25 +617,36 @@ public class SuperInputHatchME extends MTEHatchInputME implements IPowerChannelS
     }
 
     @Override
-    public boolean pasteCopiedData(EntityPlayer player, NBTTagCompound nbt) {
-        if (nbt == null || !COPIED_DATA_IDENTIFIER.equals(nbt.getString("type"))) return false;
+    public boolean pasteCopiedData(EntityPlayer player, NBTTagCompound aNBT) {
+        if (aNBT == null || !COPIED_DATA_IDENTIFIER.equals(aNBT.getString("type"))) return false;
 
         if (autoPullAvailable) {
-            setAutoPullFluidList(nbt.getBoolean("autoPull"));
-            minAutoPullAmount = nbt.getInteger("minAmount");
-            autoPullRefreshTime = nbt.getInteger("refreshTime");
-            expediteRecipeCheck = nbt.getBoolean("expediteRecipeCheck");
+            setAutoPullFluidList(aNBT.getBoolean("autoPull"));
+            minAutoPullAmount = aNBT.getInteger("minAmount");
+            autoPullRefreshTime = aNBT.getInteger("refreshTime");
+            expediteRecipeCheck = aNBT.getBoolean("expediteRecipeCheck");
         }
-        additionalConnection = nbt.getBoolean("additionalConnection");
+        additionalConnection = aNBT.getBoolean("additionalConnection");
+
+        NBTTagList list = aNBT.getTagList("storedStackSizes", 10);
+        for (int i = 0; i < list.tagCount(); i++) {
+            NBTTagCompound tag = list.getCompoundTagAt(i);
+            int slot = tag.getInteger("slot");
+            int size = tag.getInteger("size");
+
+            if (slot < SLOT_COUNT) {
+                storedStackSizes[slot] = size;
+            }
+        }
 
         if (!autoPullFluidList) {
-            NBTTagList stockingFluids = nbt.getTagList("fluidsToStock", 10);
+            NBTTagList stockingFluids = aNBT.getTagList("fluidsToStock", 10);
             for (int i = 0; i < stockingFluids.tagCount(); i++) {
                 storedFluids[i] = GTUtility.loadFluid(stockingFluids.getCompoundTagAt(i));
             }
         }
         updateValidGridProxySides();
-        byte color = nbt.getByte("color");
+        byte color = aNBT.getByte("color");
         this.getBaseMetaTileEntity()
             .setColorization(color);
         return true;
@@ -630,14 +654,25 @@ public class SuperInputHatchME extends MTEHatchInputME implements IPowerChannelS
 
     @Override
     public NBTTagCompound getCopiedData(EntityPlayer player) {
-        NBTTagCompound tag = new NBTTagCompound();
-        tag.setString("type", COPIED_DATA_IDENTIFIER);
-        tag.setBoolean("autoPull", autoPullFluidList);
-        tag.setInteger("minAmount", minAutoPullAmount);
-        tag.setBoolean("additionalConnection", additionalConnection);
-        tag.setInteger("refreshTime", autoPullRefreshTime);
-        tag.setBoolean("expediteRecipeCheck", expediteRecipeCheck);
-        tag.setByte("color", this.getColor());
+        NBTTagCompound aNBT = new NBTTagCompound();
+        aNBT.setString("type", COPIED_DATA_IDENTIFIER);
+        aNBT.setBoolean("autoPull", autoPullFluidList);
+        aNBT.setInteger("minAmount", minAutoPullAmount);
+        aNBT.setBoolean("additionalConnection", additionalConnection);
+        aNBT.setInteger("refreshTime", autoPullRefreshTime);
+        aNBT.setBoolean("expediteRecipeCheck", expediteRecipeCheck);
+        aNBT.setByte("color", this.getColor());
+
+        NBTTagList stackSizeList = new NBTTagList();
+        for (int i = 0; i < SLOT_COUNT; i++) {
+            int size = storedStackSizes[i];
+            if (size == Integer.MAX_VALUE) continue;
+            NBTTagCompound tag = new NBTTagCompound();
+            tag.setInteger("slot", i);
+            tag.setInteger("size", size);
+            stackSizeList.appendTag(tag);
+        }
+        aNBT.setTag("storedStackSizes", stackSizeList);
 
         NBTTagList stockingFluids = new NBTTagList();
         if (!autoPullFluidList) {
@@ -648,9 +683,9 @@ public class SuperInputHatchME extends MTEHatchInputME implements IPowerChannelS
                 }
                 stockingFluids.appendTag(fluidStack.writeToNBT(new NBTTagCompound()));
             }
-            tag.setTag("fluidsToStock", stockingFluids);
+            aNBT.setTag("fluidsToStock", stockingFluids);
         }
-        return tag;
+        return aNBT;
     }
 
     @Override
@@ -674,6 +709,11 @@ public class SuperInputHatchME extends MTEHatchInputME implements IPowerChannelS
             buildContext.addSyncedWindow(CONFIG_WINDOW_ID, this::createStackSizeConfigurationWindow);
         }
 
+        for (int i = 15; i < SLOT_COUNT + 15; i++) {
+            int slotID = i;
+            buildContext.addSyncedWindow(i, (player) -> createStroedStackSizeWindow(player, slotID - 15));
+        }
+
         final Scrollable scrollable = new Scrollable().setVerticalScroll();
         SlotGroup leftFluidSlotGroup = SlotGroup.ofFluidTanks(
             IntStream.range(0, SLOT_COUNT)
@@ -685,6 +725,12 @@ public class SuperInputHatchME extends MTEHatchInputME implements IPowerChannelS
 
                 @Override
                 public void tryClickPhantom(ClickData clickData, ItemStack cursorStack) {
+                    IGregTechTileEntity gtTE = getBaseMetaTileEntity();
+                    if (gtTE.isServerSide() && clickData.mouseButton == 2) {
+                        getContext().openSyncedWindow(slotIndex + 15);
+                        return;
+                    }
+
                     if (clickData.mouseButton != 0 || autoPullFluidList) return;
 
                     FluidStack heldFluid = getFluidForPhantomItem(cursorStack);
@@ -694,7 +740,7 @@ public class SuperInputHatchME extends MTEHatchInputME implements IPowerChannelS
                         if (containsSuchStack(heldFluid)) return;
                         storedFluids[slotIndex] = heldFluid;
                     }
-                    if (getBaseMetaTileEntity().isServerSide()) {
+                    if (gtTE.isServerSide()) {
                         updateInformationSlot(slotIndex);
                         detectAndSendChanges(false);
                     }
@@ -896,6 +942,46 @@ public class SuperInputHatchME extends MTEHatchInputME implements IPowerChannelS
                     .setPos(53, 87)
                     .setSize(16, 16)
                     .addTooltip(StatCollector.translateToLocal("GT5U.machines.stocking_bus.hatch_warning")));
+        return builder.build();
+    }
+
+    public ModularWindow createStroedStackSizeWindow(EntityPlayer player, int slotID) {
+        final int WIDTH = 78;
+        final int HEIGHT = 66;
+        final int PARENT_WIDTH = getGUIWidth();
+        final int PARENT_HEIGHT = getGUIHeight();
+        ModularWindow.Builder builder = ModularWindow.builder(WIDTH, HEIGHT);
+        builder.setBackground(GTUITextures.BACKGROUND_SINGLEBLOCK_DEFAULT);
+        builder.setGuiTint(getGUIColorization());
+        builder.setDraggable(true);
+        builder.setPos(
+            (size, window) -> Alignment.Center.getAlignedPos(size, new Size(PARENT_WIDTH, PARENT_HEIGHT))
+                .add(
+                    Alignment.TopRight.getAlignedPos(new Size(PARENT_WIDTH, PARENT_HEIGHT), new Size(WIDTH, HEIGHT))
+                        .add(WIDTH - 3, 0)));
+
+        builder.widget(
+            TextWidget.localised("Info_SuperInputHatchME_00")
+                .setPos(3, 6)
+                .setSize(74, 14))
+            .widget(
+                new TextWidget(StatCollector.translateToLocal("Info_SuperInputHatchME_01") + slotID).setPos(3, 20)
+                    .setSize(74, 14))
+            .widget(
+                new NumericWidget().setSetter(val -> storedStackSizes[slotID] = (int) val)
+                    .setGetter(() -> storedStackSizes[slotID])
+                    .setBounds(1, Integer.MAX_VALUE)
+                    .setScrollValues(1, 1000, 10000)
+                    .setTextAlignment(Alignment.Center)
+                    .setTextColor(Color.WHITE.normal)
+                    .setSize(70, 18)
+                    .setPos(3, 36)
+                    .setBackground(GTUITextures.BACKGROUND_TEXT_FIELD)
+                    .attachSyncer(
+                        new FakeSyncWidget.IntegerSyncer(
+                            () -> storedStackSizes[slotID],
+                            i -> storedStackSizes[slotID] = i),
+                        builder));
         return builder.build();
     }
 
