@@ -239,7 +239,7 @@ public class GrandAssemblyLine extends GTMMultiMachineBase<GrandAssemblyLine> im
         } else {
             // 非 DualInputHatch 模式，将常规输入仓/总线包装成 IDualInputInventory
             IDualInputInventory wrappedInventory = new WrappedInventory(getAllStoredInputs(), getStoredFluids());
-            inputInventories.add(wrappedInventory);
+            if (!wrappedInventory.isEmpty()) inputInventories.add(wrappedInventory);
         }
 
         // 执行配方处理逻辑
