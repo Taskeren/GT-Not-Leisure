@@ -182,7 +182,7 @@ public class HighPerformanceComputationArray extends TTMultiblockBase implements
         }
         machineLens.set(this.totalLens);
         randomColor = generateTwoModifierIndexGroups(randomUUID, this.totalLens);
-        return eUncertainHatches.size() == 1 && this.totalLens >= 3;
+        return eUncertainHatches.size() == 1 && mInputHatches.size() <= 1 && this.totalLens >= 3;
     }
 
     @Override
@@ -259,7 +259,7 @@ public class HighPerformanceComputationArray extends TTMultiblockBase implements
             if (mMaxProgresstime > 0) {
                 startRecipeProcessing();
                 ArrayList<FluidStack> storedFluids = getStoredFluids();
-                int totalSuperCoolant = 0;
+                long totalSuperCoolant = 0;
 
                 if (storedFluids != null) {
                     for (FluidStack fs : storedFluids) {
@@ -352,7 +352,6 @@ public class HighPerformanceComputationArray extends TTMultiblockBase implements
                 o.providePacket(pack);
             }
         }
-
     }
 
     public int[][] generateTwoModifierIndexGroups(UUID uuid, int totalLen) {
