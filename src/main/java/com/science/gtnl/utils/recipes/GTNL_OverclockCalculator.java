@@ -18,6 +18,8 @@ public class GTNL_OverclockCalculator extends OverclockCalculator {
     public long machineAmperage = 1;
     /** Duration of the recipe */
     public int duration = 0;
+    /** Min duration of the recipe */
+    public int minDuration = 1;
     /** A supplier used for machines which have a custom way of calculating base duration, like Neutron Activator */
     public Supplier<Double> durationUnderOneTickSupplier;
     /** The parallel the machine has when trying to overclock */
@@ -118,6 +120,13 @@ public class GTNL_OverclockCalculator extends OverclockCalculator {
     @Override
     public GTNL_OverclockCalculator setDuration(int duration) {
         this.duration = duration;
+        return this;
+    }
+
+    /** @param minDuration Sets the min duration of the recipe */
+    @Nonnull
+    public GTNL_OverclockCalculator setMinDuration(int minDuration) {
+        this.minDuration = minDuration;
         return this;
     }
 
@@ -405,25 +414,31 @@ public class GTNL_OverclockCalculator extends OverclockCalculator {
         // Special handling for laser overclocking.
         if (laserOC) {
             double eutOverclock = recipePower;
+            double currentDuration = duration;
 
             // Keep increasing power until normal overclocks are used.
             int regularOverclocks = 0;
             while (eutOverclock * 4.0 < machinePower && regularOverclocks < maxRegularOverclocks) {
+                if (currentDuration / durationDecreasePerOC < minDuration) break;
+
                 eutOverclock *= 4.0;
+                currentDuration /= durationDecreasePerOC;
                 regularOverclocks++;
             }
 
             // Keep increasing power until it hits the machine's limit.
             int laserOverclocks = 0;
             while (eutOverclock * (4.0 + 0.3 * (laserOverclocks + 1)) < machinePower) {
-                eutOverclock *= (4.0 + 0.3 * (laserOverclocks + 1));
+                if (currentDuration / durationDecreasePerOC < minDuration) break;
+
+                eutOverclock *= 4.0 + 0.3 * (laserOverclocks + 1);
+                currentDuration /= durationDecreasePerOC;
                 laserOverclocks++;
             }
 
             overclocks = regularOverclocks + laserOverclocks;
             calculatedConsumption = (long) Math.ceil(eutOverclock);
-            duration /= Math.pow(durationDecreasePerOC, overclocks);
-            calculatedDuration = (int) Math.max(duration, 1);
+            calculatedDuration = (int) Math.max(currentDuration, 1);
             return;
         }
 
@@ -440,6 +455,13 @@ public class GTNL_OverclockCalculator extends OverclockCalculator {
         // Make sure overclocks don't go negative. This allows recipes needing >1A to run on a single hatch.
         overclocks = Math.max(overclocks, 0);
 
+        if (duration > minDuration) {
+            int durationLimitedOC = (int) (Math.log(duration / minDuration) / Math.log(durationDecreasePerOC));
+            overclocks = Math.min(overclocks, Math.max(durationLimitedOC, 0));
+        } else {
+            overclocks = 0;
+        }
+
         // Split overclocks into heat-based and regular overclocks.
         int heatOverclocks = Math.min(heatOC ? (machineHeat - recipeHeat) / HEAT_OVERCLOCK_THRESHOLD : 0, overclocks);
         long regularOverclocks = overclocks - heatOverclocks;
@@ -449,6 +471,7 @@ public class GTNL_OverclockCalculator extends OverclockCalculator {
         duration /= Math.pow(durationDecreasePerHeatOC, heatOverclocks);
         duration /= Math.pow(durationDecreasePerOC, regularOverclocks);
         calculatedDuration = (int) Math.max(duration, 1);
+
     }
 
     /**
