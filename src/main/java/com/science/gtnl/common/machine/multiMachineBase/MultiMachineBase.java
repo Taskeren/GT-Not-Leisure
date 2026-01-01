@@ -1085,7 +1085,7 @@ public abstract class MultiMachineBase<T extends MultiMachineBase<T>> extends MT
 
     @Override
     public boolean getDefaultBatchMode() {
-        return false;
+        return true;
     }
 
     @Override
