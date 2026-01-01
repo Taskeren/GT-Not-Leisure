@@ -631,6 +631,7 @@ public enum GTNLItemList implements IItemContainer {
     FastNeutronBreederReactor,
     MagneticConfinementDimensionalityShockDevice,
     SupercomputingCenter,
+    PCBFactory,
 
     EnergyHatchLV,
     EnergyHatchLV4A,
@@ -1132,9 +1133,12 @@ public enum GTNLItemList implements IItemContainer {
     WirelessEnergyHatchMAX4194304A,
     WirelessEnergyHatchMAX16777216A,
 
-    LegendaryWirelessEnergyHatch,
-    LegendaryWirelessDynamoHatch,
+    HumongousWirelessEnergyHatch,
+    HumongousWirelessDynamoHatch,
 
+    BeamlinePipeMirror,
+    OutputHatchMEProxy,
+    OutputBusMEProxy,
     AdvancedSuperDualInputHatchME,
     SuperDualInputHatchME,
     HumongousOutputBusLV,

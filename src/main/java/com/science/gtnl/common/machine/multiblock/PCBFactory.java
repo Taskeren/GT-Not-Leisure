@@ -1,0 +1,678 @@
+package com.science.gtnl.common.machine.multiblock;
+
+import static com.gtnewhorizon.structurelib.structure.StructureUtility.*;
+import static com.science.gtnl.ScienceNotLeisure.*;
+import static com.science.gtnl.common.machine.multiMachineBase.MultiMachineBase.CustomHatchElement.*;
+import static gregtech.api.GregTechAPI.*;
+import static gregtech.api.enums.HatchElement.*;
+import static gregtech.api.enums.Textures.BlockIcons.*;
+import static gregtech.api.util.GTStructureUtility.*;
+import static gregtech.api.util.GTUtility.*;
+import static gtPlusPlus.core.block.ModBlocks.*;
+import static tectech.thing.casing.TTCasingsContainer.*;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import javax.annotation.Nonnull;
+
+import net.minecraft.block.Block;
+import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.StatCollector;
+import net.minecraftforge.common.util.ForgeDirection;
+import net.minecraftforge.fluids.Fluid;
+import net.minecraftforge.fluids.FluidStack;
+
+import org.jetbrains.annotations.NotNull;
+
+import com.gtnewhorizon.structurelib.alignment.constructable.ISurvivalConstructable;
+import com.gtnewhorizon.structurelib.structure.IStructureDefinition;
+import com.gtnewhorizon.structurelib.structure.ISurvivalBuildEnvironment;
+import com.gtnewhorizon.structurelib.structure.StructureDefinition;
+import com.gtnewhorizons.modularui.api.forge.ItemStackHandler;
+import com.gtnewhorizons.modularui.api.screen.ModularWindow;
+import com.gtnewhorizons.modularui.api.screen.UIBuildContext;
+import com.gtnewhorizons.modularui.common.widget.DynamicPositionedColumn;
+import com.gtnewhorizons.modularui.common.widget.SlotWidget;
+import com.gtnewhorizons.modularui.common.widget.TextWidget;
+import com.science.gtnl.api.IControllerUpgradeable;
+import com.science.gtnl.common.machine.multiMachineBase.WirelessEnergyMultiMachineBase;
+import com.science.gtnl.utils.StructureUtils;
+import com.science.gtnl.utils.recipes.GTNL_OverclockCalculator;
+import com.science.gtnl.utils.recipes.GTNL_ProcessingLogic;
+
+import gregtech.api.enums.ItemList;
+import gregtech.api.enums.Materials;
+import gregtech.api.enums.OrePrefixes;
+import gregtech.api.enums.Textures;
+import gregtech.api.interfaces.IHatchElement;
+import gregtech.api.interfaces.ITexture;
+import gregtech.api.interfaces.metatileentity.IMetaTileEntity;
+import gregtech.api.interfaces.tileentity.IGregTechTileEntity;
+import gregtech.api.logic.ProcessingLogic;
+import gregtech.api.metatileentity.implementations.MTEHatch;
+import gregtech.api.metatileentity.implementations.MTEHatchInput;
+import gregtech.api.metatileentity.implementations.MTEHatchMultiInput;
+import gregtech.api.recipe.RecipeMap;
+import gregtech.api.recipe.RecipeMaps;
+import gregtech.api.recipe.check.CheckRecipeResult;
+import gregtech.api.recipe.check.CheckRecipeResultRegistry;
+import gregtech.api.recipe.check.SimpleCheckRecipeResult;
+import gregtech.api.recipe.metadata.PCBFactoryTierKey;
+import gregtech.api.render.TextureFactory;
+import gregtech.api.util.GTModHandler;
+import gregtech.api.util.GTOreDictUnificator;
+import gregtech.api.util.GTRecipe;
+import gregtech.api.util.GTRecipeConstants;
+import gregtech.api.util.GTUtility;
+import gregtech.api.util.IGTHatchAdder;
+import gregtech.api.util.MultiblockTooltipBuilder;
+import gregtech.api.util.shutdown.ShutDownReasonRegistry;
+import gregtech.common.tileentities.machines.IRecipeProcessingAwareHatch;
+import gregtech.common.tileentities.machines.MTEHatchInputME;
+import gtPlusPlus.core.material.MaterialsAlloy;
+import lombok.Getter;
+import lombok.Setter;
+
+public class PCBFactory extends WirelessEnergyMultiMachineBase<PCBFactory>
+    implements ISurvivalConstructable, IControllerUpgradeable {
+
+    private static final String STRUCTURE_PIECE_MAIN = "main";
+    private static final String STRUCTURE_PIECE_MAIN_T2 = "main_t2";
+    private static final String STRUCTURE_PIECE_MAIN_T3 = "main_t3";
+    private static final String PCBF_T1_STRUCTURE_FILE_PATH = RESOURCE_ROOT_ID + ":" + "multiblock/pcb_factory_t1";
+    private static final String PCBF_T2_STRUCTURE_FILE_PATH = RESOURCE_ROOT_ID + ":" + "multiblock/pcb_factory_t2";
+    private static final String PCBF_T3_STRUCTURE_FILE_PATH = RESOURCE_ROOT_ID + ":" + "multiblock/pcb_factory_t3";
+    private static final int HORIZONTAL_OFF_SET = 6;
+    private static final int VERTICAL_OFF_SET = 12;
+    private static final int DEPTH_OFF_SET = 1;
+    private static final int HORIZONTAL_OFF_SET_T2 = 9;
+    private static final int VERTICAL_OFF_SET_T2 = 26;
+    private static final int DEPTH_OFF_SET_T2 = -14;
+    private static final int HORIZONTAL_OFF_SET_T3 = 23;
+    private static final int VERTICAL_OFF_SET_T3 = 16;
+    private static final int DEPTH_OFF_SET_T3 = -17;
+    private static final String[][] shape = StructureUtils.readStructureFromFile(PCBF_T1_STRUCTURE_FILE_PATH);
+    private static final String[][] shape_t2 = StructureUtils.readStructureFromFile(PCBF_T2_STRUCTURE_FILE_PATH);
+    private static final String[][] shape_t3 = StructureUtils.readStructureFromFile(PCBF_T3_STRUCTURE_FILE_PATH);
+
+    public static final ItemStack[] REQUIRED_ITEMS = new ItemStack[] {
+        GTUtility.copyAmountUnsafe(114514, ItemList.PCBFactory.get(1)) };
+
+    public static FluidStack distilledWater = GTModHandler.getDistilledWater(7500);
+    public static ItemStack t1Nanite = GTOreDictUnificator.get(OrePrefixes.nanite, Materials.Gold, 1);
+    public static ItemStack t2Nanite = GTOreDictUnificator.get(OrePrefixes.nanite, Materials.Neutronium, 1);
+    public static ItemStack t3Nanite = GTOreDictUnificator.get(OrePrefixes.nanite, Materials.Silver, 1);
+    public static FluidStack[] purifiedWater = new FluidStack[] { Materials.Grade1PurifiedWater.getFluid(1),
+        Materials.Grade3PurifiedWater.getFluid(1), Materials.Grade5PurifiedWater.getFluid(1),
+        Materials.Grade7PurifiedWater.getFluid(1), Materials.Grade2PurifiedWater.getFluid(1),
+        Materials.Grade4PurifiedWater.getFluid(1), Materials.Grade6PurifiedWater.getFluid(1),
+        Materials.Grade8PurifiedWater.getFluid(1) };
+
+    @Getter
+    public ItemStack[] storedUpgradeWindowItems = new ItemStack[16];
+    @Getter
+    public ItemStackHandler upgradeInputSlotHandler = new ItemStackHandler(16);
+    @Getter
+    public int[] upgradePaidCosts = new int[REQUIRED_ITEMS.length];
+
+    @Getter
+    @Setter
+    public boolean upgradeConsumed = false;
+
+    public ArrayList<MTEHatchInput> mWaterInputHatches = new ArrayList<>();
+    public int machineTier;
+
+    public PCBFactory(int aID, String aName, String aNameRegional) {
+        super(aID, aName, aNameRegional);
+    }
+
+    public PCBFactory(String aName) {
+        super(aName);
+    }
+
+    @Override
+    public IMetaTileEntity newMetaEntity(IGregTechTileEntity aTileEntity) {
+        return new PCBFactory(this.mName);
+    }
+
+    @Override
+    public ITexture[] getTexture(IGregTechTileEntity aBaseMetaTileEntity, ForgeDirection side, ForgeDirection facing,
+        int colorIndex, boolean aActive, boolean aRedstone) {
+        if (side == facing) {
+            if (aActive) return new ITexture[] { Textures.BlockIcons.getCasingTextureForId(getCasingTextureID()),
+                TextureFactory.builder()
+                    .addIcon(OVERLAY_FRONT_ASSEMBLY_LINE_ACTIVE)
+                    .extFacing()
+                    .build(),
+                TextureFactory.builder()
+                    .addIcon(OVERLAY_FRONT_ASSEMBLY_LINE_ACTIVE_GLOW)
+                    .extFacing()
+                    .glow()
+                    .build() };
+            return new ITexture[] { Textures.BlockIcons.getCasingTextureForId(getCasingTextureID()),
+                TextureFactory.builder()
+                    .addIcon(OVERLAY_FRONT_ASSEMBLY_LINE)
+                    .extFacing()
+                    .build(),
+                TextureFactory.builder()
+                    .addIcon(OVERLAY_FRONT_ASSEMBLY_LINE_GLOW)
+                    .extFacing()
+                    .glow()
+                    .build() };
+        }
+        return new ITexture[] { Textures.BlockIcons.getCasingTextureForId(getCasingTextureID()) };
+    }
+
+    @Override
+    public void updateHatchTexture() {
+        super.updateHatchTexture();
+        for (MTEHatch h : mWaterInputHatches) h.updateTexture(StructureUtils.getTextureIndex(sBlockCasings10, 3));
+    }
+
+    @Override
+    public int getCasingTextureID() {
+        return StructureUtils.getTextureIndex(sBlockCasings8, 7);
+    }
+
+    @Override
+    public void startRecipeProcessing() {
+        for (MTEHatchInput hatch : validMTEList(mWaterInputHatches)) {
+            if (hatch instanceof IRecipeProcessingAwareHatch aware) {
+                aware.startRecipeProcessing();
+            }
+        }
+        super.startRecipeProcessing();
+    }
+
+    @Override
+    public void endRecipeProcessing() {
+        for (MTEHatchInput hatch : validMTEList(mWaterInputHatches)) {
+            if (hatch instanceof IRecipeProcessingAwareHatch aware) {
+                setResultIfFailure(aware.endRecipeProcessing(this));
+            }
+        }
+        super.endRecipeProcessing();
+    }
+
+    @Override
+    public @NotNull CheckRecipeResult checkProcessing() {
+        CheckRecipeResult result = super.checkProcessing();
+        if (!result.wasSuccessful()) return result;
+        if (!wirelessMode) {
+            depletePurifiedWater();
+        }
+        for (ItemStack itemStack : mOutputItems) {
+            if (itemStack != null) itemStack.stackSize *= 2;
+        }
+        return result;
+    }
+
+    @Override
+    public CheckRecipeResult wirelessModeProcessOnce() {
+        CheckRecipeResult result = super.wirelessModeProcessOnce();
+        if (!result.wasSuccessful()) return result;
+        depletePurifiedWater();
+        return result;
+    }
+
+    @Override
+    public ProcessingLogic createProcessingLogic() {
+        return new GTNL_ProcessingLogic() {
+
+            @Override
+            public @NotNull CheckRecipeResult validateRecipe(@NotNull GTRecipe recipe) {
+                Materials naniteMaterial = recipe.getMetadata(GTRecipeConstants.PCB_NANITE_MATERIAL);
+                if (naniteMaterial != null) {
+                    ItemStack nanite = GTOreDictUnificator.get(OrePrefixes.nanite, naniteMaterial, 1);
+                    boolean nanitesFound = false;
+                    for (ItemStack stored : getAllStoredInputs()) {
+                        if (GTUtility.areStacksEqual(stored, nanite)) {
+                            nanitesFound = true;
+                            break;
+                        }
+                    }
+                    if (!nanitesFound) {
+                        return SimpleCheckRecipeResult.ofFailure("nanites_missing");
+                    }
+                }
+
+                int requiredPCBTier = recipe.getMetadataOrDefault(PCBFactoryTierKey.INSTANCE, 1);
+                if (requiredPCBTier > machineTier)
+                    return CheckRecipeResultRegistry.insufficientMachineTier(requiredPCBTier);
+
+                int parallel = 0;
+
+                for (FluidStack fluidStack : getStoredWater()) {
+                    if (GTUtility.areFluidsEqual(fluidStack, purifiedWater[requiredPCBTier - 1])) {
+                        parallel += (int) (fluidStack.amount / 100d
+                            * GTUtility.powInt(2, machineTier - requiredPCBTier));
+                    }
+                    if (GTUtility.areFluidsEqual(fluidStack, purifiedWater[requiredPCBTier * 2 - 1])) {
+                        parallel += (int) (fluidStack.amount / 50d
+                            * GTUtility.powInt(2, machineTier - requiredPCBTier));
+                    }
+                }
+
+                maxParallel = GTUtility.min(parallel, getTrueParallel());
+                mMaxParallel = maxParallel;
+
+                if (mMaxParallel <= 0) return CheckRecipeResultRegistry.NO_RECIPE;
+
+                return super.validateRecipe(recipe);
+            }
+
+            @Override
+            @Nonnull
+            public GTNL_OverclockCalculator createOverclockCalculator(@NotNull GTRecipe recipe) {
+                return super.createOverclockCalculator(recipe).setExtraDurationModifier(mConfigSpeedBoost)
+                    .setHeatOC(getHeatOC())
+                    .setMachineHeat(getMachineHeat())
+                    .setHeatDiscount(getHeatDiscount())
+                    .setAmperageOC(getAmperageOC())
+                    .setEUtDiscount(getEUtDiscount())
+                    .setDurationModifier(getDurationModifier())
+                    .setPerfectOC(getPerfectOC())
+                    .setMaxTierSkips(getMaxTierSkip())
+                    .setMaxOverclocks(getMaxOverclocks());
+            }
+
+        }.setMaxParallelSupplier(this::getTrueParallel);
+    }
+
+    @Override
+    public boolean getPerfectOC() {
+        return machineTier >= 3;
+    }
+
+    @Override
+    public RecipeMap<?> getRecipeMap() {
+        return RecipeMaps.pcbFactoryRecipes;
+    }
+
+    @Override
+    public MultiblockTooltipBuilder createTooltip() {
+        MultiblockTooltipBuilder tt = new MultiblockTooltipBuilder();
+        tt.addMachineType(StatCollector.translateToLocal("PCBFactoryRecipeType"))
+            .addInfo(StatCollector.translateToLocal("Tooltip_PCBFactory_00"))
+            .addInfo(StatCollector.translateToLocal("Tooltip_PCBFactory_01"))
+            .addInfo(StatCollector.translateToLocal("Tooltip_PCBFactory_02"))
+            .addInfo(StatCollector.translateToLocal("Tooltip_PCBFactory_03"))
+            .addInfo(StatCollector.translateToLocal("Tooltip_PCBFactory_04"))
+            .addInfo(StatCollector.translateToLocal("Tooltip_PCBFactory_05"))
+            .addInfo(StatCollector.translateToLocal("Tooltip_PCBFactory_06"))
+            .addInfo(StatCollector.translateToLocal("Tooltip_PCBFactory_07"))
+            .addInfo(StatCollector.translateToLocal("Tooltip_PCBFactory_08"))
+            .addInfo(StatCollector.translateToLocal("Tooltip_PCBFactory_09"))
+            .addInfo(StatCollector.translateToLocal("Tooltip_WirelessEnergyMultiMachine_02"))
+            .addInfo(StatCollector.translateToLocal("Tooltip_WirelessEnergyMultiMachine_03"))
+            .addInfo(StatCollector.translateToLocal("Tooltip_WirelessEnergyMultiMachine_04"))
+            .addInfo(StatCollector.translateToLocal("Tooltip_WirelessEnergyMultiMachine_06"))
+            .addInfo(StatCollector.translateToLocal("Tooltip_WirelessEnergyMultiMachine_08"))
+            .addInfo(StatCollector.translateToLocal("Tooltip_WirelessEnergyMultiMachine_09"))
+            .addInfo(StatCollector.translateToLocal("Tooltip_WirelessEnergyMultiMachine_10"))
+            .addTecTechHatchInfo()
+            .beginVariableStructureBlock(13, 47, 16, 30, 14, 46, true)
+            .addInputHatch(StatCollector.translateToLocal("Tooltip_PCBFactory_Casing"))
+            .addOutputHatch(StatCollector.translateToLocal("Tooltip_PCBFactory_Casing"))
+            .addInputBus(StatCollector.translateToLocal("Tooltip_PCBFactory_Casing"))
+            .addOutputBus(StatCollector.translateToLocal("Tooltip_PCBFactory_Casing"))
+            .addEnergyHatch(StatCollector.translateToLocal("Tooltip_PCBFactory_Casing"))
+            .addMaintenanceHatch(StatCollector.translateToLocal("Tooltip_PCBFactory_Casing"))
+            .toolTipFinisher();
+        return tt;
+    }
+
+    @Override
+    public IStructureDefinition<PCBFactory> getStructureDefinition() {
+        return StructureDefinition.<PCBFactory>builder()
+            .addShape(STRUCTURE_PIECE_MAIN, transpose(shape))
+            .addShape(STRUCTURE_PIECE_MAIN_T2, transpose(shape_t2))
+            .addShape(STRUCTURE_PIECE_MAIN_T3, transpose(shape_t3))
+            .addElement('A', ofBlock(sBlockCasings10, 3))
+            .addElement(
+                'B',
+                buildHatchAdder(PCBFactory.class).casingIndex(getCasingTextureID())
+                    .dot(1)
+                    .atLeast(
+                        InputHatch,
+                        OutputHatch,
+                        InputBus,
+                        OutputBus,
+                        Maintenance,
+                        Energy.or(ExoticEnergy),
+                        ParallelCon)
+                    .buildAndChain(onElementPass(x -> ++x.mCountCasing, ofBlock(sBlockCasings8, 7))))
+            .addElement('C', ofBlock(sBlockCasings6, 7))
+            .addElement('D', ofBlock(sBlockCasings10, 0))
+            .addElement('E', ofBlock(sBlockCasings8, 10))
+            .addElement('F', chainAllGlasses())
+            .addElement('G', ofFrame(Materials.Neutronium))
+            .addElement(
+                'H',
+                ofBlockAnyMeta(
+                    Block.getBlockFromItem(
+                        MaterialsAlloy.MARAGING300.getFrameBox(1)
+                            .getItem())))
+            .addElement(
+                'I',
+                buildHatchAdder(PCBFactory.class).casingIndex(StructureUtils.getTextureIndex(sBlockCasings10, 3))
+                    .dot(1)
+                    .atLeast(CustomHatchElement.WaterInputHatch)
+                    .buildAndChain(sBlockCasings10, 3))
+            .addElement('J', ofBlock(sBlockCasingsTT, 8))
+            .addElement('K', ofBlock(sBlockCasings1, 5))
+            .addElement('L', ofBlock(blockCasings2Misc, 12))
+            .addElement('M', ofBlock(sBlockCasings2, 5))
+            .addElement('N', ofBlock(sBlockCasingsTT, 0))
+            .addElement('O', ofBlock(sBlockCasings10, 12))
+            .addElement('P', ofBlock(sBlockCasingsTT, 7))
+            .addElement('Q', ofBlock(sBlockCasings9, 13))
+            .addElement('R', ofBlock(sBlockCasings10, 7))
+            .addElement('S', ofBlock(sBlockCasings9, 11))
+            .addElement('T', ofBlock(sBlockCasingsTT, 6))
+            .build();
+    }
+
+    @Override
+    public boolean checkMachine(IGregTechTileEntity aBaseMetaTileEntity, ItemStack aStack) {
+        machineTier = getMachineTier();
+        if (machineTier == 0) return false;
+        if (!checkPiece(STRUCTURE_PIECE_MAIN, HORIZONTAL_OFF_SET, VERTICAL_OFF_SET, DEPTH_OFF_SET)) {
+            return false;
+        }
+        if (machineTier >= 2
+            && !checkPiece(STRUCTURE_PIECE_MAIN_T2, HORIZONTAL_OFF_SET_T2, VERTICAL_OFF_SET_T2, DEPTH_OFF_SET_T2)) {
+            machineTier = 1;
+        }
+        if (machineTier >= 3
+            && !checkPiece(STRUCTURE_PIECE_MAIN_T3, HORIZONTAL_OFF_SET_T3, VERTICAL_OFF_SET_T3, DEPTH_OFF_SET_T3)) {
+            machineTier = 2;
+        }
+        if (!checkHatch()) {
+            return false;
+        }
+        setupParameters();
+        return mCountCasing >= 30;
+    }
+
+    @Override
+    public void clearHatches() {
+        super.clearHatches();
+        mWaterInputHatches.clear();
+    }
+
+    public int getMachineTier() {
+        ItemStack stack = getControllerSlot();
+        if (GTUtility.areStacksEqual(stack, t1Nanite)) return 1;
+        if (GTUtility.areStacksEqual(stack, t2Nanite)) return 2;
+        if (GTUtility.areStacksEqual(stack, t3Nanite)) {
+            if (upgradeConsumed) {
+                return 4;
+            } else {
+                return 3;
+            }
+        }
+        return 0;
+    }
+
+    @Override
+    public double getEUtDiscount() {
+        return (wirelessUpgrade ? 0.6 : 0.8) - 0.1 * (machineTier - 1);
+    }
+
+    @Override
+    public double getDurationModifier() {
+        return 1.0 / (wirelessUpgrade ? 8.0 : 3.0 + machineTier - 1) - (Math.max(0, mParallelTier - 1) / 50.0);
+    }
+
+    @Override
+    public void onPostTick(IGregTechTileEntity aBaseMetaTileEntity, long aTick) {
+        super.onPostTick(aBaseMetaTileEntity, aTick);
+        if (mStartUpCheck > 0 || !getBaseMetaTileEntity().isServerSide()) return;
+        if (isAllowedToWork() && aTick % 100 == 0) {
+            startRecipeProcessing();
+            if (!depleteWaterInput(distilledWater)) {
+                stopMachine(ShutDownReasonRegistry.NONE);
+            }
+            endRecipeProcessing();
+        }
+    }
+
+    public ArrayList<FluidStack> getStoredWater() {
+        ArrayList<FluidStack> rList = new ArrayList<>();
+        Map<Fluid, FluidStack> inputsFromME = new HashMap<>();
+        for (MTEHatchInput tHatch : validMTEList(mWaterInputHatches)) {
+            if (tHatch instanceof MTEHatchMultiInput multiInputHatch) {
+                for (FluidStack tFluid : multiInputHatch.getStoredFluid()) {
+                    if (tFluid != null) {
+                        rList.add(tFluid);
+                    }
+                }
+            } else if (tHatch instanceof MTEHatchInputME meHatch) {
+                for (FluidStack fluidStack : meHatch.getStoredFluids()) {
+                    if (fluidStack != null) {
+                        // Prevent the same fluid from different ME hatches from being recognized
+                        inputsFromME.put(fluidStack.getFluid(), fluidStack);
+                    }
+                }
+            } else {
+                FluidStack fillableStack = tHatch.getFillableStack();
+                if (fillableStack != null) {
+                    rList.add(fillableStack);
+                }
+            }
+        }
+
+        if (!inputsFromME.isEmpty()) {
+            rList.addAll(inputsFromME.values());
+        }
+        return rList;
+    }
+
+    public void depletePurifiedWater() {
+        int tier = ((GTNL_ProcessingLogic) processingLogic).getLastRecipe()
+            .getMetadataOrDefault(PCBFactoryTierKey.INSTANCE, 1);
+        int parallel = processingLogic.getCurrentParallels();
+
+        for (FluidStack fluidStack : getStoredWater()) {
+            if (parallel <= 0) break;
+            if (GTUtility.areFluidsEqual(fluidStack, purifiedWater[tier - 1])) {
+                int deductAmount = 100 / (int) GTUtility.powInt(2, machineTier - tier);
+                int timesToDeduct = fluidStack.amount / deductAmount;
+                if (timesToDeduct > 0) {
+                    fluidStack.amount -= deductAmount * timesToDeduct;
+                    parallel -= deductAmount;
+                }
+            }
+
+            if (parallel <= 0) break;
+
+            if (GTUtility.areFluidsEqual(fluidStack, purifiedWater[tier * 2 - 1])) {
+                int deductAmount = 50 / (int) GTUtility.powInt(2, machineTier - tier);
+                int timesToDeduct = fluidStack.amount / deductAmount;
+                if (timesToDeduct > 0) {
+                    fluidStack.amount -= deductAmount * timesToDeduct;
+                    parallel -= deductAmount;
+                }
+            }
+        }
+        for (MTEHatchInput tHatch : validMTEList(mWaterInputHatches)) tHatch.updateSlots();
+    }
+
+    public boolean depleteWaterInput(FluidStack fluidStack) {
+        for (MTEHatchInput tHatch : validMTEList(mWaterInputHatches)) {
+            FluidStack tLiquid = tHatch.drain(ForgeDirection.UNKNOWN, fluidStack, false);
+            if (tLiquid != null && tLiquid.amount >= fluidStack.amount) {
+                tLiquid = tHatch.drain(ForgeDirection.UNKNOWN, fluidStack, true);
+                return tLiquid != null && tLiquid.amount >= fluidStack.amount;
+            }
+        }
+        return false;
+    }
+
+    @Override
+    public void setItemNBT(NBTTagCompound aNBT) {
+        super.setItemNBT(aNBT);
+        saveUpgradeNBTData(aNBT);
+    }
+
+    @Override
+    public void saveNBTData(NBTTagCompound aNBT) {
+        super.saveNBTData(aNBT);
+        saveUpgradeNBTData(aNBT);
+    }
+
+    @Override
+    public void loadNBTData(NBTTagCompound aNBT) {
+        super.loadNBTData(aNBT);
+        loadUpgradeNBTData(aNBT);
+    }
+
+    @Override
+    protected void drawTexts(DynamicPositionedColumn screenElements, SlotWidget inventorySlot) {
+        super.drawTexts(screenElements, inventorySlot);
+        screenElements.widget(
+            TextWidget.dynamicString(() -> StatCollector.translateToLocalFormatted("Info_PCBFactory_00", machineTier))
+                .setDefaultColor(COLOR_TEXT_WHITE.get()));
+    }
+
+    @Override
+    public void addUIWidgets(ModularWindow.Builder builder, UIBuildContext buildContext) {
+        super.addUIWidgets(builder, buildContext);
+        if (mMachine && machineTier >= 3) createUpgradeButton(builder, buildContext);
+    }
+
+    @Override
+    public ItemStack[] getUpgradeRequiredItems() {
+        return REQUIRED_ITEMS;
+    }
+
+    @Override
+    public String getUpgradeButtonTooltip() {
+        return StatCollector.translateToLocal("Info_PCBFactory_01");
+    }
+
+    @Override
+    public void construct(ItemStack stackSize, boolean hintsOnly) {
+        buildPiece(STRUCTURE_PIECE_MAIN, stackSize, hintsOnly, HORIZONTAL_OFF_SET, VERTICAL_OFF_SET, DEPTH_OFF_SET);
+        if (stackSize.stackSize >= 2) buildPiece(
+            STRUCTURE_PIECE_MAIN_T2,
+            stackSize,
+            hintsOnly,
+            HORIZONTAL_OFF_SET_T2,
+            VERTICAL_OFF_SET_T2,
+            DEPTH_OFF_SET_T2);
+        if (stackSize.stackSize >= 3) buildPiece(
+            STRUCTURE_PIECE_MAIN_T3,
+            stackSize,
+            hintsOnly,
+            HORIZONTAL_OFF_SET_T3,
+            VERTICAL_OFF_SET_T3,
+            DEPTH_OFF_SET_T3);
+    }
+
+    @Override
+    public int survivalConstruct(ItemStack stackSize, int elementBudget, ISurvivalBuildEnvironment env) {
+        if (mMachine) return -1;
+        int built;
+
+        built = survivalBuildPiece(
+            STRUCTURE_PIECE_MAIN,
+            stackSize,
+            HORIZONTAL_OFF_SET,
+            VERTICAL_OFF_SET,
+            DEPTH_OFF_SET,
+            elementBudget,
+            env,
+            false,
+            true);
+
+        if (built >= 0) return built;
+
+        if (stackSize.stackSize >= 2) {
+            built = survivalBuildPiece(
+                STRUCTURE_PIECE_MAIN_T2,
+                stackSize,
+                HORIZONTAL_OFF_SET_T2,
+                VERTICAL_OFF_SET_T2,
+                DEPTH_OFF_SET_T2,
+                elementBudget,
+                env,
+                false,
+                true);
+        }
+
+        if (built >= 0) return built;
+
+        if (stackSize.stackSize >= 3) {
+            built = survivalBuildPiece(
+                STRUCTURE_PIECE_MAIN_T3,
+                stackSize,
+                HORIZONTAL_OFF_SET_T3,
+                VERTICAL_OFF_SET_T3,
+                DEPTH_OFF_SET_T3,
+                elementBudget,
+                env,
+                false,
+                true);
+        }
+
+        return built;
+    }
+
+    public boolean addWaterInputHatchToMachineList(IGregTechTileEntity aTileEntity, int aBaseCasingIndex) {
+        if (aTileEntity == null) return false;
+        IMetaTileEntity aMetaTileEntity = aTileEntity.getMetaTileEntity();
+        if (aMetaTileEntity == null) return false;
+        if (aMetaTileEntity instanceof MTEHatchInput hatch) {
+            hatch.updateTexture(aBaseCasingIndex);
+            hatch.updateCraftingIcon(this.getMachineCraftingIcon());
+            return mWaterInputHatches.add(hatch);
+        }
+        return false;
+    }
+
+    public enum CustomHatchElement implements IHatchElement<PCBFactory> {
+
+        WaterInputHatch("GT5U.MBTT.InputHatch", PCBFactory::addWaterInputHatchToMachineList, MTEHatchInput.class) {
+
+            @Override
+            public long count(PCBFactory t) {
+                return t.mWaterInputHatches.size();
+            }
+        };
+
+        private final String name;
+        private final List<Class<? extends IMetaTileEntity>> mteClasses;
+        private final IGTHatchAdder<PCBFactory> adder;
+
+        @SafeVarargs
+        CustomHatchElement(String name, IGTHatchAdder<PCBFactory> adder,
+            Class<? extends IMetaTileEntity>... mteClasses) {
+            this.name = name;
+            this.mteClasses = Collections.unmodifiableList(Arrays.asList(mteClasses));
+            this.adder = adder;
+        }
+
+        @Override
+        public List<? extends Class<? extends IMetaTileEntity>> mteClasses() {
+            return mteClasses;
+        }
+
+        @Override
+        public String getDisplayName() {
+            return GTUtility.translate(name);
+        }
+
+        public IGTHatchAdder<? super PCBFactory> adder() {
+            return adder;
+        }
+    }
+
+}

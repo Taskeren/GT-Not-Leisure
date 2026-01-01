@@ -1,10 +1,11 @@
-package com.science.gtnl.common.packet;
+package com.science.gtnl.common.packet.client;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 import net.minecraft.client.Minecraft;
 
+import com.science.gtnl.common.packet.SoundPacket;
 import com.science.gtnl.common.packet.SoundPacket.SoundInfo;
 
 import cpw.mods.fml.relauncher.Side;
@@ -12,9 +13,9 @@ import cpw.mods.fml.relauncher.SideOnly;
 import gregtech.client.ElectricJukeboxSound;
 
 @SideOnly(Side.CLIENT)
-public class ClientSoundHandler {
+public class SoundHandler {
 
-    public static final Map<String, ElectricJukeboxSound> PLAYING_SOUNDS = new ConcurrentHashMap<>();
+    public static Map<String, ElectricJukeboxSound> PLAYING_SOUNDS = new ConcurrentHashMap<>();
 
     public static void handleSoundPacket(SoundPacket message) {
         if (message.stopAll) {
@@ -39,9 +40,9 @@ public class ClientSoundHandler {
             for (Map.Entry<String, SoundInfo> entry : SoundPacket.soundsToSync.entrySet()) {
                 SoundInfo info = entry.getValue();
                 ElectricJukeboxSound sound = new ElectricJukeboxSound(
-                    info.resourceLocation,
-                    info.volume,
-                    info.seekMs,
+                    info.resourceLocation(),
+                    info.volume(),
+                    info.seekMs(),
                     0,
                     0,
                     0);

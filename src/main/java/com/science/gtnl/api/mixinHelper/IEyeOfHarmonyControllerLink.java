@@ -23,9 +23,9 @@ public interface IEyeOfHarmonyControllerLink {
 
     boolean isControllerSet();
 
-    void unlinkController();
+    void gtnl$unlinkController();
 
-    Widget makeSyncerWidgets();
+    Widget gtnl$makeSyncerWidgets();
 
     Map<Fluid, Long> getValidFluidMap();
 
@@ -34,4 +34,10 @@ public interface IEyeOfHarmonyControllerLink {
     long gtnl$getHeliumStored();
 
     long gtnl$getStellarPlasmaStored();
+
+    void gtnl$setHydrogenStored(long amount);
+
+    void gtnl$setHeliumStored(long amount);
+
+    void gtnl$setStellarPlasmaStored(long amount);
 }

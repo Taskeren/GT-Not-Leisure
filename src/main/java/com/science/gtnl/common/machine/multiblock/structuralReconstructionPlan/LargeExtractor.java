@@ -104,10 +104,7 @@ public class LargeExtractor extends GTMMultiMachineBase<LargeExtractor> implemen
             .addInfo(StatCollector.translateToLocal("Tooltip_LargeExtractor_01"))
             .addInfo(StatCollector.translateToLocal("Tooltip_GTMMultiMachine_02"))
             .addInfo(StatCollector.translateToLocal("Tooltip_GTMMultiMachine_03"))
-            .addInfo(StatCollector.translateToLocal("Tooltip_GTMMultiMachine_04"))
-            .addSeparator()
-            .addInfo(StatCollector.translateToLocal("StructureTooComplex"))
-            .addInfo(StatCollector.translateToLocal("BLUE_PRINT_INFO"))
+            .addMultiAmpHatchInfo()
             .beginStructureBlock(5, 3, 3, true)
             .addInputHatch(StatCollector.translateToLocal("Tooltip_LargeExtractor_Casing"))
             .addOutputHatch(StatCollector.translateToLocal("Tooltip_LargeExtractor_Casing"))
@@ -157,7 +154,7 @@ public class LargeExtractor extends GTMMultiMachineBase<LargeExtractor> implemen
     }
 
     @Override
-    public final void onScrewdriverRightClick(ForgeDirection side, EntityPlayer aPlayer, float aX, float aY, float aZ,
+    public void onModeChangeByScrewdriver(ForgeDirection side, EntityPlayer aPlayer, float aX, float aY, float aZ,
         ItemStack aTool) {
         this.machineMode = (this.machineMode + 1) % 2;
         GTUtility.sendChatToPlayer(aPlayer, StatCollector.translateToLocal("LargeExtractor_Mode_" + this.machineMode));

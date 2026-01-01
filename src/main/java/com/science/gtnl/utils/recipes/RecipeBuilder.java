@@ -3,6 +3,7 @@ package com.science.gtnl.utils.recipes;
 import static gregtech.api.util.GTRecipeMapUtil.*;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 import javax.annotation.Nullable;
@@ -82,7 +83,6 @@ public class RecipeBuilder {
     public ItemStack[][] alts;
     public FluidStack[] inputFluids = GTValues.emptyFluidStackArray;
     public FluidStack[] outputFluids = GTValues.emptyFluidStackArray;
-    public int[] chances;
     public int[] outputChance;
     public Object special;
     public int duration = -1;
@@ -114,6 +114,10 @@ public class RecipeBuilder {
         inputsOreDict = null;
         alts = null;
         return this;
+    }
+
+    public RecipeBuilder itemInputs(List<ItemStack> inputItems) {
+        return itemInputs(inputItems.toArray(new ItemStack[0]));
     }
 
     public RecipeBuilder itemInputs(ItemStack... inputItems) {
@@ -173,6 +177,14 @@ public class RecipeBuilder {
 
         this.inputItems = basics.isEmpty() ? GTValues.emptyItemStackArray : basics.toArray(new ItemStack[0]);
 
+        return this;
+    }
+
+    public RecipeBuilder itemInputsAllowNulls(ItemStack... inputs) {
+        if (skip) return this;
+        inputItems = fix(inputs, false);
+        inputsOreDict = null;
+        alts = null;
         return this;
     }
 
@@ -237,6 +249,11 @@ public class RecipeBuilder {
         return this;
     }
 
+    public RecipeBuilder recipeCategory(RecipeCategory recipeCategory) {
+        this.recipeCategory = recipeCategory;
+        return this;
+    }
+
     public RecipeBuilder hidden() {
         this.hidden = true;
         return this;
@@ -244,6 +261,16 @@ public class RecipeBuilder {
 
     public RecipeBuilder fake() {
         this.fakeRecipe = true;
+        return this;
+    }
+
+    public RecipeBuilder noBuffer() {
+        this.mCanBeBuffered = false;
+        return this;
+    }
+
+    public RecipeBuilder needsEmptyOutput() {
+        this.mNeedsEmptyOutput = true;
         return this;
     }
 
@@ -264,14 +291,6 @@ public class RecipeBuilder {
 
     public RecipeBuilder invalidate() {
         valid = false;
-        return this;
-    }
-
-    public RecipeBuilder itemInputsAllowNulls(ItemStack... inputs) {
-        if (skip) return this;
-        inputItems = fix(inputs, false);
-        inputsOreDict = null;
-        alts = null;
         return this;
     }
 
@@ -389,7 +408,7 @@ public class RecipeBuilder {
                     outputItems,
                     inputFluids,
                     outputFluids,
-                    chances,
+                    outputChance,
                     special,
                     duration,
                     eut,

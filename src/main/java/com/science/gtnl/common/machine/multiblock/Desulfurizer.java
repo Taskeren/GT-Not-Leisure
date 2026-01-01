@@ -97,10 +97,7 @@ public class Desulfurizer extends MultiMachineBase<Desulfurizer> implements ISur
             .addInfo(StatCollector.translateToLocal("Tooltip_Desulfurizer_00"))
             .addInfo(StatCollector.translateToLocal("Tooltip_Desulfurizer_01"))
             .addInfo(StatCollector.translateToLocal("Tooltip_PerfectOverclock"))
-            .addInfo(StatCollector.translateToLocal("Tooltip_GTMMultiMachine_04"))
-            .addSeparator()
-            .addInfo(StatCollector.translateToLocal("StructureTooComplex"))
-            .addInfo(StatCollector.translateToLocal("BLUE_PRINT_INFO"))
+            .addMultiAmpHatchInfo()
             .beginStructureBlock(12, 6, 6, true)
             .addInputHatch(StatCollector.translateToLocal("Tooltip_Desulfurizer_Casing"))
             .addOutputHatch(StatCollector.translateToLocal("Tooltip_Desulfurizer_Casing"))
@@ -123,7 +120,7 @@ public class Desulfurizer extends MultiMachineBase<Desulfurizer> implements ISur
             .addElement(
                 'E',
                 buildHatchAdder(Desulfurizer.class)
-                    .atLeast(Maintenance, InputHatch, OutputHatch, OutputBus, Maintenance, Energy.or(ExoticEnergy))
+                    .atLeast(InputHatch, OutputHatch, OutputBus, Maintenance, Energy.or(ExoticEnergy))
                     .casingIndex(StructureUtils.getTextureIndex(sBlockCasings4, 1))
                     .dot(1)
                     .buildAndChain(onElementPass(x -> ++x.mCountCasing, ofBlock(sBlockCasings4, 1))))

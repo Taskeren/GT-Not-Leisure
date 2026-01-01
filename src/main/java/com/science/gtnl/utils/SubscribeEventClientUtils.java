@@ -1,8 +1,7 @@
 package com.science.gtnl.utils;
 
 import static com.science.gtnl.ScienceNotLeisure.*;
-import static com.science.gtnl.common.packet.ClientSoundHandler.PLAYING_SOUNDS;
-import static com.science.gtnl.common.packet.ClientTitleDisplayHandler.*;
+import static com.science.gtnl.common.packet.client.SoundHandler.PLAYING_SOUNDS;
 import static com.science.gtnl.common.render.PlayerDollRenderManagerClient.textureCache;
 import static com.science.gtnl.common.render.tile.MeteorMinerRenderer.visualStateMap;
 
@@ -11,10 +10,8 @@ import java.util.Random;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityClientPlayerMP;
-import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.GuiChat;
 import net.minecraft.client.gui.GuiIngameMenu;
-import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.client.gui.inventory.GuiInventory;
 import net.minecraft.client.renderer.EntityRenderer;
 import net.minecraft.entity.player.EntityPlayer;
@@ -26,7 +23,6 @@ import net.minecraft.util.StatCollector;
 import net.minecraftforge.client.IItemRenderer;
 import net.minecraftforge.client.event.GuiOpenEvent;
 import net.minecraftforge.client.event.MouseEvent;
-import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.client.event.RenderItemInFrameEvent;
 import net.minecraftforge.client.event.RenderLivingEvent;
 import net.minecraftforge.client.event.TextureStitchEvent;
@@ -36,10 +32,10 @@ import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.GL11;
 
 import com.reavaritia.common.render.CustomEntityRenderer;
-import com.science.gtnl.common.item.TimeStopManager;
 import com.science.gtnl.common.item.items.NullPointerException;
-import com.science.gtnl.common.packet.ClientTitleDisplayHandler;
+import com.science.gtnl.common.item.items.TimeStopPocketWatch;
 import com.science.gtnl.common.packet.NBTUpdatePacket;
+import com.science.gtnl.common.packet.client.TitleDisplayHandler;
 import com.science.gtnl.common.render.item.ItemNullPointerExceptionRender;
 import com.science.gtnl.config.MainConfig;
 import com.science.gtnl.loader.EffectLoader;
@@ -175,7 +171,7 @@ public class SubscribeEventClientUtils {
             PotionEffect effect = player.getActivePotionEffect(EffectLoader.awe);
 
             if (effect != null && event.gui instanceof GuiIngameMenu) {
-                ClientTitleDisplayHandler
+                TitleDisplayHandler
                     .displayTitle(StatCollector.translateToLocal("Awe_Cancel_01"), 100, 0xFFFFFF, 3, 10, 20);
                 event.setCanceled(true);
             }
@@ -193,8 +189,7 @@ public class SubscribeEventClientUtils {
             if (effect != null && event.gui instanceof GuiInventory) {
                 String[] messages = { "Awe_Cancel_02_01", "Awe_Cancel_02_02" };
                 String message = messages[random.nextInt(messages.length)];
-                ClientTitleDisplayHandler
-                    .displayTitle(StatCollector.translateToLocal(message), 100, 0xFFFFFF, 3, 10, 20);
+                TitleDisplayHandler.displayTitle(StatCollector.translateToLocal(message), 100, 0xFFFFFF, 3, 10, 20);
 
                 event.setCanceled(true);
             }
@@ -216,39 +211,6 @@ public class SubscribeEventClientUtils {
         if (stack != null && stack.getItem() instanceof NullPointerException) {
             ItemNullPointerExceptionRender.renderItem(IItemRenderer.ItemRenderType.ENTITY, event.item, true);
             event.setCanceled(true);
-        }
-    }
-
-    @SideOnly(Side.CLIENT)
-    @SubscribeEvent
-    public void onRender(RenderGameOverlayEvent.Text event) {
-        if (ticksRemaining > 0 && currentTitle != null && !currentTitle.isEmpty()) {
-            GL11.glPushMatrix();
-            Minecraft mc = Minecraft.getMinecraft();
-            ScaledResolution res = new ScaledResolution(mc, mc.displayWidth, mc.displayHeight);
-            FontRenderer fr = mc.fontRenderer;
-
-            int stringWidth = fr.getStringWidth(currentTitle);
-            int stringHeight = 9;
-
-            double scale = scaleText;
-            int x = (res.getScaledWidth() - (int) (stringWidth * scale)) / 2;
-            int y = (res.getScaledHeight() - (int) (stringHeight * scale)) / 2;
-
-            if (StatCollector.canTranslate(currentTitle)) {
-                currentTitle = StatCollector.translateToLocal(currentTitle);
-            }
-
-            int argb = getArgb();
-
-            GL11.glTranslated(x, y, 0);
-            GL11.glScaled(scale, scale, 1);
-
-            fr.drawStringWithShadow(currentTitle, 0, 0, argb);
-
-            GL11.glPopMatrix();
-
-            ticksRemaining--;
         }
     }
 
@@ -314,6 +276,6 @@ public class SubscribeEventClientUtils {
                 customEntityRenderer.resetShader();
             }
         }
-        TimeStopManager.setTimeStopped(false);
+        TimeStopPocketWatch.setTimeStopped(false);
     }
 }

@@ -159,9 +159,6 @@ public class ETGWEyeOfHarmonyModule extends EternalGregTechWorkshopModule {
             .addInfo(StatCollector.translateToLocal("Tooltip_ETGWEyeOfHarmonyModule_08"))
             .addInfo(StatCollector.translateToLocal("Tooltip_ETGWEyeOfHarmonyModule_09"))
             .addInfo(StatCollector.translateToLocal("Tooltip_ETGWEyeOfHarmonyModule_10"))
-            .addSeparator()
-            .addInfo(StatCollector.translateToLocal("StructureTooComplex"))
-            .addInfo(StatCollector.translateToLocal("BLUE_PRINT_INFO"))
             .beginStructureBlock(9, 5, 7, true)
             .addInputBus(StatCollector.translateToLocal("Tooltip_ETGWEyeOfHarmonyModule_Casing"), 1)
             .addOutputBus(StatCollector.translateToLocal("Tooltip_ETGWEyeOfHarmonyModule_Casing"), 1)
@@ -172,7 +169,7 @@ public class ETGWEyeOfHarmonyModule extends EternalGregTechWorkshopModule {
     }
 
     @Override
-    public final void onScrewdriverRightClick(ForgeDirection side, EntityPlayer aPlayer, float aX, float aY, float aZ,
+    public void onModeChangeByScrewdriver(ForgeDirection side, EntityPlayer aPlayer, float aX, float aY, float aZ,
         ItemStack aTool) {
         enableRawStarMatter = !enableRawStarMatter;
         aPlayer.addChatMessage(

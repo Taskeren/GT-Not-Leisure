@@ -2,7 +2,6 @@ package com.science.gtnl.mixins.late.Gregtech;
 
 import org.spongepowered.asm.mixin.Mixin;
 
-import gregtech.api.enums.GTValues;
 import gregtech.api.interfaces.ITexture;
 import gregtech.api.metatileentity.implementations.MTETieredMachineBlock;
 import gregtech.common.tileentities.generators.MTELightningRod;
@@ -18,10 +17,5 @@ public abstract class MixinMTELightningRod extends MTETieredMachineBlock {
     @Override
     public long maxEUStore() {
         return 50_000_000L * (1L << (2 * (mTier - 3)));
-    }
-
-    @Override
-    public long maxEUOutput() {
-        return GTValues.V[mTier] * 64;
     }
 }

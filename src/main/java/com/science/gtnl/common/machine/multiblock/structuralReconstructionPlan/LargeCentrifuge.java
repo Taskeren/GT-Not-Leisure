@@ -106,10 +106,7 @@ public class LargeCentrifuge extends GTMMultiMachineBase<LargeCentrifuge> implem
             .addInfo(StatCollector.translateToLocal("Tooltip_GTMMultiMachine_01"))
             .addInfo(StatCollector.translateToLocal("Tooltip_GTMMultiMachine_02"))
             .addInfo(StatCollector.translateToLocal("Tooltip_GTMMultiMachine_03"))
-            .addInfo(StatCollector.translateToLocal("Tooltip_GTMMultiMachine_04"))
-            .addSeparator()
-            .addInfo(StatCollector.translateToLocal("StructureTooComplex"))
-            .addInfo(StatCollector.translateToLocal("BLUE_PRINT_INFO"))
+            .addMultiAmpHatchInfo()
             .beginStructureBlock(5, 3, 5, true)
             .addInputHatch(StatCollector.translateToLocal("Tooltip_LargeCentrifuge_Casing"))
             .addOutputHatch(StatCollector.translateToLocal("Tooltip_LargeCentrifuge_Casing"))
@@ -149,7 +146,7 @@ public class LargeCentrifuge extends GTMMultiMachineBase<LargeCentrifuge> implem
     }
 
     @Override
-    public final void onScrewdriverRightClick(ForgeDirection side, EntityPlayer aPlayer, float aX, float aY, float aZ,
+    public void onModeChangeByScrewdriver(ForgeDirection side, EntityPlayer aPlayer, float aX, float aY, float aZ,
         ItemStack aTool) {
         this.machineMode = (this.machineMode + 1) % 2;
         GTUtility.sendChatToPlayer(aPlayer, StatCollector.translateToLocal("LargeCentrifuge_Mode_" + this.machineMode));

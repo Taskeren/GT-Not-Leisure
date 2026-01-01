@@ -23,13 +23,13 @@ public abstract class MixinParallelHelper {
     // Original code from Overpowered Mod. MIT License. 2025/4/18
 
     @Shadow
-    public GTRecipe recipe;
+    protected GTRecipe recipe;
 
     @Shadow
-    public double chanceMultiplier;
+    protected double chanceMultiplier;
 
     @Shadow
-    public IVoidable machine;
+    protected IVoidable machine;
 
     /**
      * Inject at the start of determineParallel to apply voltage-based chance bonus.

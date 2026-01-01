@@ -22,24 +22,24 @@ public abstract class MixinMTEAdvAssLineAcceleration implements IAccelerationSta
     private boolean stuck;
 
     @Unique
-    private boolean isAccelerationState;
+    private boolean gtnl$isAccelerationState;
 
     @Override
-    public boolean getMachineAccelerationState() {
+    public boolean gtnl$getMachineAccelerationState() {
         return stuck;
     }
 
     @Override
-    public void setAccelerationState(boolean state) {
-        isAccelerationState = state;
+    public void gtnl$setIsAccelerationState(boolean state) {
+        gtnl$isAccelerationState = state;
     }
 
     @Inject(
         method = "onRunningTick",
         at = @At(value = "FIELD", target = "Lggfab/mte/MTEAdvAssLine;baseEUt:J", ordinal = 0),
         cancellable = true)
-    private void GTNL$modifyDrainEnergy(ItemStack aStack, CallbackInfoReturnable<Boolean> cir) {
-        if (isAccelerationState) cir.setReturnValue(true);
+    private void gtnl$modifyDrainEnergy(ItemStack aStack, CallbackInfoReturnable<Boolean> cir) {
+        if (gtnl$isAccelerationState) cir.setReturnValue(true);
     }
 
 }

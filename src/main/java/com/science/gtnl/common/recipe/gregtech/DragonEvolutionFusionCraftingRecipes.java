@@ -24,7 +24,6 @@ public class DragonEvolutionFusionCraftingRecipes implements IRecipePool {
     public RecipeMap<?> DEFCR = DEFCRecipes.fusionCraftingRecipes;
 
     @Override
-
     public void loadRecipes() {
         RecipeBuilder.builder()
             .itemInputs(

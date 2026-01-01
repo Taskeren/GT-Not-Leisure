@@ -25,7 +25,6 @@ import com.gtnewhorizon.structurelib.alignment.constructable.ISurvivalConstructa
 import com.gtnewhorizon.structurelib.structure.IStructureDefinition;
 import com.gtnewhorizon.structurelib.structure.ISurvivalBuildEnvironment;
 import com.gtnewhorizon.structurelib.structure.StructureDefinition;
-import com.science.gtnl.ScienceNotLeisure;
 import com.science.gtnl.common.machine.multiMachineBase.GTMMultiMachineBase;
 import com.science.gtnl.utils.StructureUtils;
 import com.science.gtnl.utils.recipes.GTNL_OverclockCalculator;
@@ -115,10 +114,7 @@ public class Digester extends GTMMultiMachineBase<Digester> implements ISurvival
             .addInfo(StatCollector.translateToLocal("Tooltip_GTMMultiMachine_01"))
             .addInfo(StatCollector.translateToLocal("Tooltip_GTMMultiMachine_02"))
             .addInfo(StatCollector.translateToLocal("Tooltip_GTMMultiMachine_03"))
-            .addInfo(StatCollector.translateToLocal("Tooltip_GTMMultiMachine_04"))
-            .addSeparator()
-            .addInfo(StatCollector.translateToLocal("StructureTooComplex"))
-            .addInfo(StatCollector.translateToLocal("BLUE_PRINT_INFO"))
+            .addMultiAmpHatchInfo()
             .beginStructureBlock(7, 4, 7, true)
             .addInputHatch(StatCollector.translateToLocal("Tooltip_Digester_Casing"))
             .addOutputHatch(StatCollector.translateToLocal("Tooltip_Digester_Casing"))
@@ -310,12 +306,6 @@ public class Digester extends GTMMultiMachineBase<Digester> implements ISurvival
             }
         }
 
-        boolean isValidFluid = tAmount >= 42;
-        if (isValidFluid) {
-            ScienceNotLeisure.LOG.warn("Filled structure.");
-        } else {
-            ScienceNotLeisure.LOG.warn("Did not fill structure.");
-        }
-        return isValidFluid;
+        return tAmount >= 42;
     }
 }

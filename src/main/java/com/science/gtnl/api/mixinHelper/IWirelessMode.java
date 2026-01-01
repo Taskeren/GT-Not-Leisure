@@ -2,7 +2,7 @@ package com.science.gtnl.api.mixinHelper;
 
 public interface IWirelessMode {
 
-    boolean isWirelessMode();
+    boolean isGtnl$wirelessMode();
 
-    void setWirelessMode(boolean wirelessMode);
+    void setGtnl$wirelessMode(boolean gtnl$wirelessMode);
 }

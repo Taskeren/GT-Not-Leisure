@@ -124,10 +124,7 @@ public class LargeChemicalBath extends GTMMultiMachineBase<LargeChemicalBath> im
             .addInfo(StatCollector.translateToLocal("Tooltip_LargeChemicalBath_01"))
             .addInfo(StatCollector.translateToLocal("Tooltip_GTMMultiMachine_02"))
             .addInfo(StatCollector.translateToLocal("Tooltip_GTMMultiMachine_03"))
-            .addInfo(StatCollector.translateToLocal("Tooltip_GTMMultiMachine_04"))
-            .addSeparator()
-            .addInfo(StatCollector.translateToLocal("StructureTooComplex"))
-            .addInfo(StatCollector.translateToLocal("BLUE_PRINT_INFO"))
+            .addMultiAmpHatchInfo()
             .beginStructureBlock(5, 3, 7, true)
             .addInputHatch(StatCollector.translateToLocal("Tooltip_LargeChemicalBath_Casing"))
             .addOutputHatch(StatCollector.translateToLocal("Tooltip_LargeChemicalBath_Casing"))
@@ -186,7 +183,7 @@ public class LargeChemicalBath extends GTMMultiMachineBase<LargeChemicalBath> im
     }
 
     @Override
-    public final void onScrewdriverRightClick(ForgeDirection side, EntityPlayer aPlayer, float aX, float aY, float aZ,
+    public void onModeChangeByScrewdriver(ForgeDirection side, EntityPlayer aPlayer, float aX, float aY, float aZ,
         ItemStack aTool) {
         this.machineMode = (this.machineMode + 1) % 2;
         GTUtility

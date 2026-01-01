@@ -105,11 +105,8 @@ public class LargeArcSmelter extends GTMMultiMachineBase<LargeArcSmelter> implem
             .addInfo(StatCollector.translateToLocal("Tooltip_LargeArcSmelter_01"))
             .addInfo(StatCollector.translateToLocal("Tooltip_GTMMultiMachine_02"))
             .addInfo(StatCollector.translateToLocal("Tooltip_GTMMultiMachine_03"))
-            .addInfo(StatCollector.translateToLocal("Tooltip_GTMMultiMachine_04"))
+            .addMultiAmpHatchInfo()
             .addInfo(StatCollector.translateToLocal("Tooltip_PerfectOverclock"))
-            .addSeparator()
-            .addInfo(StatCollector.translateToLocal("StructureTooComplex"))
-            .addInfo(StatCollector.translateToLocal("BLUE_PRINT_INFO"))
             .beginStructureBlock(5, 4, 5, true)
             .addInputHatch(StatCollector.translateToLocal("Tooltip_LargeArcSmelter_Casing"))
             .addInputBus(StatCollector.translateToLocal("Tooltip_LargeArcSmelter_Casing"))
@@ -178,7 +175,7 @@ public class LargeArcSmelter extends GTMMultiMachineBase<LargeArcSmelter> implem
     }
 
     @Override
-    public final void onScrewdriverRightClick(ForgeDirection side, EntityPlayer aPlayer, float aX, float aY, float aZ,
+    public void onModeChangeByScrewdriver(ForgeDirection side, EntityPlayer aPlayer, float aX, float aY, float aZ,
         ItemStack aTool) {
         this.machineMode = (this.machineMode + 1) % 2;
         GTUtility.sendChatToPlayer(aPlayer, StatCollector.translateToLocal("LargeArcSmelter_Mode_" + this.machineMode));

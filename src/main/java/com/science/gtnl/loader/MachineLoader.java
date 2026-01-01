@@ -25,6 +25,7 @@ import com.science.gtnl.common.machine.basicMachine.SteamTurbine;
 import com.science.gtnl.common.machine.cover.VoidCover;
 import com.science.gtnl.common.machine.cover.WirelessMultiEnergyCover;
 import com.science.gtnl.common.machine.cover.WirelessSteamCover;
+import com.science.gtnl.common.machine.hatch.BeamlinePipeMirror;
 import com.science.gtnl.common.machine.hatch.CustomFluidHatch;
 import com.science.gtnl.common.machine.hatch.CustomMaintenanceHatch;
 import com.science.gtnl.common.machine.hatch.DebugDataAccessHatch;
@@ -43,6 +44,8 @@ import com.science.gtnl.common.machine.hatch.NinefoldInputHatch;
 import com.science.gtnl.common.machine.hatch.OredictInputBusME;
 import com.science.gtnl.common.machine.hatch.OriginalInputHatch;
 import com.science.gtnl.common.machine.hatch.OriginalOutputHatch;
+import com.science.gtnl.common.machine.hatch.OutputBusMEProxy;
+import com.science.gtnl.common.machine.hatch.OutputHatchMEProxy;
 import com.science.gtnl.common.machine.hatch.ParallelControllerHatch;
 import com.science.gtnl.common.machine.hatch.SuperCraftingInputHatchME;
 import com.science.gtnl.common.machine.hatch.SuperCraftingInputProxy;
@@ -93,6 +96,7 @@ import com.science.gtnl.common.machine.multiblock.MatterFabricator;
 import com.science.gtnl.common.machine.multiblock.MegaMixer;
 import com.science.gtnl.common.machine.multiblock.MeteorMiner;
 import com.science.gtnl.common.machine.multiblock.NaquadahReactor;
+import com.science.gtnl.common.machine.multiblock.PCBFactory;
 import com.science.gtnl.common.machine.multiblock.PetrochemicalPlant;
 import com.science.gtnl.common.machine.multiblock.PhotovoltaicPowerStation;
 import com.science.gtnl.common.machine.multiblock.PlatinumBasedTreatment;
@@ -1703,6 +1707,10 @@ public class MachineLoader {
                 "SupercomputingCenter",
                 StatCollector.translateToLocal("NameSupercomputingCenter")));
         addItemTooltip(GTNLItemList.SupercomputingCenter.get(1), AnimatedText.SNL_QYZG);
+
+        GTNLItemList.PCBFactory
+            .set(new PCBFactory(PCB_FACTORY.ID, "PCBFactory", StatCollector.translateToLocal("NamePCBFactory")));
+        addItemTooltip(GTNLItemList.PCBFactory.get(1), AnimatedText.SNL_QYZG);
 
         // Special Machine
         GTNLItemList.CheatOreProcessingFactory.set(
@@ -4653,23 +4661,30 @@ public class MachineLoader {
                 16777216));
         addItemTooltip(GTNLItemList.WirelessEnergyHatchMAX16777216A.get(1), AnimatedText.SCIENCE_NOT_LEISURE);
 
-        GTNLItemList.LegendaryWirelessEnergyHatch.set(
+        GTNLItemList.HumongousWirelessEnergyHatch.set(
             new MTEHatchWirelessMulti(
-                LEGENDARY_WIRELESS_ENERGY_HATCH.ID,
-                "LegendaryWirelessEnergyHatch",
-                StatCollector.translateToLocal("LegendaryWirelessEnergyHatch"),
+                HUMONGOUS_WIRELESS_ENERGY_HATCH.ID,
+                "HumongousWirelessEnergyHatch",
+                StatCollector.translateToLocal("HumongousWirelessEnergyHatch"),
                 14,
                 Integer.MAX_VALUE));
-        addItemTooltip(GTNLItemList.LegendaryWirelessEnergyHatch.get(1), AnimatedText.SCIENCE_NOT_LEISURE);
+        addItemTooltip(GTNLItemList.HumongousWirelessEnergyHatch.get(1), AnimatedText.SCIENCE_NOT_LEISURE);
 
-        GTNLItemList.LegendaryWirelessDynamoHatch.set(
+        GTNLItemList.HumongousWirelessDynamoHatch.set(
             new WirelessMultiDynamoHatch(
-                LEGENDARY_WIRELESS_DYNAMO_HATCH.ID,
-                "LegendaryWirelessDynamoHatch",
-                StatCollector.translateToLocal("LegendaryWirelessDynamoHatch"),
+                HUMONGOUS_WIRELESS_DYNAMO_HATCH.ID,
+                "HumongousWirelessDynamoHatch",
+                StatCollector.translateToLocal("HumongousWirelessDynamoHatch"),
                 14,
                 Integer.MAX_VALUE));
-        addItemTooltip(GTNLItemList.LegendaryWirelessDynamoHatch.get(1), AnimatedText.SCIENCE_NOT_LEISURE);
+        addItemTooltip(GTNLItemList.HumongousWirelessDynamoHatch.get(1), AnimatedText.SCIENCE_NOT_LEISURE);
+
+        GTNLItemList.BeamlinePipeMirror.set(
+            new BeamlinePipeMirror(
+                BEAMLINE_PIPE_MIRROR.ID,
+                "BeamlinePipeMirror",
+                StatCollector.translateToLocal("BeamlinePipeMirror")));
+        addItemTooltip(GTNLItemList.BeamlinePipeMirror.get(1), AnimatedText.SCIENCE_NOT_LEISURE);
     }
 
     public static void registerBasicMachine() {
@@ -4786,7 +4801,7 @@ public class MachineLoader {
                 LOOT_BAG_REDEMPTION.ID,
                 "LootBagRedemption",
                 StatCollector.translateToLocal("LootBagRedemption"),
-                1));
+                14));
         addItemTooltip(GTNLItemList.LootBagRedemption.get(1), AnimatedText.SCIENCE_NOT_LEISURE);
 
         GTNLItemList.SuperOredictInputBusME.set(
@@ -4804,6 +4819,20 @@ public class MachineLoader {
                 StatCollector.translateToLocal("SuperTypeFilteredInputBusME"),
                 true));
         addItemTooltip(GTNLItemList.SuperTypeFilteredInputBusME.get(1), AnimatedText.SCIENCE_NOT_LEISURE);
+
+        GTNLItemList.OutputBusMEProxy.set(
+            new OutputBusMEProxy(
+                OUTPUT_BUS_ME_PROXY.ID,
+                "OutputBusMEProxy",
+                StatCollector.translateToLocal("OutputBusMEProxy")));
+        addItemTooltip(GTNLItemList.OutputBusMEProxy.get(1), AnimatedText.SCIENCE_NOT_LEISURE);
+
+        GTNLItemList.OutputHatchMEProxy.set(
+            new OutputHatchMEProxy(
+                OUTPUT_HATCH_ME_PROXY.ID,
+                "OutputHatchMEProxy",
+                StatCollector.translateToLocal("OutputHatchMEProxy")));
+        addItemTooltip(GTNLItemList.OutputHatchMEProxy.get(1), AnimatedText.SCIENCE_NOT_LEISURE);
     }
 
     public static void registerWireAndPipe() {

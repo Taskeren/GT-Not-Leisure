@@ -170,13 +170,12 @@ public class EnergyInfuser extends TTMultiblockBase implements IConstructable {
 
             for (ItemStack individualStack : stackArray) {
                 Item item = individualStack.getItem();
-                long euRemaining = euPerItem;
 
                 if (item != null && item.isRepairable()) {
                     int currentDamage = item.getDamage(individualStack);
                     if (currentDamage > 0) {
                         int maxRepair = Math.min(currentDamage, maxRepairedDamagePerOperation);
-                        long possibleRepair = Math.min(maxRepair, euRemaining / usedEuPerDurability);
+                        long possibleRepair = Math.min(maxRepair, euPerItem / usedEuPerDurability);
                         int uumNeeded = (int) (possibleRepair * usedUumPerDurability);
 
                         FluidStack availableUUM = getStoredFluids().stream()
@@ -189,32 +188,28 @@ public class EnergyInfuser extends TTMultiblockBase implements IConstructable {
                         if (availableUUM != null
                             && depleteInput(new FluidStack(Materials.UUMatter.mFluid, uumNeeded))) {
                             item.setDamage(individualStack, currentDamage - (int) possibleRepair);
-                            euRemaining -= possibleRepair * usedEuPerDurability;
+                            decreaseEUValue(possibleRepair * usedEuPerDurability);
                         }
                     }
                 }
 
-                if (item instanceof IElectricItem) {
-                    long charged = (long) ElectricItem.manager.charge(
-                        individualStack,
-                        euRemaining,
-                        ((IElectricItem) item).getTier(individualStack),
-                        true,
-                        false);
-                    euRemaining -= charged;
-                } else if (Mods.COFHCore.isModLoaded() && item instanceof IEnergyContainerItem) {
+                if (item instanceof IElectricItem electricItem) {
+                    double missingItemCharge = electricItem.getMaxCharge(individualStack)
+                        - ElectricItem.manager.getCharge(individualStack);
+                    double charge = Math.min(missingItemCharge, euPerItem);
+                    long charged = (long) Math.ceil(
+                        ElectricItem.manager
+                            .charge(individualStack, charge, electricItem.getTier(individualStack), true, false));
+                    decreaseEUValue(charged);
+                } else if (Mods.COFHCore.isModLoaded() && item instanceof IEnergyContainerItem energyContainerItem) {
                     long rf = Math.min(
-                        ((IEnergyContainerItem) item).getMaxEnergyStored(individualStack)
-                            - ((IEnergyContainerItem) item).getEnergyStored(individualStack),
-                        euRemaining * mEUtoRF / 10L);
-                    rf = ((IEnergyContainerItem) item).receiveEnergy(
-                        individualStack,
-                        rf > Integer.MAX_VALUE - 1 ? Integer.MAX_VALUE : (int) rf,
-                        false);
-                    euRemaining -= rf * 10L / mEUtoRF;
+                        energyContainerItem.getMaxEnergyStored(individualStack)
+                            - energyContainerItem.getEnergyStored(individualStack),
+                        euPerItem * mEUtoRF / 10L);
+                    int rfToCharge = (int) rf;
+                    rf = energyContainerItem.receiveEnergy(individualStack, rfToCharge, false);
+                    decreaseEUValue(rf * 10L / mEUtoRF);
                 }
-
-                setEUValue(euPerItem - euRemaining);
 
                 if ((isItemStackFullyCharged(individualStack) && isItemStackFullyRepaired(individualStack))
                     || outputAllItems) {
@@ -240,13 +235,12 @@ public class EnergyInfuser extends TTMultiblockBase implements IConstructable {
         Item item = stack.getItem();
 
         for (int i = 0; i < stack.stackSize; i++) {
-            if (item instanceof IElectricItem) {
-                if (ElectricItem.manager.getCharge(stack) < ((IElectricItem) item).getMaxCharge(stack)) {
+            if (item instanceof IElectricItem electricItem) {
+                if (ElectricItem.manager.getCharge(stack) < electricItem.getMaxCharge(stack)) {
                     return false;
                 }
-            } else if (Mods.COFHCore.isModLoaded() && item instanceof IEnergyContainerItem) {
-                if (((IEnergyContainerItem) item).getEnergyStored(stack)
-                    < ((IEnergyContainerItem) item).getMaxEnergyStored(stack)) {
+            } else if (Mods.COFHCore.isModLoaded() && item instanceof IEnergyContainerItem energyContainerItem) {
+                if (energyContainerItem.getEnergyStored(stack) < energyContainerItem.getMaxEnergyStored(stack)) {
                     return false;
                 }
             }
@@ -288,7 +282,7 @@ public class EnergyInfuser extends TTMultiblockBase implements IConstructable {
         return maxStoredEU;
     }
 
-    public void setEUValue(long newEnergyValue) {
+    public void decreaseEUValue(long energyToRemove) {
         long maxStoredEU = 0;
         MTEHatchEnergy targetEnergyHatch = null;
         MTEHatchEnergyMulti targetEnergyMulti = null;
@@ -313,15 +307,15 @@ public class EnergyInfuser extends TTMultiblockBase implements IConstructable {
 
         if (targetEnergyHatch != null) {
             targetEnergyHatch.getBaseMetaTileEntity()
-                .decreaseStoredEnergyUnits(newEnergyValue, false);
+                .decreaseStoredEnergyUnits(energyToRemove, false);
         } else if (targetEnergyMulti != null) {
             targetEnergyMulti.getBaseMetaTileEntity()
-                .decreaseStoredEnergyUnits(newEnergyValue, false);
+                .decreaseStoredEnergyUnits(energyToRemove, false);
         }
     }
 
     @Override
-    public final void onScrewdriverRightClick(ForgeDirection side, EntityPlayer aPlayer, float aX, float aY, float aZ,
+    public void onScrewdriverRightClick(ForgeDirection side, EntityPlayer aPlayer, float aX, float aY, float aZ,
         ItemStack aTool) {
         outputAllItems = true;
         GTUtility.sendChatToPlayer(aPlayer, StatCollector.translateToLocal("Info_EnergyInfuser_00" + this.machineMode));
@@ -381,10 +375,7 @@ public class EnergyInfuser extends TTMultiblockBase implements IConstructable {
             .addInfo(StatCollector.translateToLocal("Tooltip_EnergyInfuser_02"))
             .addInfo(StatCollector.translateToLocal("Tooltip_EnergyInfuser_03"))
             .addInfo(StatCollector.translateToLocal("Tooltip_EnergyInfuser_04"))
-            .addInfo(StatCollector.translateToLocal("Tooltip_Tectech_Hatch"))
-            .addSeparator()
-            .addInfo(StatCollector.translateToLocal("StructureTooComplex"))
-            .addInfo(StatCollector.translateToLocal("BLUE_PRINT_INFO"))
+            .addTecTechHatchInfo()
             .beginStructureBlock(5, 8, 5, true)
             .addInputHatch(StatCollector.translateToLocal("Tooltip_EnergyInfuser_Casing"))
             .addOutputBus(StatCollector.translateToLocal("Tooltip_EnergyInfuser_Casing"))

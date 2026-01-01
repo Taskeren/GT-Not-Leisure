@@ -27,6 +27,7 @@ import com.science.gtnl.common.entity.EntityParticleBeam;
 import com.science.gtnl.common.entity.EntityPlayerLeashKnot;
 import com.science.gtnl.common.entity.EntitySaddleSlime;
 import com.science.gtnl.common.entity.EntitySteamRocket;
+import com.science.gtnl.common.packet.client.TitleDisplayHandler;
 import com.science.gtnl.common.render.entity.NullPointerExceptionRender;
 import com.science.gtnl.common.render.entity.SaddleSlimeRender;
 import com.science.gtnl.common.render.entity.SteamRocketRender;
@@ -165,12 +166,19 @@ public class ClientProxy extends CommonProxy {
     public void preInit(FMLPreInitializationEvent event) {
         super.preInit(event);
         MinecraftForge.EVENT_BUS.register(new SubscribeEventClientUtils());
-        MinecraftForge.EVENT_BUS.register(GTNLInputHandler.INSTANCE);
         FMLCommonHandler.instance()
             .bus()
             .register(new SubscribeEventClientUtils());
+        MinecraftForge.EVENT_BUS.register(GTNLInputHandler.INSTANCE);
+        FMLCommonHandler.instance()
+            .bus()
+            .register(GTNLInputHandler.INSTANCE);
         GuiContainerManager.addTooltipHandler(new GTNLTooltipManager());
 
+        MinecraftForge.EVENT_BUS.register(new TitleDisplayHandler());
+        FMLCommonHandler.instance()
+            .bus()
+            .register(new TitleDisplayHandler());
     }
 
     @Override

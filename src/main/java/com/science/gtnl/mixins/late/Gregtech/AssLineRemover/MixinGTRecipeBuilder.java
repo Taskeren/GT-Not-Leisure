@@ -18,6 +18,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
+import com.science.gtnl.ScienceNotLeisure;
 import com.science.gtnl.utils.recipes.AssLineRecipeHook;
 
 import cpw.mods.fml.common.registry.GameData;
@@ -32,19 +33,17 @@ import gregtech.api.util.recipe.Scanning;
 public class MixinGTRecipeBuilder {
 
     @Shadow
-    public ItemStack[] outputs;
+    protected ItemStack[] outputs;
 
     @Shadow
     @Nullable
-    public IRecipeMetadataStorage metadataStorage;
+    protected IRecipeMetadataStorage metadataStorage;
 
     @Shadow
-    public int duration;
+    protected int duration;
 
     @Shadow
-    public int eut;
-
-    private static boolean cdddddd = true;
+    protected int eut;
 
     @Inject(method = "addTo", at = @At("HEAD"), cancellable = true)
     private void science$assLineRecipeHook(IRecipeMap recipeMap, CallbackInfoReturnable<Collection<GTRecipe>> cir) {
@@ -52,15 +51,11 @@ public class MixinGTRecipeBuilder {
             if (this.metadataStorage != null) {
                 ItemStack researchItem = this.metadataStorage.getMetadata(RESEARCH_ITEM);
                 Scanning scanningData = this.metadataStorage.getMetadataOrDefault(SCANNING, new Scanning(0, 0));
-                // noinspection DataFlowIssue
                 int time = scanningData.time;
                 if (researchItem != null) {
                     String name = GameData.getItemRegistry()
                         .getNameForObject(researchItem.getItem());
-                    if (cdddddd) {
-                        cdddddd = false;
-                        System.out.println("xxxxxxxxxxxxxx  " + name);
-                    }
+                    ScienceNotLeisure.LOG.info("Hook AssemblyLine Recipe: {}", name);
                     int amount = researchItem.stackSize;
                     int meta = Items.feather.getDamage(researchItem);
                     // noinspection StringBufferReplaceableByString

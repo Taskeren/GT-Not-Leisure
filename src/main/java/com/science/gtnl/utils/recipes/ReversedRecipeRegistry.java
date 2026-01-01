@@ -1,22 +1,20 @@
 package com.science.gtnl.utils.recipes;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
 
 import net.minecraft.item.ItemStack;
 
+import com.github.bsideup.jabel.Desugar;
 import com.science.gtnl.ScienceNotLeisure;
 
 import gregtech.api.util.GTRecipe;
 import gregtech.api.util.GTUtility;
+import it.unimi.dsi.fastutil.objects.ObjectArrayList;
+import it.unimi.dsi.fastutil.objects.ObjectList;
 
 public class ReversedRecipeRegistry {
 
-    /**
-     * List to store all manually registered GT crafting recipes.
-     */
-    private static final List<GTCraftingRecipe> REGISTRY = new ArrayList<>(2048);
+    public static ObjectList<GTCraftingRecipe> REGISTRY = new ObjectArrayList<>();
 
     public interface GTCraftingRecipe {
 
@@ -44,20 +42,11 @@ public class ReversedRecipeRegistry {
         }
     }
 
-    public static class Shaped implements GTCraftingRecipe {
-
-        private final Object[] inputs;
-        private final ItemStack output;
-        private final Throwable adderStackTrace;
+    @Desugar
+    public record Shaped(Object[] inputs, ItemStack output, Throwable adderStackTrace) implements GTCraftingRecipe {
 
         public Shaped(Object[] inputs, ItemStack output) {
             this(inputs, output, new Exception());
-        }
-
-        public Shaped(Object[] inputs, ItemStack output, Throwable adderStackTrace) {
-            this.inputs = inputs;
-            this.output = output;
-            this.adderStackTrace = adderStackTrace;
         }
 
         @Override
@@ -81,20 +70,11 @@ public class ReversedRecipeRegistry {
         }
     }
 
-    public static class Shapeless implements GTCraftingRecipe {
-
-        private final Object[] inputs;
-        private final ItemStack output;
-        private final Throwable adderStackTrace;
+    @Desugar
+    public record Shapeless(Object[] inputs, ItemStack output, Throwable adderStackTrace) implements GTCraftingRecipe {
 
         public Shapeless(Object[] inputs, ItemStack output) {
             this(inputs, output, new Exception());
-        }
-
-        public Shapeless(Object[] inputs, ItemStack output, Throwable adderStackTrace) {
-            this.inputs = inputs;
-            this.output = output;
-            this.adderStackTrace = adderStackTrace;
         }
 
         @Override

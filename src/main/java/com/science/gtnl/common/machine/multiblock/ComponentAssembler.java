@@ -134,10 +134,7 @@ public class ComponentAssembler extends MultiMachineBase<ComponentAssembler> imp
             .addInfo(StatCollector.translateToLocal("Tooltip_ComponentAssembler_05"))
             .addInfo(StatCollector.translateToLocal("Tooltip_ComponentAssembler_06"))
             .addInfo(StatCollector.translateToLocal("Tooltip_ComponentAssembler_07"))
-            .addInfo(StatCollector.translateToLocal("Tooltip_GTMMultiMachine_04"))
-            .addSeparator()
-            .addInfo(StatCollector.translateToLocal("StructureTooComplex"))
-            .addInfo(StatCollector.translateToLocal("BLUE_PRINT_INFO"))
+            .addMultiAmpHatchInfo()
             .beginStructureBlock(7, 5, 5, true)
             .addInputBus(StatCollector.translateToLocal("Tooltip_ComponentAssembler_Casing"))
             .addOutputBus(StatCollector.translateToLocal("Tooltip_ComponentAssembler_Casing"))
@@ -283,7 +280,7 @@ public class ComponentAssembler extends MultiMachineBase<ComponentAssembler> imp
     }
 
     @Override
-    public void onScrewdriverRightClick(ForgeDirection side, EntityPlayer aPlayer, float aX, float aY, float aZ,
+    public void onModeChangeByScrewdriver(ForgeDirection side, EntityPlayer aPlayer, float aX, float aY, float aZ,
         ItemStack aTool) {
         inputSeparation = !inputSeparation;
         GTUtility.sendChatToPlayer(

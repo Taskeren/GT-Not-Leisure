@@ -84,7 +84,7 @@ public class SteamWoodcutter extends SteamMultiMachineBase<SteamWoodcutter> impl
                     ofBlock(BlockLoader.metaCasing, 24)))
             .addElement('C', ofBlock(BlockLoader.metaCasing, 25))
             .addElement('D', chainAllGlasses())
-            .addElement('E', ofBlock(Blocks.dirt, 0))
+            .addElement('E', ofChain(ofBlockAnyMeta(Blocks.dirt), ofBlockAnyMeta(Blocks.grass)))
             .build();
     }
 
@@ -124,9 +124,6 @@ public class SteamWoodcutter extends SteamMultiMachineBase<SteamWoodcutter> impl
         tt.addMachineType(getMachineType())
             .addInfo(StatCollector.translateToLocal("Tooltip_SteamWoodcutter_00"))
             .addInfo(StatCollector.translateToLocal("Tooltip_SteamWoodcutter_01"))
-            .addSeparator()
-            .addInfo(StatCollector.translateToLocal("StructureTooComplex"))
-            .addInfo(StatCollector.translateToLocal("BLUE_PRINT_INFO"))
             .beginStructureBlock(7, 8, 7, true)
             .addSubChannelUsage(GTStructureChannels.BOROGLASS)
             .toolTipFinisher();

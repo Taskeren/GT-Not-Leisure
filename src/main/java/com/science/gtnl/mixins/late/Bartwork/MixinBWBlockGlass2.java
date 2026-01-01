@@ -8,13 +8,14 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Mutable;
 import org.spongepowered.asm.mixin.Shadow;
 
-import com.science.gtnl.utils.BWBlockGlassHelper;
+import com.science.gtnl.api.mixinHelper.BWBlockGlassHelper;
 
 import bartworks.common.blocks.BWBlocks;
 import bartworks.common.blocks.BWBlocksGlass2;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
+@Deprecated
 @Mixin(value = BWBlocksGlass2.class, remap = false)
 public abstract class MixinBWBlockGlass2 extends BWBlocks {
 

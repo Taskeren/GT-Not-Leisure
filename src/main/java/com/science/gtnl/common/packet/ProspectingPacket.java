@@ -28,7 +28,7 @@ import it.unimi.dsi.fastutil.objects.Object2IntOpenHashMap;
 import it.unimi.dsi.fastutil.shorts.Short2ObjectMap;
 import it.unimi.dsi.fastutil.shorts.Short2ObjectOpenHashMap;
 
-public class ProspectingPacket implements IMessage {
+public class ProspectingPacket implements IMessage, IMessageHandler<ProspectingPacket, IMessage> {
 
     public int chunkX, chunkZ, posX, posZ, size, ptype;
     public Byte2ShortMap[][] map;
@@ -116,27 +116,24 @@ public class ProspectingPacket implements IMessage {
         buf.writeInt(count);
     }
 
-    public static class Handler implements IMessageHandler<ProspectingPacket, IMessage> {
+    @Override
+    public IMessage onMessage(ProspectingPacket message, MessageContext ctx) {
+        if (message.map == null) return null;
 
-        @Override
-        public IMessage onMessage(ProspectingPacket message, MessageContext ctx) {
-            if (message.map == null) return null;
+        ProspectingWrapper wrapper = new ProspectingWrapper(
+            message.chunkX,
+            message.chunkZ,
+            message.posX,
+            message.posZ,
+            message.size,
+            message.ptype,
+            message.map,
+            message.ores,
+            message.metaMap);
 
-            ProspectingWrapper wrapper = new ProspectingWrapper(
-                message.chunkX,
-                message.chunkZ,
-                message.posX,
-                message.posZ,
-                message.size,
-                message.ptype,
-                message.map,
-                message.ores,
-                message.metaMap);
-
-            DetravScannerGUI.newMap(new DetravMapTexture(wrapper));
-            ScienceNotLeisure.proxy.openProspectorGUI();
-            return null;
-        }
+        DetravScannerGUI.newMap(new DetravMapTexture(wrapper));
+        ScienceNotLeisure.proxy.openProspectorGUI();
+        return null;
     }
 
     public static void addOre(ProspectingPacket packet, byte y, int i, int j, short meta) {

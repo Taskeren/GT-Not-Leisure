@@ -2,7 +2,6 @@ package com.science.gtnl.common.recipe.gregtech;
 
 import static gregtech.api.util.GTRecipeConstants.FUSION_THRESHOLD;
 
-import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
 
 import com.science.gtnl.api.IRecipePool;
@@ -22,8 +21,8 @@ public class FusionReactorRecipes implements IRecipePool {
     @Override
     public void loadRecipes() {
         RecipeBuilder.builder()
-            .fluidInputs(FluidRegistry.getFluidStack("hydrogen", 144), FluidRegistry.getFluidStack("molten.boron", 144))
-            .fluidOutputs(FluidRegistry.getFluidStack("plasma.carbon", 144))
+            .fluidInputs(Materials.Hydrogen.getGas(144), Materials.Boron.getMolten(144))
+            .fluidOutputs(Materials.Carbon.getPlasma(144))
             .duration(10)
             .eut(TierEU.RECIPE_IV)
             .metadata(FUSION_THRESHOLD, 20000000L)
@@ -53,6 +52,22 @@ public class FusionReactorRecipes implements IRecipePool {
             .duration(32)
             .eut(TierEU.RECIPE_LuV)
             .metadata(FUSION_THRESHOLD, 200000000L)
+            .addTo(fR);
+
+        RecipeBuilder.builder()
+            .fluidInputs(Materials.Oxygen.getGas(14), Materials.Copper.getMolten(14))
+            .fluidOutputs(Materials.Strontium.getMolten(16))
+            .duration(16)
+            .eut(TierEU.RECIPE_LuV)
+            .metadata(FUSION_THRESHOLD, 300000000L)
+            .addTo(fR);
+
+        RecipeBuilder.builder()
+            .fluidInputs(Materials.Magnesium.getMolten(129), Materials.Iridium.getMolten(129))
+            .fluidOutputs(MaterialPool.Actinium.getMolten(144))
+            .duration(20)
+            .eut(TierEU.RECIPE_UV)
+            .metadata(FUSION_THRESHOLD, 1000000000L)
             .addTo(fR);
     }
 }

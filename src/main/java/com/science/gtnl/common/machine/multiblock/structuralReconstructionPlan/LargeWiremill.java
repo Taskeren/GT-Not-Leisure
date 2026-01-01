@@ -89,10 +89,7 @@ public class LargeWiremill extends GTMMultiMachineBase<LargeWiremill> implements
             .addInfo(StatCollector.translateToLocal("Tooltip_LargeWiremill_01"))
             .addInfo(StatCollector.translateToLocal("Tooltip_GTMMultiMachine_02"))
             .addInfo(StatCollector.translateToLocal("Tooltip_GTMMultiMachine_03"))
-            .addInfo(StatCollector.translateToLocal("Tooltip_GTMMultiMachine_04"))
-            .addSeparator()
-            .addInfo(StatCollector.translateToLocal("StructureTooComplex"))
-            .addInfo(StatCollector.translateToLocal("BLUE_PRINT_INFO"))
+            .addMultiAmpHatchInfo()
             .beginStructureBlock(5, 3, 3, true)
             .addInputBus(StatCollector.translateToLocal("Tooltip_LargeWiremill_Casing"))
             .addOutputBus(StatCollector.translateToLocal("Tooltip_LargeWiremill_Casing"))
@@ -122,7 +119,7 @@ public class LargeWiremill extends GTMMultiMachineBase<LargeWiremill> implements
             return false;
         }
         setupParameters();
-        return mCountCasing >= 25;
+        return mCountCasing >= 10;
     }
 
     @Override

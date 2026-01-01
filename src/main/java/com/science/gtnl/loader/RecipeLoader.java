@@ -1,14 +1,12 @@
 package com.science.gtnl.loader;
 
 import java.util.Collection;
-import java.util.Map;
 
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.village.MerchantRecipe;
 import net.minecraftforge.fluids.FluidStack;
-import net.minecraftforge.oredict.OreDictionary;
 
 import com.Nxer.TwistSpaceTechnology.common.recipeMap.GTCMRecipe;
 import com.Nxer.TwistSpaceTechnology.recipe.machineRecipe.expanded.AssemblyLineWithoutResearchRecipePool;
@@ -50,11 +48,14 @@ import com.science.gtnl.common.recipe.gregtech.FormingPressRecipes;
 import com.science.gtnl.common.recipe.gregtech.FusionReactorRecipes;
 import com.science.gtnl.common.recipe.gregtech.HammerRecipes;
 import com.science.gtnl.common.recipe.gregtech.LaserEngraverRecipes;
+import com.science.gtnl.common.recipe.gregtech.MaceratorRecipes;
 import com.science.gtnl.common.recipe.gregtech.MixerRecipes;
 import com.science.gtnl.common.recipe.gregtech.NanoForgeRecipes;
+import com.science.gtnl.common.recipe.gregtech.NuclearSaltProcessingPlantRecipes;
 import com.science.gtnl.common.recipe.gregtech.PCBFactoryRecipes;
 import com.science.gtnl.common.recipe.gregtech.PlasmaForgeRecipes;
 import com.science.gtnl.common.recipe.gregtech.PreciseAssemblerRecipes;
+import com.science.gtnl.common.recipe.gregtech.ReactorProcessingUnitRecipes;
 import com.science.gtnl.common.recipe.gregtech.SpaceAssemblerRecipes;
 import com.science.gtnl.common.recipe.gregtech.TargetChamberRecipes;
 import com.science.gtnl.common.recipe.gregtech.TranscendentPlasmaMixerRecipes;
@@ -116,11 +117,9 @@ import com.science.gtnl.common.recipe.gtnl.SteamManufacturerRecipes;
 import com.science.gtnl.common.recipe.gtnl.SteamWeatherModuleRecipes;
 import com.science.gtnl.common.recipe.gtnl.SteamWoodcutterRecipes;
 import com.science.gtnl.common.recipe.gtnl.TheTwilightForestRecipes;
-import com.science.gtnl.common.recipe.oreDictionary.PortalToAlfheimOreRecipes;
 import com.science.gtnl.common.recipe.thaumcraft.TCRecipePool;
 import com.science.gtnl.common.recipe.thaumcraft.TCResearches;
 import com.science.gtnl.config.MainConfig;
-import com.science.gtnl.utils.enums.GTNLItemList;
 import com.science.gtnl.utils.enums.ModList;
 import com.science.gtnl.utils.machine.ProcessingArrayRecipeLoader;
 import com.science.gtnl.utils.machine.oreProcessing.CheatOreProcessingRecipes;
@@ -130,19 +129,15 @@ import com.science.gtnl.utils.recipes.RemoveRecipes;
 import bartworks.API.recipe.BartWorksRecipeMaps;
 import cpw.mods.fml.common.Optional;
 import cpw.mods.fml.common.registry.VillagerRegistry;
-import goodgenerator.loader.Loaders;
 import goodgenerator.util.CrackRecipeAdder;
 import gregtech.api.enums.ItemList;
-import gregtech.api.enums.Materials;
-import gregtech.api.enums.MaterialsUEVplus;
 import gregtech.api.enums.Mods;
-import gregtech.api.enums.OrePrefixes;
 import gregtech.api.recipe.RecipeMap;
 import gregtech.api.recipe.RecipeMaps;
 import gregtech.api.util.GTModHandler;
 import gregtech.api.util.GTOreDictUnificator;
 import gregtech.api.util.GTRecipe;
-import gtPlusPlus.xmod.gregtech.api.enums.GregtechItemList;
+import gregtech.api.util.GTUtility;
 import gtnhlanth.api.recipe.LanthanidesRecipeMaps;
 import it.unimi.dsi.fastutil.objects.Object2IntMap;
 import it.unimi.dsi.fastutil.objects.Object2IntOpenHashMap;
@@ -166,7 +161,7 @@ public class RecipeLoader {
         RecipeUtil.copyAllRecipes(RecipePool.ConvertToCircuitAssembler, RecipeMaps.circuitAssemblerRecipes);
     }
 
-    public static void loadRecipesServerStart() {
+    public static void loadServerStart() {
         RecipeUtil.removeMatchingRecipes(RecipePool.ConvertToCircuitAssembler, RecipeMaps.circuitAssemblerRecipes);
         if (recipesAdded) return;
         if (MainConfig.enableDeleteRecipe) {
@@ -183,17 +178,18 @@ public class RecipeLoader {
             registerBuffTargetChamberRecipe();
         }
 
-        IRecipePool[] recipePools = new IRecipePool[] { new TCRecipePool(), new ChemicalRecipes(),
-            new ElectrolyzerRecipes(), new MixerRecipes(), new AssemblerRecipes(), new AutoclaveRecipes(),
-            new AlloyBlastSmelterRecipes(), new CompressorRecipes(), new ReFusionReactorRecipes(),
-            new RealArtificialStarRecipes(), new PortalToAlfheimRecipes(), new NatureSpiritArrayRecipes(),
-            new ManaInfusionRecipes(), new TranscendentPlasmaMixerRecipes(), new PlasmaForgeRecipes(),
-            new CraftingTableRecipes(), new ChemicalBathRecipes(), new SteamCrackerRecipes(), new DesulfurizerRecipes(),
-            new PetrochemicalPlantRecipes(), new FusionReactorRecipes(), new SmeltingMixingFurnaceRecipes(),
-            new FluidExtraction(), new DigesterRecipes(), new DissolutionTankRecipes(), new CentrifugeRecipes(),
-            new ChemicalDehydratorRecipes(), new ChemicalPlantRecipes(), new RareEarthCentrifugalRecipes(),
-            new MatterFabricatorRecipes(), new TheTwilightForestRecipes(), new IsaMillRecipes(),
-            new CellRegulatorRecipes(), new VacuumFurnaceRecipes(), new FishingGroundRecipes(), new DistilleryRecipes(),
+        IRecipePool[] recipePools = new IRecipePool[] { new BotaniaManaInfusionRecipes(), new TCRecipePool(),
+            new ChemicalRecipes(), new ElectrolyzerRecipes(), new MixerRecipes(), new AssemblerRecipes(),
+            new AutoclaveRecipes(), new AlloyBlastSmelterRecipes(), new CompressorRecipes(),
+            new ReFusionReactorRecipes(), new RealArtificialStarRecipes(), new PortalToAlfheimRecipes(),
+            new NatureSpiritArrayRecipes(), new ManaInfusionRecipes(), new TranscendentPlasmaMixerRecipes(),
+            new PlasmaForgeRecipes(), new CraftingTableRecipes(), new ChemicalBathRecipes(), new SteamCrackerRecipes(),
+            new DesulfurizerRecipes(), new PetrochemicalPlantRecipes(), new FusionReactorRecipes(),
+            new SmeltingMixingFurnaceRecipes(), new FluidExtraction(), new DigesterRecipes(),
+            new DissolutionTankRecipes(), new CentrifugeRecipes(), new ChemicalDehydratorRecipes(),
+            new ChemicalPlantRecipes(), new RareEarthCentrifugalRecipes(), new MatterFabricatorRecipes(),
+            new TheTwilightForestRecipes(), new IsaMillRecipes(), new CellRegulatorRecipes(),
+            new VacuumFurnaceRecipes(), new FishingGroundRecipes(), new DistilleryRecipes(),
             new ElementCopyingRecipes(), new AlloySmelterRecipes(), new MolecularTransformerRecipes(),
             new NaquadahReactorRecipes(), new DragonEvolutionFusionCraftingRecipes(), new LaserEngraverRecipes(),
             new BacterialVatRecipes(), new CuttingRecipes(), new BlastFurnaceRecipes(), new FluidExtractorRecipes(),
@@ -204,28 +200,37 @@ public class RecipeLoader {
             new AdvancedCircuitAssemblyLineRecipes(), new FallingTowerRecipes(), new AssemblingLineRecipes(),
             new GasCollectorRecipes(), new EternalGregTechWorkshopUpgradeRecipes(), new FluidCannerRecipes(),
             new VacuumFreezerRecipes(), new MeteorsRecipes(), new CheatOreProcessingRecipes(),
-            new ShapedArcaneCraftingRecipes(), new InfusionCraftingRecipes(), new ShimmerRecipes(),
-            new SteamManufacturerRecipes(), new SteamCarpenterRecipe(), new LavaMakerRecipes(),
-            new SteamWoodcutterRecipes(), new SteamGateAssemblerRecipes(), new CactusWonderFakeRecipes(),
-            new InfernalCokeRecipes(), new SteamFusionReactorRecipes(), new SteamExtractinatorRecipes(),
-            new RockBreakerRecipes(), new PrimitiveBrickKilnRecipes(), new TargetChamberRecipes(),
-            new ElectrocellGeneratorRecipes(), new RocketAssemblerRecipes(), new FluidSolidifierRecipes(),
-            new BotaniaManaInfusionRecipes(), new FormingPressRecipes(), new HammerRecipes(), new CyclotronRecipes(),
-            new RuneAltarRecipes(), new IndustrialRockCrusherRecipes(), new PrecisionLaserEngraver(),
-            new NanitesIntegratedProcessingRecipes(), new NanoForgeRecipes(), new SteamWeatherModuleRecipes(),
-            new ElectricNeutronActivatorRecipes() };
+            new ShapedArcaneCraftingRecipes(), new InfusionCraftingRecipes(), new SteamManufacturerRecipes(),
+            new SteamCarpenterRecipe(), new LavaMakerRecipes(), new SteamWoodcutterRecipes(),
+            new SteamGateAssemblerRecipes(), new CactusWonderFakeRecipes(), new InfernalCokeRecipes(),
+            new SteamFusionReactorRecipes(), new SteamExtractinatorRecipes(), new RockBreakerRecipes(),
+            new PrimitiveBrickKilnRecipes(), new TargetChamberRecipes(), new ElectrocellGeneratorRecipes(),
+            new RocketAssemblerRecipes(), new FluidSolidifierRecipes(), new FormingPressRecipes(), new HammerRecipes(),
+            new CyclotronRecipes(), new RuneAltarRecipes(), new IndustrialRockCrusherRecipes(),
+            new PrecisionLaserEngraver(), new NanitesIntegratedProcessingRecipes(), new NanoForgeRecipes(),
+            new SteamWeatherModuleRecipes(), new ElectricNeutronActivatorRecipes(), new ReactorProcessingUnitRecipes(),
+            new NuclearSaltProcessingPlantRecipes(), new MaceratorRecipes() };
 
         for (IRecipePool recipePool : recipePools) {
             recipePool.loadRecipes();
         }
 
-        for (ItemStack stone : OreDictionary.getOres("stone")) {
-            PortalToAlfheimOreRecipes.addManaInfusionOreRecipes(stone);
-        }
-
         RecipeUtil.generateRecipesBioLab(BartWorksRecipeMaps.bioLabRecipes, RecipePool.LargeBioLabRecipes, true, 1.1);
+
         TCResearches.register();
 
+        ShimmerRecipes.loadRecipes();
+
+        loadPlasmaCentrifugeRecipes();
+
+        if (ModList.TwistSpaceTechnology.isModLoaded()) {
+            loadTSTMegaAssemblyLineRecipes();
+        }
+
+        recipesAdded = true;
+    }
+
+    public static void loadPlasmaCentrifugeRecipes() {
         for (RecipeMap<?> map : new RecipeMap<?>[] { RecipeMaps.transcendentPlasmaMixerRecipes,
             RecipeMaps.fusionRecipes }) {
             for (GTRecipe recipe : map.getAllRecipes()) {
@@ -253,172 +258,10 @@ public class RecipeLoader {
                 RecipePool.PlasmaCentrifugeRecipes.add(copiedRecipe);
             }
         }
-
-        if (ModList.TwistSpaceTechnology.isModLoaded()) {
-            loadTSTMegaAssemblyLineRecipes();
-        }
-
-        recipesAdded = true;
     }
 
     public static void loadCircuitNanitesData(long worldSeed) {
         new CircuitNanitesDataRecipes(worldSeed).loadRecipes();
-    }
-
-    public static void loadVillageTrade() {
-        for (int id = 0; id < 5; id++) {
-            registerTradeForVillager(id);
-        }
-
-        // for (int id : VillagerRegistry.getRegisteredVillagers()) {
-        // registerTradeForVillager(id);
-        // }
-    }
-
-    @SuppressWarnings("unchecked")
-    public static void registerTradeForVillager(int villagerId) {
-        VillagerRegistry.instance()
-            .registerVillageTradeHandler(villagerId, (villager, recipeList, random) -> {
-                recipeList.add(
-                    new MerchantRecipe(
-                        new ItemStack(Items.diamond, 3),
-                        Stick.setDisguisedStack(
-                            GTOreDictUnificator.get(OrePrefixes.plate, Materials.Diamond, 1),
-                            9,
-                            false)));
-                recipeList.add(
-                    new MerchantRecipe(
-                        new ItemStack(Items.emerald, 4),
-                        Stick.setDisguisedStack(new ItemStack(Blocks.diamond_block, 1))));
-                recipeList.add(
-                    new MerchantRecipe(
-                        new ItemStack(Items.diamond, 1),
-                        Stick.setDisguisedStack(new ItemStack(Items.emerald, 1))));
-                recipeList.add(
-                    new MerchantRecipe(
-                        new ItemStack(Items.emerald, 1),
-                        Stick.setDisguisedStack(new ItemStack(Items.ender_eye, 1), 2, false)));
-                recipeList.add(
-                    new MerchantRecipe(
-                        new ItemStack(Items.diamond, 1),
-                        Stick.setDisguisedStack(GTNLItemList.SatietyRing.get(1))));
-                recipeList.add(
-                    new MerchantRecipe(
-                        new ItemStack(Items.diamond, 1),
-                        new ItemStack(Items.emerald, 1),
-                        Stick.setDisguisedStack(GTNLItemList.VeinMiningPickaxe.get(1), 1, true)));
-                recipeList.add(
-                    new MerchantRecipe(
-                        new ItemStack(Blocks.snow, 1),
-                        Stick.setDisguisedStack(
-                            GTOreDictUnificator.get(OrePrefixes.nanite, MaterialsUEVplus.MagMatter, 1))));
-                recipeList.add(
-                    new MerchantRecipe(
-                        new ItemStack(Items.iron_ingot, 1),
-                        GTModHandler.getModItem(Mods.Botania.ID, "bifrostPermPane", 1),
-                        Stick.setDisguisedStack(
-                            GTOreDictUnificator.get(GTModHandler.getModItem(Mods.Avaritia.ID, "Resource", 1, 6)))));
-                recipeList.add(
-                    new MerchantRecipe(
-                        new ItemStack(Items.nether_star, 1),
-                        Stick.setDisguisedStack(CustomItemList.astralArrayFabricator.get(1))));
-                recipeList.add(
-                    new MerchantRecipe(
-                        new ItemStack(Items.compass, 1),
-                        Stick.setDisguisedStack(ItemList.Transdimensional_Alignment_Matrix.get(1))));
-                recipeList.add(
-                    new MerchantRecipe(
-                        new ItemStack(Items.redstone, 1),
-                        Stick.setDisguisedStack(GregtechItemList.Laser_Lens_Special.get(1))));
-                recipeList.add(
-                    new MerchantRecipe(
-                        new ItemStack(Blocks.redstone_block, 1),
-                        Stick.setDisguisedStack(CustomItemList.Machine_DebugGenny.get(1))));
-                recipeList.add(
-                    new MerchantRecipe(
-                        new ItemStack(Blocks.dispenser, 1),
-                        Stick.setDisguisedStack(CustomItemList.Machine_Multi_EyeOfHarmony.get(1))));
-                recipeList.add(
-                    new MerchantRecipe(
-                        new ItemStack(Blocks.furnace, 1),
-                        Stick.setDisguisedStack(CustomItemList.Machine_Multi_ForgeOfGods.get(1))));
-                recipeList.add(
-                    new MerchantRecipe(new ItemStack(Blocks.coal_block, 1), Stick.setDisguisedStack(Loaders.AMForge)));
-                recipeList.add(
-                    new MerchantRecipe(
-                        new ItemStack(Blocks.tnt, 1),
-                        Stick.setDisguisedStack(GTModHandler.getModItem(Mods.IndustrialCraft2.ID, "blockNuke", 1))));
-                recipeList.add(
-                    new MerchantRecipe(
-                        new ItemStack(Items.brick, 1),
-                        Stick.setDisguisedStack(ItemList.Circuit_TranscendentMainframe.get(1))));
-                recipeList.add(
-                    new MerchantRecipe(
-                        new ItemStack(Items.bucket, 1),
-                        Stick.setDisguisedStack(ReAvaItemList.InfinityBucket.get(1))));
-                recipeList.add(
-                    new MerchantRecipe(
-                        new ItemStack(Items.clock, 1),
-                        Stick.setDisguisedStack(ReAvaItemList.ChronarchsClock.get(1))));
-                recipeList.add(
-                    new MerchantRecipe(
-                        new ItemStack(Items.wooden_sword, 1),
-                        Stick.setDisguisedStack(ReAvaItemList.InfinitySword.get(1))));
-                recipeList.add(
-                    new MerchantRecipe(
-                        new ItemStack(Items.wooden_pickaxe, 1),
-                        Stick.setDisguisedStack(ReAvaItemList.InfinityPickaxe.get(1))));
-                recipeList.add(
-                    new MerchantRecipe(
-                        new ItemStack(Items.wooden_axe, 1),
-                        Stick.setDisguisedStack(ReAvaItemList.InfinityAxe.get(1))));
-                recipeList.add(
-                    new MerchantRecipe(
-                        new ItemStack(Items.wooden_shovel, 1),
-                        Stick.setDisguisedStack(ReAvaItemList.InfinityShovel.get(1))));
-                recipeList.add(
-                    new MerchantRecipe(
-                        new ItemStack(Items.wooden_hoe, 1),
-                        Stick.setDisguisedStack(ReAvaItemList.InfinityHoe.get(1))));
-                recipeList.add(
-                    new MerchantRecipe(
-                        new ItemStack(Items.leather_helmet, 1),
-                        Stick.setDisguisedStack(GTModHandler.getModItem(Mods.Avaritia.ID, "Infinity_Helm", 1))));
-                recipeList.add(
-                    new MerchantRecipe(
-                        new ItemStack(Items.leather_chestplate, 1),
-                        Stick.setDisguisedStack(GTModHandler.getModItem(Mods.Avaritia.ID, "Infinity_Chest", 1))));
-                recipeList.add(
-                    new MerchantRecipe(
-                        new ItemStack(Items.leather_leggings, 1),
-                        Stick.setDisguisedStack(GTModHandler.getModItem(Mods.Avaritia.ID, "Infinity_Pants", 1))));
-                recipeList.add(
-                    new MerchantRecipe(
-                        new ItemStack(Items.leather_boots, 1),
-                        Stick.setDisguisedStack(GTModHandler.getModItem(Mods.Avaritia.ID, "Infinity_Shoes", 1))));
-
-                if (Mods.SGCraft.isModLoaded()) {
-                    recipeList.add(
-                        new MerchantRecipe(
-                            GTOreDictUnificator.get(OrePrefixes.ingot, Materials.Naquadah, 9),
-                            Stick.setDisguisedStack(GTModHandler.getModItem(Mods.SGCraft.ID, "stargateRing", 1, 0))));
-                    recipeList.add(
-                        new MerchantRecipe(
-                            GTOreDictUnificator.get(OrePrefixes.ingot, Materials.NaquadahEnriched, 9),
-                            Stick.setDisguisedStack(GTModHandler.getModItem(Mods.SGCraft.ID, "stargateRing", 1, 1))));
-                    recipeList.add(
-                        new MerchantRecipe(
-                            GTOreDictUnificator.get(OrePrefixes.ingot, Materials.Naquadria, 9),
-                            Stick.setDisguisedStack(GTModHandler.getModItem(Mods.SGCraft.ID, "stargateBase", 1))));
-                }
-                if (Mods.EternalSingularity.isModLoaded()) {
-                    recipeList.add(
-                        new MerchantRecipe(
-                            new ItemStack(Blocks.beacon, 1),
-                            Stick.setDisguisedStack(
-                                GTModHandler.getModItem(Mods.EternalSingularity.ID, "eternal_singularity", 1))));
-                }
-            });
     }
 
     public static void loadCircuitRelatedRecipes() {
@@ -429,20 +272,6 @@ public class RecipeLoader {
         if (ModList.TwistSpaceTechnology.isModLoaded()) {
             loadTSTAdvCircuitAssemblyLineRecipes();
         }
-    }
-
-    @Optional.Method(modid = "TwistSpaceTechnology")
-    public static void loadTSTMegaAssemblyLineRecipes() {
-        AssemblyLineWithoutResearchRecipePool.loadRecipes();
-        System.out.println("[GTNL] Register TwistSpaceTechnology MegaAssemblyLine recipes");
-    }
-
-    @Optional.Method(modid = "TwistSpaceTechnology")
-    public static void loadTSTAdvCircuitAssemblyLineRecipes() {
-        GTCMRecipe.advCircuitAssemblyLineRecipes.getBackend()
-            .clearRecipes();
-        CircuitAssemblyLineWithoutImprintRecipePool.loadRecipes();
-        System.out.println("[GTNL] Register TwistSpaceTechnology AdvCircuitAssemblyLine recipes");
     }
 
     public static void registerBuffTargetChamberRecipe() {
@@ -462,20 +291,87 @@ public class RecipeLoader {
             }
         };
         for (GTRecipe recipe : targetChamberRecipe) {
-            for (Map.Entry<ItemStack, Integer> entry : waferMultiplier.entrySet()) {
-                if (recipe.mInputs[1].isItemEqual(entry.getKey())) {
-                    int multiplier = entry.getValue();
-                    for (ItemStack itemStack : recipe.mOutputs) {
-                        itemStack.stackSize *= multiplier;
-                    }
-                } else {
-                    for (ItemStack itemStack : recipe.mOutputs) {
-                        itemStack.stackSize *= 4;
+
+            int multiplier = 4;
+
+            outer: for (ItemStack input : recipe.mInputs) {
+                if (input == null) continue;
+
+                for (Object2IntMap.Entry<ItemStack> entry : waferMultiplier.object2IntEntrySet()) {
+                    if (GTUtility.areStacksEqual(input, entry.getKey(), true)) {
+                        multiplier = entry.getIntValue();
+                        break outer;
                     }
                 }
-                break;
             }
+
+            for (ItemStack output : recipe.mOutputs) {
+                output.stackSize *= multiplier;
+            }
+
             LanthanidesRecipeMaps.targetChamberRecipes.add(recipe);
         }
+
+    }
+
+    @Optional.Method(modid = "TwistSpaceTechnology")
+    public static void loadTSTMegaAssemblyLineRecipes() {
+        AssemblyLineWithoutResearchRecipePool.loadRecipes();
+        System.out.println("[GTNL] Register TwistSpaceTechnology MegaAssemblyLine recipes");
+    }
+
+    @Optional.Method(modid = "TwistSpaceTechnology")
+    public static void loadTSTAdvCircuitAssemblyLineRecipes() {
+        GTCMRecipe.advCircuitAssemblyLineRecipes.getBackend()
+            .clearRecipes();
+        CircuitAssemblyLineWithoutImprintRecipePool.loadRecipes();
+        System.out.println("[GTNL] Register TwistSpaceTechnology AdvCircuitAssemblyLine recipes");
+    }
+
+    public static void loadVillageTrade() {
+        for (int id = 0; id < 5; id++) {
+            registerTradeForVillager(id);
+        }
+
+        // for (int id : VillagerRegistry.getRegisteredVillagers()) {
+        // registerTradeForVillager(id);
+        // }
+    }
+
+    @SuppressWarnings("unchecked")
+    public static void registerTradeForVillager(int villagerId) {
+        VillagerRegistry.instance()
+            .registerVillageTradeHandler(villagerId, (villager, recipeList, random) -> {
+                recipeList.add(
+                    new MerchantRecipe(
+                        new ItemStack(Items.iron_ingot, 1),
+                        GTModHandler.getModItem(Mods.Botania.ID, "bifrostPermPane", 1),
+                        Stick.setDisguisedStack(
+                            GTOreDictUnificator.get(GTModHandler.getModItem(Mods.Avaritia.ID, "Resource", 1, 6)))));
+                recipeList.add(
+                    new MerchantRecipe(
+                        new ItemStack(Blocks.dispenser, 1),
+                        Stick.setDisguisedStack(CustomItemList.Machine_Multi_EyeOfHarmony.get(1))));
+                recipeList.add(
+                    new MerchantRecipe(
+                        new ItemStack(Items.wooden_sword, 1),
+                        Stick.setDisguisedStack(ReAvaItemList.InfinitySword.get(1))));
+                recipeList.add(
+                    new MerchantRecipe(
+                        new ItemStack(Items.leather_helmet, 1),
+                        Stick.setDisguisedStack(GTModHandler.getModItem(Mods.Avaritia.ID, "Infinity_Helm", 1))));
+                recipeList.add(
+                    new MerchantRecipe(
+                        new ItemStack(Items.leather_chestplate, 1),
+                        Stick.setDisguisedStack(GTModHandler.getModItem(Mods.Avaritia.ID, "Infinity_Chest", 1))));
+                recipeList.add(
+                    new MerchantRecipe(
+                        new ItemStack(Items.leather_leggings, 1),
+                        Stick.setDisguisedStack(GTModHandler.getModItem(Mods.Avaritia.ID, "Infinity_Pants", 1))));
+                recipeList.add(
+                    new MerchantRecipe(
+                        new ItemStack(Items.leather_boots, 1),
+                        Stick.setDisguisedStack(GTModHandler.getModItem(Mods.Avaritia.ID, "Infinity_Shoes", 1))));
+            });
     }
 }

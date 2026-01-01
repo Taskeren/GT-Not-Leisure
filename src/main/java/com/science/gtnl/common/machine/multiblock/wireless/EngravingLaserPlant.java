@@ -74,7 +74,6 @@ public class EngravingLaserPlant extends WirelessEnergyMultiMachineBase<Engravin
     private static final String STRUCTURE_PIECE_MAIN = "main";
     private static final String ELP_STRUCTURE_FILE_PATH = RESOURCE_ROOT_ID + ":" + "multiblock/engraving_laser_plant";
     private static final String[][] shape = StructureUtils.readStructureFromFile(ELP_STRUCTURE_FILE_PATH);
-    private static final int MANUAL_INSERTION_WINDOW_ID = 15;
 
     public static final ItemStack[] REQUIRED_ITEMS = new ItemStack[] {
         GTUtility.copyAmountUnsafe(114514, ItemList.Circuit_Silicon_Wafer7.get(1)) };
@@ -123,10 +122,7 @@ public class EngravingLaserPlant extends WirelessEnergyMultiMachineBase<Engravin
             .addInfo(StatCollector.translateToLocal("Tooltip_WirelessEnergyMultiMachine_08"))
             .addInfo(StatCollector.translateToLocal("Tooltip_WirelessEnergyMultiMachine_09"))
             .addInfo(StatCollector.translateToLocal("Tooltip_WirelessEnergyMultiMachine_10"))
-            .addInfo(StatCollector.translateToLocal("Tooltip_Tectech_Hatch"))
-            .addSeparator()
-            .addInfo(StatCollector.translateToLocal("StructureTooComplex"))
-            .addInfo(StatCollector.translateToLocal("BLUE_PRINT_INFO"))
+            .addTecTechHatchInfo()
             .beginStructureBlock(21, 12, 22, true)
             .addInputBus(StatCollector.translateToLocal("Tooltip_EngravingLaserPlant_Casing"), 1)
             .addOutputBus(StatCollector.translateToLocal("Tooltip_EngravingLaserPlant_Casing"), 1)
@@ -304,7 +300,7 @@ public class EngravingLaserPlant extends WirelessEnergyMultiMachineBase<Engravin
     }
 
     @Override
-    public final void onScrewdriverRightClick(ForgeDirection side, EntityPlayer aPlayer, float aX, float aY, float aZ,
+    public void onModeChangeByScrewdriver(ForgeDirection side, EntityPlayer aPlayer, float aX, float aY, float aZ,
         ItemStack aTool) {
         this.machineMode = (this.machineMode + 1) % 2;
         GTUtility
@@ -353,11 +349,6 @@ public class EngravingLaserPlant extends WirelessEnergyMultiMachineBase<Engravin
     @Override
     public ItemStack[] getUpgradeRequiredItems() {
         return REQUIRED_ITEMS;
-    }
-
-    @Override
-    public int getUpgradeWindowId() {
-        return MANUAL_INSERTION_WINDOW_ID;
     }
 
     @Override

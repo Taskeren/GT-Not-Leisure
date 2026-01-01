@@ -8,7 +8,7 @@ import cpw.mods.fml.common.network.simpleimpl.IMessageHandler;
 import cpw.mods.fml.common.network.simpleimpl.MessageContext;
 import io.netty.buffer.ByteBuf;
 
-public class SyncConfigPacket implements IMessage {
+public class SyncConfigPacket implements IMessage, IMessageHandler<SyncConfigPacket, IMessage> {
 
     public ConfigData data = new ConfigData();
 
@@ -26,13 +26,10 @@ public class SyncConfigPacket implements IMessage {
         data.read(buf);
     }
 
-    public static class Handler implements IMessageHandler<SyncConfigPacket, IMessage> {
-
-        @Override
-        public IMessage onMessage(SyncConfigPacket msg, MessageContext ctx) {
-            MainConfig.reloadConfig();
-            msg.data.writeToConfig();
-            return null;
-        }
+    @Override
+    public IMessage onMessage(SyncConfigPacket msg, MessageContext ctx) {
+        MainConfig.reloadConfig();
+        msg.data.writeToConfig();
+        return null;
     }
 }

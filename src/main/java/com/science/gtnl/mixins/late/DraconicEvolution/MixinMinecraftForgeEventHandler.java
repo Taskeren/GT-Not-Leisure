@@ -1,35 +1,28 @@
 package com.science.gtnl.mixins.late.DraconicEvolution;
 
-import static com.reavaritia.common.item.InfinitySword.cancelDragonArmor;
-
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
 
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Overwrite;
+import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import com.brandon3055.draconicevolution.common.handler.MinecraftForgeEventHandler;
-import com.brandon3055.draconicevolution.common.items.armor.CustomArmorHandler;
-
-import cpw.mods.fml.common.eventhandler.EventPriority;
-import cpw.mods.fml.common.eventhandler.SubscribeEvent;
+import com.reavaritia.common.item.InfinitySword;
+import com.science.gtnl.config.MainConfig;
 
 @Mixin(value = MinecraftForgeEventHandler.class, remap = false)
 public abstract class MixinMinecraftForgeEventHandler {
 
-    /**
-     * @reason Overwrites the original onLivingDeath handler to support custom behavior
-     *         when a player is holding the InfinitySword. If the player is sneaking and
-     *         holding the InfinitySword, this handler can be used to cancel the death
-     *         event, allowing for resurrection-like mechanics or other effects.
-     *         Also retains the default behavior of Draconic Evolution's armor death handler.
-     * @author GTNotLeisure
-     */
-    @Overwrite
-    @SubscribeEvent(priority = EventPriority.LOW)
-    public void onLivingDeath(LivingDeathEvent event) {
-        if (event.entityLiving instanceof EntityPlayer && !cancelDragonArmor) {
-            CustomArmorHandler.onPlayerDeath(event);
-        }
+    @Inject(method = "onLivingDeath", at = @At(value = "HEAD"), cancellable = true)
+    private void injectDeath(LivingDeathEvent event, CallbackInfo ci) {
+        if (!MainConfig.enableInfinitySwordBypassMechanism) return;
+        Entity entity = event.source.getSourceOfDamage();
+        if (!(entity instanceof EntityPlayer player)) return;
+        if (!player.isSneaking()) return;
+        if (!event.source.damageType.contains(InfinitySword.INFINITY_DAMAGE.damageType)) return;
+        ci.cancel();
     }
 }

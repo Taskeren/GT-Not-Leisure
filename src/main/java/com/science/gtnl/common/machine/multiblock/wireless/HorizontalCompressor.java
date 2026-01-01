@@ -67,7 +67,6 @@ public class HorizontalCompressor extends WirelessEnergyMultiMachineBase<Horizon
     private static final String STRUCTURE_PIECE_MAIN = "main";
     private static final String HC_STRUCTURE_FILE_PATH = RESOURCE_ROOT_ID + ":" + "multiblock/horizontal_compressor";
     private static final String[][] shape = StructureUtils.readStructureFromFile(HC_STRUCTURE_FILE_PATH);
-    private static final int MANUAL_INSERTION_WINDOW_ID = 15;
 
     public static final ItemStack[] REQUIRED_ITEMS = new ItemStack[] {
         GTUtility.copyAmountUnsafe(3670, ItemList.Extreme_Density_Casing.get(1)),
@@ -130,11 +129,6 @@ public class HorizontalCompressor extends WirelessEnergyMultiMachineBase<Horizon
     }
 
     @Override
-    public int getUpgradeWindowId() {
-        return MANUAL_INSERTION_WINDOW_ID;
-    }
-
-    @Override
     public String getUpgradeButtonTooltip() {
         return StatCollector.translateToLocal("Info_HorizontalCompressor_00");
     }
@@ -155,10 +149,7 @@ public class HorizontalCompressor extends WirelessEnergyMultiMachineBase<Horizon
             .addInfo(StatCollector.translateToLocal("Tooltip_WirelessEnergyMultiMachine_09"))
             .addInfo(StatCollector.translateToLocal("Tooltip_WirelessEnergyMultiMachine_10"))
             .addInfo(StatCollector.translateToLocal("Tooltip_HorizontalCompressor_00"))
-            .addInfo(StatCollector.translateToLocal("Tooltip_Tectech_Hatch"))
-            .addSeparator()
-            .addInfo(StatCollector.translateToLocal("StructureTooComplex"))
-            .addInfo(StatCollector.translateToLocal("BLUE_PRINT_INFO"))
+            .addTecTechHatchInfo()
             .beginStructureBlock(11, 10, 30, true)
             .addInputHatch(StatCollector.translateToLocal("Tooltip_HorizontalCompressor_Casing"))
             .addOutputHatch(StatCollector.translateToLocal("Tooltip_HorizontalCompressor_Casing"))

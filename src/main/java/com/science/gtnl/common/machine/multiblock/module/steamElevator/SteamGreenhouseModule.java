@@ -123,9 +123,6 @@ public class SteamGreenhouseModule extends SteamElevatorModule implements IGreen
             .addInfo(StatCollector.translateToLocal("Tooltip_SteamGreenhouseModule_03"))
             .addInfo(StatCollector.translateToLocal("Tooltip_SteamGreenhouseModule_04"))
             .addInfo(StatCollector.translateToLocal("Tooltip_SteamGreenhouseModule_05"))
-            .addSeparator()
-            .addInfo(StatCollector.translateToLocal("StructureTooComplex"))
-            .addInfo(StatCollector.translateToLocal("BLUE_PRINT_INFO"))
             .beginStructureBlock(1, 5, 2, false)
             .toolTipFinisher();
         return tt;

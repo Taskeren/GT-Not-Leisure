@@ -49,6 +49,7 @@ import com.science.gtnl.common.render.tile.KuangBiaoOneGiantNuclearFusionReactor
 import com.science.gtnl.loader.BlockLoader;
 import com.science.gtnl.utils.StructureUtils;
 import com.science.gtnl.utils.recipes.GTNL_OverclockCalculator;
+import com.science.gtnl.utils.recipes.GTNL_ParallelHelper;
 import com.science.gtnl.utils.recipes.GTNL_ProcessingLogic;
 
 import cpw.mods.fml.relauncher.Side;
@@ -217,10 +218,7 @@ public abstract class KuangBiaoOneGiantNuclearFusionReactor
             .addInfo(StatCollector.translateToLocal("Tooltip_PerfectOverclock"))
             .addInfo(StatCollector.translateToLocal("Tooltip_GTMMultiMachine_02"))
             .addInfo(StatCollector.translateToLocal("Tooltip_GTMMultiMachine_03"))
-            .addInfo(StatCollector.translateToLocal("Tooltip_Tectech_Hatch"))
-            .addSeparator()
-            .addInfo(StatCollector.translateToLocal("StructureTooComplex"))
-            .addInfo(StatCollector.translateToLocal("BLUE_PRINT_INFO"))
+            .addTecTechHatchInfo()
             .beginStructureBlock(39, 17, 39, true)
             .addInputBus(StatCollector.translateToLocal("Tooltip_KuangBiaoTwoGiantNuclearFusionReactor_Casing"))
             .addOutputBus(StatCollector.translateToLocal("Tooltip_KuangBiaoTwoGiantNuclearFusionReactor_Casing"))
@@ -253,13 +251,6 @@ public abstract class KuangBiaoOneGiantNuclearFusionReactor
     }
 
     @Override
-    public boolean onRunningTick(ItemStack aStack) {
-        prevRotation = rotation;
-        rotation = (rotation + ROTATION_SPEED) % 360f;
-        return super.onRunningTick(aStack);
-    }
-
-    @Override
     public void onFirstTick(IGregTechTileEntity aBaseMetaTileEntity) {
         super.onFirstTick(aBaseMetaTileEntity);
         getBaseMetaTileEntity().sendBlockEvent(GregTechTileClientEvents.CHANGE_CUSTOM_DATA, getUpdateData());
@@ -267,6 +258,8 @@ public abstract class KuangBiaoOneGiantNuclearFusionReactor
 
     @Override
     public void onPostTick(IGregTechTileEntity aBaseMetaTileEntity, long aTick) {
+        prevRotation = rotation;
+        rotation = (rotation + ROTATION_SPEED) % 360f;
         if (aBaseMetaTileEntity.isServerSide()) {
             mTotalRunTime++;
             if (mEfficiency < 0) mEfficiency = 0;
@@ -404,19 +397,43 @@ public abstract class KuangBiaoOneGiantNuclearFusionReactor
                 CheckRecipeResult result = super.process();
                 if (mRunningOnLoad) mRunningOnLoad = false;
                 if (result.wasSuccessful()) {
-                    KuangBiaoOneGiantNuclearFusionReactor.this.mLastRecipe = lastRecipe;
+                    mLastRecipe = lastRecipe;
                 } else {
-                    KuangBiaoOneGiantNuclearFusionReactor.this.mLastRecipe = null;
+                    mLastRecipe = null;
                 }
                 return result;
             }
 
+            @Nonnull
+            @Override
+            public CalculationResult validateAndCalculateRecipe(@Nonnull GTRecipe recipe) {
+                CheckRecipeResult result = validateRecipe(recipe);
+                if (!result.wasSuccessful()) {
+                    return CalculationResult.ofFailure(result);
+                }
+
+                GTRecipe newRecipe = recipe.copy();
+
+                newRecipe.mEUt = (int) (newRecipe.mEUt * getMachineEUtDiscount());
+
+                GTNL_ParallelHelper helper = createParallelHelper(recipe);
+                GTNL_OverclockCalculator calculator = createOverclockCalculator(recipe);
+                helper.setCalculator(calculator);
+                helper.build();
+
+                if (!helper.getResult()
+                    .wasSuccessful()) {
+                    return CalculationResult.ofFailure(helper.getResult());
+                }
+
+                return CalculationResult.ofSuccess(applyRecipe(recipe, helper, calculator, result));
+            }
         }.setMaxParallelSupplier(this::getTrueParallel);
     }
 
     @Override
     public double getEUtDiscount() {
-        return getMachineEUtDiscount() - (mParallelTier / 12.5);
+        return 1 - (mParallelTier / 12.5);
     }
 
     @Override
@@ -797,7 +814,8 @@ public abstract class KuangBiaoOneGiantNuclearFusionReactor
                         (int) (getMachineEUtDiscount() * 100)))
                 .addInfo(StatCollector.translateToLocal("Tooltip_KuangBiaoOneGiantNuclearFusionReactor_03"))
                 .addInfo(
-                    StatCollector.translateToLocal("Tooltip_KuangBiaoOneGiantNuclearFusionReactor_04") + maxEUStore()
+                    StatCollector.translateToLocal("Tooltip_KuangBiaoOneGiantNuclearFusionReactor_04")
+                        + GTUtility.formatNumbers(maxEUStore())
                         + " EU")
                 .addInfo(
                     StatCollector.translateToLocalFormatted(
@@ -812,10 +830,7 @@ public abstract class KuangBiaoOneGiantNuclearFusionReactor
                 .addInfo(StatCollector.translateToLocal("Tooltip_WirelessEnergyMultiMachine_08"))
                 .addInfo(StatCollector.translateToLocal("Tooltip_WirelessEnergyMultiMachine_09"))
                 .addInfo(StatCollector.translateToLocal("Tooltip_WirelessEnergyMultiMachine_10"))
-                .addInfo(StatCollector.translateToLocal("Tooltip_Tectech_Hatch"))
-                .addSeparator()
-                .addInfo(StatCollector.translateToLocal("StructureTooComplex"))
-                .addInfo(StatCollector.translateToLocal("BLUE_PRINT_INFO"))
+                .addTecTechHatchInfo()
                 .beginStructureBlock(39, 17, 39, true)
                 .addInputBus(StatCollector.translateToLocal("Tooltip_KuangBiaoTwoGiantNuclearFusionReactor_Casing"))
                 .addOutputBus(StatCollector.translateToLocal("Tooltip_KuangBiaoTwoGiantNuclearFusionReactor_Casing"))
@@ -927,11 +942,7 @@ public abstract class KuangBiaoOneGiantNuclearFusionReactor
                     }
                     return super.createOverclockCalculator(recipe).setExtraDurationModifier(mConfigSpeedBoost)
                         .setAmperageOC(!wirelessMode)
-                        .setDurationDecreasePerOC(4)
-                        .setEUtIncreasePerOC(4)
-                        .setAmperage(availableAmperage)
-                        .setRecipeEUt(recipe.mEUt)
-                        .setEUt(availableVoltage)
+                        .setPerfectOC(getPerfectOC())
                         .setEUtDiscount(0.4 - (mParallelTier / 50.0))
                         .setDurationModifier(1.0 / 10.0 * Math.pow(0.75, mParallelTier));
                 }

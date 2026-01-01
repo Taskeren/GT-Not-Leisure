@@ -2,12 +2,21 @@ package com.science.gtnl.common.packet;
 
 import java.util.UUID;
 
+import net.minecraft.client.Minecraft;
+import net.minecraft.tileentity.TileEntity;
+import net.minecraft.world.World;
+
+import com.science.gtnl.common.machine.multiblock.structuralReconstructionPlan.HighPerformanceComputationArray;
+
 import cpw.mods.fml.common.network.simpleimpl.IMessage;
 import cpw.mods.fml.common.network.simpleimpl.IMessageHandler;
 import cpw.mods.fml.common.network.simpleimpl.MessageContext;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
+import gregtech.api.interfaces.tileentity.IGregTechTileEntity;
 import io.netty.buffer.ByteBuf;
 
-public class SyncHPCAVariablesPacket implements IMessage {
+public class SyncHPCAVariablesPacket implements IMessage, IMessageHandler<SyncHPCAVariablesPacket, IMessage> {
 
     private UUID uuid;
     private int totalLens;
@@ -48,13 +57,24 @@ public class SyncHPCAVariablesPacket implements IMessage {
         mMachine = buf.readBoolean();
     }
 
-    public static class Handler implements IMessageHandler<SyncHPCAVariablesPacket, IMessage> {
+    @Override
+    public IMessage onMessage(SyncHPCAVariablesPacket message, MessageContext ctx) {
+        if (ctx.side.isServer()) return null;
+        apply(message.x, message.y, message.z, message.uuid, message.totalLens, message.mMachine);
+        return null;
+    }
 
-        @Override
-        public IMessage onMessage(SyncHPCAVariablesPacket message, MessageContext ctx) {
-            ClientSyncHPCAVariablesHandler
-                .apply(message.x, message.y, message.z, message.uuid, message.totalLens, message.mMachine);
-            return null;
+    @SideOnly(Side.CLIENT)
+    public void apply(int x, int y, int z, UUID uuid, int totalLens, boolean mMachine) {
+        World world = Minecraft.getMinecraft().theWorld;
+        if (world != null) {
+            TileEntity te = world.getTileEntity(x, y, z);
+            if (te instanceof IGregTechTileEntity gtTE
+                && gtTE.getMetaTileEntity() instanceof HighPerformanceComputationArray hpca) {
+                hpca.randomUUID = uuid;
+                hpca.totalLens = totalLens;
+                hpca.mMachine = mMachine;
+            }
         }
     }
 

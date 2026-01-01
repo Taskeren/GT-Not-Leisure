@@ -40,14 +40,16 @@ public class PktPatternTermUploadPattern implements IMessage, IMessageHandler<Pk
 
     private void work(final EntityPlayer player) {
         final Container container = player.openContainer;
-        final SlotRestrictedInput patternSlotOUT;
-        final ItemStack patternStack;
+        SlotRestrictedInput patternSlotOUT;
+        ItemStack patternStack;
         final IMachineSet channelNodes;
         if (container instanceof ContainerPatternTerm term) {
             patternSlotOUT = ((AccessorContainerPatternTerm) term).getPatternSlotOUT();
             patternStack = patternSlotOUT.getStack();
             if (patternStack == null) {
-                return;
+                term.encode();
+                patternStack = patternSlotOUT.getStack();
+                if (patternStack == null) return;
             }
 
             var part = term.getNetworkNode();

@@ -16,7 +16,6 @@ import com.science.gtnl.config.MainConfig;
 import com.science.gtnl.utils.enums.GTNLItemList;
 import com.science.gtnl.utils.item.ItemUtils;
 
-import goodgenerator.items.GGMaterial;
 import gregtech.api.enums.ItemList;
 import gregtech.api.enums.Materials;
 import gregtech.api.enums.MaterialsBotania;
@@ -1237,16 +1236,15 @@ public class CraftingTableRecipes implements IRecipePool {
 
         GTModHandler.addCraftingRecipe(
             GTNLItemList.AssemblerMatrixWall.get(1),
-            new Object[] { "ABA", "BCB", "ABA", 'A',
-                GTOreDictUnificator.get(OrePrefixes.plateDouble, Materials.Iridium, 1), 'B',
-                GGMaterial.adamantiumAlloy.get(OrePrefixes.plate, 1), 'C',
+            new Object[] { "ABA", "BCB", "ABA", 'A', GTOreDictUnificator.get(OrePrefixes.plate, Materials.Iridium, 1),
+                'B', GTOreDictUnificator.get(OrePrefixes.plate, Materials.StainlessSteel, 1), 'C',
                 ItemList.Casing_RobustTungstenSteel.get(1) });
 
         GTModHandler.addCraftingRecipe(
             GTNLItemList.AssemblerMatrixFrame.get(1),
             new Object[] { "ABA", "BCB", "ABA", 'A',
-                GTOreDictUnificator.get(OrePrefixes.screw, Materials.Adamantium, 1), 'B',
-                GTOreDictUnificator.get(OrePrefixes.plateDouble, Materials.Osmiridium, 1), 'C',
+                GTOreDictUnificator.get(OrePrefixes.screw, Materials.StainlessSteel, 1), 'B',
+                GTOreDictUnificator.get(OrePrefixes.plate, Materials.Osmiridium, 1), 'C',
                 GTNLItemList.AssemblerMatrixWall.get(1) });
 
         GTModHandler.addCraftingRecipe(

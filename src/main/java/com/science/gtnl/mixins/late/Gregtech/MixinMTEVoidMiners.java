@@ -54,7 +54,7 @@ public abstract class MixinMTEVoidMiners extends MTEVoidMinerBase<MixinMTEVoidMi
     @Inject(method = "checkMachine", at = @At(value = "RETURN"), cancellable = true)
     private void checkMachine(IGregTechTileEntity aBaseMetaTileEntity, ItemStack aStack,
         CallbackInfoReturnable<Boolean> cir) {
-        int amp = 0;
+        long amp = 0;
 
         for (MTEHatch tHatch : validMTEList(mEnergyHatches)) {
             amp += tHatch.maxWorkingAmperesIn();
@@ -113,7 +113,7 @@ public abstract class MixinMTEVoidMiners extends MTEVoidMinerBase<MixinMTEVoidMi
 
         if (TIER_MULTIPLIER == 3) tt.addInfo(StatCollector.translateToLocal("Tooltip_PerfectOverclock"));
 
-        tt.addInfo(StatCollector.translateToLocal("Tooltip_Tectech_Hatch"))
+        tt.addTecTechHatchInfo()
             .beginStructureBlock(structureBlock[0], structureBlock[1], structureBlock[2], false);
 
         switch (TIER_MULTIPLIER) {

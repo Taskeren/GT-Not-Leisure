@@ -36,6 +36,7 @@ import com.gtnewhorizon.structurelib.structure.IStructureDefinition;
 import com.gtnewhorizon.structurelib.structure.ISurvivalBuildEnvironment;
 import com.gtnewhorizon.structurelib.structure.StructureDefinition;
 import com.gtnewhorizon.structurelib.util.Vec3Impl;
+import com.gtnewhorizon.structurelib.util.XSTR;
 import com.science.gtnl.common.packet.SyncHPCAVariablesPacket;
 import com.science.gtnl.common.render.tile.HighPerformanceComputationArrayRenderer;
 import com.science.gtnl.utils.enums.HPCAModifier;
@@ -119,13 +120,15 @@ public class HighPerformanceComputationArray extends TTMultiblockBase implements
     public HighPerformanceComputationArray(int aID, String aName, String aNameRegional) {
         super(aID, aName, aNameRegional);
         eCertainMode = 5;
-        eCertainStatus = -128; // no-brain value
+        eCertainStatus = -128;
+        useLongPower = true;
     }
 
     public HighPerformanceComputationArray(String aName) {
         super(aName);
         eCertainMode = 5;
-        eCertainStatus = -128; // no-brain value
+        eCertainStatus = -128;
+        useLongPower = true;
     }
 
     @Override
@@ -179,7 +182,7 @@ public class HighPerformanceComputationArray extends TTMultiblockBase implements
         }
         machineLens.set(this.totalLens);
         randomColor = generateTwoModifierIndexGroups(randomUUID, this.totalLens);
-        return eUncertainHatches.size() == 1 && this.totalLens >= 3;
+        return eUncertainHatches.size() == 1 && mInputHatches.size() <= 1 && this.totalLens >= 3;
     }
 
     @Override
@@ -254,8 +257,9 @@ public class HighPerformanceComputationArray extends TTMultiblockBase implements
 
             maxCurrentTemp.set(maxTemp);
             if (mMaxProgresstime > 0) {
+                startRecipeProcessing();
                 ArrayList<FluidStack> storedFluids = getStoredFluids();
-                int totalSuperCoolant = 0;
+                long totalSuperCoolant = 0;
 
                 if (storedFluids != null) {
                     for (FluidStack fs : storedFluids) {
@@ -265,47 +269,61 @@ public class HighPerformanceComputationArray extends TTMultiblockBase implements
                     }
                 }
 
-                for (int x = 0; x < this.totalLens; x++) {
-                    for (int y = 0; y < 3; y++) {
-                        MTEHatchRack rack = rackTable.get(x, y);
-                        if (rack != null) {
-                            int modX = (randomColor[0] != null && randomColor[0].length > x) ? randomColor[0][x] : 0;
-                            int modY = (randomColor[1] != null && randomColor[1].length > y) ? randomColor[1][y] : 0;
+                outer: for (int lensIndex = 0; lensIndex < this.totalLens; lensIndex++) {
+                    for (int rackIndex = 0; rackIndex < 3; rackIndex++) {
 
-                            HPCAModifier modXVal = HPCAModifier.values()[(modX) % HPCAModifier.values().length];
-                            HPCAModifier modYVal = HPCAModifier.values()[(modY) % HPCAModifier.values().length];
+                        MTEHatchRack rack = rackTable.get(lensIndex, rackIndex);
+                        if (rack == null) continue;
+                        rack.heat = Math.max(1, rack.heat);
+                        if (totalSuperCoolant <= 0) break outer;
 
-                            double computationFactor = modXVal.computationCoefficientX
-                                * modYVal.computationCoefficientY;
-                            double coolantFactor = modXVal.coolantCoefficientX * modYVal.coolantCoefficientY;
-                            double heatFactor = modXVal.heatCoefficientX * modYVal.heatCoefficientY;
+                        int computationPerTick = rack.tickComponents(1, 1) * 8;
+                        if (computationPerTick <= 0) continue;
 
-                            int rackComputation = rack.tickComponents(1, 1) * 4;
-                            if (rackComputation > 0) {
-                                int coolantUse = (int) (rackComputation * coolantFactor / 5);
+                        int colorIndexX = (randomColor[0] != null && randomColor[0].length > lensIndex)
+                            ? randomColor[0][lensIndex]
+                            : 0;
+                        int colorIndexY = (randomColor[1] != null && randomColor[1].length > rackIndex)
+                            ? randomColor[1][rackIndex]
+                            : 0;
 
-                                double coolantRatio = totalSuperCoolant > 0
-                                    ? Math.min(1.0, (double) totalSuperCoolant / coolantUse)
-                                    : 0.0;
+                        HPCAModifier modifierX = HPCAModifier.values()[colorIndexX % HPCAModifier.values().length];
+                        HPCAModifier modifierY = HPCAModifier.values()[colorIndexY % HPCAModifier.values().length];
 
-                                rack.heat += coolantRatio > 0
-                                    ? (int) (-rackComputation / 20d * heatFactor * coolantRatio)
-                                    : (int) (150 * heatFactor);
+                        double computationMultiplier = modifierX.computationCoefficientX
+                            * modifierY.computationCoefficientY;
+                        double coolantMultiplier = modifierX.coolantCoefficientX * modifierY.coolantCoefficientY;
+                        double heatMultiplier = modifierX.heatCoefficientX * modifierY.heatCoefficientY;
 
-                                rack.heat = Math.max(100, rack.heat);
-                                this.eAvailableData += (long) (rackComputation * computationFactor) / 4;
+                        double coolantRequired = computationPerTick * coolantMultiplier / 100.0;
 
-                                int usedCoolant = (int) (coolantUse * coolantRatio);
-                                allCoolantUs += usedCoolant;
+                        if (coolantRequired <= 0) continue;
 
-                                totalSuperCoolant -= usedCoolant;
-                            }
+                        double heatReductionPerUnit = computationPerTick / 20.0 * heatMultiplier;
+
+                        int usedCoolantFactor = (int) Math
+                            .min(rack.heat / heatReductionPerUnit, totalSuperCoolant / coolantRequired);
+
+                        int coolantConsumed = (int) (usedCoolantFactor * coolantRequired);
+
+                        if (usedCoolantFactor > 0 && depleteInput(Materials.SuperCoolant.getFluid(coolantConsumed))) {
+
+                            rack.heat -= (int) (usedCoolantFactor * heatReductionPerUnit);
+                            rack.heat = Math.max(1, rack.heat);
+
+                            totalSuperCoolant -= coolantConsumed;
+                            allCoolantUs += coolantConsumed;
+
                         }
+
+                        rack.heat += (int) (100 * heatMultiplier);
+                        this.eAvailableData += (long) (computationPerTick * computationMultiplier) / 4;
                     }
                 }
 
                 coolantUse.set(allCoolantUs);
                 availableData.set(this.eAvailableData);
+                endRecipeProcessing();
             }
         }
 
@@ -334,15 +352,14 @@ public class HighPerformanceComputationArray extends TTMultiblockBase implements
                 o.providePacket(pack);
             }
         }
-
     }
 
     public int[][] generateTwoModifierIndexGroups(UUID uuid, int totalLen) {
         int enumLen = HPCAModifier.values().length;
         int[][] result = new int[2][Math.max(3, totalLen)];
 
-        Random randomA = new Random(uuid.getMostSignificantBits());
-        Random randomB = new Random(uuid.getLeastSignificantBits());
+        Random randomA = new XSTR(uuid.getMostSignificantBits());
+        Random randomB = new XSTR(uuid.getLeastSignificantBits());
 
         for (int i = 0; i < totalLen; i++) {
             result[0][i] = randomA.nextInt(enumLen);
@@ -359,7 +376,7 @@ public class HighPerformanceComputationArray extends TTMultiblockBase implements
     public CheckRecipeResult checkProcessing_EM() {
         parametrization.setToDefaults(false, true);
         double maxTemp = 0;
-        mEUt = -(int) V[7];
+        lEUt = -V[7];
         int thingsActive = 0;
         int rackComputation;
 
@@ -384,6 +401,7 @@ public class HighPerformanceComputationArray extends TTMultiblockBase implements
         }
 
         mMaxProgresstime = 40;
+        mEfficiency = 10000;
         mEfficiencyIncrease = 10000;
         maxCurrentTemp.set(maxTemp);
         if (thingsActive > 0 && eCertainStatus == 0) {
@@ -406,10 +424,7 @@ public class HighPerformanceComputationArray extends TTMultiblockBase implements
             .addInfo(StatCollector.translateToLocal("Tooltip_HighPerformanceComputationArray_02"))
             .addInfo(StatCollector.translateToLocal("Tooltip_HighPerformanceComputationArray_03"))
             .addInfo(StatCollector.translateToLocal("Tooltip_HighPerformanceComputationArray_04"))
-            .addInfo(StatCollector.translateToLocal("Tooltip_Tectech_Hatch"))
-            .addSeparator()
-            .addInfo(StatCollector.translateToLocal("StructureTooComplex"))
-            .addInfo(StatCollector.translateToLocal("BLUE_PRINT_INFO"))
+            .addTecTechHatchInfo()
             .beginVariableStructureBlock(2, 2, 4, 4, 5, 16, false)
             .addOtherStructurePart(
                 StatCollector.translateToLocal("Tooltip_HighPerformanceComputationArray_Casing_00"),
@@ -647,7 +662,7 @@ public class HighPerformanceComputationArray extends TTMultiblockBase implements
         return addRackToXY(tile, casing, 2);
     }
 
-    private boolean addRackToXY(IGregTechTileEntity aTile, int casing, int adderIndex) {
+    public boolean addRackToXY(IGregTechTileEntity aTile, int casing, int adderIndex) {
         if (aTile == null) return false;
         IMetaTileEntity mte = aTile.getMetaTileEntity();
         if (mte instanceof MTEHatchRack rack) {

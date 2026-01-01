@@ -19,6 +19,9 @@ public class BlockIcons {
     public static Textures.BlockIcons.CustomIcon LASER_BEACON_TOP = new Textures.BlockIcons.CustomIcon(
         BASE + "LASER_BEACON_TOP");
 
+    public static Textures.BlockIcons.CustomIcon BEAMLINE_PIPE_MIRROR = new Textures.BlockIcons.CustomIcon(
+        BASE + "BEAMLINE_PIPE_MIRROR");
+
     public static Textures.BlockIcons.CustomIcon OVERLAY_FRONT_FULLAUTOMAINTENANCE = new Textures.BlockIcons.CustomIcon(
         "iconsets/OVERLAY_FULLAUTOMAINTENANCE");
     public static Textures.BlockIcons.CustomIcon OVERLAY_FRONT_DUAL_HATCH = new Textures.BlockIcons.CustomIcon(

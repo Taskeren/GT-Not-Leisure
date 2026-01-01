@@ -14,8 +14,8 @@ public class BotaniaManaInfusionRecipes implements IRecipePool {
         if (Mods.IWillFindYou.isModLoaded()) {
             BotaniaAPI.registerManaInfusionRecipe(
                 GTNLItemList.ManaElectricProspectorTool.get(1),
-                GTModHandler.getModItem(Mods.IWillFindYou.ID, "ifu_buildingKit", 1),
-                10000);
+                GTModHandler.getModItem(Mods.IWillFindYou.ID, "ifu_buildingKit", 1, 10),
+                5000);
         }
     }
 }

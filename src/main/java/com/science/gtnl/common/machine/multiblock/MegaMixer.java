@@ -30,6 +30,7 @@ import gregtech.api.enums.Textures;
 import gregtech.api.interfaces.ITexture;
 import gregtech.api.interfaces.metatileentity.IMetaTileEntity;
 import gregtech.api.interfaces.tileentity.IGregTechTileEntity;
+import gregtech.api.logic.ProcessingLogic;
 import gregtech.api.recipe.RecipeMap;
 import gregtech.api.render.TextureFactory;
 import gregtech.api.util.MultiblockTooltipBuilder;
@@ -97,10 +98,7 @@ public class MegaMixer extends GTMMultiMachineBase<MegaMixer> implements ISurviv
             .addInfo(StatCollector.translateToLocal("Tooltip_MegaMixer_03"))
             .addInfo(StatCollector.translateToLocal("Tooltip_GTMMultiMachine_02"))
             .addInfo(StatCollector.translateToLocal("Tooltip_GTMMultiMachine_03"))
-            .addInfo(StatCollector.translateToLocal("Tooltip_Tectech_Hatch"))
-            .addSeparator()
-            .addInfo(StatCollector.translateToLocal("StructureTooComplex"))
-            .addInfo(StatCollector.translateToLocal("BLUE_PRINT_INFO"))
+            .addTecTechHatchInfo()
             .beginStructureBlock(11, 9, 18, true)
             .addInputHatch(StatCollector.translateToLocal("Tooltip_MegaMixer_Casing"))
             .addOutputHatch(StatCollector.translateToLocal("Tooltip_MegaMixer_Casing"))
@@ -197,6 +195,12 @@ public class MegaMixer extends GTMMultiMachineBase<MegaMixer> implements ISurviv
     @Override
     public double getDurationModifier() {
         return Math.min(0.005, 1.0 / (5 + runningSpeedBoost) - (Math.max(0, mParallelTier - 1) / 50.0));
+    }
+
+    @Override
+    protected void setupProcessingLogic(ProcessingLogic logic) {
+        super.setupProcessingLogic(logic);
+        logic.setUnlimitedTierSkips();
     }
 
     @Override

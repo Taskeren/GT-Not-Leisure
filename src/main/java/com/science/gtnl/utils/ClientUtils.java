@@ -4,7 +4,6 @@ import java.util.Map;
 
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.entity.EntityClientPlayerMP;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityList;
 import net.minecraft.entity.item.EntityItem;
@@ -24,6 +23,7 @@ import org.lwjgl.input.Keyboard;
 
 import com.science.gtnl.ScienceNotLeisure;
 import com.science.gtnl.common.packet.GetTileEntityNBTRequestPacket;
+import com.science.gtnl.common.packet.RequestGameProfilePacket;
 import com.science.gtnl.utils.item.ItemUtils;
 
 import cpw.mods.fml.relauncher.Side;
@@ -44,7 +44,7 @@ public class ClientUtils {
         Minecraft.getMinecraft().ingameGUI.func_110326_a(component.getFormattedText(), true);
     }
 
-    public static boolean onBeforePickBlock(EntityClientPlayerMP playerMP, World world, boolean useAE) {
+    public static boolean onBeforePickBlock(EntityPlayer playerMP, World world, boolean useAE) {
         boolean isCtrlKeyDown = Keyboard.isKeyDown(Keyboard.KEY_LCONTROL) || Keyboard.isKeyDown(Keyboard.KEY_RCONTROL);
         double reachDistance = 1000;
         boolean handled = onPickEntity(playerMP, reachDistance, useAE);
@@ -67,6 +67,7 @@ public class ClientUtils {
         ItemStack result = null;
         Entity entity = target.entityHit;
         if (entity == null) return false;
+        boolean isCreative = player.capabilities.isCreativeMode;
 
         if (entity instanceof EntityItem item) {
             ItemStack dropItem = item.getEntityItem()
@@ -74,7 +75,9 @@ public class ClientUtils {
             dropItem.stackSize = 1;
             result = dropItem;
         } else if (entity instanceof EntityPlayer entityPlayer) {
-            result = ItemUtils.getPlayerSkull(entityPlayer.getCommandSenderName());
+            ScienceNotLeisure.network
+                .sendToServer(new RequestGameProfilePacket(entityPlayer.getCommandSenderName(), isCreative, useAE));
+            return true;
         } else {
             int entityID = EntityList.getEntityID(entity);
             if (entityID <= 0) return false;
@@ -86,7 +89,6 @@ public class ClientUtils {
             }
         }
 
-        boolean isCreative = player.capabilities.isCreativeMode;
         return ItemUtils.placeItemInHotbar(player, result, isCreative, useAE);
     }
 

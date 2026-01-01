@@ -54,9 +54,6 @@ public class SteamGateAssembler extends SteamMultiMachineBase<SteamGateAssembler
             .addInfo(StatCollector.translateToLocal("Tooltip_SteamGateAssembler_01"))
             .addInfo(StatCollector.translateToLocal("Tooltip_SteamGateAssembler_02"))
             .addInfo(StatCollector.translateToLocal("Tooltip_SteamGateAssembler_03"))
-            .addSeparator()
-            .addInfo(StatCollector.translateToLocal("StructureTooComplex"))
-            .addInfo(StatCollector.translateToLocal("BLUE_PRINT_INFO"))
             .beginStructureBlock(21, 20, 21, true)
             .toolTipFinisher();
         return tt;

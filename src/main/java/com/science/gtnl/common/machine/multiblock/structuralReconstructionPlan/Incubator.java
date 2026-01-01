@@ -134,7 +134,7 @@ public class Incubator extends MultiMachineBase<Incubator> implements ISurvivalC
             .addInfo(StatCollector.translateToLocal("Tooltip_Incubator_00"))
             .addInfo(StatCollector.translateToLocal("Tooltip_Incubator_01"))
             .addInfo(StatCollector.translateToLocal("Tooltip_Incubator_02"))
-            .addInfo(StatCollector.translateToLocal("Tooltip_GTMMultiMachine_04"))
+            .addMultiAmpHatchInfo()
             .beginStructureBlock(5, 5, 5, false)
             .addMaintenanceHatch(StatCollector.translateToLocal("Tooltip_Incubator_Casing"), 1)
             .addOtherStructurePart(
@@ -174,7 +174,7 @@ public class Incubator extends MultiMachineBase<Incubator> implements ISurvivalC
                     onElementPass(e -> e.mCountCasing++, ofBlock(sBlockReinforced, 2))))
             .addElement(
                 'D',
-                ofBlock(
+                ofBlockAnyMeta(
                     EtFuturumRequiem.isModLoaded() ? GameRegistry.findBlock(EtFuturumRequiem.ID, "sponge")
                         : Blocks.sponge,
                     1))
@@ -216,7 +216,8 @@ public class Incubator extends MultiMachineBase<Incubator> implements ISurvivalC
                 int sievert = data.sievert;
                 boolean isExact = data.isExact;
                 int glass = recipe.getMetadataOrDefault(GLASS, 0);
-                if (!BWUtil.areStacksEqualOrNull((ItemStack) recipe.mSpecialItems, getControllerSlot()))
+                ItemStack culture = (ItemStack) recipe.mSpecialItems;
+                if (culture != null && !BWUtil.areStacksEqualOrNull(culture, getControllerSlot()))
                     return CheckRecipeResultRegistry.NO_RECIPE;
                 mNeededSievert = sievert;
 

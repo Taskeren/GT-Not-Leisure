@@ -71,7 +71,7 @@ public class FallingTowerFrontend extends RecipeMapFrontend {
         // Override regular createNEITemplate method, so we can remove the background texture with the ugly border.
         ModularWindow.Builder builder = ModularWindow.builder(neiProperties.recipeBackgroundSize);
 
-        // First draw progress bar in background
+        // First gtnl$draw progress bar in background
         if (uiProperties.useProgressBar) {
             addProgressBar(builder, progressSupplier, windowOffset);
         }

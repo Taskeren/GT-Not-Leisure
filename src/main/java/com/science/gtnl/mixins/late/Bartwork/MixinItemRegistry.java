@@ -15,6 +15,9 @@ import goodgenerator.items.GGMaterial;
 @Mixin(value = ItemRegistry.class, remap = false)
 public class MixinItemRegistry {
 
+    /**
+     * @see gregtech.api.enums.MaterialsUEVplus#QuarkGluonPlasma
+     */
     @ModifyArgs(
         method = "<clinit>",
         at = @At(
@@ -35,10 +38,6 @@ public class MixinItemRegistry {
 
         newColors[originalColors.length] = GGMaterial.shirabon.getRGBA();
 
-        /**
-         *
-         * @see gregtech.api.enums.MaterialsUEVplus#QuarkGluonPlasma
-         */
         newColors[originalColors.length + 1] = new short[] { 251, 239, 154 };
         args.set(2, newColors);
     }

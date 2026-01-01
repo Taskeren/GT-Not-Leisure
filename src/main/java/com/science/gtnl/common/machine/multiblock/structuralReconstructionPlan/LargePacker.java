@@ -113,10 +113,7 @@ public class LargePacker extends GTMMultiMachineBase<LargePacker> implements ISu
             .addInfo(StatCollector.translateToLocal("Tooltip_LargePacker_01"))
             .addInfo(StatCollector.translateToLocal("Tooltip_GTMMultiMachine_02"))
             .addInfo(StatCollector.translateToLocal("Tooltip_GTMMultiMachine_03"))
-            .addInfo(StatCollector.translateToLocal("Tooltip_GTMMultiMachine_04"))
-            .addSeparator()
-            .addInfo(StatCollector.translateToLocal("StructureTooComplex"))
-            .addInfo(StatCollector.translateToLocal("BLUE_PRINT_INFO"))
+            .addMultiAmpHatchInfo()
             .beginStructureBlock(3, 3, 6, true)
             .addInputBus(StatCollector.translateToLocal("Tooltip_LargePacker_Casing"))
             .addOutputBus(StatCollector.translateToLocal("Tooltip_LargePacker_Casing"))
@@ -185,7 +182,7 @@ public class LargePacker extends GTMMultiMachineBase<LargePacker> implements ISu
     }
 
     @Override
-    public final void onScrewdriverRightClick(ForgeDirection side, EntityPlayer aPlayer, float aX, float aY, float aZ,
+    public void onModeChangeByScrewdriver(ForgeDirection side, EntityPlayer aPlayer, float aX, float aY, float aZ,
         ItemStack aTool) {
         this.machineMode = (this.machineMode + 1) % 2;
         GTUtility.sendChatToPlayer(aPlayer, StatCollector.translateToLocal("LargePacker_Mode_" + this.machineMode));

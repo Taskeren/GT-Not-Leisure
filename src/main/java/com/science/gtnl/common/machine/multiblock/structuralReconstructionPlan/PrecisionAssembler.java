@@ -145,10 +145,7 @@ public class PrecisionAssembler extends MultiMachineBase<PrecisionAssembler> imp
             .addInfo(StatCollector.translateToLocal("Tooltip_PreciseAssembler_01"))
             .addInfo(StatCollector.translateToLocal("Tooltip_PreciseAssembler_02"))
             .addInfo(StatCollector.translateToLocal("Tooltip_PreciseAssembler_03"))
-            .addInfo(StatCollector.translateToLocal("Tooltip_Tectech_Hatch"))
-            .addSeparator()
-            .addInfo(StatCollector.translateToLocal("StructureTooComplex"))
-            .addInfo(StatCollector.translateToLocal("BLUE_PRINT_INFO"))
+            .addTecTechHatchInfo()
             .beginStructureBlock(9, 5, 5, true)
             .addInputHatch(StatCollector.translateToLocal("Tooltip_PreciseAssembler_Casing"))
             .addInputBus(StatCollector.translateToLocal("Tooltip_PreciseAssembler_Casing"))
@@ -254,7 +251,7 @@ public class PrecisionAssembler extends MultiMachineBase<PrecisionAssembler> imp
     }
 
     @Override
-    public final void onScrewdriverRightClick(ForgeDirection side, EntityPlayer aPlayer, float aX, float aY, float aZ,
+    public void onModeChangeByScrewdriver(ForgeDirection side, EntityPlayer aPlayer, float aX, float aY, float aZ,
         ItemStack aTool) {
         this.machineMode = (this.machineMode + 1) % 2;
         GTUtility

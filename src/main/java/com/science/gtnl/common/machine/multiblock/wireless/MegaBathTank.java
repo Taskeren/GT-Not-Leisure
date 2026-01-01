@@ -83,10 +83,7 @@ public class MegaBathTank extends WirelessEnergyMultiMachineBase<MegaBathTank> {
             .addInfo(StatCollector.translateToLocal("Tooltip_WirelessEnergyMultiMachine_08"))
             .addInfo(StatCollector.translateToLocal("Tooltip_WirelessEnergyMultiMachine_09"))
             .addInfo(StatCollector.translateToLocal("Tooltip_WirelessEnergyMultiMachine_10"))
-            .addInfo(StatCollector.translateToLocal("Tooltip_Tectech_Hatch"))
-            .addSeparator()
-            .addInfo(StatCollector.translateToLocal("StructureTooComplex"))
-            .addInfo(StatCollector.translateToLocal("BLUE_PRINT_INFO"))
+            .addTecTechHatchInfo()
             .beginStructureBlock(31, 13, 31, true)
             .addInputHatch(StatCollector.translateToLocal("Tooltip_MegaBathTank_Casing"))
             .addOutputHatch(StatCollector.translateToLocal("Tooltip_MegaBathTank_Casing"))
@@ -214,7 +211,7 @@ public class MegaBathTank extends WirelessEnergyMultiMachineBase<MegaBathTank> {
     }
 
     @Override
-    public final void onScrewdriverRightClick(ForgeDirection side, EntityPlayer aPlayer, float aX, float aY, float aZ,
+    public void onModeChangeByScrewdriver(ForgeDirection side, EntityPlayer aPlayer, float aX, float aY, float aZ,
         ItemStack aTool) {
         this.machineMode = (this.machineMode + 1) % 3;
         GTUtility.sendChatToPlayer(aPlayer, StatCollector.translateToLocal("MegaBathTank_Mode_" + this.machineMode));

@@ -109,7 +109,7 @@ public class ItemLoader {
     public static ItemStack infinityItemCell;
     public static ItemStack infinityDyeCell;
     public static ItemStack infinityDyeFluidCell;
-    public static ItemStack infinityCobblestoneCell;
+    public static ItemStack infinityStoneCell;
 
     public static void registryItems() {
         portableItem = new PortableItem();
@@ -203,6 +203,7 @@ public class ItemLoader {
         infinityStoneCell.add(ItemInfinityCell.SubItem.getInstance(Blocks.stone));
         infinityStoneCell.add(ItemInfinityCell.SubItem.getInstance(Blocks.cobblestone));
         infinityStoneCell.add(ItemInfinityCell.SubItem.getInstance(Blocks.netherrack));
+        infinityStoneCell.add(ItemInfinityCell.SubItem.getInstance(Blocks.end_stone));
 
         infinityStoneCell.add(ItemInfinityCell.SubItem.getInstance(new ItemStack(GregTechAPI.sBlockGranites, 1, 0)));
         infinityStoneCell.add(ItemInfinityCell.SubItem.getInstance(new ItemStack(GregTechAPI.sBlockGranites, 1, 1)));
@@ -237,7 +238,7 @@ public class ItemLoader {
                 .add(ItemInfinityCell.SubItem.getInstance(GTModHandler.getModItem(Mods.Botania.ID, "stone", 1, 3)));
         }
 
-        infinityCobblestoneCell = ItemInfinityCell
+        ItemLoader.infinityStoneCell = ItemInfinityCell
             .getSubItem(StorageChannel.ITEMS, "InfinityCell.stone.name", "InfinityStoneCell", infinityStoneCell);
 
         GameRegistry.registerItem(wirelessUpgradeChip, "WirelessUpgradeChip");
@@ -288,7 +289,7 @@ public class ItemLoader {
         GTNLItemList.InfinityCell.set(new ItemStack(infinityCell, 1));
         GTNLItemList.InfinityDyeCell.set(infinityDyeCell);
         GTNLItemList.InfinityDyeFluidCell.set(infinityDyeFluidCell);
-        GTNLItemList.InfinityStoneCell.set(infinityCobblestoneCell);
+        GTNLItemList.InfinityStoneCell.set(ItemLoader.infinityStoneCell);
     }
 
     public static void registryMetaItems() {

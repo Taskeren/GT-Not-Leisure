@@ -18,7 +18,6 @@ import com.science.gtnl.common.item.steamRocket.SchematicSteamRocket;
 import com.science.gtnl.common.material.MaterialPool;
 import com.science.gtnl.common.recipe.gtnl.RocketAssemblerRecipes;
 import com.science.gtnl.common.recipe.oreDictionary.LaserEngraverOreRecipes;
-import com.science.gtnl.common.recipe.oreDictionary.PortalToAlfheimOreRecipes;
 import com.science.gtnl.common.recipe.oreDictionary.SteamCarpenterOreRecipe;
 import com.science.gtnl.common.recipe.oreDictionary.WoodDistillationRecipes;
 import com.science.gtnl.config.MainConfig;
@@ -27,12 +26,13 @@ import com.science.gtnl.utils.gui.portableWorkbench.ContainerPortableAdvancedWor
 import com.science.gtnl.utils.gui.portableWorkbench.ContainerPortableAvaritiaddonsChest;
 import com.science.gtnl.utils.gui.portableWorkbench.ContainerPortableChest;
 import com.science.gtnl.utils.machine.greenHouseManager.GreenHouseBucket;
-import com.science.gtnl.utils.text.LanguageLoader;
 
 import bartworks.API.WerkstoffAdderRegistry;
 import cpw.mods.fml.common.Optional;
 import gregtech.api.enums.Mods;
+import gregtech.api.enums.OrePrefixes;
 import gregtech.api.util.GTModHandler;
+import gregtech.common.misc.WirelessNetworkManager;
 import micdoodle8.mods.galacticraft.api.recipe.RocketFuels;
 import micdoodle8.mods.galacticraft.api.recipe.SchematicRegistry;
 
@@ -50,8 +50,6 @@ public class MaterialLoader {
 
         ItemLoader.registry();
         WerkstoffAdderRegistry.addWerkstoffAdder(new MaterialPool());
-
-        LanguageLoader.registry();
 
         loadOreDictionaryRecipes();
 
@@ -84,6 +82,11 @@ public class MaterialLoader {
         if (Mods.InventoryBogoSorter.isModLoaded()) {
             loadCraftTweak();
         }
+
+        OrePrefixes.nugget.addFamiliarPrefix(OrePrefixes.ingotHot);
+        OrePrefixes.ingot.addFamiliarPrefix(OrePrefixes.ingotHot);
+        OrePrefixes.ingotHot.addFamiliarPrefix(OrePrefixes.nugget);
+        OrePrefixes.ingotHot.addFamiliarPrefix(OrePrefixes.ingot);
     }
 
     public static void loadCompleteInit() {
@@ -98,6 +101,8 @@ public class MaterialLoader {
         if (MainConfig.enableStickItem) {
             RecipeLoader.loadVillageTrade();
         }
+
+        WirelessNetworkManager.number_of_energy_additions = 40L;
     }
 
     @Optional.Method(modid = "bogosorter")
@@ -113,7 +118,6 @@ public class MaterialLoader {
     public static void loadOreDictionaryRecipes() {
         ScienceNotLeisure.LOG.info("GTNL: Register Ore Dictionary Recipe.");
         new WoodDistillationRecipes();
-        new PortalToAlfheimOreRecipes();
         new LaserEngraverOreRecipes();
         new SteamCarpenterOreRecipe();
     }

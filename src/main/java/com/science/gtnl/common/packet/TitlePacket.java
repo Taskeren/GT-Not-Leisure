@@ -5,13 +5,15 @@ import static com.science.gtnl.ScienceNotLeisure.network;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.server.MinecraftServer;
 
+import com.science.gtnl.common.packet.client.TitleDisplayHandler;
+
 import cpw.mods.fml.common.network.ByteBufUtils;
 import cpw.mods.fml.common.network.simpleimpl.IMessage;
 import cpw.mods.fml.common.network.simpleimpl.IMessageHandler;
 import cpw.mods.fml.common.network.simpleimpl.MessageContext;
 import io.netty.buffer.ByteBuf;
 
-public class TitlePacket implements IMessage {
+public class TitlePacket implements IMessage, IMessageHandler<TitlePacket, IMessage> {
 
     public String message;
     public int durationTicks;
@@ -77,14 +79,11 @@ public class TitlePacket implements IMessage {
         buf.writeInt(this.fadeOut);
     }
 
-    public static class Handler implements IMessageHandler<TitlePacket, IMessage> {
-
-        @Override
-        public IMessage onMessage(final TitlePacket msg, final MessageContext ctx) {
-            ClientTitleDisplayHandler
-                .displayTitle(msg.message, msg.durationTicks, msg.colorText, msg.scaleText, msg.fadeIn, msg.fadeOut);
-            return null;
-        }
+    @Override
+    public IMessage onMessage(final TitlePacket msg, final MessageContext ctx) {
+        TitleDisplayHandler
+            .displayTitle(msg.message, msg.durationTicks, msg.colorText, msg.scaleText, msg.fadeIn, msg.fadeOut);
+        return null;
     }
 
     public static void sendTitleToPlayerName(String playerName, String message, int durationTicks, int color,

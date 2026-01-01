@@ -13,9 +13,11 @@ import java.util.Optional;
 
 import javax.annotation.Nonnull;
 
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.StatCollector;
+import net.minecraftforge.common.util.ForgeDirection;
 import net.minecraftforge.fluids.FluidStack;
 
 import org.apache.commons.lang3.ArrayUtils;
@@ -282,6 +284,29 @@ public abstract class MultiMachineBase<T extends MultiMachineBase<T>> extends MT
         return false;
     }
 
+    public boolean clearRecipeMapForAllInputHatches() {
+        return resetRecipeMapForAllInputHatches(null);
+    }
+
+    public boolean resetRecipeMapForAllInputHatches() {
+        return resetRecipeMapForAllInputHatches(this.getRecipeMap());
+    }
+
+    public boolean resetRecipeMapForAllInputHatches(RecipeMap<?> aMap) {
+        int cleared = 0;
+        for (MTEHatchInput g : this.mInputHatches) {
+            if (resetRecipeMapForHatch(g, aMap)) {
+                cleared++;
+            }
+        }
+        for (MTEHatchInputBus g : this.mInputBusses) {
+            if (resetRecipeMapForHatch(g, aMap)) {
+                cleared++;
+            }
+        }
+        return cleared > 0;
+    }
+
     @Override
     public void onRemoval() {
         deactivateCoilLease();
@@ -525,6 +550,19 @@ public abstract class MultiMachineBase<T extends MultiMachineBase<T>> extends MT
     }
 
     @Override
+    public void onMachineModeSwitchClick() {
+        super.onMachineModeSwitchClick();
+        if (getBaseMetaTileEntity().isClientSide()) return;
+        clearRecipeMapForAllInputHatches();
+        onModeChangeByButton();
+        resetRecipeMapForAllInputHatches();
+    }
+
+    public void onModeChangeByButton() {
+
+    }
+
+    @Override
     public ButtonWidget createMuffleButton(IWidgetBuilder<?> builder) {
         return (ButtonWidget) new ButtonWidget().setOnClick((clickData, widget) -> setMuffled(!isMuffled()))
             .setPlayClickSound(true)
@@ -546,6 +584,19 @@ public abstract class MultiMachineBase<T extends MultiMachineBase<T>> extends MT
     }
 
     public void addConfigurationWidgets(DynamicPositionedRow configurationElements, UIBuildContext buildContext) {
+
+    }
+
+    @Override
+    public void onScrewdriverRightClick(ForgeDirection side, EntityPlayer aPlayer, float aX, float aY, float aZ,
+        ItemStack aTool) {
+        clearRecipeMapForAllInputHatches();
+        onModeChangeByScrewdriver(side, aPlayer, aX, aY, aZ, aTool);
+        resetRecipeMapForAllInputHatches();
+    }
+
+    public void onModeChangeByScrewdriver(ForgeDirection side, EntityPlayer aPlayer, float aX, float aY, float aZ,
+        ItemStack aTool) {
 
     }
 

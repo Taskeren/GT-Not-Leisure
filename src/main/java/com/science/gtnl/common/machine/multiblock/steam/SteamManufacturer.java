@@ -134,9 +134,6 @@ public class SteamManufacturer extends SteamMultiMachineBase<SteamManufacturer> 
             .addInfo(StatCollector.translateToLocal("Tooltip_SteamManufacturer_00"))
             .addInfo(StatCollector.translateToLocal("Tooltip_SteamManufacturer_01"))
             .addInfo(StatCollector.translateToLocal("Tooltip_SteamManufacturer_02"))
-            .addSeparator()
-            .addInfo(StatCollector.translateToLocal("StructureTooComplex"))
-            .addInfo(StatCollector.translateToLocal("BLUE_PRINT_INFO"))
             .beginStructureBlock(9, 7, 7, true)
             .toolTipFinisher();
         return tt;

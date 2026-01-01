@@ -57,6 +57,7 @@ import appeng.api.storage.data.IAEItemStack;
 import appeng.api.storage.data.IItemList;
 import appeng.util.item.AEFluidStack;
 import appeng.util.item.AEItemStack;
+import gregtech.api.enums.GTValues;
 import gregtech.api.enums.Textures;
 import gregtech.api.enums.TierEU;
 import gregtech.api.interfaces.ITexture;
@@ -70,11 +71,13 @@ import gregtech.api.util.GTUtility;
 import gregtech.api.util.MultiblockTooltipBuilder;
 import gregtech.common.tileentities.machines.MTEHatchCraftingInputME;
 import gregtech.common.tileentities.machines.MTEHatchInputBusME;
+import gtPlusPlus.core.block.ModBlocks;
 import lombok.Getter;
 import lombok.Setter;
 import mcp.mobius.waila.api.IWailaConfigHandler;
 import mcp.mobius.waila.api.IWailaDataAccessor;
 import tectech.thing.block.BlockQuantumGlass;
+import tectech.thing.casing.BlockGTCasingsTT;
 
 public class SingularityDataHub extends MultiMachineBase<SingularityDataHub>
     implements ISurvivalConstructable, IItemVault {
@@ -170,7 +173,7 @@ public class SingularityDataHub extends MultiMachineBase<SingularityDataHub>
     public @NotNull CheckRecipeResult checkProcessing() {
         mEfficiency = 10000;
         mEfficiencyIncrease = 10000;
-        lEUt = TierEU.RECIPE_MAX / 20;
+        lEUt = GTValues.VP[9] / 20L;
         mMaxProgresstime = 20;
 
         ArrayList<ItemStack> inputItems = getStoredInputs();
@@ -241,7 +244,7 @@ public class SingularityDataHub extends MultiMachineBase<SingularityDataHub>
     }
 
     @Override
-    public void onScrewdriverRightClick(ForgeDirection side, EntityPlayer aPlayer, float aX, float aY, float aZ,
+    public void onModeChangeByScrewdriver(ForgeDirection side, EntityPlayer aPlayer, float aX, float aY, float aZ,
         ItemStack aTool) {
         this.setDoVoidExcess(!doVoidExcess);
         GTUtility.sendChatToPlayer(
@@ -267,15 +270,14 @@ public class SingularityDataHub extends MultiMachineBase<SingularityDataHub>
                         .casingIndex(getCasingTextureID())
                         .dot(1)
                         .build(),
-                    onElementPass(x -> x.mCountCasing++, ofBlock(sBlockCasings1, 12))))
-            .addElement('C', ofBlock(sBlockCasings1, 13))
-            .addElement('D', ofBlock(sBlockCasings1, 14))
+                    onElementPass(x -> x.mCountCasing++, ofBlock(sBlockCasingsTT, 4))))
+            .addElement('C', ofBlock(sBlockCasingsTT, 0))
+            .addElement('D', ofBlock(ModBlocks.blockCasings3Misc, 10))
             .addElement('E', ofBlock(sBlockCasings10, 7))
-            .addElement('F', ofBlock(sBlockCasings9, 14))
-            .addElement('G', ofBlock(sBlockCasings9, 15))
+            .addElement('F', ofBlock(sBlockCasingsTT, 8))
+            .addElement('G', ofBlock(sBlockCasingsTT, 4))
             .addElement('H', ofBlock(sBlockCasingsTT, 6))
-            .addElement('I', ofBlock(sBlockGlass1, 3))
-            .addElement('J', ofBlock(BlockQuantumGlass.INSTANCE, 0))
+            .addElement('I', ofBlock(BlockQuantumGlass.INSTANCE, 0))
             .build();
     }
 
@@ -311,7 +313,7 @@ public class SingularityDataHub extends MultiMachineBase<SingularityDataHub>
 
     @Override
     public int getCasingTextureID() {
-        return StructureUtils.getTextureIndex(sBlockCasings1, 12);
+        return BlockGTCasingsTT.textureOffset + 4;
     }
 
     @Override
@@ -352,9 +354,6 @@ public class SingularityDataHub extends MultiMachineBase<SingularityDataHub>
             .addInfo(StatCollector.translateToLocal("Tooltip_SingularityDataHub_05"))
             .addInfo(StatCollector.translateToLocal("Tooltip_SingularityDataHub_06"))
             .addInfo(StatCollector.translateToLocal("Tooltip_SingularityDataHub_07"))
-            .addSeparator()
-            .addInfo(StatCollector.translateToLocal("StructureTooComplex"))
-            .addInfo(StatCollector.translateToLocal("BLUE_PRINT_INFO"))
             .beginStructureBlock(15, 31, 15, false)
             .addInputBus(StatCollector.translateToLocal("Tooltip_SingularityDataHub_Casing"), 1)
             .addInputHatch(StatCollector.translateToLocal("Tooltip_SingularityDataHub_Casing"), 1)

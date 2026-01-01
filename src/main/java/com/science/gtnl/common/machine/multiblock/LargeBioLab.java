@@ -92,10 +92,7 @@ public class LargeBioLab extends GTMMultiMachineBase<LargeBioLab> implements ISu
             .addInfo(StatCollector.translateToLocal("Tooltip_GTMMultiMachine_01"))
             .addInfo(StatCollector.translateToLocal("Tooltip_GTMMultiMachine_02"))
             .addInfo(StatCollector.translateToLocal("Tooltip_GTMMultiMachine_03"))
-            .addInfo(StatCollector.translateToLocal("Tooltip_Tectech_Hatch"))
-            .addSeparator()
-            .addInfo(StatCollector.translateToLocal("StructureTooComplex"))
-            .addInfo(StatCollector.translateToLocal("BLUE_PRINT_INFO"))
+            .addTecTechHatchInfo()
             .beginStructureBlock(7, 5, 5, true)
             .addInputHatch(StatCollector.translateToLocal("Tooltip_LargeBioLab_Casing"))
             .addOutputHatch(StatCollector.translateToLocal("Tooltip_LargeBioLab_Casing"))
@@ -138,6 +135,11 @@ public class LargeBioLab extends GTMMultiMachineBase<LargeBioLab> implements ISu
         }
         setupParameters();
         return mCountCasing >= 20;
+    }
+
+    @Override
+    public boolean checkEnergyHatch() {
+        return true;
     }
 
     @Override

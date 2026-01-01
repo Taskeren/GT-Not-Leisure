@@ -41,7 +41,7 @@ public class AnyBlock<T> implements IStructureElement<T> {
     @Override
     public PlaceResult survivalPlaceBlock(Object o, World world, int x, int y, int z, ItemStack trigger,
         AutoPlaceEnvironment env) {
-        if (world.provider.dimensionId == Integer.MAX_VALUE) { // Required for the NEI preview to work
+        if (world.provider.dimensionId == Integer.MAX_VALUE) { // Required for the NEI preview to startAEWork
             world.setBlock(x, y, z, Blocks.stonebrick, 0, 2);
             return PlaceResult.ACCEPT;
         }

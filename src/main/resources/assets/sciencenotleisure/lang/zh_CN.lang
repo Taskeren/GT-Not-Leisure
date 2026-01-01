@@ -28,8 +28,6 @@ Tooltip_Adder=添加模组：
 Tooltip_ChangeAdder=修改模组：
 Tooltip_NoMobsSpawnInThisBlock=生物不会在这个方块上生成
 Tooltip_NoTileEntitySpawnInThisBlock=这不是一个实体！
-Tooltip_Tectech_Hatch=支持§9Tec§1Tech§r§7激光仓！ 
-Tooltip_HighAmp_Hatch=支持§9Tec§1Tech§r§7多安能源仓！
 Tooltip_PerfectOverclock=机器可进行§c无损超频§7
 Tooltip_PressShift=§r按住 §6Shift §r查看更多信息
 Tooltip_PressCtrl=§r按住 §6Ctrl §r查看更多信息
@@ -85,7 +83,7 @@ config.machine.enableRecipeOutputChance.tooltip=当机器电压大于配方电�
 config.machine.enableLaserHatch=禁用部分机器使用激光仓
 config.machine.enableLaserHatch.tooltip=开启后部分受限的机器无法使用激光仓
 config.machine.recipeOutputChance=配方产物概率
-config.machine.recipeOutputChance.tooltip=修改每高过配方1级电压，增加的产物概率
+config.machine.recipeOutputChance.tooltip=修改每高过配方一级电压，增加的产物概率
 config.meteor_miner.meteorMinerMaxBlockPerCycle=单周期最大方块数
 config.meteor_miner.meteorMinerMaxBlockPerCycle.tooltip=设置坠星采矿场每个周期可破坏的方块数量
 config.meteor_miner.meteorMinerMaxRowPerCycle=单周期最大行数
@@ -114,6 +112,8 @@ config.machine.enableIntegratedOreFactoryChange=集成矿石处理厂改动
 config.machine.enableIntegratedOreFactoryChange.tooltip=启用后可提升并行，并可使用激光仓
 config.machine.enablePurificationPlantBuff=净水厂强化
 config.machine.enablePurificationPlantBuff.tooltip=启用净水厂强化，增加无线模式与更高并行
+config.machine.enableHatchInterfaceTerminalEnhance=输入仓接口终端显示增强
+config.machine.enableHatchInterfaceTerminalEnhance.tooltip=增强输入仓和输入总线在接口终端的显示，使其支持机器的当前配方池和虚拟编程电路
 config.recipe.enableSomethingRecipe=添加一些配方
 config.recipe.enableSomethingRecipe.tooltip=启用一些廉价的配方
 config.recipe.enableDeleteRecipe=删除配方
@@ -198,6 +198,8 @@ config.super_creeper.spiderTargetInterval=蜘蛛目标扫描间隔
 config.super_creeper.spiderTargetInterval.tooltip=苦力怕扫描蜘蛛目标的间隔
 config.super_creeper.burningExplosionTimer=燃烧爆炸计时
 config.super_creeper.burningExplosionTimer.tooltip=苦力怕因燃烧而爆炸前的刻数
+config.effect.enableGhostlyShape=启用幽灵形态
+config.effect.enableGhostlyShape.tooltip=当玩家死亡重生时，给予玩家幽灵形态效果
 config.other.enableSaturationHeal=饱食度治疗
 config.other.enableSaturationHeal.tooltip=启用饱食度治疗调整，在不满血时消耗饱食度快速回血
 config.other.enableDeathIncompleteMessage=死亡未完成消息
@@ -215,7 +217,7 @@ nei.bookmark.ae_retrieve_item=自AE取出物品
 nei.bookmark.ae_start_craft=向AE请求合成
 nei.bookmark.ae_no_craft=此物品无对应合成
 
-error.rc.cpu=§6这个CPU正在工作!
+error.rc.cpu=§6这个CPU正在工作！
 
 death.attack.damage.gtnl.crushing=%1$s 被绞碎了
 death.attack.damage.gtnl.infinity=%1$s 被抹杀了存在
@@ -256,6 +258,10 @@ Tooltip_ResearchStation_00=在GUI内标记物品来指定研究目标
 Tooltip_PurificationPlant_00=当连接绝对重子完美净化单元且不安装能源仓时将进入无线模式
 Tooltip_PurificationPlant_01=在无线模式下，所有连接此净水厂的净化单元最大并行提升为Long
 Tooltip_PurificationPlant_02=同时可以从总成获取物品和流体
+
+BeamlinePipeMirror=束流波导管
+Tooltip_BeamlinePipeMirror_00=粒子偏转管道
+Tooltip_BeamlinePipeMirror_01=§b允许拐弯
 
 EnergyTransferNode=万用通量传输节点
 Tooltip_EnergyTransferNode_00=§9有源变压器的好帮手！
@@ -375,6 +381,8 @@ Tooltip_AdvancedSuperInputHatchME_00=ME自动拉取模式将会自动标记ME网
 Tooltip_AdvancedSuperInputHatchME_01=使用螺丝刀切换，或在GUI配置.
 Tooltip_AdvancedSuperInputHatchME_02=在GUI配置 "自动拉取" 的最小堆叠数与快速配方检查，调整流体槽位刷新时间并启用快速配方检查.
 Tooltip_AdvancedSuperInputHatchME_03=警告：快速配方检查可能会很卡. 请谨慎使用.
+Info_SuperInputHatchME_00=设置指定抽取数量
+Info_SuperInputHatchME_01=槽位：
 
 EnergyHatchMAX=MAX能源仓
 
@@ -580,9 +588,9 @@ WirelessEnergyHatchMAX1048576A=1048576安MAX无线能源仓
 WirelessEnergyHatchMAX4194304A=4194304安MAX无线能源仓
 WirelessEnergyHatchMAX16777216A=16777216安MAX无线能源仓
 
-LegendaryWirelessEnergyHatch=传奇无线能源仓
+HumongousWirelessEnergyHatch=鸿蒙无线能源仓
 
-LegendaryWirelessDynamoHatch=传奇无线动力仓
+HumongousWirelessDynamoHatch=鸿蒙无线动力仓
 Tooltip_WirelessMultiDynamoHatch_00=§7将能量存储于全局网络中，上限为2^(2^31)EU.
 Tooltip_WirelessMultiDynamoHatch_01=§7不连接导线，此方块可以为网络接收EU.
 Tooltip_WirelessMultiDynamoHatch_02=支持激光和线缆连接
@@ -671,6 +679,24 @@ Tooltip_TapDynamoHatch_01=点击推动动力仓发电
 
 BigSteamInputHatch=大型蒸汽仓
 AllSteamCapacity=总蒸汽数量：
+
+OutputBusMEProxy=输出总线镜像(ME)
+Tooltip_OutputBusMEProxy_00=从多方块机器输出物品
+Tooltip_OutputBusMEProxy_01=直接存储到ME系统
+Tooltip_OutputBusMEProxy_02=默认能够缓存1600个物品
+Tooltip_OutputBusMEProxy_03=插入存储元件以改变缓存大小
+Tooltip_OutputBusMEProxy_04=手持剪线钳右键以改变仓室与ME网络的连接模式
+Tooltip_OutputBusMEProxy_05=对插入的存储元件进行分区以对可接受的输出进行过滤
+Tooltip_OutputBusMEProxy_06=使用闪存链接到目标输出总线(ME)
+
+OutputHatchMEProxy=输出仓镜像(ME)
+Tooltip_OutputHatchMEProxy_00=从多方块机器输出流体
+Tooltip_OutputHatchMEProxy_01=直接存储到ME系统
+Tooltip_OutputHatchMEProxy_02=默认能够缓存128kL流体
+Tooltip_OutputHatchMEProxy_03=插入流体存储元件以改变缓存大小
+Tooltip_OutputHatchMEProxy_04=手持剪线钳右键以改变仓室与ME网络的连接模式
+Tooltip_OutputHatchMEProxy_05=对插入的存储元件进行分区以对可接受的输出进行过滤
+Tooltip_OutputHatchMEProxy_06=使用闪存链接到目标输出仓(ME)
 
 SuperCraftingInputHatchME=超级样板输入总成 (ME)
 SuperCraftingInputBusME=超级样板输入总线 (ME)
@@ -1272,6 +1298,9 @@ item.MetaItem.61.name=MAX并行控制核心
 Tooltip_MAXParallelControllerCore_00=§d速度：+26%
 Tooltip_MAXParallelControllerCore_01=§5EU消耗：-28%
 Tooltip_MAXParallelControllerCore_02=§b并行：16777216
+Tooltip_ParallelControllerCore_Deprecated_00=已弃用！请使用并行控制仓
+Tooltip_ParallelControllerCore_Deprecated_01=如果你遇到部分无法安装并行控制仓的机器，请提交issue
+
 item.MetaItem.62.name=§7传闻 - 娜迦之书
 item.MetaItem.63.name=§b都市之星 - 暮色之书
 item.MetaItem.64.name=§6都市怪谈 - 巫妖之书
@@ -1566,8 +1595,8 @@ InfinityCell.stone.name=石材
 Tooltip_InfinityCell_Contents=内含物品：
 
 item.milledNaquadahEnriched.name=研磨富集硅岩矿
-item.FrothNaquadahEnrichedflotation=富集硅岩浮选泡沫单元
-item.FrothNaquadahEnrichedflotation.name=富集硅岩浮选泡沫单元
+item.FrothNaquadahenrichedflotation=富集硅岩浮选泡沫单元
+item.FrothNaquadahenrichedflotation.name=富集硅岩浮选泡沫单元
 gtplusplus.fluid.naquadahenrichedfroth=富集硅岩泡沫
 fluid.froth.naquadahenrichedflotation=富集硅岩泡沫
 
@@ -1617,15 +1646,10 @@ ParallelTooltip=并行：
 HighPressureTooltipNotice=高压模式下处理速度和蒸汽消耗翻倍
 Info_SteamMachine_00=超频次数
 
-StructureTooComplex=结构太复杂了！ 
-BLUE_PRINT_INFO=请参考§9Structure§1Lib§7全息投影，构建主体结构
-textUseBlueprint=用§9蓝§b图§r预览
-
 Tooltip_GTMMultiMachine_00=比相同电压的机器快67%
 Tooltip_GTMMultiMachine_01=只需要使用配方要求功率的80%
 Tooltip_GTMMultiMachine_02=初始并行为8
 Tooltip_GTMMultiMachine_03=在控制器内放入并行控制核心来提升最大并行数和减少耗电！ 
-Tooltip_GTMMultiMachine_04=支持§9Tec§1Tech§r§7多安能源仓！ 
 
 Tooltip_WirelessEnergyMultiMachine_00=比相同电压的机器快400%
 Tooltip_WirelessEnergyMultiMachine_01=只需要使用配方要求功率的60%
@@ -1732,6 +1756,7 @@ Tooltip_QuantumComputer_12=§c量子计算机被破坏时会尝试获取上方AE
 Info_QuantumComputer_00=结构大小：%sx%sx%s
 Info_QuantumComputer_01=并行线程：%s / 已使用：%s (%s)
 Info_QuantumComputer_02=可存储：%s / 已使用：%s (%s)
+Info_QuantumComputer_03=设置量子计算机自定义名称
 
 NameAssemblerMatrix=装配矩阵
 AssemblerMatrixRecipeType=分子装配室
@@ -1743,6 +1768,9 @@ Tooltip_AssemblerMatrix_04=最多只能安装5个加速核心
 Tooltip_AssemblerMatrix_05=安装奇点合成核心且不安装能源仓时自动进入无线模式
 Tooltip_AssemblerMatrix_06=可放置终极合成样板来合成终极合成配方
 Info_AssemblerMatrix_00=§7当前样板数量：%s/%s
+Info_AssemblerMatrix_01=样板倍率控制面板
+Info_AssemblerMatrix_02=当前倍率
+Info_AssemblerMatrix_03=设置装配矩阵自定义名称
 AssemblerMatrix_Mode_0=输入模式
 AssemblerMatrix_Mode_1=输出模式
 AssemblerMatrix_Mode_2=运行模式
@@ -1893,7 +1921,7 @@ Tooltip_SingularityDataHub_00=§9§o由展开的维度编织而成的仓库
 Tooltip_SingularityDataHub_01=无限存储物品和流体！
 Tooltip_SingularityDataHub_02=不再兼容输出总线和输出仓，只允许输入
 Tooltip_SingularityDataHub_03=必须使用保险库多方块输入/输出总成
-Tooltip_SingularityDataHub_04=默认运行能耗1A MAX
+Tooltip_SingularityDataHub_04=默认运行能耗1A UHV
 Tooltip_SingularityDataHub_05=不安装能源仓将自动进入无线模式
 Tooltip_SingularityDataHub_06=可以通过三录仪获取存储物品的信息
 Tooltip_SingularityDataHub_07=使用螺丝刀右键控制器方块可开启过量销毁功能
@@ -1952,7 +1980,7 @@ SteamApiaryModuleRecipeType=气动蜂箱
 Tooltip_SteamApiaryModule_00=§a§l高压力让蜜蜂工作§0§m内卷§a§l更卖力.
 Tooltip_SteamApiaryModule_01=将蜂箱功能添加到蒸汽楼梯
 Tooltip_SteamApiaryModule_02=蜜蜂的理想(?)家园
-Tooltip_SteamApiaryModule_03=固定运行时间为15秒
+Tooltip_SteamApiaryModule_03=固定运行时间为30秒
 Tooltip_SteamApiaryModule_04=每次超频，可放入数翻倍，功率*4
 Tooltip_SteamApiaryModule_05=基础数量为8
 
@@ -2102,7 +2130,7 @@ NameLargeDistillery=大型分馏蒸馏厂
 LargeDistilleryRecipeType=蒸馏塔 / 蒸馏室
 LargeDistillery_Mode_0=蒸馏塔
 LargeDistillery_Mode_1=蒸馏室
-Tooltip_LargeDistillery_00=比相同电压的机器快300%
+Tooltip_LargeDistillery_00=比相同电压的机器快400%
 Tooltip_LargeDistillery_01=只需要使用配方要求功率的50%
 Tooltip_LargeDistillery_Casing=任意储罐拓展方块
 
@@ -2168,8 +2196,6 @@ NaquadahReactorMetadata.0=需要超能硅岩反应堆
 NaquadahReactorMetadata.1=需要进阶超能硅岩反应堆
 NaquadahReactorRecipeType=硅岩反应
 NEI.NaquadahReactorRecipes.specialValue=产能功率：
-NaquadahReactor.Generates.0=产能功率：
-NaquadahReactor.Generates.1=使用额外气体加速
 Tooltip_LargeNaquadahReactor_00=固定并行为%s
 Tooltip_LargeNaquadahReactor_01=可以在配方开始的时候输入氧气
 Tooltip_LargeNaquadahReactor_02=这会让时间减少%s倍，功率翻%s倍
@@ -2185,6 +2211,8 @@ Tooltip_AdvancedHyperNaquadahReactor_01=可以在配方开始的时候输入熔�
 Tooltip_AdvancedHyperNaquadahReactor_02=这会让时间减少%s倍，功率翻%s倍
 Tooltip_AdvancedHyperNaquadahReactor_03=代价是每秒会消耗%sL的熔融时空
 Tooltip_AdvancedHyperNaquadahReactor_Casing=任意硅岩合金聚合机械方块
+Info_NaquadahReactor_00=产能功率：
+Info_NaquadahReactor_01=使用额外气体加速
 
 NameGrandAssemblyLine=大型装配线
 GrandAssemblyLineRecipeType=无序装配线
@@ -2306,6 +2334,22 @@ LargeElectrolyzerRecipeType=电解机
 Tooltip_LargeElectrolyzer_00=比相同电压的机器快200%
 Tooltip_LargeElectrolyzer_01=只需要使用配方要求功率的80%
 Tooltip_LargeElectrolyzer_Casing=任意电解机机械方块
+
+NamePCBFactory=PCB工厂
+PCBFactoryRecipeType=PCB工厂
+Tooltip_PCBFactory_00=比相同电压的机器快200%
+Tooltip_PCBFactory_01=只需要使用配方要求功率的80%
+Tooltip_PCBFactory_02=无视生物仓升级要求
+Tooltip_PCBFactory_03=固定双倍产出
+Tooltip_PCBFactory_04=机器开机时固定消耗7500L蒸馏水/5s
+Tooltip_PCBFactory_05=每并行消耗对应配方等级的100L低级净化水/50L高级净化水
+Tooltip_PCBFactory_06=机器等级每高出配方等级一级，净化水消耗减半
+Tooltip_PCBFactory_07=机器等级每提高一级，速度+100%，要求功率-10%
+Tooltip_PCBFactory_08=当机器等级超过3时开启§c无损超频§7
+Tooltip_PCBFactory_09=需要使用纳米蜂群提高结构等级
+Tooltip_PCBFactory_Casing=任意镀铱机械方块
+Info_PCBFactory_00=机器等级：%s
+Info_PCBFactory_01=T4机器等级升级
 
 NameLargeElectromagnet=大型电磁工厂
 LargeElectromagnetRecipeType=电磁离析机 / 两级磁化机

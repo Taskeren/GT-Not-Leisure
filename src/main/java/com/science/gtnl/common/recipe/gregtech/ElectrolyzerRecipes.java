@@ -247,5 +247,16 @@ public class ElectrolyzerRecipes implements IRecipePool {
             .duration(100)
             .eut(TierEU.RECIPE_MV)
             .addTo(ENCR);
+
+        RecipeBuilder.builder()
+            .itemOutputs(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Aluminium, 2))
+            .fluidInputs(Materials.PolyAluminiumChloride.getFluid(1000))
+            .fluidOutputs(
+                Materials.Hydrogen.getGas(3000),
+                Materials.Oxygen.getGas(3000),
+                Materials.Chlorine.getGas(3000))
+            .duration(40)
+            .eut(TierEU.RECIPE_HV)
+            .addTo(ENCR);
     }
 }

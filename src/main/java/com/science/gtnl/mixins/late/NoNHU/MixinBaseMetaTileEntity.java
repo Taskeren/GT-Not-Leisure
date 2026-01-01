@@ -51,7 +51,7 @@ public abstract class MixinBaseMetaTileEntity extends CommonBaseMetaTileEntity i
             // for accelerating Adv Ass Line
             if (metaTileEntity instanceof MTEAdvAssLine advAssLine) {
                 if (advAssLine instanceof IAccelerationState accelerationState) {
-                    accelerationState.setAccelerationState(true);
+                    accelerationState.gtnl$setIsAccelerationState(true);
                     try {
 
                         // Referenced GTNH to control the performance in 1ms
@@ -59,7 +59,7 @@ public abstract class MixinBaseMetaTileEntity extends CommonBaseMetaTileEntity i
 
                         for (int i = 0; i < tickAcceleratedRate; i++) {
                             // skip if assLine stuck
-                            if (accelerationState.getMachineAccelerationState()) break;
+                            if (accelerationState.gtnl$getMachineAccelerationState()) break;
                             this.updateEntity();
                             if (System.nanoTime() > tMaxTime) {
                                 break;
@@ -74,7 +74,7 @@ public abstract class MixinBaseMetaTileEntity extends CommonBaseMetaTileEntity i
                             this.zCoord,
                             e.getMessage());
                     } finally {
-                        accelerationState.setAccelerationState(false);
+                        accelerationState.gtnl$setIsAccelerationState(false);
                     }
                 }
             }

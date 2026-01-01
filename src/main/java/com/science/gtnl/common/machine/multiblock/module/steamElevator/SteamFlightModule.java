@@ -55,9 +55,6 @@ public class SteamFlightModule extends SteamElevatorModule {
             .addInfo(StatCollector.translateToLocal("Tooltip_SteamFlightModule_02"))
             .addInfo(StatCollector.translateToLocal("Tooltip_SteamFlightModule_03"))
             .addInfo(StatCollector.translateToLocal("Tooltip_SteamFlightModule_04"))
-            .addSeparator()
-            .addInfo(StatCollector.translateToLocal("StructureTooComplex"))
-            .addInfo(StatCollector.translateToLocal("BLUE_PRINT_INFO"))
             .beginStructureBlock(1, 5, 2, false)
             .toolTipFinisher();
         return tt;

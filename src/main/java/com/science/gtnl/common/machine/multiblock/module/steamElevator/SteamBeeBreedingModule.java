@@ -52,9 +52,6 @@ public class SteamBeeBreedingModule extends SteamElevatorModule {
             .addInfo(StatCollector.translateToLocal("Tooltip_SteamBeeBreedingModule_03"))
             .addInfo(StatCollector.translateToLocal("Tooltip_SteamBeeBreedingModule_04"))
             .addInfo(StatCollector.translateToLocal("Tooltip_SteamBeeBreedingModule_05"))
-            .addSeparator()
-            .addInfo(StatCollector.translateToLocal("StructureTooComplex"))
-            .addInfo(StatCollector.translateToLocal("BLUE_PRINT_INFO"))
             .beginStructureBlock(1, 5, 2, false)
             .toolTipFinisher();
         return tt;

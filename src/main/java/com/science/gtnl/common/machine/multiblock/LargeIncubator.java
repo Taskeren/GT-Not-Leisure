@@ -106,7 +106,7 @@ public class LargeIncubator extends MultiMachineBase<LargeIncubator> implements 
             .addInfo(StatCollector.translateToLocal("Tooltip_LargeIncubator_03"))
             .addInfo(StatCollector.translateToLocal("Tooltip_LargeIncubator_04"))
             .addInfo(StatCollector.translateToLocal("Tooltip_PerfectOverclock"))
-            .addInfo(StatCollector.translateToLocal("Tooltip_Tectech_Hatch"))
+            .addTecTechHatchInfo()
             .beginStructureBlock(13, 9, 13, false)
             .addMaintenanceHatch(StatCollector.translateToLocal("Tooltip_LargeIncubator_Casing"), 1)
             .addOtherStructurePart(
@@ -149,7 +149,7 @@ public class LargeIncubator extends MultiMachineBase<LargeIncubator> implements 
                     onElementPass(e -> e.mCountCasing++, ofBlock(sBlockReinforced, 2))))
             .addElement(
                 'F',
-                ofBlock(
+                ofBlockAnyMeta(
                     EtFuturumRequiem.isModLoaded() ? GameRegistry.findBlock(EtFuturumRequiem.ID, "sponge")
                         : Blocks.sponge,
                     1))
@@ -189,7 +189,8 @@ public class LargeIncubator extends MultiMachineBase<LargeIncubator> implements 
             public CheckRecipeResult validateRecipe(@NotNull GTRecipe recipe) {
                 Sievert data = recipe.getMetadataOrDefault(GTRecipeConstants.SIEVERT, defaultSievertData);
                 int sievert = data.sievert;
-                if (!BWUtil.areStacksEqualOrNull((ItemStack) recipe.mSpecialItems, getControllerSlot()))
+                ItemStack culture = (ItemStack) recipe.mSpecialItems;
+                if (culture != null && !BWUtil.areStacksEqualOrNull(culture, getControllerSlot()))
                     return CheckRecipeResultRegistry.NO_RECIPE;
                 mNeededSievert = sievert;
 

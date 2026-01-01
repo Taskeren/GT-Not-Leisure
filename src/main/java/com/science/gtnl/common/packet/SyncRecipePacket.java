@@ -14,7 +14,7 @@ import cpw.mods.fml.common.network.simpleimpl.MessageContext;
 import gregtech.api.enums.Mods;
 import io.netty.buffer.ByteBuf;
 
-public class SyncRecipePacket implements IMessage {
+public class SyncRecipePacket implements IMessage, IMessageHandler<SyncRecipePacket, IMessage> {
 
     public SyncRecipePacket() {}
 
@@ -24,16 +24,13 @@ public class SyncRecipePacket implements IMessage {
     @Override
     public void toBytes(ByteBuf buf) {}
 
-    public static class Handler implements IMessageHandler<SyncRecipePacket, IMessage> {
-
-        @Override
-        public IMessage onMessage(SyncRecipePacket message, MessageContext ctx) {
-            RecipeLoader.loadRecipesServerStart();
-            if (Mods.NEICustomDiagrams.isModLoaded()) {
-                loadNEICustomDiagram();
-            }
-            return null;
+    @Override
+    public IMessage onMessage(SyncRecipePacket message, MessageContext ctx) {
+        RecipeLoader.loadServerStart();
+        if (Mods.NEICustomDiagrams.isModLoaded()) {
+            loadNEICustomDiagram();
         }
+        return null;
     }
 
     @Optional.Method(modid = "neicustomdiagram")

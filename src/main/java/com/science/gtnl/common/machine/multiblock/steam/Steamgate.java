@@ -105,9 +105,6 @@ public class Steamgate extends MTEEnhancedMultiBlockBase<Steamgate> implements I
             .addInfo(StatCollector.translateToLocal("Tooltip_Steamgate_01"))
             .addInfo(StatCollector.translateToLocal("Tooltip_Steamgate_02"))
             .addInfo(StatCollector.translateToLocal("Tooltip_Steamgate_03"))
-            .addSeparator()
-            .addInfo(StatCollector.translateToLocal("StructureTooComplex"))
-            .addInfo(StatCollector.translateToLocal("BLUE_PRINT_INFO"))
             .beginStructureBlock(9, 9, 1, true)
             .toolTipFinisher();
         return tt;

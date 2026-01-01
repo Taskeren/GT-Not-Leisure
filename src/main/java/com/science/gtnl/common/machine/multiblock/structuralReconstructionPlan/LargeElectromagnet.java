@@ -116,10 +116,7 @@ public class LargeElectromagnet extends GTMMultiMachineBase<LargeElectromagnet> 
             .addInfo(StatCollector.translateToLocal("Tooltip_GTMMultiMachine_01"))
             .addInfo(StatCollector.translateToLocal("Tooltip_GTMMultiMachine_02"))
             .addInfo(StatCollector.translateToLocal("Tooltip_GTMMultiMachine_03"))
-            .addInfo(StatCollector.translateToLocal("Tooltip_GTMMultiMachine_04"))
-            .addSeparator()
-            .addInfo(StatCollector.translateToLocal("StructureTooComplex"))
-            .addInfo(StatCollector.translateToLocal("BLUE_PRINT_INFO"))
+            .addMultiAmpHatchInfo()
             .beginStructureBlock(5, 3, 4, true)
             .addInputBus(StatCollector.translateToLocal("Tooltip_LargeElectromagnet_Casing"))
             .addOutputBus(StatCollector.translateToLocal("Tooltip_LargeElectromagnet_Casing"))
@@ -184,7 +181,7 @@ public class LargeElectromagnet extends GTMMultiMachineBase<LargeElectromagnet> 
     }
 
     @Override
-    public final void onScrewdriverRightClick(ForgeDirection side, EntityPlayer aPlayer, float aX, float aY, float aZ,
+    public void onModeChangeByScrewdriver(ForgeDirection side, EntityPlayer aPlayer, float aX, float aY, float aZ,
         ItemStack aTool) {
         this.machineMode = (this.machineMode + 1) % 2;
         GTUtility

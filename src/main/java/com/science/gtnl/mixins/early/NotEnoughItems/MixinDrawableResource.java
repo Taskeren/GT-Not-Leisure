@@ -21,7 +21,7 @@ public abstract class MixinDrawableResource extends Image
     implements IDrawableResourceAccessor, AccessorDrawableResource {
 
     @Unique
-    private final WrenchSpecialRender specialRender = new WrenchSpecialRender();
+    private WrenchSpecialRender gtnl$specialRender = new WrenchSpecialRender();
 
     @Final
     @Shadow
@@ -49,10 +49,10 @@ public abstract class MixinDrawableResource extends Image
         int paddingBottom, int paddingLeft, int paddingRight, int textureWidth, int textureHeight, CallbackInfo ci) {}
 
     @Unique
-    public void draw(int xOffset, int yOffset, int special) {
+    public void gtnl$draw(int xOffset, int yOffset, int special) {
         final int textureX = this.x;
         final int textureY = this.y;
-        specialRender.draw(
+        gtnl$specialRender.draw(
             xOffset,
             yOffset,
             special,

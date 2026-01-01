@@ -11,7 +11,7 @@ import cpw.mods.fml.common.network.simpleimpl.IMessageHandler;
 import cpw.mods.fml.common.network.simpleimpl.MessageContext;
 import io.netty.buffer.ByteBuf;
 
-public class NBTUpdatePacket implements IMessage {
+public class NBTUpdatePacket implements IMessage, IMessageHandler<NBTUpdatePacket, IMessage> {
 
     private int slot;
     private String itemId;
@@ -45,29 +45,26 @@ public class NBTUpdatePacket implements IMessage {
         ByteBufUtils.writeTag(buf, this.tag);
     }
 
-    public static class Handler implements IMessageHandler<NBTUpdatePacket, IMessage> {
+    @Override
+    public IMessage onMessage(NBTUpdatePacket message, MessageContext ctx) {
+        EntityPlayerMP player = ctx.getServerHandler().playerEntity;
+        if (message.slot < 0 || message.slot >= player.inventory.getSizeInventory()) return null;
 
-        @Override
-        public IMessage onMessage(NBTUpdatePacket message, MessageContext ctx) {
-            EntityPlayerMP player = ctx.getServerHandler().playerEntity;
-            if (message.slot < 0 || message.slot >= player.inventory.getSizeInventory()) return null;
+        ItemStack stack = player.inventory.getStackInSlot(message.slot);
+        if (stack == null) return null;
 
-            ItemStack stack = player.inventory.getStackInSlot(message.slot);
-            if (stack == null) return null;
+        String actualId = Item.itemRegistry.getNameForObject(stack.getItem());
+        int actualDamage = stack.getItemDamage();
 
-            String actualId = Item.itemRegistry.getNameForObject(stack.getItem());
-            int actualDamage = stack.getItemDamage();
-
-            if (!actualId.equals(message.itemId) || actualDamage != message.damage) {
-                return null;
-            }
-
-            if (message.tag != null) {
-                stack.setTagCompound(message.tag);
-            } else {
-                stack.setTagCompound(null);
-            }
+        if (!actualId.equals(message.itemId) || actualDamage != message.damage) {
             return null;
         }
+
+        if (message.tag != null) {
+            stack.setTagCompound(message.tag);
+        } else {
+            stack.setTagCompound(null);
+        }
+        return null;
     }
 }

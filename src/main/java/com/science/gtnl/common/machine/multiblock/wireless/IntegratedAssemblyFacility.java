@@ -82,8 +82,6 @@ public class IntegratedAssemblyFacility extends WirelessEnergyMultiMachineBase<I
     private static final int MACHINEMODE_ASSEM = 0;
     private static final int MACHINEMODE_COMPO = 1;
 
-    private static final int MANUAL_INSERTION_WINDOW_ID = 15;
-
     public static final ItemStack[] REQUIRED_ITEMS = new ItemStack[] { ItemRefer.Component_Assembly_Line.get(64),
         GTNLItemList.ComponentAssembler.get(64),
         GTOreDictUnificator.get(OrePrefixes.frameGt, MaterialsUEVplus.TranscendentMetal, 64),
@@ -139,10 +137,7 @@ public class IntegratedAssemblyFacility extends WirelessEnergyMultiMachineBase<I
             .addInfo(StatCollector.translateToLocal("Tooltip_WirelessEnergyMultiMachine_08"))
             .addInfo(StatCollector.translateToLocal("Tooltip_WirelessEnergyMultiMachine_09"))
             .addInfo(StatCollector.translateToLocal("Tooltip_WirelessEnergyMultiMachine_10"))
-            .addInfo(StatCollector.translateToLocal("Tooltip_Tectech_Hatch"))
-            .addSeparator()
-            .addInfo(StatCollector.translateToLocal("StructureTooComplex"))
-            .addInfo(StatCollector.translateToLocal("BLUE_PRINT_INFO"))
+            .addTecTechHatchInfo()
             .beginStructureBlock(47, 13, 19, true)
             .addInputBus(StatCollector.translateToLocal("Tooltip_IntegratedAssemblyFacility_Casing"), 1)
             .addOutputBus(StatCollector.translateToLocal("Tooltip_IntegratedAssemblyFacility_Casing"), 1)
@@ -346,7 +341,7 @@ public class IntegratedAssemblyFacility extends WirelessEnergyMultiMachineBase<I
     }
 
     @Override
-    public final void onScrewdriverRightClick(ForgeDirection side, EntityPlayer aPlayer, float aX, float aY, float aZ,
+    public void onModeChangeByScrewdriver(ForgeDirection side, EntityPlayer aPlayer, float aX, float aY, float aZ,
         ItemStack aTool) {
         this.machineMode = (this.machineMode + 1) % 2;
         GTUtility.sendChatToPlayer(
@@ -395,11 +390,6 @@ public class IntegratedAssemblyFacility extends WirelessEnergyMultiMachineBase<I
     @Override
     public ItemStack[] getUpgradeRequiredItems() {
         return REQUIRED_ITEMS;
-    }
-
-    @Override
-    public int getUpgradeWindowId() {
-        return MANUAL_INSERTION_WINDOW_ID;
     }
 
     @Override

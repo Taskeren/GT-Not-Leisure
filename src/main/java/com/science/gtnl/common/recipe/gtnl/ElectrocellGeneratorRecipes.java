@@ -67,13 +67,41 @@ public class ElectrocellGeneratorRecipes implements IRecipePool {
                 GTOreDictUnificator.get(OrePrefixes.stick, Materials.TungstenSteel, 1),
                 GTOreDictUnificator.get(OrePrefixes.dust, Materials.SodiumHydroxide, 7))
             .itemOutputs(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Thorium, 5))
-            .fluidInputs(GGMaterial.thoriumNitrate.getFluidOrGas(250))
-            .fluidOutputs(Materials.NitricAcid.getFluid(1000))
+            .fluidInputs(GGMaterial.thoriumNitrate.getFluidOrGas(150))
+            .fluidOutputs(Materials.NitricAcid.getFluid(600))
             .outputChances(8000)
             .eut(0)
             .specialValue(110)
             .metadata(GENERATOR_EUT, 20480L)
-            .duration(1500)
+            .duration(1400)
+            .addTo(EGR);
+
+        RecipeBuilder.builder()
+            .itemInputs(
+                GTOreDictUnificator.get(OrePrefixes.stick, Materials.TungstenSteel, 1),
+                GTOreDictUnificator.get(OrePrefixes.dust, Materials.MeteoricIron, 5))
+            .itemOutputs(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Sunnarium, 1))
+            .fluidInputs(MaterialPool.GlowThorium.getFluidOrGas(100))
+            .fluidOutputs(Materials.NitricAcid.getFluid(200))
+            .outputChances(10000)
+            .eut(0)
+            .specialValue(110)
+            .metadata(GENERATOR_EUT, 30720L)
+            .duration(1400)
+            .addTo(EGR);
+
+        RecipeBuilder.builder()
+            .itemInputs(
+                GTOreDictUnificator.get(OrePrefixes.stick, Materials.TungstenSteel, 1),
+                GTOreDictUnificator.get(OrePrefixes.dust, Materials.Molybdenum, 3))
+            .itemOutputs(GTOreDictUnificator.get(OrePrefixes.dustSmall, Materials.Uranium235, 1))
+            .fluidInputs(MaterialPool.UraniumFuel.getFluidOrGas(8))
+            .fluidOutputs(MaterialPool.UraniumWaste.getFluidOrGas(8))
+            .outputChances(8000)
+            .eut(0)
+            .specialValue(110)
+            .metadata(GENERATOR_EUT, 49152L)
+            .duration(900)
             .addTo(EGR);
     }
 }

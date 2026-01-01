@@ -156,7 +156,7 @@ public class TeleportationArrayToAlfheim extends MultiMachineBase<TeleportationA
     }
 
     @Override
-    public final void onScrewdriverRightClick(ForgeDirection side, EntityPlayer aPlayer, float aX, float aY, float aZ,
+    public void onModeChangeByScrewdriver(ForgeDirection side, EntityPlayer aPlayer, float aX, float aY, float aZ,
         ItemStack aTool) {
         this.machineMode = (this.machineMode + 1) % 4;
         GTUtility.sendChatToPlayer(
@@ -410,10 +410,7 @@ public class TeleportationArrayToAlfheim extends MultiMachineBase<TeleportationA
             .addInfo(StatCollector.translateToLocal("Tooltip_TeleportationArrayToAlfheim_02"))
             .addInfo(StatCollector.translateToLocal("Tooltip_TeleportationArrayToAlfheim_03"))
             .addInfo(StatCollector.translateToLocal("Tooltip_PerfectOverclock"))
-            .addInfo(StatCollector.translateToLocal("Tooltip_Tectech_Hatch"))
-            .addSeparator()
-            .addInfo(StatCollector.translateToLocal("StructureTooComplex"))
-            .addInfo(StatCollector.translateToLocal("BLUE_PRINT_INFO"))
+            .addTecTechHatchInfo()
             .beginStructureBlock(23, 18, 23, false)
             .addInputBus(StatCollector.translateToLocal("Tooltip_TeleportationArrayToAlfheim_Casing"), 1)
             .addOutputBus(StatCollector.translateToLocal("Tooltip_TeleportationArrayToAlfheim_Casing"), 1)

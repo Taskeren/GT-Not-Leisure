@@ -4,14 +4,17 @@ import static com.gtnewhorizon.structurelib.structure.StructureUtility.*;
 import static com.science.gtnl.ScienceNotLeisure.*;
 import static com.science.gtnl.utils.Utils.*;
 import static gregtech.api.enums.HatchElement.*;
+import static gregtech.api.gui.modularui.GTUITextures.*;
 import static gregtech.api.metatileentity.BaseTileEntity.*;
 import static gregtech.api.util.GTStructureUtility.*;
 import static gregtech.api.util.GTUtility.*;
+import static net.minecraft.util.StatCollector.*;
 
 import java.io.File;
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayDeque;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
@@ -50,27 +53,36 @@ import com.gtnewhorizon.structurelib.structure.ISurvivalBuildEnvironment;
 import com.gtnewhorizon.structurelib.structure.StructureDefinition;
 import com.gtnewhorizons.modularui.api.drawable.IDrawable;
 import com.gtnewhorizons.modularui.api.drawable.ItemDrawable;
+import com.gtnewhorizons.modularui.api.drawable.UITexture;
 import com.gtnewhorizons.modularui.api.math.Alignment;
+import com.gtnewhorizons.modularui.api.math.Color;
+import com.gtnewhorizons.modularui.api.math.MainAxisAlignment;
+import com.gtnewhorizons.modularui.api.math.Pos2d;
+import com.gtnewhorizons.modularui.api.math.Size;
 import com.gtnewhorizons.modularui.api.screen.ModularWindow;
 import com.gtnewhorizons.modularui.api.screen.UIBuildContext;
 import com.gtnewhorizons.modularui.api.widget.IWidgetBuilder;
 import com.gtnewhorizons.modularui.api.widget.Widget;
 import com.gtnewhorizons.modularui.common.widget.ButtonWidget;
 import com.gtnewhorizons.modularui.common.widget.ChangeableWidget;
+import com.gtnewhorizons.modularui.common.widget.Column;
 import com.gtnewhorizons.modularui.common.widget.DrawableWidget;
 import com.gtnewhorizons.modularui.common.widget.DynamicPositionedColumn;
 import com.gtnewhorizons.modularui.common.widget.FakeSyncWidget;
 import com.gtnewhorizons.modularui.common.widget.MultiChildWidget;
+import com.gtnewhorizons.modularui.common.widget.Scrollable;
 import com.gtnewhorizons.modularui.common.widget.SlotWidget;
 import com.gtnewhorizons.modularui.common.widget.TextWidget;
+import com.gtnewhorizons.modularui.common.widget.textfield.NumericWidget;
+import com.gtnewhorizons.modularui.common.widget.textfield.TextFieldWidget;
 import com.science.gtnl.common.machine.multiMachineBase.MultiMachineBase;
+import com.science.gtnl.config.MainConfig;
 import com.science.gtnl.loader.BlockLoader;
 import com.science.gtnl.utils.DireCraftingPatternDetails;
 import com.science.gtnl.utils.LargeInventoryCrafting;
 import com.science.gtnl.utils.StructureUtils;
 import com.science.gtnl.utils.Utils;
 import com.science.gtnl.utils.enums.GTNLItemList;
-import com.science.gtnl.utils.enums.ModList;
 import com.science.gtnl.utils.item.ItemUtils;
 
 import appeng.api.config.Actionable;
@@ -95,6 +107,7 @@ import appeng.api.util.DimensionalCoord;
 import appeng.api.util.IConfigManager;
 import appeng.core.localization.WailaText;
 import appeng.helpers.DualityInterface;
+import appeng.helpers.ICustomNameObject;
 import appeng.helpers.IInterfaceHost;
 import appeng.me.GridAccessException;
 import appeng.me.helpers.AENetworkProxy;
@@ -132,7 +145,7 @@ import mcp.mobius.waila.api.IWailaConfigHandler;
 import mcp.mobius.waila.api.IWailaDataAccessor;
 
 public class AssemblerMatrix extends MultiMachineBase<AssemblerMatrix>
-    implements IInterfaceHost, IGridProxyable, IAEAppEngInventory, IMEConnectable {
+    implements IInterfaceHost, IGridProxyable, IAEAppEngInventory, IMEConnectable, ICustomNameObject {
 
     public static int eachPatternCasingCapacity = 72;
     public static int eachCraftingCasingParallel = 2048;
@@ -154,14 +167,16 @@ public class AssemblerMatrix extends MultiMachineBase<AssemblerMatrix>
     public boolean showPattern = true;
     public String costingEUText = ZERO_STRING;
 
+    private String customName = "";
     private AENetworkProxy gridProxy;
     private DualityInterface di;
     private final MachineSource source = new MachineSource(this);
-    private final Map<ItemStack, ICraftingPatternDetails> patterns = new Reference2ObjectOpenHashMap<>();
+    private final Map<ItemStack, DireCraftingPatternDetails> patterns = new Reference2ObjectOpenHashMap<>();
     @Getter
     private final Set<IAEItemStack> possibleOutputs = new ObjectOpenHashSet<>();
     @Getter
     private final CombinationPatternsIInventory inventory = new CombinationPatternsIInventory();
+    private int patternMultiply = 1;
 
     private static final String STRUCTURE_PIECE_MAIN = "main";
     private static final String AM_STRUCTURE_FILE_PATH = RESOURCE_ROOT_ID + ":" + "multiblock/assembler_matrix";
@@ -176,6 +191,19 @@ public class AssemblerMatrix extends MultiMachineBase<AssemblerMatrix>
 
     public AssemblerMatrix(String aName) {
         super(aName);
+    }
+
+    public void setPatternMultiply(int patternMultiply) {
+        this.patternMultiply = Math.max(1, patternMultiply);
+        if (Platform.isServer()) {
+            for (DireCraftingPatternDetails pattern : patterns.values()) {
+                pattern.setMultiply(this.patternMultiply);
+            }
+        }
+    }
+
+    public void setPatternMultiply(double patternMultiply) {
+        setPatternMultiply((int) patternMultiply);
     }
 
     @Override
@@ -275,13 +303,17 @@ public class AssemblerMatrix extends MultiMachineBase<AssemblerMatrix>
         }
         if (newStack != null) {
             if (newStack.getItem() instanceof ICraftingPatternItem ic) {
-                var p = ic.getPatternForItem(
+                var pattern = ic.getPatternForItem(
                     newStack,
                     this.getBaseMetaTileEntity()
                         .getWorld());
-                if (p.isCraftable() || p instanceof DireCraftingPatternDetails) {
-                    patterns.put(newStack, p);
-                    possibleOutputs.add(p.getCondensedOutputs()[0]);
+                if (pattern.isCraftable()) {
+                    pattern = new DireCraftingPatternDetails(pattern);
+                }
+                if (pattern instanceof DireCraftingPatternDetails d) {
+                    d.setMultiply(patternMultiply);
+                    patterns.put(newStack, d);
+                    possibleOutputs.add(d.getCondensedOutputs()[0]);
                     work = true;
                 }
             }
@@ -309,6 +341,7 @@ public class AssemblerMatrix extends MultiMachineBase<AssemblerMatrix>
     public boolean pushPattern(ICraftingPatternDetails patternDetails, InventoryCrafting table) {
         final var out = patternDetails.getCondensedOutputs()[0];
         final var p = ((LargeInventoryCrafting) table).getAssemblerSize();
+        if (!(patternDetails instanceof DireCraftingPatternDetails d)) return false;
         for (int i = 0; i < table.getSizeInventory(); i++) {
             final var stack = table.getStackInSlot(i);
             if (stack != null) {
@@ -316,7 +349,7 @@ public class AssemblerMatrix extends MultiMachineBase<AssemblerMatrix>
                 if (c != null) {
                     inputs.add(
                         AEItemStack.create(c)
-                            .setStackSize(p));
+                            .setStackSize(p * d.getMultiply()));
                 }
                 stack.stackSize = 1;
             }
@@ -353,7 +386,44 @@ public class AssemblerMatrix extends MultiMachineBase<AssemblerMatrix>
 
     @Override
     public void addUIWidgets(ModularWindow.Builder builder, UIBuildContext buildContext) {
-        super.addUIWidgets(builder, buildContext);
+        builder.widget(
+            new DrawableWidget().setDrawable(GTUITextures.PICTURE_SCREEN_BLACK)
+                .setPos(4, 4)
+                .setSize(190, 85));
+
+        slotWidgets.clear();
+        createInventorySlots();
+
+        Column slotsColumn = new Column();
+        for (int i = slotWidgets.size() - 1; i >= 0; i--) {
+            slotsColumn.widget(slotWidgets.get(i));
+        }
+        builder.widget(
+            slotsColumn.setAlignment(MainAxisAlignment.END)
+                .setPos(173, 167 - 1));
+
+        final DynamicPositionedColumn screenElements = new DynamicPositionedColumn();
+        drawTexts(screenElements, !slotWidgets.isEmpty() ? slotWidgets.get(0) : null);
+        builder.widget(
+            new Scrollable().setVerticalScroll()
+                .widget(screenElements.setPos(10, 0))
+                .setPos(0, 7)
+                .setSize(190, 79));
+
+        if (supportsMachineModeSwitch() && machineModeIcons == null) {
+            machineModeIcons = new ArrayList<>(4);
+            setMachineModeIcons();
+        }
+        builder.widget(createPowerSwitchButton(builder))
+            .widget(createStructureUpdateButton(builder))
+            .widget(createModeSwitchButton(builder))
+            .widget(createMuffleButton(builder));
+
+        if (supportsPowerPanel()) {
+            builder.widget(createPowerPanelButton(builder));
+            buildContext.addSyncedWindow(POWER_PANEL_WINDOW_ID, this::createPowerPanel);
+        }
+
         builder.widget(
             new ButtonWidget().setOnClick((clickData, widget) -> showPattern = !showPattern)
                 .setPlayClickSoundResource(
@@ -373,14 +443,99 @@ public class AssemblerMatrix extends MultiMachineBase<AssemblerMatrix>
                         StatCollector.translateToLocal("Info_ShowPattern_" + (showPattern ? "Enabled" : "Disabled"))))
                 .setTooltipShowUpDelay(TOOLTIP_DELAY)
                 .setUpdateTooltipEveryTick(true)
-                .setPos(98, 91)
+                .setPos(26, 91)
                 .setSize(16, 16));
+
+        builder.widget(
+            new TextFieldWidget().setSetter((value) -> customName = value)
+                .setGetter(() -> hasCustomName() ? customName : getMachineCraftingIcon().getDisplayName())
+                .setTextAlignment(Alignment.Center)
+                .setScrollBar()
+                .setTextColor(Color.WHITE.normal)
+                .addTooltip(StatCollector.translateToLocal("Info_AssemblerMatrix_03"))
+                .setBackground(GTUITextures.BACKGROUND_TEXT_FIELD)
+                .setPos(43, 90)
+                .setSize(126, 18)
+                .attachSyncer(new FakeSyncWidget.StringSyncer(this::getCustomName, this::setCustomName), builder));
+    }
+
+    @Override
+    public ButtonWidget createPowerPanelButton(IWidgetBuilder<?> builder) {
+        Widget button = new ButtonWidget().setOnClick((clickData, widget) -> {
+            if (supportsPowerPanel()) {
+                if (!widget.isClient()) widget.getContext()
+                    .openSyncedWindow(POWER_PANEL_WINDOW_ID);
+            }
+        })
+            .setPlayClickSound(true)
+            .setBackground(() -> {
+                List<UITexture> ret = new ArrayList<>();
+                ret.add(GTUITextures.BUTTON_STANDARD);
+                ret.add(OVERLAY_BUTTON_POWER_PANEL);
+                return ret.toArray(new IDrawable[0]);
+            })
+            .addTooltip(StatCollector.translateToLocal("Info_AssemblerMatrix_01"))
+            .setTooltipShowUpDelay(TOOLTIP_DELAY)
+            .setPos(getPowerPanelButtonPos())
+            .setSize(16, 16);
+        return (ButtonWidget) button;
+    }
+
+    @Override
+    public ModularWindow createPowerPanel(EntityPlayer player) {
+        final int w = 100;
+        final int h = 80;
+        final int parentW = getGUIWidth();
+        final int parentH = getGUIHeight();
+
+        ModularWindow.Builder builder = ModularWindow.builder(w, h);
+
+        builder.setBackground(GTUITextures.BACKGROUND_SINGLEBLOCK_DEFAULT);
+        builder.setGuiTint(getGUIColorization());
+        builder.setDraggable(true);
+        builder.setPos(
+            (size, window) -> Alignment.Center.getAlignedPos(size, new Size(parentW, parentH))
+                .add(
+                    Alignment.TopRight.getAlignedPos(new Size(parentW, parentH), new Size(w, h))
+                        .add(w - 3, 0)));
+
+        builder.widget(
+            new TextWidget(EnumChatFormatting.UNDERLINE + translateToLocal("Info_AssemblerMatrix_01")).setPos(0, 2)
+                .setSize(100, 18));
+
+        builder.widget(new FakeSyncWidget.IntegerSyncer(() -> patternMultiply, this::setPatternMultiply));
+
+        builder.widget(
+            TextWidget.localised("Info_AssemblerMatrix_02")
+                .setPos(0, 24)
+                .setSize(100, 18));
+
+        builder.widget(
+            new NumericWidget().setSetter(this::setPatternMultiply)
+                .setGetter(() -> patternMultiply)
+                .setDefaultValue(powerPanelMaxParallel)
+                .setMinValue(1)
+                .setMaxValue(Integer.MAX_VALUE)
+                .setScrollValues(1, 4, 64)
+                .setTextAlignment(Alignment.Center)
+                .setTextColor(Color.WHITE.normal)
+                .addTooltip(StatCollector.translateToLocalFormatted("GT5U.gui.text.rangedvalue", 1, Integer.MAX_VALUE))
+                .setTooltipShowUpDelay(TOOLTIP_DELAY)
+                .setSize(70, 18)
+                .setPos(15, 40)
+                .setBackground(GTUITextures.BACKGROUND_TEXT_FIELD));
+
+        return builder.build();
     }
 
     @Override
     public void addGregTechLogo(ModularWindow.Builder builder) {
         builder.widget(
             new DrawableWidget().setDrawable(ItemUtils.PICTURE_CIRCULATION)
+                .setSize(18, 18)
+                .setPos(172, 49));
+        builder.widget(
+            new DrawableWidget().setDrawable(ItemUtils.PICTURE_GTNL_LOGO)
                 .setSize(18, 18)
                 .setPos(172, 67));
     }
@@ -502,7 +657,7 @@ public class AssemblerMatrix extends MultiMachineBase<AssemblerMatrix>
     }
 
     @Override
-    public void onScrewdriverRightClick(ForgeDirection side, EntityPlayer aPlayer, float aX, float aY, float aZ,
+    public void onModeChangeByScrewdriver(ForgeDirection side, EntityPlayer aPlayer, float aX, float aY, float aZ,
         ItemStack aTool) {
         super.onScrewdriverRightClick(side, aPlayer, aX, aY, aZ, aTool);
         if (this.mMaxProgresstime > 0) {
@@ -542,6 +697,11 @@ public class AssemblerMatrix extends MultiMachineBase<AssemblerMatrix>
             builder,
             (widget, val) -> widget.notifyTooltipChange());
         return (ButtonWidget) button;
+    }
+
+    @Override
+    public Pos2d getMachineModeSwitchButtonPos() {
+        return new Pos2d(8, 91);
     }
 
     @Override
@@ -612,9 +772,11 @@ public class AssemblerMatrix extends MultiMachineBase<AssemblerMatrix>
         aNBT.setInteger("mCountSingularityCrafterCasing", mCountSingularityCrafterCasing);
         aNBT.setInteger("mCountPatternCasing", mCountPatternCasing);
         aNBT.setInteger("mCountSpeedCasing", mCountSpeedCasing);
+        aNBT.setInteger("patternMultiply", patternMultiply);
         aNBT.setLong("mMaxParallelLong", mMaxParallelLong);
         aNBT.setBoolean("wirelessMode", wirelessMode);
         aNBT.setBoolean("showPattern", showPattern);
+        if (customName != null) aNBT.setString("customName", customName);
         getProxy().writeToNBT(aNBT);
         saveInvData(aNBT, false);
     }
@@ -693,10 +855,12 @@ public class AssemblerMatrix extends MultiMachineBase<AssemblerMatrix>
         mCountSingularityCrafterCasing = aNBT.getInteger("mCountSingularityCrafterCasing");
         mCountCrafterCasing = aNBT.getInteger("mCountCrafterCasing");
         mCountPatternCasing = aNBT.getInteger("mCountPatternCasing");
+        patternMultiply = Math.max(1, aNBT.getInteger("patternMultiply"));
         usedParallel = aNBT.getLong("usedParallel");
         mMaxParallelLong = aNBT.getLong("mMaxParallelLong");
         wirelessMode = aNBT.getBoolean("wirelessMode");
         showPattern = aNBT.getBoolean("showPattern");
+        if (aNBT.hasKey("customName")) customName = aNBT.getString("customName");
 
         NBTTagCompound storeRoot = null;
 
@@ -772,10 +936,7 @@ public class AssemblerMatrix extends MultiMachineBase<AssemblerMatrix>
             .addInfo(StatCollector.translateToLocal("Tooltip_AssemblerMatrix_04"))
             .addInfo(StatCollector.translateToLocal("Tooltip_AssemblerMatrix_05"))
             .addInfo(StatCollector.translateToLocal("Tooltip_AssemblerMatrix_06"))
-            .addInfo(StatCollector.translateToLocal("Tooltip_Tectech_Hatch"))
-            .addSeparator()
-            .addInfo(StatCollector.translateToLocal("StructureTooComplex"))
-            .addInfo(StatCollector.translateToLocal("BLUE_PRINT_INFO"))
+            .addTecTechHatchInfo()
             .beginStructureBlock(9, 9, 9, false)
             .toolTipFinisher();
         return tt;
@@ -798,15 +959,19 @@ public class AssemblerMatrix extends MultiMachineBase<AssemblerMatrix>
         patterns.clear();
         possibleOutputs.clear();
 
-        for (var newStack : this.inventory.getAllItemsCopy()) {
+        for (var newStack : this.inventory) {
             if (newStack.getItem() instanceof ICraftingPatternItem ic) {
-                var p = ic.getPatternForItem(
+                var pattern = ic.getPatternForItem(
                     newStack,
-                    AssemblerMatrix.this.getBaseMetaTileEntity()
+                    this.getBaseMetaTileEntity()
                         .getWorld());
-                if (p.isCraftable() || p instanceof DireCraftingPatternDetails) {
-                    patterns.put(newStack, p);
-                    possibleOutputs.add(p.getCondensedOutputs()[0]);
+                if (pattern.isCraftable()) {
+                    pattern = new DireCraftingPatternDetails(pattern);
+                }
+                if (pattern instanceof DireCraftingPatternDetails d) {
+                    d.setMultiply(patternMultiply);
+                    patterns.put(newStack, d);
+                    possibleOutputs.add(d.getCondensedOutputs()[0]);
                 }
             }
         }
@@ -815,8 +980,8 @@ public class AssemblerMatrix extends MultiMachineBase<AssemblerMatrix>
                 .getGrid()
                 .postEvent(
                     new MENetworkCraftingPatternChange(
-                        AssemblerMatrix.this,
-                        AssemblerMatrix.this.getProxy()
+                        this,
+                        this.getProxy()
                             .getNode()));
         } catch (GridAccessException ignored) {
 
@@ -898,10 +1063,9 @@ public class AssemblerMatrix extends MultiMachineBase<AssemblerMatrix>
             .addShape(STRUCTURE_PIECE_MAIN, transpose(shape))
             .addElement(
                 'A',
-                buildHatchAdder(AssemblerMatrix.class).atLeast(Maintenance, InputBus, OutputBus)
-                    .adder(AssemblerMatrix::addToMachineList)
+                buildHatchAdder(AssemblerMatrix.class).casingIndex(getCasingTextureID())
                     .dot(1)
-                    .casingIndex(getCasingTextureID())
+                    .atLeast(Maintenance, InputBus, OutputBus, Energy.or(ExoticEnergy))
                     .buildAndChain(BlockLoader.metaCasing02, 4))
             .addElement('B', ofChain(chainAllGlasses(), ofBlock(BlockLoader.metaCasing02, 5)))
             .addElement(
@@ -944,28 +1108,28 @@ public class AssemblerMatrix extends MultiMachineBase<AssemblerMatrix>
 
                 for (ItemStack input : inputs) {
                     if (!(input.getItem() instanceof ICraftingPatternItem i)) continue;
-                    ICraftingPatternDetails patternDetails = i.getPatternForItem(
+                    int slot = inventory.getFirstEmptySlot();
+                    if (slot == -1) continue;
+                    var p = i.getPatternForItem(
                         input,
                         this.getBaseMetaTileEntity()
                             .getWorld());
-                    if (isBlockedAe2ThingsInfusionPattern(input)) continue;
-                    int slot = inventory.getFirstEmptySlot();
-                    if (slot == -1) continue;
+
+                    if (p.isCraftable()) {
+                        p = new DireCraftingPatternDetails(p);
+                    }
+                    if (!(p instanceof DireCraftingPatternDetails d)) continue;
                     ItemStack pattern = input.copy();
                     pattern.stackSize = 1;
                     inventory.setInventorySlotContents(slot, pattern);
-                    if (patternDetails != null
-                        && (patternDetails.isCraftable() || patternDetails instanceof DireCraftingPatternDetails)) {
-                        patterns.put(pattern, patternDetails);
-                        possibleOutputs.add(patternDetails.getCondensedOutputs()[0]);
-                    }
-
+                    d.setMultiply(patternMultiply);
+                    patterns.put(pattern, d);
+                    possibleOutputs.add(d.getCondensedOutputs()[0]);
                     input.stackSize--;
                     updated = true;
                     if (inventory.size() >= mMaxSlots) break;
                 }
                 if (updated) {
-                    updateSlots();
                     try {
                         this.getProxy()
                             .getGrid()
@@ -1061,14 +1225,6 @@ public class AssemblerMatrix extends MultiMachineBase<AssemblerMatrix>
         }
 
         return CheckRecipeResultRegistry.NO_RECIPE;
-    }
-
-    private static boolean isBlockedAe2ThingsInfusionPattern(ItemStack stack) {
-        if (stack == null || stack.getItem() == null) return false;
-        if (!ModList.AE2Thing.isModLoaded()) return false;
-        if (stack.stackTagCompound == null) return false;
-        // AE2Things infusion pattern terminal encodes to standard AE2 pattern item with tc_crafting flag.
-        return stack.stackTagCompound.hasKey("tc_crafting");
     }
 
     @Override
@@ -1348,8 +1504,45 @@ public class AssemblerMatrix extends MultiMachineBase<AssemblerMatrix>
     }
 
     @Override
+    public String getCustomName() {
+        return customName != null ? customName : getMachineCraftingIcon().getDisplayName();
+    }
+
+    @Override
+    public boolean hasCustomName() {
+        return customName != null && !this.customName.isEmpty();
+    }
+
+    @Override
+    public void setCustomName(String name) {
+        customName = name;
+    }
+
+    @Override
     public String getName() {
-        return getCrafterIcon().getDisplayName();
+        if (hasCustomName()) {
+            return customName;
+        }
+
+        StringBuilder name = new StringBuilder();
+        if (MainConfig.enableHatchInterfaceTerminalEnhance) {
+
+            if (getCrafterIcon() != null) {
+                name.append(getCrafterIcon().getUnlocalizedName());
+            } else {
+                name.append("gt.blockmachines.")
+                    .append(mName)
+                    .append(".name");
+            }
+        } else {
+            if (getCrafterIcon() != null) {
+                name.append(getCrafterIcon().getDisplayName());
+            } else {
+                name.append(getLocalName());
+            }
+        }
+
+        return name.toString();
     }
 
     @Override

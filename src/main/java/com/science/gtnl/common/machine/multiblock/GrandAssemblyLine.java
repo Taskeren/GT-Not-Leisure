@@ -25,6 +25,7 @@ import static net.minecraft.util.StatCollector.translateToLocal;
 import static tectech.thing.casing.TTCasingsContainer.sBlockCasingsTT;
 
 import java.math.BigInteger;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
@@ -103,6 +104,7 @@ import gregtech.api.util.GTRecipeBuilder;
 import gregtech.api.util.GTUtility;
 import gregtech.api.util.IGTHatchAdder;
 import gregtech.api.util.MultiblockTooltipBuilder;
+import gregtech.api.util.ParallelHelper;
 import gregtech.common.tileentities.machines.IDualInputHatch;
 import gregtech.common.tileentities.machines.IDualInputInventory;
 import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
@@ -172,7 +174,7 @@ public class GrandAssemblyLine extends GTMMultiMachineBase<GrandAssemblyLine> im
             .addInfo(StatCollector.translateToLocal("Tooltip_GrandAssemblyLine_12"))
             .addInfo(StatCollector.translateToLocal("Tooltip_GTMMultiMachine_02"))
             .addInfo(StatCollector.translateToLocal("Tooltip_GTMMultiMachine_03"))
-            .addInfo(StatCollector.translateToLocal("Tooltip_Tectech_Hatch"))
+            .addTecTechHatchInfo()
             .beginStructureBlock(48, 5, 5, true)
             .addEnergyHatch(StatCollector.translateToLocal("Tooltip_GrandAssemblyLine_Casing"), 1)
             .addMaintenanceHatch(StatCollector.translateToLocal("Tooltip_GrandAssemblyLine_Casing"), 1)
@@ -239,7 +241,7 @@ public class GrandAssemblyLine extends GTMMultiMachineBase<GrandAssemblyLine> im
         } else {
             // 非 DualInputHatch 模式，将常规输入仓/总线包装成 IDualInputInventory
             IDualInputInventory wrappedInventory = new WrappedInventory(getAllStoredInputs(), getStoredFluids());
-            inputInventories.add(wrappedInventory);
+            if (!wrappedInventory.isEmpty()) inputInventories.add(wrappedInventory);
         }
 
         // 执行配方处理逻辑
@@ -247,6 +249,218 @@ public class GrandAssemblyLine extends GTMMultiMachineBase<GrandAssemblyLine> im
     }
 
     public CheckRecipeResult processRecipeLogic(List<IDualInputInventory> inputInventories, long energyEU,
+        int maxParallel, int minDuration) {
+        // 1. 获取并筛选配方 (完全保留你的逻辑)
+        List<GTRecipe.RecipeAssemblyLine> validRecipes = new ObjectArrayList<>();
+        findRecipe(validRecipes, energyEU);
+
+        if (validRecipes.isEmpty()) return CheckRecipeResultRegistry.NO_RECIPE;
+
+        validRecipes.removeIf(
+            recipe -> recipe.mInputs == null || Arrays.stream(recipe.mInputs)
+                .anyMatch(Objects::isNull)
+                || recipe.mFluidInputs == null
+                || Arrays.stream(recipe.mFluidInputs)
+                    .anyMatch(Objects::isNull)
+                || recipe.mOutput == null);
+
+        // 按耗电量排序，优先匹配低耗电配方
+        validRecipes.sort(Comparator.comparingInt(recipe -> recipe.mEUt));
+
+        // 2. 初始化全局统计变量
+        ArrayList<ItemStack> totalOutputs = new ArrayList<>();
+        BigInteger totalCostingEU = BigInteger.ZERO;
+        long totalWiredEU = 0;
+        int maxDurationFound = 0;
+        int totalExecutedParallel = 0;
+        int remainingGlobalParallel = maxParallel;
+
+        // 获取电路板配置
+        int circuitOC = -1;
+        for (ItemStack item : getAllStoredInputs()) {
+            if (item.getItem() == ItemList.Circuit_Integrated.getItem()) {
+                circuitOC = item.getItemDamage();
+                break;
+            }
+        }
+        int perfectOCTime = (mParallelTier >= 11) ? 4 : 2;
+
+        // 3. 外层循环：遍历每一个输入仓
+        for (IDualInputInventory inventory : inputInventories) {
+            if (remainingGlobalParallel <= 0) break;
+
+            ItemStack[] invItems = inventory.getItemInputs();
+            FluidStack[] invFluids = inventory.getFluidInputs();
+            if (invItems == null) continue;
+
+            // 4. 内层循环：遍历配方列表
+            for (GTRecipe.RecipeAssemblyLine recipe : validRecipes) {
+                if (!canOutputAll(new ItemStack[] { recipe.mOutput })) continue;
+
+                // 4.1 检查输入匹配情况并计算并行
+                int localMaxParallel = remainingGlobalParallel;
+
+                if (recipe.mInputs != null) {
+                    for (ItemStack req : recipe.mInputs) {
+                        long available = getAvailableItemCount(req, invItems);
+                        if (available < req.stackSize) {
+                            localMaxParallel = 0;
+                            break;
+                        }
+                        localMaxParallel = Math.min(localMaxParallel, (int) (available / req.stackSize));
+                    }
+                }
+                if (localMaxParallel == 0) continue;
+
+                if (recipe.mFluidInputs != null) {
+                    if (invFluids == null) continue;
+                    for (FluidStack req : recipe.mFluidInputs) {
+                        long available = getAvailableFluidCount(req, invFluids);
+                        if (available < req.amount) {
+                            localMaxParallel = 0;
+                            break;
+                        }
+                        localMaxParallel = Math.min(localMaxParallel, (int) (available / req.amount));
+                    }
+                }
+                if (localMaxParallel == 0) continue;
+
+                // --- 4.2 配方匹配成功，开始进行超频计算 (集成 minDuration) ---
+
+                int adjustedTime = recipe.mDuration;
+                int adjustedPower = recipe.mEUt;
+
+                if (wirelessMode) {
+                    val IntMax = BigInteger.valueOf(Integer.MAX_VALUE);
+                    val big4 = BigInteger.valueOf(4);
+                    // 无线模式下，时间直接设为传入的 minDuration (这里通常对应你之前用的 minRecipeTime)
+                    adjustedTime = minDuration;
+                    BigInteger adjustedPowerBigInt = BigInteger
+                        .valueOf((long) recipe.mEUt * recipe.mDuration / adjustedTime);
+                    while (adjustedPowerBigInt.compareTo(IntMax) > 0) {
+                        adjustedPowerBigInt = adjustedPowerBigInt.divide(big4);
+                        adjustedTime *= 4;
+                    }
+                    adjustedPower = adjustedPowerBigInt.min(IntMax)
+                        .intValue();
+                } else {
+                    int overclockCount = 0;
+                    long energyRatio = energyEU / Math.max(1, recipe.mEUt);
+                    long threshold = 1;
+
+                    while (energyRatio >= threshold * 4) {
+                        overclockCount++;
+                        threshold *= 4;
+                    }
+                    if (circuitOC >= 0) {
+                        overclockCount = Math.min(overclockCount, circuitOC);
+                    }
+
+                    // 在超频计算时，增加对 minDuration 的检查
+                    // 只有当超频后的时间仍然 >= minDuration 时，才允许继续增加功率缩短时间
+                    while (overclockCount > 0 && adjustedPower * 4L <= Integer.MAX_VALUE
+                        && adjustedTime / perfectOCTime >= minDuration) { // 限制在此
+                        overclockCount--;
+                        adjustedPower *= 4;
+                        adjustedTime /= perfectOCTime;
+                    }
+                }
+
+                // 确保不低于硬性下限
+                adjustedTime = Math.max(minDuration, adjustedTime);
+                adjustedPower = Math.max(1, adjustedPower);
+
+                // 批处理模式 (Batch Mode)
+                if (adjustedTime < 128 && batchMode) {
+                    double timeFactor = 128.0 / adjustedTime;
+                    double energyFactor = (double) energyEU / adjustedPower;
+                    double newPower = adjustedPower * timeFactor;
+
+                    if (newPower > energyEU) {
+                        adjustedPower = (int) Math.min(Integer.MAX_VALUE, adjustedPower * energyFactor);
+                        adjustedTime = (int) Math.max(minDuration, adjustedTime * energyFactor);
+                    } else {
+                        adjustedPower = (int) Math.min(Integer.MAX_VALUE, newPower);
+                        adjustedTime = 128;
+                    }
+                }
+
+                // --- 4.3 能量上限检查 (有线模式) ---
+                if (!wirelessMode) {
+                    long currentInvLoad = (long) adjustedPower * localMaxParallel;
+                    if (totalWiredEU + currentInvLoad > energyEU) {
+                        long availablePower = energyEU - totalWiredEU;
+                        localMaxParallel = (int) (availablePower / adjustedPower);
+                    }
+                }
+
+                if (localMaxParallel <= 0) continue;
+
+                // --- 4.4 执行消耗 ---
+                if (recipe.mInputs != null) {
+                    for (ItemStack req : recipe.mInputs) {
+                        depleteInputLong(req, (long) req.stackSize * localMaxParallel, invItems, false);
+                    }
+                }
+                if (recipe.mFluidInputs != null) {
+                    for (FluidStack req : recipe.mFluidInputs) {
+                        depleteInputLong(req, (long) req.amount * localMaxParallel, invFluids, false);
+                    }
+                }
+
+                // --- 4.5 记录结果 ---
+                if (recipe.mOutput != null) {
+                    ItemStack out = recipe.mOutput.copy();
+                    ParallelHelper.addItemsLong(totalOutputs, out, (long) out.stackSize * localMaxParallel);
+                }
+
+                if (wirelessMode) {
+                    BigInteger cost = BigInteger.valueOf(adjustedPower)
+                        .multiply(BigInteger.valueOf(adjustedTime))
+                        .multiply(BigInteger.valueOf(localMaxParallel));
+                    totalCostingEU = totalCostingEU.add(cost);
+                } else {
+                    totalWiredEU += (long) adjustedPower * localMaxParallel;
+                }
+
+                maxDurationFound = Math.max(maxDurationFound, adjustedTime);
+                totalExecutedParallel += localMaxParallel;
+                remainingGlobalParallel -= localMaxParallel;
+
+                break;
+            }
+        }
+
+        // 5. 最终结算
+        if (totalExecutedParallel == 0) return CheckRecipeResultRegistry.NO_RECIPE;
+
+        if (!canOutputAll(totalOutputs.toArray(new ItemStack[0]))) {
+            return CheckRecipeResultRegistry.ITEM_OUTPUT_FULL;
+        }
+
+        mOutputItems = totalOutputs.toArray(new ItemStack[0]);
+        updateSlots();
+
+        if (wirelessMode) {
+            if (!addEUToGlobalEnergyMap(ownerUUID, totalCostingEU.multiply(NEGATIVE_ONE))) {
+                return CheckRecipeResultRegistry.insufficientPower(totalCostingEU.longValue());
+            }
+            costingEUText = GTUtility.formatNumbers(totalCostingEU);
+            this.lEUt = 0;
+            this.mMaxProgresstime = maxDurationFound;
+        } else {
+            this.lEUt = -totalWiredEU;
+            this.mMaxProgresstime = maxDurationFound;
+        }
+
+        this.mEfficiency = 10000;
+        this.mEfficiencyIncrease = 10000;
+
+        return CheckRecipeResultRegistry.SUCCESSFUL;
+    }
+
+    @Deprecated
+    public CheckRecipeResult processRecipeLogicOld(List<IDualInputInventory> inputInventories, long energyEU,
         int maxParallel, int limit) {
         long totalNeedEUt = 0; // 累加的总功率
         int totalMaxProgressTime = 0; // 累加的最大时间
@@ -273,7 +487,9 @@ public class GrandAssemblyLine extends GTMMultiMachineBase<GrandAssemblyLine> im
         }
 
         List<GTRecipe.RecipeAssemblyLine> validRecipes = new ObjectArrayList<>();
+
         findRecipe(validRecipes, energyEU);
+
         if (validRecipes.isEmpty()) return CheckRecipeResultRegistry.NO_RECIPE;
         validRecipes.removeIf(
             recipe -> recipe.mInputs == null || Arrays.stream(recipe.mInputs)
@@ -845,6 +1061,16 @@ public class GrandAssemblyLine extends GTMMultiMachineBase<GrandAssemblyLine> im
         }
 
         return matchedCount;
+    }
+
+    public long getAvailableFluidCount(FluidStack target, FluidStack[] inputs) {
+        long count = 0;
+        for (FluidStack stored : inputs) {
+            if (GTUtility.areFluidsEqual(stored, target)) {
+                count += stored.amount;
+            }
+        }
+        return count;
     }
 
     public long depleteInputLong(FluidStack required, long amount, FluidStack[] allFluids, boolean simulate) {

@@ -91,6 +91,7 @@ public abstract class MixinCraftingCPUCluster {
         @Local(name = "medium") ICraftingMedium instance, @Local(name = "details") ICraftingPatternDetails details,
         @Share("snl$assembly") LocalBooleanRef assembly,
         @Share("snl$craftingFrequency") LocalLongRef craftingFrequencyR) {
+        assembly.set(false);
         if ((details instanceof ChiselPatternDetails && instance instanceof TileEntityAEChisel)
             || ((details.isCraftable() || details instanceof DireCraftingPatternDetails)
                 && instance instanceof AssemblerMatrix ef

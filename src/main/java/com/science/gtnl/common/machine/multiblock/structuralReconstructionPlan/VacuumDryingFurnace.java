@@ -120,10 +120,7 @@ public class VacuumDryingFurnace extends GTMMultiMachineBase<VacuumDryingFurnace
             .addInfo(StatCollector.translateToLocal("Tooltip_VacuumDryingFurnace_03"))
             .addInfo(StatCollector.translateToLocal("Tooltip_VacuumDryingFurnace_04"))
             .addInfo(StatCollector.translateToLocal("Tooltip_VacuumDryingFurnace_05"))
-            .addInfo(StatCollector.translateToLocal("Tooltip_GTMMultiMachine_04"))
-            .addSeparator()
-            .addInfo(StatCollector.translateToLocal("StructureTooComplex"))
-            .addInfo(StatCollector.translateToLocal("BLUE_PRINT_INFO"))
+            .addMultiAmpHatchInfo()
             .beginStructureBlock(3, 5, 3, true)
             .addInputHatch(StatCollector.translateToLocal("Tooltip_VacuumDryingFurnace_Casing"))
             .addInputBus(StatCollector.translateToLocal("Tooltip_VacuumDryingFurnace_Casing"))
@@ -179,7 +176,7 @@ public class VacuumDryingFurnace extends GTMMultiMachineBase<VacuumDryingFurnace
     }
 
     @Override
-    public final void onScrewdriverRightClick(ForgeDirection side, EntityPlayer aPlayer, float aX, float aY, float aZ,
+    public void onModeChangeByScrewdriver(ForgeDirection side, EntityPlayer aPlayer, float aX, float aY, float aZ,
         ItemStack aTool) {
         this.machineMode = (this.machineMode + 1) % 4;
         GTUtility

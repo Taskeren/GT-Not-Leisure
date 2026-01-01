@@ -1,105 +1,49 @@
 package com.science.gtnl.mixins.late.Gregtech;
 
-import java.util.List;
-
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Pseudo;
+import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
-import com.science.gtnl.api.IRecipeProcessingAwareDualHatch;
+import com.science.gtnl.api.mixinHelper.IMultiblockRecipeMap;
+import com.science.gtnl.config.MainConfig;
 
-import gregtech.api.metatileentity.MetaTileEntity;
+import gregtech.api.interfaces.metatileentity.IMetaTileEntity;
+import gregtech.api.interfaces.tileentity.IGregTechTileEntity;
+import gregtech.api.metatileentity.implementations.MTEHatchInput;
+import gregtech.api.metatileentity.implementations.MTEHatchInputBus;
 import gregtech.api.metatileentity.implementations.MTEMultiBlockBase;
-import gregtech.api.util.GTUtility;
-import gregtech.common.tileentities.machines.IDualInputHatch;
+import gregtech.api.recipe.RecipeMap;
 
-@Pseudo
-@Mixin(
-    value = MTEMultiBlockBase.class,
-    targets = {
-        "com.Nxer.TwistSpaceTechnology.common.modularizedMachine.ModularizedMachineLogic.MultiExecutionCoreMachineBase" },
-    remap = false)
+@Mixin(value = MTEMultiBlockBase.class, remap = false)
 public abstract class MixinMTEMultiBlockBase {
 
-    // @Shadow
-    // public ArrayList<IDualInputHatch> mDualInputHatches = new ArrayList<>();
-    // @Shadow
-    // public CheckRecipeResult checkRecipeResult;
-    // @Shadow
-    // public abstract void setResultIfFailure(CheckRecipeResult result) ;
+    @Shadow
+    public abstract RecipeMap<?> getRecipeMap();
 
-    private MTEMultiBlockBase cast() {
-        Object o = this;
-        return (MTEMultiBlockBase) o;
-    }
-    /*
-     * @Unique
-     * private static MethodHandle MH_mDualInputHatches;
-     * @Unique
-     * private static MethodHandle MH_setResultIfFailure;
-     * static {
-     * try {
-     * MH_mDualInputHatches = MethodHandles.lookup()
-     * .findGetter(MTEMultiBlockBase.class, "mDualInputHatches", ArrayList.class);
-     * MH_setResultIfFailure = MethodHandles.lookup()
-     * .findVirtual(
-     * MTEMultiBlockBase.class,
-     * "setResultIfFailure",
-     * MethodType.methodType(void.class, CheckRecipeResult.class));
-     * } catch (Exception e) {
-     * e.printStackTrace();
-     * throw new AssertionError(e);
-     * }
-     * }
-     * @Unique
-     * private void setResultIfFailure0(CheckRecipeResult endRecipeProcessing) {
-     * try {
-     * MH_setResultIfFailure.invoke((MTEMultiBlockBase) (Object) this, endRecipeProcessing);
-     * } catch (Throwable e) {
-     * e.printStackTrace();
-     * throw new AssertionError(e);
-     * }
-     * }
-     * @Unique
-     * private ArrayList<IDualInputHatch> mDualInputHatches0() {
-     * try {
-     * return (ArrayList<IDualInputHatch>) MH_mDualInputHatches.invoke((MTEMultiBlockBase) (Object) this);
-     * } catch (Throwable e) {
-     * e.printStackTrace();
-     * throw new AssertionError(e);
-     * }
-     * }
-     */
-
-    @Inject(method = "startRecipeProcessing", at = { @At(value = "RETURN") }, require = 1)
-    public void startRecipeProcessing(CallbackInfo c) {
-
-        @SuppressWarnings({ "unchecked", "rawtypes" })
-        Iterable<IDualInputHatch> l = (Iterable<IDualInputHatch>) (Iterable) GTUtility
-            .validMTEList((List<MetaTileEntity>) (Object) (cast().mDualInputHatches));
-        for (IDualInputHatch hatch : l) {
-
-            if (hatch instanceof IRecipeProcessingAwareDualHatch dualHatch) {
-                dualHatch.startRecipeProcessing();
-            }
-        }
+    @Inject(method = "addInputBusToMachineList", at = @At(value = "HEAD"))
+    private void gtnl$InputBusCheck(IGregTechTileEntity aTileEntity, int aBaseCasingIndex,
+        CallbackInfoReturnable<Boolean> cir) {
+        if (!MainConfig.enableHatchInterfaceTerminalEnhance) return;
+        if (aTileEntity == null) return;
+        if (getRecipeMap() == null) return;
+        IMetaTileEntity aMetaTileEntity = aTileEntity.getMetaTileEntity();
+        if (aMetaTileEntity == null) return;
+        if (aMetaTileEntity instanceof MTEHatchInputBus)
+            ((IMultiblockRecipeMap) aMetaTileEntity).gtnl$setRecipeMapName(getRecipeMap().unlocalizedName);
     }
 
-    @Inject(method = "endRecipeProcessing", at = { @At(value = "RETURN") }, require = 1)
-    public void endRecipeProcessing(CallbackInfo c) {
-        /*
-         * Consumer<CheckRecipeResult> setResultIfFailure = result -> { if
-         * (!result.wasSuccessful()) { this.checkRecipeResult = result; } };
-         */
-
-        for (IDualInputHatch hatch : (cast().mDualInputHatches)) {
-            if (hatch == null || !((MetaTileEntity) hatch).isValid()) continue;
-            if (hatch instanceof IRecipeProcessingAwareDualHatch dualHatch) {
-                cast().setResultIfFailure(dualHatch.endRecipeProcessing((MTEMultiBlockBase) (Object) this));
-            }
-        }
+    @Inject(method = "addInputHatchToMachineList", at = @At(value = "HEAD"))
+    private void gtnl$InputHatchCheck(IGregTechTileEntity aTileEntity, int aBaseCasingIndex,
+        CallbackInfoReturnable<Boolean> cir) {
+        if (!MainConfig.enableHatchInterfaceTerminalEnhance) return;
+        if (aTileEntity == null) return;
+        if (getRecipeMap() == null) return;
+        IMetaTileEntity aMetaTileEntity = aTileEntity.getMetaTileEntity();
+        if (aMetaTileEntity == null) return;
+        if (aMetaTileEntity instanceof MTEHatchInput)
+            ((IMultiblockRecipeMap) aMetaTileEntity).gtnl$setRecipeMapName(getRecipeMap().unlocalizedName);
     }
 
 }

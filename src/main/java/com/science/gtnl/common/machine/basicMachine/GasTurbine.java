@@ -88,7 +88,7 @@ public class GasTurbine extends MTEBasicGenerator implements IAddGregtechLogo {
                     .addIcon(GAS_TURBINE_FRONT_GLOW)
                     .glow()
                     .build()),
-            OVERLAYS_ENERGY_OUT[this.mTier] };
+            OVERLAYS_ENERGY_OUT[this.mTier + 1] };
     }
 
     @Override
@@ -144,7 +144,7 @@ public class GasTurbine extends MTEBasicGenerator implements IAddGregtechLogo {
                     .addIcon(GAS_TURBINE_FRONT_ACTIVE_GLOW)
                     .glow()
                     .build()),
-            OVERLAYS_ENERGY_OUT[this.mTier] };
+            OVERLAYS_ENERGY_OUT[this.mTier + 1] };
     }
 
     @Override

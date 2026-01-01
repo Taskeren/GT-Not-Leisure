@@ -171,7 +171,7 @@ public class MaterialPool implements Runnable {
     public static final Werkstoff Benzaldehyde = new Werkstoff(
         new short[] { 142, 89, 27 },
         "Benzaldehyde",
-        subscriptNumbers("C7H6O"),
+        subscriptNumbers("C7H8O"),
         new Werkstoff.Stats(),
         Werkstoff.Types.ELEMENT,
         new Werkstoff.GenerationFeatures().disable()
@@ -1406,7 +1406,10 @@ public class MaterialPool implements Runnable {
         "Compressed Steam",
         subscriptNumbers("H2O"),
         new Werkstoff.Stats().setMass(50)
-            .setProtons(8000),
+            .setProtons(8000)
+            .setQualityOverride((byte) 10)
+            .setSpeedOverride(50)
+            .setDurOverride(600000),
         Werkstoff.Types.MIXTURE,
         new Werkstoff.GenerationFeatures().onlyDust()
             .addMolten()
@@ -1424,7 +1427,10 @@ public class MaterialPool implements Runnable {
         "Stronze",
         subscriptNumbers("(SnCu3)(Fe50C)2"),
         new Werkstoff.Stats().setMass(40)
-            .setProtons(96),
+            .setProtons(96)
+            .setQualityOverride((byte) 5)
+            .setSpeedOverride(20)
+            .setDurOverride(36000),
         Werkstoff.Types.MIXTURE,
         new Werkstoff.GenerationFeatures().onlyDust()
             .addMolten()
@@ -1442,7 +1448,10 @@ public class MaterialPool implements Runnable {
         "Breel",
         subscriptNumbers("(Fe50C)(SnCu3)2"),
         new Werkstoff.Stats().setMass(40)
-            .setProtons(102),
+            .setProtons(102)
+            .setQualityOverride((byte) 4)
+            .setSpeedOverride(10)
+            .setDurOverride(24000),
         Werkstoff.Types.MIXTURE,
         new Werkstoff.GenerationFeatures().onlyDust()
             .addMolten()
@@ -1599,6 +1608,35 @@ public class MaterialPool implements Runnable {
         offsetID + 125,
         TextureSet.SET_FLUID);
 
+    public static final Werkstoff GlowThorium = new Werkstoff(
+        new short[] { 232, 255, 134 },
+        "Glow Thorium",
+        new Werkstoff.Stats(),
+        Werkstoff.Types.MIXTURE,
+        new Werkstoff.GenerationFeatures().disable()
+            .addCells(),
+        offsetID + 126,
+        TextureSet.SET_FLUID);
+
+    public static final Werkstoff UraniumFuel = new Werkstoff(
+        new short[] { 151, 231, 151 },
+        "Mixed Uranium Fuel",
+        new Werkstoff.Stats(),
+        Werkstoff.Types.MIXTURE,
+        new Werkstoff.GenerationFeatures().disable()
+            .addCells(),
+        offsetID + 127,
+        TextureSet.SET_FLUID);
+
+    public static final Werkstoff UraniumWaste = new Werkstoff(
+        new short[] { 114, 178, 114 },
+        "Uranium Waste",
+        new Werkstoff.Stats(),
+        Werkstoff.Types.ELEMENT,
+        new Werkstoff.GenerationFeatures().disable()
+            .addCells(),
+        offsetID + 128,
+        TextureSet.SET_FLUID);
     // Special
 
     public static final Werkstoff Periodicium = new Werkstoff(

@@ -61,9 +61,9 @@ import io.netty.buffer.ByteBuf;
 
 public class KeyBindingHandler implements IMessage, IMessageHandler<KeyBindingHandler, IMessage> {
 
-    ItemStack stack;
-    String key;
-    boolean isAE = false;
+    public ItemStack stack;
+    public String key;
+    public boolean isAE = false;
 
     public KeyBindingHandler() {
 
@@ -101,8 +101,8 @@ public class KeyBindingHandler implements IMessage, IMessageHandler<KeyBindingHa
         var container = player.openContainer;
         var item = message.stack;
         switch (message.key) {
-            case "RetrieveItem" -> retrieveItem(player, container, item, message.isAE);
-            case "StartCraft" -> ServerThreadUtil
+            case "gui.ae_retrieve_item" -> retrieveItem(player, container, item, message.isAE);
+            case "gui.ae_start_craft" -> ServerThreadUtil
                 .addScheduledTask(() -> startCraft(player, container, item, message.isAE));
         }
         return null;
@@ -236,7 +236,6 @@ public class KeyBindingHandler implements IMessage, IMessageHandler<KeyBindingHa
         } else {
             map.put(playUUID, worldTime);
         }
-        exItem.stackSize = 1;
         if (!isAE) {
             if (player.openContainer instanceof ContainerCraftAmount
                 || player.openContainer instanceof ContainerCraftConfirm) return;
@@ -291,9 +290,6 @@ public class KeyBindingHandler implements IMessage, IMessageHandler<KeyBindingHa
             if (container instanceof ContainerItemMonitor c) {
                 aec = c;
                 gridNode = c.getNetworkNode();
-            } else if (container instanceof ContainerItemMonitor c) {
-                aec = c;
-                gridNode = c.getNetworkNode();
             } else {
                 return;
             }
@@ -331,6 +327,7 @@ public class KeyBindingHandler implements IMessage, IMessageHandler<KeyBindingHa
                         cca.getCraftingItem()
                             .putStack(item0);
                         cca.setItemToCraft(aeItem);
+                        cca.setInitialCraftAmount(exItem.stackSize);
                         cca.detectAndSendChanges();
                     }
                 }
@@ -342,9 +339,6 @@ public class KeyBindingHandler implements IMessage, IMessageHandler<KeyBindingHa
         int i, boolean isBauble) {
         IGrid grid = gridNode.getGrid();
         if (securityCheck(player, grid, SecurityPermissions.CRAFT)) {
-            IStorageGrid storageGrid = grid.getCache(IStorageGrid.class);
-            var iItemStorageChannel = storageGrid.getItemInventory();
-
             CraftingGridCache cgc = gridNode.getGrid()
                 .getCache(ICraftingGrid.class);
             IAEItemStack aeItem = AEItemStack.create(exItem)
@@ -387,6 +381,7 @@ public class KeyBindingHandler implements IMessage, IMessageHandler<KeyBindingHa
                 cca.getCraftingItem()
                     .putStack(item0);
                 cca.setItemToCraft(aeItem);
+                cca.setInitialCraftAmount(exItem.stackSize);
                 cca.detectAndSendChanges();
             }
         }

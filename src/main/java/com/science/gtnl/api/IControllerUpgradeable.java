@@ -94,7 +94,9 @@ public interface IControllerUpgradeable {
 
     GUITextureSet getGUITextureSet();
 
-    int getUpgradeWindowId();
+    default int getUpgradeWindowId() {
+        return 15;
+    }
 
     String getUpgradeButtonTooltip();
 

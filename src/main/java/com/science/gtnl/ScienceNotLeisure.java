@@ -7,6 +7,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import com.science.gtnl.common.command.CommandEnergyNetwork;
+import com.science.gtnl.common.command.CommandItemInfo;
 import com.science.gtnl.common.command.CommandPlaySound;
 import com.science.gtnl.common.command.CommandReloadConfig;
 import com.science.gtnl.common.command.CommandSteamNetwork;
@@ -17,6 +18,7 @@ import com.science.gtnl.loader.MaterialLoader;
 import com.science.gtnl.loader.RecipeLoader;
 import com.science.gtnl.utils.enums.ModList;
 import com.science.gtnl.utils.item.MissingMappingsHandler;
+import com.science.gtnl.utils.text.LanguageLoader;
 
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.SidedProxy;
@@ -98,6 +100,7 @@ public class ScienceNotLeisure {
     @Mod.EventHandler
     public void completeInit(FMLLoadCompleteEvent event) {
         proxy.completeInit(event);
+        LanguageLoader.registry();
     }
 
     // register server commands in this event handler (Remove if not needed)
@@ -109,8 +112,9 @@ public class ScienceNotLeisure {
         event.registerServerCommand(new CommandSteamNetwork());
         event.registerServerCommand(new CommandEnergyNetwork());
         event.registerServerCommand(new CommandPlaySound());
+        event.registerServerCommand(new CommandItemInfo());
         event.registerServerCommand(new CommandSudo());
-        RecipeLoader.loadRecipesServerStart();
+        RecipeLoader.loadServerStart();
     }
 
     @Mod.EventHandler

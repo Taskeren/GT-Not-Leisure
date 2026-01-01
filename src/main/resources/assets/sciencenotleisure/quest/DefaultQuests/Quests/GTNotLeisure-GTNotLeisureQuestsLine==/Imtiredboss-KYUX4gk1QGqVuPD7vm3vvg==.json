@@ -8,7 +8,7 @@
   "properties:10": {
     "betterquesting:10": {
       "autoClaim:1": 0,
-      "desc:8": "I got thirsty from doing quests, go get me a glass of water and I\u0027ll give you some new quests",
+      "desc:8": "I got thirsty from doing quests, go get me a glass of water and I'll give you some new quests",
       "globalShare:1": 0,
       "icon:10": {
         "Count:3": 1,
@@ -19,7 +19,7 @@
       "isMain:1": 0,
       "isSilent:1": 0,
       "lockedProgress:1": 0,
-      "name:8": "I\u0027m tired boss",
+      "name:8": "I'm tired boss",
       "questLogic:8": "AND",
       "repeatTime:3": -1,
       "repeat_relative:1": 1,

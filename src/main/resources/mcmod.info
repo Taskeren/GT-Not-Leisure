@@ -8,7 +8,7 @@
 		"url": "https://github.com/ABKQPO/GT-Not-Leisure",
 		"authorList": ["HFstudio"],
 		"credits": "HFstudio",
-		"logoFile": "",
+    "logoFile": "assets/sciencenotleisure/textures/logo.png",
 		"screenshots": [],
 		"parent": "",
 		"requiredMods": ["Gregtech"],

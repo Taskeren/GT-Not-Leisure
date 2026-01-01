@@ -1,9 +1,5 @@
 package com.science.gtnl.mixins.late.TecTech;
 
-import static gregtech.api.recipe.RecipeMaps.*;
-import static gregtech.api.util.GTUtility.*;
-import static net.minecraft.util.StatCollector.*;
-
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.common.util.Constants;
@@ -31,10 +27,10 @@ import tectech.thing.metaTileEntity.multi.base.TTMultiblockBase;
 public abstract class MixinMTEResearchStation extends TTMultiblockBase {
 
     @Unique
-    public ItemStack[] lockedItems = new ItemStack[1];
+    public ItemStack[] gtnl$lockedItems = new ItemStack[1];
 
     @Unique
-    public IItemHandlerModifiable lockedInventoryHandler = new ItemStackHandler(lockedItems);
+    public IItemHandlerModifiable gtnl$lockedInventoryHandler = new ItemStackHandler(gtnl$lockedItems);
 
     public MixinMTEResearchStation(int aID, String aName, String aNameRegional) {
         super(aID, aName, aNameRegional);
@@ -43,10 +39,10 @@ public abstract class MixinMTEResearchStation extends TTMultiblockBase {
     @Override
     public void saveNBTData(NBTTagCompound aNBT) {
         super.saveNBTData(aNBT);
-        if (lockedItems[0] != null) {
+        if (gtnl$lockedItems[0] != null) {
             NBTTagCompound itemTag = new NBTTagCompound();
             itemTag.setInteger("Slot", 0);
-            lockedItems[0].writeToNBT(itemTag);
+            gtnl$lockedItems[0].writeToNBT(itemTag);
             aNBT.setTag("lockedItem", itemTag);
         }
     }
@@ -56,7 +52,7 @@ public abstract class MixinMTEResearchStation extends TTMultiblockBase {
         super.loadNBTData(aNBT);
         if (aNBT.hasKey("lockedItem", Constants.NBT.TAG_COMPOUND)) {
             NBTTagCompound itemTag = aNBT.getCompoundTag("lockedItem");
-            lockedItems[0] = ItemStack.loadItemStackFromNBT(itemTag);
+            gtnl$lockedItems[0] = ItemStack.loadItemStackFromNBT(itemTag);
         }
     }
 
@@ -64,12 +60,12 @@ public abstract class MixinMTEResearchStation extends TTMultiblockBase {
     public void addUIWidgets(ModularWindow.Builder builder, UIBuildContext buildContext) {
         super.addUIWidgets(builder, buildContext);
         builder.widget(
-            SlotGroup.ofItemHandler(lockedInventoryHandler, 1)
+            SlotGroup.ofItemHandler(gtnl$lockedInventoryHandler, 1)
                 .startFromSlot(0)
                 .endAtSlot(0)
                 .background(PhantomItemButton.FILTER_BACKGROUND)
                 .phantom(true)
-                .slotCreator(index -> new BaseSlot(lockedInventoryHandler, index, true))
+                .slotCreator(index -> new BaseSlot(gtnl$lockedInventoryHandler, index, true))
                 .build()
                 .setSize(18, 18)
                 .setPos(173, 96));
@@ -83,7 +79,8 @@ public abstract class MixinMTEResearchStation extends TTMultiblockBase {
             target = "Lgregtech/api/util/GTUtility;areStacksEqual(Lnet/minecraft/item/ItemStack;Lnet/minecraft/item/ItemStack;Z)Z"))
     private boolean redirectCheckProcessingAreStacksEqual0(ItemStack stack1, ItemStack stack2, boolean matchNBT,
         @Local(name = "assRecipe") GTRecipe.RecipeAssemblyLine assRecipe) {
-        if (lockedItems[0] != null && !GTUtility.areStacksEqual(assRecipe.mOutput, lockedItems[0], matchNBT)) {
+        if (gtnl$lockedItems[0] != null
+            && !GTUtility.areStacksEqual(assRecipe.mOutput, gtnl$lockedItems[0], matchNBT)) {
             return false;
         }
 
@@ -98,7 +95,8 @@ public abstract class MixinMTEResearchStation extends TTMultiblockBase {
             target = "Lgregtech/api/util/GTUtility;areStacksEqual(Lnet/minecraft/item/ItemStack;Lnet/minecraft/item/ItemStack;Z)Z"))
     private boolean redirectCheckProcessingAreStacksEqual2(ItemStack stack1, ItemStack stack2, boolean matchNBT,
         @Local(name = "assRecipe") GTRecipe.RecipeAssemblyLine assRecipe) {
-        if (lockedItems[0] != null && !GTUtility.areStacksEqual(assRecipe.mOutput, lockedItems[0], matchNBT)) {
+        if (gtnl$lockedItems[0] != null
+            && !GTUtility.areStacksEqual(assRecipe.mOutput, gtnl$lockedItems[0], matchNBT)) {
             return false;
         }
 

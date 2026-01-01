@@ -3,6 +3,8 @@ package com.science.gtnl.common.recipe.gregtech;
 import static gregtech.api.enums.Materials.*;
 import static gregtech.api.util.GTRecipeConstants.SIEVERT;
 
+import net.minecraftforge.fluids.FluidRegistry;
+
 import com.dreammaster.item.NHItemList;
 import com.science.gtnl.api.IRecipePool;
 import com.science.gtnl.utils.recipes.RecipeBuilder;
@@ -23,13 +25,13 @@ public class BacterialVatRecipes implements IRecipePool {
 
     @Override
     public void loadRecipes() {
-
         RecipeBuilder.builder()
             .itemInputs(
                 ItemList.Circuit_Chip_Stemcell.get(64),
                 GTOreDictUnificator.get(OrePrefixes.dust, NaquadahEnriched, 1L))
             .itemOutputs(ItemList.Circuit_Chip_Biocell.get(64))
-            .fluidInputs(Materials.BioMediumSterilized.getFluid(1000))
+            .fluidInputs(Materials.BioMediumSterilized.getFluid(1))
+            .fluidOutputs(FluidRegistry.getFluidStack("mutagen", 1))
             .eut(TierEU.RECIPE_ZPM)
             .metadata(SIEVERT, new Sievert(BWUtil.calculateSv(Materials.NaquadahEnriched), false))
             .duration(800)

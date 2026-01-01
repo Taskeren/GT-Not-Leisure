@@ -5,6 +5,7 @@ import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 
 import com.science.gtnl.api.IRecipePool;
+import com.science.gtnl.common.material.RecipePool;
 import com.science.gtnl.utils.enums.GTNLItemList;
 import com.science.gtnl.utils.recipes.RecipeBuilder;
 
@@ -25,6 +26,7 @@ import tectech.thing.CustomItemList;
 public class LaserEngraverRecipes implements IRecipePool {
 
     public RecipeMap<?> lER = RecipeMaps.laserEngraverRecipes;
+    public RecipeMap<?> HOR = RecipePool.HardOverrideRecipes;
 
     public void recipeWithPurifiedWater(ItemStack[] inputs, ItemStack[] outputs, Materials lowTierWater,
         Materials highTierWater, int duration, int boostedDuration, long eut) {
@@ -143,7 +145,8 @@ public class LaserEngraverRecipes implements IRecipePool {
                     .itemOutputs(GTNLItemList.WIRELESS_ENERGY_HATCHES[j][i].get(1))
                     .duration(200)
                     .eut(GTValues.VP[j + 1])
-                    .addTo(lER);
+                    .addTo(lER)
+                    .addTo(HOR);
             }
         }
     }

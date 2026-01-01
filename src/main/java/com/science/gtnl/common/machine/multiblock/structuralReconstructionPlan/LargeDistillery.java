@@ -101,10 +101,7 @@ public class LargeDistillery extends GTMMultiMachineBase<LargeDistillery> implem
             .addInfo(StatCollector.translateToLocal("Tooltip_LargeDistillery_01"))
             .addInfo(StatCollector.translateToLocal("Tooltip_GTMMultiMachine_02"))
             .addInfo(StatCollector.translateToLocal("Tooltip_GTMMultiMachine_03"))
-            .addInfo(StatCollector.translateToLocal("Tooltip_GTMMultiMachine_04"))
-            .addSeparator()
-            .addInfo(StatCollector.translateToLocal("StructureTooComplex"))
-            .addInfo(StatCollector.translateToLocal("BLUE_PRINT_INFO"))
+            .addMultiAmpHatchInfo()
             .beginStructureBlock(5, 15, 5, true)
             .addInputHatch(StatCollector.translateToLocal("Tooltip_LargeDistillery_Casing"))
             .addOutputHatch(StatCollector.translateToLocal("Tooltip_LargeDistillery_Casing"))
@@ -161,7 +158,7 @@ public class LargeDistillery extends GTMMultiMachineBase<LargeDistillery> implem
     }
 
     @Override
-    public final void onScrewdriverRightClick(ForgeDirection side, EntityPlayer aPlayer, float aX, float aY, float aZ,
+    public void onModeChangeByScrewdriver(ForgeDirection side, EntityPlayer aPlayer, float aX, float aY, float aZ,
         ItemStack aTool) {
         this.machineMode = (this.machineMode + 1) % 2;
         GTUtility.sendChatToPlayer(aPlayer, StatCollector.translateToLocal("LargeDistillery_Mode_" + this.machineMode));
@@ -396,7 +393,7 @@ public class LargeDistillery extends GTMMultiMachineBase<LargeDistillery> implem
 
     @Override
     public double getDurationModifier() {
-        return Math.max(0.05, 1.0 / 4.0 - (Math.max(0, mParallelTier - 1) / 50.0));
+        return Math.max(0.05, 1.0 / 5.0 - (Math.max(0, mParallelTier - 1) / 50.0));
     }
 
     @Override

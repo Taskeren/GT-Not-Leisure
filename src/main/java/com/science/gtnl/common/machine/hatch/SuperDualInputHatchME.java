@@ -139,10 +139,12 @@ public class SuperDualInputHatchME extends MTEHatchInputBus
     implements IDualInputHatchWithPattern, IRecipeProcessingAwareDualHatch, IAddGregtechLogo, IDataCopyable,
     ISmartInputHatch, IPowerChannelState, IGridProxyable {
 
-    public boolean allowAuto;
+    public static int SLOT_COUNT = 100;
     public static final String COPIED_DATA_IDENTIFIER = "superStockingDualHatch";
+
     public boolean expediteRecipeCheck = false;
     public boolean justHadNewItems = false;
+    public boolean allowAuto;
 
     public static Utils.VargsFunction<Object[], FluidStack[]> asFluidStack = (s) -> Arrays.stream(s)
         .flatMap(Arrays::stream)
@@ -362,7 +364,7 @@ public class SuperDualInputHatchME extends MTEHatchInputBus
     @Override
     public void addUIWidgets(Builder builder, UIBuildContext buildContext) {
         updateAllInformationSlots();
-        SlotWidget[] aeSlotWidgets = new SlotWidget[100];
+        SlotWidget[] aeSlotWidgets = new SlotWidget[SLOT_COUNT];
         builder.setBackground(ModularUITextures.VANILLA_BACKGROUND);
 
         IDrawable tab1 = new ItemDrawable(ItemList.Hatch_Input_Bus_ME_Advanced.get(1)).withFixedSize(18, 18, 4, 6);
@@ -564,7 +566,7 @@ public class SuperDualInputHatchME extends MTEHatchInputBus
                         }
 
                         public boolean containsSuchStack(ItemStack tStack) {
-                            for (int i = 0; i < 100; ++i) {
+                            for (int i = 0; i < SLOT_COUNT; ++i) {
                                 if (GTUtility.areStacksEqual(i_mark[i], tStack, false)) return true;
                             }
                             return false;
@@ -584,7 +586,7 @@ public class SuperDualInputHatchME extends MTEHatchInputBus
 
         MultiChildWidget fluidPage = new MultiChildWidget().addChild(
             SlotGroup.ofFluidTanks(
-                IntStream.range(0, 100)
+                IntStream.range(0, SLOT_COUNT)
                     .mapToObj(index -> createTankForFluidStack(f_mark, index, 1))
                     .collect(Collectors.toList()),
                 10)
@@ -609,7 +611,7 @@ public class SuperDualInputHatchME extends MTEHatchInputBus
                     }
 
                     public boolean containsSuchStack(FluidStack tStack) {
-                        for (int i = 0; i < 100; ++i) {
+                        for (int i = 0; i < SLOT_COUNT; ++i) {
                             if (GTUtility.areFluidsEqual(f_mark[i], tStack, false)) {
                                 return true;
                             }
@@ -656,7 +658,7 @@ public class SuperDualInputHatchME extends MTEHatchInputBus
 
             .addChild(
                 SlotGroup.ofFluidTanks(
-                    IntStream.range(0, 100)
+                    IntStream.range(0, SLOT_COUNT)
                         .mapToObj(index -> createTankForFluidStack(f_display, index, Integer.MAX_VALUE))
                         .collect(Collectors.toList()),
                     10)
@@ -855,7 +857,7 @@ public class SuperDualInputHatchME extends MTEHatchInputBus
             .setSize(130, 9)
             .setPos(131, 84));
 
-        for (int ii = 0; ii < 100; ii++) {
+        for (int ii = 0; ii < SLOT_COUNT; ii++) {
             int i = ii;
             builder.widget(new FakeSyncWidget.LongSyncer(() -> {
                 // i_client[i]=i_saved[i];
@@ -865,10 +867,10 @@ public class SuperDualInputHatchME extends MTEHatchInputBus
             );
         }
 
-        for (int ii = 0; ii < 100; ii++) {
+        for (int ii = 0; ii < SLOT_COUNT; ii++) {
             int i = ii;
             builder.widget(new FakeSyncWidget.LongSyncer(() -> {
-                // f_client[i]=f_shadow[i].getFluidAmount();
+                // f_client[i]=f_shadow[i].gtnl$getFluidAmount();
                 return f_client[i];
             }, s -> f_client[i] = s).setSynced(false, true));
         }
@@ -884,8 +886,8 @@ public class SuperDualInputHatchME extends MTEHatchInputBus
                 .setPos(367, 81));
     }
 
-    public long[] i_client = new long[100];
-    public long[] f_client = new long[100];
+    public long[] i_client = new long[SLOT_COUNT];
+    public long[] f_client = new long[SLOT_COUNT];
 
     public DecimalFormat df2 = new DecimalFormat("#,###.00");
     public DecimalFormat df = new DecimalFormat("#,###");
@@ -907,7 +909,7 @@ public class SuperDualInputHatchME extends MTEHatchInputBus
 
         autoPullItemList = pullItemList;
         if (!autoPullItemList) {
-            for (int i = 0; i < 100; i++) {
+            for (int i = 0; i < SLOT_COUNT; i++) {
                 i_mark[i] = null;
                 f_mark[i] = null;
             }
@@ -926,7 +928,7 @@ public class SuperDualInputHatchME extends MTEHatchInputBus
             Iterator<IAEItemStack> iterator = sg.getStorageList()
                 .iterator();
             int index = 0;
-            while (iterator.hasNext() && index < 100) {
+            while (iterator.hasNext() && index < SLOT_COUNT) {
                 IAEItemStack currItem = iterator.next();
                 if (currItem.getStackSize() >= minAutoPullStackSize) {
                     ItemStack itemstack = GTUtility.copyAmount(1, currItem.getItemStack());
@@ -941,7 +943,7 @@ public class SuperDualInputHatchME extends MTEHatchInputBus
                     index++;
                 }
             }
-            for (int i = index; i < 100; i++) {
+            for (int i = index; i < SLOT_COUNT; i++) {
                 i_mark[i] = null;
             }
 
@@ -956,7 +958,7 @@ public class SuperDualInputHatchME extends MTEHatchInputBus
             Iterator<IAEFluidStack> iterator = sg.getStorageList()
                 .iterator();
             int index = 0;
-            while (iterator.hasNext() && index < 100) {
+            while (iterator.hasNext() && index < SLOT_COUNT) {
                 IAEFluidStack currItem = iterator.next();
                 if (currItem.getStackSize() >= minAutoPullStackSize) {
                     FluidStack fluidstack = GTUtility.copyAmount(1, currItem.getFluidStack());
@@ -971,10 +973,10 @@ public class SuperDualInputHatchME extends MTEHatchInputBus
                     index++;
                 }
             }
-            for (int i = index; i < 100; i++) {
+
+            for (int i = index; i < SLOT_COUNT; i++) {
                 f_mark[i] = null;
             }
-
         } catch (GridAccessException ignored) {}
     }
 
@@ -1004,7 +1006,7 @@ public class SuperDualInputHatchME extends MTEHatchInputBus
     @Override
     public void startRecipeProcessing() {
         recipe = true;
-        for (int i = 0; i < 100; i++) {
+        for (int i = 0; i < SLOT_COUNT; i++) {
             i_shadow[i] = null;
             i_saved[i] = 0;
             if (i_mark[i] != null) {
@@ -1024,7 +1026,7 @@ public class SuperDualInputHatchME extends MTEHatchInputBus
                 } catch (GridAccessException ignored) {}
             }
         }
-        for (int i = 0; i < 100; i++) {
+        for (int i = 0; i < SLOT_COUNT; i++) {
             f_shadow[i].setFluid(null);
             f_saved[i] = 0;
             if (f_mark[i] != null) {
@@ -1053,7 +1055,7 @@ public class SuperDualInputHatchME extends MTEHatchInputBus
     @Override
     public CheckRecipeResult endRecipeProcessing(MTEMultiBlockBase controller) {
         recipe = false;
-        for (int i = 0; i < 100; i++) {
+        for (int i = 0; i < SLOT_COUNT; i++) {
             long current = i_shadow[i] == null ? 0 : i_shadow[i].stackSize();
             long original = i_saved[i];
             if (current > original) {
@@ -1090,7 +1092,7 @@ public class SuperDualInputHatchME extends MTEHatchInputBus
 
         }
 
-        for (int i = 0; i < 100; i++) {
+        for (int i = 0; i < SLOT_COUNT; i++) {
             long current = f_shadow[i] == null ? 0 : f_shadow[i].getFluidAmount();
             long original = f_saved[i];
             if (current > original) {
@@ -1132,30 +1134,30 @@ public class SuperDualInputHatchME extends MTEHatchInputBus
     }
 
     public void updateAllInformationSlots() {
-        for (int index = 0; index < 100; index++) {
+        for (int index = 0; index < SLOT_COUNT; index++) {
             updateInformationSlot(index, i_mark[index]);
         }
 
-        for (int index = 0; index < 100; index++) {
+        for (int index = 0; index < SLOT_COUNT; index++) {
             updateInformationSlotF(index/* , f_mark[index] */);
         }
 
     }
 
-    public ItemStack[] i_mark = new ItemStack[100];
-    public ItemStackG[] i_shadow = new ItemStackG[100];
-    public ItemStack[] i_display = new ItemStack[100];
-    public long[] i_saved = new long[100];
-    public FluidStack[] f_mark = new FluidStack[100];
-    public FluidTankG[] f_shadow = new FluidTankG[100];
+    public ItemStack[] i_mark = new ItemStack[SLOT_COUNT];
+    public ItemStackG[] i_shadow = new ItemStackG[SLOT_COUNT];
+    public ItemStack[] i_display = new ItemStack[SLOT_COUNT];
+    public long[] i_saved = new long[SLOT_COUNT];
+    public FluidStack[] f_mark = new FluidStack[SLOT_COUNT];
+    public FluidTankG[] f_shadow = new FluidTankG[SLOT_COUNT];
     {
 
-        for (int i = 0; i < 100; i++) {
+        for (int i = 0; i < SLOT_COUNT; i++) {
             f_shadow[i] = new FluidTankG();
         }
     }
-    public FluidStack[] f_display = new FluidStack[100];
-    public long[] f_saved = new long[100];
+    public FluidStack[] f_display = new FluidStack[SLOT_COUNT];
+    public long[] f_saved = new long[SLOT_COUNT];
 
     @Override
     public void onFirstTick(IGregTechTileEntity aBaseMetaTileEntity) {
@@ -1307,7 +1309,7 @@ public class SuperDualInputHatchME extends MTEHatchInputBus
         getProxy().writeToNBT(aNBT);
         super.saveNBTData(aNBT);
         NBTTagList nbtTagList = new NBTTagList();
-        for (int i = 0; i < 100; i++) {
+        for (int i = 0; i < SLOT_COUNT; i++) {
             FluidStack fluidStack = f_mark[i];
             if (fluidStack == null) {
                 nbtTagList.appendTag(new NBTTagCompound());
@@ -1320,7 +1322,7 @@ public class SuperDualInputHatchME extends MTEHatchInputBus
         aNBT.setTag("storedFluids", nbtTagList);
 
         nbtTagList = new NBTTagList();
-        for (int i = 0; i < 100; i++) {
+        for (int i = 0; i < SLOT_COUNT; i++) {
             ItemStack fluidStack = i_mark[i];
             if (fluidStack == null) {
                 nbtTagList.appendTag(new NBTTagCompound());
@@ -1332,29 +1334,24 @@ public class SuperDualInputHatchME extends MTEHatchInputBus
         }
         aNBT.setTag("storedItems", nbtTagList);
 
-        {
-            int[] sizesf = new int[100];
-            for (int i = 0; i < 100; ++i) sizesf[i] = f_display[i] == null ? 0 : f_display[i].amount;
-            aNBT.setIntArray("sizesF", sizesf);
-            int[] sizes = new int[100];
-            for (int i = 0; i < 100; ++i) sizes[i] = i_display[i] == null ? 0 : i_display[i].stackSize;
-            aNBT.setIntArray("sizes", sizes);
+        int[] sizesf = new int[SLOT_COUNT];
+        for (int i = 0; i < SLOT_COUNT; ++i) sizesf[i] = f_display[i] == null ? 0 : f_display[i].amount;
+        aNBT.setIntArray("sizesF", sizesf);
+        int[] sizes = new int[SLOT_COUNT];
+        for (int i = 0; i < SLOT_COUNT; ++i) sizes[i] = i_display[i] == null ? 0 : i_display[i].stackSize;
+        aNBT.setIntArray("sizes", sizes);
+
+        ByteBuffer b = ByteBuffer.allocate(Long.SIZE / Byte.SIZE * SLOT_COUNT);
+        for (long l : i_client) {
+            b.putLong(l);
         }
+        aNBT.setByteArray("clientDisplayValue", b.array());
 
-        {
-            ByteBuffer b = ByteBuffer.allocate(Long.SIZE / Byte.SIZE * 100);
-            for (long l : i_client) {
-                b.putLong(l);
-            }
-            aNBT.setByteArray("clientDisplayValue", b.array());
-
-            b = ByteBuffer.allocate(Long.SIZE / Byte.SIZE * 100);
-            for (long l : f_client) {
-                b.putLong(l);
-            }
-            aNBT.setByteArray("clientDisplayValueF", b.array());
-
+        b = ByteBuffer.allocate(Long.SIZE / Byte.SIZE * SLOT_COUNT);
+        for (long l : f_client) {
+            b.putLong(l);
         }
+        aNBT.setByteArray("clientDisplayValueF", b.array());
 
         aNBT.setBoolean("autoPull", autoPullItemList);
 
@@ -1373,7 +1370,7 @@ public class SuperDualInputHatchME extends MTEHatchInputBus
         super.loadNBTData(aNBT);
         if (aNBT.hasKey("storedFluids")) {
             NBTTagList nbtTagList = aNBT.getTagList("storedFluids", 10);
-            int c = Math.min(nbtTagList.tagCount(), 100);
+            int c = Math.min(nbtTagList.tagCount(), SLOT_COUNT);
             for (int i = 0; i < c; i++) {
                 NBTTagCompound nbtTagCompound = nbtTagList.getCompoundTagAt(i);
                 FluidStack fluidStack = GTUtility.loadFluid(nbtTagCompound);
@@ -1388,7 +1385,7 @@ public class SuperDualInputHatchME extends MTEHatchInputBus
 
         if (aNBT.hasKey("storedItems")) {
             NBTTagList nbtTagList = aNBT.getTagList("storedItems", 10);
-            int c = Math.min(nbtTagList.tagCount(), 100);
+            int c = Math.min(nbtTagList.tagCount(), SLOT_COUNT);
             for (int i = 0; i < c; i++) {
                 NBTTagCompound nbtTagCompound = nbtTagList.getCompoundTagAt(i);
                 ItemStack fluidStack = GTUtility.loadItem(nbtTagCompound);
@@ -1403,7 +1400,7 @@ public class SuperDualInputHatchME extends MTEHatchInputBus
 
         if (aNBT.hasKey("sizesF")) {
             int[] size = aNBT.getIntArray("sizesF");
-            for (int i = 0; i < 100; i++) {
+            for (int i = 0; i < SLOT_COUNT; i++) {
                 if (f_mark[i] != null) {
                     f_display[i] = f_mark[i].copy();
                     f_display[i].amount = size[i];
@@ -1424,17 +1421,17 @@ public class SuperDualInputHatchME extends MTEHatchInputBus
             }
         }
         if (aNBT.hasKey("clientDisplayValue")) {
-            ByteBuffer b = ByteBuffer.allocate(8 * 100);
+            ByteBuffer b = ByteBuffer.allocate(8 * SLOT_COUNT);
             b.put(aNBT.getByteArray("clientDisplayValue"));
             b.flip();
             LongBuffer l = b.asLongBuffer();
-            for (int i = 0; i < 100; i++) i_client[i] = l.get();
+            for (int i = 0; i < SLOT_COUNT; i++) i_client[i] = l.get();
 
-            b = ByteBuffer.allocate(8 * 100);
+            b = ByteBuffer.allocate(8 * SLOT_COUNT);
             b.put(aNBT.getByteArray("clientDisplayValueF"));
             b.flip();
             l = b.asLongBuffer();
-            for (int i = 0; i < 100; i++) f_client[i] = l.get();
+            for (int i = 0; i < SLOT_COUNT; i++) f_client[i] = l.get();
         }
 
         autoPullRefreshTime = aNBT.getInteger("interval");
@@ -1582,7 +1579,7 @@ public class SuperDualInputHatchME extends MTEHatchInputBus
         NBTTagList stockingFluids = new NBTTagList();
 
         if (!autoPullItemList) {
-            for (int index = 0; index < 100; index++) {
+            for (int index = 0; index < SLOT_COUNT; index++) {
                 FluidStack fluidStack = f_mark[index];
                 if (fluidStack == null) {
                     continue;
@@ -1591,7 +1588,7 @@ public class SuperDualInputHatchME extends MTEHatchInputBus
             }
             tag.setTag("fluidsToStock", stockingFluids);
 
-            for (int index = 0; index < 100; index++) {
+            for (int index = 0; index < SLOT_COUNT; index++) {
                 stockingItems.appendTag(GTUtility.saveItem(i_mark[index]));
             }
             tag.setTag("itemsToStock", stockingItems);

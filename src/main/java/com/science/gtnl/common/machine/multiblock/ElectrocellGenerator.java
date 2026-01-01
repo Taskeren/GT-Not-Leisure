@@ -189,7 +189,7 @@ public class ElectrocellGenerator extends MultiMachineBase<ElectrocellGenerator>
     @Override
     public void onPostTick(IGregTechTileEntity aBaseMetaTileEntity, long aTick) {
         super.onPostTick(aBaseMetaTileEntity, aTick);
-        if (!aBaseMetaTileEntity.isServerSide()) return;
+        if (mStartUpCheck > 0 || !aBaseMetaTileEntity.isServerSide()) return;
         if (mMaxProgresstime > 0 && aTick % 20 == 0) {
             FluidStack matchedFluidExtra = matchedFluid.copy();
             matchedFluidExtra.amount = (int) (matchedFluidExtra.amount * generatorValue);
@@ -323,6 +323,7 @@ public class ElectrocellGenerator extends MultiMachineBase<ElectrocellGenerator>
         super.saveNBTData(aNBT);
 
         aNBT.setDouble("generatorValue", generatorValue);
+        aNBT.setLong("lastEUt", lastEUt);
 
         if (matchedFluid != null) {
             NBTTagCompound fluidTag = new NBTTagCompound();
@@ -342,6 +343,7 @@ public class ElectrocellGenerator extends MultiMachineBase<ElectrocellGenerator>
         super.loadNBTData(aNBT);
 
         generatorValue = aNBT.getDouble("generatorValue");
+        lastEUt = aNBT.getLong("lastEUt");
 
         if (aNBT.hasKey("matchedFluid")) {
             matchedFluid = FluidStack.loadFluidStackFromNBT(aNBT.getCompoundTag("matchedFluid"));
@@ -384,9 +386,6 @@ public class ElectrocellGenerator extends MultiMachineBase<ElectrocellGenerator>
             .addInfo(StatCollector.translateToLocal("Tooltip_ElectrocellGenerator_03"))
             .addInfo(StatCollector.translateToLocal("Tooltip_ElectrocellGenerator_04"))
             .addInfo(StatCollector.translateToLocal("Tooltip_ElectrocellGenerator_05"))
-            .addSeparator()
-            .addInfo(StatCollector.translateToLocal("StructureTooComplex"))
-            .addInfo(StatCollector.translateToLocal("BLUE_PRINT_INFO"))
             .beginStructureBlock(11, 5, 3, true)
             .addDynamoHatch(StatCollector.translateToLocal("Tooltip_ElectrocellGenerator_Casing"))
             .addMaintenanceHatch(StatCollector.translateToLocal("Tooltip_ElectrocellGenerator_Casing"))
@@ -405,7 +404,6 @@ public class ElectrocellGenerator extends MultiMachineBase<ElectrocellGenerator>
         if (aTileEntity != null) {
             final IMetaTileEntity aMetaTileEntity = aTileEntity.getMetaTileEntity();
             if (aMetaTileEntity instanceof MTEHatchInputBus inputBus) {
-                if (inputBus.getTierForStructure() > 0) return false;
                 if (mLeftInputBusses != null) return false;
                 mLeftInputBusses = inputBus;
                 mLeftInputBusses.updateTexture(aBaseCasingIndex);
@@ -419,7 +417,6 @@ public class ElectrocellGenerator extends MultiMachineBase<ElectrocellGenerator>
         if (aTileEntity != null) {
             final IMetaTileEntity aMetaTileEntity = aTileEntity.getMetaTileEntity();
             if (aMetaTileEntity instanceof MTEHatchInputBus inputBus) {
-                if (inputBus.getTierForStructure() > 0) return false;
                 if (mRightInputBusses != null) return false;
                 mRightInputBusses = inputBus;
                 mRightInputBusses.updateTexture(aBaseCasingIndex);

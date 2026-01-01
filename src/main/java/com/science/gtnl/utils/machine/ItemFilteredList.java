@@ -1,4 +1,4 @@
-package com.science.gtnl.utils;
+package com.science.gtnl.utils.machine;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;

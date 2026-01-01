@@ -17,13 +17,17 @@ import net.minecraftforge.common.util.ForgeDirection;
 import com.gtnewhorizon.structurelib.StructureLibAPI;
 import com.gtnewhorizon.structurelib.alignment.constructable.IConstructable;
 import com.gtnewhorizons.modularui.api.math.Alignment;
+import com.gtnewhorizons.modularui.api.math.Color;
+import com.gtnewhorizons.modularui.api.math.Pos2d;
 import com.gtnewhorizons.modularui.api.screen.ModularWindow;
 import com.gtnewhorizons.modularui.api.screen.UIBuildContext;
 import com.gtnewhorizons.modularui.common.widget.DrawableWidget;
 import com.gtnewhorizons.modularui.common.widget.DynamicPositionedColumn;
 import com.gtnewhorizons.modularui.common.widget.FakeSyncWidget;
+import com.gtnewhorizons.modularui.common.widget.Scrollable;
 import com.gtnewhorizons.modularui.common.widget.SlotWidget;
 import com.gtnewhorizons.modularui.common.widget.TextWidget;
+import com.gtnewhorizons.modularui.common.widget.textfield.TextFieldWidget;
 import com.science.gtnl.ScienceNotLeisure;
 import com.science.gtnl.config.MainConfig;
 import com.science.gtnl.loader.BlockLoader;
@@ -49,6 +53,7 @@ import appeng.api.util.AECableType;
 import appeng.api.util.DimensionalCoord;
 import appeng.api.util.WorldCoord;
 import appeng.crafting.MECraftingInventory;
+import appeng.helpers.ICustomNameObject;
 import appeng.me.GridAccessException;
 import appeng.me.cluster.implementations.CraftingCPUCluster;
 import appeng.me.helpers.AENetworkProxy;
@@ -57,6 +62,7 @@ import cpw.mods.fml.common.registry.GameRegistry;
 import gregtech.api.enums.Mods;
 import gregtech.api.enums.Textures;
 import gregtech.api.enums.VoidingMode;
+import gregtech.api.gui.modularui.GTUITextures;
 import gregtech.api.interfaces.ISecondaryDescribable;
 import gregtech.api.interfaces.ITexture;
 import gregtech.api.interfaces.metatileentity.IMetaTileEntity;
@@ -70,7 +76,7 @@ import it.unimi.dsi.fastutil.objects.ObjectLists;
 import it.unimi.dsi.fastutil.objects.ReferenceArrayList;
 
 public class QuantumComputer extends MTETooltipMultiBlockBase
-    implements IConstructable, ISecondaryDescribable, IActionHost, IGridProxyable, IAddGregtechLogo {
+    implements IConstructable, ISecondaryDescribable, IActionHost, IGridProxyable, IAddGregtechLogo, ICustomNameObject {
 
     /**
      * Maximum size of the quantum computer. Includes walls.
@@ -109,6 +115,7 @@ public class QuantumComputer extends MTETooltipMultiBlockBase
     public long usedStorage = 0;
     public int usedParallel = 0;
     public boolean enabledSingularityCore = false;
+    public String customName = "";
 
     public long getMaximumStorage() {
         if (singularityCraftingStorageCount > 0) return Long.MAX_VALUE;
@@ -150,9 +157,6 @@ public class QuantumComputer extends MTETooltipMultiBlockBase
             .addInfo(StatCollector.translateToLocal("Tooltip_QuantumComputer_10"))
             .addInfo(StatCollector.translateToLocal("Tooltip_QuantumComputer_11"))
             .addInfo(StatCollector.translateToLocal("Tooltip_QuantumComputer_12"))
-            .addSeparator()
-            .addInfo(StatCollector.translateToLocal("StructureTooComplex"))
-            .addInfo(StatCollector.translateToLocal("BLUE_PRINT_INFO"))
             .beginVariableStructureBlock(3, MAX_SIZE, 3, MAX_SIZE, 3, MAX_SIZE, true)
             .toolTipFinisher();
         return tt;
@@ -275,6 +279,8 @@ public class QuantumComputer extends MTETooltipMultiBlockBase
         aNBT.setInteger("maximumParallel", this.maximumParallel);
         aNBT.setBoolean("enabledSingularityCore", enabledSingularityCore);
 
+        if (customName != null) aNBT.setString("customName", customName);
+
         getProxy().writeToNBT(aNBT);
         writeCPUNBT(aNBT);
 
@@ -320,6 +326,9 @@ public class QuantumComputer extends MTETooltipMultiBlockBase
         this.maximumStorage = aNBT.getLong("maximumStorage");
         this.maximumParallel = aNBT.getInteger("maximumParallel");
         this.enabledSingularityCore = aNBT.getBoolean("enabledSingularityCore");
+
+        if (aNBT.hasKey("customName")) setCustomName(aNBT.getString("customName"));
+
         getProxy().readFromNBT(aNBT);
         readCPUNBT(aNBT);
 
@@ -913,14 +922,52 @@ public class QuantumComputer extends MTETooltipMultiBlockBase
 
     @Override
     public void addUIWidgets(ModularWindow.Builder builder, UIBuildContext buildContext) {
-        super.addUIWidgets(builder, buildContext);
+        builder.widget(
+            new DrawableWidget().setDrawable(GTUITextures.PICTURE_SCREEN_BLACK)
+                .setPos(4, 4)
+                .setSize(190, 85));
+        final SlotWidget inventorySlot = new SlotWidget(inventoryHandler, 1);
+        builder.widget(
+            inventorySlot.setPos(173, 167)
+                .setBackground(GTUITextures.SLOT_DARK_GRAY));
+
+        final DynamicPositionedColumn screenElements = new DynamicPositionedColumn();
+        drawTexts(screenElements, inventorySlot);
+        builder.widget(
+            new Scrollable().setVerticalScroll()
+                .widget(screenElements)
+                .setPos(10, 7)
+                .setSize(182, 79));
+
+        builder.widget(
+            new TextFieldWidget().setSetter((value) -> customName = value)
+                .setGetter(() -> hasCustomName() ? customName : getMachineCraftingIcon().getDisplayName())
+                .setTextAlignment(Alignment.Center)
+                .setScrollBar()
+                .setTextColor(Color.WHITE.normal)
+                .addTooltip(StatCollector.translateToLocal("Info_QuantumComputer_03"))
+                .setBackground(GTUITextures.BACKGROUND_TEXT_FIELD)
+                .setPos(7, 90)
+                .setSize(162, 18)
+                .attachSyncer(new FakeSyncWidget.StringSyncer(this::getCustomName, this::setCustomName), builder));
+
+        builder.widget(createStructureUpdateButton(builder));
         addGregTechLogo(builder);
+    }
+
+    @Override
+    public Pos2d getStructureUpdateButtonPos() {
+        return new Pos2d(174, 148);
     }
 
     @Override
     public void addGregTechLogo(ModularWindow.Builder builder) {
         builder.widget(
             new DrawableWidget().setDrawable(ItemUtils.PICTURE_CIRCULATION)
+                .setSize(18, 18)
+                .setPos(172, 49));
+        builder.widget(
+            new DrawableWidget().setDrawable(ItemUtils.PICTURE_GTNL_LOGO)
                 .setSize(18, 18)
                 .setPos(172, 67));
     }
@@ -1022,6 +1069,25 @@ public class QuantumComputer extends MTETooltipMultiBlockBase
         return gridProxy;
     }
 
+    @Override
+    public String getCustomName() {
+        return customName != null ? customName : getMachineCraftingIcon().getDisplayName();
+    }
+
+    @Override
+    public boolean hasCustomName() {
+        return customName != null && !this.customName.isEmpty();
+    }
+
+    @Override
+    public void setCustomName(String name) {
+        customName = name;
+        if (this.virtualCPU != null) {
+            ECPUCluster.from(virtualCPU)
+                .ec$setName(customName);
+        }
+    }
+
     public static final EnumSet<ForgeDirection> upDirection = EnumSet.of(ForgeDirection.UP);
     public static final EnumSet<ForgeDirection> emptyDirection = EnumSet.noneOf(ForgeDirection.class);
 
@@ -1099,6 +1165,7 @@ public class QuantumComputer extends MTETooltipMultiBlockBase
 
         ECPUCluster ecpuCluster = ECPUCluster.from(this.virtualCPU);
         ecpuCluster.ec$setAvailableStorage(usedBytes);
+        ecpuCluster.ec$setName("");
         this.virtualCPU = null;
         createVirtualCPU();
     }
@@ -1138,6 +1205,7 @@ public class QuantumComputer extends MTETooltipMultiBlockBase
         eCluster.ec$setVirtualCPUOwner(this);
         eCluster.ec$setAvailableStorage(availableBytes);
         eCluster.ec$setAccelerators(maximumParallel);
+        if (hasCustomName()) eCluster.ec$setName(customName);
 
         this.postCPUClusterChangeEvent();
     }

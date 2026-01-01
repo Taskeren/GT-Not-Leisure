@@ -9,7 +9,7 @@ import cpw.mods.fml.common.network.simpleimpl.IMessageHandler;
 import cpw.mods.fml.common.network.simpleimpl.MessageContext;
 import io.netty.buffer.ByteBuf;
 
-public class TeleportRequestPacket implements IMessage {
+public class TeleportRequestPacket implements IMessage, IMessageHandler<TeleportRequestPacket, IMessage> {
 
     private int worldX, worldZ;
 
@@ -32,56 +32,53 @@ public class TeleportRequestPacket implements IMessage {
         worldZ = buf.readInt();
     }
 
-    public static class Handler implements IMessageHandler<TeleportRequestPacket, IMessage> {
+    @Override
+    public IMessage onMessage(TeleportRequestPacket message, MessageContext ctx) {
+        EntityPlayerMP player = ctx.getServerHandler().playerEntity;
+        WorldServer world = player.getServerForPlayer();
 
-        @Override
-        public IMessage onMessage(TeleportRequestPacket message, MessageContext ctx) {
-            EntityPlayerMP player = ctx.getServerHandler().playerEntity;
-            WorldServer world = player.getServerForPlayer();
+        int x = message.worldX;
+        int z = message.worldZ;
 
-            int x = message.worldX;
-            int z = message.worldZ;
+        int y = world.getTopSolidOrLiquidBlock(x, z);
 
-            int y = world.getTopSolidOrLiquidBlock(x, z);
+        if (world.provider.dimensionId == -1) {
+            if (y > 127) {
+                y = 125;
+                while (y > 1 && !isSafe(world, x, y, z)) {
+                    y--;
+                }
 
-            if (world.provider.dimensionId == -1) {
-                if (y > 127) {
-                    y = 125;
-                    while (y > 1 && !isSafe(world, x, y, z)) {
-                        y--;
-                    }
-
-                    if (!isSafe(world, x, y, z)) {
-                        for (int dx = -10; dx <= 10; dx++) {
-                            for (int dz = -10; dz <= 10; dz++) {
-                                int nx = x + dx;
-                                int nz = z + dz;
-                                int ny = world.getTopSolidOrLiquidBlock(nx, nz);
-                                if (ny > 128) ny = 125;
-                                while (ny > 1 && !isSafe(world, nx, ny, nz)) {
-                                    ny--;
-                                }
-                                if (isSafe(world, nx, ny, nz)) {
-                                    x = nx;
-                                    z = nz;
-                                    y = ny;
-                                    break;
-                                }
+                if (!isSafe(world, x, y, z)) {
+                    for (int dx = -10; dx <= 10; dx++) {
+                        for (int dz = -10; dz <= 10; dz++) {
+                            int nx = x + dx;
+                            int nz = z + dz;
+                            int ny = world.getTopSolidOrLiquidBlock(nx, nz);
+                            if (ny > 128) ny = 125;
+                            while (ny > 1 && !isSafe(world, nx, ny, nz)) {
+                                ny--;
+                            }
+                            if (isSafe(world, nx, ny, nz)) {
+                                x = nx;
+                                z = nz;
+                                y = ny;
+                                break;
                             }
                         }
                     }
                 }
             }
-
-            player.setPositionAndUpdate(x + 0.5, y + 1, z + 0.5);
-            return null;
         }
 
-        private boolean isSafe(World world, int x, int y, int z) {
-            return world.getBlock(x, y - 1, z)
-                .getMaterial()
-                .isSolid() && world.isAirBlock(x, y, z)
-                && world.isAirBlock(x, y + 1, z);
-        }
+        player.setPositionAndUpdate(x + 0.5, y + 1, z + 0.5);
+        return null;
+    }
+
+    public boolean isSafe(World world, int x, int y, int z) {
+        return world.getBlock(x, y - 1, z)
+            .getMaterial()
+            .isSolid() && world.isAirBlock(x, y, z)
+            && world.isAirBlock(x, y + 1, z);
     }
 }

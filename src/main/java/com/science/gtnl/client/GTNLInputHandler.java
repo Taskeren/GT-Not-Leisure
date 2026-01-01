@@ -1,6 +1,5 @@
 package com.science.gtnl.client;
 
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.function.BooleanSupplier;
@@ -8,116 +7,135 @@ import java.util.function.BooleanSupplier;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityClientPlayerMP;
 import net.minecraft.client.gui.GuiScreen;
-import net.minecraft.client.gui.ScaledResolution;
+import net.minecraft.client.gui.inventory.GuiContainer;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
-import net.minecraftforge.client.event.GuiScreenEvent;
 
 import org.lwjgl.input.Mouse;
 
-import com.cleanroommc.modularui.api.event.MouseInputEvent;
 import com.glodblock.github.client.gui.GuiItemMonitor;
 import com.gtnewhorizons.modularui.api.KeyboardUtil;
 import com.science.gtnl.ScienceNotLeisure;
+import com.science.gtnl.common.item.items.Stick;
 import com.science.gtnl.common.packet.KeyBindingHandler;
 import com.science.gtnl.utils.ClientUtils;
 
+import appeng.api.implementations.ICraftingPatternItem;
+import appeng.api.networking.crafting.ICraftingPatternDetails;
 import appeng.client.gui.implementations.GuiMEMonitorable;
 import appeng.container.implementations.ContainerCraftAmount;
 import appeng.container.implementations.ContainerCraftConfirm;
-import codechicken.nei.BookmarkPanel;
-import codechicken.nei.LayoutManager;
-import codechicken.nei.Widget;
-import codechicken.nei.bookmark.BookmarksGridSlot;
-import cpw.mods.fml.common.FMLCommonHandler;
+import codechicken.nei.NEIClientConfig;
+import codechicken.nei.guihook.GuiContainerManager;
+import codechicken.nei.guihook.IContainerInputHandler;
+import codechicken.nei.recipe.GuiCraftingRecipe;
+import codechicken.nei.recipe.GuiUsageRecipe;
 import cpw.mods.fml.common.eventhandler.EventPriority;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.common.gameevent.InputEvent;
 import cpw.mods.fml.common.gameevent.TickEvent;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import gregtech.api.util.AssemblyLineUtils;
 
 @SideOnly(Side.CLIENT)
-public class GTNLInputHandler {
+public class GTNLInputHandler implements IContainerInputHandler {
 
     public static GTNLInputHandler INSTANCE = new GTNLInputHandler();
-    private static final Map<String, BooleanSupplier> keys;
-    private static final Minecraft mc = Minecraft.getMinecraft();
-    private static int tick = 0;
-    public static int counter = 0;
-    private static int counter1 = 0;
+    public static Map<String, BooleanSupplier> keys = new HashMap<>() {
+
+        {
+            put("gui.ae_retrieve_item", () -> KeyboardUtil.isCtrlKeyDown() && Mouse.isButtonDown(2));
+            put("gui.ae_start_craft", () -> KeyboardUtil.isAltKeyDown() && Mouse.isButtonDown(2));
+        }
+    };
+
+    public static final Minecraft mc = Minecraft.getMinecraft();
+    public static int inputCooldownTicks = 0;
+    public static int animationTick = 0;
+    public static int frameCounter = 0;
     public static GuiScreen oldGui = null;
     public static Runnable delayMethod = null;
 
-    private GTNLInputHandler() {
-        FMLCommonHandler.instance()
-            .bus()
-            .register(this);
+    public GTNLInputHandler() {
+        GuiContainerManager.addInputHandler(this);
     }
 
-    // Mouse.isButtonDown(2) = 按下鼠标中键
-    static {
-        Map<String, BooleanSupplier> map = new HashMap<>();
+    @Override
+    public boolean lastKeyTyped(GuiContainer gui, char keyChar, int keyCode) {
+        ItemStack stack = GuiContainerManager.getStackMouseOver(gui);
+        if (stack == null) return false;
+        Item item = stack.getItem();
 
-        map.put("RetrieveItem", () -> KeyboardUtil.isCtrlKeyDown() && Mouse.isButtonDown(2));
-        map.put("StartCraft", () -> KeyboardUtil.isAltKeyDown() && Mouse.isButtonDown(2));
+        if (item instanceof ICraftingPatternItem pattern) {
+            ICraftingPatternDetails details = pattern.getPatternForItem(stack, Minecraft.getMinecraft().theWorld);
+            if (details == null) return false;
 
-        // noinspection Java9CollectionFactory
-        keys = Collections.unmodifiableMap(map);
-    }
-
-    @SubscribeEvent(priority = EventPriority.HIGHEST)
-    public void r$onGuiMouseEvent(MouseInputEvent.Pre event) {
-        if (work(event)) {
-            event.setCanceled(true);
+            stack = details.getCondensedOutputs()[0].getItemStack();
         }
+
+        if (item instanceof Stick) {
+            ItemStack fake = Stick.getDisguisedStack(stack);
+            if (fake == null) return false;
+
+            stack = fake;
+        }
+
+        ItemStack dataStickOutput = AssemblyLineUtils.getDataStickOutput(stack);
+        if (dataStickOutput != null) stack = dataStickOutput;
+
+        if (NEIClientConfig.isKeyHashDown("gui.recipe")) {
+            return GuiCraftingRecipe.openRecipeGui("item", stack);
+        }
+
+        if (NEIClientConfig.isKeyHashDown("gui.usage")) {
+            return GuiUsageRecipe.openRecipeGui("item", stack);
+        }
+        return false;
+    }
+
+    @Override
+    public boolean mouseClicked(GuiContainer gui, int mousex, int mousey, int button) {
+        ItemStack stack = GuiContainerManager.getStackMouseOver(gui);
+        if (stack == null) return false;
+        return startAEWork(stack, mousex, mousey);
     }
 
     @SubscribeEvent(priority = EventPriority.LOWEST)
     public void onClientTick(TickEvent.ClientTickEvent event) {
-        if (tick > 0) {
-            tick--;
+        if (inputCooldownTicks > 0) {
+            inputCooldownTicks--;
         }
-        counter = (counter + ((++counter1 & 1) == 0 ? 1 : 0)) % 14;
+        animationTick = (animationTick + ((++frameCounter & 1) == 0 ? 1 : 0)) % 14;
     }
 
     @SubscribeEvent(priority = EventPriority.HIGHEST)
     public void onInputEvent(final InputEvent.KeyInputEvent event) {
-        if (!mc.thePlayer.capabilities.isCreativeMode && tick == 0 && mc.gameSettings.keyBindPickBlock.isPressed()) {
+        if (!mc.thePlayer.capabilities.isCreativeMode && inputCooldownTicks == 0
+            && mc.gameSettings.keyBindPickBlock.isPressed()) {
             EntityClientPlayerMP player = mc.thePlayer;
             World world = player.worldObj;
             ClientUtils.onBeforePickBlock(player, world, true);
-            tick = 10;
+            inputCooldownTicks = 10;
         }
     }
 
     @SubscribeEvent(priority = EventPriority.HIGHEST)
     public void onInputEvent(final InputEvent.MouseInputEvent event) {
-        if (!mc.thePlayer.capabilities.isCreativeMode && tick == 0 && mc.gameSettings.keyBindPickBlock.isPressed()) {
+        if (!mc.thePlayer.capabilities.isCreativeMode && inputCooldownTicks == 0
+            && mc.gameSettings.keyBindPickBlock.isPressed()) {
             EntityClientPlayerMP player = mc.thePlayer;
             World world = player.worldObj;
             ClientUtils.onBeforePickBlock(player, world, true);
-            tick = 10;
+            inputCooldownTicks = 10;
         }
     }
 
-    private boolean work(GuiScreenEvent event) {
+    public boolean startAEWork(ItemStack item, int mouseX, int mouseY) {
         for (Map.Entry<String, BooleanSupplier> key : keys.entrySet()) {
             if (!key.getValue()
                 .getAsBoolean()) continue;
-            var mouse = new MouseHelper(Minecraft.getMinecraft());
-            final int x = mouse.getX();
-            final int y = mouse.getY();
-            final Widget focused = LayoutManager.instance()
-                .getWidgetUnderMouse(x, y);
-
-            if (!(focused instanceof BookmarkPanel bp)) return false;
-
-            BookmarksGridSlot ing = bp.getSlotMouseOver(x, y);
-            if (ing == null) return false;
-
-            ItemStack item = ing.getItemStack();
-            if (item == null) return false;
             final var oldGui = Minecraft.getMinecraft().currentScreen;
             ScienceNotLeisure.network.sendToServer(
                 new KeyBindingHandler(
@@ -125,7 +143,7 @@ public class GTNLInputHandler {
                     item,
                     oldGui instanceof GuiMEMonitorable || oldGui instanceof GuiItemMonitor));
             if (key.getKey()
-                .equals("StartCraft")) {
+                .equals("gui.ae_start_craft")) {
                 var player = Minecraft.getMinecraft().thePlayer;
                 if (player.openContainer instanceof ContainerCraftAmount
                     || player.openContainer instanceof ContainerCraftConfirm) return false;
@@ -137,25 +155,29 @@ public class GTNLInputHandler {
         return false;
     }
 
-    private static class MouseHelper {
+    @Override
+    public void onKeyTyped(GuiContainer gui, char keyChar, int keyID) {}
 
-        private final Minecraft mc;
-        private final ScaledResolution scaledresolution;
+    @Override
+    public void onMouseClicked(GuiContainer gui, int mousex, int mousey, int button) {}
 
-        private MouseHelper(Minecraft mc) {
-            this.mc = mc;
-            this.scaledresolution = new ScaledResolution(mc, mc.displayWidth, mc.displayHeight);
-        }
+    @Override
+    public void onMouseUp(GuiContainer gui, int mousex, int mousey, int button) {}
 
-        private int getX() {
-            int i = scaledresolution.getScaledWidth();
-            return Mouse.getX() * i / this.mc.displayWidth;
-        }
-
-        private int getY() {
-            int j = scaledresolution.getScaledHeight();
-            return j - Mouse.getY() * j / this.mc.displayHeight - 1;
-        }
+    @Override
+    public boolean keyTyped(GuiContainer gui, char keyChar, int keyID) {
+        return false;
     }
+
+    @Override
+    public boolean mouseScrolled(GuiContainer gui, int mousex, int mousey, int scrolled) {
+        return false;
+    }
+
+    @Override
+    public void onMouseScrolled(GuiContainer gui, int mousex, int mousey, int scrolled) {}
+
+    @Override
+    public void onMouseDragged(GuiContainer gui, int mousex, int mousey, int button, long heldTime) {}
 
 }

@@ -66,7 +66,7 @@ public class ChemicalDehydratorRecipes implements IRecipePool {
             .fluidInputs(MaterialPool.SmGdOxidesSolution.getFluidOrGas(4000))
             .itemOutputs(
                 MaterialPool.ScandiumOxide.get(OrePrefixes.dust, 5),
-                WerkstoffMaterialPool.SamariumOxalate.get(OrePrefixes.dust, 5),
+                WerkstoffMaterialPool.SamariumOxide.get(OrePrefixes.dust, 5),
                 WerkstoffMaterialPool.EuropiumIIIOxide.get(OrePrefixes.dust, 5),
                 MaterialPool.GadoliniumOxide.get(OrePrefixes.dust, 5))
             .outputChances(5000, 5000, 5000, 5000)
@@ -82,6 +82,19 @@ public class ChemicalDehydratorRecipes implements IRecipePool {
                 MaterialPool.TerbiumOxide.get(OrePrefixes.dust, 5),
                 MaterialPool.DysprosiumOxide.get(OrePrefixes.dust, 5),
                 MaterialPool.HolmiumOxide.get(OrePrefixes.dust, 5))
+            .outputChances(5000, 5000, 5000, 5000)
+            .duration(220)
+            .eut(480)
+            .addTo(CDNCR)
+            .addTo(CDR);
+
+        RecipeBuilder.builder()
+            .fluidInputs(MaterialPool.ErLuOxidesSolution.getFluidOrGas(4000))
+            .itemOutputs(
+                MaterialPool.ErbiumOxide.get(OrePrefixes.dust, 5),
+                MaterialPool.ThuliumOxide.get(OrePrefixes.dust, 5),
+                MaterialPool.YtterbiumOxide.get(OrePrefixes.dust, 5),
+                MaterialPool.LutetiumOxide.get(OrePrefixes.dust, 5))
             .outputChances(5000, 5000, 5000, 5000)
             .duration(220)
             .eut(480)

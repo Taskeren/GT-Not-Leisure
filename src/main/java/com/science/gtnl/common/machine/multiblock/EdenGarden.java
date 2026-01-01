@@ -232,10 +232,7 @@ public class EdenGarden extends MultiMachineBase<EdenGarden> implements IGreenHo
             .addInfo(StatCollector.translateToLocal("Tooltip_EdenGarden_04"))
             .addInfo(StatCollector.translateToLocal("Tooltip_EdenGarden_05"))
             .addInfo(StatCollector.translateToLocal("Tooltip_EdenGarden_06"))
-            .addInfo(StatCollector.translateToLocal("Tooltip_Tectech_Hatch"))
-            .addSeparator()
-            .addInfo(StatCollector.translateToLocal("StructureTooComplex"))
-            .addInfo(StatCollector.translateToLocal("BLUE_PRINT_INFO"))
+            .addTecTechHatchInfo()
             .beginStructureBlock(6, 43, 10, false)
             .addInputBus(StatCollector.translateToLocal("Tooltip_EdenGarden_Casing"), 1)
             .addOutputBus(StatCollector.translateToLocal("Tooltip_EdenGarden_Casing"), 1)
@@ -310,7 +307,7 @@ public class EdenGarden extends MultiMachineBase<EdenGarden> implements IGreenHo
     }
 
     @Override
-    public void onScrewdriverRightClick(ForgeDirection side, EntityPlayer aPlayer, float aX, float aY, float aZ,
+    public void onModeChangeByScrewdriver(ForgeDirection side, EntityPlayer aPlayer, float aX, float aY, float aZ,
         ItemStack aTool) {
         if (aPlayer.isSneaking()) {
             tryChangeMode(aPlayer);

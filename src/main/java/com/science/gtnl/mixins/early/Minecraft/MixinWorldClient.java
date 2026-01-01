@@ -10,7 +10,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-import com.science.gtnl.common.item.TimeStopManager;
+import com.science.gtnl.common.item.items.TimeStopPocketWatch;
 
 @Mixin(value = WorldClient.class)
 public class MixinWorldClient {
@@ -20,9 +20,10 @@ public class MixinWorldClient {
     @Shadow
     private ChunkProviderClient clientChunkProvider;
 
+    @SuppressWarnings("DataFlowIssue")
     @Inject(method = "tick", at = @At("HEAD"), cancellable = true)
     public void mixin$tick(CallbackInfo ci) {
-        boolean isStop = TimeStopManager.isTimeStopped();
+        boolean isStop = TimeStopPocketWatch.isTimeStopped();
         if (isStop) {
             ci.cancel();
         } else return;

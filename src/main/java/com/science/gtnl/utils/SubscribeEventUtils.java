@@ -41,7 +41,7 @@ import com.science.gtnl.api.TickrateAPI;
 import com.science.gtnl.asm.GTNLEarlyCoreMod;
 import com.science.gtnl.common.command.CommandTickrate;
 import com.science.gtnl.common.item.BaubleItem;
-import com.science.gtnl.common.item.TimeStopManager;
+import com.science.gtnl.common.item.items.TimeStopPocketWatch;
 import com.science.gtnl.common.machine.hatch.ExplosionDynamoHatch;
 import com.science.gtnl.common.material.RecipePool;
 import com.science.gtnl.common.packet.SoundPacket;
@@ -102,7 +102,7 @@ public class SubscribeEventUtils {
             SchematicRegistry
                 .addUnlockedPage(player, SchematicRegistry.getMatchingRecipeForID(MainConfig.idSchematicRocketSteam));
 
-            TimeStopManager.setTimeStopped(false);
+            TimeStopPocketWatch.setTimeStopped(false);
 
             boolean giveAchievement = Arrays.stream(ModList.values())
                 .filter(mod -> !MOD_BLACKLIST.contains(mod.getModId()))
@@ -191,8 +191,9 @@ public class SubscribeEventUtils {
 
     @SubscribeEvent
     public void onPlayerLoginOut(PlayerEvent.PlayerLoggedOutEvent event) {
-        TimeStopManager.setTimeStopped(false);
+        TimeStopPocketWatch.setTimeStopped(false);
         BaubleItem.removePlayer(event.player.getUniqueID());
+        circuitNanitesDataLoad = false;
     }
 
     @SubscribeEvent
