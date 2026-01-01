@@ -29,6 +29,7 @@ import com.science.gtnl.utils.recipes.GTNL_OverclockCalculator;
 
 import gregtech.api.enums.HatchElement;
 import gregtech.api.enums.Materials;
+import gregtech.api.gui.modularui.GTUITextures;
 import gregtech.api.interfaces.IHatchElement;
 import gregtech.api.metatileentity.implementations.MTEExtendedPowerMultiBlockBase;
 import gregtech.api.recipe.RecipeMaps;
@@ -189,7 +190,7 @@ public abstract class MixinMTEIntegratedOreFactory
 
         sMidProduct = simulatedOres.toArray(new ItemStack[0]);
 
-        switch (machineMode) {
+        switch (sMode) {
             case 0 -> {
                 gtnl$doMac(isOre);
                 gtnl$doWash(isCrushedOre);
@@ -453,7 +454,7 @@ public abstract class MixinMTEIntegratedOreFactory
     }
 
     @Unique
-    public List<ItemStack> gtnl$getOutputStack(GTRecipe aRecipe, int aTime) {
+    public List<ItemStack> gtnl$getOutputStack(GTRecipe aRecipe, int aStacksize) {
         ObjectArrayList<ItemStack> tOutput = new ObjectArrayList<>();
         Random random = RAND.get();
         for (int i = 0; i < aRecipe.mOutputs.length; i++) {
@@ -462,10 +463,11 @@ public abstract class MixinMTEIntegratedOreFactory
             }
             int tChance = aRecipe.getOutputChance(i);
             if (tChance == 10000) {
-                tOutput.add(GTUtility.copyAmountUnsafe(aTime * aRecipe.getOutput(i).stackSize, aRecipe.getOutput(i)));
+                tOutput
+                    .add(GTUtility.copyAmountUnsafe(aStacksize * aRecipe.getOutput(i).stackSize, aRecipe.getOutput(i)));
             } else {
-                double u = aTime * (tChance / 10000D);
-                double e = aTime * (tChance / 10000D) * (1 - (tChance / 10000D));
+                double u = aStacksize * (tChance / 10000D);
+                double e = aStacksize * (tChance / 10000D) * (1 - (tChance / 10000D));
                 int tAmount = (int) Math.ceil(Math.sqrt(e) * random.nextGaussian() + u);
                 tOutput.add(
                     GTUtility
@@ -498,6 +500,42 @@ public abstract class MixinMTEIntegratedOreFactory
             sMidProduct[cnt] = GTUtility.copyAmountUnsafe(e.getIntValue(), stack);
             cnt++;
         }
+    }
+
+    @Override
+    public boolean supportsMachineModeSwitch() {
+        return true;
+    }
+
+    @Override
+    public String getMachineModeName() {
+        List<String> des = getDisplayMode(sMode);
+        return String.join("\n", des);
+    }
+
+    @Override
+    public void setMachineModeIcons() {
+        machineModeIcons.add(GTUITextures.OVERLAY_BUTTON_MACHINEMODE_LPF_FLUID);
+        machineModeIcons.add(GTUITextures.OVERLAY_BUTTON_MACHINEMODE_LPF_METAL);
+        machineModeIcons.add(GTUITextures.OVERLAY_BUTTON_MACHINEMODE_BENDING);
+        machineModeIcons.add(GTUITextures.OVERLAY_BUTTON_MACHINEMODE_WASHPLANT);
+        machineModeIcons.add(GTUITextures.OVERLAY_BUTTON_MACHINEMODE_CHEMBATH);
+        machineModeIcons.add(GTUITextures.OVERLAY_BUTTON_MACHINEMODE_SIMPLEWASHER);
+    }
+
+    @Override
+    public int getMachineMode() {
+        return sMode;
+    }
+
+    @Override
+    public void setMachineMode(int index) {
+        sMode = index;
+    }
+
+    @Override
+    public int nextMachineMode() {
+        return sMode = (sMode + 1) % 6;
     }
 
     /**

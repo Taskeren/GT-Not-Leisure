@@ -123,19 +123,19 @@ public abstract class MultiMachineBase<T extends MultiMachineBase<T>> extends MT
 
         {
             put(GTNLItemList.LVParallelControllerCore.get(1), 1);
-            put(GTNLItemList.MVParallelControllerCore.getInternalStack_unsafe(), 2);
-            put(GTNLItemList.HVParallelControllerCore.getInternalStack_unsafe(), 3);
-            put(GTNLItemList.EVParallelControllerCore.getInternalStack_unsafe(), 4);
-            put(GTNLItemList.IVParallelControllerCore.getInternalStack_unsafe(), 5);
-            put(GTNLItemList.LuVParallelControllerCore.getInternalStack_unsafe(), 6);
-            put(GTNLItemList.ZPMParallelControllerCore.getInternalStack_unsafe(), 7);
-            put(GTNLItemList.UVParallelControllerCore.getInternalStack_unsafe(), 8);
-            put(GTNLItemList.UHVParallelControllerCore.getInternalStack_unsafe(), 9);
-            put(GTNLItemList.UEVParallelControllerCore.getInternalStack_unsafe(), 10);
-            put(GTNLItemList.UIVParallelControllerCore.getInternalStack_unsafe(), 11);
-            put(GTNLItemList.UMVParallelControllerCore.getInternalStack_unsafe(), 12);
-            put(GTNLItemList.UXVParallelControllerCore.getInternalStack_unsafe(), 13);
-            put(GTNLItemList.MAXParallelControllerCore.getInternalStack_unsafe(), 14);
+            put(GTNLItemList.MVParallelControllerCore.get(1), 2);
+            put(GTNLItemList.HVParallelControllerCore.get(1), 3);
+            put(GTNLItemList.EVParallelControllerCore.get(1), 4);
+            put(GTNLItemList.IVParallelControllerCore.get(1), 5);
+            put(GTNLItemList.LuVParallelControllerCore.get(1), 6);
+            put(GTNLItemList.ZPMParallelControllerCore.get(1), 7);
+            put(GTNLItemList.UVParallelControllerCore.get(1), 8);
+            put(GTNLItemList.UHVParallelControllerCore.get(1), 9);
+            put(GTNLItemList.UEVParallelControllerCore.get(1), 10);
+            put(GTNLItemList.UIVParallelControllerCore.get(1), 11);
+            put(GTNLItemList.UMVParallelControllerCore.get(1), 12);
+            put(GTNLItemList.UXVParallelControllerCore.get(1), 13);
+            put(GTNLItemList.MAXParallelControllerCore.get(1), 14);
         }
     };
 

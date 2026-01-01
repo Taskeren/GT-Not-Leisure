@@ -2304,6 +2304,7 @@ Tooltip_LargeIndustrialLathe_Casing=Any reinforced nichrome machine block
 NameLargeMaterialPress=Large Material Press
 LargeMaterialPressRecipeType=Compressor
 Tooltip_LargeMaterialPress_00=150% faster than machines of the same voltage
+Tooltip_LargeMaterialPress_01=Install UV or higher Parallel Control Core to support HIP Unit
 Tooltip_LargeMaterialPress_Casing=Any reinforced nichrome machine block
 
 NameLargeWiremill=Large Wiremill

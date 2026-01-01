@@ -2305,6 +2305,7 @@ Tooltip_LargeIndustrialLathe_Casing=任意强化镍铬机械方块
 NameLargeMaterialPress=大型挤压机
 LargeMaterialPressRecipeType=压缩机
 Tooltip_LargeMaterialPress_00=比相同电压的机器快150%
+Tooltip_LargeMaterialPress_01=安装UV及以上的并行控制核心来支持热等静压装置
 Tooltip_LargeMaterialPress_Casing=任意强化镍铬机械方块
 
 NameLargeWiremill=大型线材工厂
