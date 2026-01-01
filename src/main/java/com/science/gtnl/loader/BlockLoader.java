@@ -568,6 +568,7 @@ public class BlockLoader {
                 19,
                 metaCasing02,
                 new String[] { StatCollector.translateToLocal("Tooltip_QuantumComputerSingularityCore_00") }));
+        GTNLItemList.CompressedFurnaceCasing.set(MetaItemBlockCasing.initMetaBlockCasing(20, metaCasing02));
     }
 
     public static void registry() {

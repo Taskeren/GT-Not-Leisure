@@ -171,11 +171,6 @@ public abstract class PhotovoltaicPowerStation extends MultiMachineBase<Photovol
     }
 
     @Override
-    public int getMaxParallelRecipes() {
-        return 1;
-    }
-
-    @Override
     public void saveNBTData(NBTTagCompound aNBT) {
         super.saveNBTData(aNBT);
     }

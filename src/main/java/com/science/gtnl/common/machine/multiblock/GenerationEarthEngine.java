@@ -188,9 +188,4 @@ public class GenerationEarthEngine extends MultiMachineBase<GenerationEarthEngin
     public RecipeMap<?> getRecipeMap() {
         return RecipePool.RecombinationFusionReactorRecipes;
     }
-
-    @Override
-    public int getMaxParallelRecipes() {
-        return 1;
-    }
 }

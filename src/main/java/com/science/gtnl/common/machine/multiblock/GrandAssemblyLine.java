@@ -974,7 +974,7 @@ public class GrandAssemblyLine extends GTMMultiMachineBase<GrandAssemblyLine> im
         for (ItemStack input : allInputs) {
             if (input != null) {
                 if ((required.getItemDamage() == GTRecipeBuilder.WILDCARD && input.getItem() == required.getItem())
-                    || (input.isItemEqual(required) && ItemStack.areItemStackTagsEqual(input, required))) {
+                    || GTUtility.areStacksEqual(required, input)) {
                     count += input.stackSize;
                 }
             }
@@ -1016,8 +1016,7 @@ public class GrandAssemblyLine extends GTMMultiMachineBase<GrandAssemblyLine> im
         for (ItemStack input : allInputs) {
             if (input != null) {
                 boolean match = (required.getItemDamage() == GTRecipeBuilder.WILDCARD
-                    && input.getItem() == required.getItem())
-                    || (input.isItemEqual(required) && ItemStack.areItemStackTagsEqual(input, required));
+                    && input.getItem() == required.getItem()) || GTUtility.areStacksEqual(required, input);
 
                 if (match) {
                     matchedCount += input.stackSize;

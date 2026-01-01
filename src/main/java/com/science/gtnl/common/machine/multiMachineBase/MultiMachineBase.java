@@ -430,8 +430,9 @@ public abstract class MultiMachineBase<T extends MultiMachineBase<T>> extends MT
      *
      * @return The value (or a method to get the value) of Max Parallel (dynamically) .
      */
-    @ApiStatus.OverrideOnly
-    public abstract int getMaxParallelRecipes();
+    public int getMaxParallelRecipes() {
+        return 1;
+    }
 
     public abstract int getCasingTextureID();
 

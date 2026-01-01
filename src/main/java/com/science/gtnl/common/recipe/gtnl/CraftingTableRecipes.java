@@ -1288,6 +1288,16 @@ public class CraftingTableRecipes implements IRecipePool {
                 GTNLItemList.PrecisionSteamMechanism.get(1), 'D', GTNLItemList.HydraulicConveyor.get(1), 'E',
                 ItemList.Casing_BronzePlatedBricks.get(1) });
 
+        GTModHandler.addCraftingRecipe(
+            GTNLItemList.FurnaceArray.get(1),
+            new Object[] { "AAA", "BBB", "AAA", 'A', GTNLItemList.CompressedFurnaceCasing.get(1), 'B',
+                new ItemStack(Items.flint, 1) });
+
+        GTModHandler.addCraftingRecipe(
+            GTNLItemList.CompressedFurnaceCasing.get(1),
+            new Object[] { "AAA", "ABA", "AAA", 'A', new ItemStack(Blocks.furnace, 1), 'B',
+                new ItemStack(Items.flint, 1) });
+
         if (MainConfig.enableSomethingRecipe) loadExtraRecipe();
     }
 

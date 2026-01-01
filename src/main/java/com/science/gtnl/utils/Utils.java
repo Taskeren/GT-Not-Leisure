@@ -331,11 +331,11 @@ public class Utils {
         long amount) {
         if (amount < 0L) {
             throw new IllegalArgumentException("Code is trying to set item stack size a negative number.");
-        } else if (amount <= 2147483647L) {
+        } else if (amount <= Integer.MAX_VALUE) {
             return list.add(GTUtility.copyAmountUnsafe((int) amount, itemStack));
         } else {
             long toAdd;
-            for (toAdd = amount; toAdd > 2147483647L; toAdd -= 2147483647L) {
+            for (toAdd = amount; toAdd > Integer.MAX_VALUE; toAdd -= Integer.MAX_VALUE) {
                 list.add(GTUtility.copyAmountUnsafe(Integer.MAX_VALUE, itemStack));
             }
 
@@ -347,11 +347,11 @@ public class Utils {
         long amount) {
         if (amount < 0L) {
             throw new IllegalArgumentException("Code is trying to set item stack size a negative number.");
-        } else if (amount <= 2147483647L) {
+        } else if (amount <= Integer.MAX_VALUE) {
             return list.add(GTUtility.copyAmount((int) amount, fluidStackStack));
         } else {
             long toAdd;
-            for (toAdd = amount; toAdd > 2147483647L; toAdd -= 2147483647L) {
+            for (toAdd = amount; toAdd > Integer.MAX_VALUE; toAdd -= Integer.MAX_VALUE) {
                 list.add(GTUtility.copyAmount(Integer.MAX_VALUE, fluidStackStack));
             }
 

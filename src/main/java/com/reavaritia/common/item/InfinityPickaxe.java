@@ -131,9 +131,9 @@ public class InfinityPickaxe extends ItemPickaxe implements SubtitleDisplay {
                 if (!(victim instanceof EntityPlayer entityPlayer && LudicrousItems.isInfinite(entityPlayer))) {
                     int i = 10;
                     victim.addVelocity(
-                        (double) (-MathHelper.sin(player.rotationYaw * (float) Math.PI / 180.0F) * (float) i * 0.5F),
+                        -MathHelper.sin(player.rotationYaw * (float) Math.PI / 180.0F) * (float) i * 0.5F,
                         2.0D,
-                        (double) (MathHelper.cos(player.rotationYaw * (float) Math.PI / 180.0F) * (float) i * 0.5F));
+                        MathHelper.cos(player.rotationYaw * (float) Math.PI / 180.0F) * (float) i * 0.5F);
                 }
             }
         }
