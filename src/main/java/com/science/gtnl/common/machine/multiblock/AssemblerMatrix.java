@@ -70,6 +70,7 @@ import com.science.gtnl.utils.LargeInventoryCrafting;
 import com.science.gtnl.utils.StructureUtils;
 import com.science.gtnl.utils.Utils;
 import com.science.gtnl.utils.enums.GTNLItemList;
+import com.science.gtnl.utils.enums.ModList;
 import com.science.gtnl.utils.item.ItemUtils;
 
 import appeng.api.config.Actionable;
@@ -943,18 +944,21 @@ public class AssemblerMatrix extends MultiMachineBase<AssemblerMatrix>
 
                 for (ItemStack input : inputs) {
                     if (!(input.getItem() instanceof ICraftingPatternItem i)) continue;
+                    ICraftingPatternDetails patternDetails = i.getPatternForItem(
+                        input,
+                        this.getBaseMetaTileEntity()
+                            .getWorld());
+                    if (isBlockedAe2ThingsInfusionPattern(input)) continue;
                     int slot = inventory.getFirstEmptySlot();
                     if (slot == -1) continue;
                     ItemStack pattern = input.copy();
                     pattern.stackSize = 1;
                     inventory.setInventorySlotContents(slot, pattern);
-                    var p = i.getPatternForItem(
-                        input,
-                        this.getBaseMetaTileEntity()
-                            .getWorld());
-                    if (!(p.isCraftable() || p instanceof DireCraftingPatternDetails)) continue;
-                    patterns.put(pattern, p);
-                    possibleOutputs.add(p.getCondensedOutputs()[0]);
+                    if (patternDetails != null
+                        && (patternDetails.isCraftable() || patternDetails instanceof DireCraftingPatternDetails)) {
+                        patterns.put(pattern, patternDetails);
+                        possibleOutputs.add(patternDetails.getCondensedOutputs()[0]);
+                    }
 
                     input.stackSize--;
                     updated = true;
@@ -1057,6 +1061,14 @@ public class AssemblerMatrix extends MultiMachineBase<AssemblerMatrix>
         }
 
         return CheckRecipeResultRegistry.NO_RECIPE;
+    }
+
+    private static boolean isBlockedAe2ThingsInfusionPattern(ItemStack stack) {
+        if (stack == null || stack.getItem() == null) return false;
+        if (!ModList.AE2Thing.isModLoaded()) return false;
+        if (stack.stackTagCompound == null) return false;
+        // AE2Things infusion pattern terminal encodes to standard AE2 pattern item with tc_crafting flag.
+        return stack.stackTagCompound.hasKey("tc_crafting");
     }
 
     @Override
