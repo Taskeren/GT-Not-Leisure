@@ -1,6 +1,5 @@
 package com.science.gtnl.client.gui.portableWorkbench;
 
-import com.science.gtnl.container.portableWorkbench.ContainerPortableFurnace;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.EntityPlayer;
@@ -9,6 +8,8 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 
 import org.lwjgl.opengl.GL11;
+
+import com.science.gtnl.container.portableWorkbench.ContainerPortableFurnace;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;

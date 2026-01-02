@@ -2,7 +2,6 @@ package com.science.gtnl.client.gui.portableWorkbench;
 
 import static com.science.gtnl.ScienceNotLeisure.*;
 
-import com.science.gtnl.container.portableWorkbench.ContainerPortableChest;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.entity.player.InventoryPlayer;
@@ -11,6 +10,8 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 
 import org.lwjgl.opengl.GL11;
+
+import com.science.gtnl.container.portableWorkbench.ContainerPortableChest;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;

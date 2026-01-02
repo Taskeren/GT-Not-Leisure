@@ -7,8 +7,8 @@ import net.minecraft.inventory.Slot;
 import net.minecraft.nbt.NBTTagCompound;
 
 import com.science.gtnl.ScienceNotLeisure;
-import com.science.gtnl.common.packet.DirePatternHandler;
 import com.science.gtnl.client.gui.GuiDirePatternEncoder;
+import com.science.gtnl.common.packet.DirePatternHandler;
 
 import appeng.container.slot.SlotFakeCraftingMatrix;
 import codechicken.nei.PositionedStack;

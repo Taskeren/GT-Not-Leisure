@@ -1,6 +1,5 @@
 package com.science.gtnl.client.gui;
 
-import com.science.gtnl.container.ContainerAEChisel;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.InventoryPlayer;
 
@@ -9,6 +8,7 @@ import org.apache.commons.lang3.StringUtils;
 import com.science.gtnl.ScienceNotLeisure;
 import com.science.gtnl.common.block.blocks.tile.TileEntityAEChisel;
 import com.science.gtnl.common.packet.AEChiselSyncParallel;
+import com.science.gtnl.container.ContainerAEChisel;
 
 import appeng.client.gui.AEBaseGui;
 import appeng.client.gui.widgets.MEGuiTextField;

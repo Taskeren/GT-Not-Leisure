@@ -4,6 +4,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
 
+import com.science.gtnl.client.gui.portableWorkbench.GuiPortableChest;
 import com.science.gtnl.common.block.blocks.tile.TileEntityAEChisel;
 import com.science.gtnl.common.block.blocks.tile.TileEntityDirePatternEncoder;
 import com.science.gtnl.common.entity.EntityParticleBeam;
@@ -12,9 +13,6 @@ import com.science.gtnl.common.machine.multiblock.AssemblerMatrix;
 import com.science.gtnl.common.packet.NetWorkHandler;
 import com.science.gtnl.common.recipe.gtnl.ExtremeExtremeEntityCrusherRecipes;
 import com.science.gtnl.common.world.FluidLakeWorldGen;
-import com.science.gtnl.loader.MaterialLoader;
-import com.science.gtnl.utils.SubscribeEventUtils;
-import com.science.gtnl.utils.enums.GuiType;
 import com.science.gtnl.container.ContainerAEChisel;
 import com.science.gtnl.container.ContainerDirePatternEncoder;
 import com.science.gtnl.container.portableWorkbench.ContainerPortableAdvancedWorkbench;
@@ -26,7 +24,9 @@ import com.science.gtnl.container.portableWorkbench.ContainerPortableEnchanting;
 import com.science.gtnl.container.portableWorkbench.ContainerPortableEnderChest;
 import com.science.gtnl.container.portableWorkbench.ContainerPortableFurnace;
 import com.science.gtnl.container.portableWorkbench.ContainerPortableInfinityChest;
-import com.science.gtnl.client.gui.portableWorkbench.GuiPortableChest;
+import com.science.gtnl.loader.MaterialLoader;
+import com.science.gtnl.utils.SubscribeEventUtils;
+import com.science.gtnl.utils.enums.GuiType;
 import com.science.gtnl.utils.machine.VMTweakHelper;
 import com.science.gtnl.utils.recipes.CraftingUnitHandler;
 

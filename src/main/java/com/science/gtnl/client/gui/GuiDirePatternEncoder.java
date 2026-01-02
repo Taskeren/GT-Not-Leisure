@@ -1,6 +1,5 @@
 package com.science.gtnl.client.gui;
 
-import com.science.gtnl.container.ContainerDirePatternEncoder;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.util.ResourceLocation;
@@ -10,6 +9,7 @@ import org.lwjgl.opengl.GL11;
 import com.science.gtnl.ScienceNotLeisure;
 import com.science.gtnl.common.block.blocks.tile.TileEntityDirePatternEncoder;
 import com.science.gtnl.common.packet.DirePatternHandler;
+import com.science.gtnl.container.ContainerDirePatternEncoder;
 
 import appeng.api.config.ActionItems;
 import appeng.api.config.Settings;

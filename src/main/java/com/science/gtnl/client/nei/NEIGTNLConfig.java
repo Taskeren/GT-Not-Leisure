@@ -1,13 +1,13 @@
 package com.science.gtnl.client.nei;
 
-import com.science.gtnl.common.material.MaterialPool;
-import com.science.gtnl.common.material.RecipePool;
-import com.science.gtnl.utils.enums.GTNLItemList;
-import com.science.gtnl.utils.enums.ModList;
 import com.science.gtnl.client.gui.GuiDirePatternEncoder;
 import com.science.gtnl.client.gui.portableWorkbench.GuiPortableAdvancedWorkbench;
 import com.science.gtnl.client.gui.portableWorkbench.GuiPortableBasicWorkbench;
 import com.science.gtnl.client.gui.portableWorkbench.GuiPortableFurnace;
+import com.science.gtnl.common.material.MaterialPool;
+import com.science.gtnl.common.material.RecipePool;
+import com.science.gtnl.utils.enums.GTNLItemList;
+import com.science.gtnl.utils.enums.ModList;
 import com.science.gtnl.utils.gui.recipe.RocketAssemblerHandler;
 
 import bartworks.system.material.Werkstoff;

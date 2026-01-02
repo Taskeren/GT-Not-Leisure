@@ -28,10 +28,10 @@ import net.minecraftforge.event.entity.living.LivingHurtEvent;
 
 import com.cleanroommc.modularui.utils.item.InvWrapper;
 import com.science.gtnl.client.GTNLCreativeTabs;
-import com.science.gtnl.utils.enums.GTNLItemList;
-import com.science.gtnl.utils.enums.GuiType;
 import com.science.gtnl.client.gui.portableWorkbench.GuiPortableChest;
 import com.science.gtnl.utils.InventoryInfinityChest;
+import com.science.gtnl.utils.enums.GTNLItemList;
+import com.science.gtnl.utils.enums.GuiType;
 
 import appeng.api.config.Actionable;
 import appeng.api.networking.security.PlayerSource;
