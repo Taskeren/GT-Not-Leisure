@@ -81,6 +81,7 @@ import com.science.gtnl.common.machine.multiblock.FOGAlloyBlastSmelterModule;
 import com.science.gtnl.common.machine.multiblock.FOGAlloySmelterModule;
 import com.science.gtnl.common.machine.multiblock.FOGExtractorModule;
 import com.science.gtnl.common.machine.multiblock.FuelRefiningComplex;
+import com.science.gtnl.common.machine.multiblock.FurnaceArray;
 import com.science.gtnl.common.machine.multiblock.GenerationEarthEngine;
 import com.science.gtnl.common.machine.multiblock.GrandAssemblyLine;
 import com.science.gtnl.common.machine.multiblock.IndustrialArcaneAssembler;
@@ -1711,6 +1712,10 @@ public class MachineLoader {
         GTNLItemList.PCBFactory
             .set(new PCBFactory(PCB_FACTORY.ID, "PCBFactory", StatCollector.translateToLocal("NamePCBFactory")));
         addItemTooltip(GTNLItemList.PCBFactory.get(1), AnimatedText.SNL_QYZG);
+
+        GTNLItemList.FurnaceArray.set(
+            new FurnaceArray(FURNACE_ARRAY.ID, "FurnaceArray", StatCollector.translateToLocal("NameFurnaceArray")));
+        addItemTooltip(GTNLItemList.FurnaceArray.get(1), AnimatedText.SCIENCE_NOT_LEISURE);
 
         // Special Machine
         GTNLItemList.CheatOreProcessingFactory.set(

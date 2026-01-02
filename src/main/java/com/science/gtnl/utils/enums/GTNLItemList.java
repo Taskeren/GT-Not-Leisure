@@ -154,6 +154,7 @@ public enum GTNLItemList implements IItemContainer {
     QuantumComputerDataEntangler,
     QuantumComputerAccelerator,
     QuantumComputerMultiThreader,
+    CompressedFurnaceCasing,
 
     TrollFace,
     DepletedExcitedNaquadahFuelRod,
@@ -632,6 +633,7 @@ public enum GTNLItemList implements IItemContainer {
     MagneticConfinementDimensionalityShockDevice,
     SupercomputingCenter,
     PCBFactory,
+    FurnaceArray,
 
     EnergyHatchLV,
     EnergyHatchLV4A,

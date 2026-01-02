@@ -300,6 +300,24 @@ public class SubscribeEventUtils {
         }
     }
 
+    public static long sleepTime = 0;
+    public static int tick = 0;
+
+    @SubscribeEvent
+    public void onServerTick(TickEvent.ServerTickEvent event) {
+        if (event.phase == TickEvent.Phase.START) {
+            ++tick;
+            sleepTime = 0;
+        } else if (sleepTime > 0 && tick % 20 == 0) {
+            try {
+                sleepTime = Math.min(2000, sleepTime);
+                Thread.sleep(sleepTime);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+        }
+    }
+
     // World
     @SubscribeEvent
     public void onWorldLoad(WorldEvent.Load event) {

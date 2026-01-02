@@ -113,11 +113,6 @@ public class EdenGarden extends MultiMachineBase<EdenGarden> implements IGreenHo
     }
 
     @Override
-    public int getMaxParallelRecipes() {
-        return 1;
-    }
-
-    @Override
     public ArrayList<MTEHatchOutputBus> getOutputBus() {
         return mOutputBusses;
     }

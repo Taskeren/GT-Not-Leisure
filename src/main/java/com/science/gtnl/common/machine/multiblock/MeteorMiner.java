@@ -151,11 +151,6 @@ public class MeteorMiner extends MultiMachineBase<MeteorMiner> implements ISurvi
     }
 
     @Override
-    public int getMaxParallelRecipes() {
-        return 1;
-    }
-
-    @Override
     public IStructureDefinition<MeteorMiner> getStructureDefinition() {
         return StructureDefinition.<MeteorMiner>builder()
             .addShape(STRUCTURE_PIECE_MAIN, transpose(shape_t1))

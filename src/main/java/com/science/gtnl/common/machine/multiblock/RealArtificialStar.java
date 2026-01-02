@@ -633,11 +633,6 @@ public class RealArtificialStar extends MultiMachineBase<RealArtificialStar> {
     }
 
     @Override
-    public int getMaxParallelRecipes() {
-        return 1;
-    }
-
-    @Override
     public boolean supportsVoidProtection() {
         return false;
     }

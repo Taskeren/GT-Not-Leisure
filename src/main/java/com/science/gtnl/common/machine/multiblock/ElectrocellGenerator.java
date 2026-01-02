@@ -116,11 +116,6 @@ public class ElectrocellGenerator extends MultiMachineBase<ElectrocellGenerator>
     }
 
     @Override
-    public int getMaxParallelRecipes() {
-        return 1;
-    }
-
-    @Override
     public IStructureDefinition<ElectrocellGenerator> getStructureDefinition() {
         return StructureDefinition.<ElectrocellGenerator>builder()
             .addShape(STRUCTURE_PIECE_MAIN, transpose(shape))

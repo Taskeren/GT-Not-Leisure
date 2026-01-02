@@ -56,6 +56,7 @@ public class NEIGTNLConfig implements IConfigureNEI {
         API.addRecipeCatalyst(GTNLItemList.ReactionFurnace.get(1), "smelting");
         API.addRecipeCatalyst(GTNLItemList.LargeSteamFurnace.get(1), "smelting");
         API.addRecipeCatalyst(GTNLItemList.PortableFurnace.get(1), "smelting");
+        API.addRecipeCatalyst(GTNLItemList.FurnaceArray.get(1), "smelting");
         API.addRecipeCatalyst(GTNLItemList.PortableBasicWorkBench.get(1), "crafting");
         API.addRecipeCatalyst(GTNLItemList.PortableAdvancedWorkBench.get(1), "crafting");
         API.addRecipeCatalyst(GTNLItemList.AssemblerMatrix.get(1), "crafting");

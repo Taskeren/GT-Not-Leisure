@@ -390,11 +390,6 @@ public class SingularityDataHub extends MultiMachineBase<SingularityDataHub>
     }
 
     @Override
-    public int getMaxParallelRecipes() {
-        return 0;
-    }
-
-    @Override
     public String[] getInfoData() {
         ArrayList<String> ll = new ArrayList<>();
         ll.add(

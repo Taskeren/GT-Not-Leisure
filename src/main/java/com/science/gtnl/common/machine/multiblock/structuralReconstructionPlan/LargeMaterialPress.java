@@ -109,6 +109,7 @@ public class LargeMaterialPress extends GTMMultiMachineBase<LargeMaterialPress> 
             .addInfo(StatCollector.translateToLocal("Tooltip_GTMMultiMachine_01"))
             .addInfo(StatCollector.translateToLocal("Tooltip_GTMMultiMachine_02"))
             .addInfo(StatCollector.translateToLocal("Tooltip_GTMMultiMachine_03"))
+            .addInfo(StatCollector.translateToLocal("Tooltip_LargeMaterialPress_01"))
             .addMultiAmpHatchInfo()
             .beginStructureBlock(7, 3, 3, true)
             .addInputHatch(StatCollector.translateToLocal("Tooltip_LargeMaterialPress_Casing"))
@@ -178,7 +179,8 @@ public class LargeMaterialPress extends GTMMultiMachineBase<LargeMaterialPress> 
             @NotNull
             @Override
             public CheckRecipeResult validateRecipe(@NotNull GTRecipe recipe) {
-                if (recipe.getMetadataOrDefault(CompressionTierKey.INSTANCE, 0) != 0) {
+                int tier = recipe.getMetadataOrDefault(CompressionTierKey.INSTANCE, 0);
+                if (tier > 1 || (tier == 1 && mParallelTier < 8)) {
                     return CheckRecipeResultRegistry.NO_RECIPE;
                 }
                 return super.validateRecipe(recipe);

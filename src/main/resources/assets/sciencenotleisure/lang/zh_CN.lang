@@ -976,6 +976,7 @@ tile.MetaCasing02.18.name=装配矩阵Debug合成核心
 Tooltip_AssemblerMatrixDebugCrafterCore_00=每个提供9,223,372,036,854,775,807并行
 tile.MetaCasing02.19.name=量子计算机奇点核心
 Tooltip_QuantumComputerSingularityCore_00=将量子计算机的合成存储容量锁定为9.22E
+tile.MetaCasing02.20.name=压缩熔炉机械方块
 
 tile.MetaBlock.0.name=测试方块
 tile.MetaBlock.1.name=§d新视野线圈
@@ -1795,6 +1796,15 @@ Tooltip_SwarmCore_Casing=任意放射硅岩合金机械方块
 Info_SwarmCore_00=纳米锻炉升级
 Info_SwarmCore_01=锻炉等级：%s
 
+NameFurnaceArray=熔炉组
+FurnaceArrayRecipeType=熔炉
+Tooltip_FurnaceArray_00=§o§6我说2048熔炉组比工业熔炉数值，因为熔炉组每消耗8个圆石就能加1并行
+Tooltip_FurnaceArray_01=初始最大并行为1，每输入一个熔炉，最大并行加1
+Tooltip_FurnaceArray_02=每输入32煤炭，永久点燃一个熔炉，使最大可用并行加1
+Tooltip_FurnaceArray_03=固定运行时间为5秒
+Tooltip_FurnaceArray_04=每个熔炉按照期望的运行速度产生不可思议的效果
+Info_FurnaceArray_00=大家快来看 %s, %s, %s 的%s设计的%sms延迟熔炉！
+
 NameHorizontalCompressor=卧式压缩机
 HorizontalCompressorRecipeType=压缩机
 Tooltip_HorizontalCompressor_00=升级机器来启用黑洞压缩机！
@@ -2295,6 +2305,7 @@ Tooltip_LargeIndustrialLathe_Casing=任意强化镍铬机械方块
 NameLargeMaterialPress=大型挤压机
 LargeMaterialPressRecipeType=压缩机
 Tooltip_LargeMaterialPress_00=比相同电压的机器快150%
+Tooltip_LargeMaterialPress_01=安装UV及以上的并行控制核心来支持热等静压装置
 Tooltip_LargeMaterialPress_Casing=任意强化镍铬机械方块
 
 NameLargeWiremill=大型线材工厂
