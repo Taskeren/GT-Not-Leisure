@@ -174,7 +174,7 @@ public class FurnaceArray extends MultiMachineBase<FurnaceArray> implements ISur
         int y = te.getYCoord();
         int z = te.getZCoord();
 
-        long remainingFurnace = furnaceCount;
+        long remainingFurnace = furnaceCount - 1;
         while (remainingFurnace > 0) {
             int dropAmount = (int) Math.min(64, remainingFurnace);
             ItemStack drop = furnace.copy();
