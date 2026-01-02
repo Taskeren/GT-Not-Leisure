@@ -115,7 +115,6 @@ public class FurnaceArray extends MultiMachineBase<FurnaceArray> implements ISur
             .addInfo(StatCollector.translateToLocal("Tooltip_FurnaceArray_02"))
             .addInfo(StatCollector.translateToLocal("Tooltip_FurnaceArray_03"))
             .addInfo(StatCollector.translateToLocal("Tooltip_FurnaceArray_04"))
-            .addMultiAmpHatchInfo()
             .beginStructureBlock(3, 3, 3, true)
             .addInputBus(StatCollector.translateToLocal("Tooltip_FurnaceArray_Casing"))
             .addOutputBus(StatCollector.translateToLocal("Tooltip_FurnaceArray_Casing"))
