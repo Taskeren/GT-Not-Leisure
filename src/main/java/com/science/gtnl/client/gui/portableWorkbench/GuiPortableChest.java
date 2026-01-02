@@ -1,7 +1,8 @@
-package com.science.gtnl.utils.gui.portableWorkbench;
+package com.science.gtnl.client.gui.portableWorkbench;
 
 import static com.science.gtnl.ScienceNotLeisure.*;
 
+import com.science.gtnl.container.portableWorkbench.ContainerPortableChest;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.entity.player.InventoryPlayer;

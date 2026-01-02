@@ -1,5 +1,6 @@
-package com.science.gtnl.utils.gui;
+package com.science.gtnl.client.gui;
 
+import com.science.gtnl.container.ContainerDirePatternEncoder;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.util.ResourceLocation;

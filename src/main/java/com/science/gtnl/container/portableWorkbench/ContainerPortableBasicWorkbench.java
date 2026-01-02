@@ -1,4 +1,4 @@
-package com.science.gtnl.utils.gui.portableWorkbench;
+package com.science.gtnl.container.portableWorkbench;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.ContainerWorkbench;

@@ -1,4 +1,4 @@
-package com.science.gtnl.utils.gui;
+package com.science.gtnl.container;
 
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.item.ItemStack;

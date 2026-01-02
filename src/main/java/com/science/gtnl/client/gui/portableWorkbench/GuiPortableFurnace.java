@@ -1,5 +1,6 @@
-package com.science.gtnl.utils.gui.portableWorkbench;
+package com.science.gtnl.client.gui.portableWorkbench;
 
+import com.science.gtnl.container.portableWorkbench.ContainerPortableFurnace;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.EntityPlayer;

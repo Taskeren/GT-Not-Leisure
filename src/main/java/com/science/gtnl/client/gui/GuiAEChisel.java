@@ -1,5 +1,6 @@
-package com.science.gtnl.utils.gui;
+package com.science.gtnl.client.gui;
 
+import com.science.gtnl.container.ContainerAEChisel;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.InventoryPlayer;
 

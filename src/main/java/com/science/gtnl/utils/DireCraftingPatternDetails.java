@@ -6,7 +6,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.Constants;
 
-import com.science.gtnl.utils.gui.ContainerDirePatternEncoder;
+import com.science.gtnl.container.ContainerDirePatternEncoder;
 
 import appeng.api.networking.crafting.ICraftingPatternDetails;
 import appeng.api.storage.data.IAEItemStack;

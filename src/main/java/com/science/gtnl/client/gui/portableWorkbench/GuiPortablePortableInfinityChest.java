@@ -1,7 +1,8 @@
-package com.science.gtnl.utils.gui.portableWorkbench;
+package com.science.gtnl.client.gui.portableWorkbench;
 
 import javax.annotation.Nonnull;
 
+import com.science.gtnl.container.portableWorkbench.ContainerPortableInfinityChest;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.item.ItemStack;
 

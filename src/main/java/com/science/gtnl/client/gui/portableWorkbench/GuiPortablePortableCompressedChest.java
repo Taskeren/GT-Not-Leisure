@@ -1,5 +1,6 @@
-package com.science.gtnl.utils.gui.portableWorkbench;
+package com.science.gtnl.client.gui.portableWorkbench;
 
+import com.science.gtnl.container.portableWorkbench.ContainerPortableCompressedChest;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.item.ItemStack;
 

@@ -1,7 +1,8 @@
-package com.science.gtnl.utils.gui.portableWorkbench;
+package com.science.gtnl.container.portableWorkbench;
 
 import javax.annotation.Nullable;
 
+import com.science.gtnl.utils.SlotInfinity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.Container;

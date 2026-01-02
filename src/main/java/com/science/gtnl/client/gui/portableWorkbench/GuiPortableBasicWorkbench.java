@@ -1,4 +1,4 @@
-package com.science.gtnl.utils.gui.portableWorkbench;
+package com.science.gtnl.client.gui.portableWorkbench;
 
 import net.minecraft.client.gui.inventory.GuiCrafting;
 import net.minecraft.entity.player.InventoryPlayer;

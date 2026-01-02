@@ -2,7 +2,7 @@ package com.science.gtnl.common.packet;
 
 import net.minecraft.nbt.NBTTagCompound;
 
-import com.science.gtnl.utils.gui.ContainerDirePatternEncoder;
+import com.science.gtnl.container.ContainerDirePatternEncoder;
 
 import cpw.mods.fml.common.network.ByteBufUtils;
 import cpw.mods.fml.common.network.simpleimpl.IMessage;

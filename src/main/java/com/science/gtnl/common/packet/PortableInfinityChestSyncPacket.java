@@ -4,7 +4,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 
 import com.science.gtnl.ScienceNotLeisure;
-import com.science.gtnl.utils.gui.portableWorkbench.ContainerPortableInfinityChest;
+import com.science.gtnl.container.portableWorkbench.ContainerPortableInfinityChest;
 
 import cpw.mods.fml.common.network.ByteBufUtils;
 import cpw.mods.fml.common.network.simpleimpl.IMessage;

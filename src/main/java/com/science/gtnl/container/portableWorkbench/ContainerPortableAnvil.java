@@ -1,4 +1,4 @@
-package com.science.gtnl.utils.gui.portableWorkbench;
+package com.science.gtnl.container.portableWorkbench;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
@@ -11,6 +11,7 @@ import com.science.gtnl.mixins.early.Minecraft.AccessorContainerRepair;
 
 public class ContainerPortableAnvil extends ContainerRepair {
 
+    @SuppressWarnings("ReferenceToMixin")
     public ContainerPortableAnvil(InventoryPlayer playerInv, EntityPlayer player) {
         super(playerInv, player.worldObj, 0, 0, 0, player);
 
