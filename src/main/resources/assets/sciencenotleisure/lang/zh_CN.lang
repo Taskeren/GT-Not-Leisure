@@ -1804,6 +1804,8 @@ Tooltip_FurnaceArray_02=每输入32煤炭，永久点燃一个熔炉，使最大
 Tooltip_FurnaceArray_03=固定运行时间为5秒
 Tooltip_FurnaceArray_04=每个熔炉按照期望的运行速度产生不可思议的效果
 Info_FurnaceArray_00=大家快来看 %s, %s, %s 的%s设计的%sms延迟熔炉！
+Info_FurnaceArray_01=当前熔炉数量：%s
+Info_FurnaceArray_02=当前煤炭数量：%s
 
 NameHorizontalCompressor=卧式压缩机
 HorizontalCompressorRecipeType=压缩机

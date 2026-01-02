@@ -1,12 +1,12 @@
 package com.science.gtnl.common.machine.multiblock;
 
 import static com.gtnewhorizon.structurelib.structure.StructureUtility.*;
-import static com.science.gtnl.common.machine.multiMachineBase.MultiMachineBase.CustomHatchElement.*;
 import static gregtech.api.enums.HatchElement.*;
 import static gregtech.api.util.GTStructureUtility.*;
 import static gregtech.api.util.GTUtility.*;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import net.minecraft.entity.item.EntityItem;
@@ -28,11 +28,17 @@ import com.gtnewhorizon.structurelib.alignment.constructable.ISurvivalConstructa
 import com.gtnewhorizon.structurelib.structure.IStructureDefinition;
 import com.gtnewhorizon.structurelib.structure.ISurvivalBuildEnvironment;
 import com.gtnewhorizon.structurelib.structure.StructureDefinition;
-import com.science.gtnl.common.machine.multiMachineBase.MultiMachineBase;
+import com.gtnewhorizons.modularui.api.math.Alignment;
+import com.gtnewhorizons.modularui.common.widget.DynamicPositionedColumn;
+import com.gtnewhorizons.modularui.common.widget.FakeSyncWidget;
+import com.gtnewhorizons.modularui.common.widget.SlotWidget;
+import com.gtnewhorizons.modularui.common.widget.TextWidget;
+import com.science.gtnl.common.machine.multiMachineBase.SteamMultiMachineBase;
 import com.science.gtnl.loader.BlockLoader;
 import com.science.gtnl.utils.SubscribeEventUtils;
 import com.science.gtnl.utils.Utils;
 
+import gregtech.api.enums.StructureError;
 import gregtech.api.enums.Textures;
 import gregtech.api.interfaces.ITexture;
 import gregtech.api.interfaces.metatileentity.IMetaTileEntity;
@@ -48,7 +54,7 @@ import gregtech.api.util.GTUtility;
 import gregtech.api.util.MultiblockTooltipBuilder;
 import gregtech.common.tileentities.machines.MTEHatchOutputBusME;
 
-public class FurnaceArray extends MultiMachineBase<FurnaceArray> implements ISurvivalConstructable {
+public class FurnaceArray extends SteamMultiMachineBase<FurnaceArray> implements ISurvivalConstructable {
 
     private static final String STRUCTURE_PIECE_MAIN = "main";
     private static final int HORIZONTAL_OFF_SET = 1;
@@ -107,6 +113,16 @@ public class FurnaceArray extends MultiMachineBase<FurnaceArray> implements ISur
     }
 
     @Override
+    public int getTierRecipes() {
+        return 14;
+    }
+
+    @Override
+    public String getMachineType() {
+        return StatCollector.translateToLocal("FurnaceArrayRecipeType");
+    }
+
+    @Override
     public MultiblockTooltipBuilder createTooltip() {
         MultiblockTooltipBuilder tt = new MultiblockTooltipBuilder();
         tt.addMachineType(StatCollector.translateToLocal("FurnaceArrayRecipeType"))
@@ -134,7 +150,7 @@ public class FurnaceArray extends MultiMachineBase<FurnaceArray> implements ISur
                 'A',
                 buildHatchAdder(FurnaceArray.class).casingIndex(getCasingTextureID())
                     .dot(1)
-                    .atLeast(InputBus, OutputBus)
+                    .atLeast(SteamHatchElement.InputBus_Steam, SteamHatchElement.OutputBus_Steam, InputBus, OutputBus)
                     .buildAndChain(onElementPass(x -> ++x.mCountCasing, ofBlock(BlockLoader.metaCasing02, 20))))
             .build();
     }
@@ -143,6 +159,9 @@ public class FurnaceArray extends MultiMachineBase<FurnaceArray> implements ISur
     public boolean checkMachine(IGregTechTileEntity aBaseMetaTileEntity, ItemStack aStack) {
         return checkPiece(STRUCTURE_PIECE_MAIN, HORIZONTAL_OFF_SET, VERTICAL_OFF_SET, DEPTH_OFF_SET) && checkHatch();
     }
+
+    @Override
+    public void validateStructure(Collection<StructureError> errors, NBTTagCompound context) {}
 
     @Override
     public void saveNBTData(NBTTagCompound aNBT) {
@@ -195,9 +214,23 @@ public class FurnaceArray extends MultiMachineBase<FurnaceArray> implements ISur
     public CheckRecipeResult checkProcessing() {
         time = 0;
         List<ItemStack> tInput = getAllStoredInputs();
+
+        for (ItemStack input : tInput) {
+            if (GTUtility.areStacksEqual(input, furnace)) {
+                furnaceCount += input.stackSize;
+                depleteInput(input);
+                continue;
+            }
+            if (GTUtility.areStacksEqual(input, coal)) {
+                coalCount += input.stackSize;
+                depleteInput(input);
+            }
+        }
+
         if (tInput.isEmpty()) {
             return CheckRecipeResultRegistry.NO_RECIPE;
         }
+
         long maxParallel = Math.min(furnaceCount, coalCount / 32);
         if (maxParallel <= 0) {
             return CheckRecipeResultRegistry.NO_RECIPE;
@@ -245,17 +278,6 @@ public class FurnaceArray extends MultiMachineBase<FurnaceArray> implements ISur
         long toSmelt = maxParallel;
 
         for (ItemStack item : tInput) {
-            if (GTUtility.areStacksEqual(item, furnace)) {
-                furnaceCount += item.stackSize;
-                depleteInput(item);
-                continue;
-            }
-            if (GTUtility.areStacksEqual(item, coal)) {
-                coalCount += item.stackSize;
-                depleteInput(item);
-                continue;
-            }
-
             ItemStack smeltedOutput = GTModHandler.getSmeltingOutput(item, false, null);
             if (smeltedOutput == null) continue;
 
@@ -319,6 +341,25 @@ public class FurnaceArray extends MultiMachineBase<FurnaceArray> implements ISur
             SubscribeEventUtils.sleepTime += time;
         }
         return super.onRunningTick(aStack);
+    }
+
+    @Override
+    protected void drawTexts(DynamicPositionedColumn screenElements, SlotWidget inventorySlot) {
+        super.drawTexts(screenElements, inventorySlot);
+        screenElements
+            .widget(
+                new TextWidget()
+                    .setStringSupplier(
+                        () -> StatCollector.translateToLocalFormatted("Info_FurnaceArray_01", furnaceCount))
+                    .setTextAlignment(Alignment.CenterLeft)
+                    .setDefaultColor(COLOR_TEXT_WHITE.get()))
+            .widget(
+                new TextWidget()
+                    .setStringSupplier(() -> StatCollector.translateToLocalFormatted("Info_FurnaceArray_02", coalCount))
+                    .setTextAlignment(Alignment.CenterLeft)
+                    .setDefaultColor(COLOR_TEXT_WHITE.get()))
+            .widget(new FakeSyncWidget.LongSyncer(() -> furnaceCount, f -> furnaceCount = f))
+            .widget(new FakeSyncWidget.LongSyncer(() -> coalCount, c -> coalCount = c));
     }
 
     @Override

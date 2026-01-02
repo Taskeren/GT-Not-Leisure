@@ -1803,6 +1803,8 @@ Tooltip_FurnaceArray_02=For every 32 coal input, permanently light one furnace, 
 Tooltip_FurnaceArray_03=Fixed operation time is 5 seconds
 Tooltip_FurnaceArray_04=Each furnace produces unbelievable effects at the expected operating speed
 Info_FurnaceArray_00=Come check out %s, %s, %s designed by %s: the %sms delay furnace!
+Info_FurnaceArray_01=Current furnace count: %s
+Info_FurnaceArray_02=Current coal count: %s
 
 NameHorizontalCompressor=Horizontal Compressor
 HorizontalCompressorRecipeType=Compressor

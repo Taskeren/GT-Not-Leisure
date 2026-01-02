@@ -307,11 +307,11 @@ public class SubscribeEventUtils {
     public void onServerTick(TickEvent.ServerTickEvent event) {
         if (event.phase == TickEvent.Phase.START) {
             ++tick;
-            sleepTime = 0;
         } else if (sleepTime > 0 && tick % 20 == 0) {
             try {
                 sleepTime = Math.min(2000, sleepTime);
                 Thread.sleep(sleepTime);
+                sleepTime = 0;
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }
