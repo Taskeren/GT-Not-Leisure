@@ -19,8 +19,12 @@ tasks.withType<JavaCompile>().configureEach {
 val runConfigs = listOf(
     "runClient" to "run/client_280",
     "runClient17" to "run/client17_280",
+    "runClient21" to "run/client17_280",
+    "runClient25" to "run/client17_280",
     "runServer" to "run/server_280",
-    "runServer17" to "run/server17_280"
+    "runServer17" to "run/server17_280",
+    "runServer21" to "run/server17_280",
+    "runServer25" to "run/server17_280"
 )
 
 runConfigs.forEach { (taskName, path) ->

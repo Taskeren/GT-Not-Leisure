@@ -118,12 +118,12 @@ public class FOGAlloyBlastSmelterModule extends MTEBaseModule {
 
     @Override
     public double getSpeedBonus() {
-        return processingSpeedBonus / 2;
+        return processingSpeedBonus / 15;
     }
 
     @Override
     public double getEnergyDiscount() {
-        return energyDiscount / 2;
+        return energyDiscount / 5;
     }
 
     @Override

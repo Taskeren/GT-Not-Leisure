@@ -102,7 +102,7 @@ public class MaterialLoader {
             RecipeLoader.loadVillageTrade();
         }
 
-        WirelessNetworkManager.number_of_energy_additions = 40L;
+        WirelessNetworkManager.number_of_energy_additions = 4L;
     }
 
     @Optional.Method(modid = "bogosorter")
