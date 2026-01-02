@@ -83,6 +83,7 @@ import com.science.gtnl.utils.LargeInventoryCrafting;
 import com.science.gtnl.utils.StructureUtils;
 import com.science.gtnl.utils.Utils;
 import com.science.gtnl.utils.enums.GTNLItemList;
+import com.science.gtnl.utils.enums.ModList;
 import com.science.gtnl.utils.item.ItemUtils;
 
 import appeng.api.config.Actionable;
@@ -1108,6 +1109,7 @@ public class AssemblerMatrix extends MultiMachineBase<AssemblerMatrix>
 
                 for (ItemStack input : inputs) {
                     if (!(input.getItem() instanceof ICraftingPatternItem i)) continue;
+                    if (isBlockedAe2ThingsInfusionPattern(input)) continue;
                     int slot = inventory.getFirstEmptySlot();
                     if (slot == -1) continue;
                     var p = i.getPatternForItem(
@@ -1225,6 +1227,14 @@ public class AssemblerMatrix extends MultiMachineBase<AssemblerMatrix>
         }
 
         return CheckRecipeResultRegistry.NO_RECIPE;
+    }
+
+    private static boolean isBlockedAe2ThingsInfusionPattern(ItemStack stack) {
+        if (stack == null || stack.getItem() == null) return false;
+        if (!ModList.AE2Thing.isModLoaded()) return false;
+        if (stack.stackTagCompound == null) return false;
+        // AE2Things infusion pattern terminal encodes to standard AE2 pattern item with tc_crafting flag.
+        return stack.stackTagCompound.hasKey("tc_crafting");
     }
 
     @Override
