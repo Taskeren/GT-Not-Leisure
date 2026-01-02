@@ -135,18 +135,14 @@ public class FurnaceArray extends MultiMachineBase<FurnaceArray> implements ISur
                 'A',
                 buildHatchAdder(FurnaceArray.class).casingIndex(getCasingTextureID())
                     .dot(1)
-                    .atLeast(InputBus, OutputBus, Maintenance)
+                    .atLeast(InputBus, OutputBus)
                     .buildAndChain(onElementPass(x -> ++x.mCountCasing, ofBlock(BlockLoader.metaCasing02, 20))))
             .build();
     }
 
     @Override
     public boolean checkMachine(IGregTechTileEntity aBaseMetaTileEntity, ItemStack aStack) {
-        if (!checkPiece(STRUCTURE_PIECE_MAIN, HORIZONTAL_OFF_SET, VERTICAL_OFF_SET, DEPTH_OFF_SET) || !checkHatch()) {
-            return false;
-        }
-        setupParameters();
-        return true;
+        return checkPiece(STRUCTURE_PIECE_MAIN, HORIZONTAL_OFF_SET, VERTICAL_OFF_SET, DEPTH_OFF_SET) && checkHatch();
     }
 
     @Override
@@ -344,5 +340,18 @@ public class FurnaceArray extends MultiMachineBase<FurnaceArray> implements ISur
             env,
             false,
             true);
+    }
+
+    @Override
+    public void checkMaintenance() {}
+
+    @Override
+    public boolean getDefaultHasMaintenanceChecks() {
+        return false;
+    }
+
+    @Override
+    public boolean shouldCheckMaintenance() {
+        return false;
     }
 }
