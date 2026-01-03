@@ -296,12 +296,12 @@ public class SubscribeEventUtils {
 
             foodTickTimers.put(uuid, timer);
         } else {
-            foodTickTimers.remove(player.getUniqueID());
+            foodTickTimers.removeInt(player.getUniqueID());
         }
     }
 
     public static long sleepTime = 0;
-    public static int tick = 0;
+    public static long tick = 0;
 
     @SubscribeEvent
     public void onServerTick(TickEvent.ServerTickEvent event) {
