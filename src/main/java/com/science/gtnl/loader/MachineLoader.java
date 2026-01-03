@@ -81,7 +81,6 @@ import com.science.gtnl.common.machine.multiblock.FOGAlloyBlastSmelterModule;
 import com.science.gtnl.common.machine.multiblock.FOGAlloySmelterModule;
 import com.science.gtnl.common.machine.multiblock.FOGExtractorModule;
 import com.science.gtnl.common.machine.multiblock.FuelRefiningComplex;
-import com.science.gtnl.common.machine.multiblock.FurnaceArray;
 import com.science.gtnl.common.machine.multiblock.GenerationEarthEngine;
 import com.science.gtnl.common.machine.multiblock.GrandAssemblyLine;
 import com.science.gtnl.common.machine.multiblock.IndustrialArcaneAssembler;
@@ -133,6 +132,7 @@ import com.science.gtnl.common.machine.multiblock.module.steamElevator.SteamMons
 import com.science.gtnl.common.machine.multiblock.module.steamElevator.SteamOilDrillModule;
 import com.science.gtnl.common.machine.multiblock.module.steamElevator.SteamOreProcessorModule;
 import com.science.gtnl.common.machine.multiblock.module.steamElevator.SteamWeatherModule;
+import com.science.gtnl.common.machine.multiblock.steam.FurnaceArray;
 import com.science.gtnl.common.machine.multiblock.steam.HighPressureSteamFusionReactor;
 import com.science.gtnl.common.machine.multiblock.steam.LargeSteamAlloySmelter;
 import com.science.gtnl.common.machine.multiblock.steam.LargeSteamBending;
