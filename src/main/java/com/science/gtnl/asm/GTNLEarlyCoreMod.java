@@ -1,6 +1,5 @@
 package com.science.gtnl.asm;
 
-import java.io.File;
 import java.util.List;
 import java.util.Map;
 
@@ -28,7 +27,6 @@ public class GTNLEarlyCoreMod implements IFMLLoadingPlugin, IEarlyMixinLoader, I
 
     public static GTNLEarlyCoreMod INSTANCE;
     public static Logger LOGGER = LogManager.getLogger("GTNL Asm Core Mod");
-    public static File CONFIG_FILE = null;
     public static final String GAME_RULE = "tickrate";
 
     // Stored client-side tickrate

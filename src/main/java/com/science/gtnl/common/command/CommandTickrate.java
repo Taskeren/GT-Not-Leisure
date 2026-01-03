@@ -30,7 +30,7 @@ public class CommandTickrate extends CommandBase {
     public List<String> suggestedTickrateValues;
 
     public CommandTickrate() {
-        aliases = Arrays.asList("ticks", "GTNLEarlyCoreMod", "trc", "settickrate");
+        aliases = Arrays.asList("ticks", "trc", "settickrate");
         suggestedTickrateValues = Arrays.asList("20", "2.5", "5", "10", "15", "25", "35", "50", "100");
     }
 
@@ -68,11 +68,10 @@ public class CommandTickrate extends CommandBase {
             if (!tab.contains(defTickrate)) {
                 tab.add(0, defTickrate);
             }
-            tab.add("setdefault");
             tab.add("setmap");
             tab.add("freeze");
         } else if (args.length == 2) {
-            if ((args[0].equalsIgnoreCase("setdefault")) || (args[0].equalsIgnoreCase("setmap"))) {
+            if (args[0].equalsIgnoreCase("setmap")) {
                 tab.addAll(suggestedTickrateValues);
                 float defaultTickrate = MainConfig.defaultTickrate;
                 String defTickrate = defaultTickrate + "";
@@ -89,9 +88,6 @@ public class CommandTickrate extends CommandBase {
                     tab.add(p.getCommandSenderName());
                 }
             }
-        } else if (((args.length == 3) || (args.length == 4)) && (args[0].equalsIgnoreCase("setdefault"))) {
-            tab.add("--dontsave");
-            tab.add("--dontupdate");
         } else if (((args.length == 3) || (args.length == 4)) && (args[0].equalsIgnoreCase("setmap"))) {
             tab.add("--dontupdate");
         }
@@ -114,13 +110,11 @@ public class CommandTickrate extends CommandBase {
                     chat(sender, c("Current Map Tickrate: ", 'f', 'l'), c(tickrate + " ticks per second", 'a'));
                 }
             } catch (Exception ignored) {}
-            chat(sender, c("Default Tickrate: ", 'f', 'l'), c(MainConfig.defaultTickrate + " ticks per second", 'e'));
             chat(
                 sender,
                 c("/tickrate <ticks per second> [all/server/client/", 'b'),
                 c("playername", 'b', 'o'),
                 c("]", 'b'));
-            chat(sender, c("/tickrate setdefault <ticks per second> [--dontsave, --dontupdate]", 'b'));
             chat(sender, c("/tickrate setmap <ticks per second> [--dontupdate]", 'b'));
             chat(sender);
             chat(sender, c("Use ", 'c'), c("/tickrate help", 'c', 'n'), c(" for more command info", 'c'));
@@ -159,33 +153,6 @@ public class CommandTickrate extends CommandBase {
             chat(
                 sender,
                 c(
-                    "/tickrate setdefault 20 ",
-                    new ChatComponentText[] { c("Sets the ", 'a'), c("default", 'f'), c(" tickrate to 20", 'a') },
-                    '7'));
-            chat(
-                sender,
-                c(
-                    "/tickrate setdefault 20 --dontsave ",
-                    new ChatComponentText[] { c("Sets the ", 'a'), c("default", 'f'),
-                        c(" tickrate to 20 without saving in the config", 'a') },
-                    '7'));
-            chat(
-                sender,
-                c(
-                    "/tickrate setdefault 20 --dontupdate ",
-                    new ChatComponentText[] { c("Sets the ", 'a'), c("default", 'f'),
-                        c(" tickrate to 20 without updating players", 'a') },
-                    '7'));
-            chat(
-                sender,
-                c(
-                    "/tickrate setdefault 20 --dontsave --dontupdate",
-                    new ChatComponentText[] { c("Sets the ", 'a'), c("default", 'f'),
-                        c(" tickrate to 20 without saving and updating anything", 'a') },
-                    '7'));
-            chat(
-                sender,
-                c(
                     "/tickrate setmap 20 ",
                     new ChatComponentText[] { c("Sets the ", 'a'), c("map", 'f'), c(" tickrate to 20", 'a') },
                     '7'));
@@ -197,30 +164,6 @@ public class CommandTickrate extends CommandBase {
                         c(" tickrate to 20 without updating", 'a') },
                     '7'));
             chat(sender, c(" * * * * * * * * * * * * * * ", '5', 'l'));
-            return;
-        } else if ((args[0].equalsIgnoreCase("setdefault")) && (args.length > 1)) {
-            boolean save = true, update = true;
-            for (String s : args) {
-                if (s.equalsIgnoreCase("--dontsave")) save = false;
-                if (s.equalsIgnoreCase("--dontupdate")) update = false;
-            }
-            float ticksPerSecond;
-            try {
-                ticksPerSecond = Float.parseFloat(args[1]);
-            } catch (Exception ex) {
-                chat(sender, c("Something went wrong!", '4'));
-                chat(sender, c("/tickrate setdefault <ticks per second> [--dontsave, --dontupdate]", 'c'));
-                return;
-            }
-            if (!TickrateAPI.isValidTickrate(ticksPerSecond)) {
-                chat(sender, c("Invalid tickrate value!", 'c'), c(" (Must be tickrate > 0)", '7'));
-                return;
-            }
-            TickrateAPI.changeDefaultTickrate(ticksPerSecond, save);
-            if (update) {
-                TickrateAPI.changeTickrate(ticksPerSecond);
-            }
-            chat(sender, c("Default tickrate successfully changed to", 'a'), c(" " + ticksPerSecond, 'f'), c(".", 'a'));
             return;
         } else if ((args[0].equalsIgnoreCase("setmap")) && (args.length > 1)) {
             boolean update = true;

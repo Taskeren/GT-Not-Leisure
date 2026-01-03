@@ -8,11 +8,9 @@ import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.world.GameRules;
 import net.minecraft.world.World;
-import net.minecraftforge.common.config.Configuration;
 
 import com.science.gtnl.asm.GTNLEarlyCoreMod;
 import com.science.gtnl.common.packet.TickratePacket;
-import com.science.gtnl.config.MainConfig;
 
 import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.relauncher.Side;
@@ -73,24 +71,6 @@ public class TickrateAPI {
             GTNLEarlyCoreMod.INSTANCE.updateClientTickrate(ticksPerSecond);
         } else { // Server
             network.sendTo(new TickratePacket(ticksPerSecond), (EntityPlayerMP) player);
-        }
-    }
-
-    /**
-     * Let you change the server tickrate
-     * Can only be called from server-side. Can also be called from client-side if is singleplayer.
-     * This will not update the tickrate from the server/clients.
-     *
-     * @param ticksPerSecond Tickrate to be set
-     * @param save           If will be saved in the config file
-     */
-    public static void changeDefaultTickrate(float ticksPerSecond, boolean save) {
-        MainConfig.defaultTickrate = ticksPerSecond;
-        if (save) {
-            Configuration cfg = new Configuration(GTNLEarlyCoreMod.CONFIG_FILE);
-            cfg.get("default", "tickrate", 20.0, "Default tickrate. The game will always initialize with this value.")
-                .set(ticksPerSecond);
-            cfg.save();
         }
     }
 
