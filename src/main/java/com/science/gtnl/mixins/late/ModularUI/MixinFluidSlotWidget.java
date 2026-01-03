@@ -17,7 +17,7 @@ import com.llamalad7.mixinextras.sugar.Local;
 import com.reavaritia.common.item.InfinityBucket;
 
 @Mixin(value = FluidSlotWidget.class, remap = false)
-public abstract class FluidSlotWidgetMixin extends SyncedWidget {
+public abstract class MixinFluidSlotWidget extends SyncedWidget {
 
     @Shadow
     protected abstract ItemStack fillFluid(@NotNull FluidStack heldFluid, boolean processFullStack);
