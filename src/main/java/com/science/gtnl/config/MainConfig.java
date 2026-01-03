@@ -342,13 +342,6 @@ public class MainConfig {
             "config.machine.enableHatchInterfaceTerminalEnhance");
 
         // Recipe
-        enableSomethingRecipe = config.getBoolean(
-            "enableSomethingRecipe",
-            CATEGORY_RECIPE,
-            enableSomethingRecipe,
-            "Enable Something Cheap Recipe",
-            "config.recipe.enableSomethingRecipe");
-
         enableDeleteRecipe = config.getBoolean(
             "enableDeleteRecipe",
             CATEGORY_RECIPE,

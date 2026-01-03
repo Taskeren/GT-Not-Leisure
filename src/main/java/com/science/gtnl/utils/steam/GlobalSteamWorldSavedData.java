@@ -5,7 +5,6 @@ import static com.science.gtnl.utils.steam.SteamWirelessNetworkManager.GlobalSte
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.math.BigInteger;
@@ -54,19 +53,22 @@ public class GlobalSteamWorldSavedData extends WorldSavedData {
     public void readFromNBT(NBTTagCompound nbtTagCompound) {
         try {
             byte[] ba = nbtTagCompound.getByteArray(GlobalSteamNBTTag);
-            InputStream byteArrayInputStream = new ByteArrayInputStream(ba);
-            ObjectInputStream objectInputStream = new ObjectInputStream(byteArrayInputStream);
-            Object data = objectInputStream.readObject();
-            HashMap<Object, BigInteger> hashData = (HashMap<Object, BigInteger>) data;
-            for (Map.Entry<Object, BigInteger> entry : hashData.entrySet()) {
-                try {
-                    GlobalSteam.put(
-                        UUID.fromString(
-                            entry.getKey()
-                                .toString()),
-                        entry.getValue());
-                } catch (RuntimeException ignored) {
-                    // likely a malformed UUID, skip
+            if (ba.length == 0) return;
+
+            try (ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(ba);
+                ObjectInputStream objectInputStream = new ObjectInputStream(byteArrayInputStream)) {
+
+                Object data = objectInputStream.readObject();
+                HashMap<Object, BigInteger> hashData = (HashMap<Object, BigInteger>) data;
+
+                for (Map.Entry<Object, BigInteger> entry : hashData.entrySet()) {
+                    try {
+                        GlobalSteam.put(
+                            UUID.fromString(
+                                entry.getKey()
+                                    .toString()),
+                            entry.getValue());
+                    } catch (RuntimeException ignored) {}
                 }
             }
         } catch (IOException | ClassNotFoundException exception) {
@@ -76,17 +78,21 @@ public class GlobalSteamWorldSavedData extends WorldSavedData {
 
         try {
             if (!nbtTagCompound.hasKey(GlobalSteamTeamNBTTag)) return;
+
             byte[] ba = nbtTagCompound.getByteArray(GlobalSteamTeamNBTTag);
-            InputStream byteArrayInputStream = new ByteArrayInputStream(ba);
-            ObjectInputStream objectInputStream = new ObjectInputStream(byteArrayInputStream);
-            Object data = objectInputStream.readObject();
-            HashMap<String, String> oldTeams = (HashMap<String, String>) data;
-            for (String member : oldTeams.keySet()) {
-                String leader = oldTeams.get(member);
-                try {
-                    SpaceProjectManager.putInTeam(UUID.fromString(member), UUID.fromString(leader));
-                } catch (RuntimeException ignored) {
-                    // likely a malformed UUID, skip
+            if (ba.length == 0) return;
+
+            try (ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(ba);
+                ObjectInputStream objectInputStream = new ObjectInputStream(byteArrayInputStream)) {
+
+                Object data = objectInputStream.readObject();
+                HashMap<String, String> oldTeams = (HashMap<String, String>) data;
+
+                for (Map.Entry<String, String> entry : oldTeams.entrySet()) {
+                    try {
+                        SpaceProjectManager
+                            .putInTeam(UUID.fromString(entry.getKey()), UUID.fromString(entry.getValue()));
+                    } catch (RuntimeException ignored) {}
                 }
             }
         } catch (IOException | ClassNotFoundException exception) {
@@ -97,13 +103,14 @@ public class GlobalSteamWorldSavedData extends WorldSavedData {
 
     @Override
     public void writeToNBT(NBTTagCompound nbtTagCompound) {
-        try {
-            ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-            ObjectOutputStream objectOutputStream = new ObjectOutputStream(byteArrayOutputStream);
+        try (ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+            ObjectOutputStream objectOutputStream = new ObjectOutputStream(byteArrayOutputStream)) {
+
             objectOutputStream.writeObject(GlobalSteam);
             objectOutputStream.flush();
-            byte[] data = byteArrayOutputStream.toByteArray();
-            nbtTagCompound.setByteArray(GlobalSteamNBTTag, data);
+
+            nbtTagCompound.setByteArray(GlobalSteamNBTTag, byteArrayOutputStream.toByteArray());
+
         } catch (IOException exception) {
             System.out.println(GlobalSteamNBTTag + " SAVE FAILED");
             exception.printStackTrace();

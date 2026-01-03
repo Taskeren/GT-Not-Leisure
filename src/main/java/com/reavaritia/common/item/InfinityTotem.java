@@ -35,8 +35,8 @@ import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
 
 import com.reavaritia.ReAvaCreativeTabs;
 import com.reavaritia.ReAvaItemList;
+import com.reavaritia.common.PlaySound;
 import com.reavaritia.common.SubtitleDisplay;
-import com.reavaritia.common.playSound;
 
 import baubles.api.BaubleType;
 import baubles.api.BaublesApi;
@@ -48,7 +48,7 @@ import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
 @Optional.Interface(iface = "baubles.api.IBauble", modid = "Baubles")
-public class InfinityTotem extends Item implements IBauble, SubtitleDisplay, playSound {
+public class InfinityTotem extends Item implements IBauble, SubtitleDisplay, PlaySound {
 
     public InfinityTotem() {
         this.setUnlocalizedName("InfinityTotem");

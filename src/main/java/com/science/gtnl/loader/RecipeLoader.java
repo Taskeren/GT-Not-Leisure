@@ -221,7 +221,7 @@ public class RecipeLoader {
 
         ShimmerRecipes.loadRecipes();
 
-        loadPlasmaCentrifugeRecipes();
+        // loadPlasmaCentrifugeRecipes();
 
         if (ModList.TwistSpaceTechnology.isModLoaded()) {
             loadTSTMegaAssemblyLineRecipes();

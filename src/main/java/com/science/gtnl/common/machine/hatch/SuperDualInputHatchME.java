@@ -1185,7 +1185,7 @@ public class SuperDualInputHatchME extends MTEHatchInputBus
         return true;
     }
 
-    public interface x extends IDualInputInventoryWithPattern {
+    public interface NonCachedDualInputInventory extends IDualInputInventoryWithPattern {
 
         @Override
         default boolean shouldBeCached() {
@@ -1196,7 +1196,7 @@ public class SuperDualInputHatchME extends MTEHatchInputBus
 
     public Iterator<? extends IDualInputInventoryWithPattern> getItr() {
 
-        IDualInputInventoryWithPattern xx = new x() {
+        IDualInputInventoryWithPattern inventory = new NonCachedDualInputInventory() {
 
             @Override
             public boolean isEmpty() {
@@ -1227,7 +1227,7 @@ public class SuperDualInputHatchME extends MTEHatchInputBus
             }
         };
 
-        return ImmutableSet.of(xx)
+        return ImmutableSet.of(inventory)
             .iterator();
     }
 

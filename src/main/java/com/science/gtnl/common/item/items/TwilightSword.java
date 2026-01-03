@@ -26,7 +26,7 @@ import net.minecraftforge.common.util.EnumHelper;
 import net.minecraftforge.event.entity.living.LivingAttackEvent;
 import net.minecraftforge.event.entity.living.LivingEvent;
 
-import com.reavaritia.common.playSound;
+import com.reavaritia.common.PlaySound;
 import com.science.gtnl.client.GTNLCreativeTabs;
 import com.science.gtnl.common.entity.EntityArrowCustom;
 import com.science.gtnl.utils.Utils;
@@ -38,7 +38,7 @@ import cpw.mods.fml.relauncher.SideOnly;
 import it.unimi.dsi.fastutil.objects.Object2IntMap;
 import it.unimi.dsi.fastutil.objects.Object2IntOpenHashMap;
 
-public class TwilightSword extends ItemSword implements playSound {
+public class TwilightSword extends ItemSword implements PlaySound {
 
     public static final Item.ToolMaterial[] TWILIGHT_MATERIALS = {
         EnumHelper.addToolMaterial("TWILIGHT_EXPLOSIVE", 3, 9999, 14.0F, 30.0F, 30),
