@@ -159,6 +159,7 @@ We gratefully acknowledge the use of code and assets from the open-source commun
 | **Occultism Assets**   | [klikli-dev](https://github.com/klikli-dev/occultism)           | [MIT](https://mit-license.org/)                                       |
 | **Mekanism Assets**    | [mekanism](https://github.com/mekanism/Mekanism)                | [MIT](https://mit-license.org/)                                       |
 | **Twist-Space-Tech**   | [Nxer](https://github.com/Nxer/Twist-Space-Technology-Mod)      | [GPLv3](https://www.gnu.org/licenses/gpl-3.0.html)                    |
+| **gtnh-no-nerf**       | [Taskeren](https://github.com/ElytraServers/gtnh-no-nerf)       | [MIT](https://www.gnu.org/licenses/gpl-3.0.html)                      |
 
 ---
 

@@ -179,7 +179,7 @@ public class MixerRecipes implements IRecipePool {
             .fluidInputs(Materials.Water.getFluid(1000))
             .fluidOutputs(MaterialPool.GemSluice.getFluidOrGas(4000))
             .duration(15 * SECONDS)
-            .eut(300)
+            .eut(TierEU.RECIPE_MV)
             .addTo(MCR)
             .addTo(MNCR);
 
