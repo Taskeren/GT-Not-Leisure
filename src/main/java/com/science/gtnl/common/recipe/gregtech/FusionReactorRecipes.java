@@ -55,7 +55,7 @@ public class FusionReactorRecipes implements IRecipePool {
             .addTo(fR);
 
         RecipeBuilder.builder()
-            .fluidInputs(Materials.Oxygen.getGas(14), Materials.Copper.getMolten(14))
+            .fluidInputs(Materials.Oxygen.getGas(16), Materials.Copper.getMolten(16))
             .fluidOutputs(Materials.Strontium.getMolten(16))
             .duration(16)
             .eut(TierEU.RECIPE_LuV)
@@ -63,7 +63,7 @@ public class FusionReactorRecipes implements IRecipePool {
             .addTo(fR);
 
         RecipeBuilder.builder()
-            .fluidInputs(Materials.Magnesium.getMolten(129), Materials.Iridium.getMolten(129))
+            .fluidInputs(Materials.Magnesium.getMolten(144), Materials.Iridium.getMolten(144))
             .fluidOutputs(MaterialPool.Actinium.getMolten(144))
             .duration(20)
             .eut(TierEU.RECIPE_UV)
