@@ -76,6 +76,9 @@ public class SuperInputHatchME extends MTEHatchInputME {
     public FluidStack[] storedFluids = new FluidStack[SLOT_COUNT];
     public FluidStack[] storedInformationFluids = new FluidStack[SLOT_COUNT];
     public int[] storedStackSizes = new int[SLOT_COUNT];
+    {
+        Arrays.fill(storedStackSizes, Integer.MAX_VALUE);
+    }
 
     // these two fields should ALWAYS be mutated simultaneously
     // in most cases, you should call setSavedFluid() instead of trying to write to the array directly
@@ -285,7 +288,6 @@ public class SuperInputHatchME extends MTEHatchInputME {
     @Override
     public void onFirstTick(IGregTechTileEntity aBaseMetaTileEntity) {
         super.onFirstTick(aBaseMetaTileEntity);
-        Arrays.fill(storedStackSizes, Integer.MAX_VALUE);
         getProxy().onReady();
     }
 

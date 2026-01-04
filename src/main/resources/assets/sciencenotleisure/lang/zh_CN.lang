@@ -355,6 +355,9 @@ Tooltip_AdvancedSuperDualInputHatchME_03=警告：快速配方检查可能会很
 Info_AdvancedSuperDualInputHatchME_ExceedIntMax=拉取数量超过Int, 查看Tooltip获取真实数量！
 Info_AdvancedSuperDualInputHatchME_IntMax=最大拉取数量 (单位：Int.MAX）
 Info_AdvancedSuperDualInputHatchME_IntMaxTooltip=设置所能拉取的最大数量，数字越大卡顿越大. 请谨慎使用.
+Info_SuperDualInputHatchME_00=设置物品指定抽取数量
+Info_SuperDualInputHatchME_01=设置流体指定抽取数量
+Info_SuperDualInputHatchME_02=槽位：
 
 SuperInputBusME=超级存储输入总线(ME)
 AdvancedSuperInputBusME=进阶超级存储输入总线(ME)

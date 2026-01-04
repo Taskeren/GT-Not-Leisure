@@ -78,6 +78,9 @@ public class SuperInputBusME extends MTEHatchInputBusME implements IConfiguratio
     public static int ALL_SLOT_COUNT = SIDE_SLOT_COUNT * 2 + 1 + 9 * 9;
     public ItemStack[] shadowInventory = new ItemStack[SIDE_SLOT_COUNT];
     public int[] storedStackSizes = new int[SIDE_SLOT_COUNT];
+    {
+        Arrays.fill(storedStackSizes, Integer.MAX_VALUE);
+    }
     public int[] savedStackSizes = new int[SIDE_SLOT_COUNT];
     public static final int CONFIG_WINDOW_ID = 10;
     public static final int MANUAL_SLOT_WINDOW = 11;
@@ -139,7 +142,6 @@ public class SuperInputBusME extends MTEHatchInputBusME implements IConfiguratio
     @Override
     public void onFirstTick(IGregTechTileEntity aBaseMetaTileEntity) {
         super.onFirstTick(aBaseMetaTileEntity);
-        Arrays.fill(storedStackSizes, Integer.MAX_VALUE);
     }
 
     @Override
@@ -331,7 +333,7 @@ public class SuperInputBusME extends MTEHatchInputBusME implements IConfiguratio
                     .getItemInventory();
 
                 IAEItemStack request = AEItemStack.create(mInventory[aIndex]);
-                request.setStackSize(Integer.MAX_VALUE);
+                request.setStackSize(storedStackSizes[aIndex]);
 
                 IAEItemStack result = sg.extractItems(request, Actionable.SIMULATE, getRequestSource());
 
@@ -562,9 +564,7 @@ public class SuperInputBusME extends MTEHatchInputBusME implements IConfiguratio
 
                 @Override
                 public ClickResult onClick(int buttonId, boolean doubleClick) {
-                    // vanilla slot interaction is handled on mouseMovedOrUp, so we need to hold the state
-                    // of this widget being clicked and prevent further interaction
-                    if (interactionDisabled || !getMcSlot().isEnabled()) return ClickResult.ACCEPT;
+                    if (interactionDisabled) return ClickResult.ACCEPT;
                     if (buttonId == 2) {
                         ClickData clickData = ClickData.create(buttonId, doubleClick);
                         syncToServer(15, clickData::writeToPacket);
@@ -580,7 +580,7 @@ public class SuperInputBusME extends MTEHatchInputBusME implements IConfiguratio
                 }
 
                 public void click(ClickData clickData) {
-                    if (interactionDisabled || !getMcSlot().isEnabled()) return;
+                    if (interactionDisabled) return;
                     if (clickData.mouseButton == 2) {
                         getContext().openSyncedWindow(getMcSlot().slotNumber - 21);
                     }
