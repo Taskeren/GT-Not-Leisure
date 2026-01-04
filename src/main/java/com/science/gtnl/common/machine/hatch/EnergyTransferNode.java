@@ -32,6 +32,7 @@ import tectech.mechanics.pipe.IConnectsToEnergyTunnel;
 import tectech.thing.metaTileEntity.hatch.MTEHatchDynamoMulti;
 import tectech.thing.metaTileEntity.hatch.MTEHatchDynamoTunnel;
 import tectech.thing.metaTileEntity.hatch.MTEHatchEnergyMulti;
+import tectech.thing.metaTileEntity.hatch.MTEHatchEnergyTunnel;
 import tectech.thing.metaTileEntity.pipe.MTEPipeLaser;
 import tectech.thing.metaTileEntity.pipe.MTEPipeLaserMirror;
 import tectech.thing.metaTileEntity.single.MTEDebugPowerGenerator;
@@ -102,6 +103,11 @@ public class EnergyTransferNode extends MTETieredMachineBlock implements IConnec
     @Override
     public ITexture[][][] getTextureSet(ITexture[] aTextures) {
         return new ITexture[0][0][0];
+    }
+
+    @Override
+    public boolean shouldJoinIc2Enet() {
+        return true;
     }
 
     @Override
@@ -326,7 +332,7 @@ public class EnergyTransferNode extends MTETieredMachineBlock implements IConnec
 
             if (!findProvider && aMetaTileEntity instanceof MTEHatchEnergyMulti
                 && facingSide == tGTTileEntity.getFrontFacing()) {
-                if (aMetaTileEntity instanceof MTEHatchEnergyMulti && tGTTileEntity.getColorization() != color) break;
+                if (aMetaTileEntity instanceof MTEHatchEnergyTunnel && tGTTileEntity.getColorization() != color) break;
                 return aMetaTileEntity;
             }
 
