@@ -2,9 +2,13 @@ package com.science.gtnl.common.machine.hatch;
 
 import static com.science.gtnl.utils.enums.BlockIcons.*;
 import static gregtech.api.enums.Dyes.*;
+import static gregtech.api.enums.GTValues.*;
+import static gregtech.api.enums.GTValues.V;
 
 import java.util.List;
 
+import gregtech.api.interfaces.tileentity.IEnergyConnected;
+import gregtech.api.metatileentity.BaseMetaTileEntity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemStack;
@@ -26,6 +30,7 @@ import gregtech.api.metatileentity.implementations.MTEHatchDynamo;
 import gregtech.api.metatileentity.implementations.MTEHatchEnergy;
 import gregtech.api.metatileentity.implementations.MTETieredMachineBlock;
 import gregtech.api.render.TextureFactory;
+import gregtech.api.util.GTUtility;
 import mcp.mobius.waila.api.IWailaConfigHandler;
 import mcp.mobius.waila.api.IWailaDataAccessor;
 import tectech.mechanics.pipe.IConnectsToEnergyTunnel;
@@ -122,7 +127,7 @@ public class EnergyTransferNode extends MTETieredMachineBlock implements IConnec
 
     @Override
     public long maxEUStore() {
-        return mVoltage * mAmperes * mAmperes * mAmperes;
+        return mVoltage * mAmperes * mAmperes * 16;
     }
 
     @Override
@@ -194,20 +199,10 @@ public class EnergyTransferNode extends MTETieredMachineBlock implements IConnec
                     if (side == aBaseMetaTileEntity.getFrontFacing()) continue;
 
                     IMetaTileEntity provider = findMTE(aBaseMetaTileEntity, color, side, true);
-                    if (provider instanceof MTEHatchDynamo dynamo) {
-                        mVoltage = Math.max(mVoltage, dynamo.maxEUOutput());
-                        mAmperes = Math.max(mAmperes, dynamo.maxAmperesOut());
-                        moveEnergy(dynamo, this);
-                    }
-                    if (provider instanceof MTEHatchDynamoMulti dynamoMulti) {
-                        mVoltage = Math.max(mVoltage, dynamoMulti.maxEUOutput());
-                        mAmperes = Math.max(mAmperes, dynamoMulti.Amperes);
-                        moveEnergy(dynamoMulti, this);
-                    }
-                    if (provider instanceof MTEDebugPowerGenerator debug) {
-                        mVoltage = Math.max(mVoltage, debug.getEUT());
-                        mAmperes = Math.max(mAmperes, debug.getAMP());
-                        moveEnergy(debug, this);
+                    if (provider instanceof MetaTileEntity metaTileEntity) {
+                        mVoltage = Math.max(mVoltage, metaTileEntity.maxEUOutput());
+                        mAmperes = Math.max(mAmperes, metaTileEntity.maxAmperesOut());
+                        moveEnergy(metaTileEntity, this);
                     }
                 }
                 IMetaTileEntity receiver = findMTE(
@@ -215,22 +210,16 @@ public class EnergyTransferNode extends MTETieredMachineBlock implements IConnec
                     color,
                     aBaseMetaTileEntity.getFrontFacing(),
                     false);
-                if (receiver instanceof MTEHatchEnergy energy) {
-                    moveEnergy(this, energy);
-                }
-                if (receiver instanceof MTEHatchEnergyMulti energyMulti) {
-                    moveEnergy(this, energyMulti);
+                if (receiver instanceof MetaTileEntity metaTileEntity) {
+                    moveEnergy(this, metaTileEntity);
                 }
             } else {
                 for (ForgeDirection side : ForgeDirection.VALID_DIRECTIONS) {
                     if (side == aBaseMetaTileEntity.getFrontFacing()) continue;
 
                     IMetaTileEntity receiver = findMTE(aBaseMetaTileEntity, color, side, false);
-                    if (receiver instanceof MTEHatchEnergy energy) {
-                        moveEnergy(this, energy);
-                    }
-                    if (receiver instanceof MTEHatchEnergyMulti energyMulti) {
-                        moveEnergy(this, energyMulti);
+                    if (receiver instanceof MetaTileEntity metaTileEntity) {
+                        moveEnergy(this, metaTileEntity);
                     }
                 }
                 IMetaTileEntity provider = findMTE(
@@ -238,20 +227,10 @@ public class EnergyTransferNode extends MTETieredMachineBlock implements IConnec
                     color,
                     aBaseMetaTileEntity.getFrontFacing(),
                     true);
-                if (provider instanceof MTEHatchDynamo dynamo) {
-                    mVoltage = dynamo.maxEUOutput();
-                    mAmperes = dynamo.maxAmperesOut();
-                    moveEnergy(dynamo, this);
-                }
-                if (provider instanceof MTEHatchDynamoMulti dynamoMulti) {
-                    mVoltage = dynamoMulti.maxEUOutput();
-                    mAmperes = dynamoMulti.Amperes;
-                    moveEnergy(dynamoMulti, this);
-                }
-                if (provider instanceof MTEDebugPowerGenerator debug) {
-                    mVoltage = debug.getEUT();
-                    mAmperes = debug.getAMP();
-                    moveEnergy(debug, this);
+                if (provider instanceof MetaTileEntity metaTileEntity) {
+                    mVoltage = Math.max(mVoltage, metaTileEntity.maxEUOutput());
+                    mAmperes = Math.max(mAmperes, metaTileEntity.maxAmperesOut());
+                    moveEnergy(metaTileEntity, this);
                 }
             }
         }
@@ -270,12 +249,12 @@ public class EnergyTransferNode extends MTETieredMachineBlock implements IConnec
     }
 
     private void moveEnergy(MetaTileEntity dynamo, MetaTileEntity energy) {
-        if (dynamo.maxEUOutput() > energy.maxEUInput()) {
+        if (GTUtility.getTier(dynamo.maxEUOutput()) > GTUtility.getTier(energy.maxEUInput())) {
             energy.doExplosion(dynamo.maxEUOutput());
             dynamo.setEUVar(
                 dynamo.getBaseMetaTileEntity()
                     .getStoredEU() - dynamo.maxEUOutput());
-        } else if (dynamo.maxEUOutput() >= energy.maxEUInput() * 0.8 && dynamo.maxEUOutput() <= energy.maxEUInput()) {
+        } else {
             long diff = Math.min(
                 dynamo.maxAmperesOut() * 20L * dynamo.maxEUOutput(),
                 Math.min(
@@ -340,6 +319,18 @@ public class EnergyTransferNode extends MTETieredMachineBlock implements IConnec
                 return aMetaTileEntity;
             }
 
+            if (findProvider && aMetaTileEntity instanceof MetaTileEntity metaTileEntity
+                && metaTileEntity.maxEUOutput() > 0
+                && metaTileEntity.isOutputFacing(facingSide)) {
+                return aMetaTileEntity;
+            }
+
+            if (!findProvider && aMetaTileEntity instanceof MetaTileEntity metaTileEntity
+                && metaTileEntity.maxEUInput() > 0
+                && metaTileEntity.isInputFacing(facingSide)) {
+                return aMetaTileEntity;
+            }
+
             if (aMetaTileEntity instanceof EnergyTransferNode && tGTTileEntity.getColorization() == color) {
                 if ((findProvider && facingSide != tGTTileEntity.getFrontFacing())
                     || (!findProvider && facingSide == tGTTileEntity.getFrontFacing())) {
@@ -356,8 +347,8 @@ public class EnergyTransferNode extends MTETieredMachineBlock implements IConnec
                 }
             }
 
-            if (aMetaTileEntity instanceof MTECable) {
-                continue;
+            if (aMetaTileEntity instanceof MTECable cable) {
+                if (cable.isConnectedAtSide(facingSide)) continue;
             }
             break;
         }

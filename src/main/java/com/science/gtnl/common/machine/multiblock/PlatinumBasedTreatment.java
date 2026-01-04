@@ -258,12 +258,4 @@ public class PlatinumBasedTreatment extends MultiMachineBase<PlatinumBasedTreatm
         return SoundResource.GT_MACHINES_MEGA_BLAST_FURNACE_LOOP;
     }
 
-    @Override
-    public void setProcessingLogicPower(ProcessingLogic logic) {
-        boolean useSingleAmp = mEnergyHatches.size() == 1 && mExoticEnergyHatches.isEmpty() && getMaxInputAmps() <= 4;
-        logic.setAvailableVoltage(getMachineVoltageLimit());
-        logic.setAvailableAmperage(useSingleAmp ? 1 : getMaxInputAmps());
-        logic.setAmperageOC(!useSingleAmp);
-    }
-
 }
