@@ -3,12 +3,9 @@ package com.science.gtnl.common.machine.hatch;
 import static com.science.gtnl.utils.enums.BlockIcons.*;
 import static gregtech.api.enums.Dyes.*;
 import static gregtech.api.enums.GTValues.*;
-import static gregtech.api.enums.GTValues.V;
 
 import java.util.List;
 
-import gregtech.api.interfaces.tileentity.IEnergyConnected;
-import gregtech.api.metatileentity.BaseMetaTileEntity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemStack;

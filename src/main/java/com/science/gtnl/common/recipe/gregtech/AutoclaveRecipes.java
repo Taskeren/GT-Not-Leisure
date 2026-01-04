@@ -76,6 +76,16 @@ public class AutoclaveRecipes implements IRecipePool {
             .eut(TierEU.RECIPE_IV)
             .addTo(AR);
 
+        RecipeBuilder.builder()
+            .itemInputs(
+                GregtechItemList.RedAlgaeBiomass.get(32),
+                GTOreDictUnificator.get(OrePrefixes.dust, Materials.CertusQuartz, 32))
+            .fluidInputs(Materials.Grade2PurifiedWater.getFluid(8000))
+            .itemOutputs(GTOreDictUnificator.get(OrePrefixes.shard, MaterialsGTNH.Prismarine, 64))
+            .duration(300)
+            .eut(TierEU.RECIPE_LuV)
+            .addTo(AR);
+
         if (MainConfig.enableDeleteRecipe) loadDeleteRecipe();
     }
 

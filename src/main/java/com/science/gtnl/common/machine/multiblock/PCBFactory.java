@@ -105,9 +105,9 @@ public class PCBFactory extends WirelessEnergyMultiMachineBase<PCBFactory>
         GTUtility.copyAmountUnsafe(114514, ItemList.PCBFactory.get(1)) };
 
     public static FluidStack distilledWater = GTModHandler.getDistilledWater(7500);
-    public static ItemStack t1Nanite = GTOreDictUnificator.get(OrePrefixes.nanite, Materials.Gold, 1);
-    public static ItemStack t2Nanite = GTOreDictUnificator.get(OrePrefixes.nanite, Materials.Neutronium, 1);
-    public static ItemStack t3Nanite = GTOreDictUnificator.get(OrePrefixes.nanite, Materials.Silver, 1);
+    public static ItemStack t1Nanite = GTOreDictUnificator.get(OrePrefixes.nanite, Materials.Neutronium, 1);
+    public static ItemStack t2Nanite = GTOreDictUnificator.get(OrePrefixes.nanite, Materials.Silver, 1);
+    public static ItemStack t3Nanite = GTOreDictUnificator.get(OrePrefixes.nanite, Materials.Gold, 1);
     public static FluidStack[] purifiedWater = new FluidStack[] { Materials.Grade1PurifiedWater.getFluid(1),
         Materials.Grade3PurifiedWater.getFluid(1), Materials.Grade5PurifiedWater.getFluid(1),
         Materials.Grade7PurifiedWater.getFluid(1), Materials.Grade2PurifiedWater.getFluid(1),

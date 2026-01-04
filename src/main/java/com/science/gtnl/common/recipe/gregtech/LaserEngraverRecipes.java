@@ -1,5 +1,8 @@
 package com.science.gtnl.common.recipe.gregtech;
 
+import static gregtech.api.recipe.RecipeMaps.*;
+import static gregtech.api.util.GTRecipeBuilder.*;
+
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
@@ -9,6 +12,7 @@ import com.science.gtnl.common.material.RecipePool;
 import com.science.gtnl.utils.enums.GTNLItemList;
 import com.science.gtnl.utils.recipes.RecipeBuilder;
 
+import bartworks.system.material.WerkstoffLoader;
 import gregtech.api.enums.GTValues;
 import gregtech.api.enums.ItemList;
 import gregtech.api.enums.Materials;
@@ -118,6 +122,23 @@ public class LaserEngraverRecipes implements IRecipePool {
             .eut(TierEU.RECIPE_LuV)
             .addTo(lER);
 
+        RecipeBuilder.builder()
+            .itemInputs(
+                GTNLItemList.NeutroniumBoule.get(1L),
+                WerkstoffLoader.MagnetoResonaticDust.get(OrePrefixes.lens, 0),
+                WerkstoffLoader.Fayalit.get(OrePrefixes.lens, 0),
+                com.dreammaster.gthandler.CustomItemList.MysteriousCrystalLens.get(0))
+            .itemOutputs(ItemList.Circuit_Silicon_Ingot6.get(2))
+            .fluidInputs(Materials.UUMatter.getFluid(16000L))
+            .duration(30 * SECONDS)
+            .eut(TierEU.RECIPE_UEV)
+            .requiresCleanRoom()
+            .addTo(lER);
+
+        loadWirelessEnergyCoverRecipes();
+    }
+
+    public void loadWirelessEnergyCoverRecipes() {
         for (int j = 0; j < 14; j++) {
             for (int i = 0; i < 13; i++) {
                 if (j < 4 && i >= 4) continue;
