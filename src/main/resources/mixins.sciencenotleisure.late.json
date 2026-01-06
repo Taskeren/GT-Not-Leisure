@@ -9,6 +9,7 @@
     "AEFluidCraft.MixinItemFluidPacket",
     "AppliedEnergistics.MixinAdaptorIInventory",
     "AppliedEnergistics.MixinDualityInterface",
+    "AppliedEnergistics.MixinInterfaceTerminalEntry",
     "AppliedEnergistics.MixinEntityTinyTNTPrimed",
     "AppliedEnergistics.MixinTileIOPort",
     "AppliedEnergistics.MixinToolQuartzCuttingKnife",
