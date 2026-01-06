@@ -13,6 +13,7 @@ import org.spongepowered.asm.mixin.gen.Accessor;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
@@ -22,9 +23,11 @@ import com.llamalad7.mixinextras.sugar.ref.LocalBooleanRef;
 import com.llamalad7.mixinextras.sugar.ref.LocalLongRef;
 import com.science.gtnl.common.block.blocks.tile.TileEntityAEChisel;
 import com.science.gtnl.common.machine.multiblock.AssemblerMatrix;
+import com.science.gtnl.config.MainConfig;
 import com.science.gtnl.utils.ChiselPatternDetails;
 import com.science.gtnl.utils.DireCraftingPatternDetails;
 import com.science.gtnl.utils.LargeInventoryCrafting;
+import com.science.gtnl.utils.Utils;
 
 import appeng.api.config.Actionable;
 import appeng.api.config.PowerMultiplier;
@@ -327,6 +330,13 @@ public abstract class MixinCraftingCPUCluster {
             return value;
         }
         return original.call(instance);
+    }
+
+    @Inject(method = "translateFromNetwork", at = @At("HEAD"), cancellable = true)
+    private static void injectTranslateFromNetwork(String name, CallbackInfoReturnable<String> cir) {
+        if (!MainConfig.enableHatchInterfaceTerminalEnhance) return;
+        if (name == null) return;
+        cir.setReturnValue(Utils.getExtraInterfaceName(name));
     }
 
     @Mixin(targets = "appeng.me.cluster.implementations.CraftingCPUCluster$TaskProgress", remap = false)

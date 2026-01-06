@@ -23,7 +23,6 @@ public class FormingPressRecipes implements IRecipePool {
 
     @Override
     public void loadRecipes() {
-
         RecipeBuilder.builder()
             .itemInputs(ItemList.Shape_Mold_Ingot.get(0), ItemList.Netherite_Nanoparticles.get(1))
             .fluidInputs(Materials.InfusedGold.getMolten(144))
@@ -165,6 +164,138 @@ public class FormingPressRecipes implements IRecipePool {
                 MaterialPool.Technetium.get(OrePrefixes.plate, 1))
             .itemOutputs(GTNLItemList.ExoticRAMWafer.get(1))
             .duration(300)
+            .eut(TierEU.RECIPE_UEV)
+            .addTo(FPR);
+
+        RecipeBuilder.builder()
+            .itemInputs(ItemList.Shape_Mold_Ingot.get(0), ItemList.Intensely_Bonded_Netherite_Nanoparticles.get(1))
+            .fluidInputs(Materials.InfusedGold.getMolten(144))
+            .itemOutputs(GTOreDictUnificator.get(OrePrefixes.ingot, Materials.Netherite, 1))
+            .duration(100)
+            .eut(TierEU.RECIPE_UEV)
+            .addTo(FPR);
+
+        RecipeBuilder.builder()
+            .itemInputs(
+                GTUtility.getIntegratedCircuit(1),
+                ItemList.Shape_Mold_Plate.get(0),
+                ItemList.Intensely_Bonded_Netherite_Nanoparticles.get(1))
+            .fluidInputs(Materials.InfusedGold.getMolten(144))
+            .itemOutputs(GTOreDictUnificator.get(OrePrefixes.plate, Materials.Netherite, 1))
+            .duration(100)
+            .eut(TierEU.RECIPE_UEV)
+            .addTo(FPR);
+
+        RecipeBuilder.builder()
+            .itemInputs(
+                GTUtility.getIntegratedCircuit(2),
+                ItemList.Shape_Mold_Plate.get(0),
+                ItemList.Intensely_Bonded_Netherite_Nanoparticles.get(2))
+            .fluidInputs(Materials.InfusedGold.getMolten(288))
+            .itemOutputs(GTOreDictUnificator.get(OrePrefixes.plateDouble, Materials.Netherite, 1))
+            .duration(100)
+            .eut(TierEU.RECIPE_UEV)
+            .addTo(FPR);
+
+        RecipeBuilder.builder()
+            .itemInputs(
+                GTUtility.getIntegratedCircuit(9),
+                ItemList.Shape_Mold_Plate.get(0),
+                ItemList.Intensely_Bonded_Netherite_Nanoparticles.get(9))
+            .fluidInputs(Materials.InfusedGold.getMolten(1296))
+            .itemOutputs(GTOreDictUnificator.get(OrePrefixes.plateDense, Materials.Netherite, 1))
+            .duration(100)
+            .eut(TierEU.RECIPE_UEV)
+            .addTo(FPR);
+
+        RecipeBuilder.builder()
+            .itemInputs(ItemList.Shape_Mold_Rod.get(0), ItemList.Intensely_Bonded_Netherite_Nanoparticles.get(1))
+            .fluidInputs(Materials.InfusedGold.getMolten(144))
+            .itemOutputs(GTOreDictUnificator.get(OrePrefixes.stick, Materials.Netherite, 2))
+            .duration(100)
+            .eut(TierEU.RECIPE_UEV)
+            .addTo(FPR);
+
+        RecipeBuilder.builder()
+            .itemInputs(ItemList.Shape_Mold_Round.get(0), ItemList.Intensely_Bonded_Netherite_Nanoparticles.get(1))
+            .fluidInputs(Materials.InfusedGold.getMolten(144))
+            .itemOutputs(GTOreDictUnificator.get(OrePrefixes.round, Materials.Netherite, 9))
+            .duration(100)
+            .eut(TierEU.RECIPE_UEV)
+            .addTo(FPR);
+
+        RecipeBuilder.builder()
+            .itemInputs(ItemList.Shape_Mold_Bolt.get(0), ItemList.Intensely_Bonded_Netherite_Nanoparticles.get(1))
+            .fluidInputs(Materials.InfusedGold.getMolten(144))
+            .itemOutputs(GTOreDictUnificator.get(OrePrefixes.round, Materials.Netherite, 8))
+            .duration(100)
+            .eut(TierEU.RECIPE_UEV)
+            .addTo(FPR);
+
+        RecipeBuilder.builder()
+            .itemInputs(ItemList.Shape_Mold_Screw.get(0), ItemList.Intensely_Bonded_Netherite_Nanoparticles.get(1))
+            .fluidInputs(Materials.InfusedGold.getMolten(144))
+            .itemOutputs(GTOreDictUnificator.get(OrePrefixes.screw, Materials.Netherite, 8))
+            .duration(100)
+            .eut(TierEU.RECIPE_UEV)
+            .addTo(FPR);
+
+        RecipeBuilder.builder()
+            .itemInputs(ItemList.Shape_Mold_Ring.get(0), ItemList.Intensely_Bonded_Netherite_Nanoparticles.get(1))
+            .fluidInputs(Materials.InfusedGold.getMolten(144))
+            .itemOutputs(GTOreDictUnificator.get(OrePrefixes.ring, Materials.Netherite, 4))
+            .duration(100)
+            .eut(TierEU.RECIPE_UEV)
+            .addTo(FPR);
+
+        RecipeBuilder.builder()
+            .itemInputs(
+                GTUtility.getIntegratedCircuit(10),
+                ItemList.Shape_Mold_Plate.get(0),
+                ItemList.Intensely_Bonded_Netherite_Nanoparticles.get(1))
+            .fluidInputs(Materials.InfusedGold.getMolten(144))
+            .itemOutputs(GTOreDictUnificator.get(OrePrefixes.foil, Materials.Netherite, 4))
+            .duration(100)
+            .eut(TierEU.RECIPE_UEV)
+            .addTo(FPR);
+
+        RecipeBuilder.builder()
+            .itemInputs(ItemList.Shape_Mold_Casing.get(0), ItemList.Intensely_Bonded_Netherite_Nanoparticles.get(1))
+            .fluidInputs(Materials.InfusedGold.getMolten(144))
+            .itemOutputs(GTOreDictUnificator.get(OrePrefixes.itemCasing, Materials.Netherite, 2))
+            .duration(100)
+            .eut(TierEU.RECIPE_UEV)
+            .addTo(FPR);
+
+        RecipeBuilder.builder()
+            .itemInputs(ItemList.Shape_Mold_Gear_Small.get(0), ItemList.Intensely_Bonded_Netherite_Nanoparticles.get(1))
+            .fluidInputs(Materials.InfusedGold.getMolten(144))
+            .itemOutputs(GTOreDictUnificator.get(OrePrefixes.gearGtSmall, Materials.Netherite, 1))
+            .duration(100)
+            .eut(TierEU.RECIPE_UEV)
+            .addTo(FPR);
+
+        RecipeBuilder.builder()
+            .itemInputs(ItemList.Shape_Mold_Gear.get(0), ItemList.Intensely_Bonded_Netherite_Nanoparticles.get(4))
+            .fluidInputs(Materials.InfusedGold.getMolten(576))
+            .itemOutputs(GTOreDictUnificator.get(OrePrefixes.gearGt, Materials.Netherite, 1))
+            .duration(100)
+            .eut(TierEU.RECIPE_UEV)
+            .addTo(FPR);
+
+        RecipeBuilder.builder()
+            .itemInputs(ItemList.Shape_Mold_Rotor.get(0), ItemList.Intensely_Bonded_Netherite_Nanoparticles.get(5))
+            .fluidInputs(Materials.InfusedGold.getMolten(720))
+            .itemOutputs(GTOreDictUnificator.get(OrePrefixes.rotor, Materials.Netherite, 1))
+            .duration(100)
+            .eut(TierEU.RECIPE_UEV)
+            .addTo(FPR);
+
+        RecipeBuilder.builder()
+            .itemInputs(ItemList.Shape_Mold_Rod_Long.get(0), ItemList.Intensely_Bonded_Netherite_Nanoparticles.get(1))
+            .fluidInputs(Materials.InfusedGold.getMolten(144))
+            .itemOutputs(GTOreDictUnificator.get(OrePrefixes.stickLong, Materials.Netherite, 1))
+            .duration(100)
             .eut(TierEU.RECIPE_UEV)
             .addTo(FPR);
 
