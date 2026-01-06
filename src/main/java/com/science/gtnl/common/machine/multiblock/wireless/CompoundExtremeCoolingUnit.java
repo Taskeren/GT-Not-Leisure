@@ -24,7 +24,7 @@ import com.gtnewhorizon.structurelib.structure.IStructureDefinition;
 import com.gtnewhorizon.structurelib.structure.ISurvivalBuildEnvironment;
 import com.gtnewhorizon.structurelib.structure.StructureDefinition;
 import com.science.gtnl.common.machine.multiMachineBase.WirelessEnergyMultiMachineBase;
-import com.science.gtnl.common.material.RecipePool;
+import com.science.gtnl.common.material.GTNLRecipeMaps;
 import com.science.gtnl.loader.BlockLoader;
 import com.science.gtnl.utils.StructureUtils;
 
@@ -204,13 +204,13 @@ public class CompoundExtremeCoolingUnit extends WirelessEnergyMultiMachineBase<C
     @Override
     public RecipeMap<?> getRecipeMap() {
         return (machineMode == MACHINEMODE_VACUUM_FREEZE) ? RecipeMaps.vacuumFreezerRecipes
-            : RecipePool.PlasmaCondensationRecipes;
+            : GTNLRecipeMaps.PlasmaCondensationRecipes;
     }
 
     @Nonnull
     @Override
     public Collection<RecipeMap<?>> getAvailableRecipeMaps() {
-        return Arrays.asList(RecipeMaps.vacuumFreezerRecipes, RecipePool.PlasmaCondensationRecipes);
+        return Arrays.asList(RecipeMaps.vacuumFreezerRecipes, GTNLRecipeMaps.PlasmaCondensationRecipes);
     }
 
     @Override

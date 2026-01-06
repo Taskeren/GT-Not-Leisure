@@ -25,7 +25,7 @@ import com.gtnewhorizons.modularui.common.widget.DrawableWidget;
 import com.gtnewhorizons.modularui.common.widget.FluidSlotWidget;
 import com.gtnewhorizons.modularui.common.widget.SlotWidget;
 import com.gtnewhorizons.modularui.common.widget.TextWidget;
-import com.science.gtnl.common.material.MaterialPool;
+import com.science.gtnl.common.material.GTNLMaterials;
 import com.science.gtnl.utils.item.ItemUtils;
 
 import gregtech.api.gui.modularui.GTUITextures;
@@ -188,7 +188,7 @@ public class ManaTank extends MTEDigitalTankBase {
     @Override
     public void onFirstTick(IGregTechTileEntity aBaseMetaTileEntity) {
         super.onFirstTick(aBaseMetaTileEntity);
-        if (fluidMana == null) fluidMana = MaterialPool.FluidMana.getFluidOrGas(0);
+        if (fluidMana == null) fluidMana = GTNLMaterials.FluidMana.getFluidOrGas(0);
     }
 
     @Override

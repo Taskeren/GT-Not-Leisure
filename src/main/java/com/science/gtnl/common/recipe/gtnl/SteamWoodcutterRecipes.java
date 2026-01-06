@@ -5,7 +5,7 @@ import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 
 import com.science.gtnl.api.IRecipePool;
-import com.science.gtnl.common.material.RecipePool;
+import com.science.gtnl.common.material.GTNLRecipeMaps;
 import com.science.gtnl.utils.recipes.RecipeBuilder;
 
 import gregtech.api.enums.TierEU;
@@ -13,7 +13,7 @@ import gregtech.api.recipe.RecipeMap;
 
 public class SteamWoodcutterRecipes implements IRecipePool {
 
-    public RecipeMap<?> SWR = RecipePool.WoodcutterRecipes;
+    public RecipeMap<?> SWR = GTNLRecipeMaps.WoodcutterRecipes;
 
     @Override
     public void loadRecipes() {

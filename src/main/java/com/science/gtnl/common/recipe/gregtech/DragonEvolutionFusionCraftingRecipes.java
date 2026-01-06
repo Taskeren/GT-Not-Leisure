@@ -5,7 +5,7 @@ import static gregtech.api.enums.Mods.GalacticraftAmunRa;
 import static gregtech.api.util.GTRecipeConstants.DEFC_CASING_TIER;
 
 import com.science.gtnl.api.IRecipePool;
-import com.science.gtnl.common.material.MaterialPool;
+import com.science.gtnl.common.material.GTNLMaterials;
 import com.science.gtnl.utils.recipes.RecipeBuilder;
 
 import gregtech.api.enums.ItemList;
@@ -37,7 +37,7 @@ public class DragonEvolutionFusionCraftingRecipes implements IRecipePool {
                 GTOreDictUnificator.get(OrePrefixes.nanite, Materials.Neutronium, 4),
                 ItemList.Circuit_Parts_Chip_Bioware.get(64L))
             .fluidInputs(MaterialMisc.MUTATED_LIVING_SOLDER.getFluidStack(10000))
-            .fluidOutputs(MaterialPool.SuperMutatedLivingSolder.getFluidOrGas(10000))
+            .fluidOutputs(GTNLMaterials.SuperMutatedLivingSolder.getFluidOrGas(10000))
             .eut(TierEU.RECIPE_UEV)
             .duration(1200)
             .metadata(DEFC_CASING_TIER, 3)

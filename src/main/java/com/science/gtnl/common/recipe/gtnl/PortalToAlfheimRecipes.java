@@ -13,7 +13,7 @@ import net.minecraft.util.StatCollector;
 import net.minecraftforge.oredict.OreDictionary;
 
 import com.science.gtnl.api.IRecipePool;
-import com.science.gtnl.common.material.RecipePool;
+import com.science.gtnl.common.material.GTNLRecipeMaps;
 import com.science.gtnl.utils.enums.GTNLItemList;
 import com.science.gtnl.utils.recipes.RecipeBuilder;
 
@@ -25,7 +25,7 @@ import vazkii.botania.api.recipe.RecipeElvenTrade;
 
 public class PortalToAlfheimRecipes implements IRecipePool {
 
-    public RecipeMap<?> PTAR = RecipePool.PortalToAlfheimRecipes;
+    public RecipeMap<?> PTAR = GTNLRecipeMaps.PortalToAlfheimRecipes;
 
     @Override
     public void loadRecipes() {

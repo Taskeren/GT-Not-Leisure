@@ -23,7 +23,7 @@ import com.gtnewhorizon.structurelib.structure.IStructureDefinition;
 import com.gtnewhorizon.structurelib.structure.ISurvivalBuildEnvironment;
 import com.gtnewhorizon.structurelib.structure.StructureDefinition;
 import com.science.gtnl.common.machine.multiMachineBase.WirelessEnergyMultiMachineBase;
-import com.science.gtnl.common.material.RecipePool;
+import com.science.gtnl.common.material.GTNLRecipeMaps;
 import com.science.gtnl.loader.BlockLoader;
 import com.science.gtnl.utils.StructureUtils;
 
@@ -199,9 +199,9 @@ public class FastNeutronBreederReactor extends WirelessEnergyMultiMachineBase<Fa
     @Override
     public RecipeMap<?> getRecipeMap() {
         if (machineMode == MACHINEMODE_DECAY) {
-            return RecipePool.DecayHastenerRecipes;
+            return GTNLRecipeMaps.DecayHastenerRecipes;
         } else if (machineMode == MACHINEMODE_NEUTRON) {
-            return RecipePool.ElectricNeutronActivatorRecipes;
+            return GTNLRecipeMaps.ElectricNeutronActivatorRecipes;
         } else {
             return GTPPRecipeMaps.cyclotronRecipes;
         }
@@ -211,8 +211,8 @@ public class FastNeutronBreederReactor extends WirelessEnergyMultiMachineBase<Fa
     @Override
     public Collection<RecipeMap<?>> getAvailableRecipeMaps() {
         return Arrays.asList(
-            RecipePool.DecayHastenerRecipes,
-            RecipePool.ElectricNeutronActivatorRecipes,
+            GTNLRecipeMaps.DecayHastenerRecipes,
+            GTNLRecipeMaps.ElectricNeutronActivatorRecipes,
             GTPPRecipeMaps.cyclotronRecipes);
     }
 

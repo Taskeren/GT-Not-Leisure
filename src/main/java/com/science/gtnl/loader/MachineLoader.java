@@ -264,9 +264,9 @@ import com.science.gtnl.common.machine.multiblock.wireless.SuperconductingMagnet
 import com.science.gtnl.common.machine.multiblock.wireless.SwarmCore;
 import com.science.gtnl.common.machine.multiblock.wireless.TransliminalOasis;
 import com.science.gtnl.common.machine.multiblock.wireless.VortexMatterCentrifuge;
-import com.science.gtnl.common.material.MaterialPool;
+import com.science.gtnl.common.material.GTNLMaterials;
+import com.science.gtnl.common.material.GTNLRecipeMaps;
 import com.science.gtnl.common.material.MaterialUtils;
-import com.science.gtnl.common.material.RecipePool;
 import com.science.gtnl.config.MainConfig;
 import com.science.gtnl.utils.enums.GTNLItemList;
 import com.science.gtnl.utils.enums.GTNLMachineID;
@@ -1736,7 +1736,7 @@ public class MachineLoader {
     public static void registerHatch() {
         Set<Fluid> acceptedFluids = new HashSet<>();
         acceptedFluids.add(
-            MaterialPool.FluidMana.getFluidOrGas(1)
+            GTNLMaterials.FluidMana.getFluidOrGas(1)
                 .getFluid());
 
         if (ModList.TwistSpaceTechnology.isModLoaded()) {
@@ -2051,7 +2051,7 @@ public class MachineLoader {
                     FluidUtils.getSuperHeatedSteam(1)
                         .getFluid(),
                     Materials.DenseSupercriticalSteam.mGas,
-                    MaterialPool.CompressedSteam.getMolten(1)
+                    GTNLMaterials.CompressedSteam.getMolten(1)
                         .getFluid()),
                 4096000,
                 BIG_STEAM_INPUT_HATCH.ID,
@@ -4745,7 +4745,7 @@ public class MachineLoader {
                         + EnumChatFormatting.YELLOW
                         + StatCollector.translateToLocal("GasCollectorRecipeType")
                         + EnumChatFormatting.RESET },
-                RecipePool.GasCollectorRecipes,
+                GTNLRecipeMaps.GasCollectorRecipes,
                 3,
                 3,
                 true,
@@ -4841,11 +4841,11 @@ public class MachineLoader {
     }
 
     public static void registerWireAndPipe() {
-        MaterialUtils.registerWires(STAR_GATE_WIRE.ID, MaterialPool.Stargate, 2147483647, 2147483647, 0, false);
+        MaterialUtils.registerWires(STAR_GATE_WIRE.ID, GTNLMaterials.Stargate, 2147483647, 2147483647, 0, false);
         MaterialUtils.registerItemPipe(BLUE_ALLOY_PIPE.ID, Materials.BlueAlloy, 8, 2048, false, 20);
-        MaterialUtils.registerFluidPipes(COMPRESSED_STEAM_PIPE.ID, MaterialPool.CompressedSteam, 250000, 10000, true);
-        MaterialUtils.registerFluidPipes(STRONZE_PIPE.ID, MaterialPool.Stronze, 15000, 10000, true);
-        MaterialUtils.registerFluidPipes(BREEL_PIPE.ID, MaterialPool.Breel, 10000, 10000, true);
+        MaterialUtils.registerFluidPipes(COMPRESSED_STEAM_PIPE.ID, GTNLMaterials.CompressedSteam, 250000, 10000, true);
+        MaterialUtils.registerFluidPipes(STRONZE_PIPE.ID, GTNLMaterials.Stronze, 15000, 10000, true);
+        MaterialUtils.registerFluidPipes(BREEL_PIPE.ID, GTNLMaterials.Breel, 10000, 10000, true);
     }
 
     public static void registerCovers() {

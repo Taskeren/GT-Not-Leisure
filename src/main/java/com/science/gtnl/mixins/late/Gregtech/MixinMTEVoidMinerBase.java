@@ -33,7 +33,7 @@ import com.gtnewhorizons.modularui.common.widget.TextWidget;
 import com.science.gtnl.config.MainConfig;
 import com.science.gtnl.utils.enums.ModList;
 import com.science.gtnl.utils.machine.VMTweakHelper;
-import com.science.gtnl.utils.recipes.GTNL_OverclockCalculator;
+import com.science.gtnl.utils.recipes.GTNLOverclockCalculator;
 
 import bwcrossmod.galacticgreg.MTEVoidMinerBase;
 import gregtech.api.enums.GTValues;
@@ -286,7 +286,7 @@ public abstract class MixinMTEVoidMinerBase extends MTEEnhancedMultiBlockBase<Mi
         if (batchMode) {
             this.mMaxProgresstime = 128;
         } else {
-            GTNL_OverclockCalculator calculator = new GTNL_OverclockCalculator().setEUt(useEU)
+            GTNLOverclockCalculator calculator = new GTNLOverclockCalculator().setEUt(useEU)
                 .setRecipeEUt(-gtnl$lEUt)
                 .setDuration(10)
                 .setParallel(1);
@@ -314,7 +314,7 @@ public abstract class MixinMTEVoidMinerBase extends MTEEnhancedMultiBlockBase<Mi
             .collect(Collectors.toList());
         ItemStack output = this.nextOre();
 
-        GTNL_OverclockCalculator calculator = new GTNL_OverclockCalculator().setEUt(getMaxInputEu())
+        GTNLOverclockCalculator calculator = new GTNLOverclockCalculator().setEUt(getMaxInputEu())
             .setRecipeEUt(Math.abs(Math.toIntExact(GTValues.V[this.getMinTier()])))
             .setDuration(10 * (batchMode ? 16 : 1))
             .setParallel(1);

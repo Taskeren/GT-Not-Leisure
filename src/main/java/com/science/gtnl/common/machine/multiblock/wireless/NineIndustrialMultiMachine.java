@@ -34,9 +34,9 @@ import com.science.gtnl.common.machine.multiMachineBase.WirelessEnergyMultiMachi
 import com.science.gtnl.loader.BlockLoader;
 import com.science.gtnl.utils.StructureUtils;
 import com.science.gtnl.utils.machine.NineIndustrialMultiMachineManager;
-import com.science.gtnl.utils.recipes.GTNL_OverclockCalculator;
-import com.science.gtnl.utils.recipes.GTNL_ParallelHelper;
-import com.science.gtnl.utils.recipes.GTNL_ProcessingLogic;
+import com.science.gtnl.utils.recipes.GTNLOverclockCalculator;
+import com.science.gtnl.utils.recipes.GTNLParallelHelper;
+import com.science.gtnl.utils.recipes.GTNLProcessingLogic;
 
 import gregtech.api.enums.Materials;
 import gregtech.api.enums.Textures;
@@ -241,7 +241,7 @@ public class NineIndustrialMultiMachine extends WirelessEnergyMultiMachineBase<N
 
     @Override
     public ProcessingLogic createProcessingLogic() {
-        return new GTNL_ProcessingLogic() {
+        return new GTNLProcessingLogic() {
 
             private ItemStack lastCircuit = null;
             private int lastMode = -1;
@@ -270,8 +270,8 @@ public class NineIndustrialMultiMachine extends WirelessEnergyMultiMachineBase<N
 
             @Nonnull
             @Override
-            public GTNL_ParallelHelper createParallelHelper(@Nonnull GTRecipe recipe) {
-                return new GTNL_ParallelHelper().setRecipe(recipe)
+            public GTNLParallelHelper createParallelHelper(@Nonnull GTRecipe recipe) {
+                return new GTNLParallelHelper().setRecipe(recipe)
                     .setAvailableEUt(Long.MAX_VALUE)
                     .setMachine(machine, protectItems, protectFluids)
                     .setRecipeLocked(recipeLockableMachine, isRecipeLocked)
@@ -282,8 +282,8 @@ public class NineIndustrialMultiMachine extends WirelessEnergyMultiMachineBase<N
             }
 
             @Override
-            public double calculateDuration(@Nonnull GTRecipe recipe, @Nonnull GTNL_ParallelHelper helper,
-                @Nonnull GTNL_OverclockCalculator calculator) {
+            public double calculateDuration(@Nonnull GTRecipe recipe, @Nonnull GTNLParallelHelper helper,
+                @Nonnull GTNLOverclockCalculator calculator) {
                 if (batchMode) {
                     return 1;
                 } else {

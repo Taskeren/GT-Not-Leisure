@@ -10,7 +10,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraftforge.fluids.FluidRegistry;
 
 import com.science.gtnl.api.IRecipePool;
-import com.science.gtnl.common.material.MaterialPool;
+import com.science.gtnl.common.material.GTNLMaterials;
 import com.science.gtnl.config.MainConfig;
 import com.science.gtnl.utils.enums.GTNLItemList;
 import com.science.gtnl.utils.recipes.RecipeBuilder;
@@ -66,7 +66,7 @@ public class ChemicalBathRecipes implements IRecipePool {
             .itemInputs(GTOreDictUnificator.get(OrePrefixes.crushed, Materials.Pitchblende, 12))
             .fluidInputs(Materials.SulfuricAcid.getFluid(1000))
             .itemOutputs(
-                MaterialPool.PitchblendeSlag.get(OrePrefixes.dust, 12),
+                GTNLMaterials.PitchblendeSlag.get(OrePrefixes.dust, 12),
                 GTOreDictUnificator.get(OrePrefixes.dust, Materials.Uraninite, 10),
                 GTOreDictUnificator.get(OrePrefixes.dust, Materials.Uraninite, 2))
             .outputChances(10000, 10000, 5000)
@@ -78,7 +78,7 @@ public class ChemicalBathRecipes implements IRecipePool {
             .itemInputs(GTOreDictUnificator.get(OrePrefixes.crushedPurified, Materials.Pitchblende, 12))
             .fluidInputs(Materials.SulfuricAcid.getFluid(1000))
             .itemOutputs(
-                MaterialPool.PitchblendeSlag.get(OrePrefixes.dust, 12),
+                GTNLMaterials.PitchblendeSlag.get(OrePrefixes.dust, 12),
                 GTOreDictUnificator.get(OrePrefixes.dust, Materials.Uraninite, 10),
                 GTOreDictUnificator.get(OrePrefixes.dust, Materials.Uraninite, 2))
             .outputChances(10000, 10000, 5000)
@@ -87,9 +87,9 @@ public class ChemicalBathRecipes implements IRecipePool {
             .addTo(cBR);
 
         RecipeBuilder.builder()
-            .itemInputs(MaterialPool.UraniumSlag.get(OrePrefixes.dust, 1))
+            .itemInputs(GTNLMaterials.UraniumSlag.get(OrePrefixes.dust, 1))
             .fluidInputs(Materials.HydrochloricAcid.getFluid(4000))
-            .itemOutputs(MaterialPool.UraniumChlorideSlag.get(OrePrefixes.dust, 1))
+            .itemOutputs(GTNLMaterials.UraniumChlorideSlag.get(OrePrefixes.dust, 1))
             .duration(160)
             .eut(TierEU.RECIPE_HV)
             .addTo(cBR);

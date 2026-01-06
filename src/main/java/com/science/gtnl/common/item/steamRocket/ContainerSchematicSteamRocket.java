@@ -5,7 +5,7 @@ import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 
 import com.dreammaster.gthandler.CustomItemList;
-import com.science.gtnl.common.material.MaterialPool;
+import com.science.gtnl.common.material.GTNLMaterials;
 import com.science.gtnl.common.recipe.gtnl.RocketAssemblerRecipes;
 
 import galaxyspace.core.inventory.InventorySchematic;
@@ -114,9 +114,9 @@ public class ContainerSchematicSteamRocket extends ContainerSchematic {
                         y,
                         z,
                         inventory.player,
-                        MaterialPool.CompressedSteam.get(OrePrefixes.plateSuperdense, 1)
+                        GTNLMaterials.CompressedSteam.get(OrePrefixes.plateSuperdense, 1)
                             .getItem(),
-                        MaterialPool.CompressedSteam.getmID()));
+                        GTNLMaterials.CompressedSteam.getmID()));
             }
         }
         // engine

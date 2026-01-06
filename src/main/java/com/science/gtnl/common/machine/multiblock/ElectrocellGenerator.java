@@ -30,7 +30,7 @@ import com.gtnewhorizon.structurelib.structure.ISurvivalBuildEnvironment;
 import com.gtnewhorizon.structurelib.structure.StructureDefinition;
 import com.science.gtnl.api.IConfigurationMaintenance;
 import com.science.gtnl.common.machine.multiMachineBase.MultiMachineBase;
-import com.science.gtnl.common.material.RecipePool;
+import com.science.gtnl.common.material.GTNLRecipeMaps;
 import com.science.gtnl.utils.StructureUtils;
 import com.science.gtnl.utils.recipes.metadata.ElectrocellGeneratorMetadata;
 
@@ -226,7 +226,7 @@ public class ElectrocellGenerator extends MultiMachineBase<ElectrocellGenerator>
 
         ArrayList<FluidStack> fluidStacks = getStoredFluids();
 
-        for (GTRecipe recipe : RecipePool.ElectrocellGeneratorRecipes.getAllRecipes()) {
+        for (GTRecipe recipe : GTNLRecipeMaps.ElectrocellGeneratorRecipes.getAllRecipes()) {
             if (depleteInput(mLeftInputBusses, recipe.mInputs[0], true)
                 && depleteInput(mRightInputBusses, recipe.mInputs[1], true)) {
                 if (recipe.mFluidInputs != null && !fluidStacks.isEmpty()) {
@@ -368,7 +368,7 @@ public class ElectrocellGenerator extends MultiMachineBase<ElectrocellGenerator>
 
     @Override
     public RecipeMap<?> getRecipeMap() {
-        return RecipePool.ElectrocellGeneratorRecipes;
+        return GTNLRecipeMaps.ElectrocellGeneratorRecipes;
     }
 
     @Override

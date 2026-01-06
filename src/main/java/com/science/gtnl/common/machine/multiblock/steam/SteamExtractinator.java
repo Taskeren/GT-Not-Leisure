@@ -17,7 +17,7 @@ import com.gtnewhorizon.structurelib.structure.IStructureDefinition;
 import com.gtnewhorizon.structurelib.structure.ISurvivalBuildEnvironment;
 import com.gtnewhorizon.structurelib.structure.StructureDefinition;
 import com.science.gtnl.common.machine.multiMachineBase.SteamMultiMachineBase;
-import com.science.gtnl.common.material.RecipePool;
+import com.science.gtnl.common.material.GTNLRecipeMaps;
 import com.science.gtnl.loader.BlockLoader;
 import com.science.gtnl.utils.StructureUtils;
 
@@ -170,7 +170,7 @@ public class SteamExtractinator extends SteamMultiMachineBase<SteamExtractinator
 
     @Override
     public RecipeMap<?> getRecipeMap() {
-        return RecipePool.SteamExtractinatorRecipes;
+        return GTNLRecipeMaps.SteamExtractinatorRecipes;
     }
 
     @Override

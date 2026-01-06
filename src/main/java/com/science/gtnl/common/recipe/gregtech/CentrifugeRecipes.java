@@ -6,7 +6,7 @@ import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
 
 import com.science.gtnl.api.IRecipePool;
-import com.science.gtnl.common.material.MaterialPool;
+import com.science.gtnl.common.material.GTNLMaterials;
 import com.science.gtnl.loader.BlockLoader;
 import com.science.gtnl.utils.recipes.RecipeBuilder;
 
@@ -28,19 +28,19 @@ public class CentrifugeRecipes implements IRecipePool {
     @Override
     public void loadRecipes() {
         RecipeBuilder.builder()
-            .fluidInputs(MaterialPool.NeutralisedRedMud.getFluidOrGas(2000))
+            .fluidInputs(GTNLMaterials.NeutralisedRedMud.getFluidOrGas(2000))
             .fluidOutputs(
                 FluidUtils.getFluidStack(GTPPFluids.RedMud, 1000),
-                MaterialPool.FerricReeChloride.getFluidOrGas(1000),
+                GTNLMaterials.FerricReeChloride.getFluidOrGas(1000),
                 Materials.Hydrogen.getGas(4000))
             .duration(100)
             .eut(120)
             .addTo(CNCR);
 
         RecipeBuilder.builder()
-            .fluidInputs(MaterialPool.FerricReeChloride.getFluidOrGas(2000))
+            .fluidInputs(GTNLMaterials.FerricReeChloride.getFluidOrGas(2000))
             .fluidOutputs(
-                MaterialPool.RareEarthChlorides.getFluidOrGas(1000),
+                GTNLMaterials.RareEarthChlorides.getFluidOrGas(1000),
                 Materials.IronIIIChloride.getFluid(1000),
                 Materials.Water.getFluid(3000))
             .duration(320)
@@ -49,31 +49,31 @@ public class CentrifugeRecipes implements IRecipePool {
 
         RecipeBuilder.builder()
             .itemInputs(GTModHandler.getModItem(DraconicEvolution.ID, "magnet", 0, 1))
-            .fluidInputs(MaterialPool.RareEarthChlorides.getFluidOrGas(2000))
+            .fluidInputs(GTNLMaterials.RareEarthChlorides.getFluidOrGas(2000))
             .fluidOutputs(
-                MaterialPool.LaNdOxidesSolution.getFluidOrGas(250),
-                MaterialPool.SmGdOxidesSolution.getFluidOrGas(250),
-                MaterialPool.TbHoOxidesSolution.getFluidOrGas(250),
-                MaterialPool.ErLuOxidesSolution.getFluidOrGas(250),
+                GTNLMaterials.LaNdOxidesSolution.getFluidOrGas(250),
+                GTNLMaterials.SmGdOxidesSolution.getFluidOrGas(250),
+                GTNLMaterials.TbHoOxidesSolution.getFluidOrGas(250),
+                GTNLMaterials.ErLuOxidesSolution.getFluidOrGas(250),
                 Materials.HydrochloricAcid.getFluid(1000))
             .duration(200)
             .eut(480)
             .addTo(CNCR);
 
         RecipeBuilder.builder()
-            .itemInputs(MaterialPool.UraniumChlorideSlag.get(OrePrefixes.dust, 3))
+            .itemInputs(GTNLMaterials.UraniumChlorideSlag.get(OrePrefixes.dust, 3))
             .itemOutputs(
-                MaterialPool.BariumChloride.get(OrePrefixes.dust, 1),
+                GTNLMaterials.BariumChloride.get(OrePrefixes.dust, 1),
                 GTOreDictUnificator.get(OrePrefixes.dust, Materials.Lead, 1),
                 GTOreDictUnificator.get(OrePrefixes.dust, Materials.Thorium, 1),
-                MaterialPool.RadiumChloride.get(OrePrefixes.dust, 1))
+                GTNLMaterials.RadiumChloride.get(OrePrefixes.dust, 1))
             .outputChances(10000, 10000, 10000, 500)
             .duration(300)
             .eut(TierEU.RECIPE_HV)
             .addTo(CNCR);
 
         RecipeBuilder.builder()
-            .fluidInputs(MaterialPool.EnderAir.getFluidOrGas(10000))
+            .fluidInputs(GTNLMaterials.EnderAir.getFluidOrGas(10000))
             .fluidOutputs(
                 Materials.NitrogenDioxide.getGas(3000),
                 Materials.Deuterium.getGas(1000),
@@ -92,7 +92,7 @@ public class CentrifugeRecipes implements IRecipePool {
 
         RecipeBuilder.builder()
             .itemOutputs(Materials.Beryllium.getDust(24))
-            .fluidInputs(MaterialPool.PostProcessBeWaste.getFluidOrGas(24000))
+            .fluidInputs(GTNLMaterials.PostProcessBeWaste.getFluidOrGas(24000))
             .fluidOutputs(Materials.DilutedSulfuricAcid.getFluid(8000))
             .duration(200)
             .eut(TierEU.RECIPE_MV)

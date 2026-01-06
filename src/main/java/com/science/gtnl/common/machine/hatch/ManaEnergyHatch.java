@@ -12,7 +12,7 @@ import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
 import net.minecraftforge.fluids.FluidStack;
 
-import com.science.gtnl.common.material.MaterialPool;
+import com.science.gtnl.common.material.GTNLMaterials;
 
 import gregtech.api.interfaces.ITexture;
 import gregtech.api.interfaces.modularui.IAddUIWidgets;
@@ -28,7 +28,7 @@ public class ManaEnergyHatch extends MTEHatchEnergy implements IAddUIWidgets {
 
     private static final int MANA_POOL_RADIUS = 5;
     private static final int EU_TO_MANA_RATE = 250;
-    private static final FluidStack fluidMana = MaterialPool.FluidMana.getFluidOrGas(1);
+    private static final FluidStack fluidMana = GTNLMaterials.FluidMana.getFluidOrGas(1);
     private static int mAmp;
 
     public ManaEnergyHatch(int aID, String aName, String aNameRegional, int aTier, int aAmp) {

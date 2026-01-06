@@ -30,11 +30,11 @@ import com.gtnewhorizon.structurelib.structure.ISurvivalBuildEnvironment;
 import com.gtnewhorizon.structurelib.structure.ITierConverter;
 import com.gtnewhorizon.structurelib.structure.StructureDefinition;
 import com.science.gtnl.common.machine.multiMachineBase.GTMMultiMachineBase;
-import com.science.gtnl.common.material.RecipePool;
+import com.science.gtnl.common.material.GTNLRecipeMaps;
 import com.science.gtnl.common.render.tile.AtomicEnergyExcitationPlantRenderer;
 import com.science.gtnl.utils.StructureUtils;
-import com.science.gtnl.utils.recipes.GTNL_OverclockCalculator;
-import com.science.gtnl.utils.recipes.GTNL_ProcessingLogic;
+import com.science.gtnl.utils.recipes.GTNLOverclockCalculator;
+import com.science.gtnl.utils.recipes.GTNLProcessingLogic;
 import com.science.gtnl.utils.recipes.metadata.FuelRefiningMetadata;
 
 import goodgenerator.loader.Loaders;
@@ -238,7 +238,7 @@ public class AtomicEnergyExcitationPlant extends GTMMultiMachineBase<AtomicEnerg
 
     @Override
     public RecipeMap<?> getRecipeMap() {
-        return RecipePool.FuelRefiningComplexRecipes;
+        return GTNLRecipeMaps.FuelRefiningComplexRecipes;
     }
 
     @Override
@@ -464,7 +464,7 @@ public class AtomicEnergyExcitationPlant extends GTMMultiMachineBase<AtomicEnerg
 
     @Override
     public ProcessingLogic createProcessingLogic() {
-        return new GTNL_ProcessingLogic() {
+        return new GTNLProcessingLogic() {
 
             @NotNull
             @Override
@@ -479,7 +479,7 @@ public class AtomicEnergyExcitationPlant extends GTMMultiMachineBase<AtomicEnerg
 
             @NotNull
             @Override
-            public GTNL_OverclockCalculator createOverclockCalculator(@NotNull GTRecipe recipe) {
+            public GTNLOverclockCalculator createOverclockCalculator(@NotNull GTRecipe recipe) {
                 return super.createOverclockCalculator(recipe).setExtraDurationModifier(mConfigSpeedBoost)
                     .setRecipeHeat(recipe.mSpecialValue)
                     .setMachineHeat(mHeatingCapacity)

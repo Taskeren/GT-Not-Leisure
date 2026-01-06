@@ -15,7 +15,7 @@ import com.gtnewhorizon.structurelib.structure.IStructureDefinition;
 import com.gtnewhorizon.structurelib.structure.ISurvivalBuildEnvironment;
 import com.gtnewhorizon.structurelib.structure.StructureDefinition;
 import com.science.gtnl.common.machine.multiMachineBase.MultiMachineBase;
-import com.science.gtnl.common.material.RecipePool;
+import com.science.gtnl.common.material.GTNLRecipeMaps;
 import com.science.gtnl.loader.BlockLoader;
 import com.science.gtnl.utils.StructureUtils;
 
@@ -82,7 +82,7 @@ public class RareEarthCentrifugal extends MultiMachineBase<RareEarthCentrifugal>
 
     @Override
     public RecipeMap<?> getRecipeMap() {
-        return RecipePool.RareEarthCentrifugalRecipes;
+        return GTNLRecipeMaps.RareEarthCentrifugalRecipes;
     }
 
     @Override

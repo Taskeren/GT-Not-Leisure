@@ -71,8 +71,8 @@ import com.science.gtnl.utils.enums.ModList;
 import com.science.gtnl.utils.enums.SteamTypes;
 import com.science.gtnl.utils.gui.CircularGaugeDrawable;
 import com.science.gtnl.utils.item.ItemUtils;
-import com.science.gtnl.utils.recipes.GTNL_OverclockCalculator;
-import com.science.gtnl.utils.recipes.GTNL_ProcessingLogic;
+import com.science.gtnl.utils.recipes.GTNLOverclockCalculator;
+import com.science.gtnl.utils.recipes.GTNLProcessingLogic;
 
 import gregtech.api.enums.StructureError;
 import gregtech.api.gui.modularui.GTUITextures;
@@ -446,11 +446,11 @@ public abstract class SteamMultiMachineBase<T extends SteamMultiMachineBase<T>> 
 
     @ApiStatus.OverrideOnly
     public ProcessingLogic createProcessingLogic() {
-        return new GTNL_ProcessingLogic() {
+        return new GTNLProcessingLogic() {
 
             @Override
             @Nonnull
-            public GTNL_OverclockCalculator createOverclockCalculator(@NotNull GTRecipe recipe) {
+            public GTNLOverclockCalculator createOverclockCalculator(@NotNull GTRecipe recipe) {
                 return super.createOverclockCalculator(recipe).setExtraDurationModifier(configSpeedBoost)
                     .setEUtDiscount(getEUtDiscount())
                     .setDurationModifier(getDurationModifier())

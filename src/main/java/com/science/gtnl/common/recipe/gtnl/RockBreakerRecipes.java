@@ -7,7 +7,7 @@ import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 
 import com.science.gtnl.api.IRecipePool;
-import com.science.gtnl.common.material.RecipePool;
+import com.science.gtnl.common.material.GTNLRecipeMaps;
 import com.science.gtnl.utils.recipes.RecipeBuilder;
 
 import gregtech.api.enums.Materials;
@@ -21,7 +21,7 @@ import gregtech.api.util.GTUtility;
 
 public class RockBreakerRecipes implements IRecipePool {
 
-    public RecipeMap<?> RBR = RecipePool.RockBreakerRecipes;
+    public RecipeMap<?> RBR = GTNLRecipeMaps.RockBreakerRecipes;
 
     @Override
     public void loadRecipes() {

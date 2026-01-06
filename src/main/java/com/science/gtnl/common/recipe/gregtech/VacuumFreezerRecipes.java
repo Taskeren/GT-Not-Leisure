@@ -1,7 +1,7 @@
 package com.science.gtnl.common.recipe.gregtech;
 
 import com.science.gtnl.api.IRecipePool;
-import com.science.gtnl.common.material.MaterialPool;
+import com.science.gtnl.common.material.GTNLMaterials;
 import com.science.gtnl.config.MainConfig;
 import com.science.gtnl.utils.recipes.RecipeBuilder;
 
@@ -19,8 +19,8 @@ public class VacuumFreezerRecipes implements IRecipePool {
     @Override
     public void loadRecipes() {
         RecipeBuilder.builder()
-            .fluidInputs(MaterialPool.EnderAir.getFluidOrGas(4000))
-            .fluidOutputs(MaterialPool.LiquidEnderAir.getFluidOrGas(4000))
+            .fluidInputs(GTNLMaterials.EnderAir.getFluidOrGas(4000))
+            .fluidOutputs(GTNLMaterials.LiquidEnderAir.getFluidOrGas(4000))
             .duration(80)
             .eut(TierEU.RECIPE_HV)
             .addTo(VFR)

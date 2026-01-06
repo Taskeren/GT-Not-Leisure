@@ -8,7 +8,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import com.science.gtnl.ScienceNotLeisure;
-import com.science.gtnl.common.material.RecipePool;
+import com.science.gtnl.common.material.GTNLRecipeMaps;
 import com.science.gtnl.utils.recipes.RecipeBuilder;
 
 import gtPlusPlus.core.material.Material;
@@ -46,7 +46,7 @@ public class GTPPOreHandler {
                 .itemOutputs(ore.getDust(Integer.MAX_VALUE))
                 .eut(0)
                 .duration(1)
-                .addTo(RecipePool.CheatOreProcessingRecipes);
+                .addTo(GTNLRecipeMaps.CheatOreProcessingRecipes);
         }
     }
 
@@ -57,7 +57,7 @@ public class GTPPOreHandler {
                 .itemOutputs(ore.getDust(Integer.MAX_VALUE))
                 .eut(0)
                 .duration(1)
-                .addTo(RecipePool.CheatOreProcessingRecipes);
+                .addTo(GTNLRecipeMaps.CheatOreProcessingRecipes);
         }
     }
 }

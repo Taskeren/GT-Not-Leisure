@@ -3,7 +3,7 @@ package com.science.gtnl.common.recipe.gregtech;
 import static gregtech.api.util.GTRecipeConstants.COIL_HEAT;
 
 import com.science.gtnl.api.IRecipePool;
-import com.science.gtnl.common.material.MaterialPool;
+import com.science.gtnl.common.material.GTNLMaterials;
 import com.science.gtnl.utils.recipes.RecipeBuilder;
 
 import gregtech.api.enums.Materials;
@@ -19,9 +19,9 @@ public class DigesterRecipes implements IRecipePool {
     @Override
     public void loadRecipes() {
         RecipeBuilder.builder()
-            .itemInputs(MaterialPool.RareEarthOxide.get(OrePrefixes.dust, 1))
+            .itemInputs(GTNLMaterials.RareEarthOxide.get(OrePrefixes.dust, 1))
             .fluidInputs(Materials.Hydrogen.getGas(1000))
-            .itemOutputs(MaterialPool.RareEarthMetal.get(OrePrefixes.dust, 1))
+            .itemOutputs(GTNLMaterials.RareEarthMetal.get(OrePrefixes.dust, 1))
             .fluidOutputs(Materials.Water.getFluid(500))
             .metadata(COIL_HEAT, 800)
             .duration(400)
@@ -30,8 +30,8 @@ public class DigesterRecipes implements IRecipePool {
 
         RecipeBuilder.builder()
             .itemInputs(GTOreDictUnificator.get(OrePrefixes.dust, Materials.SodiumOxide, 3))
-            .fluidInputs(MaterialPool.RareEarthChlorides.getFluidOrGas(1000))
-            .itemOutputs(MaterialPool.RareEarthOxide.get(OrePrefixes.dust, 1))
+            .fluidInputs(GTNLMaterials.RareEarthChlorides.getFluidOrGas(1000))
+            .itemOutputs(GTNLMaterials.RareEarthOxide.get(OrePrefixes.dust, 1))
             .fluidOutputs(Materials.SaltWater.getFluid(1000))
             .metadata(COIL_HEAT, 2580)
             .duration(800)

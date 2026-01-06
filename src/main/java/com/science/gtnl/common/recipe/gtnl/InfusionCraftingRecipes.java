@@ -10,7 +10,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 
 import com.science.gtnl.api.IRecipePool;
-import com.science.gtnl.common.material.RecipePool;
+import com.science.gtnl.common.material.GTNLRecipeMaps;
 import com.science.gtnl.common.recipe.thaumcraft.TCRecipeTools;
 import com.science.gtnl.utils.recipes.RecipeBuilder;
 
@@ -63,7 +63,7 @@ public class InfusionCraftingRecipes implements IRecipePool {
     public void loadRecipes() {
         TCRecipeTools.getInfusionCraftingRecipe();
 
-        IRecipeMap IIC = RecipePool.IndustrialInfusionCraftingRecipes;
+        IRecipeMap IIC = GTNLRecipeMaps.IndustrialInfusionCraftingRecipes;
         for (TCRecipeTools.InfusionCraftingRecipe Recipe : TCRecipeTools.ICR) {
             if (shouldSkip(
                 Recipe.getOutput()

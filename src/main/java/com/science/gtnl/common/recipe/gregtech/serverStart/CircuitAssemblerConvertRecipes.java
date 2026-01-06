@@ -7,8 +7,8 @@ import static gregtech.api.util.GTRecipeConstants.*;
 import net.minecraftforge.fluids.FluidStack;
 
 import com.science.gtnl.api.IRecipePool;
-import com.science.gtnl.common.material.MaterialPool;
-import com.science.gtnl.common.material.RecipePool;
+import com.science.gtnl.common.material.GTNLMaterials;
+import com.science.gtnl.common.material.GTNLRecipeMaps;
 import com.science.gtnl.config.MainConfig;
 import com.science.gtnl.utils.enums.GTNLItemList;
 import com.science.gtnl.utils.recipes.RecipeBuilder;
@@ -30,7 +30,7 @@ import tectech.recipe.TTRecipeAdder;
 
 public class CircuitAssemblerConvertRecipes implements IRecipePool {
 
-    public RecipeMap<?> CAR = RecipePool.ConvertToCircuitAssembler;
+    public RecipeMap<?> CAR = GTNLRecipeMaps.ConvertToCircuitAssembler;
 
     @Override
     public void loadRecipes() {
@@ -204,7 +204,7 @@ public class CircuitAssemblerConvertRecipes implements IRecipePool {
                     .getStack(3, 8),
                 WerkstoffLoader.MagnetoResonaticDust.get(OrePrefixes.gemExquisite, 1),
                 GTNLItemList.CircuitResonaticUHV.get(1))
-            .fluidInputs(MaterialPool.SuperMutatedLivingSolder.getFluidOrGas(288))
+            .fluidInputs(GTNLMaterials.SuperMutatedLivingSolder.getFluidOrGas(288))
             .itemOutputs(GTNLItemList.CircuitResonaticUEV.get(4))
             .duration(770)
             .eut(31457280)
@@ -220,7 +220,7 @@ public class CircuitAssemblerConvertRecipes implements IRecipePool {
                     .getStack(3, 8),
                 WerkstoffLoader.MagnetoResonaticDust.get(OrePrefixes.gemExquisite, 1),
                 GTNLItemList.CircuitResonaticUEV.get(1))
-            .fluidInputs(MaterialPool.SuperMutatedLivingSolder.getFluidOrGas(432))
+            .fluidInputs(GTNLMaterials.SuperMutatedLivingSolder.getFluidOrGas(432))
             .itemOutputs(GTNLItemList.CircuitResonaticUIV.get(4))
             .duration(790)
             .eut(125829120)
@@ -459,7 +459,7 @@ public class CircuitAssemblerConvertRecipes implements IRecipePool {
             new Object[] { ItemList.Circuit_Board_Bio_Ultra.get(1), GTNLItemList.BiowareSMDCapacitor.get(8),
                 GTNLItemList.BiowareSMDDiode.get(8), GTNLItemList.BiowareSMDResistor.get(8),
                 GTNLItemList.BiowareSMDTransistor.get(8), GTNLItemList.BiowareSMDInductor.get(8),
-                MaterialPool.Polyetheretherketone.get(OrePrefixes.foil, 2), ItemList.Circuit_Chip_Biocell.get(8),
+                GTNLMaterials.Polyetheretherketone.get(OrePrefixes.foil, 2), ItemList.Circuit_Chip_Biocell.get(8),
                 ItemList.Circuit_Parts_Chip_Bioware.get(8),
                 GTOreDictUnificator.get(OrePrefixes.wireFine, Materials.Naquadah, 16),
                 GTOreDictUnificator.get(OrePrefixes.plate, Materials.NiobiumTitanium, 4) },

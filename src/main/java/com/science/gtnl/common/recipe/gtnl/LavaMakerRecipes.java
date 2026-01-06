@@ -6,7 +6,7 @@ import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 
 import com.science.gtnl.api.IRecipePool;
-import com.science.gtnl.common.material.RecipePool;
+import com.science.gtnl.common.material.GTNLRecipeMaps;
 import com.science.gtnl.utils.recipes.RecipeBuilder;
 
 import gregtech.api.enums.Materials;
@@ -14,7 +14,7 @@ import gregtech.api.recipe.RecipeMap;
 
 public class LavaMakerRecipes implements IRecipePool {
 
-    public RecipeMap<?> LMR = RecipePool.LavaMakerRecipes;
+    public RecipeMap<?> LMR = GTNLRecipeMaps.LavaMakerRecipes;
 
     @Override
     public void loadRecipes() {

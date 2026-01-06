@@ -6,7 +6,7 @@ import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 
 import com.science.gtnl.api.IRecipePool;
-import com.science.gtnl.common.material.MaterialPool;
+import com.science.gtnl.common.material.GTNLMaterials;
 import com.science.gtnl.utils.recipes.RecipeBuilder;
 
 import gregtech.api.recipe.RecipeMap;
@@ -22,7 +22,7 @@ public class FluidCannerRecipes implements IRecipePool {
         RecipeBuilder.builder()
             .itemInputs(new ItemStack(Items.glass_bottle, 1))
             .itemOutputs(GTModHandler.getModItem(Botania.ID, "manaResource", 1, 15))
-            .fluidInputs(MaterialPool.EnderAir.getFluidOrGas(599))
+            .fluidInputs(GTNLMaterials.EnderAir.getFluidOrGas(599))
             .duration(1)
             .eut(8)
             .addTo(FCR);

@@ -43,8 +43,8 @@ import com.gtnewhorizons.modularui.common.widget.TextWidget;
 import com.science.gtnl.api.IControllerUpgradeable;
 import com.science.gtnl.common.machine.multiMachineBase.WirelessEnergyMultiMachineBase;
 import com.science.gtnl.utils.StructureUtils;
-import com.science.gtnl.utils.recipes.GTNL_OverclockCalculator;
-import com.science.gtnl.utils.recipes.GTNL_ProcessingLogic;
+import com.science.gtnl.utils.recipes.GTNLOverclockCalculator;
+import com.science.gtnl.utils.recipes.GTNLProcessingLogic;
 
 import gregtech.api.enums.ItemList;
 import gregtech.api.enums.Materials;
@@ -223,7 +223,7 @@ public class PCBFactory extends WirelessEnergyMultiMachineBase<PCBFactory>
 
     @Override
     public ProcessingLogic createProcessingLogic() {
-        return new GTNL_ProcessingLogic() {
+        return new GTNLProcessingLogic() {
 
             @Override
             public @NotNull CheckRecipeResult validateRecipe(@NotNull GTRecipe recipe) {
@@ -269,7 +269,7 @@ public class PCBFactory extends WirelessEnergyMultiMachineBase<PCBFactory>
 
             @Override
             @Nonnull
-            public GTNL_OverclockCalculator createOverclockCalculator(@NotNull GTRecipe recipe) {
+            public GTNLOverclockCalculator createOverclockCalculator(@NotNull GTRecipe recipe) {
                 return super.createOverclockCalculator(recipe).setExtraDurationModifier(mConfigSpeedBoost)
                     .setHeatOC(getHeatOC())
                     .setMachineHeat(getMachineHeat())
@@ -476,7 +476,7 @@ public class PCBFactory extends WirelessEnergyMultiMachineBase<PCBFactory>
     }
 
     public void depletePurifiedWater() {
-        int tier = ((GTNL_ProcessingLogic) processingLogic).getLastRecipe()
+        int tier = ((GTNLProcessingLogic) processingLogic).getLastRecipe()
             .getMetadataOrDefault(PCBFactoryTierKey.INSTANCE, 1);
         int parallel = processingLogic.getCurrentParallels();
 

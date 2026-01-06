@@ -4,7 +4,7 @@ import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 
 import com.science.gtnl.api.IRecipePool;
-import com.science.gtnl.common.material.MaterialPool;
+import com.science.gtnl.common.material.GTNLMaterials;
 import com.science.gtnl.utils.enums.GTNLItemList;
 import com.science.gtnl.utils.recipes.RecipeBuilder;
 
@@ -31,7 +31,7 @@ public class AlloySmelterRecipes implements IRecipePool {
             .itemInputs(
                 GTOreDictUnificator.get(OrePrefixes.dust, Materials.Steel, 2L),
                 GTOreDictUnificator.get(OrePrefixes.dust, Materials.Bronze, 1L))
-            .itemOutputs(MaterialPool.Stronze.get(OrePrefixes.ingot, 3))
+            .itemOutputs(GTNLMaterials.Stronze.get(OrePrefixes.ingot, 3))
             .duration(150)
             .eut(128)
             .addTo(aSR);
@@ -40,7 +40,7 @@ public class AlloySmelterRecipes implements IRecipePool {
             .itemInputs(
                 GTOreDictUnificator.get(OrePrefixes.dust, Materials.Steel, 2L),
                 GTOreDictUnificator.get(OrePrefixes.ingot, Materials.Bronze, 1L))
-            .itemOutputs(MaterialPool.Stronze.get(OrePrefixes.ingot, 3))
+            .itemOutputs(GTNLMaterials.Stronze.get(OrePrefixes.ingot, 3))
             .duration(150)
             .eut(128)
             .addTo(aSR);
@@ -49,7 +49,7 @@ public class AlloySmelterRecipes implements IRecipePool {
             .itemInputs(
                 GTOreDictUnificator.get(OrePrefixes.ingot, Materials.Steel, 2L),
                 GTOreDictUnificator.get(OrePrefixes.ingot, Materials.Bronze, 1L))
-            .itemOutputs(MaterialPool.Stronze.get(OrePrefixes.ingot, 3))
+            .itemOutputs(GTNLMaterials.Stronze.get(OrePrefixes.ingot, 3))
             .duration(150)
             .eut(128)
             .addTo(aSR);
@@ -58,7 +58,7 @@ public class AlloySmelterRecipes implements IRecipePool {
             .itemInputs(
                 GTOreDictUnificator.get(OrePrefixes.ingot, Materials.Steel, 2L),
                 GTOreDictUnificator.get(OrePrefixes.dust, Materials.Bronze, 1L))
-            .itemOutputs(MaterialPool.Stronze.get(OrePrefixes.ingot, 3))
+            .itemOutputs(GTNLMaterials.Stronze.get(OrePrefixes.ingot, 3))
             .duration(150)
             .eut(128)
             .addTo(aSR);

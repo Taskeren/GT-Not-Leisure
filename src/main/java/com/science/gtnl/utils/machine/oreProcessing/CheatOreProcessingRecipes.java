@@ -11,7 +11,7 @@ import net.minecraft.item.ItemStack;
 import com.google.common.collect.Sets;
 import com.science.gtnl.ScienceNotLeisure;
 import com.science.gtnl.api.IRecipePool;
-import com.science.gtnl.common.material.RecipePool;
+import com.science.gtnl.common.material.GTNLRecipeMaps;
 import com.science.gtnl.utils.recipes.RecipeBuilder;
 
 import bartworks.system.material.WerkstoffLoader;
@@ -313,7 +313,7 @@ public class CheatOreProcessingRecipes implements IRecipePool {
             .itemOutputs(output)
             .eut(0)
             .duration(1)
-            .addTo(RecipePool.CheatOreProcessingRecipes);
+            .addTo(GTNLRecipeMaps.CheatOreProcessingRecipes);
     }
 
     /**

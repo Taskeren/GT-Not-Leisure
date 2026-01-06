@@ -1,7 +1,7 @@
 package com.science.gtnl.common.recipe.gtnl;
 
 import com.science.gtnl.api.IRecipePool;
-import com.science.gtnl.common.material.RecipePool;
+import com.science.gtnl.common.material.GTNLRecipeMaps;
 import com.science.gtnl.utils.recipes.RecipeBuilder;
 
 import gregtech.api.enums.ItemList;
@@ -11,7 +11,7 @@ import gregtech.api.util.GTUtility;
 
 public class PrecisionLaserEngraver implements IRecipePool {
 
-    public RecipeMap<?> PLE = RecipePool.PrecisionLaserEngraverRecipes;
+    public RecipeMap<?> PLE = GTNLRecipeMaps.PrecisionLaserEngraverRecipes;
 
     @Override
     public void loadRecipes() {

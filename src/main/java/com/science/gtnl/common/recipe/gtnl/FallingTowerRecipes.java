@@ -6,7 +6,7 @@ import static gregtech.api.enums.Mods.IndustrialCraft2;
 import net.minecraft.item.ItemStack;
 
 import com.science.gtnl.api.IRecipePool;
-import com.science.gtnl.common.material.RecipePool;
+import com.science.gtnl.common.material.GTNLRecipeMaps;
 import com.science.gtnl.utils.recipes.MeteorRecipeData;
 import com.science.gtnl.utils.recipes.RecipeBuilder;
 
@@ -17,7 +17,7 @@ import gregtech.api.util.GTModHandler;
 
 public class FallingTowerRecipes implements IRecipePool {
 
-    public RecipeMap<?> BSTR = RecipePool.FallingTowerRecipes;
+    public RecipeMap<?> BSTR = GTNLRecipeMaps.FallingTowerRecipes;
 
     @Override
     public void loadRecipes() {

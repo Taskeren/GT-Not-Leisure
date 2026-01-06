@@ -26,7 +26,7 @@ import com.gtnewhorizon.structurelib.structure.IStructureDefinition;
 import com.gtnewhorizon.structurelib.structure.ISurvivalBuildEnvironment;
 import com.gtnewhorizon.structurelib.structure.StructureDefinition;
 import com.science.gtnl.common.machine.multiMachineBase.WirelessEnergyMultiMachineBase;
-import com.science.gtnl.common.material.RecipePool;
+import com.science.gtnl.common.material.GTNLRecipeMaps;
 import com.science.gtnl.utils.StructureUtils;
 
 import goodgenerator.loader.Loaders;
@@ -252,7 +252,7 @@ public class CircuitComponentAssemblyLine extends WirelessEnergyMultiMachineBase
 
     @Override
     public RecipeMap<?> getRecipeMap() {
-        return RecipePool.CircuitComponentAssemblyLineRecipes;
+        return GTNLRecipeMaps.CircuitComponentAssemblyLineRecipes;
     }
 
 }

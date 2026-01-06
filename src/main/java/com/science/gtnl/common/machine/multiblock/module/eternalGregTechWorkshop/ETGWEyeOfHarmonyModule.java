@@ -24,7 +24,7 @@ import net.minecraftforge.fluids.FluidStack;
 
 import org.jetbrains.annotations.NotNull;
 
-import com.science.gtnl.utils.recipes.GTNL_ParallelHelper;
+import com.science.gtnl.utils.recipes.GTNLParallelHelper;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -274,7 +274,7 @@ public class ETGWEyeOfHarmonyModule extends EternalGregTechWorkshopModule {
         // And stellar plasma is the second last.
         stellarPlasma = new FluidStackLong(outputFluids.get(outputFluids.size() - 2));
 
-        successfulParallelAmount = (long) GTNL_ParallelHelper
+        successfulParallelAmount = (long) GTNLParallelHelper
             .calculateChancedOutputMultiplier((int) ((successChance + pityChance) * 10000), 65536);
         // Iterate over item output list and apply yield & successful parallel values.
         for (ItemStackLong itemStackLong : outputItems) {

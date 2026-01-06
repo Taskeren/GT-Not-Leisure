@@ -4,7 +4,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraftforge.fluids.FluidStack;
 
 import com.science.gtnl.api.IRecipePool;
-import com.science.gtnl.common.material.MaterialPool;
+import com.science.gtnl.common.material.GTNLMaterials;
 import com.science.gtnl.utils.recipes.RecipeBuilder;
 
 import bartworks.system.material.WerkstoffLoader;
@@ -28,11 +28,11 @@ public class DistillationTowerRecipes implements IRecipePool {
     @Override
     public void loadRecipes() {
         RecipeBuilder.builder()
-            .fluidInputs(MaterialPool.FluorineCrackedNaquadah.getFluidOrGas(1000))
+            .fluidInputs(GTNLMaterials.FluorineCrackedNaquadah.getFluidOrGas(1000))
             .fluidOutputs(
                 GGMaterial.naquadahBasedFuelMkI.getFluidOrGas(800),
                 Materials.NitricAcid.getFluid(200),
-                MaterialPool.EnrichedNaquadahWaste.getFluidOrGas(100),
+                GTNLMaterials.EnrichedNaquadahWaste.getFluidOrGas(100),
                 Materials.Ammonia.getGas(200),
                 Materials.Fluorine.getGas(200))
             .duration(600)
@@ -41,7 +41,7 @@ public class DistillationTowerRecipes implements IRecipePool {
 
         RecipeBuilder.builder()
             .itemOutputs(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Barium, 1))
-            .fluidInputs(MaterialPool.EnrichedNaquadahWaste.getFluidOrGas(2000))
+            .fluidInputs(GTNLMaterials.EnrichedNaquadahWaste.getFluidOrGas(2000))
             .fluidOutputs(
                 Materials.SulfuricAcid.getFluid(500),
                 GGMaterial.enrichedNaquadahRichSolution.getFluidOrGas(250),
@@ -52,10 +52,10 @@ public class DistillationTowerRecipes implements IRecipePool {
             .addTo(DTR);
 
         RecipeBuilder.builder()
-            .fluidInputs(MaterialPool.RadonCrackedEnrichedNaquadah.getFluidOrGas(1000))
+            .fluidInputs(GTNLMaterials.RadonCrackedEnrichedNaquadah.getFluidOrGas(1000))
             .fluidOutputs(
                 GGMaterial.naquadahBasedFuelMkII.getFluidOrGas(800),
-                MaterialPool.NaquadriaWaste.getFluidOrGas(100),
+                GTNLMaterials.NaquadriaWaste.getFluidOrGas(100),
                 Materials.Radon.getGas(200),
                 Materials.Fluorine.getGas(200))
             .duration(300)
@@ -64,7 +64,7 @@ public class DistillationTowerRecipes implements IRecipePool {
 
         RecipeBuilder.builder()
             .itemOutputs(GGMaterial.triniumSulphate.get(OrePrefixes.dust, 1))
-            .fluidInputs(MaterialPool.NaquadriaWaste.getFluidOrGas(2000))
+            .fluidInputs(GTNLMaterials.NaquadriaWaste.getFluidOrGas(2000))
             .fluidOutputs(
                 GGMaterial.naquadriaRichSolution.getFluidOrGas(250),
                 GGMaterial.enrichedNaquadahRichSolution.getFluidOrGas(100))
@@ -75,7 +75,7 @@ public class DistillationTowerRecipes implements IRecipePool {
 
         RecipeBuilder.builder()
             .itemOutputs(GTOreDictUnificator.get(OrePrefixes.dust, Materials.EnderPearl, 1))
-            .fluidInputs(MaterialPool.LiquidEnderAir.getFluidOrGas(200000))
+            .fluidInputs(GTNLMaterials.LiquidEnderAir.getFluidOrGas(200000))
             .fluidOutputs(
                 Materials.NitrogenDioxide.getGas(120000),
                 Materials.Deuterium.getGas(40000),

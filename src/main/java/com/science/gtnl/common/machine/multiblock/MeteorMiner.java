@@ -47,7 +47,7 @@ import com.science.gtnl.config.MainConfig;
 import com.science.gtnl.loader.BlockLoader;
 import com.science.gtnl.utils.StructureUtils;
 import com.science.gtnl.utils.enums.GTNLItemList;
-import com.science.gtnl.utils.recipes.GTNL_OverclockCalculator;
+import com.science.gtnl.utils.recipes.GTNLOverclockCalculator;
 
 import bartworks.system.material.BWTileEntityMetaGeneratedOre;
 import cpw.mods.fml.relauncher.Side;
@@ -694,7 +694,7 @@ public class MeteorMiner extends MultiMachineBase<MeteorMiner> implements ISurvi
         this.mEfficiency = 10000;
         this.mEfficiencyIncrease = 10000;
 
-        GTNL_OverclockCalculator calculator = new GTNL_OverclockCalculator().setEUt(getAverageInputVoltage())
+        GTNLOverclockCalculator calculator = new GTNLOverclockCalculator().setEUt(getAverageInputVoltage())
             .setAmperage(getMaxInputAmps())
             .setRecipeEUt(128)
             .setDuration(12 * 20)

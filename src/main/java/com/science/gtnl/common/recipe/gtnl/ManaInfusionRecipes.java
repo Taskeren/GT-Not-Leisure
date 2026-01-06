@@ -10,8 +10,8 @@ import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.oredict.OreDictionary;
 
 import com.science.gtnl.api.IRecipePool;
-import com.science.gtnl.common.material.MaterialPool;
-import com.science.gtnl.common.material.RecipePool;
+import com.science.gtnl.common.material.GTNLMaterials;
+import com.science.gtnl.common.material.GTNLRecipeMaps;
 import com.science.gtnl.utils.recipes.RecipeBuilder;
 
 import gregtech.api.recipe.RecipeMap;
@@ -22,7 +22,7 @@ import vazkii.botania.api.recipe.RecipeManaInfusion;
 
 public class ManaInfusionRecipes implements IRecipePool {
 
-    public RecipeMap<?> MIR = RecipePool.ManaInfusionRecipes;
+    public RecipeMap<?> MIR = GTNLRecipeMaps.ManaInfusionRecipes;
 
     @Override
     public void loadRecipes() {
@@ -32,7 +32,7 @@ public class ManaInfusionRecipes implements IRecipePool {
             Object input = recipe.getInput();
             List<ItemStack> inputs = new ArrayList<>();
             ItemStack output = recipe.getOutput();
-            FluidStack mana = MaterialPool.FluidMana.getFluidOrGas(recipe.getManaToConsume());
+            FluidStack mana = GTNLMaterials.FluidMana.getFluidOrGas(recipe.getManaToConsume());
 
             if (isAlchemy) {
                 inputs.add(GTModHandler.getModItem(Botania.ID, "alchemyCatalyst", 0));
@@ -82,7 +82,7 @@ public class ManaInfusionRecipes implements IRecipePool {
                 GTModHandler.getModItem(Botania.ID, "manaResource", 1, 1),
                 GTModHandler.getModItem(Botania.ID, "manaResource", 1, 2))
             .itemOutputs(GTModHandler.getModItem(Botania.ID, "manaResource", 1, 4))
-            .fluidInputs(MaterialPool.FluidMana.getFluidOrGas(500000))
+            .fluidInputs(GTNLMaterials.FluidMana.getFluidOrGas(500000))
             .duration(20)
             .eut(2048)
             .addTo(MIR);

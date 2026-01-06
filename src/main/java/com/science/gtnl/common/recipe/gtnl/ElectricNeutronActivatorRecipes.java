@@ -1,7 +1,7 @@
 package com.science.gtnl.common.recipe.gtnl;
 
 import com.science.gtnl.api.IRecipePool;
-import com.science.gtnl.common.material.RecipePool;
+import com.science.gtnl.common.material.GTNLRecipeMaps;
 
 import goodgenerator.api.recipe.GoodGeneratorRecipeMaps;
 import gregtech.api.recipe.RecipeMap;
@@ -9,7 +9,7 @@ import gregtech.api.util.GTRecipe;
 
 public class ElectricNeutronActivatorRecipes implements IRecipePool {
 
-    public RecipeMap<?> ENAR = RecipePool.ElectricNeutronActivatorRecipes;
+    public RecipeMap<?> ENAR = GTNLRecipeMaps.ElectricNeutronActivatorRecipes;
 
     @Override
     public void loadRecipes() {

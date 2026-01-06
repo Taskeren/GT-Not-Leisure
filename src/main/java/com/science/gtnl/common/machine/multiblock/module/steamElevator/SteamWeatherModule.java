@@ -4,7 +4,7 @@ import javax.annotation.Nonnull;
 
 import net.minecraft.util.StatCollector;
 
-import com.science.gtnl.common.material.RecipePool;
+import com.science.gtnl.common.material.GTNLRecipeMaps;
 import com.science.gtnl.mixins.late.Gregtech.AccessorProcessingLogic;
 
 import gregtech.api.interfaces.metatileentity.IMetaTileEntity;
@@ -54,7 +54,7 @@ public class SteamWeatherModule extends SteamElevatorModule {
 
     @Override
     public RecipeMap<?> getRecipeMap() {
-        return RecipePool.SteamWeatherModuleRecipes;
+        return GTNLRecipeMaps.SteamWeatherModuleRecipes;
     }
 
     @Nonnull

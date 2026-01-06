@@ -3,8 +3,8 @@ package com.science.gtnl.common.recipe.gtnl;
 import net.minecraft.item.ItemStack;
 
 import com.science.gtnl.api.IRecipePool;
-import com.science.gtnl.common.material.MaterialPool;
-import com.science.gtnl.common.material.RecipePool;
+import com.science.gtnl.common.material.GTNLMaterials;
+import com.science.gtnl.common.material.GTNLRecipeMaps;
 import com.science.gtnl.utils.recipes.RecipeBuilder;
 
 import gregtech.api.enums.ItemList;
@@ -16,7 +16,7 @@ import gtneioreplugin.plugin.block.ModBlocks;
 
 public class GasCollectorRecipes implements IRecipePool {
 
-    public RecipeMap<?> GCR = RecipePool.GasCollectorRecipes;
+    public RecipeMap<?> GCR = GTNLRecipeMaps.GasCollectorRecipes;
 
     @Override
     public void loadRecipes() {
@@ -37,7 +37,7 @@ public class GasCollectorRecipes implements IRecipePool {
 
         RecipeBuilder.builder()
             .itemInputs(GTUtility.getIntegratedCircuit(3), new ItemStack(ModBlocks.getBlock("ED"), 0))
-            .fluidOutputs(MaterialPool.EnderAir.getFluidOrGas(100000))
+            .fluidOutputs(GTNLMaterials.EnderAir.getFluidOrGas(100000))
             .duration(200)
             .eut(TierEU.RECIPE_IV)
             .addTo(GCR);
@@ -47,7 +47,7 @@ public class GasCollectorRecipes implements IRecipePool {
                 GTUtility.getIntegratedCircuit(4),
                 new ItemStack(ModBlocks.getBlock("ED"), 0),
                 ItemList.Machine_Multi_VacuumFreezer.get(0))
-            .fluidOutputs(MaterialPool.LiquidEnderAir.getFluidOrGas(100000))
+            .fluidOutputs(GTNLMaterials.LiquidEnderAir.getFluidOrGas(100000))
             .duration(200)
             .eut(TierEU.RECIPE_ZPM)
             .addTo(GCR);

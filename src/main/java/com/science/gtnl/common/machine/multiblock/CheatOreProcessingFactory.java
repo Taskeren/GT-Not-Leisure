@@ -28,7 +28,7 @@ import com.gtnewhorizon.structurelib.structure.ISurvivalBuildEnvironment;
 import com.gtnewhorizon.structurelib.structure.StructureDefinition;
 import com.science.gtnl.ScienceNotLeisure;
 import com.science.gtnl.common.machine.multiMachineBase.MultiMachineBase;
-import com.science.gtnl.common.material.RecipePool;
+import com.science.gtnl.common.material.GTNLRecipeMaps;
 import com.science.gtnl.utils.StructureUtils;
 
 import gregtech.api.enums.Materials;
@@ -172,7 +172,7 @@ public class CheatOreProcessingFactory extends MultiMachineBase<CheatOreProcessi
 
     @Override
     public RecipeMap<?> getRecipeMap() {
-        return RecipePool.CheatOreProcessingRecipes;
+        return GTNLRecipeMaps.CheatOreProcessingRecipes;
     }
 
     @Override

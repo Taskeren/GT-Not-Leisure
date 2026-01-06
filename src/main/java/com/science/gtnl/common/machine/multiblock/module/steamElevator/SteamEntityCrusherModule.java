@@ -7,8 +7,8 @@ import javax.annotation.Nonnull;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.StatCollector;
 
-import com.science.gtnl.common.material.RecipePool;
-import com.science.gtnl.utils.recipes.GTNL_ProcessingLogic;
+import com.science.gtnl.common.material.GTNLRecipeMaps;
+import com.science.gtnl.utils.recipes.GTNLProcessingLogic;
 
 import gregtech.api.interfaces.metatileentity.IMetaTileEntity;
 import gregtech.api.interfaces.tileentity.IGregTechTileEntity;
@@ -83,7 +83,7 @@ public class SteamEntityCrusherModule extends SteamElevatorModule {
 
     @Override
     public RecipeMap<?> getRecipeMap() {
-        return RecipePool.ExtremeExtremeEntityCrusherRecipes;
+        return GTNLRecipeMaps.ExtremeExtremeEntityCrusherRecipes;
     }
 
     @Override
@@ -112,7 +112,7 @@ public class SteamEntityCrusherModule extends SteamElevatorModule {
         setEnergyUsage(processingLogic);
 
         ItemStack[] outputItems = processingLogic.getOutputItems();
-        ItemStack inputItem = ((GTNL_ProcessingLogic) processingLogic).getInputItems()[0];
+        ItemStack inputItem = ((GTNLProcessingLogic) processingLogic).getInputItems()[0];
 
         double multiplier = 2.0;
 

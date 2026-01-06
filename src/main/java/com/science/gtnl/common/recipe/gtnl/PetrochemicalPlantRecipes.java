@@ -8,8 +8,8 @@ import net.minecraftforge.fluids.FluidStack;
 import com.dreammaster.bartworksHandler.BacteriaRegistry;
 import com.dreammaster.fluids.FluidList;
 import com.science.gtnl.api.IRecipePool;
-import com.science.gtnl.common.material.MaterialPool;
-import com.science.gtnl.common.material.RecipePool;
+import com.science.gtnl.common.material.GTNLMaterials;
+import com.science.gtnl.common.material.GTNLRecipeMaps;
 import com.science.gtnl.utils.recipes.RecipeBuilder;
 
 import bartworks.common.loaders.BioItemList;
@@ -24,7 +24,7 @@ import gtPlusPlus.core.fluids.GTPPFluids;
 
 public class PetrochemicalPlantRecipes implements IRecipePool {
 
-    public RecipeMap<?> PPR = RecipePool.PetrochemicalPlantRecipes;
+    public RecipeMap<?> PPR = GTNLRecipeMaps.PetrochemicalPlantRecipes;
 
     @Override
     public void loadRecipes() {
@@ -129,7 +129,7 @@ public class PetrochemicalPlantRecipes implements IRecipePool {
                 GTOreDictUnificator.get(OrePrefixes.dust, Materials.AntimonyTrioxide, 16),
                 GTOreDictUnificator.get(OrePrefixes.dust, Materials.Osmium, 16))
             .fluidInputs(
-                MaterialPool.BarnardaCSappy.getFluidOrGas(1000),
+                GTNLMaterials.BarnardaCSappy.getFluidOrGas(1000),
                 Materials.Oil.getFluid(2000),
                 Materials.Silver.getPlasma(10))
             .fluidOutputs(

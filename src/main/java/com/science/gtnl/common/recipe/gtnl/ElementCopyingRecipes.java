@@ -5,8 +5,8 @@ import static gregtech.api.util.GTRecipeBuilder.MINUTES;
 import net.minecraftforge.fluids.FluidStack;
 
 import com.science.gtnl.api.IRecipePool;
-import com.science.gtnl.common.material.MaterialPool;
-import com.science.gtnl.common.material.RecipePool;
+import com.science.gtnl.common.material.GTNLMaterials;
+import com.science.gtnl.common.material.GTNLRecipeMaps;
 import com.science.gtnl.utils.recipes.RecipeBuilder;
 
 import bartworks.system.material.WerkstoffLoader;
@@ -26,7 +26,7 @@ import gtnhlanth.common.register.WerkstoffMaterialPool;
 
 public class ElementCopyingRecipes implements IRecipePool {
 
-    public RecipeMap<?> ECR = RecipePool.ElementCopyingRecipes;
+    public RecipeMap<?> ECR = GTNLRecipeMaps.ElementCopyingRecipes;
 
     @Override
     public void loadRecipes() {
@@ -67,7 +67,7 @@ public class ElementCopyingRecipes implements IRecipePool {
                 GTOreDictUnificator.get(OrePrefixes.dust, Materials.Lanthanum, 16),
                 GTOreDictUnificator.get(OrePrefixes.dust, Materials.Dysprosium, 16),
                 GTOreDictUnificator.get(OrePrefixes.dust, Materials.Terbium, 16),
-                MaterialPool.Actinium.get(OrePrefixes.dust, 16))
+                GTNLMaterials.Actinium.get(OrePrefixes.dust, 16))
             .fluidInputs(Materials.UUMatter.getFluid(1))
             .duration(4 * MINUTES)
             .eut(TierEU.RECIPE_IV)
@@ -80,7 +80,7 @@ public class ElementCopyingRecipes implements IRecipePool {
                 GTOreDictUnificator.get(OrePrefixes.dust, Materials.Holmium, 16),
                 WerkstoffLoader.Zirconium.get(OrePrefixes.dust, 16),
                 MaterialsElements.getInstance().HAFNIUM.getDust(16),
-                MaterialPool.Rutherfordium.get(OrePrefixes.dust, 16))
+                GTNLMaterials.Rutherfordium.get(OrePrefixes.dust, 16))
             .fluidInputs(Materials.UUMatter.getFluid(1))
             .duration(4 * MINUTES)
             .eut(TierEU.RECIPE_IV)
@@ -93,7 +93,7 @@ public class ElementCopyingRecipes implements IRecipePool {
                 GTOreDictUnificator.get(OrePrefixes.dust, Materials.Niobium, 16),
                 GTOreDictUnificator.get(OrePrefixes.dust, Materials.Erbium, 16),
                 GTOreDictUnificator.get(OrePrefixes.dust, Materials.Tantalum, 16),
-                MaterialPool.Dubnium.get(OrePrefixes.dust, 16))
+                GTNLMaterials.Dubnium.get(OrePrefixes.dust, 16))
             .fluidInputs(Materials.UUMatter.getFluid(1))
             .duration(4 * MINUTES)
             .eut(TierEU.RECIPE_IV)
@@ -106,7 +106,7 @@ public class ElementCopyingRecipes implements IRecipePool {
                 GTOreDictUnificator.get(OrePrefixes.dust, Materials.Molybdenum, 16),
                 GTOreDictUnificator.get(OrePrefixes.dust, Materials.Tungsten, 16),
                 GTOreDictUnificator.get(OrePrefixes.dust, Materials.Thulium, 16),
-                MaterialPool.Seaborgium.get(OrePrefixes.dust, 16))
+                GTNLMaterials.Seaborgium.get(OrePrefixes.dust, 16))
             .fluidInputs(Materials.UUMatter.getFluid(1))
             .duration(4 * MINUTES)
             .eut(TierEU.RECIPE_IV)
@@ -117,9 +117,9 @@ public class ElementCopyingRecipes implements IRecipePool {
             .itemOutputs(
                 GTOreDictUnificator.get(OrePrefixes.dust, Materials.Manganese, 16),
                 GTOreDictUnificator.get(OrePrefixes.dust, Materials.Ytterbium, 16),
-                MaterialPool.Technetium.get(OrePrefixes.dust, 16),
+                GTNLMaterials.Technetium.get(OrePrefixes.dust, 16),
                 MaterialsElements.getInstance().RHENIUM.getDust(16),
-                MaterialPool.Bohrium.get(OrePrefixes.dust, 16))
+                GTNLMaterials.Bohrium.get(OrePrefixes.dust, 16))
             .fluidInputs(Materials.UUMatter.getFluid(1))
             .duration(4 * MINUTES)
             .eut(TierEU.RECIPE_IV)
@@ -132,7 +132,7 @@ public class ElementCopyingRecipes implements IRecipePool {
                 MaterialsElements.getInstance().RUTHENIUM.getDust(16),
                 GTOreDictUnificator.get(OrePrefixes.dust, Materials.Osmium, 16),
                 GTOreDictUnificator.get(OrePrefixes.dust, Materials.Lutetium, 16),
-                MaterialPool.Hassium.get(OrePrefixes.dust, 16))
+                GTNLMaterials.Hassium.get(OrePrefixes.dust, 16))
             .fluidInputs(Materials.UUMatter.getFluid(1))
             .fluidOutputs(Materials.Oxygen.getGas(16000))
             .duration(4 * MINUTES)
@@ -145,7 +145,7 @@ public class ElementCopyingRecipes implements IRecipePool {
                 GTOreDictUnificator.get(OrePrefixes.dust, Materials.Cobalt, 16),
                 WerkstoffLoader.Rhodium.get(OrePrefixes.dust, 16),
                 GTOreDictUnificator.get(OrePrefixes.dust, Materials.Iridium, 16),
-                MaterialPool.Meitnerium.get(OrePrefixes.dust, 16))
+                GTNLMaterials.Meitnerium.get(OrePrefixes.dust, 16))
             .fluidInputs(Materials.UUMatter.getFluid(1))
             .fluidOutputs(Materials.Nitrogen.getGas(16000))
             .duration(4 * MINUTES)
@@ -158,8 +158,8 @@ public class ElementCopyingRecipes implements IRecipePool {
                 GTOreDictUnificator.get(OrePrefixes.dust, Materials.Nickel, 16),
                 GTOreDictUnificator.get(OrePrefixes.dust, Materials.Palladium, 16),
                 GTOreDictUnificator.get(OrePrefixes.dust, Materials.Platinum, 16),
-                MaterialPool.Nihonium.get(OrePrefixes.dust, 16),
-                MaterialPool.Darmstadtium.get(OrePrefixes.dust, 16))
+                GTNLMaterials.Nihonium.get(OrePrefixes.dust, 16),
+                GTNLMaterials.Darmstadtium.get(OrePrefixes.dust, 16))
             .fluidInputs(Materials.UUMatter.getFluid(1))
             .fluidOutputs(Materials.Argon.getGas(16000))
             .duration(4 * MINUTES)
@@ -172,7 +172,7 @@ public class ElementCopyingRecipes implements IRecipePool {
                 GTOreDictUnificator.get(OrePrefixes.dust, Materials.Copper, 16),
                 GTOreDictUnificator.get(OrePrefixes.dust, Materials.Silver, 16),
                 GTOreDictUnificator.get(OrePrefixes.dust, Materials.Gold, 16),
-                MaterialPool.Roentgenium.get(OrePrefixes.dust, 16))
+                GTNLMaterials.Roentgenium.get(OrePrefixes.dust, 16))
             .fluidInputs(Materials.UUMatter.getFluid(1))
             .fluidOutputs(WerkstoffLoader.Xenon.getFluidOrGas(16000))
             .duration(4 * MINUTES)
@@ -185,7 +185,7 @@ public class ElementCopyingRecipes implements IRecipePool {
                 GTOreDictUnificator.get(OrePrefixes.dust, Materials.Zinc, 16),
                 GTOreDictUnificator.get(OrePrefixes.dust, Materials.Cadmium, 16),
                 GTOreDictUnificator.get(OrePrefixes.dust, Materials.Gadolinium, 16),
-                MaterialPool.Copernicium.get(OrePrefixes.dust, 16))
+                GTNLMaterials.Copernicium.get(OrePrefixes.dust, 16))
             .fluidInputs(Materials.UUMatter.getFluid(1))
             .fluidOutputs(WerkstoffLoader.Krypton.getFluidOrGas(16000), Materials.Mercury.getFluid(16000))
             .duration(4 * MINUTES)
@@ -228,7 +228,7 @@ public class ElementCopyingRecipes implements IRecipePool {
                 GTOreDictUnificator.get(OrePrefixes.dust, Materials.Antimony, 16),
                 GTOreDictUnificator.get(OrePrefixes.dust, Materials.Europium, 16),
                 GTOreDictUnificator.get(OrePrefixes.dust, Materials.Bismuth, 16),
-                MaterialPool.Moscovium.get(OrePrefixes.dust, 16))
+                GTNLMaterials.Moscovium.get(OrePrefixes.dust, 16))
             .fluidInputs(Materials.UUMatter.getFluid(1))
             .duration(4 * MINUTES)
             .eut(TierEU.RECIPE_IV)
@@ -241,7 +241,7 @@ public class ElementCopyingRecipes implements IRecipePool {
                 MaterialsElements.getInstance().SELENIUM.getDust(16),
                 GTOreDictUnificator.get(OrePrefixes.dust, Materials.Tellurium, 16),
                 MaterialsElements.getInstance().POLONIUM.getDust(16),
-                MaterialPool.Livermorium.get(OrePrefixes.dust, 16))
+                GTNLMaterials.Livermorium.get(OrePrefixes.dust, 16))
             .fluidInputs(Materials.UUMatter.getFluid(1))
             .duration(4 * MINUTES)
             .eut(TierEU.RECIPE_IV)
@@ -252,8 +252,8 @@ public class ElementCopyingRecipes implements IRecipePool {
             .itemOutputs(
                 GTOreDictUnificator.get(OrePrefixes.dust, Materials.Samarium, 16),
                 WerkstoffMaterialPool.Iodine.get(OrePrefixes.dust, 16),
-                MaterialPool.Astatine.get(OrePrefixes.dust, 16),
-                MaterialPool.Tennessine.get(OrePrefixes.dust, 16))
+                GTNLMaterials.Astatine.get(OrePrefixes.dust, 16),
+                GTNLMaterials.Tennessine.get(OrePrefixes.dust, 16))
             .fluidInputs(Materials.UUMatter.getFluid(1))
             .fluidOutputs(
                 new FluidStack(MaterialsElements.getInstance().BROMINE.getFluid(), 16000),
@@ -267,7 +267,7 @@ public class ElementCopyingRecipes implements IRecipePool {
             .itemInputs()
             .itemOutputs(
                 GTOreDictUnificator.get(OrePrefixes.dust, Materials.Thorium, 16),
-                MaterialPool.Francium.get(OrePrefixes.dust, 16),
+                GTNLMaterials.Francium.get(OrePrefixes.dust, 16),
                 MaterialsElements.getInstance().PROTACTINIUM.getDust(16),
                 GTOreDictUnificator.get(OrePrefixes.dust, Materials.Uranium, 16))
             .fluidInputs(Materials.UUMatter.getFluid(1))
@@ -287,9 +287,9 @@ public class ElementCopyingRecipes implements IRecipePool {
                 GTOreDictUnificator.get(OrePrefixes.dust, Materials.Americium, 16),
                 GTOreDictUnificator.get(OrePrefixes.dust, Materials.Neodymium, 16),
                 MaterialsElements.getInstance().CURIUM.getDust(16),
-                MaterialPool.Berkelium.get(OrePrefixes.dust, 16),
+                GTNLMaterials.Berkelium.get(OrePrefixes.dust, 16),
                 WerkstoffLoader.Californium.get(OrePrefixes.dust, 16),
-                MaterialPool.Einsteinium.get(OrePrefixes.dust, 16))
+                GTNLMaterials.Einsteinium.get(OrePrefixes.dust, 16))
             .fluidInputs(Materials.UUMatter.getFluid(1))
             .duration(4 * MINUTES)
             .eut(TierEU.RECIPE_IV)
@@ -299,9 +299,9 @@ public class ElementCopyingRecipes implements IRecipePool {
             .itemInputs()
             .itemOutputs(
                 MaterialsElements.getInstance().FERMIUM.getDust(16),
-                MaterialPool.Mendelevium.get(OrePrefixes.dust, 16),
-                MaterialPool.Nobelium.get(OrePrefixes.dust, 16),
-                MaterialPool.Lawrencium.get(OrePrefixes.dust, 16),
+                GTNLMaterials.Mendelevium.get(OrePrefixes.dust, 16),
+                GTNLMaterials.Nobelium.get(OrePrefixes.dust, 16),
+                GTNLMaterials.Lawrencium.get(OrePrefixes.dust, 16),
                 GTOreDictUnificator.get(OrePrefixes.dust, Materials.Cerium, 16),
                 GTOreDictUnificator.get(OrePrefixes.dust, Materials.Praseodymium, 16),
                 GTOreDictUnificator.get(OrePrefixes.dust, Materials.Promethium, 16))

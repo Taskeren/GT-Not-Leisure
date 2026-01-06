@@ -14,7 +14,7 @@ import com.brandon3055.draconicevolution.common.ModItems;
 import com.kuba6000.mobsinfo.api.MobDrop;
 import com.kuba6000.mobsinfo.api.MobRecipe;
 import com.kuba6000.mobsinfo.api.event.PostMobRegistrationEvent;
-import com.science.gtnl.common.material.RecipePool;
+import com.science.gtnl.common.material.GTNLRecipeMaps;
 import com.science.gtnl.utils.recipes.RecipeBuilder;
 
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
@@ -30,7 +30,7 @@ import kubatech.loaders.MobHandlerLoader;
 
 public class ExtremeExtremeEntityCrusherRecipes {
 
-    public RecipeMap<?> EEEC = RecipePool.ExtremeExtremeEntityCrusherRecipes;
+    public RecipeMap<?> EEEC = GTNLRecipeMaps.ExtremeExtremeEntityCrusherRecipes;
 
     public static IntSet registeredSpawnerTypes = new IntOpenHashSet();
 

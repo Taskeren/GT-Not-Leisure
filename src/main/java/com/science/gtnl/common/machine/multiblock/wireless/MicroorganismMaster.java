@@ -6,7 +6,6 @@ import static com.science.gtnl.common.machine.multiMachineBase.MultiMachineBase.
 import static gregtech.api.GregTechAPI.*;
 import static gregtech.api.enums.GTValues.*;
 import static gregtech.api.enums.HatchElement.*;
-import static gregtech.api.enums.Mods.*;
 import static gregtech.api.enums.Mods.EtFuturumRequiem;
 import static gregtech.api.util.GTStructureUtility.*;
 import static tectech.thing.casing.TTCasingsContainer.*;
@@ -28,9 +27,9 @@ import com.science.gtnl.common.machine.multiMachineBase.WirelessEnergyMultiMachi
 import com.science.gtnl.common.machine.multiblock.LargeIncubator;
 import com.science.gtnl.loader.BlockLoader;
 import com.science.gtnl.utils.StructureUtils;
-import com.science.gtnl.utils.recipes.GTNL_OverclockCalculator;
-import com.science.gtnl.utils.recipes.GTNL_ParallelHelper;
-import com.science.gtnl.utils.recipes.GTNL_ProcessingLogic;
+import com.science.gtnl.utils.recipes.GTNLOverclockCalculator;
+import com.science.gtnl.utils.recipes.GTNLParallelHelper;
+import com.science.gtnl.utils.recipes.GTNLProcessingLogic;
 
 import bartworks.API.recipe.BartWorksRecipeMaps;
 import bartworks.util.BWUtil;
@@ -204,7 +203,7 @@ public class MicroorganismMaster extends WirelessEnergyMultiMachineBase<Microorg
 
     @Override
     public ProcessingLogic createProcessingLogic() {
-        return new GTNL_ProcessingLogic() {
+        return new GTNLProcessingLogic() {
 
             @NotNull
             @Override
@@ -231,7 +230,7 @@ public class MicroorganismMaster extends WirelessEnergyMultiMachineBase<Microorg
 
             @Nonnull
             @Override
-            public GTNL_OverclockCalculator createOverclockCalculator(@Nonnull GTRecipe recipe) {
+            public GTNLOverclockCalculator createOverclockCalculator(@Nonnull GTRecipe recipe) {
                 return super.createOverclockCalculator(recipe).setExtraDurationModifier(mConfigSpeedBoost)
                     .setEUtDiscount(getEUtDiscount())
                     .setDurationModifier(getDurationModifier());
@@ -239,7 +238,7 @@ public class MicroorganismMaster extends WirelessEnergyMultiMachineBase<Microorg
 
             @NotNull
             @Override
-            public GTNL_ParallelHelper createParallelHelper(@NotNull GTRecipe recipe) {
+            public GTNLParallelHelper createParallelHelper(@NotNull GTRecipe recipe) {
                 return super.createParallelHelper(
                     LargeIncubator.recipeWithMultiplier(recipe, inputFluids, mOutputHatches.get(0), getTrueParallel()));
             }

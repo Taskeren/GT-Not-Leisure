@@ -3,7 +3,7 @@ package com.science.gtnl.common.recipe.gregtech;
 import static gregtech.api.util.GTRecipeConstants.PRECISE_ASSEMBLER_CASING_TIER;
 
 import com.science.gtnl.api.IRecipePool;
-import com.science.gtnl.common.material.MaterialPool;
+import com.science.gtnl.common.material.GTNLMaterials;
 import com.science.gtnl.config.MainConfig;
 import com.science.gtnl.utils.enums.GTNLItemList;
 import com.science.gtnl.utils.recipes.RecipeBuilder;
@@ -36,7 +36,7 @@ public class PreciseAssemblerRecipes implements IRecipePool {
                 .itemInputs(
                     GTNLItemList.NeutroniumWafer.get(4),
                     ItemList.Circuit_Chip_Biocell.get(64),
-                    MaterialPool.Actinium.get(OrePrefixes.dust, 1),
+                    GTNLMaterials.Actinium.get(OrePrefixes.dust, 1),
                     GTOreDictUnificator.get(OrePrefixes.dust, Materials.Strontium, 1))
                 .itemOutputs(ItemList.Circuit_Wafer_Bioware.get(4))
                 .fluidInputs(
@@ -94,7 +94,7 @@ public class PreciseAssemblerRecipes implements IRecipePool {
                 Materials.NiobiumTitanium.getMolten(864),
                 MaterialsAlloy.INDALLOY_140.getFluidStack(1152),
                 Materials.SolderingAlloy.getMolten(2304),
-                MaterialPool.Polyetheretherketone.getMolten(2304))
+                GTNLMaterials.Polyetheretherketone.getMolten(2304))
             .duration(400)
             .eut(TierEU.RECIPE_LuV)
             .metadata(PRECISE_ASSEMBLER_CASING_TIER, 1)
@@ -111,7 +111,7 @@ public class PreciseAssemblerRecipes implements IRecipePool {
                 Materials.VanadiumGallium.getMolten(864),
                 MaterialsAlloy.INDALLOY_140.getFluidStack(1152),
                 Materials.SolderingAlloy.getMolten(2304),
-                MaterialPool.Polyetheretherketone.getMolten(2304))
+                GTNLMaterials.Polyetheretherketone.getMolten(2304))
             .duration(400)
             .eut(TierEU.RECIPE_ZPM)
             .metadata(PRECISE_ASSEMBLER_CASING_TIER, 1)
@@ -128,7 +128,7 @@ public class PreciseAssemblerRecipes implements IRecipePool {
                 Materials.YttriumBariumCuprate.getMolten(864),
                 MaterialsAlloy.INDALLOY_140.getFluidStack(1152),
                 Materials.SolderingAlloy.getMolten(2304),
-                MaterialPool.Polyetheretherketone.getMolten(2304))
+                GTNLMaterials.Polyetheretherketone.getMolten(2304))
             .duration(400)
             .eut(TierEU.RECIPE_UV)
             .metadata(PRECISE_ASSEMBLER_CASING_TIER, 2)
@@ -145,7 +145,7 @@ public class PreciseAssemblerRecipes implements IRecipePool {
                 Materials.Europium.getMolten(864),
                 MaterialsAlloy.INDALLOY_140.getFluidStack(1152),
                 Materials.SolderingAlloy.getMolten(2304),
-                MaterialPool.Polyetheretherketone.getMolten(2304))
+                GTNLMaterials.Polyetheretherketone.getMolten(2304))
             .duration(400)
             .eut(TierEU.RECIPE_UHV)
             .metadata(PRECISE_ASSEMBLER_CASING_TIER, 2)
@@ -162,7 +162,7 @@ public class PreciseAssemblerRecipes implements IRecipePool {
                 WerkstoffLoader.Oganesson.getFluidOrGas(864),
                 MaterialsAlloy.INDALLOY_140.getFluidStack(1152),
                 Materials.SolderingAlloy.getMolten(2304),
-                MaterialPool.Polyetheretherketone.getMolten(2304))
+                GTNLMaterials.Polyetheretherketone.getMolten(2304))
             .duration(400)
             .eut(TierEU.RECIPE_UEV)
             .metadata(PRECISE_ASSEMBLER_CASING_TIER, 3)

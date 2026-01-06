@@ -26,7 +26,7 @@ import com.science.gtnl.common.machine.hatch.ParallelControllerHatch;
 import com.science.gtnl.common.machine.multiMachineBase.GTMMultiMachineBase;
 import com.science.gtnl.loader.BlockLoader;
 import com.science.gtnl.utils.StructureUtils;
-import com.science.gtnl.utils.recipes.GTNL_OverclockCalculator;
+import com.science.gtnl.utils.recipes.GTNLOverclockCalculator;
 
 import gregtech.api.enums.Textures;
 import gregtech.api.interfaces.ITexture;
@@ -163,7 +163,7 @@ public class ReactionFurnace extends GTMMultiMachineBase<ReactionFurnace> implem
         int maxParallel = getTrueParallel();
         int originalMaxParallel = getTrueParallel();
 
-        GTNL_OverclockCalculator calculator = new GTNL_OverclockCalculator().setEUt(availableEUt)
+        GTNLOverclockCalculator calculator = new GTNLOverclockCalculator().setEUt(availableEUt)
             .setRecipeEUt(4)
             .setDuration(64)
             .setParallel(originalMaxParallel)

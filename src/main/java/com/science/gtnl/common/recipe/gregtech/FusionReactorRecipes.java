@@ -5,7 +5,7 @@ import static gregtech.api.util.GTRecipeConstants.FUSION_THRESHOLD;
 import net.minecraftforge.fluids.FluidStack;
 
 import com.science.gtnl.api.IRecipePool;
-import com.science.gtnl.common.material.MaterialPool;
+import com.science.gtnl.common.material.GTNLMaterials;
 import com.science.gtnl.utils.recipes.RecipeBuilder;
 
 import gregtech.api.enums.Materials;
@@ -40,7 +40,7 @@ public class FusionReactorRecipes implements IRecipePool {
             .fluidInputs(
                 Materials.Arsenic.getMolten(32),
                 new FluidStack(MaterialsElements.getInstance().RUTHENIUM.getFluid(), 16))
-            .fluidOutputs(MaterialPool.Darmstadtium.getMolten(16))
+            .fluidOutputs(GTNLMaterials.Darmstadtium.getMolten(16))
             .duration(32)
             .eut(TierEU.RECIPE_LuV)
             .metadata(FUSION_THRESHOLD, 200000000L)
@@ -64,7 +64,7 @@ public class FusionReactorRecipes implements IRecipePool {
 
         RecipeBuilder.builder()
             .fluidInputs(Materials.Magnesium.getMolten(144), Materials.Iridium.getMolten(144))
-            .fluidOutputs(MaterialPool.Actinium.getMolten(144))
+            .fluidOutputs(GTNLMaterials.Actinium.getMolten(144))
             .duration(20)
             .eut(TierEU.RECIPE_UV)
             .metadata(FUSION_THRESHOLD, 1000000000L)

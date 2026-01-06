@@ -38,9 +38,9 @@ import com.gtnewhorizon.structurelib.structure.StructureDefinition;
 import com.science.gtnl.common.machine.multiMachineBase.MultiMachineBase;
 import com.science.gtnl.common.machine.multiblock.LargeIncubator;
 import com.science.gtnl.utils.StructureUtils;
-import com.science.gtnl.utils.recipes.GTNL_OverclockCalculator;
-import com.science.gtnl.utils.recipes.GTNL_ParallelHelper;
-import com.science.gtnl.utils.recipes.GTNL_ProcessingLogic;
+import com.science.gtnl.utils.recipes.GTNLOverclockCalculator;
+import com.science.gtnl.utils.recipes.GTNLParallelHelper;
+import com.science.gtnl.utils.recipes.GTNLProcessingLogic;
 
 import bartworks.API.SideReference;
 import bartworks.API.recipe.BartWorksRecipeMaps;
@@ -207,7 +207,7 @@ public class Incubator extends MultiMachineBase<Incubator> implements ISurvivalC
 
     @Override
     public ProcessingLogic createProcessingLogic() {
-        return new GTNL_ProcessingLogic() {
+        return new GTNLProcessingLogic() {
 
             @NotNull
             @Override
@@ -238,7 +238,7 @@ public class Incubator extends MultiMachineBase<Incubator> implements ISurvivalC
 
             @NotNull
             @Override
-            public GTNL_OverclockCalculator createOverclockCalculator(@NotNull GTRecipe recipe) {
+            public GTNLOverclockCalculator createOverclockCalculator(@NotNull GTRecipe recipe) {
                 return super.createOverclockCalculator(recipe).setExtraDurationModifier(mConfigSpeedBoost)
                     .setEUtDiscount(getEUtDiscount())
                     .setDurationModifier(getDurationModifier());
@@ -246,7 +246,7 @@ public class Incubator extends MultiMachineBase<Incubator> implements ISurvivalC
 
             @NotNull
             @Override
-            public GTNL_ParallelHelper createParallelHelper(@NotNull GTRecipe recipe) {
+            public GTNLParallelHelper createParallelHelper(@NotNull GTRecipe recipe) {
                 return super.createParallelHelper(
                     LargeIncubator.recipeWithMultiplier(recipe, inputFluids, mOutputHatches.get(0), getTrueParallel()));
             }

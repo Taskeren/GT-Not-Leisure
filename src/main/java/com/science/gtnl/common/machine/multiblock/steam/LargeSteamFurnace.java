@@ -31,8 +31,8 @@ import com.gtnewhorizon.structurelib.structure.StructureDefinition;
 import com.science.gtnl.common.machine.multiMachineBase.SteamMultiMachineBase;
 import com.science.gtnl.loader.BlockLoader;
 import com.science.gtnl.utils.StructureUtils;
-import com.science.gtnl.utils.recipes.GTNL_OverclockCalculator;
-import com.science.gtnl.utils.recipes.GTNL_ProcessingLogic;
+import com.science.gtnl.utils.recipes.GTNLOverclockCalculator;
+import com.science.gtnl.utils.recipes.GTNLProcessingLogic;
 
 import gregtech.api.enums.Textures;
 import gregtech.api.interfaces.ITexture;
@@ -209,11 +209,11 @@ public class LargeSteamFurnace extends SteamMultiMachineBase<LargeSteamFurnace> 
     @Override
     public ProcessingLogic createProcessingLogic() {
 
-        return new GTNL_ProcessingLogic() {
+        return new GTNLProcessingLogic() {
 
             @Override
             @Nonnull
-            public GTNL_OverclockCalculator createOverclockCalculator(@NotNull GTRecipe recipe) {
+            public GTNLOverclockCalculator createOverclockCalculator(@NotNull GTRecipe recipe) {
                 return super.createOverclockCalculator(recipe).setExtraDurationModifier(configSpeedBoost)
                     .setEUtDiscount(0.5 * tierMachine * (1 << (2 * Math.min(4, recipeOcCount))))
                     .setDurationModifier(1.0 / 10.0 / tierMachine / (1 << Math.min(4, recipeOcCount)))
@@ -316,7 +316,7 @@ public class LargeSteamFurnace extends SteamMultiMachineBase<LargeSteamFurnace> 
         int maxParallel = getTrueParallel();
         int originalMaxParallel = getTrueParallel();
 
-        GTNL_OverclockCalculator calculator = new GTNL_OverclockCalculator().setEUt(availableEUt)
+        GTNLOverclockCalculator calculator = new GTNLOverclockCalculator().setEUt(availableEUt)
             .setRecipeEUt(4)
             .setDuration(64)
             .setParallel(originalMaxParallel)

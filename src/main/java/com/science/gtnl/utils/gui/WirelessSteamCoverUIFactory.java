@@ -5,7 +5,7 @@ import net.minecraft.util.StatCollector;
 import com.gtnewhorizons.modularui.api.drawable.ItemDrawable;
 import com.gtnewhorizons.modularui.api.screen.ModularWindow;
 import com.gtnewhorizons.modularui.common.widget.TextWidget;
-import com.science.gtnl.common.material.MaterialPool;
+import com.science.gtnl.common.material.GTNLMaterials;
 import com.science.gtnl.utils.enums.SteamTypes;
 
 import gregtech.api.enums.Materials;
@@ -65,7 +65,7 @@ public class WirelessSteamCoverUIFactory extends CoverLegacyDataUIFactory {
                             CoverDataFollowerToggleButtonWidget.ofDisableable(),
                             widget -> widget
                                 .setStaticTexture(
-                                    new ItemDrawable(MaterialPool.CompressedSteam.get(OrePrefixes.cellMolten, 1)))
+                                    new ItemDrawable(GTNLMaterials.CompressedSteam.get(OrePrefixes.cellMolten, 1)))
                                 .addTooltip(SteamTypes.CM_STEAM.displayName)
                                 .setPos(spaceX * 3, spaceY * 0))
                         .setPos(startX, startY))

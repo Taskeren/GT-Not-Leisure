@@ -23,7 +23,7 @@ import com.gtnewhorizon.structurelib.structure.IStructureDefinition;
 import com.gtnewhorizon.structurelib.structure.ISurvivalBuildEnvironment;
 import com.gtnewhorizon.structurelib.structure.StructureDefinition;
 import com.science.gtnl.common.machine.multiMachineBase.MultiMachineBase;
-import com.science.gtnl.common.material.RecipePool;
+import com.science.gtnl.common.material.GTNLRecipeMaps;
 import com.science.gtnl.utils.StructureUtils;
 import com.science.gtnl.utils.item.ItemUtils;
 
@@ -104,15 +104,16 @@ public class IndustrialArcaneAssembler extends MultiMachineBase<IndustrialArcane
 
     @Override
     public RecipeMap<?> getRecipeMap() {
-        return (machineMode == ShapedArcaneCrafting) ? RecipePool.IndustrialShapedArcaneCraftingRecipes
-            : RecipePool.IndustrialInfusionCraftingRecipes;
+        return (machineMode == ShapedArcaneCrafting) ? GTNLRecipeMaps.IndustrialShapedArcaneCraftingRecipes
+            : GTNLRecipeMaps.IndustrialInfusionCraftingRecipes;
     }
 
     @Nonnull
     @Override
     public Collection<RecipeMap<?>> getAvailableRecipeMaps() {
-        return Arrays
-            .asList(RecipePool.IndustrialShapedArcaneCraftingRecipes, RecipePool.IndustrialInfusionCraftingRecipes);
+        return Arrays.asList(
+            GTNLRecipeMaps.IndustrialShapedArcaneCraftingRecipes,
+            GTNLRecipeMaps.IndustrialInfusionCraftingRecipes);
     }
 
     @Override

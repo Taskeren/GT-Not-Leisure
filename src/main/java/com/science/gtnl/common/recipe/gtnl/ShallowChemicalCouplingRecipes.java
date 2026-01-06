@@ -6,8 +6,8 @@ import static gregtech.api.util.GTRecipeBuilder.TICKS;
 import static gregtech.api.util.GTRecipeConstants.COIL_HEAT;
 
 import com.science.gtnl.api.IRecipePool;
-import com.science.gtnl.common.material.MaterialPool;
-import com.science.gtnl.common.material.RecipePool;
+import com.science.gtnl.common.material.GTNLMaterials;
+import com.science.gtnl.common.material.GTNLRecipeMaps;
 import com.science.gtnl.utils.enums.GTNLItemList;
 import com.science.gtnl.utils.recipes.RecipeBuilder;
 
@@ -25,7 +25,7 @@ import gtPlusPlus.core.material.MaterialMisc;
 
 public class ShallowChemicalCouplingRecipes implements IRecipePool {
 
-    public RecipeMap<?> SCCR = RecipePool.ShallowChemicalCouplingRecipes;
+    public RecipeMap<?> SCCR = GTNLRecipeMaps.ShallowChemicalCouplingRecipes;
 
     @Override
     public void loadRecipes() {
@@ -229,7 +229,7 @@ public class ShallowChemicalCouplingRecipes implements IRecipePool {
                 Materials.Oxygen.getGas(60000),
                 Materials.Nitrogen.getGas(20000),
                 Materials.Hydrogen.getGas(120000))
-            .fluidOutputs(MaterialPool.Polyimide.getMolten(1440))
+            .fluidOutputs(GTNLMaterials.Polyimide.getMolten(1440))
             .metadata(COIL_HEAT, 10800)
             .duration(400)
             .eut(TierEU.RECIPE_UV)
@@ -242,10 +242,10 @@ public class ShallowChemicalCouplingRecipes implements IRecipePool {
                 GTUtility.getIntegratedCircuit(10),
                 GTNLItemList.ZnFeAlClCatalyst.get(0),
                 GTNLItemList.BlackLight.get(0),
-                MaterialPool.CoAcAbCatalyst.get(OrePrefixes.dust, 0),
+                GTNLMaterials.CoAcAbCatalyst.get(OrePrefixes.dust, 0),
                 GTUtility.copyAmountUnsafe(400, GTOreDictUnificator.get(OrePrefixes.dust, Materials.Carbon, 1)))
             .fluidInputs(Materials.Oxygen.getGas(60000), Materials.Hydrogen.getGas(240000))
-            .fluidOutputs(MaterialPool.Polyetheretherketone.getMolten(2880))
+            .fluidOutputs(GTNLMaterials.Polyetheretherketone.getMolten(2880))
             .metadata(COIL_HEAT, 11700)
             .duration(600)
             .eut(TierEU.RECIPE_UHV)

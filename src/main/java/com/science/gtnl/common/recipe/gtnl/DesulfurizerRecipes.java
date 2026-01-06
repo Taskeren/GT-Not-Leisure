@@ -3,7 +3,7 @@ package com.science.gtnl.common.recipe.gtnl;
 import net.minecraftforge.fluids.FluidStack;
 
 import com.science.gtnl.api.IRecipePool;
-import com.science.gtnl.common.material.RecipePool;
+import com.science.gtnl.common.material.GTNLRecipeMaps;
 import com.science.gtnl.utils.recipes.RecipeBuilder;
 
 import gregtech.api.enums.Materials;
@@ -14,7 +14,7 @@ import gtPlusPlus.core.fluids.GTPPFluids;
 
 public class DesulfurizerRecipes implements IRecipePool {
 
-    public RecipeMap<?> DesR = RecipePool.DesulfurizerRecipes;
+    public RecipeMap<?> DesR = GTNLRecipeMaps.DesulfurizerRecipes;
 
     @Override
     public void loadRecipes() {

@@ -3,7 +3,7 @@ package com.science.gtnl.common.recipe.gregtech;
 import static gregtech.api.util.GTRecipeBuilder.*;
 
 import com.science.gtnl.api.IRecipePool;
-import com.science.gtnl.common.material.MaterialPool;
+import com.science.gtnl.common.material.GTNLMaterials;
 import com.science.gtnl.utils.recipes.RecipeBuilder;
 
 import gregtech.api.enums.Materials;
@@ -34,7 +34,7 @@ public class ReactorProcessingUnitRecipes implements IRecipePool {
                 GTOreDictUnificator.get(OrePrefixes.dust, Materials.Plutonium, 1),
                 MaterialsElements.getInstance().RHODIUM.getDust(1))
             .outputChances(10000, 10000, 10000, 3000, 3000, 3000, 3000, 7500, 3000)
-            .fluidInputs(MaterialPool.UraniumWaste.getFluidOrGas(3600))
+            .fluidInputs(GTNLMaterials.UraniumWaste.getFluidOrGas(3600))
             .duration(20 * MINUTES)
             .eut(TierEU.RECIPE_MV)
             .addTo(RPU);

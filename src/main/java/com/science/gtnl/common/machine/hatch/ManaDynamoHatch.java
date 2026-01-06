@@ -16,7 +16,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;
 import net.minecraftforge.fluids.FluidStack;
 
-import com.science.gtnl.common.material.MaterialPool;
+import com.science.gtnl.common.material.GTNLMaterials;
 
 import gregtech.api.interfaces.ITexture;
 import gregtech.api.interfaces.modularui.IAddUIWidgets;
@@ -38,7 +38,7 @@ public class ManaDynamoHatch extends MTEHatchDynamo implements IAddUIWidgets {
     private static final int MANA_POOL_RADIUS = 2;
     private static final int MANA_FLOWER_RADIUS = 6;
     private static final int MANA_TO_EU_RATE = 200;
-    private static final FluidStack fluidMana = MaterialPool.FluidMana.getFluidOrGas(1);
+    private static final FluidStack fluidMana = GTNLMaterials.FluidMana.getFluidOrGas(1);
     private static int mAmp;
 
     public ManaDynamoHatch(int aID, String aName, String aNameRegional, int aTier, int aAmp) {

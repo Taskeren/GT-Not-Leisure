@@ -51,7 +51,7 @@ import gregtech.api.recipe.RecipeMapBuilder;
 import gregtech.api.util.GTRecipe;
 import gregtech.nei.formatter.HeatingCoilSpecialValueFormatter;
 
-public class RecipePool {
+public class GTNLRecipeMaps {
 
     public static final UITexture PROGRESSBAR_GAS_COLLECTOR = UITexture
         .fullImage(ModList.ScienceNotLeisure.ID, "gui/progressbar/gas_collector");

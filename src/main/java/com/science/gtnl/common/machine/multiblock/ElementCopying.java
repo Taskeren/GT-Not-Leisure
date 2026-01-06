@@ -3,10 +3,8 @@ package com.science.gtnl.common.machine.multiblock;
 import static com.gtnewhorizon.structurelib.structure.StructureUtility.*;
 import static com.science.gtnl.ScienceNotLeisure.RESOURCE_ROOT_ID;
 import static com.science.gtnl.common.machine.multiMachineBase.MultiMachineBase.CustomHatchElement.*;
-import static com.science.gtnl.utils.Utils.*;
 import static gregtech.api.enums.HatchElement.*;
 import static gregtech.api.util.GTStructureUtility.buildHatchAdder;
-import static gregtech.common.misc.WirelessNetworkManager.*;
 import static gtnhlanth.common.register.LanthItemList.ELECTRODE_CASING;
 import static tectech.thing.casing.TTCasingsContainer.sBlockCasingsTT;
 
@@ -19,7 +17,7 @@ import com.gtnewhorizon.structurelib.structure.IStructureDefinition;
 import com.gtnewhorizon.structurelib.structure.ISurvivalBuildEnvironment;
 import com.gtnewhorizon.structurelib.structure.StructureDefinition;
 import com.science.gtnl.common.machine.multiMachineBase.WirelessEnergyMultiMachineBase;
-import com.science.gtnl.common.material.RecipePool;
+import com.science.gtnl.common.material.GTNLRecipeMaps;
 import com.science.gtnl.loader.BlockLoader;
 import com.science.gtnl.utils.StructureUtils;
 
@@ -78,7 +76,7 @@ public class ElementCopying extends WirelessEnergyMultiMachineBase<ElementCopyin
 
     @Override
     public RecipeMap<?> getRecipeMap() {
-        return RecipePool.ElementCopyingRecipes;
+        return GTNLRecipeMaps.ElementCopyingRecipes;
     }
 
     @Override

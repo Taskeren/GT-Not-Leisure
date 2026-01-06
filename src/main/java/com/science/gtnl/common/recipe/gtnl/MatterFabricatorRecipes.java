@@ -6,7 +6,7 @@ import static gregtech.api.util.GTModHandler.getModItem;
 import net.minecraft.util.StatCollector;
 
 import com.science.gtnl.api.IRecipePool;
-import com.science.gtnl.common.material.RecipePool;
+import com.science.gtnl.common.material.GTNLRecipeMaps;
 import com.science.gtnl.utils.recipes.RecipeBuilder;
 
 import gregtech.api.enums.Materials;
@@ -17,7 +17,7 @@ import gregtech.api.util.GTUtility;
 
 public class MatterFabricatorRecipes implements IRecipePool {
 
-    public RecipeMap<?> MFR = RecipePool.MatterFabricatorRecipes;
+    public RecipeMap<?> MFR = GTNLRecipeMaps.MatterFabricatorRecipes;
 
     @Override
     public void loadRecipes() {

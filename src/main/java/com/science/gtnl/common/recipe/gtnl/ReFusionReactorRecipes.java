@@ -5,7 +5,7 @@ import static com.science.gtnl.utils.enums.GTNLItemList.TrollFace;
 import net.minecraft.util.StatCollector;
 
 import com.science.gtnl.api.IRecipePool;
-import com.science.gtnl.common.material.RecipePool;
+import com.science.gtnl.common.material.GTNLRecipeMaps;
 import com.science.gtnl.utils.recipes.RecipeBuilder;
 
 import gregtech.api.enums.Materials;
@@ -17,7 +17,7 @@ import gregtech.api.util.GTUtility;
 
 public class ReFusionReactorRecipes implements IRecipePool {
 
-    public RecipeMap<?> RFRR = RecipePool.RecombinationFusionReactorRecipes;
+    public RecipeMap<?> RFRR = GTNLRecipeMaps.RecombinationFusionReactorRecipes;
 
     @Override
     public void loadRecipes() {

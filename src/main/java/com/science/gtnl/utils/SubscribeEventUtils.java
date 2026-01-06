@@ -43,7 +43,7 @@ import com.science.gtnl.common.command.CommandTickrate;
 import com.science.gtnl.common.item.BaubleItem;
 import com.science.gtnl.common.item.items.TimeStopPocketWatch;
 import com.science.gtnl.common.machine.hatch.ExplosionDynamoHatch;
-import com.science.gtnl.common.material.RecipePool;
+import com.science.gtnl.common.material.GTNLRecipeMaps;
 import com.science.gtnl.common.packet.SoundPacket;
 import com.science.gtnl.common.packet.SyncCircuitNanitesPacket;
 import com.science.gtnl.common.packet.SyncConfigPacket;
@@ -343,7 +343,7 @@ public class SubscribeEventUtils {
         ElectrocellGeneratorFrontend.initializedRecipes.clear();
         RocketAssemblerFrontend.initializedRecipes.clear();
         CircuitNanitesRecipeData.recipeDataMap.clear();
-        RecipePool.CircuitNanitesDataRecipes.getBackend()
+        GTNLRecipeMaps.CircuitNanitesDataRecipes.getBackend()
             .clearRecipes();
     }
 

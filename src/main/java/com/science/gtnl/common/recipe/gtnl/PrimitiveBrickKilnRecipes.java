@@ -6,7 +6,7 @@ import net.minecraft.item.ItemStack;
 
 import com.dreammaster.gthandler.CustomItemList;
 import com.science.gtnl.api.IRecipePool;
-import com.science.gtnl.common.material.RecipePool;
+import com.science.gtnl.common.material.GTNLRecipeMaps;
 import com.science.gtnl.utils.enums.GTNLItemList;
 import com.science.gtnl.utils.recipes.RecipeBuilder;
 
@@ -21,7 +21,7 @@ import gregtech.api.util.GTUtility;
 
 public class PrimitiveBrickKilnRecipes implements IRecipePool {
 
-    public RecipeMap<?> PBKR = RecipePool.PrimitiveBrickKilnRecipes;
+    public RecipeMap<?> PBKR = GTNLRecipeMaps.PrimitiveBrickKilnRecipes;
 
     @Override
     public void loadRecipes() {

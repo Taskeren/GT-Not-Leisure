@@ -3,8 +3,8 @@ package com.science.gtnl.common.recipe.gtnl;
 import static gregtech.api.util.GTRecipeBuilder.SECONDS;
 
 import com.science.gtnl.api.IRecipePool;
-import com.science.gtnl.common.material.MaterialPool;
-import com.science.gtnl.common.material.RecipePool;
+import com.science.gtnl.common.material.GTNLMaterials;
+import com.science.gtnl.common.material.GTNLRecipeMaps;
 import com.science.gtnl.utils.recipes.RecipeBuilder;
 
 import gregtech.api.enums.Materials;
@@ -15,13 +15,13 @@ import gregtech.api.util.GTOreDictUnificator;
 
 public class SteamExtractinatorRecipes implements IRecipePool {
 
-    public RecipeMap<?> SER = RecipePool.SteamExtractinatorRecipes;
+    public RecipeMap<?> SER = GTNLRecipeMaps.SteamExtractinatorRecipes;
 
     @Override
     public void loadRecipes() {
 
         RecipeBuilder.builder()
-            .fluidInputs(MaterialPool.GravelSluice.getFluidOrGas(4000))
+            .fluidInputs(GTNLMaterials.GravelSluice.getFluidOrGas(4000))
             .itemOutputs(
                 GTOreDictUnificator.get(OrePrefixes.crushed, Materials.Iron, 8),
                 GTOreDictUnificator.get(OrePrefixes.crushed, Materials.Copper, 8),
@@ -34,7 +34,7 @@ public class SteamExtractinatorRecipes implements IRecipePool {
             .addTo(SER);
 
         RecipeBuilder.builder()
-            .fluidInputs(MaterialPool.SandSluice.getFluidOrGas(4000))
+            .fluidInputs(GTNLMaterials.SandSluice.getFluidOrGas(4000))
             .itemOutputs(
                 GTOreDictUnificator.get(OrePrefixes.crushed, Materials.Gold, 8),
                 GTOreDictUnificator.get(OrePrefixes.crushed, Materials.Redstone, 8),
@@ -46,7 +46,7 @@ public class SteamExtractinatorRecipes implements IRecipePool {
             .addTo(SER);
 
         RecipeBuilder.builder()
-            .fluidInputs(MaterialPool.ObsidianSluice.getFluidOrGas(4000))
+            .fluidInputs(GTNLMaterials.ObsidianSluice.getFluidOrGas(4000))
             .itemOutputs(
                 GTOreDictUnificator.get(OrePrefixes.crushed, Materials.Silver, 8),
                 GTOreDictUnificator.get(OrePrefixes.gem, Materials.Diamond, 8),
@@ -58,7 +58,7 @@ public class SteamExtractinatorRecipes implements IRecipePool {
             .addTo(SER);
 
         RecipeBuilder.builder()
-            .fluidInputs(MaterialPool.GemSluice.getFluidOrGas(4000))
+            .fluidInputs(GTNLMaterials.GemSluice.getFluidOrGas(4000))
             .itemOutputs(
                 GTOreDictUnificator.get(OrePrefixes.gemExquisite, Materials.Diamond, 1),
                 GTOreDictUnificator.get(OrePrefixes.gemExquisite, Materials.Emerald, 1),

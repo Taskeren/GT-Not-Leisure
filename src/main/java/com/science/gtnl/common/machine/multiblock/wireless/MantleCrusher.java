@@ -20,7 +20,7 @@ import com.gtnewhorizon.structurelib.structure.ISurvivalBuildEnvironment;
 import com.gtnewhorizon.structurelib.structure.StructureDefinition;
 import com.science.gtnl.common.machine.multiMachineBase.WirelessEnergyMultiMachineBase;
 import com.science.gtnl.common.machine.multiblock.structuralReconstructionPlan.LargeRockCrusher;
-import com.science.gtnl.common.material.RecipePool;
+import com.science.gtnl.common.material.GTNLRecipeMaps;
 import com.science.gtnl.loader.BlockLoader;
 import com.science.gtnl.utils.StructureUtils;
 
@@ -174,7 +174,7 @@ public class MantleCrusher extends WirelessEnergyMultiMachineBase<MantleCrusher>
 
     @Override
     public RecipeMap<?> getRecipeMap() {
-        return RecipePool.IndustrialRockCrusherRecipes;
+        return GTNLRecipeMaps.IndustrialRockCrusherRecipes;
     }
 
     @Override

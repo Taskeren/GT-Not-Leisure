@@ -6,7 +6,7 @@ import java.util.List;
 import net.minecraft.item.ItemStack;
 
 import com.dreammaster.gthandler.CustomItemList;
-import com.science.gtnl.common.material.MaterialPool;
+import com.science.gtnl.common.material.GTNLMaterials;
 import com.science.gtnl.utils.enums.GTNLItemList;
 
 import codechicken.nei.PositionedStack;
@@ -69,7 +69,7 @@ public class NEIGTNLGalaxySpaceConfig implements IConfigureNEI {
             for (int j = 0; j < 2; j++) {
                 input.add(
                     new PositionedStack(
-                        MaterialPool.CompressedSteam.get(OrePrefixes.plateSuperdense, 1),
+                        GTNLMaterials.CompressedSteam.get(OrePrefixes.plateSuperdense, 1),
                         44 + j * 18 - x,
                         37 + i * 18 - y));
             }

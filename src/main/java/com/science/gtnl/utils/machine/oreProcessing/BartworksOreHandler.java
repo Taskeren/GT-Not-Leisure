@@ -6,7 +6,7 @@ import java.util.ArrayList;
 
 import net.minecraft.item.ItemStack;
 
-import com.science.gtnl.common.material.RecipePool;
+import com.science.gtnl.common.material.GTNLRecipeMaps;
 import com.science.gtnl.utils.recipes.RecipeBuilder;
 
 import bartworks.system.material.Werkstoff;
@@ -78,7 +78,7 @@ public class BartworksOreHandler {
                     .itemOutputs(rawOreOutputs.toArray(new ItemStack[] {}))
                     .eut(0)
                     .duration(1)
-                    .addTo(RecipePool.CheatOreProcessingRecipes);
+                    .addTo(GTNLRecipeMaps.CheatOreProcessingRecipes);
             }
 
             RecipeBuilder.builder()
@@ -86,7 +86,7 @@ public class BartworksOreHandler {
                 .itemOutputs(outputs.toArray(new ItemStack[] {}))
                 .eut(0)
                 .duration(1)
-                .addTo(RecipePool.CheatOreProcessingRecipes);
+                .addTo(GTNLRecipeMaps.CheatOreProcessingRecipes);
         }
     }
 }

@@ -37,15 +37,15 @@ import com.gtnewhorizon.structurelib.structure.StructureDefinition;
 import com.science.gtnl.common.machine.hatch.CustomFluidHatch;
 import com.science.gtnl.common.machine.hatch.SuperCraftingInputHatchME;
 import com.science.gtnl.common.machine.multiMachineBase.MultiMachineBase;
-import com.science.gtnl.common.material.MaterialPool;
-import com.science.gtnl.common.material.RecipePool;
+import com.science.gtnl.common.material.GTNLMaterials;
+import com.science.gtnl.common.material.GTNLRecipeMaps;
 import com.science.gtnl.config.MainConfig;
 import com.science.gtnl.loader.BlockLoader;
 import com.science.gtnl.utils.StructureUtils;
 import com.science.gtnl.utils.item.ItemUtils;
 import com.science.gtnl.utils.machine.PortalToAlfheimExplosion;
-import com.science.gtnl.utils.recipes.GTNL_ParallelHelper;
-import com.science.gtnl.utils.recipes.GTNL_ProcessingLogic;
+import com.science.gtnl.utils.recipes.GTNLParallelHelper;
+import com.science.gtnl.utils.recipes.GTNLProcessingLogic;
 
 import gregtech.api.enums.Textures;
 import gregtech.api.gui.modularui.GTUITextures;
@@ -110,10 +110,10 @@ public class TeleportationArrayToAlfheim extends MultiMachineBase<TeleportationA
     @Override
     public RecipeMap<?> getRecipeMap() {
         return switch (machineMode) {
-            case NATURE_MODE -> RecipePool.NatureSpiritArrayRecipes;
-            case MANA_MODE -> RecipePool.ManaInfusionRecipes;
-            case RUNE_MODE -> RecipePool.RuneAltarRecipes;
-            default -> RecipePool.PortalToAlfheimRecipes;
+            case NATURE_MODE -> GTNLRecipeMaps.NatureSpiritArrayRecipes;
+            case MANA_MODE -> GTNLRecipeMaps.ManaInfusionRecipes;
+            case RUNE_MODE -> GTNLRecipeMaps.RuneAltarRecipes;
+            default -> GTNLRecipeMaps.PortalToAlfheimRecipes;
         };
     }
 
@@ -121,10 +121,10 @@ public class TeleportationArrayToAlfheim extends MultiMachineBase<TeleportationA
     @Override
     public Collection<RecipeMap<?>> getAvailableRecipeMaps() {
         return Arrays.asList(
-            RecipePool.NatureSpiritArrayRecipes,
-            RecipePool.ManaInfusionRecipes,
-            RecipePool.RuneAltarRecipes,
-            RecipePool.PortalToAlfheimRecipes);
+            GTNLRecipeMaps.NatureSpiritArrayRecipes,
+            GTNLRecipeMaps.ManaInfusionRecipes,
+            GTNLRecipeMaps.RuneAltarRecipes,
+            GTNLRecipeMaps.PortalToAlfheimRecipes);
     }
 
     @Override
@@ -217,7 +217,7 @@ public class TeleportationArrayToAlfheim extends MultiMachineBase<TeleportationA
                     List<FluidStack> fluids = new ArrayList<>(Arrays.asList(slot.getFluidInputs()));
                     if (!manaHatchStored.isEmpty()) fluids.addAll(manaHatchStored);
                     if (enableInfinityMana) {
-                        fluids.add(MaterialPool.FluidMana.getFluidOrGas(Integer.MAX_VALUE));
+                        fluids.add(GTNLMaterials.FluidMana.getFluidOrGas(Integer.MAX_VALUE));
                     }
                     processingLogic.setInputFluids(fluids);
 
@@ -248,7 +248,7 @@ public class TeleportationArrayToAlfheim extends MultiMachineBase<TeleportationA
             List<FluidStack> fluids = new ArrayList<>(getStoredFluidsForColor(Optional.of(color)));
             if (!manaHatchStored.isEmpty()) fluids.addAll(manaHatchStored);
             if (enableInfinityMana) {
-                fluids.add(MaterialPool.FluidMana.getFluidOrGas(Integer.MAX_VALUE));
+                fluids.add(GTNLMaterials.FluidMana.getFluidOrGas(Integer.MAX_VALUE));
             }
             processingLogic.setInputFluids(fluids);
 
@@ -499,7 +499,7 @@ public class TeleportationArrayToAlfheim extends MultiMachineBase<TeleportationA
                     .hasWorkJustBeenEnabled() && !enableInfinityMana) {
                     if (!this.depleteInputFromRestrictedHatches(this.mFluidManaInputHatch, 100)) {
                         this.causeMaintenanceIssue();
-                        this.stopMachine(ShutDownReasonRegistry.outOfFluid(MaterialPool.FluidMana.getFluidOrGas(100)));
+                        this.stopMachine(ShutDownReasonRegistry.outOfFluid(GTNLMaterials.FluidMana.getFluidOrGas(100)));
                     }
                 }
             }
@@ -508,13 +508,13 @@ public class TeleportationArrayToAlfheim extends MultiMachineBase<TeleportationA
 
     @Override
     public ProcessingLogic createProcessingLogic() {
-        return new GTNL_ProcessingLogic() {
+        return new GTNLProcessingLogic() {
 
             @Nonnull
             @Override
-            public GTNL_ParallelHelper createParallelHelper(@Nonnull GTRecipe recipe) {
+            public GTNLParallelHelper createParallelHelper(@Nonnull GTRecipe recipe) {
                 if (enableInfinityMana && inputFluids != null && inputFluids.length > 0) {
-                    inputFluids[0] = MaterialPool.FluidMana.getFluidOrGas(Integer.MAX_VALUE);
+                    inputFluids[0] = GTNLMaterials.FluidMana.getFluidOrGas(Integer.MAX_VALUE);
                 }
                 return super.createParallelHelper(recipe).setFluidInputs(inputFluids);
             }

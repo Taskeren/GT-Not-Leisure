@@ -3,7 +3,7 @@ package com.science.gtnl.common.recipe.gtnl;
 import net.minecraftforge.fluids.FluidStack;
 
 import com.science.gtnl.api.IRecipePool;
-import com.science.gtnl.common.material.RecipePool;
+import com.science.gtnl.common.material.GTNLRecipeMaps;
 import com.science.gtnl.utils.recipes.RecipeBuilder;
 
 import gregtech.api.enums.Materials;
@@ -12,7 +12,7 @@ import gregtech.api.util.GTUtility;
 
 public class SteamCrackerRecipes implements IRecipePool {
 
-    public RecipeMap<?> SCR = RecipePool.SteamCrackerRecipes;
+    public RecipeMap<?> SCR = GTNLRecipeMaps.SteamCrackerRecipes;
 
     @Override
     public void loadRecipes() {

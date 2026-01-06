@@ -3,7 +3,7 @@ package com.science.gtnl.common.recipe.oreDictionary;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fluids.FluidStack;
 
-import com.science.gtnl.common.material.RecipePool;
+import com.science.gtnl.common.material.GTNLRecipeMaps;
 import com.science.gtnl.utils.recipes.RecipeBuilder;
 
 import gregtech.api.enums.Materials;
@@ -46,7 +46,7 @@ public class WoodDistillationRecipes implements IOreRecipeRegistrator {
                     Materials.Ethanol.getFluid(8))
                 .duration(200)
                 .eut(120)
-                .addTo(RecipePool.WoodDistillationRecipes);
+                .addTo(GTNLRecipeMaps.WoodDistillationRecipes);
         }
     }
 }

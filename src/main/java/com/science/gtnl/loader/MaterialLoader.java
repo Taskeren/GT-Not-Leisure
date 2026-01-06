@@ -15,7 +15,7 @@ import com.science.gtnl.api.TickrateAPI;
 import com.science.gtnl.common.entity.EntitySteamRocket;
 import com.science.gtnl.common.item.items.MilledOre;
 import com.science.gtnl.common.item.steamRocket.SchematicSteamRocket;
-import com.science.gtnl.common.material.MaterialPool;
+import com.science.gtnl.common.material.GTNLMaterials;
 import com.science.gtnl.common.recipe.gtnl.RocketAssemblerRecipes;
 import com.science.gtnl.common.recipe.oreDictionary.LaserEngraverOreRecipes;
 import com.science.gtnl.common.recipe.oreDictionary.SteamCarpenterOreRecipe;
@@ -49,7 +49,7 @@ public class MaterialLoader {
         BlockLoader.registerTreeBrickuoia();
 
         ItemLoader.registry();
-        WerkstoffAdderRegistry.addWerkstoffAdder(new MaterialPool());
+        WerkstoffAdderRegistry.addWerkstoffAdder(new GTNLMaterials());
 
         loadOreDictionaryRecipes();
 
@@ -77,7 +77,7 @@ public class MaterialLoader {
             SchematicRegistry.registerSchematicRecipe(new SchematicSteamRocket());
             RocketAssemblerRecipes.loadSteamRocketRecipe();
         }
-        RocketFuels.addFuel(EntitySteamRocket.class, MaterialPool.CompressedSteam.getMolten(1));
+        RocketFuels.addFuel(EntitySteamRocket.class, GTNLMaterials.CompressedSteam.getMolten(1));
 
         if (Mods.InventoryBogoSorter.isModLoaded()) {
             loadCraftTweak();

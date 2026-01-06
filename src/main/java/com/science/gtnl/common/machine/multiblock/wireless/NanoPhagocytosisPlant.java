@@ -37,7 +37,7 @@ import com.gtnewhorizon.structurelib.structure.StructureDefinition;
 import com.science.gtnl.common.block.blocks.BlockNanoPhagocytosisPlantRender;
 import com.science.gtnl.common.block.blocks.tile.TileEntityNanoPhagocytosisPlant;
 import com.science.gtnl.common.machine.multiMachineBase.WirelessEnergyMultiMachineBase;
-import com.science.gtnl.common.material.RecipePool;
+import com.science.gtnl.common.material.GTNLRecipeMaps;
 import com.science.gtnl.loader.BlockLoader;
 import com.science.gtnl.utils.StructureUtils;
 
@@ -543,13 +543,13 @@ public class NanoPhagocytosisPlant extends WirelessEnergyMultiMachineBase<NanoPh
 
     @Override
     public RecipeMap<?> getRecipeMap() {
-        return machineMode == MACHINEMODE_MACERATOR ? RecipeMaps.maceratorRecipes : RecipePool.IsaMillRecipes;
+        return machineMode == MACHINEMODE_MACERATOR ? RecipeMaps.maceratorRecipes : GTNLRecipeMaps.IsaMillRecipes;
     }
 
     @Nonnull
     @Override
     public Collection<RecipeMap<?>> getAvailableRecipeMaps() {
-        return Arrays.asList(RecipeMaps.maceratorRecipes, RecipePool.IsaMillRecipes);
+        return Arrays.asList(RecipeMaps.maceratorRecipes, GTNLRecipeMaps.IsaMillRecipes);
     }
 
     @Override

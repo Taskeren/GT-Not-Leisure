@@ -35,12 +35,12 @@ import com.gtnewhorizon.structurelib.structure.ISurvivalBuildEnvironment;
 import com.gtnewhorizon.structurelib.structure.StructureDefinition;
 import com.science.gtnl.common.machine.hatch.ParallelControllerHatch;
 import com.science.gtnl.common.machine.multiMachineBase.GTMMultiMachineBase;
-import com.science.gtnl.common.material.RecipePool;
+import com.science.gtnl.common.material.GTNLRecipeMaps;
 import com.science.gtnl.utils.StructureUtils;
 import com.science.gtnl.utils.enums.CommonElements;
-import com.science.gtnl.utils.recipes.GTNL_OverclockCalculator;
-import com.science.gtnl.utils.recipes.GTNL_ParallelHelper;
-import com.science.gtnl.utils.recipes.GTNL_ProcessingLogic;
+import com.science.gtnl.utils.recipes.GTNLOverclockCalculator;
+import com.science.gtnl.utils.recipes.GTNLParallelHelper;
+import com.science.gtnl.utils.recipes.GTNLProcessingLogic;
 
 import WayofTime.alchemicalWizardry.ModBlocks;
 import WayofTime.alchemicalWizardry.api.items.interfaces.IBindable;
@@ -101,7 +101,7 @@ public class BloodSoulSacrificialArray extends GTMMultiMachineBase<BloodSoulSacr
             mParallelTier = module.mTier;
 
             int baseParallel = module.getParallel();
-            return getRecipeMap() == RecipePool.FallingTowerRecipes ? baseParallel / 4 : baseParallel * 4;
+            return getRecipeMap() == GTNLRecipeMaps.FallingTowerRecipes ? baseParallel / 4 : baseParallel * 4;
         }
 
         if (mParallelTier <= 1) {
@@ -109,15 +109,15 @@ public class BloodSoulSacrificialArray extends GTMMultiMachineBase<BloodSoulSacr
         }
 
         int base = 1 << (2 * (mParallelTier - 2));
-        return getRecipeMap() == RecipePool.FallingTowerRecipes ? base / 4 : base * 4;
+        return getRecipeMap() == GTNLRecipeMaps.FallingTowerRecipes ? base / 4 : base * 4;
     }
 
     @Override
     public RecipeMap<?> getRecipeMap() {
         return switch (machineMode) {
-            case MACHINEMODE_FALLING_TOWER -> RecipePool.FallingTowerRecipes;
-            case MACHINEMODE_ALCHEMIC -> RecipePool.AlchemicChemistrySetRecipes;
-            default -> RecipePool.BloodDemonInjectionRecipes;
+            case MACHINEMODE_FALLING_TOWER -> GTNLRecipeMaps.FallingTowerRecipes;
+            case MACHINEMODE_ALCHEMIC -> GTNLRecipeMaps.AlchemicChemistrySetRecipes;
+            default -> GTNLRecipeMaps.BloodDemonInjectionRecipes;
         };
     }
 
@@ -125,9 +125,9 @@ public class BloodSoulSacrificialArray extends GTMMultiMachineBase<BloodSoulSacr
     @Override
     public Collection<RecipeMap<?>> getAvailableRecipeMaps() {
         return Arrays.asList(
-            RecipePool.FallingTowerRecipes,
-            RecipePool.AlchemicChemistrySetRecipes,
-            RecipePool.BloodDemonInjectionRecipes);
+            GTNLRecipeMaps.FallingTowerRecipes,
+            GTNLRecipeMaps.AlchemicChemistrySetRecipes,
+            GTNLRecipeMaps.BloodDemonInjectionRecipes);
     }
 
     @Override
@@ -275,7 +275,7 @@ public class BloodSoulSacrificialArray extends GTMMultiMachineBase<BloodSoulSacr
     public boolean onRunningTick(ItemStack stack) {
 
         if ((this.mProgresstime + 1) % 20 == 0 && this.mProgresstime > 0
-            && this.getRecipeMap() == RecipePool.FallingTowerRecipes
+            && this.getRecipeMap() == GTNLRecipeMaps.FallingTowerRecipes
             && enableRender) {
 
             if (this.mMaxProgresstime - this.mProgresstime < 250) {
@@ -343,7 +343,7 @@ public class BloodSoulSacrificialArray extends GTMMultiMachineBase<BloodSoulSacr
 
     @Override
     public ProcessingLogic createProcessingLogic() {
-        return new GTNL_ProcessingLogic() {
+        return new GTNLProcessingLogic() {
 
             @Nonnull
             @Override
@@ -409,8 +409,8 @@ public class BloodSoulSacrificialArray extends GTMMultiMachineBase<BloodSoulSacr
                     return CalculationResult.ofFailure(result);
                 }
 
-                GTNL_ParallelHelper helper = createParallelHelper(recipe);
-                GTNL_OverclockCalculator calculator = createOverclockCalculator(recipe);
+                GTNLParallelHelper helper = createParallelHelper(recipe);
+                GTNLOverclockCalculator calculator = createOverclockCalculator(recipe);
                 helper.setCalculator(calculator);
                 helper.build();
 
@@ -424,12 +424,12 @@ public class BloodSoulSacrificialArray extends GTMMultiMachineBase<BloodSoulSacr
 
             @Nonnull
             @Override
-            public GTNL_ParallelHelper createParallelHelper(@Nonnull GTRecipe recipe) {
+            public GTNLParallelHelper createParallelHelper(@Nonnull GTRecipe recipe) {
 
                 currentEssence = SoulNetworkHandler.getCurrentEssence(getOwner());
                 int needEssence = (int) (recipe.mSpecialValue * (1 - mParallelTier / 50.0));
 
-                return new GTNL_ParallelHelper().setRecipe(recipe)
+                return new GTNLParallelHelper().setRecipe(recipe)
                     .setItemInputs(inputItems)
                     .setFluidInputs(inputFluids)
                     .setAvailableEUt(availableVoltage * availableAmperage)
@@ -461,8 +461,8 @@ public class BloodSoulSacrificialArray extends GTMMultiMachineBase<BloodSoulSacr
 
             @NotNull
             @Override
-            public GTNL_OverclockCalculator createOverclockCalculator(@NotNull GTRecipe recipe) {
-                return GTNL_OverclockCalculator.ofNoOverclock(recipe)
+            public GTNLOverclockCalculator createOverclockCalculator(@NotNull GTRecipe recipe) {
+                return GTNLOverclockCalculator.ofNoOverclock(recipe)
                     .setExtraDurationModifier(mConfigSpeedBoost)
                     .setDurationModifier(getDurationModifier());
             }

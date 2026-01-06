@@ -3,7 +3,7 @@ package com.science.gtnl.common.recipe.gtnl;
 import static gregtech.api.util.GTRecipeBuilder.SECONDS;
 
 import com.science.gtnl.api.IRecipePool;
-import com.science.gtnl.common.material.RecipePool;
+import com.science.gtnl.common.material.GTNLRecipeMaps;
 import com.science.gtnl.utils.enums.GTNLItemList;
 import com.science.gtnl.utils.recipes.RecipeBuilder;
 
@@ -14,7 +14,7 @@ import gregtech.api.util.GTOreDictUnificator;
 
 public class SteamCarpenterRecipe implements IRecipePool {
 
-    public RecipeMap<?> SCR = RecipePool.SteamCarpenterRecipes;
+    public RecipeMap<?> SCR = GTNLRecipeMaps.SteamCarpenterRecipes;
 
     @Override
     public void loadRecipes() {

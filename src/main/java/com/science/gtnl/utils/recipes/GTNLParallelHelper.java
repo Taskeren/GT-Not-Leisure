@@ -28,7 +28,7 @@ import gregtech.api.util.ParallelHelper;
 import gregtech.api.util.VoidProtectionHelper;
 
 @SuppressWarnings({ "unused", "UnusedReturnValue" })
-public class GTNL_ParallelHelper extends ParallelHelper {
+public class GTNLParallelHelper extends ParallelHelper {
 
     public static final double MAX_BATCH_MODE_TICK_TIME = 128;
     /**
@@ -128,7 +128,7 @@ public class GTNL_ParallelHelper extends ParallelHelper {
     /**
      * Calculator to use for overclocking
      */
-    public GTNL_OverclockCalculator calculator;
+    public GTNLOverclockCalculator calculator;
     @Nonnull
     public CheckRecipeResult result = CheckRecipeResultRegistry.NONE;
 
@@ -136,14 +136,14 @@ public class GTNL_ParallelHelper extends ParallelHelper {
 
     public Function<Integer, FluidStack[]> customFluidOutputCalculation;
 
-    public GTNL_ParallelHelper() {}
+    public GTNLParallelHelper() {}
 
     /**
      * Sets machine, with current configuration for void protection mode.
      */
     @Nonnull
     @Override
-    public GTNL_ParallelHelper setMachine(IVoidable machine) {
+    public GTNLParallelHelper setMachine(IVoidable machine) {
         return setMachine(machine, machine.protectsExcessItem(), machine.protectsExcessFluid());
     }
 
@@ -152,7 +152,7 @@ public class GTNL_ParallelHelper extends ParallelHelper {
      */
     @Nonnull
     @Override
-    public GTNL_ParallelHelper setMachine(IVoidable machine, boolean protectExcessItem, boolean protectExcessFluid) {
+    public GTNLParallelHelper setMachine(IVoidable machine, boolean protectExcessItem, boolean protectExcessFluid) {
         this.protectExcessItem = protectExcessItem;
         this.protectExcessFluid = protectExcessFluid;
         this.machine = machine;
@@ -164,14 +164,14 @@ public class GTNL_ParallelHelper extends ParallelHelper {
      */
     @Nonnull
     @Override
-    public GTNL_ParallelHelper setRecipe(@Nonnull GTRecipe aRecipe) {
+    public GTNLParallelHelper setRecipe(@Nonnull GTRecipe aRecipe) {
         recipe = Objects.requireNonNull(aRecipe);
         return this;
     }
 
     @Nonnull
     @Override
-    public GTNL_ParallelHelper setRecipeLocked(IRecipeLockable singleRecipeMachine, boolean isRecipeLocked) {
+    public GTNLParallelHelper setRecipeLocked(IRecipeLockable singleRecipeMachine, boolean isRecipeLocked) {
         this.singleRecipeMachine = singleRecipeMachine;
         this.isRecipeLocked = isRecipeLocked;
         return this;
@@ -182,7 +182,7 @@ public class GTNL_ParallelHelper extends ParallelHelper {
      */
     @Nonnull
     @Override
-    public GTNL_ParallelHelper setItemInputs(ItemStack... aItemInputs) {
+    public GTNLParallelHelper setItemInputs(ItemStack... aItemInputs) {
         this.itemInputs = aItemInputs;
         return this;
     }
@@ -192,7 +192,7 @@ public class GTNL_ParallelHelper extends ParallelHelper {
      */
     @Nonnull
     @Override
-    public GTNL_ParallelHelper setFluidInputs(FluidStack... aFluidInputs) {
+    public GTNLParallelHelper setFluidInputs(FluidStack... aFluidInputs) {
         this.fluidInputs = aFluidInputs;
         return this;
     }
@@ -202,7 +202,7 @@ public class GTNL_ParallelHelper extends ParallelHelper {
      */
     @Nonnull
     @Override
-    public GTNL_ParallelHelper setAvailableEUt(long aAvailableEUt) {
+    public GTNLParallelHelper setAvailableEUt(long aAvailableEUt) {
         this.availableEUt = aAvailableEUt;
         return this;
     }
@@ -212,7 +212,7 @@ public class GTNL_ParallelHelper extends ParallelHelper {
      */
     @Nonnull
     @Override
-    public GTNL_ParallelHelper setEUtModifier(double aEUtModifier) {
+    public GTNLParallelHelper setEUtModifier(double aEUtModifier) {
         this.eutModifier = aEUtModifier;
         return this;
     }
@@ -223,13 +223,13 @@ public class GTNL_ParallelHelper extends ParallelHelper {
      */
     @Nonnull
     @Override
-    public GTNL_ParallelHelper setChanceMultiplier(double chanceMultiplier) {
+    public GTNLParallelHelper setChanceMultiplier(double chanceMultiplier) {
         this.chanceMultiplier = chanceMultiplier;
         return this;
     }
 
     @Nonnull
-    public GTNL_ParallelHelper setCalculator(GTNL_OverclockCalculator calculator) {
+    public GTNLParallelHelper setCalculator(GTNLOverclockCalculator calculator) {
         this.calculator = calculator;
         return this;
     }
@@ -241,7 +241,7 @@ public class GTNL_ParallelHelper extends ParallelHelper {
      */
     @Nonnull
     @Override
-    public GTNL_ParallelHelper setConsumption(boolean consume) {
+    public GTNLParallelHelper setConsumption(boolean consume) {
         this.consume = consume;
         return this;
     }
@@ -251,7 +251,7 @@ public class GTNL_ParallelHelper extends ParallelHelper {
      */
     @Nonnull
     @Override
-    public GTNL_ParallelHelper setMaxParallel(int maxParallel) {
+    public GTNLParallelHelper setMaxParallel(int maxParallel) {
         this.maxParallel = maxParallel;
         return this;
     }
@@ -262,7 +262,7 @@ public class GTNL_ParallelHelper extends ParallelHelper {
      */
     @Nonnull
     @Override
-    public GTNL_ParallelHelper enableBatchMode(int batchModifier) {
+    public GTNLParallelHelper enableBatchMode(int batchModifier) {
         this.batchMode = batchModifier > 1;
         this.batchModifier = batchModifier;
         return this;
@@ -275,7 +275,7 @@ public class GTNL_ParallelHelper extends ParallelHelper {
      */
     @Nonnull
     @Override
-    public GTNL_ParallelHelper setOutputCalculation(boolean calculateOutputs) {
+    public GTNLParallelHelper setOutputCalculation(boolean calculateOutputs) {
         this.calculateOutputs = calculateOutputs;
         return this;
     }
@@ -286,7 +286,7 @@ public class GTNL_ParallelHelper extends ParallelHelper {
      */
     @Nonnull
     @Override
-    public GTNL_ParallelHelper setCustomItemOutputCalculation(Function<Integer, ItemStack[]> custom) {
+    public GTNLParallelHelper setCustomItemOutputCalculation(Function<Integer, ItemStack[]> custom) {
         customItemOutputCalculation = custom;
         return this;
     }
@@ -297,7 +297,7 @@ public class GTNL_ParallelHelper extends ParallelHelper {
      */
     @Nonnull
     @Override
-    public GTNL_ParallelHelper setCustomFluidOutputCalculation(Function<Integer, FluidStack[]> custom) {
+    public GTNLParallelHelper setCustomFluidOutputCalculation(Function<Integer, FluidStack[]> custom) {
         customFluidOutputCalculation = custom;
         return this;
     }
@@ -305,7 +305,7 @@ public class GTNL_ParallelHelper extends ParallelHelper {
     /**
      * Sets method for calculating max parallel from given inputs.
      */
-    public GTNL_ParallelHelper setMaxParallelCalculator(ParallelHelper.MaxParallelCalculator maxParallelCalculator) {
+    public GTNLParallelHelper setMaxParallelCalculator(ParallelHelper.MaxParallelCalculator maxParallelCalculator) {
         this.maxParallelCalculator = maxParallelCalculator;
         return this;
     }
@@ -313,7 +313,7 @@ public class GTNL_ParallelHelper extends ParallelHelper {
     /**
      * Sets method for consuming inputs after determining how many parallels it can execute.
      */
-    public GTNL_ParallelHelper setInputConsumer(ParallelHelper.InputConsumer inputConsumer) {
+    public GTNLParallelHelper setInputConsumer(ParallelHelper.InputConsumer inputConsumer) {
         this.inputConsumer = inputConsumer;
         return this;
     }
@@ -323,7 +323,7 @@ public class GTNL_ParallelHelper extends ParallelHelper {
      */
     @Nonnull
     @Override
-    public GTNL_ParallelHelper build() {
+    public GTNLParallelHelper build() {
         if (built) {
             throw new IllegalStateException("Tried to build twice");
         }
@@ -428,7 +428,7 @@ public class GTNL_ParallelHelper extends ParallelHelper {
         }
 
         if (calculator == null) {
-            calculator = new GTNL_OverclockCalculator().setEUt(availableEUt)
+            calculator = new GTNLOverclockCalculator().setEUt(availableEUt)
                 .setRecipeEUt(recipe.mEUt)
                 .setDuration(recipe.mDuration)
                 .setEUtDiscount(eutModifier);

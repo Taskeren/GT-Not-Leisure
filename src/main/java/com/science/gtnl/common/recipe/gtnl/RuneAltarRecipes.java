@@ -8,8 +8,8 @@ import net.minecraft.item.ItemStack;
 import net.minecraftforge.oredict.OreDictionary;
 
 import com.science.gtnl.api.IRecipePool;
-import com.science.gtnl.common.material.MaterialPool;
-import com.science.gtnl.common.material.RecipePool;
+import com.science.gtnl.common.material.GTNLMaterials;
+import com.science.gtnl.common.material.GTNLRecipeMaps;
 import com.science.gtnl.utils.recipes.RecipeBuilder;
 
 import gregtech.api.enums.TierEU;
@@ -23,7 +23,7 @@ import vazkii.botania.common.item.material.ItemRune;
 
 public class RuneAltarRecipes implements IRecipePool {
 
-    public RecipeMap<?> RAR = RecipePool.RuneAltarRecipes;
+    public RecipeMap<?> RAR = GTNLRecipeMaps.RuneAltarRecipes;
 
     @Override
     public void loadRecipes() {
@@ -84,7 +84,7 @@ public class RuneAltarRecipes implements IRecipePool {
             RecipeBuilder.builder()
                 .itemInputs(finalInputs.toArray(new Object[0]))
                 .itemOutputs(recipe.getOutput())
-                .fluidInputs(MaterialPool.FluidMana.getFluidOrGas(recipe.getManaUsage()))
+                .fluidInputs(GTNLMaterials.FluidMana.getFluidOrGas(recipe.getManaUsage()))
                 .duration(40)
                 .eut(TierEU.RECIPE_EV)
                 .addTo(RAR);

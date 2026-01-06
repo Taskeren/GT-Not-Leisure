@@ -3,7 +3,7 @@ package com.science.gtnl.common.recipe.gtnl;
 import net.minecraft.item.ItemStack;
 
 import com.science.gtnl.api.IRecipePool;
-import com.science.gtnl.common.material.RecipePool;
+import com.science.gtnl.common.material.GTNLRecipeMaps;
 import com.science.gtnl.utils.recipes.RecipeBuilder;
 
 import WayofTime.alchemicalWizardry.ModItems;
@@ -16,7 +16,7 @@ import gregtech.api.util.GTUtility;
 
 public class BloodDemonInjectionRecipes implements IRecipePool {
 
-    public RecipeMap<?> BIR = RecipePool.BloodDemonInjectionRecipes;
+    public RecipeMap<?> BIR = GTNLRecipeMaps.BloodDemonInjectionRecipes;
 
     @Override
     public void loadRecipes() {

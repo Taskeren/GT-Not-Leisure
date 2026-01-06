@@ -4,7 +4,7 @@ import static gregtech.api.util.GTRecipeBuilder.*;
 
 import com.science.gtnl.api.IRecipePool;
 import com.science.gtnl.common.item.items.MilledOre;
-import com.science.gtnl.common.material.RecipePool;
+import com.science.gtnl.common.material.GTNLRecipeMaps;
 import com.science.gtnl.utils.recipes.RecipeBuilder;
 
 import gregtech.api.enums.Materials;
@@ -17,7 +17,7 @@ import gtPlusPlus.xmod.gregtech.api.enums.GregtechItemList;
 
 public class CellRegulatorRecipes implements IRecipePool {
 
-    public RecipeMap<?> CRR = RecipePool.CellRegulatorRecipes;
+    public RecipeMap<?> CRR = GTNLRecipeMaps.CellRegulatorRecipes;
 
     @Override
     public void loadRecipes() {

@@ -26,7 +26,7 @@ import com.google.common.collect.ImmutableSet;
 import com.gtnewhorizons.modularui.api.screen.ModularWindow;
 import com.gtnewhorizons.modularui.common.widget.DrawableWidget;
 import com.gtnewhorizons.modularui.common.widget.FluidSlotWidget;
-import com.science.gtnl.common.material.MaterialPool;
+import com.science.gtnl.common.material.GTNLMaterials;
 import com.science.gtnl.mixins.late.Gregtech.AccessorMTEHatch;
 import com.science.gtnl.utils.enums.SteamTypes;
 import com.science.gtnl.utils.item.ItemUtils;
@@ -61,7 +61,7 @@ public class WirelessSteamDynamoHatch extends MTEHatchOutput implements IFluidSt
             FluidUtils.getSuperHeatedSteam(1)
                 .getFluid(),
             Materials.DenseSupercriticalSteam.mGas,
-            MaterialPool.CompressedSteam.getMolten(1)
+            GTNLMaterials.CompressedSteam.getMolten(1)
                 .getFluid());
     }
 
@@ -72,7 +72,7 @@ public class WirelessSteamDynamoHatch extends MTEHatchOutput implements IFluidSt
             FluidUtils.getSuperHeatedSteam(1)
                 .getFluid(),
             Materials.DenseSupercriticalSteam.mGas,
-            MaterialPool.CompressedSteam.getMolten(1)
+            GTNLMaterials.CompressedSteam.getMolten(1)
                 .getFluid());
     }
 

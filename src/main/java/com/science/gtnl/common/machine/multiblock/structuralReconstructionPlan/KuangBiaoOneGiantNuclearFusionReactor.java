@@ -48,9 +48,9 @@ import com.science.gtnl.common.machine.multiMachineBase.GTMMultiMachineBase;
 import com.science.gtnl.common.render.tile.KuangBiaoOneGiantNuclearFusionReactorRenderer;
 import com.science.gtnl.loader.BlockLoader;
 import com.science.gtnl.utils.StructureUtils;
-import com.science.gtnl.utils.recipes.GTNL_OverclockCalculator;
-import com.science.gtnl.utils.recipes.GTNL_ParallelHelper;
-import com.science.gtnl.utils.recipes.GTNL_ProcessingLogic;
+import com.science.gtnl.utils.recipes.GTNLOverclockCalculator;
+import com.science.gtnl.utils.recipes.GTNLParallelHelper;
+import com.science.gtnl.utils.recipes.GTNLProcessingLogic;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -365,11 +365,11 @@ public abstract class KuangBiaoOneGiantNuclearFusionReactor
 
     @Override
     public ProcessingLogic createProcessingLogic() {
-        return new GTNL_ProcessingLogic() {
+        return new GTNLProcessingLogic() {
 
             @NotNull
             @Override
-            public GTNL_OverclockCalculator createOverclockCalculator(@NotNull GTRecipe recipe) {
+            public GTNLOverclockCalculator createOverclockCalculator(@NotNull GTRecipe recipe) {
                 return super.createOverclockCalculator(recipe).setExtraDurationModifier(mConfigSpeedBoost)
                     .setPerfectOC(getPerfectOC())
                     .setEUtDiscount(getEUtDiscount())
@@ -416,8 +416,8 @@ public abstract class KuangBiaoOneGiantNuclearFusionReactor
 
                 newRecipe.mEUt = (int) (newRecipe.mEUt * getMachineEUtDiscount());
 
-                GTNL_ParallelHelper helper = createParallelHelper(recipe);
-                GTNL_OverclockCalculator calculator = createOverclockCalculator(recipe);
+                GTNLParallelHelper helper = createParallelHelper(recipe);
+                GTNLOverclockCalculator calculator = createOverclockCalculator(recipe);
                 helper.setCalculator(calculator);
                 helper.build();
 
@@ -931,11 +931,11 @@ public abstract class KuangBiaoOneGiantNuclearFusionReactor
 
         @Override
         public ProcessingLogic createProcessingLogic() {
-            return new GTNL_ProcessingLogic() {
+            return new GTNLProcessingLogic() {
 
                 @NotNull
                 @Override
-                public GTNL_OverclockCalculator createOverclockCalculator(@NotNull GTRecipe recipe) {
+                public GTNLOverclockCalculator createOverclockCalculator(@NotNull GTRecipe recipe) {
                     if (wirelessMode) {
                         availableAmperage = (8L << (2 * mParallelTier)) - 2L;
                         availableVoltage = V[Math.min(mParallelTier + 1, 14)];

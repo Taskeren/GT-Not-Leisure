@@ -18,7 +18,7 @@ import com.gtnewhorizon.structurelib.structure.IStructureDefinition;
 import com.gtnewhorizon.structurelib.structure.ISurvivalBuildEnvironment;
 import com.gtnewhorizon.structurelib.structure.StructureDefinition;
 import com.science.gtnl.common.machine.multiMachineBase.SteamMultiMachineBase;
-import com.science.gtnl.common.material.RecipePool;
+import com.science.gtnl.common.material.GTNLRecipeMaps;
 import com.science.gtnl.loader.BlockLoader;
 import com.science.gtnl.utils.StructureUtils;
 
@@ -114,7 +114,7 @@ public class SteamManufacturer extends SteamMultiMachineBase<SteamManufacturer> 
 
     @Override
     public RecipeMap<?> getRecipeMap() {
-        return RecipePool.SteamManufacturerRecipes;
+        return GTNLRecipeMaps.SteamManufacturerRecipes;
     }
 
     @Override

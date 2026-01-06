@@ -1,7 +1,7 @@
 package com.science.gtnl.common.recipe.gregtech;
 
 import com.science.gtnl.api.IRecipePool;
-import com.science.gtnl.common.material.MaterialPool;
+import com.science.gtnl.common.material.GTNLMaterials;
 import com.science.gtnl.utils.recipes.RecipeBuilder;
 
 import goodgenerator.items.GGMaterial;
@@ -30,7 +30,7 @@ public class TranscendentPlasmaMixerRecipes implements IRecipePool {
                 GGMaterial.naquadahBasedFuelMkV.getFluidOrGas(1000),
                 GGMaterial.naquadahBasedFuelMkVI.getFluidOrGas(1000),
                 Materials.LiquidAir.getFluid(85200))
-            .fluidOutputs(MaterialPool.ExcitedNaquadahFuel.getFluidOrGas(1000))
+            .fluidOutputs(GTNLMaterials.ExcitedNaquadahFuel.getFluidOrGas(1000))
             .duration(20)
             .eut(TierEU.RECIPE_UXV)
             .addTo(TPMP);

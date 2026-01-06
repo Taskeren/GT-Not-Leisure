@@ -1,9 +1,7 @@
 package com.science.gtnl.common.recipe.gregtech;
 
-import static gregtech.api.enums.Mods.*;
-
 import com.science.gtnl.api.IRecipePool;
-import com.science.gtnl.common.material.MaterialPool;
+import com.science.gtnl.common.material.GTNLMaterials;
 import com.science.gtnl.config.MainConfig;
 import com.science.gtnl.utils.enums.GTNLItemList;
 import com.science.gtnl.utils.recipes.RecipeBuilder;
@@ -161,7 +159,7 @@ public class FormingPressRecipes implements IRecipePool {
                 ItemList.Circuit_Wafer_NOR.get(1),
                 ItemList.Circuit_Wafer_NAND.get(1),
                 GTOreDictUnificator.get(OrePrefixes.plate, Materials.Amethyst, 1),
-                MaterialPool.Technetium.get(OrePrefixes.plate, 1))
+                GTNLMaterials.Technetium.get(OrePrefixes.plate, 1))
             .itemOutputs(GTNLItemList.ExoticRAMWafer.get(1))
             .duration(300)
             .eut(TierEU.RECIPE_UEV)
@@ -311,7 +309,7 @@ public class FormingPressRecipes implements IRecipePool {
                 GTOreDictUnificator.get(OrePrefixes.foil, Materials.YttriumBariumCuprate, 1),
                 GTOreDictUnificator.get(OrePrefixes.foil, Materials.NickelZincFerrite, 1),
                 GTOreDictUnificator.get(OrePrefixes.foil, Materials.NaquadahAlloy, 1),
-                MaterialPool.Darmstadtium.get(OrePrefixes.bolt, 4))
+                GTNLMaterials.Darmstadtium.get(OrePrefixes.bolt, 4))
             .itemOutputs(ItemList.Optical_Cpu_Containment_Housing.get(1))
             .duration(290)
             .eut(TierEU.RECIPE_ZPM)

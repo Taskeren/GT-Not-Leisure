@@ -9,7 +9,7 @@ import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 
-import com.science.gtnl.common.material.RecipePool;
+import com.science.gtnl.common.material.GTNLRecipeMaps;
 import com.science.gtnl.utils.recipes.RecipeBuilder;
 
 import gregtech.api.enums.Materials;
@@ -22,7 +22,7 @@ import gregtech.api.util.GTUtility;
 
 public class SteamCarpenterOreRecipe implements IOreRecipeRegistrator {
 
-    public RecipeMap<?> SCR = RecipePool.SteamCarpenterRecipes;
+    public RecipeMap<?> SCR = GTNLRecipeMaps.SteamCarpenterRecipes;
 
     public SteamCarpenterOreRecipe() {
         OrePrefixes.log.add(this);

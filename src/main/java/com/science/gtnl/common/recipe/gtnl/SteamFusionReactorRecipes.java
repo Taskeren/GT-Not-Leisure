@@ -3,7 +3,7 @@ package com.science.gtnl.common.recipe.gtnl;
 import static gregtech.api.util.GTRecipeBuilder.TICKS;
 
 import com.science.gtnl.api.IRecipePool;
-import com.science.gtnl.common.material.RecipePool;
+import com.science.gtnl.common.material.GTNLRecipeMaps;
 import com.science.gtnl.utils.recipes.RecipeBuilder;
 import com.science.gtnl.utils.recipes.metadata.SteamFusionMetadata;
 
@@ -13,7 +13,7 @@ import gtPlusPlus.core.util.minecraft.FluidUtils;
 
 public class SteamFusionReactorRecipes implements IRecipePool {
 
-    public RecipeMap<?> SFRR = RecipePool.SteamFusionReactorRecipes;
+    public RecipeMap<?> SFRR = GTNLRecipeMaps.SteamFusionReactorRecipes;
 
     @Override
     public void loadRecipes() {

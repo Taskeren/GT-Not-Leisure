@@ -10,7 +10,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-import com.science.gtnl.common.material.RecipePool;
+import com.science.gtnl.common.material.GTNLRecipeMaps;
 import com.science.gtnl.utils.recipes.RecipeBuilder;
 
 import gregtech.api.enums.TierEU;
@@ -68,6 +68,6 @@ public class MixinMTETreeFarm {
                     .toArray())
             .duration(40)
             .eut(TierEU.RECIPE_LV)
-            .addTo(RecipePool.WoodcutterRecipes);
+            .addTo(GTNLRecipeMaps.WoodcutterRecipes);
     }
 }

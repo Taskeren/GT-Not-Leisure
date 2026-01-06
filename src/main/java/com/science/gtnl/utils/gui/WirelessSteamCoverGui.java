@@ -12,7 +12,7 @@ import com.cleanroommc.modularui.value.sync.PanelSyncManager;
 import com.cleanroommc.modularui.widgets.layout.Flow;
 import com.cleanroommc.modularui.widgets.layout.Grid;
 import com.science.gtnl.common.machine.cover.WirelessSteamCover;
-import com.science.gtnl.common.material.MaterialPool;
+import com.science.gtnl.common.material.GTNLMaterials;
 import com.science.gtnl.utils.enums.SteamTypes;
 
 import gregtech.api.enums.Materials;
@@ -48,7 +48,7 @@ public class WirelessSteamCoverGui extends CoverGui<WirelessSteamCover> {
                     () -> new ItemDrawable(GTModHandler.getModItem(Mods.IndustrialCraft2.ID, "itemCellEmpty", 1, 13))),
                 new DynamicDrawable(() -> new ItemDrawable(Materials.DenseSupercriticalSteam.getCells(1))),
                 new DynamicDrawable(
-                    () -> new ItemDrawable(MaterialPool.CompressedSteam.get(OrePrefixes.cellMolten, 1))))
+                    () -> new ItemDrawable(GTNLMaterials.CompressedSteam.get(OrePrefixes.cellMolten, 1))))
             .tooltip(
                 IKey.dynamic(() -> SteamTypes.STEAM.displayName),
                 IKey.dynamic(() -> SteamTypes.SH_STEAM.displayName),

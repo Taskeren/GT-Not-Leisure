@@ -5,7 +5,7 @@ import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 
 import com.science.gtnl.api.IRecipePool;
-import com.science.gtnl.common.material.RecipePool;
+import com.science.gtnl.common.material.GTNLRecipeMaps;
 import com.science.gtnl.utils.recipes.RecipeBuilder;
 
 import gregtech.api.GregTechAPI;
@@ -16,7 +16,7 @@ import gregtech.api.util.GTModHandler;
 
 public class IndustrialRockCrusherRecipes implements IRecipePool {
 
-    public RecipeMap<?> IRCR = RecipePool.IndustrialRockCrusherRecipes;
+    public RecipeMap<?> IRCR = GTNLRecipeMaps.IndustrialRockCrusherRecipes;
 
     @Override
     public void loadRecipes() {

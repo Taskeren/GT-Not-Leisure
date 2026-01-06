@@ -4,8 +4,8 @@ import com.science.gtnl.client.gui.GuiDirePatternEncoder;
 import com.science.gtnl.client.gui.portableWorkbench.GuiPortableAdvancedWorkbench;
 import com.science.gtnl.client.gui.portableWorkbench.GuiPortableBasicWorkbench;
 import com.science.gtnl.client.gui.portableWorkbench.GuiPortableFurnace;
-import com.science.gtnl.common.material.MaterialPool;
-import com.science.gtnl.common.material.RecipePool;
+import com.science.gtnl.common.material.GTNLMaterials;
+import com.science.gtnl.common.material.GTNLRecipeMaps;
 import com.science.gtnl.utils.enums.GTNLItemList;
 import com.science.gtnl.utils.enums.ModList;
 import com.science.gtnl.utils.gui.recipe.RocketAssemblerHandler;
@@ -36,7 +36,7 @@ public class NEIGTNLConfig implements IConfigureNEI {
     public void loadConfig() {
 
         isAdded = false;
-        new RocketAssemblerHandler(RecipePool.RocketAssemblerRecipes.getDefaultRecipeCategory());
+        new RocketAssemblerHandler(GTNLRecipeMaps.RocketAssemblerRecipes.getDefaultRecipeCategory());
         isAdded = true;
 
         API.registerGuiOverlay(GuiPortableAdvancedWorkbench.class, "crafting");
@@ -49,9 +49,9 @@ public class NEIGTNLConfig implements IConfigureNEI {
         API.registerGuiOverlayHandler(GuiPortableAdvancedWorkbench.class, new DefaultOverlayHandler(), "crafting");
         API.registerGuiOverlayHandler(GuiPortableBasicWorkbench.class, new DefaultOverlayHandler(), "crafting");
 
-        API.addRecipeCatalyst(GTNLItemList.ShimmerBucket.get(1), RecipePool.ShimmerRecipes.unlocalizedName);
-        API.addRecipeCatalyst(GTNLItemList.InfinityShimmerBucket.get(1), RecipePool.ShimmerRecipes.unlocalizedName);
-        API.addRecipeCatalyst(GTNLItemList.ShimmerFluidBlock.get(1), RecipePool.ShimmerRecipes.unlocalizedName);
+        API.addRecipeCatalyst(GTNLItemList.ShimmerBucket.get(1), GTNLRecipeMaps.ShimmerRecipes.unlocalizedName);
+        API.addRecipeCatalyst(GTNLItemList.InfinityShimmerBucket.get(1), GTNLRecipeMaps.ShimmerRecipes.unlocalizedName);
+        API.addRecipeCatalyst(GTNLItemList.ShimmerFluidBlock.get(1), GTNLRecipeMaps.ShimmerRecipes.unlocalizedName);
 
         API.addRecipeCatalyst(GTNLItemList.ReactionFurnace.get(1), "smelting");
         API.addRecipeCatalyst(GTNLItemList.LargeSteamFurnace.get(1), "smelting");
@@ -66,15 +66,15 @@ public class NEIGTNLConfig implements IConfigureNEI {
         API.addRecipeCatalyst(GTNLItemList.SteamOilDrillModuleIII.get(1), "GTOrePluginUndergroundFluid");
         API.addRecipeCatalyst(GTNLItemList.LootBagRedemption.get(1), Mods.EnhancedLootBags.ID);
 
-        Werkstoff[] hiddenMaterials = { MaterialPool.Polyimide, MaterialPool.AcrylonitrileButadieneStyrene,
-            MaterialPool.Polyetheretherketone, MaterialPool.HSLASteel, MaterialPool.Actinium,
-            MaterialPool.Rutherfordium, MaterialPool.Dubnium, MaterialPool.Seaborgium, MaterialPool.Technetium,
-            MaterialPool.Bohrium, MaterialPool.Hassium, MaterialPool.Meitnerium, MaterialPool.Darmstadtium,
-            MaterialPool.Roentgenium, MaterialPool.Copernicium, MaterialPool.Moscovium, MaterialPool.Livermorium,
-            MaterialPool.Astatine, MaterialPool.Tennessine, MaterialPool.Francium, MaterialPool.Berkelium,
-            MaterialPool.Einsteinium, MaterialPool.Mendelevium, MaterialPool.Nobelium, MaterialPool.Lawrencium,
-            MaterialPool.Nihonium, MaterialPool.CompressedSteam, MaterialPool.Breel, MaterialPool.Stronze,
-            MaterialPool.Periodicium, MaterialPool.Stargate };
+        Werkstoff[] hiddenMaterials = { GTNLMaterials.Polyimide, GTNLMaterials.AcrylonitrileButadieneStyrene,
+            GTNLMaterials.Polyetheretherketone, GTNLMaterials.HSLASteel, GTNLMaterials.Actinium,
+            GTNLMaterials.Rutherfordium, GTNLMaterials.Dubnium, GTNLMaterials.Seaborgium, GTNLMaterials.Technetium,
+            GTNLMaterials.Bohrium, GTNLMaterials.Hassium, GTNLMaterials.Meitnerium, GTNLMaterials.Darmstadtium,
+            GTNLMaterials.Roentgenium, GTNLMaterials.Copernicium, GTNLMaterials.Moscovium, GTNLMaterials.Livermorium,
+            GTNLMaterials.Astatine, GTNLMaterials.Tennessine, GTNLMaterials.Francium, GTNLMaterials.Berkelium,
+            GTNLMaterials.Einsteinium, GTNLMaterials.Mendelevium, GTNLMaterials.Nobelium, GTNLMaterials.Lawrencium,
+            GTNLMaterials.Nihonium, GTNLMaterials.CompressedSteam, GTNLMaterials.Breel, GTNLMaterials.Stronze,
+            GTNLMaterials.Periodicium, GTNLMaterials.Stargate };
 
         OrePrefixes[] orePrefixes = { OrePrefixes.ingotHot, OrePrefixes.toolHeadSaw, OrePrefixes.toolHeadWrench,
             OrePrefixes.toolHeadHammer };

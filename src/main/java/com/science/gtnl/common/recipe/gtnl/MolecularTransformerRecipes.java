@@ -7,7 +7,7 @@ import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 
 import com.science.gtnl.api.IRecipePool;
-import com.science.gtnl.common.material.RecipePool;
+import com.science.gtnl.common.material.GTNLRecipeMaps;
 import com.science.gtnl.utils.enums.GTNLItemList;
 import com.science.gtnl.utils.recipes.RecipeBuilder;
 
@@ -21,7 +21,7 @@ import gregtech.api.util.GTUtility;
 
 public class MolecularTransformerRecipes implements IRecipePool {
 
-    public RecipeMap<?> MTR = RecipePool.MolecularTransformerRecipes;
+    public RecipeMap<?> MTR = GTNLRecipeMaps.MolecularTransformerRecipes;
 
     @Override
     public void loadRecipes() {

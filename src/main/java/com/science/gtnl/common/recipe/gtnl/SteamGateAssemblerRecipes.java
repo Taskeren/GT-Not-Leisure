@@ -6,8 +6,8 @@ import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 
 import com.science.gtnl.api.IRecipePool;
-import com.science.gtnl.common.material.MaterialPool;
-import com.science.gtnl.common.material.RecipePool;
+import com.science.gtnl.common.material.GTNLMaterials;
+import com.science.gtnl.common.material.GTNLRecipeMaps;
 import com.science.gtnl.utils.enums.GTNLItemList;
 import com.science.gtnl.utils.recipes.RecipeBuilder;
 
@@ -19,7 +19,7 @@ import gregtech.api.util.GTOreDictUnificator;
 
 public class SteamGateAssemblerRecipes implements IRecipePool {
 
-    public RecipeMap<?> SGAR = RecipePool.SteamGateAssemblerRecipes;
+    public RecipeMap<?> SGAR = GTNLRecipeMaps.SteamGateAssemblerRecipes;
 
     @Override
     public void loadRecipes() {
@@ -49,31 +49,31 @@ public class SteamGateAssemblerRecipes implements IRecipePool {
         // Superdense plates
         ItemStack superdenseBronze = GTOreDictUnificator.get(OrePrefixes.plateSuperdense, Materials.Bronze, 1);
         ItemStack superdenseSteel = GTOreDictUnificator.get(OrePrefixes.plateSuperdense, Materials.Steel, 1);
-        ItemStack superdenseBreel = MaterialPool.Breel.get(OrePrefixes.plateSuperdense, 1);
-        ItemStack superdenseStronze = MaterialPool.Stronze.get(OrePrefixes.plateSuperdense, 1);
-        ItemStack superdenseSteam = MaterialPool.CompressedSteam.get(OrePrefixes.plateSuperdense, 1);
+        ItemStack superdenseBreel = GTNLMaterials.Breel.get(OrePrefixes.plateSuperdense, 1);
+        ItemStack superdenseStronze = GTNLMaterials.Stronze.get(OrePrefixes.plateSuperdense, 1);
+        ItemStack superdenseSteam = GTNLMaterials.CompressedSteam.get(OrePrefixes.plateSuperdense, 1);
         // Pipes
-        ItemStack stronzePipe = MaterialPool.Stronze.get(OrePrefixes.pipeMedium, 1);
-        ItemStack stronzePipeH = MaterialPool.Stronze.get(OrePrefixes.pipeHuge, 1);
-        ItemStack breelPipeL = MaterialPool.Breel.get(OrePrefixes.pipeLarge, 1);
+        ItemStack stronzePipe = GTNLMaterials.Stronze.get(OrePrefixes.pipeMedium, 1);
+        ItemStack stronzePipeH = GTNLMaterials.Stronze.get(OrePrefixes.pipeHuge, 1);
+        ItemStack breelPipeL = GTNLMaterials.Breel.get(OrePrefixes.pipeLarge, 1);
         // Plates
-        ItemStack stronzePlate = MaterialPool.Stronze.get(OrePrefixes.plate, 1);
-        ItemStack breelPlate = MaterialPool.Breel.get(OrePrefixes.plate, 1);
+        ItemStack stronzePlate = GTNLMaterials.Stronze.get(OrePrefixes.plate, 1);
+        ItemStack breelPlate = GTNLMaterials.Breel.get(OrePrefixes.plate, 1);
         // Rings
-        ItemStack stronzeRing = MaterialPool.Stronze.get(OrePrefixes.ring, 1);
-        ItemStack breelRing = MaterialPool.Breel.get(OrePrefixes.ring, 1);
+        ItemStack stronzeRing = GTNLMaterials.Stronze.get(OrePrefixes.ring, 1);
+        ItemStack breelRing = GTNLMaterials.Breel.get(OrePrefixes.ring, 1);
         // Gears
-        ItemStack stronzeGear = MaterialPool.Stronze.get(OrePrefixes.gearGt, 1);
-        ItemStack breelGear = MaterialPool.Breel.get(OrePrefixes.gearGt, 1);
-        ItemStack steamGear = MaterialPool.CompressedSteam.get(OrePrefixes.gearGt, 1);
+        ItemStack stronzeGear = GTNLMaterials.Stronze.get(OrePrefixes.gearGt, 1);
+        ItemStack breelGear = GTNLMaterials.Breel.get(OrePrefixes.gearGt, 1);
+        ItemStack steamGear = GTNLMaterials.CompressedSteam.get(OrePrefixes.gearGt, 1);
         // Small gears
-        ItemStack stronzeSmallGear = MaterialPool.Stronze.get(OrePrefixes.gearGtSmall, 1);
-        ItemStack breelSmallGear = MaterialPool.Breel.get(OrePrefixes.gearGtSmall, 1);
-        ItemStack steamSmallGear = MaterialPool.CompressedSteam.get(OrePrefixes.gearGtSmall, 1);
+        ItemStack stronzeSmallGear = GTNLMaterials.Stronze.get(OrePrefixes.gearGtSmall, 1);
+        ItemStack breelSmallGear = GTNLMaterials.Breel.get(OrePrefixes.gearGtSmall, 1);
+        ItemStack steamSmallGear = GTNLMaterials.CompressedSteam.get(OrePrefixes.gearGtSmall, 1);
         // Long rods
-        ItemStack stronzeLongRod = MaterialPool.Stronze.get(OrePrefixes.stickLong, 1);
-        ItemStack breelLongRod = MaterialPool.Breel.get(OrePrefixes.stickLong, 1);
-        ItemStack steamLongRod = MaterialPool.CompressedSteam.get(OrePrefixes.stickLong, 1);
+        ItemStack stronzeLongRod = GTNLMaterials.Stronze.get(OrePrefixes.stickLong, 1);
+        ItemStack breelLongRod = GTNLMaterials.Breel.get(OrePrefixes.stickLong, 1);
+        ItemStack steamLongRod = GTNLMaterials.CompressedSteam.get(OrePrefixes.stickLong, 1);
         // Reinforced wood
         ItemStack ironWood = GTNLItemList.IronReinforcedWood.get(1);
         ItemStack bronzeWood = GTNLItemList.BronzeReinforcedWood.get(1);

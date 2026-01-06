@@ -26,7 +26,7 @@ import com.gtnewhorizon.structurelib.structure.ISurvivalBuildEnvironment;
 import com.gtnewhorizon.structurelib.structure.StructureDefinition;
 import com.science.gtnl.common.machine.multiMachineBase.GTMMultiMachineBase;
 import com.science.gtnl.utils.StructureUtils;
-import com.science.gtnl.utils.recipes.GTNL_ParallelHelper;
+import com.science.gtnl.utils.recipes.GTNLParallelHelper;
 
 import bartworks.util.BWUtil;
 import gregtech.api.enums.HeatingCoilLevel;
@@ -251,7 +251,7 @@ public class MegaAlloyBlastSmelter extends GTMMultiMachineBase<MegaAlloyBlastSme
                     long doubledAmount = (long) itemStack.stackSize * 2L;
 
                     if (itemStack.stackSize > Integer.MAX_VALUE / 2) {
-                        GTNL_ParallelHelper.addItemsLong(itemList, itemStack, doubledAmount);
+                        GTNLParallelHelper.addItemsLong(itemList, itemStack, doubledAmount);
                     } else {
                         ItemStack copy = itemStack.copy();
                         copy.stackSize = (int) doubledAmount;
@@ -277,7 +277,7 @@ public class MegaAlloyBlastSmelter extends GTMMultiMachineBase<MegaAlloyBlastSme
                     long doubledAmount = (long) fluidStack.amount * 2L;
 
                     if (fluidStack.amount > Integer.MAX_VALUE / 2) {
-                        GTNL_ParallelHelper.addFluidsLong(fluidList, fluidStack, doubledAmount);
+                        GTNLParallelHelper.addFluidsLong(fluidList, fluidStack, doubledAmount);
                     } else {
                         FluidStack copy = fluidStack.copy();
                         copy.amount = (int) doubledAmount;

@@ -3,12 +3,10 @@ package com.science.gtnl.common.machine.multiblock.wireless;
 import static com.gtnewhorizon.structurelib.structure.StructureUtility.*;
 import static com.science.gtnl.ScienceNotLeisure.*;
 import static com.science.gtnl.common.machine.multiMachineBase.MultiMachineBase.CustomHatchElement.*;
-import static com.science.gtnl.utils.Utils.*;
 import static gregtech.api.GregTechAPI.*;
 import static gregtech.api.enums.HatchElement.*;
 import static gregtech.api.enums.Mods.*;
 import static gregtech.api.util.GTStructureUtility.*;
-import static gregtech.common.misc.WirelessNetworkManager.*;
 import static gtnhlanth.common.register.LanthItemList.*;
 
 import net.minecraft.init.Blocks;
@@ -21,7 +19,7 @@ import com.gtnewhorizon.structurelib.structure.IStructureDefinition;
 import com.gtnewhorizon.structurelib.structure.ISurvivalBuildEnvironment;
 import com.gtnewhorizon.structurelib.structure.StructureDefinition;
 import com.science.gtnl.common.machine.multiMachineBase.WirelessEnergyMultiMachineBase;
-import com.science.gtnl.common.material.RecipePool;
+import com.science.gtnl.common.material.GTNLRecipeMaps;
 import com.science.gtnl.loader.BlockLoader;
 import com.science.gtnl.utils.StructureUtils;
 
@@ -196,7 +194,7 @@ public class TransliminalOasis extends WirelessEnergyMultiMachineBase<Translimin
 
     @Override
     public RecipeMap<?> getRecipeMap() {
-        return RecipePool.WoodcutterRecipes;
+        return GTNLRecipeMaps.WoodcutterRecipes;
     }
 
     @Override

@@ -1,7 +1,7 @@
 package com.science.gtnl.common.recipe.gtnl;
 
 import com.science.gtnl.api.IRecipePool;
-import com.science.gtnl.common.material.RecipePool;
+import com.science.gtnl.common.material.GTNLRecipeMaps;
 import com.science.gtnl.utils.recipes.RecipeBuilder;
 import com.science.gtnl.utils.recipes.data.CircuitNanitesRecipeData;
 import com.science.gtnl.utils.recipes.metadata.CircuitNanitesDataMetadata;
@@ -13,7 +13,7 @@ import gregtech.api.util.GTOreDictUnificator;
 
 public class CircuitNanitesDataRecipes implements IRecipePool {
 
-    public RecipeMap<?> CNDR = RecipePool.CircuitNanitesDataRecipes;
+    public RecipeMap<?> CNDR = GTNLRecipeMaps.CircuitNanitesDataRecipes;
     public CircuitNanitesDataMetadata RECIPE_DATA = CircuitNanitesDataMetadata.INSTANCE;
     public long worldSeed;
 

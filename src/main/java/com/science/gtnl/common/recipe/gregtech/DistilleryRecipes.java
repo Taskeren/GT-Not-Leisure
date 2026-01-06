@@ -7,7 +7,7 @@ import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
 
 import com.science.gtnl.api.IRecipePool;
-import com.science.gtnl.common.material.MaterialPool;
+import com.science.gtnl.common.material.GTNLMaterials;
 import com.science.gtnl.utils.item.ItemUtils;
 import com.science.gtnl.utils.recipes.RecipeBuilder;
 
@@ -215,8 +215,8 @@ public class DistilleryRecipes implements IRecipePool {
 
         RecipeBuilder.builder()
             .itemInputs(GTUtility.getIntegratedCircuit(1))
-            .fluidInputs(MaterialPool.BenzenediazoniumTetrafluoroborate.getFluidOrGas(1000))
-            .fluidOutputs(MaterialPool.FluoroBenzene.getFluidOrGas(1000))
+            .fluidInputs(GTNLMaterials.BenzenediazoniumTetrafluoroborate.getFluidOrGas(1000))
+            .fluidOutputs(GTNLMaterials.FluoroBenzene.getFluidOrGas(1000))
             .duration(100)
             .eut(TierEU.RECIPE_ZPM)
             .addTo(DR);

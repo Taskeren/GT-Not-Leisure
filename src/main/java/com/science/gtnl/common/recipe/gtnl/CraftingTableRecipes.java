@@ -11,7 +11,7 @@ import net.minecraft.item.ItemStack;
 import com.dreammaster.gthandler.CustomItemList;
 import com.dreammaster.item.NHItemList;
 import com.science.gtnl.api.IRecipePool;
-import com.science.gtnl.common.material.MaterialPool;
+import com.science.gtnl.common.material.GTNLMaterials;
 import com.science.gtnl.config.MainConfig;
 import com.science.gtnl.utils.enums.GTNLItemList;
 import com.science.gtnl.utils.item.ItemUtils;
@@ -43,7 +43,7 @@ public class CraftingTableRecipes implements IRecipePool {
 
         GTModHandler.addCraftingRecipe(
             GTNLItemList.LargeSteamCrusher.get(1),
-            new Object[] { "ABA", "BCB", "ABA", 'A', MaterialPool.Stronze.get(OrePrefixes.plate, 1), 'B',
+            new Object[] { "ABA", "BCB", "ABA", 'A', GTNLMaterials.Stronze.get(OrePrefixes.plate, 1), 'B',
                 GregtechItemList.Controller_SteamMaceratorMulti.get(1), 'C',
                 GTNLItemList.PrecisionSteamMechanism.get(1) });
 
@@ -67,8 +67,8 @@ public class CraftingTableRecipes implements IRecipePool {
         GTModHandler.addCraftingRecipe(
             GTNLItemList.LargeSteamFurnace.get(1),
             new Object[] { "ABA", "BCB", "DBD", 'A', GTNLItemList.PrecisionSteamMechanism.get(1), 'B',
-                MaterialPool.Stronze.get(OrePrefixes.pipeMedium, 1), 'C', ItemList.Machine_Bronze_Furnace.get(1), 'D',
-                MaterialPool.Breel.get(OrePrefixes.pipeTiny, 1) });
+                GTNLMaterials.Stronze.get(OrePrefixes.pipeMedium, 1), 'C', ItemList.Machine_Bronze_Furnace.get(1), 'D',
+                GTNLMaterials.Breel.get(OrePrefixes.pipeTiny, 1) });
 
         GTModHandler.addCraftingRecipe(
             GTNLItemList.LargeSteamAlloySmelter.get(1),
@@ -82,7 +82,7 @@ public class CraftingTableRecipes implements IRecipePool {
             GTNLItemList.LargeSteamChemicalBath.get(1),
             new Object[] { "ABC", "DBA", "EFE", 'A', GTNLItemList.HydraulicConveyor.get(1), 'B',
                 GTModHandler.getModItem(IndustrialCraft2.ID, "blockAlloyGlass", 1, 0, missing), 'C',
-                MaterialPool.Breel.get(OrePrefixes.pipeTiny, 1), 'D', GTNLItemList.HydraulicPump.get(1), 'E',
+                GTNLMaterials.Breel.get(OrePrefixes.pipeTiny, 1), 'D', GTNLItemList.HydraulicPump.get(1), 'E',
                 GTNLItemList.PrecisionSteamMechanism.get(1), 'F', ItemList.Hull_Bronze.get(1) });
 
         GTModHandler.addCraftingRecipe(
@@ -97,7 +97,7 @@ public class CraftingTableRecipes implements IRecipePool {
             GTNLItemList.PrimitiveDistillationTower.get(1),
             new Object[] { "ABA", "CDC", "AEA", 'A', GTNLItemList.PrecisionSteamMechanism.get(1), 'B',
                 GTNLItemList.SteelTurbine.get(1), 'C', GTNLItemList.HydraulicPump.get(1), 'D',
-                ItemList.Hull_Bronze.get(1), 'E', MaterialPool.Stronze.get(OrePrefixes.pipeLarge, 1) });
+                ItemList.Hull_Bronze.get(1), 'E', GTNLMaterials.Stronze.get(OrePrefixes.pipeLarge, 1) });
 
         GTModHandler.addCraftingRecipe(
             GTNLItemList.LargeSteamCircuitAssembler.get(1),
@@ -112,15 +112,15 @@ public class CraftingTableRecipes implements IRecipePool {
 
         GTModHandler.addCraftingRecipe(
             GTNLItemList.SteamCracking.get(1),
-            new Object[] { "ABA", "CDC", "ABA", 'A', MaterialPool.Stronze.get(OrePrefixes.pipeHuge, 1), 'B',
+            new Object[] { "ABA", "CDC", "ABA", 'A', GTNLMaterials.Stronze.get(OrePrefixes.pipeHuge, 1), 'B',
                 GTNLItemList.HydraulicPump.get(1), 'C', GTNLItemList.PrecisionSteamMechanism.get(1), 'D',
                 ItemList.Hull_Bronze.get(1) });
 
         GTModHandler.addCraftingRecipe(
             GTNLItemList.LargeSteamThermalCentrifuge.get(1),
             new Object[] { "ABA", "CDC", "EBE", 'A', GTNLItemList.PrecisionSteamMechanism.get(1), 'B',
-                GTNLItemList.HydraulicMotor.get(1), 'C', MaterialPool.Stronze.get(OrePrefixes.pipeMedium, 1), 'D',
-                ItemList.Hull_Bronze.get(1), 'E', MaterialPool.Breel.get(OrePrefixes.pipeTiny, 1) });
+                GTNLItemList.HydraulicMotor.get(1), 'C', GTNLMaterials.Stronze.get(OrePrefixes.pipeMedium, 1), 'D',
+                ItemList.Hull_Bronze.get(1), 'E', GTNLMaterials.Breel.get(OrePrefixes.pipeTiny, 1) });
 
         GTModHandler.addCraftingRecipe(
             GTNLItemList.Desulfurizer.get(1),
@@ -276,7 +276,7 @@ public class CraftingTableRecipes implements IRecipePool {
             GTNLItemList.LargeSteamExtractor.get(1),
             new Object[] { "ABA", "CDC", "EFE", 'A',
                 GTModHandler.getModItem(IndustrialCraft2.ID, "blockAlloyGlass", 1, 0, missing), 'B',
-                GTNLItemList.HydraulicPiston.get(1), 'C', MaterialPool.Breel.get(OrePrefixes.pipeTiny, 1), 'D',
+                GTNLItemList.HydraulicPiston.get(1), 'C', GTNLMaterials.Breel.get(OrePrefixes.pipeTiny, 1), 'D',
                 GTNLItemList.HydraulicPump.get(1), 'E', GTNLItemList.PrecisionSteamMechanism.get(1), 'F',
                 ItemList.Machine_Bronze_Extractor.get(1) });
 
@@ -284,7 +284,7 @@ public class CraftingTableRecipes implements IRecipePool {
             GTNLItemList.LargeSteamOreWasher.get(1),
             new Object[] { "ABA", "CDC", "EFE", 'A', GTOreDictUnificator.get(OrePrefixes.rotor, Materials.Steel, 1L),
                 'B', GTNLItemList.HydraulicPump.get(1), 'C', GTNLItemList.PrecisionSteamMechanism.get(1), 'D',
-                GTNLItemList.HydraulicMotor.get(1), 'E', MaterialPool.Breel.get(OrePrefixes.pipeTiny, 1), 'F',
+                GTNLItemList.HydraulicMotor.get(1), 'E', GTNLMaterials.Breel.get(OrePrefixes.pipeTiny, 1), 'F',
                 GregtechItemList.Controller_SteamWasherMulti.get(1) });
 
         GTModHandler.addCraftingRecipe(
@@ -325,24 +325,24 @@ public class CraftingTableRecipes implements IRecipePool {
         GTModHandler.addCraftingRecipe(
             GTNLItemList.LargeSteamCentrifuge.get(1),
             new Object[] { "ABA", "CDC", "ABA", 'A', GTNLItemList.PrecisionSteamMechanism.get(1), 'B',
-                GTNLItemList.HydraulicMotor.get(1), 'C', MaterialPool.Breel.get(OrePrefixes.pipeTiny, 1), 'D',
+                GTNLItemList.HydraulicMotor.get(1), 'C', GTNLMaterials.Breel.get(OrePrefixes.pipeTiny, 1), 'D',
                 GregtechItemList.Controller_SteamCentrifugeMulti.get(1) });
 
         GTModHandler.addCraftingRecipe(
             GTNLItemList.LargeSteamHammer.get(1),
-            new Object[] { "ABA", "CDC", "AEA", 'A', MaterialPool.Breel.get(OrePrefixes.pipeTiny, 1), 'B',
+            new Object[] { "ABA", "CDC", "AEA", 'A', GTNLMaterials.Breel.get(OrePrefixes.pipeTiny, 1), 'B',
                 GTNLItemList.HydraulicPiston.get(1), 'C', GTNLItemList.PrecisionSteamMechanism.get(1), 'D',
                 GregtechItemList.Controller_SteamForgeHammerMulti.get(1), 'E', new ItemStack(Blocks.anvil, 1) });
 
         GTModHandler.addCraftingRecipe(
             GTNLItemList.LargeSteamCompressor.get(1),
             new Object[] { "ABA", "CDC", "BBB", 'A', GTNLItemList.HydraulicPiston.get(1), 'B',
-                MaterialPool.Stronze.get(OrePrefixes.plate, 1), 'C', GTNLItemList.PrecisionSteamMechanism.get(1), 'D',
+                GTNLMaterials.Stronze.get(OrePrefixes.plate, 1), 'C', GTNLItemList.PrecisionSteamMechanism.get(1), 'D',
                 GregtechItemList.Controller_SteamCompressorMulti.get(1) });
 
         GTModHandler.addCraftingRecipe(
             GTNLItemList.LargeSteamSifter.get(1),
-            new Object[] { "ABA", "CDC", "EBE", 'A', MaterialPool.Breel.get(OrePrefixes.pipeTiny, 1), 'B',
+            new Object[] { "ABA", "CDC", "EBE", 'A', GTNLMaterials.Breel.get(OrePrefixes.pipeTiny, 1), 'B',
                 ItemList.Component_Filter.get(1), 'C', GTNLItemList.HydraulicPiston.get(1), 'D',
                 ItemList.Hull_Bronze.get(1), 'E', GTNLItemList.PrecisionSteamMechanism.get(1) });
 
@@ -424,7 +424,7 @@ public class CraftingTableRecipes implements IRecipePool {
 
         GTModHandler.addCraftingRecipe(
             GTNLItemList.LargeSteamFormingPress.get(1),
-            new Object[] { "ABA", "CDC", "ABA", 'A', MaterialPool.Breel.get(OrePrefixes.pipeTiny, 1), 'B',
+            new Object[] { "ABA", "CDC", "ABA", 'A', GTNLMaterials.Breel.get(OrePrefixes.pipeTiny, 1), 'B',
                 GTNLItemList.HydraulicPiston.get(1), 'C', GTNLItemList.PrecisionSteamMechanism.get(1), 'D',
                 ItemList.Hull_Bronze.get(1) });
 
@@ -721,7 +721,7 @@ public class CraftingTableRecipes implements IRecipePool {
             new Object[] { GTNLItemList.DebugEnergyHatch.get(1) });
 
         GTModHandler.addShapelessCraftingRecipe(
-            MaterialPool.Breel.get(OrePrefixes.dust, 3),
+            GTNLMaterials.Breel.get(OrePrefixes.dust, 3),
             new Object[] { GTOreDictUnificator.get(OrePrefixes.dust, Materials.Bronze, 1),
                 GTOreDictUnificator.get(OrePrefixes.dust, Materials.Bronze, 1),
                 GTOreDictUnificator.get(OrePrefixes.dust, Materials.Steel, 1) });
@@ -734,53 +734,53 @@ public class CraftingTableRecipes implements IRecipePool {
             GTNLItemList.VibrationSafeCasing.get(1),
             new Object[] { "AAA", "BCB", "AAA", 'A',
                 GTOreDictUnificator.get(OrePrefixes.plate, Materials.CrudeSteel, 1), 'B',
-                MaterialPool.Breel.get(OrePrefixes.plateDouble, 1), 'C', ItemList.Casing_SolidSteel.get(1) });
+                GTNLMaterials.Breel.get(OrePrefixes.plateDouble, 1), 'C', ItemList.Casing_SolidSteel.get(1) });
 
         GTModHandler.addCraftingRecipe(
             GTNLItemList.ConcentratingSieveMesh.get(1),
             new Object[] { "AAA", "wBh", "AAA", 'A',
                 GTOreDictUnificator.get(OrePrefixes.stick, Materials.CrudeSteel, 1), 'B',
-                MaterialPool.Breel.get(OrePrefixes.plateDouble, 1) });
+                GTNLMaterials.Breel.get(OrePrefixes.plateDouble, 1) });
 
         GTModHandler.addCraftingRecipe(
             GTNLItemList.StronzeWrappedCasing.get(4),
-            new Object[] { "ABA", "BBB", "ABA", 'A', MaterialPool.Stronze.get(OrePrefixes.plate, 1), 'B',
+            new Object[] { "ABA", "BBB", "ABA", 'A', GTNLMaterials.Stronze.get(OrePrefixes.plate, 1), 'B',
                 GTOreDictUnificator.get(OrePrefixes.frameGt, Materials.CrudeSteel, 1) });
 
         GTModHandler.addCraftingRecipe(
             GTNLItemList.BreelPipeCasing.get(2),
             new Object[] { "ABA", "BCB", "ABA", 'A',
                 GTOreDictUnificator.get(OrePrefixes.plate, Materials.CrudeSteel, 1), 'B',
-                MaterialPool.Breel.get(OrePrefixes.pipeMedium, 1), 'C',
+                GTNLMaterials.Breel.get(OrePrefixes.pipeMedium, 1), 'C',
                 GTOreDictUnificator.get(OrePrefixes.frameGt, Materials.CrudeSteel, 1) });
 
         GTModHandler.addCraftingRecipe(
             GTNLItemList.SolarBoilingCell.get(1),
             new Object[] { "AAA", "BCB", 'A', new ItemStack(Blocks.glass, 1), 'B',
-                MaterialPool.Stronze.get(OrePrefixes.pipeTiny, 1), 'C', ItemList.Machine_HP_Solar.get(1) });
+                GTNLMaterials.Stronze.get(OrePrefixes.pipeTiny, 1), 'C', ItemList.Machine_HP_Solar.get(1) });
 
         GTModHandler.addCraftingRecipe(
             GTNLItemList.HydraulicAssemblingCasing.get(1),
-            new Object[] { "ABA", "CCC", "ABA", 'A', MaterialPool.Stronze.get(OrePrefixes.pipeTiny, 1), 'B',
-                MaterialPool.Breel.get(OrePrefixes.plate, 1), 'C', GTNLItemList.HydraulicArm.get(1) });
+            new Object[] { "ABA", "CCC", "ABA", 'A', GTNLMaterials.Stronze.get(OrePrefixes.pipeTiny, 1), 'B',
+                GTNLMaterials.Breel.get(OrePrefixes.plate, 1), 'C', GTNLItemList.HydraulicArm.get(1) });
 
         GTModHandler.addCraftingRecipe(
             GTNLItemList.HyperPressureBreelCasing.get(1),
-            new Object[] { "AAA", "BCB", "AAA", 'A', MaterialPool.Breel.get(OrePrefixes.plate, 1), 'B',
+            new Object[] { "AAA", "BCB", "AAA", 'A', GTNLMaterials.Breel.get(OrePrefixes.plate, 1), 'B',
                 GTOreDictUnificator.get(OrePrefixes.stick, Materials.Beryllium, 1), 'C',
                 GTOreDictUnificator.get(OrePrefixes.frameGt, Materials.Beryllium, 1) });
 
         GTModHandler.addCraftingRecipe(
             GTNLItemList.BreelPlatedCasing.get(1),
-            new Object[] { "AAA", "BCB", "AAA", 'A', MaterialPool.Breel.get(OrePrefixes.pipeTiny, 1), 'B',
-                MaterialPool.Breel.get(OrePrefixes.plate, 1), 'C',
+            new Object[] { "AAA", "BCB", "AAA", 'A', GTNLMaterials.Breel.get(OrePrefixes.pipeTiny, 1), 'B',
+                GTNLMaterials.Breel.get(OrePrefixes.plate, 1), 'C',
                 GTOreDictUnificator.get(OrePrefixes.frameGt, Materials.CrudeSteel, 1) });
 
         GTModHandler.addCraftingRecipe(
             GTNLItemList.SteamExtractinator.get(1),
             new Object[] { "ABA", "CDC", "ABA", 'A', GTNLItemList.VibrationSafeCasing.get(1), 'B',
                 ItemList.Casing_BronzePlatedBricks.get(1), 'C', GTNLItemList.HydraulicPump.get(1), 'D',
-                MaterialPool.Stronze.get(OrePrefixes.pipeLarge, 1) });
+                GTNLMaterials.Stronze.get(OrePrefixes.pipeLarge, 1) });
 
         GTModHandler.addCraftingRecipe(
             GTNLItemList.LargeSteamExtruder.get(1),
@@ -814,7 +814,7 @@ public class CraftingTableRecipes implements IRecipePool {
             GTNLItemList.SteamManufacturer.get(1),
             new Object[] { "AAA", "DCD", "EBE", 'A', GTNLItemList.HydraulicArm.get(1), 'B',
                 GTNLItemList.HydraulicConveyor.get(1), 'D', GTNLItemList.HydraulicAssemblingCasing.get(1), 'C',
-                MaterialPool.Breel.get(OrePrefixes.plateDouble, 1), 'E', ItemList.Casing_Gearbox_Steel.get(1) });
+                GTNLMaterials.Breel.get(OrePrefixes.plateDouble, 1), 'E', ItemList.Casing_Gearbox_Steel.get(1) });
 
         GTModHandler.addCraftingRecipe(
             GTNLItemList.MegaSolarBoiler.get(1),
@@ -829,7 +829,7 @@ public class CraftingTableRecipes implements IRecipePool {
 
         GTModHandler.addCraftingRecipe(
             GTNLItemList.SteamFusionReactor.get(1),
-            new Object[] { "ABA", "DCD", "ABA", 'A', MaterialPool.Stronze.get(OrePrefixes.pipeHuge, 1), 'C',
+            new Object[] { "ABA", "DCD", "ABA", 'A', GTNLMaterials.Stronze.get(OrePrefixes.pipeHuge, 1), 'C',
                 GTNLItemList.MegaSolarBoiler.get(1), 'B',
                 GTOreDictUnificator.get(OrePrefixes.gem, Materials.Emerald, 1), 'D',
                 GTOreDictUnificator.get(OrePrefixes.plate, Materials.Beryllium, 1) });
@@ -837,8 +837,8 @@ public class CraftingTableRecipes implements IRecipePool {
         GTModHandler.addCraftingRecipe(
             GTNLItemList.SteamInfernalCokeOven.get(1),
             new Object[] { "ABA", "DCD", "ABA", 'A', new ItemStack(Blocks.nether_brick, 1), 'C',
-                ItemList.Machine_Bricked_BlastFurnace.get(1), 'B', MaterialPool.Breel.get(OrePrefixes.plate, 1), 'D',
-                MaterialPool.Stronze.get(OrePrefixes.plate, 1) });
+                ItemList.Machine_Bricked_BlastFurnace.get(1), 'B', GTNLMaterials.Breel.get(OrePrefixes.plate, 1), 'D',
+                GTNLMaterials.Stronze.get(OrePrefixes.plate, 1) });
 
         GTModHandler.addCraftingRecipe(
             GTNLItemList.HydraulicMotor.get(1),
@@ -884,42 +884,42 @@ public class CraftingTableRecipes implements IRecipePool {
 
         GTModHandler.addCraftingRecipe(
             GTNLItemList.HydraulicSteamReceiver.get(1),
-            new Object[] { "ABC", "ACB", "DAA", 'A', MaterialPool.CompressedSteam.get(OrePrefixes.plate, 1), 'B',
+            new Object[] { "ABC", "ACB", "DAA", 'A', GTNLMaterials.CompressedSteam.get(OrePrefixes.plate, 1), 'B',
                 GTOreDictUnificator.get(OrePrefixes.plate, Materials.Rubber, 1), 'C',
-                MaterialPool.Stronze.get(OrePrefixes.pipeHuge, 1), 'D', GTNLItemList.HydraulicPump.get(1) });
+                GTNLMaterials.Stronze.get(OrePrefixes.pipeHuge, 1), 'D', GTNLItemList.HydraulicPump.get(1) });
 
         GTModHandler.addCraftingRecipe(
             GTNLItemList.HydraulicSteamJetSpewer.get(1),
-            new Object[] { "ABC", "BDB", "CBA", 'A', MaterialPool.CompressedSteam.get(OrePrefixes.plate, 1), 'B',
-                MaterialPool.CompressedSteam.get(OrePrefixes.stick, 1), 'C',
-                MaterialPool.Breel.get(OrePrefixes.pipeHuge, 1), 'D',
+            new Object[] { "ABC", "BDB", "CBA", 'A', GTNLMaterials.CompressedSteam.get(OrePrefixes.plate, 1), 'B',
+                GTNLMaterials.CompressedSteam.get(OrePrefixes.stick, 1), 'C',
+                GTNLMaterials.Breel.get(OrePrefixes.pipeHuge, 1), 'D',
                 GTOreDictUnificator.get(OrePrefixes.gemExquisite, Materials.Salt, 1) });
 
         GTModHandler.addCraftingRecipe(
             GTNLItemList.HydraulicVaporGenerator.get(1),
-            new Object[] { "ABC", "BDB", "CBA", 'A', MaterialPool.CompressedSteam.get(OrePrefixes.plateSuperdense, 1),
-                'B', MaterialPool.CompressedSteam.get(OrePrefixes.plateDouble, 1), 'C',
+            new Object[] { "ABC", "BDB", "CBA", 'A', GTNLMaterials.CompressedSteam.get(OrePrefixes.plateSuperdense, 1),
+                'B', GTNLMaterials.CompressedSteam.get(OrePrefixes.plateDouble, 1), 'C',
                 GTNLItemList.HydraulicSteamJetSpewer.get(1), 'D', GTNLItemList.CompressedSteamTurbine.get(1) });
 
         // Pipeless Hatch
         GTModHandler.addCraftingRecipe(
             GTNLItemList.PipelessSteamHatch.get(1),
             new Object[] { "AEA", "CBD", "AEA", 'A', GTNLItemList.BronzeReinforcedWood.get(1), 'B',
-                ItemList.Hatch_Input_Bus_LV.get(1), 'C', MaterialPool.Stronze.get(OrePrefixes.pipeHuge, 1), 'D',
-                MaterialPool.Breel.get(OrePrefixes.pipeHuge, 1), 'E', GTNLItemList.HydraulicRegulator.get(1) });
+                ItemList.Hatch_Input_Bus_LV.get(1), 'C', GTNLMaterials.Stronze.get(OrePrefixes.pipeHuge, 1), 'D',
+                GTNLMaterials.Breel.get(OrePrefixes.pipeHuge, 1), 'E', GTNLItemList.HydraulicRegulator.get(1) });
 
         // Pipeless Vent
         GTModHandler.addCraftingRecipe(
             GTNLItemList.PipelessSteamVent.get(1),
             new Object[] { "AEA", "CBD", "AEA", 'A', GTNLItemList.BronzeReinforcedWood.get(1), 'B',
-                ItemList.Hatch_Output_Bus_LV.get(1), 'C', MaterialPool.Stronze.get(OrePrefixes.pipeHuge, 1), 'D',
-                MaterialPool.Breel.get(OrePrefixes.pipeHuge, 1), 'E', GTNLItemList.HydraulicRegulator.get(1) });
+                ItemList.Hatch_Output_Bus_LV.get(1), 'C', GTNLMaterials.Stronze.get(OrePrefixes.pipeHuge, 1), 'D',
+                GTNLMaterials.Breel.get(OrePrefixes.pipeHuge, 1), 'E', GTNLItemList.HydraulicRegulator.get(1) });
 
         GTModHandler.addCraftingRecipe(
             GTNLItemList.PipelessSteamVent.get(1),
             new Object[] { "AEA", "CBD", "AEA", 'A', GTNLItemList.BronzeReinforcedWood.get(1), 'B',
-                ItemList.Hatch_Output_Bus_LV.get(1), 'C', MaterialPool.Stronze.get(OrePrefixes.pipeHuge, 1), 'D',
-                MaterialPool.Breel.get(OrePrefixes.pipeHuge, 1), 'E', GTNLItemList.HydraulicRegulator.get(1) });
+                ItemList.Hatch_Output_Bus_LV.get(1), 'C', GTNLMaterials.Stronze.get(OrePrefixes.pipeHuge, 1), 'D',
+                GTNLMaterials.Breel.get(OrePrefixes.pipeHuge, 1), 'E', GTNLItemList.HydraulicRegulator.get(1) });
 
         GTModHandler.addCraftingRecipe(
             GTNLItemList.IronTurbine.get(1),
@@ -968,11 +968,11 @@ public class CraftingTableRecipes implements IRecipePool {
             new Object[] { "ABA", "CDE", "BFG", 'A', ItemList.Casing_BronzePlatedBricks.get(1), 'B',
                 GTNLItemList.PrecisionSteamMechanism.get(1), 'C', GTNLItemList.HydraulicPump.get(1), 'D',
                 ItemList.Casing_Gearbox_Bronze.get(1), 'E', OrePrefixes.gem.get(Materials.Diamond), 'F',
-                MaterialPool.Breel.get(OrePrefixes.pipeLarge, 1), 'G', GTNLItemList.HydraulicPiston.get(1) });
+                GTNLMaterials.Breel.get(OrePrefixes.pipeLarge, 1), 'G', GTNLItemList.HydraulicPiston.get(1) });
 
         GTModHandler.addCraftingRecipe(
             GTNLItemList.LargeSteamCutting.get(1),
-            new Object[] { "ABC", "DEF", "BAG", 'A', MaterialPool.Breel.get(OrePrefixes.pipeMedium, 1), 'B',
+            new Object[] { "ABC", "DEF", "BAG", 'A', GTNLMaterials.Breel.get(OrePrefixes.pipeMedium, 1), 'B',
                 GTNLItemList.PrecisionSteamMechanism.get(1), 'C', new ItemStack(Blocks.glass, 1), 'D',
                 GTNLItemList.HydraulicConveyor.get(1), 'E', ItemList.Casing_Pipe_Bronze.get(1), 'F',
                 ItemList.Component_Sawblade_Diamond.get(1), 'G', GTNLItemList.HydraulicArm.get(1) });
@@ -1134,7 +1134,7 @@ public class CraftingTableRecipes implements IRecipePool {
             new Object[] { "ABA", "CDC", "EFE", 'A', OrePrefixes.circuit.get(Materials.EV), 'B',
                 OrePrefixes.wireGt16.get(Materials.Titaniumonabariumdecacoppereikosaoxid), 'C',
                 ItemList.Electric_Pump_HV, 'D', ItemList.Casing_HV, 'E',
-                MaterialPool.Stronze.get(OrePrefixes.pipeHuge, 1), 'F',
+                GTNLMaterials.Stronze.get(OrePrefixes.pipeHuge, 1), 'F',
                 OrePrefixes.cableGt16.get(Materials.Nichrome) });
 
         GTModHandler.addCraftingRecipe(

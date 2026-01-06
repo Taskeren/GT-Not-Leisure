@@ -38,12 +38,12 @@ import com.gtnewhorizon.structurelib.structure.IStructureDefinition;
 import com.gtnewhorizon.structurelib.structure.ISurvivalBuildEnvironment;
 import com.gtnewhorizon.structurelib.structure.StructureDefinition;
 import com.science.gtnl.common.machine.multiMachineBase.MultiMachineBase;
-import com.science.gtnl.common.material.RecipePool;
+import com.science.gtnl.common.material.GTNLRecipeMaps;
 import com.science.gtnl.common.render.tile.AdvancedHyperNaquadahReactorRenderer;
 import com.science.gtnl.loader.BlockLoader;
 import com.science.gtnl.utils.StructureUtils;
-import com.science.gtnl.utils.recipes.GTNL_OverclockCalculator;
-import com.science.gtnl.utils.recipes.GTNL_ProcessingLogic;
+import com.science.gtnl.utils.recipes.GTNLOverclockCalculator;
+import com.science.gtnl.utils.recipes.GTNLProcessingLogic;
 import com.science.gtnl.utils.recipes.metadata.NaquadahReactorMetadata;
 
 import goodgenerator.items.GGMaterial;
@@ -102,12 +102,12 @@ public abstract class NaquadahReactor<T extends NaquadahReactor<T>> extends Mult
 
     @Override
     public RecipeMap<?> getRecipeMap() {
-        return RecipePool.NaquadahReactorRecipes;
+        return GTNLRecipeMaps.NaquadahReactorRecipes;
     }
 
     @Override
     public ProcessingLogic createProcessingLogic() {
-        return new GTNL_ProcessingLogic() {
+        return new GTNLProcessingLogic() {
 
             @Override
             public @NotNull CheckRecipeResult validateRecipe(@NotNull GTRecipe recipe) {
@@ -121,8 +121,8 @@ public abstract class NaquadahReactor<T extends NaquadahReactor<T>> extends Mult
 
             @Override
             @Nonnull
-            public GTNL_OverclockCalculator createOverclockCalculator(@NotNull GTRecipe recipe) {
-                return GTNL_OverclockCalculator.ofNoOverclock(recipe);
+            public GTNLOverclockCalculator createOverclockCalculator(@NotNull GTRecipe recipe) {
+                return GTNLOverclockCalculator.ofNoOverclock(recipe);
             }
         }.setMaxParallelSupplier(this::getTrueParallel);
     }
@@ -169,7 +169,7 @@ public abstract class NaquadahReactor<T extends NaquadahReactor<T>> extends Mult
         mEfficiency = 10000;
         mEfficiencyIncrease = 10000;
         mMaxProgresstime = (int) (processingLogic.getDuration() * mConfigSpeedBoost);
-        lEUt = ((GTNL_ProcessingLogic) processingLogic).getLastRecipe()
+        lEUt = ((GTNLProcessingLogic) processingLogic).getLastRecipe()
             .getMetadataOrDefault(NaquadahReactorMetadata.INSTANCE, Pair.of(0, 0L))
             .getValue() * processingLogic.getCurrentParallels();
 

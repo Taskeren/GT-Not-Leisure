@@ -5,7 +5,6 @@ import static com.science.gtnl.ScienceNotLeisure.*;
 import static com.science.gtnl.common.machine.multiMachineBase.MultiMachineBase.CustomHatchElement.*;
 import static gregtech.api.GregTechAPI.*;
 import static gregtech.api.enums.HatchElement.*;
-import static gregtech.api.enums.Mods.*;
 import static gregtech.api.util.GTStructureUtility.*;
 import static gtPlusPlus.core.block.ModBlocks.*;
 
@@ -22,7 +21,7 @@ import com.gtnewhorizon.structurelib.structure.IStructureDefinition;
 import com.gtnewhorizon.structurelib.structure.ISurvivalBuildEnvironment;
 import com.gtnewhorizon.structurelib.structure.StructureDefinition;
 import com.science.gtnl.common.machine.multiMachineBase.GTMMultiMachineBase;
-import com.science.gtnl.common.material.RecipePool;
+import com.science.gtnl.common.material.GTNLRecipeMaps;
 import com.science.gtnl.loader.BlockLoader;
 import com.science.gtnl.utils.StructureUtils;
 
@@ -90,7 +89,7 @@ public class LargeRockCrusher extends GTMMultiMachineBase<LargeRockCrusher> impl
 
     @Override
     public RecipeMap<?> getRecipeMap() {
-        return RecipePool.IndustrialRockCrusherRecipes;
+        return GTNLRecipeMaps.IndustrialRockCrusherRecipes;
     }
 
     @Override

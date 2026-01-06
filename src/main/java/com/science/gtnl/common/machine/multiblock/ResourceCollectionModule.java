@@ -27,12 +27,12 @@ import com.gtnewhorizons.modularui.api.screen.ModularWindow;
 import com.gtnewhorizons.modularui.api.screen.UIBuildContext;
 import com.gtnewhorizons.modularui.common.widget.DrawableWidget;
 import com.gtnewhorizons.modularui.common.widget.DynamicTextWidget;
-import com.science.gtnl.common.material.RecipePool;
+import com.science.gtnl.common.material.GTNLRecipeMaps;
 import com.science.gtnl.utils.StructureUtils;
 import com.science.gtnl.utils.enums.GTNLItemList;
 import com.science.gtnl.utils.item.ItemUtils;
-import com.science.gtnl.utils.recipes.GTNL_OverclockCalculator;
-import com.science.gtnl.utils.recipes.GTNL_ProcessingLogic;
+import com.science.gtnl.utils.recipes.GTNLOverclockCalculator;
+import com.science.gtnl.utils.recipes.GTNLProcessingLogic;
 import com.science.gtnl.utils.recipes.metadata.ResourceCollectionModuleMetadata;
 
 import gregtech.api.enums.GTValues;
@@ -105,13 +105,13 @@ public class ResourceCollectionModule extends TileEntityModuleBase {
 
     @Override
     public RecipeMap<?> getRecipeMap() {
-        return (machineMode == MACHINEMODE_MINER) ? RecipePool.SpaceMinerRecipes : RecipePool.SpaceDrillRecipes;
+        return (machineMode == MACHINEMODE_MINER) ? GTNLRecipeMaps.SpaceMinerRecipes : GTNLRecipeMaps.SpaceDrillRecipes;
     }
 
     @Nonnull
     @Override
     public Collection<RecipeMap<?>> getAvailableRecipeMaps() {
-        return Arrays.asList(RecipePool.SpaceMinerRecipes, RecipePool.SpaceDrillRecipes);
+        return Arrays.asList(GTNLRecipeMaps.SpaceMinerRecipes, GTNLRecipeMaps.SpaceDrillRecipes);
     }
 
     @Override
@@ -218,7 +218,7 @@ public class ResourceCollectionModule extends TileEntityModuleBase {
 
     @Override
     public ProcessingLogic createProcessingLogic() {
-        return new GTNL_ProcessingLogic() {
+        return new GTNLProcessingLogic() {
 
             @NotNull
             @Override
@@ -272,7 +272,7 @@ public class ResourceCollectionModule extends TileEntityModuleBase {
 
             @NotNull
             @Override
-            public GTNL_OverclockCalculator createOverclockCalculator(@NotNull GTRecipe recipe) {
+            public GTNLOverclockCalculator createOverclockCalculator(@NotNull GTRecipe recipe) {
                 return super.createOverclockCalculator(recipe).setAmperageOC(false)
                     .setDurationDecreasePerOC(2)
                     .setEUtIncreasePerOC(4)

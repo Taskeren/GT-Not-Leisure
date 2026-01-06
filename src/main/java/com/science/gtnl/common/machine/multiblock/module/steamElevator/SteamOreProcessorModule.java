@@ -21,7 +21,7 @@ import net.minecraftforge.oredict.OreDictionary;
 
 import org.jetbrains.annotations.NotNull;
 
-import com.science.gtnl.utils.recipes.GTNL_OverclockCalculator;
+import com.science.gtnl.utils.recipes.GTNLOverclockCalculator;
 
 import gnu.trove.map.hash.TIntIntHashMap;
 import gregtech.api.enums.Materials;
@@ -72,8 +72,8 @@ public class SteamOreProcessorModule extends SteamElevatorModule {
 
     public static final ThreadLocal<Random> RAND = ThreadLocal.withInitial(Random::new);
 
-    public static final ThreadLocal<GTNL_OverclockCalculator> OC_CALC = ThreadLocal
-        .withInitial(GTNL_OverclockCalculator::new);
+    public static final ThreadLocal<GTNLOverclockCalculator> OC_CALC = ThreadLocal
+        .withInitial(GTNLOverclockCalculator::new);
 
     public SteamOreProcessorModule(int aID, String aName, String aNameRegional) {
         super(aID, aName, aNameRegional, 8);
@@ -128,7 +128,7 @@ public class SteamOreProcessorModule extends SteamElevatorModule {
 
         int maxParallel = MAX_PARA * powerMultiplier;
 
-        GTNL_OverclockCalculator calculator = OC_CALC.get()
+        GTNLOverclockCalculator calculator = OC_CALC.get()
             .reset()
             .setEUt(availableEUt)
             .setRecipeEUt(requiredEUt)

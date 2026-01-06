@@ -1,8 +1,8 @@
 package com.science.gtnl.common.recipe.gtnl;
 
 import com.science.gtnl.api.IRecipePool;
-import com.science.gtnl.common.material.MaterialPool;
-import com.science.gtnl.common.material.RecipePool;
+import com.science.gtnl.common.material.GTNLMaterials;
+import com.science.gtnl.common.material.GTNLRecipeMaps;
 import com.science.gtnl.utils.recipes.RecipeBuilder;
 import com.science.gtnl.utils.recipes.metadata.ElectrocellGeneratorMetadata;
 
@@ -15,7 +15,7 @@ import gtPlusPlus.core.util.minecraft.ItemUtils;
 
 public class ElectrocellGeneratorRecipes implements IRecipePool {
 
-    public RecipeMap<?> EGR = RecipePool.ElectrocellGeneratorRecipes;
+    public RecipeMap<?> EGR = GTNLRecipeMaps.ElectrocellGeneratorRecipes;
     public ElectrocellGeneratorMetadata GENERATOR_EUT = ElectrocellGeneratorMetadata.INSTANCE;
 
     @Override
@@ -26,7 +26,7 @@ public class ElectrocellGeneratorRecipes implements IRecipePool {
                 ItemUtils.getItemStackOfAmountFromOreDict("dustBerylliumHydroxide", 6))
             .itemOutputs(GTOreDictUnificator.get(OrePrefixes.ingot, Materials.Zinc, 1))
             .fluidInputs(Materials.Mercury.getFluid(35))
-            .fluidOutputs(MaterialPool.ToxicMercurySludge.getFluidOrGas(40))
+            .fluidOutputs(GTNLMaterials.ToxicMercurySludge.getFluidOrGas(40))
             .outputChances(10000)
             .eut(0)
             .specialValue(110)
@@ -81,7 +81,7 @@ public class ElectrocellGeneratorRecipes implements IRecipePool {
                 GTOreDictUnificator.get(OrePrefixes.stick, Materials.TungstenSteel, 1),
                 GTOreDictUnificator.get(OrePrefixes.dust, Materials.MeteoricIron, 5))
             .itemOutputs(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Sunnarium, 1))
-            .fluidInputs(MaterialPool.GlowThorium.getFluidOrGas(100))
+            .fluidInputs(GTNLMaterials.GlowThorium.getFluidOrGas(100))
             .fluidOutputs(Materials.NitricAcid.getFluid(200))
             .outputChances(10000)
             .eut(0)
@@ -95,8 +95,8 @@ public class ElectrocellGeneratorRecipes implements IRecipePool {
                 GTOreDictUnificator.get(OrePrefixes.stick, Materials.TungstenSteel, 1),
                 GTOreDictUnificator.get(OrePrefixes.dust, Materials.Molybdenum, 3))
             .itemOutputs(GTOreDictUnificator.get(OrePrefixes.dustSmall, Materials.Uranium235, 1))
-            .fluidInputs(MaterialPool.UraniumFuel.getFluidOrGas(8))
-            .fluidOutputs(MaterialPool.UraniumWaste.getFluidOrGas(8))
+            .fluidInputs(GTNLMaterials.UraniumFuel.getFluidOrGas(8))
+            .fluidOutputs(GTNLMaterials.UraniumWaste.getFluidOrGas(8))
             .outputChances(8000)
             .eut(0)
             .specialValue(110)

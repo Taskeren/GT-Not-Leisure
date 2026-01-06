@@ -4,7 +4,7 @@ import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 
 import com.science.gtnl.api.IRecipePool;
-import com.science.gtnl.common.material.RecipePool;
+import com.science.gtnl.common.material.GTNLRecipeMaps;
 import com.science.gtnl.utils.recipes.RecipeBuilder;
 import com.science.gtnl.utils.recipes.data.NanitesIntegratedProcessingRecipesData;
 import com.science.gtnl.utils.recipes.metadata.NanitesIntegratedProcessingMetadata;
@@ -17,7 +17,7 @@ import gregtech.api.util.GTUtility;
 public class NanitesIntegratedProcessingRecipes implements IRecipePool {
 
     public NanitesIntegratedProcessingMetadata MODULE_REQ = NanitesIntegratedProcessingMetadata.INSTANCE;
-    public RecipeMap<?> NIPR = RecipePool.NanitesIntegratedProcessingRecipes;
+    public RecipeMap<?> NIPR = GTNLRecipeMaps.NanitesIntegratedProcessingRecipes;
 
     @Override
     public void loadRecipes() {

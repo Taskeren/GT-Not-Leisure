@@ -1,8 +1,8 @@
 package com.science.gtnl.common.recipe.gtnl;
 
 import com.science.gtnl.api.IRecipePool;
-import com.science.gtnl.common.material.MaterialPool;
-import com.science.gtnl.common.material.RecipePool;
+import com.science.gtnl.common.material.GTNLMaterials;
+import com.science.gtnl.common.material.GTNLRecipeMaps;
 import com.science.gtnl.utils.recipes.RecipeBuilder;
 
 import gregtech.api.enums.Materials;
@@ -13,12 +13,12 @@ import gregtech.api.util.GTOreDictUnificator;
 
 public class RareEarthCentrifugalRecipes implements IRecipePool {
 
-    public RecipeMap<?> RECR = RecipePool.RareEarthCentrifugalRecipes;
+    public RecipeMap<?> RECR = GTNLRecipeMaps.RareEarthCentrifugalRecipes;
 
     @Override
     public void loadRecipes() {
         RecipeBuilder.builder()
-            .itemInputs(MaterialPool.RareEarthMetal.get(OrePrefixes.dust, 1))
+            .itemInputs(GTNLMaterials.RareEarthMetal.get(OrePrefixes.dust, 1))
             .itemOutputs(
                 GTOreDictUnificator.get(OrePrefixes.dust, Materials.Lanthanum, 1),
                 GTOreDictUnificator.get(OrePrefixes.dust, Materials.Cerium, 1),

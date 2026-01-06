@@ -34,11 +34,11 @@ import com.gtnewhorizons.modularui.api.screen.ModularWindow;
 import com.gtnewhorizons.modularui.api.screen.UIBuildContext;
 import com.science.gtnl.api.IControllerUpgradeable;
 import com.science.gtnl.common.machine.multiMachineBase.WirelessEnergyMultiMachineBase;
-import com.science.gtnl.common.material.RecipePool;
+import com.science.gtnl.common.material.GTNLRecipeMaps;
 import com.science.gtnl.loader.BlockLoader;
 import com.science.gtnl.utils.StructureUtils;
-import com.science.gtnl.utils.recipes.GTNL_OverclockCalculator;
-import com.science.gtnl.utils.recipes.GTNL_ProcessingLogic;
+import com.science.gtnl.utils.recipes.GTNLOverclockCalculator;
+import com.science.gtnl.utils.recipes.GTNLProcessingLogic;
 
 import goodgenerator.loader.Loaders;
 import gregtech.api.GregTechAPI;
@@ -285,13 +285,13 @@ public class EngravingLaserPlant extends WirelessEnergyMultiMachineBase<Engravin
     @Override
     public RecipeMap<?> getRecipeMap() {
         return (machineMode == MACHINEMODE_LASER) ? RecipeMaps.laserEngraverRecipes
-            : RecipePool.PrecisionLaserEngraverRecipes;
+            : GTNLRecipeMaps.PrecisionLaserEngraverRecipes;
     }
 
     @Nonnull
     @Override
     public Collection<RecipeMap<?>> getAvailableRecipeMaps() {
-        return Arrays.asList(RecipeMaps.laserEngraverRecipes, RecipePool.PrecisionLaserEngraverRecipes);
+        return Arrays.asList(RecipeMaps.laserEngraverRecipes, GTNLRecipeMaps.PrecisionLaserEngraverRecipes);
     }
 
     @Override
@@ -358,7 +358,7 @@ public class EngravingLaserPlant extends WirelessEnergyMultiMachineBase<Engravin
 
     @Override
     public ProcessingLogic createProcessingLogic() {
-        return new GTNL_ProcessingLogic() {
+        return new GTNLProcessingLogic() {
 
             @NotNull
             @Override
@@ -374,7 +374,7 @@ public class EngravingLaserPlant extends WirelessEnergyMultiMachineBase<Engravin
 
             @Nonnull
             @Override
-            public GTNL_OverclockCalculator createOverclockCalculator(@Nonnull GTRecipe recipe) {
+            public GTNLOverclockCalculator createOverclockCalculator(@Nonnull GTRecipe recipe) {
                 return super.createOverclockCalculator(recipe).setExtraDurationModifier(mConfigSpeedBoost)
                     .setEUtDiscount(getEUtDiscount())
                     .setDurationModifier(getDurationModifier());

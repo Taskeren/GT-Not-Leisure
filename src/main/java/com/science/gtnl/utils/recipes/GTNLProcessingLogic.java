@@ -35,7 +35,7 @@ import gregtech.common.tileentities.machines.IDualInputInventoryWithPattern;
  * Logic class to calculate result of recipe check from inputs, based on recipemap.
  */
 @SuppressWarnings({ "unused", "UnusedReturnValue" })
-public class GTNL_ProcessingLogic extends ProcessingLogic {
+public class GTNLProcessingLogic extends ProcessingLogic {
 
     public double extraSpeedBoost = 1.0;
     public int maxOverclocks = Integer.MAX_VALUE;
@@ -55,9 +55,9 @@ public class GTNL_ProcessingLogic extends ProcessingLogic {
      */
     public Map<IDualInputInventoryWithPattern, Set<GTRecipe>> dualInvWithPatternToRecipeCache = new HashMap<>();
 
-    public GTNL_ProcessingLogic() {}
+    public GTNLProcessingLogic() {}
 
-    public GTNL_ProcessingLogic(ProcessingLogic logic) {
+    public GTNLProcessingLogic(ProcessingLogic logic) {
         AccessorProcessingLogic processingLogic = (AccessorProcessingLogic) logic;
 
         this.machine = processingLogic.getMachine();
@@ -97,7 +97,7 @@ public class GTNL_ProcessingLogic extends ProcessingLogic {
      * Sets machine used for void protection logic.
      */
     @Override
-    public GTNL_ProcessingLogic setMachine(IVoidable machine) {
+    public GTNLProcessingLogic setMachine(IVoidable machine) {
         this.machine = machine;
         return this;
     }
@@ -106,7 +106,7 @@ public class GTNL_ProcessingLogic extends ProcessingLogic {
      * Enables single recipe locking mode.
      */
     @Override
-    public GTNL_ProcessingLogic setRecipeLocking(IRecipeLockable recipeLockableMachine, boolean isRecipeLocked) {
+    public GTNLProcessingLogic setRecipeLocking(IRecipeLockable recipeLockableMachine, boolean isRecipeLocked) {
         this.recipeLockableMachine = recipeLockableMachine;
         this.isRecipeLocked = isRecipeLocked;
         return this;
@@ -114,34 +114,34 @@ public class GTNL_ProcessingLogic extends ProcessingLogic {
 
     @Nonnull
     @Override
-    public GTNL_ProcessingLogic setInputItems(ItemStack... itemInputs) {
+    public GTNLProcessingLogic setInputItems(ItemStack... itemInputs) {
         this.inputItems = itemInputs;
         return this;
     }
 
     @Nonnull
     @Override
-    public GTNL_ProcessingLogic setInputItems(List<ItemStack> itemInputs) {
+    public GTNLProcessingLogic setInputItems(List<ItemStack> itemInputs) {
         this.inputItems = itemInputs.toArray(new ItemStack[0]);
         return this;
     }
 
     @Nonnull
     @Override
-    public GTNL_ProcessingLogic setInputFluids(FluidStack... fluidInputs) {
+    public GTNLProcessingLogic setInputFluids(FluidStack... fluidInputs) {
         this.inputFluids = fluidInputs;
         return this;
     }
 
     @Nonnull
     @Override
-    public GTNL_ProcessingLogic setInputFluids(List<FluidStack> fluidInputs) {
+    public GTNLProcessingLogic setInputFluids(List<FluidStack> fluidInputs) {
         this.inputFluids = fluidInputs.toArray(new FluidStack[0]);
         return this;
     }
 
     @Override
-    public GTNL_ProcessingLogic setSpecialSlotItem(ItemStack specialSlotItem) {
+    public GTNLProcessingLogic setSpecialSlotItem(ItemStack specialSlotItem) {
         this.specialSlotItem = specialSlotItem;
         return this;
     }
@@ -195,7 +195,7 @@ public class GTNL_ProcessingLogic extends ProcessingLogic {
      * Sets max amount of parallel.
      */
     @Override
-    public GTNL_ProcessingLogic setMaxParallel(int maxParallel) {
+    public GTNLProcessingLogic setMaxParallel(int maxParallel) {
         this.maxParallel = maxParallel;
         return this;
     }
@@ -204,7 +204,7 @@ public class GTNL_ProcessingLogic extends ProcessingLogic {
      * Sets method to get max amount of parallel.
      */
     @Override
-    public GTNL_ProcessingLogic setMaxParallelSupplier(Supplier<Integer> supplier) {
+    public GTNLProcessingLogic setMaxParallelSupplier(Supplier<Integer> supplier) {
         this.maxParallelSupplier = supplier;
         return this;
     }
@@ -213,35 +213,35 @@ public class GTNL_ProcessingLogic extends ProcessingLogic {
      * Sets batch size for batch mode.
      */
     @Override
-    public GTNL_ProcessingLogic setBatchSize(int size) {
+    public GTNLProcessingLogic setBatchSize(int size) {
         this.batchSize = size;
         return this;
     }
 
     @Override
-    public GTNL_ProcessingLogic setRecipeMap(RecipeMap<?> recipeMap) {
+    public GTNLProcessingLogic setRecipeMap(RecipeMap<?> recipeMap) {
         return setRecipeMapSupplier(() -> recipeMap);
     }
 
     @Override
-    public GTNL_ProcessingLogic setRecipeMapSupplier(Supplier<RecipeMap<?>> supplier) {
+    public GTNLProcessingLogic setRecipeMapSupplier(Supplier<RecipeMap<?>> supplier) {
         this.recipeMapSupplier = supplier;
         return this;
     }
 
     @Override
-    public GTNL_ProcessingLogic setEuModifier(double modifier) {
+    public GTNLProcessingLogic setEuModifier(double modifier) {
         this.euModifier = modifier;
         return this;
     }
 
     @Override
-    public GTNL_ProcessingLogic setSpeedBonus(double speedModifier) {
+    public GTNLProcessingLogic setSpeedBonus(double speedModifier) {
         this.speedBoost = speedModifier;
         return this;
     }
 
-    public GTNL_ProcessingLogic setExtraSpeedBonus(double speedModifier) {
+    public GTNLProcessingLogic setExtraSpeedBonus(double speedModifier) {
         this.extraSpeedBoost = speedModifier;
         return this;
     }
@@ -252,7 +252,7 @@ public class GTNL_ProcessingLogic extends ProcessingLogic {
      * and 1 as amperage. That way recipemap search will be executed with overclocked voltage.
      */
     @Override
-    public GTNL_ProcessingLogic setAvailableVoltage(long voltage) {
+    public GTNLProcessingLogic setAvailableVoltage(long voltage) {
         this.availableVoltage = voltage;
         return this;
     }
@@ -262,17 +262,17 @@ public class GTNL_ProcessingLogic extends ProcessingLogic {
      * Useful for preventing tier skip but still considering amperage for parallel.
      */
     @Override
-    public GTNL_ProcessingLogic setAvailableAmperage(long amperage) {
+    public GTNLProcessingLogic setAvailableAmperage(long amperage) {
         this.availableAmperage = amperage;
         return this;
     }
 
-    public GTNL_ProcessingLogic setMaxOverclocks(int maxOverclocks) {
+    public GTNLProcessingLogic setMaxOverclocks(int maxOverclocks) {
         this.maxOverclocks = maxOverclocks;
         return this;
     }
 
-    public GTNL_ProcessingLogic setUnlimitedMaxOverclocks() {
+    public GTNLProcessingLogic setUnlimitedMaxOverclocks() {
         this.maxOverclocks = Integer.MAX_VALUE;
         return this;
     }
@@ -282,26 +282,26 @@ public class GTNL_ProcessingLogic extends ProcessingLogic {
      * a recipe is valid. For unlimited tier skips, use {@link #setUnlimitedTierSkips()}
      */
     @Override
-    public GTNL_ProcessingLogic setMaxTierSkips(int tierSkips) {
+    public GTNLProcessingLogic setMaxTierSkips(int tierSkips) {
         this.maxTierSkips = tierSkips;
         return this;
     }
 
     @Override
-    public GTNL_ProcessingLogic setUnlimitedTierSkips() {
+    public GTNLProcessingLogic setUnlimitedTierSkips() {
         this.maxTierSkips = Integer.MAX_VALUE;
         return this;
     }
 
     @Override
-    public GTNL_ProcessingLogic setVoidProtection(boolean protectItems, boolean protectFluids) {
+    public GTNLProcessingLogic setVoidProtection(boolean protectItems, boolean protectFluids) {
         this.protectItems = protectItems;
         this.protectFluids = protectFluids;
         return this;
     }
 
     @Override
-    public GTNL_ProcessingLogic setOverclock(double timeReduction, double powerIncrease) {
+    public GTNLProcessingLogic setOverclock(double timeReduction, double powerIncrease) {
         this.overClockTimeReduction = timeReduction;
         this.overClockPowerIncrease = powerIncrease;
         return this;
@@ -311,7 +311,7 @@ public class GTNL_ProcessingLogic extends ProcessingLogic {
      * Sets overclock ratio to 4/4.
      */
     @Override
-    public GTNL_ProcessingLogic enablePerfectOverclock() {
+    public GTNLProcessingLogic enablePerfectOverclock() {
         return this.setOverclock(4.0, 4.0);
     }
 
@@ -319,7 +319,7 @@ public class GTNL_ProcessingLogic extends ProcessingLogic {
      * Sets whether the multi should use amperage to OC or not.
      */
     @Override
-    public GTNL_ProcessingLogic setAmperageOC(boolean amperageOC) {
+    public GTNLProcessingLogic setAmperageOC(boolean amperageOC) {
         this.amperageOC = amperageOC;
         return this;
     }
@@ -332,7 +332,7 @@ public class GTNL_ProcessingLogic extends ProcessingLogic {
      * Overwrites calculated item output.
      */
     @Override
-    public GTNL_ProcessingLogic overwriteOutputItems(ItemStack... itemOutputs) {
+    public GTNLProcessingLogic overwriteOutputItems(ItemStack... itemOutputs) {
         this.outputItems = itemOutputs;
         return this;
     }
@@ -341,7 +341,7 @@ public class GTNL_ProcessingLogic extends ProcessingLogic {
      * Overwrites calculated fluid output.
      */
     @Override
-    public GTNL_ProcessingLogic overwriteOutputFluids(FluidStack... fluidOutputs) {
+    public GTNLProcessingLogic overwriteOutputFluids(FluidStack... fluidOutputs) {
         this.outputFluids = fluidOutputs;
         return this;
     }
@@ -350,7 +350,7 @@ public class GTNL_ProcessingLogic extends ProcessingLogic {
      * Overwrites calculated EU/t.
      */
     @Override
-    public GTNL_ProcessingLogic overwriteCalculatedEut(long calculatedEut) {
+    public GTNLProcessingLogic overwriteCalculatedEut(long calculatedEut) {
         this.calculatedEut = calculatedEut;
         return this;
     }
@@ -359,7 +359,7 @@ public class GTNL_ProcessingLogic extends ProcessingLogic {
      * Overwrites calculated duration.
      */
     @Override
-    public GTNL_ProcessingLogic overwriteCalculatedDuration(int duration) {
+    public GTNLProcessingLogic overwriteCalculatedDuration(int duration) {
         this.duration = duration;
         return this;
     }
@@ -370,7 +370,7 @@ public class GTNL_ProcessingLogic extends ProcessingLogic {
      * Clears calculated results and provided machine inputs to prepare for the next machine operation.
      */
     @Override
-    public GTNL_ProcessingLogic clear() {
+    public GTNLProcessingLogic clear() {
         this.inputItems = null;
         this.inputFluids = null;
         this.specialSlotItem = null;
@@ -482,8 +482,8 @@ public class GTNL_ProcessingLogic extends ProcessingLogic {
             return CalculationResult.ofFailure(result);
         }
 
-        GTNL_ParallelHelper helper = createParallelHelper(recipe);
-        GTNL_OverclockCalculator calculator = createOverclockCalculator(recipe);
+        GTNLParallelHelper helper = createParallelHelper(recipe);
+        GTNLOverclockCalculator calculator = createOverclockCalculator(recipe);
         helper.setCalculator(calculator);
         helper.build();
 
@@ -500,8 +500,8 @@ public class GTNL_ProcessingLogic extends ProcessingLogic {
      * At this point, inputs have been already consumed.
      */
     @Nonnull
-    public CheckRecipeResult applyRecipe(@Nonnull GTRecipe recipe, @Nonnull GTNL_ParallelHelper helper,
-        @Nonnull GTNL_OverclockCalculator calculator, @Nonnull CheckRecipeResult result) {
+    public CheckRecipeResult applyRecipe(@Nonnull GTRecipe recipe, @Nonnull GTNLParallelHelper helper,
+        @Nonnull GTNLOverclockCalculator calculator, @Nonnull CheckRecipeResult result) {
         if (recipe.mCanBeBuffered) {
             lastRecipe = recipe;
         } else {
@@ -552,8 +552,8 @@ public class GTNL_ProcessingLogic extends ProcessingLogic {
     /**
      * Override to tweak final duration that will be set as a result of this logic class.
      */
-    public double calculateDuration(@Nonnull GTRecipe recipe, @Nonnull GTNL_ParallelHelper helper,
-        @Nonnull GTNL_OverclockCalculator calculator) {
+    public double calculateDuration(@Nonnull GTRecipe recipe, @Nonnull GTNLParallelHelper helper,
+        @Nonnull GTNLOverclockCalculator calculator) {
         return calculator.getDuration() * helper.getDurationMultiplierDouble();
     }
 
@@ -592,8 +592,8 @@ public class GTNL_ProcessingLogic extends ProcessingLogic {
      */
     @Nonnull
     @Override
-    public GTNL_ParallelHelper createParallelHelper(@Nonnull GTRecipe recipe) {
-        return new GTNL_ParallelHelper().setRecipe(recipe)
+    public GTNLParallelHelper createParallelHelper(@Nonnull GTRecipe recipe) {
+        return new GTNLParallelHelper().setRecipe(recipe)
             .setItemInputs(inputItems)
             .setFluidInputs(inputFluids)
             .setAvailableEUt(availableVoltage * availableAmperage)
@@ -611,8 +611,8 @@ public class GTNL_ProcessingLogic extends ProcessingLogic {
      */
     @Nonnull
     @Override
-    public GTNL_OverclockCalculator createOverclockCalculator(@Nonnull GTRecipe recipe) {
-        return new GTNL_OverclockCalculator().setRecipeEUt(recipe.mEUt)
+    public GTNLOverclockCalculator createOverclockCalculator(@Nonnull GTRecipe recipe) {
+        return new GTNLOverclockCalculator().setRecipeEUt(recipe.mEUt)
             .setAmperage(availableAmperage)
             .setEUt(availableVoltage)
             .setMaxTierSkips(maxTierSkips)

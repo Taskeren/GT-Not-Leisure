@@ -3,7 +3,7 @@ package com.science.gtnl.common.recipe.gregtech;
 import net.minecraftforge.fluids.FluidStack;
 
 import com.science.gtnl.api.IRecipePool;
-import com.science.gtnl.common.material.MaterialPool;
+import com.science.gtnl.common.material.GTNLMaterials;
 import com.science.gtnl.utils.recipes.RecipeBuilder;
 
 import gregtech.api.recipe.RecipeMap;
@@ -26,7 +26,7 @@ public class FluidExtraction implements IRecipePool {
 
         RecipeBuilder.builder()
             .itemInputs(GTModHandler.getModItem("GalaxySpace", "barnardaClog", 64, 0))
-            .fluidOutputs(MaterialPool.BarnardaCSappy.getFluidOrGas(500))
+            .fluidOutputs(GTNLMaterials.BarnardaCSappy.getFluidOrGas(500))
             .duration(4)
             .eut(491520)
             .addTo(fER);

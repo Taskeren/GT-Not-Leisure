@@ -10,8 +10,8 @@ import net.minecraft.item.ItemStack;
 
 import com.dreammaster.gthandler.CustomItemList;
 import com.science.gtnl.api.IRecipePool;
-import com.science.gtnl.common.material.MaterialPool;
-import com.science.gtnl.common.material.RecipePool;
+import com.science.gtnl.common.material.GTNLMaterials;
+import com.science.gtnl.common.material.GTNLRecipeMaps;
 import com.science.gtnl.utils.enums.GTNLItemList;
 import com.science.gtnl.utils.recipes.RecipeBuilder;
 
@@ -31,7 +31,7 @@ import micdoodle8.mods.galacticraft.core.recipe.NasaWorkbenchRecipe;
 public class RocketAssemblerRecipes implements IRecipePool {
 
     public static List<INasaWorkbenchRecipe> RECIPES_ROCKET_STEAM = new ArrayList<>();
-    public RecipeMap<?> RAR = RecipePool.RocketAssemblerRecipes;
+    public RecipeMap<?> RAR = GTNLRecipeMaps.RocketAssemblerRecipes;
 
     public ItemStack[] itemStacks = new ItemStack[] {
         GTModHandler.getModItem(Mods.GalacticraftCore.ID, "item.schematic", 1, 1),
@@ -53,7 +53,7 @@ public class RocketAssemblerRecipes implements IRecipePool {
         input.put(7, GTOreDictUnificator.get(OrePrefixes.plateSuperdense, Materials.BlackSteel, 1));
 
         for (int i = 8; i <= 15; i++) {
-            input.put(i, MaterialPool.CompressedSteam.get(OrePrefixes.plateSuperdense, 1));
+            input.put(i, GTNLMaterials.CompressedSteam.get(OrePrefixes.plateSuperdense, 1));
         }
 
         input.put(16, GTModHandler.getModItem(Mods.GraviSuite.ID, "itemSimpleItem", 1, 6));

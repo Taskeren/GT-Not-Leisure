@@ -1,6 +1,5 @@
 package com.science.gtnl.common.recipe.gregtech;
 
-import static gregtech.api.recipe.RecipeMaps.*;
 import static gregtech.api.util.GTRecipeBuilder.*;
 
 import net.minecraft.init.Blocks;
@@ -8,7 +7,7 @@ import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 
 import com.science.gtnl.api.IRecipePool;
-import com.science.gtnl.common.material.RecipePool;
+import com.science.gtnl.common.material.GTNLRecipeMaps;
 import com.science.gtnl.utils.enums.GTNLItemList;
 import com.science.gtnl.utils.recipes.RecipeBuilder;
 
@@ -30,7 +29,7 @@ import tectech.thing.CustomItemList;
 public class LaserEngraverRecipes implements IRecipePool {
 
     public RecipeMap<?> lER = RecipeMaps.laserEngraverRecipes;
-    public RecipeMap<?> HOR = RecipePool.HardOverrideRecipes;
+    public RecipeMap<?> HOR = GTNLRecipeMaps.HardOverrideRecipes;
 
     public void recipeWithPurifiedWater(ItemStack[] inputs, ItemStack[] outputs, Materials lowTierWater,
         Materials highTierWater, int duration, int boostedDuration, long eut) {

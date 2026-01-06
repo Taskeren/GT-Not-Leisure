@@ -72,7 +72,7 @@ import com.science.gtnl.common.machine.multiblock.module.eternalGregTechWorkshop
 import com.science.gtnl.common.machine.multiblock.module.eternalGregTechWorkshop.util.EternalGregTechWorkshopUI;
 import com.science.gtnl.common.machine.multiblock.module.eternalGregTechWorkshop.util.EternalGregTechWorkshopUpgrade;
 import com.science.gtnl.common.machine.multiblock.module.eternalGregTechWorkshop.util.UpgradeColor;
-import com.science.gtnl.common.material.RecipePool;
+import com.science.gtnl.common.material.GTNLRecipeMaps;
 import com.science.gtnl.config.MainConfig;
 import com.science.gtnl.loader.BlockLoader;
 import com.science.gtnl.utils.StructureUtils;
@@ -342,7 +342,7 @@ public class EternalGregTechWorkshop extends MultiMachineBase<EternalGregTechWor
 
     @Override
     public RecipeMap<?> getRecipeMap() {
-        return RecipePool.EternalGregTechWorkshopUpgradeRecipes;
+        return GTNLRecipeMaps.EternalGregTechWorkshopUpgradeRecipes;
     }
 
     @Override

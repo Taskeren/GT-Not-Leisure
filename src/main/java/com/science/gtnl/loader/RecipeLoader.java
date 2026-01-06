@@ -14,8 +14,8 @@ import com.Nxer.TwistSpaceTechnology.recipe.machineRecipe.expanded.CircuitAssemb
 import com.reavaritia.ReAvaItemList;
 import com.science.gtnl.api.IRecipePool;
 import com.science.gtnl.common.item.items.Stick;
-import com.science.gtnl.common.material.MaterialPool;
-import com.science.gtnl.common.material.RecipePool;
+import com.science.gtnl.common.material.GTNLMaterials;
+import com.science.gtnl.common.material.GTNLRecipeMaps;
 import com.science.gtnl.common.recipe.bloodMagic.MeteorsRecipes;
 import com.science.gtnl.common.recipe.botania.BotaniaManaInfusionRecipes;
 import com.science.gtnl.common.recipe.gregtech.AlloyBlastSmelterRecipes;
@@ -159,11 +159,11 @@ public class RecipeLoader {
             recipePool.loadRecipes();
         }
 
-        RecipeUtil.copyAllRecipes(RecipePool.ConvertToCircuitAssembler, RecipeMaps.circuitAssemblerRecipes);
+        RecipeUtil.copyAllRecipes(GTNLRecipeMaps.ConvertToCircuitAssembler, RecipeMaps.circuitAssemblerRecipes);
     }
 
     public static void loadServerStart() {
-        RecipeUtil.removeMatchingRecipes(RecipePool.ConvertToCircuitAssembler, RecipeMaps.circuitAssemblerRecipes);
+        RecipeUtil.removeMatchingRecipes(GTNLRecipeMaps.ConvertToCircuitAssembler, RecipeMaps.circuitAssemblerRecipes);
         if (recipesAdded) return;
         if (MainConfig.enableDeleteRecipe) {
             RemoveRecipes.removeRecipes();
@@ -171,9 +171,9 @@ public class RecipeLoader {
 
         ProcessingArrayRecipeLoader.registerDefaultGregtechMaps();
 
-        CrackRecipeAdder.reAddBlastRecipe(MaterialPool.MolybdenumDisilicide, 800, 1920, 2300, true);
-        CrackRecipeAdder.reAddBlastRecipe(MaterialPool.HSLASteel, 1000, 480, 1711, true);
-        CrackRecipeAdder.reAddBlastRecipe(MaterialPool.Germaniumtungstennitride, 800, 30720, 8200, true);
+        CrackRecipeAdder.reAddBlastRecipe(GTNLMaterials.MolybdenumDisilicide, 800, 1920, 2300, true);
+        CrackRecipeAdder.reAddBlastRecipe(GTNLMaterials.HSLASteel, 1000, 480, 1711, true);
+        CrackRecipeAdder.reAddBlastRecipe(GTNLMaterials.Germaniumtungstennitride, 800, 30720, 8200, true);
 
         if (MainConfig.enableChamberRecipesBuff) {
             registerBuffTargetChamberRecipe();
@@ -216,7 +216,8 @@ public class RecipeLoader {
             recipePool.loadRecipes();
         }
 
-        RecipeUtil.generateRecipesBioLab(BartWorksRecipeMaps.bioLabRecipes, RecipePool.LargeBioLabRecipes, true, 1.1);
+        RecipeUtil
+            .generateRecipesBioLab(BartWorksRecipeMaps.bioLabRecipes, GTNLRecipeMaps.LargeBioLabRecipes, true, 1.1);
 
         TCResearches.register();
 
@@ -256,7 +257,7 @@ public class RecipeLoader {
                 copiedRecipe.mEUt = 0;
                 copiedRecipe.mDuration = 200;
 
-                RecipePool.PlasmaCentrifugeRecipes.add(copiedRecipe);
+                GTNLRecipeMaps.PlasmaCentrifugeRecipes.add(copiedRecipe);
             }
         }
     }
@@ -266,7 +267,7 @@ public class RecipeLoader {
     }
 
     public static void loadCircuitRelatedRecipes() {
-        RecipeUtil.copyAllRecipes(RecipePool.ConvertToCircuitAssembler, RecipeMaps.circuitAssemblerRecipes);
+        RecipeUtil.copyAllRecipes(GTNLRecipeMaps.ConvertToCircuitAssembler, RecipeMaps.circuitAssemblerRecipes);
 
         new CircuitAssemblyLineRecipes().loadRecipes();
 

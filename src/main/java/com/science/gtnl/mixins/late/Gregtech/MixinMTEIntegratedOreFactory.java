@@ -25,7 +25,7 @@ import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.ModifyArg;
 
-import com.science.gtnl.utils.recipes.GTNL_OverclockCalculator;
+import com.science.gtnl.utils.recipes.GTNLOverclockCalculator;
 
 import gregtech.api.enums.HatchElement;
 import gregtech.api.enums.Materials;
@@ -119,7 +119,7 @@ public abstract class MixinMTEIntegratedOreFactory
 
         int maxParallel = 65536 * GTUtility.getTier(getMaxInputEu());
 
-        GTNL_OverclockCalculator calculator = OC_CALC.get()
+        GTNLOverclockCalculator calculator = OC_CALC.get()
             .reset()
             .setEUt(availableEUt)
             .setRecipeEUt(requiredEUt)

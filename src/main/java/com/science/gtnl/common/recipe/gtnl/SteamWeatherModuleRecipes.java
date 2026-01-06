@@ -1,9 +1,7 @@
 package com.science.gtnl.common.recipe.gtnl;
 
-import static gregtech.api.enums.Mods.*;
-
 import com.science.gtnl.api.IRecipePool;
-import com.science.gtnl.common.material.RecipePool;
+import com.science.gtnl.common.material.GTNLRecipeMaps;
 import com.science.gtnl.utils.recipes.RecipeBuilder;
 
 import gregtech.api.enums.Mods;
@@ -12,7 +10,7 @@ import gregtech.api.util.GTModHandler;
 
 public class SteamWeatherModuleRecipes implements IRecipePool {
 
-    public RecipeMap<?> SWMR = RecipePool.SteamWeatherModuleRecipes;
+    public RecipeMap<?> SWMR = GTNLRecipeMaps.SteamWeatherModuleRecipes;
 
     @Override
     public void loadRecipes() {

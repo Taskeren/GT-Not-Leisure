@@ -5,8 +5,8 @@ import net.minecraft.item.ItemStack;
 import net.minecraftforge.fluids.FluidStack;
 
 import com.science.gtnl.api.IRecipePool;
-import com.science.gtnl.common.material.MaterialPool;
-import com.science.gtnl.common.material.RecipePool;
+import com.science.gtnl.common.material.GTNLMaterials;
+import com.science.gtnl.common.material.GTNLRecipeMaps;
 import com.science.gtnl.utils.recipes.RecipeBuilder;
 
 import bartworks.system.material.WerkstoffLoader;
@@ -24,7 +24,7 @@ import gtnhlanth.common.register.WerkstoffMaterialPool;
 
 public class SmeltingMixingFurnaceRecipes implements IRecipePool {
 
-    public RecipeMap<?> SMFR = RecipePool.SmeltingMixingFurnaceRecipes;
+    public RecipeMap<?> SMFR = GTNLRecipeMaps.SmeltingMixingFurnaceRecipes;
 
     @Override
     public void loadRecipes() {
@@ -609,7 +609,7 @@ public class SmeltingMixingFurnaceRecipes implements IRecipePool {
                 MaterialsElements.getInstance().GERMANIUM.getFluidStack(144 * 3),
                 Materials.Tungsten.getMolten(144 * 3),
                 Materials.Nitrogen.getGas(10000))
-            .fluidOutputs(MaterialPool.Germaniumtungstennitride.getMolten(2304))
+            .fluidOutputs(GTNLMaterials.Germaniumtungstennitride.getMolten(2304))
             .duration(9600)
             .eut(TierEU.RECIPE_LuV)
             .addTo(SMFR);
@@ -1499,7 +1499,7 @@ public class SmeltingMixingFurnaceRecipes implements IRecipePool {
         RecipeBuilder.builder()
             .itemInputs(GTUtility.getIntegratedCircuit(2))
             .fluidInputs(Materials.Molybdenum.getMolten(144), Materials.Silicon.getMolten(144 * 2))
-            .fluidOutputs(MaterialPool.MolybdenumDisilicide.getMolten(144 * 3))
+            .fluidOutputs(GTNLMaterials.MolybdenumDisilicide.getMolten(144 * 3))
             .duration(1800)
             .eut(TierEU.RECIPE_EV)
             .addTo(SMFR);
@@ -1532,7 +1532,7 @@ public class SmeltingMixingFurnaceRecipes implements IRecipePool {
                 Materials.Vanadium.getMolten(144 * 3),
                 Materials.Titanium.getMolten(144 * 3),
                 Materials.Molybdenum.getMolten(144 * 3))
-            .fluidOutputs(MaterialPool.HSLASteel.getMolten(144 * 15))
+            .fluidOutputs(GTNLMaterials.HSLASteel.getMolten(144 * 15))
             .duration(3750)
             .eut(TierEU.RECIPE_HV)
             .addTo(SMFR);

@@ -8,7 +8,7 @@ import org.apache.commons.lang3.ArrayUtils;
 
 import com.science.gtnl.api.IRecipePool;
 import com.science.gtnl.common.machine.multiblock.module.eternalGregTechWorkshop.util.EternalGregTechWorkshopUpgrade;
-import com.science.gtnl.common.material.RecipePool;
+import com.science.gtnl.common.material.GTNLRecipeMaps;
 import com.science.gtnl.utils.enums.GTNLItemList;
 import com.science.gtnl.utils.recipes.RecipeBuilder;
 
@@ -27,7 +27,7 @@ import tectech.thing.CustomItemList;
 
 public class EternalGregTechWorkshopUpgradeRecipes implements IRecipePool {
 
-    public RecipeMap<?> EGTWUR = RecipePool.EternalGregTechWorkshopUpgradeRecipes;
+    public RecipeMap<?> EGTWUR = GTNLRecipeMaps.EternalGregTechWorkshopUpgradeRecipes;
 
     @Override
     public void loadRecipes() {

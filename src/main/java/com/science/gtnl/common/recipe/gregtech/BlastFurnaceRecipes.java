@@ -9,7 +9,7 @@ import static gregtech.api.util.GTRecipeConstants.*;
 import net.minecraft.item.ItemStack;
 
 import com.science.gtnl.api.IRecipePool;
-import com.science.gtnl.common.material.MaterialPool;
+import com.science.gtnl.common.material.GTNLMaterials;
 import com.science.gtnl.utils.enums.GTNLItemList;
 import com.science.gtnl.utils.recipes.RecipeBuilder;
 
@@ -65,10 +65,10 @@ public class BlastFurnaceRecipes implements IRecipePool {
 
         RecipeBuilder.builder()
             .itemInputs(
-                MaterialPool.PitchblendeSlag.get(OrePrefixes.dust, 12),
+                GTNLMaterials.PitchblendeSlag.get(OrePrefixes.dust, 12),
                 GTOreDictUnificator.get(OrePrefixes.dust, Materials.SodiumCarbonate, 6))
             .itemOutputs(
-                MaterialPool.UraniumSlag.get(OrePrefixes.dust, 12),
+                GTNLMaterials.UraniumSlag.get(OrePrefixes.dust, 12),
                 new ItemStack(ModItems.dustCalciumCarbonate, 1, 5),
                 GTUtility.copyAmountUnsafe(7, WerkstoffLoader.Sodiumsulfate.get(OrePrefixes.dust, 1)))
             .duration(100)

@@ -10,7 +10,7 @@ import gregtech.api.enums.OrePrefixes;
 import gregtech.api.enums.TextureSet;
 import gtPlusPlus.core.client.CustomTextureSet;
 
-public class MaterialPool implements Runnable {
+public class GTNLMaterials implements Runnable {
 
     public static final int offsetID = 25_000;
 

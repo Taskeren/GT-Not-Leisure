@@ -17,7 +17,7 @@ import com.dreammaster.item.NHItemList;
 import com.github.bsideup.jabel.Desugar;
 import com.glodblock.github.common.item.ItemFluidPacket;
 import com.science.gtnl.ScienceNotLeisure;
-import com.science.gtnl.common.material.RecipePool;
+import com.science.gtnl.common.material.GTNLRecipeMaps;
 import com.science.gtnl.common.recipe.gtnl.ShimmerRecipes;
 
 import gregtech.api.enums.ItemList;
@@ -416,7 +416,7 @@ public class DisassemblerHelper {
     }
 
     public static void loadHardOverrideRecipes() {
-        for (GTRecipe recipe : RecipePool.HardOverrideRecipes.getAllRecipes()) {
+        for (GTRecipe recipe : GTNLRecipeMaps.HardOverrideRecipes.getAllRecipes()) {
             if (recipe == null || recipe.mOutputs == null) continue;
 
             ItemStack input = recipe.mOutputs[0];
@@ -435,10 +435,10 @@ public class DisassemblerHelper {
                 .eut(0)
                 .fake()
                 .setNEIDesc("Generated from Hard-Override Recipe")
-                .addTo(RecipePool.ShimmerRecipes);
+                .addTo(GTNLRecipeMaps.ShimmerRecipes);
             ShimmerRecipes.registerConversion(input, outputs);
         }
-        RecipePool.HardOverrideRecipes.getBackend()
+        GTNLRecipeMaps.HardOverrideRecipes.getBackend()
             .clearRecipes();
     }
 
@@ -497,7 +497,7 @@ public class DisassemblerHelper {
                     .fake()
                     .setNEIDesc("Generated from Assembler Recipe");
                 applyDebugAssembler(builder, recipes, false);
-                builder.addTo(RecipePool.ShimmerRecipes);
+                builder.addTo(GTNLRecipeMaps.ShimmerRecipes);
                 ShimmerRecipes.registerConversion(revInput, outputs);
 
             } catch (Exception e) {
@@ -537,7 +537,7 @@ public class DisassemblerHelper {
                 .eut(0)
                 .fake()
                 .setNEIDesc("Generated from Assembly Line")
-                .addTo(RecipePool.ShimmerRecipes);
+                .addTo(GTNLRecipeMaps.ShimmerRecipes);
             ShimmerRecipes.registerConversion(input, outputs);
         }
 
@@ -561,7 +561,7 @@ public class DisassemblerHelper {
                 .eut(0)
                 .fake()
                 .setNEIDesc("Generated from Space Assembler")
-                .addTo(RecipePool.ShimmerRecipes);
+                .addTo(GTNLRecipeMaps.ShimmerRecipes);
             ShimmerRecipes.registerConversion(input, outputs);
         }
     }
@@ -588,7 +588,7 @@ public class DisassemblerHelper {
                 .fake()
                 .setNEIDesc("Generated from GT Crafting Recipe");
             applyDebugCrafting(builder, recipe);
-            builder.addTo(RecipePool.ShimmerRecipes);
+            builder.addTo(GTNLRecipeMaps.ShimmerRecipes);
             if (input != null) {
                 ShimmerRecipes.registerConversion(input, outputs);
             }

@@ -4,7 +4,7 @@ import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 
 import com.science.gtnl.api.IRecipePool;
-import com.science.gtnl.common.material.RecipePool;
+import com.science.gtnl.common.material.GTNLRecipeMaps;
 import com.science.gtnl.utils.recipes.RecipeBuilder;
 import com.science.gtnl.utils.recipes.metadata.IsaMillMetadata;
 
@@ -19,7 +19,7 @@ import gtPlusPlus.core.util.minecraft.MaterialUtils;
 public class IsaMillRecipes implements IRecipePool {
 
     public IsaMillMetadata ISAMILL_TIER = IsaMillMetadata.INSTANCE;
-    public RecipeMap<?> IsaMR = RecipePool.IsaMillRecipes;
+    public RecipeMap<?> IsaMR = GTNLRecipeMaps.IsaMillRecipes;
 
     @Override
     public void loadRecipes() {

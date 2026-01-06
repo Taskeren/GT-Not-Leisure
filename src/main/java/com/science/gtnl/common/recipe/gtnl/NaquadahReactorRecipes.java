@@ -3,7 +3,7 @@ package com.science.gtnl.common.recipe.gtnl;
 import org.apache.commons.lang3.tuple.Pair;
 
 import com.science.gtnl.api.IRecipePool;
-import com.science.gtnl.common.material.RecipePool;
+import com.science.gtnl.common.material.GTNLRecipeMaps;
 import com.science.gtnl.utils.recipes.RecipeBuilder;
 import com.science.gtnl.utils.recipes.metadata.NaquadahReactorMetadata;
 
@@ -15,7 +15,7 @@ import gregtech.api.recipe.RecipeMap;
 public class NaquadahReactorRecipes implements IRecipePool {
 
     public NaquadahReactorMetadata REACTOR_TIER = NaquadahReactorMetadata.INSTANCE;
-    public RecipeMap<?> NRR = RecipePool.NaquadahReactorRecipes;
+    public RecipeMap<?> NRR = GTNLRecipeMaps.NaquadahReactorRecipes;
 
     @Override
     public void loadRecipes() {
