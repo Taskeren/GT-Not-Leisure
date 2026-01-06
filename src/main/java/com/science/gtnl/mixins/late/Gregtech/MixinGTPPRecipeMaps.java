@@ -22,7 +22,7 @@ public class MixinGTPPRecipeMaps {
             ordinal = 3))
     private static RecipeMap<?> redirectBuild(RecipeMapBuilder<?> instance) {
         return instance.frontend(ExtendQFTFrontend::new)
-            .maxIO(16, 16, 16, 16)
+            .maxIO(16, 16, 8, 8)
             .neiHandlerInfo(
                 builder -> builder.setDisplayStack(GregtechItemList.QuantumForceTransformer.get(1))
                     .setMaxRecipesPerPage(1))

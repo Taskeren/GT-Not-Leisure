@@ -46,6 +46,7 @@
     "Gregtech.MixinGodForgeMath",
     "Gregtech.MixinGTOreDictUnificator",
     "Gregtech.MixinGTRecipeConstants",
+    "Gregtech.MixinGTPPRecipeMaps",
     "Gregtech.MixinGTShapedRecipe",
     "Gregtech.MixinGTShapelessRecipe",
     "Gregtech.MixinGTUtility",

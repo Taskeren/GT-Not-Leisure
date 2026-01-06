@@ -1710,7 +1710,7 @@ public class AssemblingLineRecipes implements IRecipePool {
                 CustomItemList.DATApipe.get(1),
                 GTOreDictUnificator.get(OrePrefixes.plateDense, Materials.Polybenzimidazole, 1))
             .fluidInputs(
-                Materials.Grade3PurifiedWater.getFluid(32000),
+                Materials.Grade4PurifiedWater.getFluid(32000),
                 Materials.Osmium.getMolten(1296),
                 Materials.UUMatter.getFluid(2560),
                 MaterialPool.Polyetheretherketone.getMolten(1296))

@@ -1,7 +1,6 @@
 package com.science.gtnl.common.recipe.gtnl;
 
 import static com.science.gtnl.utils.enums.GTNLItemList.TrollFace;
-import static gregtech.api.util.GTModHandler.getModItem;
 
 import net.minecraft.util.StatCollector;
 
@@ -9,8 +8,11 @@ import com.science.gtnl.api.IRecipePool;
 import com.science.gtnl.common.material.RecipePool;
 import com.science.gtnl.utils.recipes.RecipeBuilder;
 
+import gregtech.api.enums.Materials;
 import gregtech.api.enums.MaterialsUEVplus;
+import gregtech.api.enums.OrePrefixes;
 import gregtech.api.recipe.RecipeMap;
+import gregtech.api.util.GTOreDictUnificator;
 import gregtech.api.util.GTUtility;
 
 public class ReFusionReactorRecipes implements IRecipePool {
@@ -21,7 +23,8 @@ public class ReFusionReactorRecipes implements IRecipePool {
     public void loadRecipes() {
         RecipeBuilder.builder()
             .itemInputs(
-                GTUtility.copyAmountUnsafe(Integer.MAX_VALUE, getModItem("gregtech", "gt.metaitem.01", 1, 2299)))
+                GTUtility
+                    .copyAmountUnsafe(Integer.MAX_VALUE, GTOreDictUnificator.get(OrePrefixes.dust, Materials.Stone, 1)))
             .itemOutputs(
                 TrollFace.get(1)
                     .setStackDisplayName(StatCollector.translateToLocal("RFRRRecipes.1")))
