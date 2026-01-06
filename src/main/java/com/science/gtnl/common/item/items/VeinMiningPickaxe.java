@@ -135,11 +135,6 @@ public class VeinMiningPickaxe extends ItemPickaxe implements SubtitleDisplay {
     }
 
     @Override
-    public boolean isBookEnchantable(ItemStack itemstack1, ItemStack itemstack2) {
-        return false;
-    }
-
-    @Override
     @SideOnly(Side.CLIENT)
     public void getSubItems(Item aItem, CreativeTabs aCreativeTabs, List<ItemStack> aList) {
         ItemStack stack = new ItemStack(ItemLoader.veinMiningPickaxe, 1);

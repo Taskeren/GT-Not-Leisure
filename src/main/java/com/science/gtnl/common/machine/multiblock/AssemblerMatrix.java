@@ -203,10 +203,6 @@ public class AssemblerMatrix extends MultiMachineBase<AssemblerMatrix>
         }
     }
 
-    public void setPatternMultiply(double patternMultiply) {
-        setPatternMultiply((int) patternMultiply);
-    }
-
     @Override
     public IMetaTileEntity newMetaEntity(IGregTechTileEntity aTileEntity) {
         return new AssemblerMatrix(this.mName);
@@ -512,7 +508,7 @@ public class AssemblerMatrix extends MultiMachineBase<AssemblerMatrix>
                 .setSize(100, 18));
 
         builder.widget(
-            new NumericWidget().setSetter(this::setPatternMultiply)
+            new NumericWidget().setSetter(val -> patternMultiply = (int) val)
                 .setGetter(() -> patternMultiply)
                 .setDefaultValue(powerPanelMaxParallel)
                 .setMinValue(1)

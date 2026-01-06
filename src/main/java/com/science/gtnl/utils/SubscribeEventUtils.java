@@ -68,7 +68,6 @@ import cpw.mods.fml.common.gameevent.TickEvent;
 import cpw.mods.fml.common.network.FMLNetworkEvent;
 import gregtech.api.interfaces.metatileentity.IMetaTileEntity;
 import gregtech.api.metatileentity.BaseMetaTileEntity;
-import ic2.api.event.ExplosionEvent;
 import it.unimi.dsi.fastutil.objects.Object2IntMap;
 import it.unimi.dsi.fastutil.objects.Object2IntOpenHashMap;
 import micdoodle8.mods.galacticraft.api.recipe.SchematicRegistry;
@@ -349,13 +348,26 @@ public class SubscribeEventUtils {
     }
 
     @SubscribeEvent
-    public void onExplosionEvent(ExplosionEvent event) {
-        World world = event.world;
-        double explosionX = event.x;
-        double explosionY = event.y;
-        double explosionZ = event.z;
-        float power = (float) event.power;
+    public void onExplosionEvent(net.minecraftforge.event.world.ExplosionEvent event) {
+        if (tryAbsorbExplosion(
+            event.world,
+            event.explosion.explosionX,
+            event.explosion.explosionY,
+            event.explosion.explosionZ,
+            event.explosion.explosionSize)) {
+            event.setCanceled(true);
+        }
+    }
 
+    @SubscribeEvent
+    public void onExplosionEvent(ic2.api.event.ExplosionEvent event) {
+        if (tryAbsorbExplosion(event.world, event.x, event.y, event.z, (float) event.power)) {
+            event.setCanceled(true);
+        }
+    }
+
+    public boolean tryAbsorbExplosion(World world, double explosionX, double explosionY, double explosionZ,
+        float power) {
         int ex = (int) explosionX;
         int ey = (int) explosionY;
         int ez = (int) explosionZ;
@@ -363,31 +375,36 @@ public class SubscribeEventUtils {
         for (int x = ex - 10; x <= ex + 10; x++) {
             for (int y = ey - 10; y <= ey + 10; y++) {
                 for (int z = ez - 10; z <= ez + 10; z++) {
+
                     if (!world.blockExists(x, y, z)) continue;
+
                     TileEntity tile = world.getTileEntity(x, y, z);
-                    if (tile instanceof BaseMetaTileEntity te) {
-                        IMetaTileEntity mte = te.getMetaTileEntity();
-                        if (mte instanceof ExplosionDynamoHatch machine) {
-                            double dx = te.getXCoord() + 0.5 - explosionX;
-                            double dy = te.getYCoord() + 0.5 - explosionY;
-                            double dz = te.getZCoord() + 0.5 - explosionZ;
-                            double distance = Math.sqrt(dx * dx + dy * dy + dz * dz);
-                            if (distance <= 10.0) {
-                                double efficiency = Math.max(0.0, 1.0 - 0.05 * distance);
-                                long addedEU = (long) (power * 2048 * efficiency);
-                                long stored = machine.getEUVar();
-                                long maxEU = machine.maxEUStore();
-                                if (stored + addedEU <= maxEU) {
-                                    machine.setEUVar(stored + addedEU);
-                                    event.setCanceled(true);
-                                    return;
-                                }
-                            }
-                        }
+                    if (!(tile instanceof BaseMetaTileEntity te)) continue;
+
+                    IMetaTileEntity mte = te.getMetaTileEntity();
+                    if (!(mte instanceof ExplosionDynamoHatch machine)) continue;
+
+                    double dx = te.getXCoord() + 0.5 - explosionX;
+                    double dy = te.getYCoord() + 0.5 - explosionY;
+                    double dz = te.getZCoord() + 0.5 - explosionZ;
+                    double distance = Math.sqrt(dx * dx + dy * dy + dz * dz);
+
+                    if (distance > 10.0) continue;
+
+                    double efficiency = Math.max(0.0, 1.0 - 0.05 * distance);
+                    long addedEU = (long) (power * 2048 * efficiency);
+
+                    long stored = machine.getEUVar();
+                    long maxEU = machine.maxEUStore();
+
+                    if (stored + addedEU <= maxEU) {
+                        machine.setEUVar(stored + addedEU);
+                        return true;
                     }
                 }
             }
         }
+        return false;
     }
 
     // Mobs

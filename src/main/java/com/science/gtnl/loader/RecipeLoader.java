@@ -55,6 +55,7 @@ import com.science.gtnl.common.recipe.gregtech.NuclearSaltProcessingPlantRecipes
 import com.science.gtnl.common.recipe.gregtech.PCBFactoryRecipes;
 import com.science.gtnl.common.recipe.gregtech.PlasmaForgeRecipes;
 import com.science.gtnl.common.recipe.gregtech.PreciseAssemblerRecipes;
+import com.science.gtnl.common.recipe.gregtech.QuantumForceTransformerRecipes;
 import com.science.gtnl.common.recipe.gregtech.ReactorProcessingUnitRecipes;
 import com.science.gtnl.common.recipe.gregtech.SpaceAssemblerRecipes;
 import com.science.gtnl.common.recipe.gregtech.TargetChamberRecipes;
@@ -209,7 +210,7 @@ public class RecipeLoader {
             new CyclotronRecipes(), new RuneAltarRecipes(), new IndustrialRockCrusherRecipes(),
             new PrecisionLaserEngraver(), new NanitesIntegratedProcessingRecipes(), new NanoForgeRecipes(),
             new SteamWeatherModuleRecipes(), new ElectricNeutronActivatorRecipes(), new ReactorProcessingUnitRecipes(),
-            new NuclearSaltProcessingPlantRecipes(), new MaceratorRecipes() };
+            new NuclearSaltProcessingPlantRecipes(), new MaceratorRecipes(), new QuantumForceTransformerRecipes() };
 
         for (IRecipePool recipePool : recipePools) {
             recipePool.loadRecipes();
