@@ -1,5 +1,6 @@
 package com.science.gtnl.common.recipe.gtnl;
 
+import gregtech.api.util.GTUtility;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
@@ -13,6 +14,8 @@ import gregtech.api.enums.Mods;
 import gregtech.api.enums.TierEU;
 import gregtech.api.recipe.RecipeMap;
 import gregtech.api.util.GTModHandler;
+
+import static gregtech.api.util.GTRecipeBuilder.*;
 
 public class IndustrialRockCrusherRecipes implements IRecipePool {
 
@@ -151,6 +154,15 @@ public class IndustrialRockCrusherRecipes implements IRecipePool {
             .itemOutputs(GTModHandler.getModItem(Mods.Botania.ID, "stone", 1, 3))
             .duration(16)
             .eut(TierEU.RECIPE_MV)
+            .addTo(IRCR);
+
+        RecipeBuilder.builder()
+            .itemInputs(
+                GTUtility.getIntegratedCircuit(7),
+                GTModHandler.getModItem(Mods.AppliedEnergistics2.ID, "tile.BlockSkyStone", 0))
+            .itemOutputs(GTModHandler.getModItem(Mods.AppliedEnergistics2.ID, "tile.BlockSkyStone", 1))
+            .duration(20 * TICKS)
+            .eut(TierEU.RECIPE_IV)
             .addTo(IRCR);
     }
 }
