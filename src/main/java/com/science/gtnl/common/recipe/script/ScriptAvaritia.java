@@ -854,7 +854,8 @@ public class ScriptAvaritia implements IScriptLoader {
                 'E',
                 GTModHandler.getModItem(UniversalSingularities.ID, "universal.general.singularity", 1, 17, missing),
                 'F',
-                GTModHandler.getModItem(UniversalSingularities.ID, "universal.extraUtilities.singularity", 1, 0, missing),
+                GTModHandler
+                    .getModItem(UniversalSingularities.ID, "universal.extraUtilities.singularity", 1, 0, missing),
                 'G',
                 GTModHandler.getModItem(Avaritia.ID, "Singularity", 1, 0, missing),
                 'H',
@@ -868,7 +869,8 @@ public class ScriptAvaritia implements IScriptLoader {
                 'L',
                 GTModHandler.getModItem(UniversalSingularities.ID, "universal.general.singularity", 1, 2, missing),
                 'M',
-                GTModHandler.getModItem(UniversalSingularities.ID, "universal.tinkersConstruct.singularity", 1, 32, missing),
+                GTModHandler
+                    .getModItem(UniversalSingularities.ID, "universal.tinkersConstruct.singularity", 1, 32, missing),
                 'N',
                 GTModHandler.getModItem(EternalSingularity.ID, "combined_singularity", 1, 5, missing),
                 'O',
@@ -888,11 +890,13 @@ public class ScriptAvaritia implements IScriptLoader {
                 'V',
                 GTModHandler.getModItem(UniversalSingularities.ID, "universal.enderIO.singularity", 1, 0, missing),
                 'W',
-                GTModHandler.getModItem(UniversalSingularities.ID, "universal.tinkersConstruct.singularity", 1, 1, missing),
+                GTModHandler
+                    .getModItem(UniversalSingularities.ID, "universal.tinkersConstruct.singularity", 1, 1, missing),
                 'X',
                 GTModHandler.getModItem(UniversalSingularities.ID, "universal.general.singularity", 1, 12, missing),
                 'Y',
-                GTModHandler.getModItem(UniversalSingularities.ID, "universal.tinkersConstruct.singularity", 1, 6, missing),
+                GTModHandler
+                    .getModItem(UniversalSingularities.ID, "universal.tinkersConstruct.singularity", 1, 6, missing),
                 'Z',
                 GTModHandler.getModItem(Avaritia.ID, "Singularity", 1, 9, missing),
                 '0',
@@ -906,15 +910,18 @@ public class ScriptAvaritia implements IScriptLoader {
                 '4',
                 GTModHandler.getModItem(SGCraft.ID, "stargateRing", 1, 0, missing),
                 '5',
-                GTModHandler.getModItem(UniversalSingularities.ID, "universal.draconicEvolution.singularity", 1, 0, missing),
+                GTModHandler
+                    .getModItem(UniversalSingularities.ID, "universal.draconicEvolution.singularity", 1, 0, missing),
                 '6',
                 GTModHandler.getModItem(UniversalSingularities.ID, "universal.enderIO.singularity", 1, 7, missing),
                 '7',
                 GTModHandler.getModItem(UniversalSingularities.ID, "universal.general.singularity", 1, 30, missing),
                 '8',
-                GTModHandler.getModItem(UniversalSingularities.ID, "universal.draconicEvolution.singularity", 1, 1, missing),
+                GTModHandler
+                    .getModItem(UniversalSingularities.ID, "universal.draconicEvolution.singularity", 1, 1, missing),
                 '9',
-                GTModHandler.getModItem(UniversalSingularities.ID, "universal.tinkersConstruct.singularity", 1, 3, missing),
+                GTModHandler
+                    .getModItem(UniversalSingularities.ID, "universal.tinkersConstruct.singularity", 1, 3, missing),
                 'a',
                 GTModHandler.getModItem(UniversalSingularities.ID, "universal.enderIO.singularity", 1, 6, missing),
                 'b',
@@ -958,7 +965,8 @@ public class ScriptAvaritia implements IScriptLoader {
                 'u',
                 GTModHandler.getModItem(UniversalSingularities.ID, "universal.general.singularity", 1, 26, missing),
                 'v',
-                GTModHandler.getModItem(UniversalSingularities.ID, "universal.tinkersConstruct.singularity", 1, 2, missing),
+                GTModHandler
+                    .getModItem(UniversalSingularities.ID, "universal.tinkersConstruct.singularity", 1, 2, missing),
                 'w',
                 GTModHandler.getModItem(Avaritia.ID, "Singularity", 1, 11, missing),
                 'x',
@@ -968,7 +976,8 @@ public class ScriptAvaritia implements IScriptLoader {
                 'z',
                 GTModHandler.getModItem(UniversalSingularities.ID, "universal.general.singularity", 1, 21, missing),
                 '/',
-                GTModHandler.getModItem(UniversalSingularities.ID, "universal.tinkersConstruct.singularity", 1, 4, missing),
+                GTModHandler
+                    .getModItem(UniversalSingularities.ID, "universal.tinkersConstruct.singularity", 1, 4, missing),
                 '<',
                 GTModHandler.getModItem(UniversalSingularities.ID, "universal.vanilla.singularity", 1, 2, missing),
                 '>',
