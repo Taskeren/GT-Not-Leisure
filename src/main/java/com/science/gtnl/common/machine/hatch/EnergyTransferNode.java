@@ -18,9 +18,16 @@ import net.minecraftforge.common.util.ForgeDirection;
 
 import gregtech.api.enums.Dyes;
 import gregtech.api.enums.Textures;
+import gregtech.api.graphs.Node;
+import gregtech.api.graphs.NodeList;
+import gregtech.api.graphs.PowerNode;
+import gregtech.api.graphs.PowerNodes;
+import gregtech.api.graphs.consumers.ConsumerNode;
 import gregtech.api.interfaces.ITexture;
 import gregtech.api.interfaces.metatileentity.IMetaTileEntity;
 import gregtech.api.interfaces.tileentity.IGregTechTileEntity;
+import gregtech.api.metatileentity.BaseMetaPipeEntity;
+import gregtech.api.metatileentity.BaseMetaTileEntity;
 import gregtech.api.metatileentity.MetaTileEntity;
 import gregtech.api.metatileentity.implementations.MTECable;
 import gregtech.api.metatileentity.implementations.MTEHatchDynamo;
@@ -91,14 +98,17 @@ public class EnergyTransferNode extends MTETieredMachineBlock implements IConnec
         int colorIndex, boolean aActive, boolean redstoneLevel) {
         if (side == aFacing) {
             return new ITexture[] { TextureFactory.of(OVERLAY_ENERGY_TRANSFER_NODE),
-                getBaseMetaTileEntity().isAllowedToWork() ? Textures.BlockIcons.OVERLAYS_ENERGY_OUT_MULTI_LASER[mTier]
-                    : Textures.BlockIcons.OVERLAYS_ENERGY_IN_MULTI_LASER[mTier],
+                TextureFactory.of(
+                    getBaseMetaTileEntity().isAllowedToWork() ? Textures.BlockIcons.OVERLAY_ENERGY_OUT_MULTI_LASER
+                        : Textures.BlockIcons.OVERLAY_ENERGY_IN_MULTI_LASER),
                 TextureFactory
                     .of(OVERLAY_ENERGY_TRANSFER_NODE_ACTIVE, Dyes.getModulation(colorIndex, MACHINE_METAL.getRGBA())) };
         } else {
             return new ITexture[] { TextureFactory.of(OVERLAY_ENERGY_TRANSFER_NODE),
-                getBaseMetaTileEntity().isAllowedToWork() ? Textures.BlockIcons.OVERLAYS_ENERGY_IN_MULTI_LASER[mTier]
-                    : Textures.BlockIcons.OVERLAYS_ENERGY_OUT_MULTI_LASER[mTier] };
+                TextureFactory.of(
+                    getBaseMetaTileEntity().isAllowedToWork() ? Textures.BlockIcons.OVERLAY_ENERGY_OUT_MULTI_LASER
+                        : Textures.BlockIcons.OVERLAY_ENERGY_IN_MULTI_LASER,
+                    Dyes.getModulation(colorIndex, MACHINE_METAL.getRGBA())) };
         }
     }
 
@@ -164,20 +174,13 @@ public class EnergyTransferNode extends MTETieredMachineBlock implements IConnec
 
     @Override
     public boolean isInputFacing(ForgeDirection side) {
-        if (getBaseMetaTileEntity().isAllowedToWork()) {
-            return side == getBaseMetaTileEntity().getFrontFacing();
-        } else {
-            return side != getBaseMetaTileEntity().getFrontFacing();
-        }
+        boolean front = side == getBaseMetaTileEntity().getFrontFacing();
+        return getBaseMetaTileEntity().isAllowedToWork() ? front : !front;
     }
 
     @Override
     public boolean isOutputFacing(ForgeDirection side) {
-        if (getBaseMetaTileEntity().isAllowedToWork()) {
-            return side != getBaseMetaTileEntity().getFrontFacing();
-        } else {
-            return side == getBaseMetaTileEntity().getFrontFacing();
-        }
+        return !isInputFacing(side);
     }
 
     @Override
@@ -233,19 +236,7 @@ public class EnergyTransferNode extends MTETieredMachineBlock implements IConnec
         }
     }
 
-    @Override
-    public boolean allowPullStack(IGregTechTileEntity aBaseMetaTileEntity, int aIndex, ForgeDirection side,
-        ItemStack aStack) {
-        return false;
-    }
-
-    @Override
-    public boolean allowPutStack(IGregTechTileEntity aBaseMetaTileEntity, int aIndex, ForgeDirection side,
-        ItemStack aStack) {
-        return false;
-    }
-
-    private void moveEnergy(MetaTileEntity dynamo, MetaTileEntity energy) {
+    public void moveEnergy(MetaTileEntity dynamo, MetaTileEntity energy) {
         if (GTUtility.getTier(dynamo.maxEUOutput()) > GTUtility.getTier(energy.maxEUInput())) {
             energy.doExplosion(dynamo.maxEUOutput());
             dynamo.setEUVar(
@@ -336,17 +327,51 @@ public class EnergyTransferNode extends MTETieredMachineBlock implements IConnec
             }
 
             if (aMetaTileEntity instanceof MTEPipeLaser pipe && tGTTileEntity.getColorization() == color) {
-                if (pipe.connectionCount < 2) {
-                    break;
-                } else {
-                    pipe.markUsed();
-                    continue;
-                }
+                if (pipe.connectionCount < 2) break;
+                pipe.markUsed();
+                continue;
             }
 
             if (aMetaTileEntity instanceof MTECable cable) {
-                if (cable.isConnectedAtSide(facingSide)) continue;
+                if (!cable.isConnectedAtSide(facingSide)) break;
+                if (findProvider) continue;
+                var node = ((BaseMetaPipeEntity) cable.getBaseMetaTileEntity()).getNode();
+                if (!(node instanceof PowerNode tNode)) break;
+                if (tNode.mConsumers == null) break;
+
+                tNode.mHadVoltage = true;
+
+                for (ConsumerNode consumer : tNode.mConsumers) {
+                    if (consumer == null) continue;
+                    if (!(consumer.mTileEntity instanceof BaseMetaTileEntity baseMetaTileEntity)) continue;
+                    var meta = baseMetaTileEntity.getMetaTileEntity();
+                    var gtTE = meta.getBaseMetaTileEntity();
+                    if (meta == this) continue;
+
+                    long maxAvailableVoltage = gtTE.getInputVoltage();
+
+                    if (maxAvailableVoltage <= 0) continue;
+
+                    long currentStoredEU = getBaseMetaTileEntity().getStoredEU();
+
+                    int maxAvailableAmps = Math.toIntExact(currentStoredEU / maxAvailableVoltage);
+
+                    if (maxAvailableAmps <= 0) maxAvailableAmps = 1;
+
+                    int ampsToAttempt = Math.toIntExact(Math.min(mAmperes, maxAvailableAmps));
+
+                    var singleConsumerList = new NodeList(new Node[] { consumer });
+
+                    long usedAmperes = PowerNodes
+                        .powerNode(tNode, null, singleConsumerList, maxAvailableVoltage, ampsToAttempt);
+
+                    if (usedAmperes > 0) {
+                        long euToDeduct = maxAvailableVoltage * usedAmperes;
+                        setEUVar(getBaseMetaTileEntity().getStoredEU() - euToDeduct);
+                    }
+                }
             }
+
             break;
         }
         return null;
@@ -355,6 +380,18 @@ public class EnergyTransferNode extends MTETieredMachineBlock implements IConnec
     @Override
     public boolean canConnect(ForgeDirection side) {
         return true;
+    }
+
+    @Override
+    public boolean allowPullStack(IGregTechTileEntity aBaseMetaTileEntity, int aIndex, ForgeDirection side,
+        ItemStack aStack) {
+        return false;
+    }
+
+    @Override
+    public boolean allowPutStack(IGregTechTileEntity aBaseMetaTileEntity, int aIndex, ForgeDirection side,
+        ItemStack aStack) {
+        return false;
     }
 
     @Override
