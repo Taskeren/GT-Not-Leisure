@@ -26,6 +26,7 @@ import com.science.gtnl.loader.BlockLoader;
 import com.science.gtnl.utils.StructureUtils;
 
 import gregtech.api.enums.Materials;
+import gregtech.api.enums.TAE;
 import gregtech.api.enums.Textures;
 import gregtech.api.interfaces.ITexture;
 import gregtech.api.interfaces.metatileentity.IMetaTileEntity;
@@ -129,7 +130,19 @@ public class MegaMixer extends GTMMultiMachineBase<MegaMixer> implements ISurviv
                         ParallelCon)
                     .buildAndChain(onElementPass(x -> ++x.mCountCasing, ofBlock(sBlockCasings8, 7))))
             .addElement('C', ofBlock(sBlockCasingsTT, 4))
-            .addElement('D', ofBlock(blockCasingsMisc, 11))
+            .addElement(
+                'D',
+                buildHatchAdder(MegaMixer.class).casingIndex(TAE.GTPP_INDEX(11))
+                    .dot(1)
+                    .atLeast(
+                        InputHatch,
+                        OutputHatch,
+                        InputBus,
+                        OutputBus,
+                        Maintenance,
+                        Energy.or(ExoticEnergy),
+                        ParallelCon)
+                    .buildAndChain(onElementPass(x -> ++x.mCountCasing, ofBlock(blockCasingsMisc, 11))))
             .addElement('E', ofBlock(sBlockCasings8, 10))
             .addElement('F', ofFrame(Materials.Neutronium))
             .addElement('G', ofBlock(BlockLoader.metaCasing, 4))
