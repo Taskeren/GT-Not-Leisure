@@ -2005,7 +2005,7 @@ public class AssemblingLineRecipes implements IRecipePool {
                 GregtechItemList.Laser_Lens_Special.get(16),
                 GGMaterial.atomicSeparationCatalyst.get(OrePrefixes.nanite, 8),
                 GTOreDictUnificator.get(OrePrefixes.wireGt16, Materials.SuperconductorUEV, 12),
-                GTOreDictUnificator.get(OrePrefixes.plateSuperdense, GGMaterial.extremelyUnstableNaquadah, 8) },
+                GGMaterial.extremelyUnstableNaquadah.get(OrePrefixes.plateSuperdense, 8) },
             new FluidStack[] { MaterialMisc.MUTATED_LIVING_SOLDER.getFluidStack(100000),
                 Materials.Lubricant.getFluid(512000), GGMaterial.atomicSeparationCatalyst.getMolten(230400) },
             GTNLItemList.PhaseChangeCube.get(1),
