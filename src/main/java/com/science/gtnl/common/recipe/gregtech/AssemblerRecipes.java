@@ -3369,6 +3369,13 @@ public class AssemblerRecipes implements IRecipePool {
             .eut(TierEU.RECIPE_ZPM)
             .addTo(As);
 
+        RecipeBuilder.builder()
+            .itemInputs(GTUtility.getIntegratedCircuit(8), ItemList.Hull_LV.get(1))
+            .itemOutputs(ItemList.Hatch_Maintenance.get(1))
+            .duration(100)
+            .eut(TierEU.RECIPE_LV)
+            .addTo(As);
+
         loadLamp();
         loadWirelessHatch();
         loadLaserHatch();

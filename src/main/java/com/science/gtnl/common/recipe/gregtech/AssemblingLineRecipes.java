@@ -50,6 +50,7 @@ import gtnhlanth.common.register.LanthItemList;
 import tectech.recipe.TTRecipeAdder;
 import tectech.thing.CustomItemList;
 
+@SuppressWarnings("deprecation")
 public class AssemblingLineRecipes implements IRecipePool {
 
     public IRecipeMap AL = GTRecipeConstants.AssemblyLine;

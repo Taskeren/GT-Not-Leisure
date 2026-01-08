@@ -17,6 +17,7 @@ import gregtech.api.enums.Materials;
 import gregtech.api.enums.OrePrefixes;
 import gregtech.api.enums.TierEU;
 import gregtech.api.recipe.RecipeMap;
+import gregtech.api.recipe.RecipeMaps;
 import gregtech.api.util.GTModHandler;
 import gregtech.api.util.GTOreDictUnificator;
 import gregtech.api.util.GTUtility;
@@ -26,6 +27,7 @@ import gtPlusPlus.xmod.gregtech.api.enums.GregtechItemList;
 public class SteamManufacturerRecipes implements IRecipePool {
 
     public RecipeMap<?> SMFR = GTNLRecipeMaps.SteamManufacturerRecipes;
+    public RecipeMap<?> As = RecipeMaps.assemblerRecipes;
 
     @Override
     public void loadRecipes() {
@@ -103,7 +105,8 @@ public class SteamManufacturerRecipes implements IRecipePool {
             .itemOutputs(GTNLItemList.HydraulicMotor.get(1))
             .duration(1 * SECONDS)
             .eut(16)
-            .addTo(SMFR);
+            .addTo(SMFR)
+            .addTo(As);
 
         RecipeBuilder.builder()
             .itemInputs(
@@ -117,7 +120,8 @@ public class SteamManufacturerRecipes implements IRecipePool {
             .itemOutputs(GTNLItemList.HydraulicPiston.get(1))
             .duration(1 * SECONDS)
             .eut(16)
-            .addTo(SMFR);
+            .addTo(SMFR)
+            .addTo(As);
 
         RecipeBuilder.builder()
             .itemInputs(
@@ -129,7 +133,8 @@ public class SteamManufacturerRecipes implements IRecipePool {
             .itemOutputs(GTNLItemList.HydraulicPump.get(1))
             .duration(1 * SECONDS)
             .eut(16)
-            .addTo(SMFR);
+            .addTo(SMFR)
+            .addTo(As);
 
         RecipeBuilder.builder()
             .itemInputs(
@@ -141,7 +146,8 @@ public class SteamManufacturerRecipes implements IRecipePool {
             .itemOutputs(GTNLItemList.HydraulicArm.get(1))
             .duration(1 * SECONDS)
             .eut(16)
-            .addTo(SMFR);
+            .addTo(SMFR)
+            .addTo(As);
 
         RecipeBuilder.builder()
             .itemInputs(
@@ -151,7 +157,8 @@ public class SteamManufacturerRecipes implements IRecipePool {
             .itemOutputs(GTNLItemList.HydraulicConveyor.get(1))
             .duration(1 * SECONDS)
             .eut(16)
-            .addTo(SMFR);
+            .addTo(SMFR)
+            .addTo(As);
 
         RecipeBuilder.builder()
             .itemInputs(
@@ -162,7 +169,8 @@ public class SteamManufacturerRecipes implements IRecipePool {
             .itemOutputs(GTNLItemList.HydraulicRegulator.get(1))
             .duration(1 * SECONDS)
             .eut(16)
-            .addTo(SMFR);
+            .addTo(SMFR)
+            .addTo(As);
 
         RecipeBuilder.builder()
             .itemInputs(
@@ -173,7 +181,8 @@ public class SteamManufacturerRecipes implements IRecipePool {
             .itemOutputs(GTNLItemList.HydraulicSteamReceiver.get(1))
             .duration(1 * SECONDS)
             .eut(16)
-            .addTo(SMFR);
+            .addTo(SMFR)
+            .addTo(As);
 
         RecipeBuilder.builder()
             .itemInputs(
@@ -184,7 +193,8 @@ public class SteamManufacturerRecipes implements IRecipePool {
             .itemOutputs(GTNLItemList.HydraulicSteamJetSpewer.get(1))
             .duration(1 * SECONDS)
             .eut(16)
-            .addTo(SMFR);
+            .addTo(SMFR)
+            .addTo(As);
 
         RecipeBuilder.builder()
             .itemInputs(
@@ -195,7 +205,8 @@ public class SteamManufacturerRecipes implements IRecipePool {
             .itemOutputs(GTNLItemList.HydraulicVaporGenerator.get(1))
             .duration(1 * SECONDS)
             .eut(16)
-            .addTo(SMFR);
+            .addTo(SMFR)
+            .addTo(As);
 
         RecipeBuilder.builder()
             .itemInputs(
@@ -205,7 +216,8 @@ public class SteamManufacturerRecipes implements IRecipePool {
             .itemOutputs(GTNLItemList.IronTurbine.get(1))
             .duration(5 * SECONDS)
             .eut(16)
-            .addTo(SMFR);
+            .addTo(SMFR)
+            .addTo(As);
 
         RecipeBuilder.builder()
             .itemInputs(
@@ -215,7 +227,8 @@ public class SteamManufacturerRecipes implements IRecipePool {
             .itemOutputs(GTNLItemList.BronzeTurbine.get(1))
             .duration(5 * SECONDS)
             .eut(16)
-            .addTo(SMFR);
+            .addTo(SMFR)
+            .addTo(As);
 
         RecipeBuilder.builder()
             .itemInputs(
@@ -224,7 +237,8 @@ public class SteamManufacturerRecipes implements IRecipePool {
             .itemOutputs(GTNLItemList.SteelTurbine.get(1))
             .duration(5 * SECONDS)
             .eut(512)
-            .addTo(SMFR);
+            .addTo(SMFR)
+            .addTo(As);
 
         RecipeBuilder.builder()
             .itemInputs(
@@ -233,7 +247,8 @@ public class SteamManufacturerRecipes implements IRecipePool {
             .itemOutputs(GTNLItemList.CompressedSteamTurbine.get(1))
             .duration(5 * SECONDS)
             .eut(512)
-            .addTo(SMFR);
+            .addTo(SMFR)
+            .addTo(As);
 
         RecipeBuilder.builder()
             .itemInputs(
@@ -256,7 +271,8 @@ public class SteamManufacturerRecipes implements IRecipePool {
             .itemOutputs(GTNLItemList.PrecisionSteamMechanism.get(1))
             .duration(3 * SECONDS)
             .eut(16)
-            .addTo(SMFR);
+            .addTo(SMFR)
+            .addTo(As);
 
         if (StorageDrawers.isModLoaded()) {
             // Drawer template
@@ -424,7 +440,8 @@ public class SteamManufacturerRecipes implements IRecipePool {
             .itemOutputs(GTNLItemList.OriginalInputHatch.get(1))
             .duration(2 * SECONDS)
             .eut(16)
-            .addTo(SMFR);
+            .addTo(SMFR)
+            .addTo(As);
 
         RecipeBuilder.builder()
             .itemInputs(
@@ -435,7 +452,8 @@ public class SteamManufacturerRecipes implements IRecipePool {
             .itemOutputs(GTNLItemList.OriginalOutputHatch.get(1))
             .duration(2 * SECONDS)
             .eut(16)
-            .addTo(SMFR);
+            .addTo(SMFR)
+            .addTo(As);
 
         // Machine Casings
 
@@ -521,16 +539,6 @@ public class SteamManufacturerRecipes implements IRecipePool {
             .eut(16)
             .addTo(SMFR);
 
-        RecipeBuilder.builder()
-            .itemInputs(
-                GTOreDictUnificator.get(OrePrefixes.frameGt, Materials.Steel, 2),
-                ItemList.Casing_Gearbox_Steel.get(1),
-                GTOreDictUnificator.get(OrePrefixes.plate, Materials.Steel, 6))
-            .itemOutputs(GregtechItemList.Casing_BedrockMiner.get(1))
-            .duration(2 * SECONDS)
-            .eut(16)
-            .addTo(SMFR);
-
         // Vibration Casing
         RecipeBuilder.builder()
             .itemInputs(
@@ -540,7 +548,8 @@ public class SteamManufacturerRecipes implements IRecipePool {
             .itemOutputs(GTNLItemList.VibrationSafeCasing.get(1))
             .duration(2 * SECONDS)
             .eut(16)
-            .addTo(SMFR);
+            .addTo(SMFR)
+            .addTo(As);
 
         RecipeBuilder.builder()
             .itemInputs(
@@ -550,7 +559,8 @@ public class SteamManufacturerRecipes implements IRecipePool {
             .itemOutputs(GTNLItemList.BronzeBrickCasing.get(2))
             .duration(2 * SECONDS)
             .eut(16)
-            .addTo(SMFR);
+            .addTo(SMFR)
+            .addTo(As);
 
         RecipeBuilder.builder()
             .itemInputs(
@@ -560,7 +570,8 @@ public class SteamManufacturerRecipes implements IRecipePool {
             .itemOutputs(GTNLItemList.SteelBrickCasing.get(2))
             .duration(2 * SECONDS)
             .eut(16)
-            .addTo(SMFR);
+            .addTo(SMFR)
+            .addTo(As);
 
         // Extractinator Solid Casing
         RecipeBuilder.builder()
@@ -570,7 +581,8 @@ public class SteamManufacturerRecipes implements IRecipePool {
             .itemOutputs(GTNLItemList.ConcentratingSieveMesh.get(1))
             .duration(2 * SECONDS)
             .eut(16)
-            .addTo(SMFR);
+            .addTo(SMFR)
+            .addTo(As);
 
         // Stronze Wrapped Casingg
         RecipeBuilder.builder()
@@ -580,7 +592,8 @@ public class SteamManufacturerRecipes implements IRecipePool {
             .itemOutputs(GTNLItemList.StronzeWrappedCasing.get(4))
             .duration(2 * SECONDS)
             .eut(16)
-            .addTo(SMFR);
+            .addTo(SMFR)
+            .addTo(As);
 
         // Breel Pipe Casingg
         RecipeBuilder.builder()
@@ -591,7 +604,8 @@ public class SteamManufacturerRecipes implements IRecipePool {
             .itemOutputs(GTNLItemList.BreelPipeCasing.get(2))
             .duration(2 * SECONDS)
             .eut(16)
-            .addTo(SMFR);
+            .addTo(SMFR)
+            .addTo(As);
 
         // Solar Cell Casing
         RecipeBuilder.builder()
@@ -602,7 +616,8 @@ public class SteamManufacturerRecipes implements IRecipePool {
             .itemOutputs(GTNLItemList.SolarBoilingCell.get(1))
             .duration(2 * SECONDS)
             .eut(16)
-            .addTo(SMFR);
+            .addTo(SMFR)
+            .addTo(As);
 
         // Hydraulic Assembling Casing
         RecipeBuilder.builder()
@@ -613,7 +628,8 @@ public class SteamManufacturerRecipes implements IRecipePool {
             .itemOutputs(GTNLItemList.HydraulicAssemblingCasing.get(1))
             .duration(2 * SECONDS)
             .eut(16)
-            .addTo(SMFR);
+            .addTo(SMFR)
+            .addTo(As);
 
         // Hyper Pressure Breel Casing
         RecipeBuilder.builder()
@@ -624,7 +640,8 @@ public class SteamManufacturerRecipes implements IRecipePool {
             .itemOutputs(GTNLItemList.HyperPressureBreelCasing.get(1))
             .duration(2 * SECONDS)
             .eut(16)
-            .addTo(SMFR);
+            .addTo(SMFR)
+            .addTo(As);
 
         // Breel-Plated Casing
         RecipeBuilder.builder()
@@ -635,7 +652,8 @@ public class SteamManufacturerRecipes implements IRecipePool {
             .itemOutputs(GTNLItemList.BreelPlatedCasing.get(1))
             .duration(2 * SECONDS)
             .eut(16)
-            .addTo(SMFR);
+            .addTo(SMFR)
+            .addTo(As);
 
         // Compact Pipe Casing
         RecipeBuilder.builder()
@@ -646,7 +664,8 @@ public class SteamManufacturerRecipes implements IRecipePool {
             .itemOutputs(GTNLItemList.SteamCompactPipeCasing.get(1))
             .duration(6 * SECONDS)
             .eut(24)
-            .addTo(SMFR);
+            .addTo(SMFR)
+            .addTo(As);
 
         // Weighted Pressure Plates
         RecipeBuilder.builder()
@@ -675,7 +694,8 @@ public class SteamManufacturerRecipes implements IRecipePool {
             .itemOutputs(GTNLItemList.SteamLavaMaker.get(1))
             .duration(10 * SECONDS)
             .eut(200)
-            .addTo(SMFR);
+            .addTo(SMFR)
+            .addTo(As);
 
         // Supercompressor
         RecipeBuilder.builder()
@@ -683,7 +703,8 @@ public class SteamManufacturerRecipes implements IRecipePool {
             .itemOutputs(GTNLItemList.MegaSteamCompressor.get(1))
             .duration(120 * SECONDS)
             .eut(1600)
-            .addTo(SMFR);
+            .addTo(SMFR)
+            .addTo(As);
 
         // Progenitor
         RecipeBuilder.builder()
@@ -700,7 +721,8 @@ public class SteamManufacturerRecipes implements IRecipePool {
             .itemOutputs(GTNLItemList.SteamGateAssembler.get(1))
             .duration(120 * SECONDS)
             .eut(1600)
-            .addTo(SMFR);
+            .addTo(SMFR)
+            .addTo(As);
 
         // Compact Fusion
         RecipeBuilder.builder()
@@ -717,7 +739,8 @@ public class SteamManufacturerRecipes implements IRecipePool {
             .itemOutputs(GTNLItemList.HighPressureSteamFusionReactor.get(1))
             .duration(120 * SECONDS)
             .eut(1600)
-            .addTo(SMFR);
+            .addTo(SMFR)
+            .addTo(As);
 
         // Pipeless
         RecipeBuilder.builder()
@@ -731,7 +754,8 @@ public class SteamManufacturerRecipes implements IRecipePool {
             .itemOutputs(GTNLItemList.PipelessSteamHatch.get(1))
             .duration(2 * SECONDS)
             .eut(16)
-            .addTo(SMFR);
+            .addTo(SMFR)
+            .addTo(As);
 
         RecipeBuilder.builder()
             .itemInputs(
@@ -744,7 +768,8 @@ public class SteamManufacturerRecipes implements IRecipePool {
             .itemOutputs(GTNLItemList.PipelessSteamVent.get(1))
             .duration(2 * SECONDS)
             .eut(16)
-            .addTo(SMFR);
+            .addTo(SMFR)
+            .addTo(As);
 
         // Jetstream Hatch
         RecipeBuilder.builder()
@@ -756,7 +781,8 @@ public class SteamManufacturerRecipes implements IRecipePool {
             .itemOutputs(GTNLItemList.PipelessJetstreamHatch.get(1))
             .duration(20 * SECONDS)
             .eut(400)
-            .addTo(SMFR);
+            .addTo(SMFR)
+            .addTo(As);
 
         // Jetstream Vent
         RecipeBuilder.builder()
@@ -768,7 +794,8 @@ public class SteamManufacturerRecipes implements IRecipePool {
             .itemOutputs(GTNLItemList.PipelessJetstreamVent.get(1))
             .duration(20 * SECONDS)
             .eut(400)
-            .addTo(SMFR);
+            .addTo(SMFR)
+            .addTo(As);
 
         RecipeBuilder.builder()
             .itemInputs(
@@ -779,7 +806,8 @@ public class SteamManufacturerRecipes implements IRecipePool {
             .itemOutputs(GTNLItemList.PipelessSteamCover.get(1))
             .duration(20 * SECONDS)
             .eut(400)
-            .addTo(SMFR);
+            .addTo(SMFR)
+            .addTo(As);
 
         RecipeBuilder.builder()
             .itemInputs(
@@ -789,7 +817,8 @@ public class SteamManufacturerRecipes implements IRecipePool {
             .itemOutputs(GTNLItemList.IndustrialSteamCasing.get(1))
             .duration(2 * SECONDS)
             .eut(16)
-            .addTo(SMFR);
+            .addTo(SMFR)
+            .addTo(As);
 
         RecipeBuilder.builder()
             .itemInputs(
@@ -799,7 +828,8 @@ public class SteamManufacturerRecipes implements IRecipePool {
             .itemOutputs(GTNLItemList.AdvancedIndustrialSteamCasing.get(1))
             .duration(2 * SECONDS)
             .eut(16)
-            .addTo(SMFR);
+            .addTo(SMFR)
+            .addTo(As);
 
         RecipeBuilder.builder()
             .itemInputs(
@@ -809,7 +839,8 @@ public class SteamManufacturerRecipes implements IRecipePool {
             .itemOutputs(GTNLItemList.BronzeMachineFrame.get(1))
             .duration(2 * SECONDS)
             .eut(16)
-            .addTo(SMFR);
+            .addTo(SMFR)
+            .addTo(As);
 
         RecipeBuilder.builder()
             .itemInputs(
@@ -819,7 +850,8 @@ public class SteamManufacturerRecipes implements IRecipePool {
             .itemOutputs(GTNLItemList.SteelMachineFrame.get(1))
             .duration(2 * SECONDS)
             .eut(16)
-            .addTo(SMFR);
+            .addTo(SMFR)
+            .addTo(As);
 
         RecipeBuilder.builder()
             .itemInputs(
