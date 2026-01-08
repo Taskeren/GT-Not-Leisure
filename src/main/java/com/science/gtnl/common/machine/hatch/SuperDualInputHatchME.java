@@ -924,9 +924,9 @@ public class SuperDualInputHatchME extends MTEHatchInputBus
         return createStoredStackSizeWindow(player, slotID, f_stored, "Info_SuperDualInputHatchME_01");
     }
 
-    private ModularWindow createStoredStackSizeWindow(EntityPlayer player, int slotID, long[] storedArray,
+    public ModularWindow createStoredStackSizeWindow(EntityPlayer player, int slotID, long[] storedArray,
         String titleKey) {
-        final int WIDTH = 100;
+        final int WIDTH = 110;
         final int HEIGHT = 66;
         final int PARENT_WIDTH = getGUIWidth();
         final int PARENT_HEIGHT = getGUIHeight();
@@ -944,10 +944,10 @@ public class SuperDualInputHatchME extends MTEHatchInputBus
         builder.widget(
             TextWidget.localised(titleKey)
                 .setPos(3, 6)
-                .setSize(96, 14))
+                .setSize(106, 14))
             .widget(
                 new TextWidget(StatCollector.translateToLocal("Info_SuperDualInputHatchME_02") + slotID).setPos(3, 20)
-                    .setSize(96, 14))
+                    .setSize(106, 14))
             .widget(
                 new NumericWidget().setSetter(val -> storedArray[slotID] = (long) val)
                     .setGetter(() -> storedArray[slotID])
@@ -955,7 +955,7 @@ public class SuperDualInputHatchME extends MTEHatchInputBus
                     .setScrollValues(1, 100_000, 1_000_000)
                     .setTextAlignment(Alignment.Center)
                     .setTextColor(Color.WHITE.normal)
-                    .setSize(92, 18)
+                    .setSize(106, 18)
                     .setPos(3, 36)
                     .setBackground(GTUITextures.BACKGROUND_TEXT_FIELD)
                     .attachSyncer(

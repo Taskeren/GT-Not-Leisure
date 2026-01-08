@@ -748,7 +748,7 @@ public class SuperInputBusME extends MTEHatchInputBusME implements IConfiguratio
     }
 
     public ModularWindow createStroedStackSizeWindow(EntityPlayer player, int slotID) {
-        final int WIDTH = 78;
+        final int WIDTH = 110;
         final int HEIGHT = 66;
         final int PARENT_WIDTH = getGUIWidth();
         final int PARENT_HEIGHT = getGUIHeight();
@@ -765,10 +765,10 @@ public class SuperInputBusME extends MTEHatchInputBusME implements IConfiguratio
         builder.widget(
             TextWidget.localised("Info_SuperInputHatchME_00")
                 .setPos(3, 6)
-                .setSize(74, 14))
+                .setSize(106, 14))
             .widget(
                 new TextWidget(StatCollector.translateToLocal("Info_SuperInputHatchME_01") + slotID).setPos(3, 20)
-                    .setSize(74, 14))
+                    .setSize(106, 14))
             .widget(
                 new NumericWidget().setSetter(val -> storedStackSizes[slotID] = (int) val)
                     .setGetter(() -> storedStackSizes[slotID])
@@ -776,7 +776,7 @@ public class SuperInputBusME extends MTEHatchInputBusME implements IConfiguratio
                     .setScrollValues(1, 1000, 10000)
                     .setTextAlignment(Alignment.Center)
                     .setTextColor(Color.WHITE.normal)
-                    .setSize(70, 18)
+                    .setSize(106, 18)
                     .setPos(3, 36)
                     .setBackground(GTUITextures.BACKGROUND_TEXT_FIELD)
                     .attachSyncer(
