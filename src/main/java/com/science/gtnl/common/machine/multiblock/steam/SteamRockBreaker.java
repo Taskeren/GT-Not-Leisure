@@ -216,7 +216,7 @@ public class SteamRockBreaker extends SteamMultiMachineBase<SteamRockBreaker> im
 
     @Override
     public int getTierRecipes() {
-        return 1;
+        return 14;
     }
 
     @Override
