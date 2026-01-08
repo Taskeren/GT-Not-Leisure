@@ -1,6 +1,7 @@
 package com.science.gtnl.common.recipe.gtnl;
 
-import gregtech.api.util.GTUtility;
+import static gregtech.api.util.GTRecipeBuilder.*;
+
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
@@ -14,8 +15,7 @@ import gregtech.api.enums.Mods;
 import gregtech.api.enums.TierEU;
 import gregtech.api.recipe.RecipeMap;
 import gregtech.api.util.GTModHandler;
-
-import static gregtech.api.util.GTRecipeBuilder.*;
+import gregtech.api.util.GTUtility;
 
 public class IndustrialRockCrusherRecipes implements IRecipePool {
 
