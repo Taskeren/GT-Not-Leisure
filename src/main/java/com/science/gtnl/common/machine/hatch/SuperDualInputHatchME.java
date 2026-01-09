@@ -27,6 +27,7 @@ import net.minecraft.client.renderer.entity.RenderItem;
 import net.minecraft.client.renderer.texture.TextureManager;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -1664,6 +1665,38 @@ public class SuperDualInputHatchME extends MTEHatchInputBus
         if (proxy.getNode() != null) {
             proxy.getNode()
                 .updateState();
+        }
+    }
+
+    @Override
+    public void onLeftclick(IGregTechTileEntity aBaseMetaTileEntity, EntityPlayer aPlayer) {
+        if (aPlayer instanceof EntityPlayerMP) {
+            ItemStack dataStick = aPlayer.inventory.getCurrentItem();
+            if (ItemList.Tool_DataStick.isStackEqual(dataStick, false, true)) {
+                dataStick.stackTagCompound = this.getCopiedData(aPlayer);
+                dataStick.setStackDisplayName("Super Dual Input Hatch ME Link Configuration");
+                aPlayer.addChatMessage(new ChatComponentTranslation("GT5U.machines.output_bus.saved"));
+            }
+        }
+    }
+
+    @Override
+    public boolean onRightclick(IGregTechTileEntity aBaseMetaTileEntity, EntityPlayer aPlayer, ForgeDirection side,
+        float aX, float aY, float aZ) {
+        if (!(aPlayer instanceof EntityPlayerMP)) {
+            this.openGui(aPlayer);
+            return this.onRightclick(aBaseMetaTileEntity, aPlayer);
+        } else {
+            ItemStack dataStick = aPlayer.inventory.getCurrentItem();
+            if (!ItemList.Tool_DataStick.isStackEqual(dataStick, false, true)) {
+                this.openGui(aPlayer);
+                return this.onRightclick(aBaseMetaTileEntity, aPlayer);
+            } else if (!this.pasteCopiedData(aPlayer, dataStick.stackTagCompound)) {
+                return false;
+            } else {
+                aPlayer.addChatMessage(new ChatComponentTranslation("GT5U.machines.output_bus.loaded"));
+                return true;
+            }
         }
     }
 
