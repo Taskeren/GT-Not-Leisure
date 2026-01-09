@@ -34,9 +34,11 @@ import com.gtnewhorizon.structurelib.alignment.constructable.ISurvivalConstructa
 import com.gtnewhorizon.structurelib.structure.IStructureDefinition;
 import com.gtnewhorizon.structurelib.structure.ISurvivalBuildEnvironment;
 import com.gtnewhorizon.structurelib.structure.StructureDefinition;
+import com.gtnewhorizons.modularui.api.drawable.IDrawable;
 import com.gtnewhorizons.modularui.api.forge.ItemStackHandler;
 import com.gtnewhorizons.modularui.api.screen.ModularWindow;
 import com.gtnewhorizons.modularui.api.screen.UIBuildContext;
+import com.gtnewhorizons.modularui.common.widget.ButtonWidget;
 import com.gtnewhorizons.modularui.common.widget.DynamicPositionedColumn;
 import com.gtnewhorizons.modularui.common.widget.FakeSyncWidget;
 import com.gtnewhorizons.modularui.common.widget.SlotWidget;
@@ -52,6 +54,7 @@ import gregtech.api.enums.Materials;
 import gregtech.api.enums.MaterialsUEVplus;
 import gregtech.api.enums.OrePrefixes;
 import gregtech.api.enums.Textures;
+import gregtech.api.gui.modularui.GTUITextures;
 import gregtech.api.interfaces.IHatchElement;
 import gregtech.api.interfaces.ITexture;
 import gregtech.api.interfaces.metatileentity.IMetaTileEntity;
@@ -563,7 +566,29 @@ public class PCBFactory extends WirelessEnergyMultiMachineBase<PCBFactory>
     @Override
     public void addUIWidgets(ModularWindow.Builder builder, UIBuildContext buildContext) {
         super.addUIWidgets(builder, buildContext);
-        if (machineTier >= 3) createUpgradeButton(builder, buildContext);
+        createUpgradeButton(builder, buildContext);
+    }
+
+    @Override
+    public void createUpgradeButton(ModularWindow.Builder builder, UIBuildContext buildContext) {
+        buildContext.addSyncedWindow(getUpgradeWindowId(), this::createConsumeWindow);
+        builder.widget(new FakeSyncWidget.BooleanSyncer(this::isUpgradeConsumed, this::setUpgradeConsumed));
+
+        builder.widget(new ButtonWidget().setOnClick((click, widget) -> {
+            if (!widget.isClient()) {
+                widget.getContext()
+                    .openSyncedWindow(getUpgradeWindowId());
+            }
+        })
+            .setBackground(
+                () -> new IDrawable[] {
+                    isUpgradeConsumed() ? GTUITextures.BUTTON_STANDARD_PRESSED : GTUITextures.BUTTON_STANDARD,
+                    GTUITextures.OVERLAY_BUTTON_ARROW_GREEN_UP })
+            .addTooltip(getUpgradeButtonTooltip())
+            .setTooltipShowUpDelay(5)
+            .setEnabled(widget -> machineTier >= 3)
+            .setPos(getUpgradeButtonPos())
+            .setSize(16, 16));
     }
 
     @Override

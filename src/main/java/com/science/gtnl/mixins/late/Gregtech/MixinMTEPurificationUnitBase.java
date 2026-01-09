@@ -536,6 +536,7 @@ public abstract class MixinMTEPurificationUnitBase extends MTEExtendedPowerMulti
         builder.widget(new FakeSyncWidget.BooleanSyncer(() -> gtnl$wirelessMode, val -> gtnl$wirelessMode = val));
     }
 
+    @Unique
     private static final int LONG_PARALLEL_WINDOW_ID = 11;
 
     @Override
