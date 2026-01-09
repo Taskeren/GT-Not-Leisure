@@ -32,7 +32,7 @@ import com.gtnewhorizon.structurelib.structure.StructureDefinition;
 import com.gtnewhorizons.modularui.api.forge.ItemStackHandler;
 import com.gtnewhorizons.modularui.api.screen.ModularWindow;
 import com.gtnewhorizons.modularui.api.screen.UIBuildContext;
-import com.science.gtnl.api.IControllerUpgradeable;
+import com.science.gtnl.api.IControllerUpgrade;
 import com.science.gtnl.common.machine.multiMachineBase.WirelessEnergyMultiMachineBase;
 import com.science.gtnl.common.material.GTNLRecipeMaps;
 import com.science.gtnl.loader.BlockLoader;
@@ -64,7 +64,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 public class EngravingLaserPlant extends WirelessEnergyMultiMachineBase<EngravingLaserPlant>
-    implements IControllerUpgradeable {
+    implements IControllerUpgrade {
 
     private static final int MACHINEMODE_LASER = 0;
     private static final int MACHINEMODE_PRECISION_LASER = 1;

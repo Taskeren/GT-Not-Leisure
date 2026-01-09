@@ -62,6 +62,7 @@ import com.gtnewhorizons.modularui.common.widget.Scrollable;
 import com.gtnewhorizons.modularui.common.widget.SlotWidget;
 import com.gtnewhorizons.modularui.common.widget.TextWidget;
 import com.gtnewhorizons.modularui.common.widget.textfield.NumericWidget;
+import com.science.gtnl.api.IControllerInfo;
 import com.science.gtnl.common.machine.hatch.CustomFluidHatch;
 import com.science.gtnl.common.machine.hatch.WirelessSteamEnergyHatch;
 import com.science.gtnl.loader.BlockLoader;
@@ -108,9 +109,10 @@ import gtPlusPlus.xmod.gregtech.api.metatileentity.implementations.base.MTESteam
 import mcp.mobius.waila.api.IWailaConfigHandler;
 import mcp.mobius.waila.api.IWailaDataAccessor;
 
-public abstract class SteamMultiMachineBase<T extends SteamMultiMachineBase<T>> extends MTESteamMultiBase<T> {
+public abstract class SteamMultiMachineBase<T extends SteamMultiMachineBase<T>> extends MTESteamMultiBase<T>
+    implements IControllerInfo {
 
-    public static final int OC_WINDOW_ID = 11;
+    public static final int OC_WINDOW_ID = 12;
     public double configSpeedBoost = 1;
     public int recipeOcCount = 0;
     public int tierAdvancedCasing = -1;
@@ -1365,6 +1367,11 @@ public abstract class SteamMultiMachineBase<T extends SteamMultiMachineBase<T>> 
                 builder.widget(createPowerPanelButton(builder));
                 buildContext.addSyncedWindow(POWER_PANEL_WINDOW_ID, this::createPowerPanel);
             }
+
+            if (supportsMachineInfo()) {
+                builder.widget(createMachineInfoButton(builder));
+                buildContext.addSyncedWindow(MACHINE_INFO_WINDOW_ID, this::createMachineInfo);
+            }
         } else {
             addNoPlayerInventoryUI(builder, buildContext);
         }
@@ -1445,6 +1452,11 @@ public abstract class SteamMultiMachineBase<T extends SteamMultiMachineBase<T>> 
 
     public boolean supportsSteamCapacityUI() {
         return true;
+    }
+
+    @Override
+    public boolean supportsMachineInfo() {
+        return false;
     }
 
     @Override

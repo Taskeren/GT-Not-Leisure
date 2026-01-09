@@ -454,6 +454,11 @@ public class EdenGarden extends MultiMachineBase<EdenGarden> implements IGreenHo
             .widget(createLockToSingleRecipeButton(builder))
             .widget(createStructureUpdateButton(builder));
 
+        if (supportsMachineInfo()) {
+            builder.widget(createMachineInfoButton(builder));
+            buildContext.addSyncedWindow(MACHINE_INFO_WINDOW_ID, this::createMachineInfo);
+        }
+
         DynamicPositionedRow configurationElements = new DynamicPositionedRow();
         addConfigurationWidgets(configurationElements, buildContext);
 

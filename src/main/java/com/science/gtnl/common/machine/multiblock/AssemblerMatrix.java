@@ -421,6 +421,11 @@ public class AssemblerMatrix extends MultiMachineBase<AssemblerMatrix>
             buildContext.addSyncedWindow(POWER_PANEL_WINDOW_ID, this::createPowerPanel);
         }
 
+        if (supportsMachineInfo()) {
+            builder.widget(createMachineInfoButton(builder));
+            buildContext.addSyncedWindow(MACHINE_INFO_WINDOW_ID, this::createMachineInfo);
+        }
+
         builder.widget(
             new ButtonWidget().setOnClick((clickData, widget) -> showPattern = !showPattern)
                 .setPlayClickSoundResource(

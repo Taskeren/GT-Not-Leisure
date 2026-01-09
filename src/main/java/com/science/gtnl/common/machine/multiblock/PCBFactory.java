@@ -40,7 +40,7 @@ import com.gtnewhorizons.modularui.api.screen.UIBuildContext;
 import com.gtnewhorizons.modularui.common.widget.DynamicPositionedColumn;
 import com.gtnewhorizons.modularui.common.widget.SlotWidget;
 import com.gtnewhorizons.modularui.common.widget.TextWidget;
-import com.science.gtnl.api.IControllerUpgradeable;
+import com.science.gtnl.api.IControllerUpgrade;
 import com.science.gtnl.common.machine.multiMachineBase.WirelessEnergyMultiMachineBase;
 import com.science.gtnl.utils.StructureUtils;
 import com.science.gtnl.utils.recipes.GTNLOverclockCalculator;
@@ -48,6 +48,7 @@ import com.science.gtnl.utils.recipes.GTNLProcessingLogic;
 
 import gregtech.api.enums.ItemList;
 import gregtech.api.enums.Materials;
+import gregtech.api.enums.MaterialsUEVplus;
 import gregtech.api.enums.OrePrefixes;
 import gregtech.api.enums.Textures;
 import gregtech.api.interfaces.IHatchElement;
@@ -76,11 +77,13 @@ import gregtech.api.util.shutdown.ShutDownReasonRegistry;
 import gregtech.common.tileentities.machines.IRecipeProcessingAwareHatch;
 import gregtech.common.tileentities.machines.MTEHatchInputME;
 import gtPlusPlus.core.material.MaterialsAlloy;
+import gtPlusPlus.xmod.gregtech.api.enums.GregtechItemList;
 import lombok.Getter;
 import lombok.Setter;
+import tectech.thing.CustomItemList;
 
 public class PCBFactory extends WirelessEnergyMultiMachineBase<PCBFactory>
-    implements ISurvivalConstructable, IControllerUpgradeable {
+    implements ISurvivalConstructable, IControllerUpgrade {
 
     private static final String STRUCTURE_PIECE_MAIN = "main";
     private static final String STRUCTURE_PIECE_MAIN_T2 = "main_t2";
@@ -102,7 +105,18 @@ public class PCBFactory extends WirelessEnergyMultiMachineBase<PCBFactory>
     private static final String[][] shape_t3 = StructureUtils.readStructureFromFile(PCBF_T3_STRUCTURE_FILE_PATH);
 
     public static final ItemStack[] REQUIRED_ITEMS = new ItemStack[] {
-        GTUtility.copyAmountUnsafe(114514, ItemList.PCBFactory.get(1)) };
+        GTUtility.copyAmountUnsafe(256, ItemList.InfinityCooledCasing.get(1)),
+        GTUtility.copyAmountUnsafe(256, ItemList.ReinforcedPhotolithographicFrameworkCasing.get(1)),
+        GTUtility.copyAmountUnsafe(128, CustomItemList.Godforge_HarmonicPhononTransmissionConduit.get(1)),
+        GTUtility.copyAmountUnsafe(128, CustomItemList.EOH_Reinforced_Spatial_Casing.get(1)),
+        GTUtility.copyAmountUnsafe(128, GregtechItemList.SpaceTimeContinuumRipper.get(1)),
+        GTOreDictUnificator.get(OrePrefixes.wireGt16, Materials.SuperconductorUMV, 64),
+        GTOreDictUnificator.get(OrePrefixes.plateSuperdense, Materials.Netherite, 16),
+        GTOreDictUnificator.get(OrePrefixes.plateSuperdense, MaterialsUEVplus.TranscendentMetal, 16),
+        GTOreDictUnificator.get(OrePrefixes.plateSuperdense, MaterialsUEVplus.ProtoHalkonite, 16),
+        GTOreDictUnificator.get(OrePrefixes.plateSuperdense, MaterialsUEVplus.SixPhasedCopper, 16),
+        GTOreDictUnificator.get(OrePrefixes.plateSuperdense, MaterialsUEVplus.SpaceTime, 16), ItemList.ZPM6.get(8),
+        ItemList.Robot_Arm_UIV.get(64), ItemList.Conveyor_Module_UIV.get(64), ItemList.Field_Generator_UEV.get(64) };
 
     public static FluidStack distilledWater = GTModHandler.getDistilledWater(7500);
     public static ItemStack t1Nanite = GTOreDictUnificator.get(OrePrefixes.nanite, Materials.Neutronium, 1);

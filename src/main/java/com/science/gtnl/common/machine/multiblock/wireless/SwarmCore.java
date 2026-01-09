@@ -29,7 +29,7 @@ import com.gtnewhorizons.modularui.common.widget.DynamicPositionedColumn;
 import com.gtnewhorizons.modularui.common.widget.FakeSyncWidget;
 import com.gtnewhorizons.modularui.common.widget.SlotWidget;
 import com.gtnewhorizons.modularui.common.widget.TextWidget;
-import com.science.gtnl.api.IControllerUpgradeable;
+import com.science.gtnl.api.IControllerUpgrade;
 import com.science.gtnl.common.machine.multiMachineBase.WirelessEnergyMultiMachineBase;
 import com.science.gtnl.loader.BlockLoader;
 import com.science.gtnl.utils.StructureUtils;
@@ -53,7 +53,7 @@ import gregtech.api.util.GTRecipe;
 import gregtech.api.util.MultiblockTooltipBuilder;
 import lombok.Getter;
 
-public class SwarmCore extends WirelessEnergyMultiMachineBase<SwarmCore> implements IControllerUpgradeable {
+public class SwarmCore extends WirelessEnergyMultiMachineBase<SwarmCore> implements IControllerUpgrade {
 
     private static final int HORIZONTAL_OFF_SET = 20;
     private static final int VERTICAL_OFF_SET = 47;
@@ -100,7 +100,7 @@ public class SwarmCore extends WirelessEnergyMultiMachineBase<SwarmCore> impleme
 
     @Override
     public boolean tryConsumeItems() {
-        boolean result = IControllerUpgradeable.super.tryConsumeItems();
+        boolean result = IControllerUpgrade.super.tryConsumeItems();
         if (result && machineTier < 4) machineTier++;
         return result;
     }

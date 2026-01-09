@@ -26,7 +26,9 @@ import gregtech.api.gui.modularui.GTUITextures;
 import gregtech.api.gui.modularui.GUITextureSet;
 import gregtech.api.util.GTUtility;
 
-public interface IControllerUpgradeable {
+public interface IControllerUpgrade {
+
+    int UPGRADE_WINDOW_ID = 11;
 
     ItemStack[] getUpgradeRequiredItems();
 
@@ -95,7 +97,7 @@ public interface IControllerUpgradeable {
     GUITextureSet getGUITextureSet();
 
     default int getUpgradeWindowId() {
-        return 15;
+        return UPGRADE_WINDOW_ID;
     }
 
     String getUpgradeButtonTooltip();

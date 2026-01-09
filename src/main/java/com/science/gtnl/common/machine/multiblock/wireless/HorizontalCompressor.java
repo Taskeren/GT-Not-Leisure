@@ -29,7 +29,7 @@ import com.gtnewhorizon.structurelib.structure.StructureDefinition;
 import com.gtnewhorizons.modularui.api.forge.ItemStackHandler;
 import com.gtnewhorizons.modularui.api.screen.ModularWindow;
 import com.gtnewhorizons.modularui.api.screen.UIBuildContext;
-import com.science.gtnl.api.IControllerUpgradeable;
+import com.science.gtnl.api.IControllerUpgrade;
 import com.science.gtnl.common.machine.multiMachineBase.WirelessEnergyMultiMachineBase;
 import com.science.gtnl.utils.StructureUtils;
 import com.science.gtnl.utils.recipes.GTNLOverclockCalculator;
@@ -59,7 +59,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 public class HorizontalCompressor extends WirelessEnergyMultiMachineBase<HorizontalCompressor>
-    implements IControllerUpgradeable {
+    implements IControllerUpgrade {
 
     private static final int HORIZONTAL_OFF_SET = 5;
     private static final int VERTICAL_OFF_SET = 8;

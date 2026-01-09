@@ -1,7 +1,10 @@
 package com.science.gtnl.common.machine.multiMachineBase;
 
 import static com.science.gtnl.utils.Utils.filterValidMTEs;
+import static gregtech.api.gui.modularui.GTUITextures.*;
+import static gregtech.api.metatileentity.BaseTileEntity.*;
 import static gregtech.api.util.GTUtility.validMTEList;
+import static net.minecraft.util.StatCollector.*;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -42,6 +45,7 @@ import com.gtnewhorizons.modularui.common.widget.FakeSyncWidget;
 import com.gtnewhorizons.modularui.common.widget.Scrollable;
 import com.gtnewhorizons.modularui.common.widget.SlotWidget;
 import com.science.gtnl.ScienceNotLeisure;
+import com.science.gtnl.api.IControllerInfo;
 import com.science.gtnl.common.machine.hatch.CustomFluidHatch;
 import com.science.gtnl.common.machine.hatch.ParallelControllerHatch;
 import com.science.gtnl.common.machine.hatch.SuperCraftingInputHatchME;
@@ -89,7 +93,7 @@ import tectech.thing.metaTileEntity.hatch.MTEHatchDynamoMulti;
 import tectech.thing.metaTileEntity.hatch.MTEHatchEnergyTunnel;
 
 public abstract class MultiMachineBase<T extends MultiMachineBase<T>> extends MTEExtendedPowerMultiBlockBase<T>
-    implements IConstructable, ISurvivalConstructable {
+    implements IConstructable, ISurvivalConstructable, IControllerInfo {
 
     public MultiMachineBase(int aID, String aName, String aNameRegional) {
         super(aID, aName, aNameRegional);
@@ -138,14 +142,6 @@ public abstract class MultiMachineBase<T extends MultiMachineBase<T>> extends MT
             put(GTNLItemList.MAXParallelControllerCore.get(1), 14);
         }
     };
-
-    @Override
-    public void addGregTechLogo(ModularWindow.Builder builder) {
-        builder.widget(
-            new DrawableWidget().setDrawable(ItemUtils.PICTURE_GTNL_LOGO)
-                .setSize(18, 18)
-                .setPos(172, 67));
-    }
 
     @Override
     public void onPostTick(IGregTechTileEntity aBaseMetaTileEntity, long aTick) {
@@ -544,10 +540,23 @@ public abstract class MultiMachineBase<T extends MultiMachineBase<T>> extends MT
             buildContext.addSyncedWindow(POWER_PANEL_WINDOW_ID, this::createPowerPanel);
         }
 
+        if (supportsMachineInfo()) {
+            builder.widget(createMachineInfoButton(builder));
+            buildContext.addSyncedWindow(MACHINE_INFO_WINDOW_ID, this::createMachineInfo);
+        }
+
         builder.widget(
             configurationElements.setSpace(2)
                 .setAlignment(MainAxisAlignment.SPACE_BETWEEN)
                 .setPos(getRecipeLockingButtonPos().add(18, 0)));
+    }
+
+    @Override
+    public void addGregTechLogo(ModularWindow.Builder builder) {
+        builder.widget(
+            new DrawableWidget().setDrawable(ItemUtils.PICTURE_GTNL_LOGO)
+                .setSize(18, 18)
+                .setPos(172, 67));
     }
 
     @Override
@@ -1065,6 +1074,11 @@ public abstract class MultiMachineBase<T extends MultiMachineBase<T>> extends MT
 
     @Override
     public boolean willExplodeInRain() {
+        return false;
+    }
+
+    @Override
+    public boolean supportsMachineInfo() {
         return false;
     }
 
