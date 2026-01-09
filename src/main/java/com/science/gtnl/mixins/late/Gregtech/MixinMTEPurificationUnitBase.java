@@ -525,7 +525,7 @@ public abstract class MixinMTEPurificationUnitBase extends MTEExtendedPowerMulti
         builder.widget(new FakeSyncWidget.BooleanSyncer(() -> gtnl$wirelessMode, val -> gtnl$wirelessMode = val));
     }
 
-    @Inject(method = "createParallelWindow", at = @At("RETURN"), cancellable = true)
+    @Inject(method = "createParallelWindow", at = @At("HEAD"), cancellable = true)
     public void createParallelWindow(EntityPlayer player, CallbackInfoReturnable<ModularWindow> cir) {
         if (!gtnl$wirelessMode) return;
         final int WIDTH = 158;

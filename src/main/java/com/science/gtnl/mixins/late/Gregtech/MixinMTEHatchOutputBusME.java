@@ -32,7 +32,6 @@ import lombok.Setter;
 public abstract class MixinMTEHatchOutputBusME extends MTEHatchOutputBus implements IOutputME {
 
     @Getter
-    @Setter
     @Shadow
     @Final
     IItemList<IAEItemStack> itemCache;

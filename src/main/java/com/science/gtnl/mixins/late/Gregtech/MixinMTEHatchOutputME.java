@@ -36,7 +36,6 @@ import lombok.Setter;
 public abstract class MixinMTEHatchOutputME extends MTEHatchOutput implements IOutputME, IDataCopyable {
 
     @Getter
-    @Setter
     @Shadow
     @Final
     IItemList<IAEFluidStack> fluidCache;
