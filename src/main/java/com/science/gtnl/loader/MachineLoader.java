@@ -4748,10 +4748,11 @@ public class MachineLoader {
                 GTNLRecipeMaps.GasCollectorRecipes,
                 3,
                 3,
-                true,
+                tier.tier * 100000000,
                 SoundResource.NONE,
                 MTEBasicMachineWithRecipe.SpecialEffects.NONE,
-                "GAS_COLLECTOR");
+                "GAS_COLLECTOR",
+                null);
 
             tier.itemEnum.set(mte);
 
