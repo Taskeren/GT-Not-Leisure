@@ -1854,7 +1854,7 @@ public class AssemblingLineRecipes implements IRecipePool {
                 new Object[] { OrePrefixes.circuit.get(Materials.UEV), 32L },
                 com.dreammaster.gthandler.CustomItemList.HighEnergyFlowCircuit.get(64),
                 GTOreDictUnificator.get(OrePrefixes.wireGt16, Materials.SuperconductorUHV, 16),
-                GTOreDictUnificator.get(OrePrefixes.plateSuperdense, GTNLMaterials.Polyetheretherketone, 8),
+                GTNLMaterials.Polyetheretherketone.get(OrePrefixes.plateSuperdense, 8),
                 GregtechItemList.Laser_Lens_Special.get(16),
                 GTOreDictUnificator.get(OrePrefixes.nanite, Materials.Silver, 2) },
             new FluidStack[] { MaterialMisc.MUTATED_LIVING_SOLDER.getFluidStack(96000),
