@@ -271,7 +271,7 @@ public class PCBFactory extends WirelessEnergyMultiMachineBase<PCBFactory>
                         parallel += (int) (fluidStack.amount / 100d
                             * GTUtility.powInt(2, machineTier - requiredPCBTier));
                     }
-                    if (GTUtility.areFluidsEqual(fluidStack, purifiedWater[requiredPCBTier * 2 - 1])) {
+                    if (GTUtility.areFluidsEqual(fluidStack, purifiedWater[requiredPCBTier + 3])) {
                         parallel += (int) (fluidStack.amount / 50d
                             * GTUtility.powInt(2, machineTier - requiredPCBTier));
                     }
