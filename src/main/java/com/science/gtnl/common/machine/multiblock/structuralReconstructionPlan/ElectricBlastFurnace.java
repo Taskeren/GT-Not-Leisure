@@ -230,7 +230,7 @@ public class ElectricBlastFurnace extends MultiMachineBase<ElectricBlastFurnace>
             return false;
         }
         setupParameters();
-        return mCountCasing >= 30;
+        return mCountCasing >= 15;
     }
 
     @Override
