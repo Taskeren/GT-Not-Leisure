@@ -172,7 +172,7 @@ public class DataCenter extends TTMultiblockBase implements ISurvivalConstructab
     }
 
     @Override
-    protected SoundResource getActivitySoundLoop() {
+    public SoundResource getActivitySoundLoop() {
         return SoundResource.TECTECH_MACHINES_FX_HIGH_FREQ;
     }
 

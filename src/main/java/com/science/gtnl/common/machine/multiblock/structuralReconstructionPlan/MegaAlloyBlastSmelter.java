@@ -229,7 +229,7 @@ public class MegaAlloyBlastSmelter extends GTMMultiMachineBase<MegaAlloyBlastSme
     }
 
     @Override
-    protected void setupProcessingLogic(ProcessingLogic logic) {
+    public void setupProcessingLogic(ProcessingLogic logic) {
         super.setupProcessingLogic(logic);
         logic.setUnlimitedTierSkips();
     }

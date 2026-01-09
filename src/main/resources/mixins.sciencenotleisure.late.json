@@ -43,7 +43,6 @@
     "Gregtech.AccessorProcessingLogic",
     "Gregtech.AccessorRecipeDisplayInfo",
     "Gregtech.MixinBaseMetaTileEntity",
-    "Gregtech.MixinCheckRecipeResultRegistry",
     "Gregtech.MixinGodForgeMath",
     "Gregtech.MixinGTOreDictUnificator",
     "Gregtech.MixinGTRecipeConstants",

@@ -254,7 +254,7 @@ public class NullPointerException extends Entity implements IProjectile {
      * prevent them from trampling crops
      */
     @Override
-    protected boolean canTriggerWalking() {
+    public boolean canTriggerWalking() {
         return false;
     }
 

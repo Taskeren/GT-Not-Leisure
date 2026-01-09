@@ -204,7 +204,6 @@ public interface IControllerUpgrade {
     }
 
     default void createUpgradeButton(ModularWindow.Builder builder, UIBuildContext buildContext) {
-
         buildContext.addSyncedWindow(getUpgradeWindowId(), this::createConsumeWindow);
         builder.widget(new FakeSyncWidget.BooleanSyncer(this::isUpgradeConsumed, this::setUpgradeConsumed));
 

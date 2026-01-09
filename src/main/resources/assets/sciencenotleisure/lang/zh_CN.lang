@@ -2364,7 +2364,7 @@ Tooltip_PCBFactory_07=机器等级每提高一级，速度+100%，要求功率-1
 Tooltip_PCBFactory_08=当机器等级超过3时开启§c无损超频§7
 Tooltip_PCBFactory_09=需要使用纳米蜂群提高结构等级
 Tooltip_PCBFactory_Casing=任意镀铱机械方块
-Info_PCBFactory_00=机器等级：%s
+Info_PCBFactory_00=机器等级：
 Info_PCBFactory_01=T4机器等级升级
 
 NameLargeElectromagnet=大型电磁工厂

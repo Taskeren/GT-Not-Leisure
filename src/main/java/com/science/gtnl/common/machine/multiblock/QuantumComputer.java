@@ -1116,7 +1116,7 @@ public class QuantumComputer extends MTETooltipMultiBlockBase
         }
     }
 
-    protected void postCPUClusterChangeEvent() {
+    public void postCPUClusterChangeEvent() {
         if (isActive()) {
             try {
                 getProxy().getGrid()
@@ -1129,8 +1129,8 @@ public class QuantumComputer extends MTETooltipMultiBlockBase
         return getProxy().isActive();
     }
 
-    protected CraftingCPUCluster virtualCPU = null;
-    protected final List<CraftingCPUCluster> cpus = new ReferenceArrayList<>();
+    public CraftingCPUCluster virtualCPU = null;
+    public final List<CraftingCPUCluster> cpus = new ReferenceArrayList<>();
 
     public boolean isVirtualCPU(Object cluster) {
         return virtualCPU == cluster;

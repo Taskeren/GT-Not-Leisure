@@ -38,6 +38,7 @@ import com.gtnewhorizons.modularui.api.forge.ItemStackHandler;
 import com.gtnewhorizons.modularui.api.screen.ModularWindow;
 import com.gtnewhorizons.modularui.api.screen.UIBuildContext;
 import com.gtnewhorizons.modularui.common.widget.DynamicPositionedColumn;
+import com.gtnewhorizons.modularui.common.widget.FakeSyncWidget;
 import com.gtnewhorizons.modularui.common.widget.SlotWidget;
 import com.gtnewhorizons.modularui.common.widget.TextWidget;
 import com.science.gtnl.api.IControllerUpgrade;
@@ -549,17 +550,20 @@ public class PCBFactory extends WirelessEnergyMultiMachineBase<PCBFactory>
     }
 
     @Override
-    protected void drawTexts(DynamicPositionedColumn screenElements, SlotWidget inventorySlot) {
+    public void drawTexts(DynamicPositionedColumn screenElements, SlotWidget inventorySlot) {
         super.drawTexts(screenElements, inventorySlot);
-        screenElements.widget(
-            TextWidget.dynamicString(() -> StatCollector.translateToLocalFormatted("Info_PCBFactory_00", machineTier))
-                .setDefaultColor(COLOR_TEXT_WHITE.get()));
+        screenElements
+            .widget(
+                TextWidget.dynamicString(() -> StatCollector.translateToLocal("Info_PCBFactory_00") + machineTier)
+                    .setDefaultColor(COLOR_TEXT_WHITE.get()))
+            .widget(
+                new FakeSyncWidget.IntegerSyncer(() -> machineTier, tier -> machineTier = tier).setSynced(true, false));
     }
 
     @Override
     public void addUIWidgets(ModularWindow.Builder builder, UIBuildContext buildContext) {
         super.addUIWidgets(builder, buildContext);
-        if (mMachine && machineTier >= 3) createUpgradeButton(builder, buildContext);
+        if (machineTier >= 3) createUpgradeButton(builder, buildContext);
     }
 
     @Override

@@ -1,8 +1,10 @@
 package com.science.gtnl.mixins.late.Gregtech;
 
 import static com.science.gtnl.utils.Utils.*;
+import static gregtech.api.metatileentity.BaseTileEntity.*;
 import static gregtech.api.util.GTUtility.*;
 import static gregtech.common.misc.WirelessNetworkManager.*;
+import static net.minecraft.util.StatCollector.*;
 
 import java.math.BigInteger;
 import java.util.ArrayList;
@@ -39,11 +41,14 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import com.google.common.collect.Lists;
+import com.gtnewhorizons.modularui.api.drawable.IDrawable;
+import com.gtnewhorizons.modularui.api.drawable.UITexture;
 import com.gtnewhorizons.modularui.api.math.Alignment;
 import com.gtnewhorizons.modularui.api.math.Color;
 import com.gtnewhorizons.modularui.api.math.Size;
 import com.gtnewhorizons.modularui.api.screen.ModularWindow;
 import com.gtnewhorizons.modularui.api.screen.UIBuildContext;
+import com.gtnewhorizons.modularui.common.widget.ButtonWidget;
 import com.gtnewhorizons.modularui.common.widget.FakeSyncWidget;
 import com.gtnewhorizons.modularui.common.widget.TextWidget;
 import com.gtnewhorizons.modularui.common.widget.textfield.NumericWidget;
@@ -121,6 +126,12 @@ public abstract class MixinMTEPurificationUnitBase extends MTEExtendedPowerMulti
     @Final
     public static float WATER_BOOST_NEEDED_FLUID;
 
+    @Shadow
+    protected abstract ModularWindow createParallelWindow(EntityPlayer player);
+
+    @Shadow
+    @Final
+    private static int PARALLEL_WINDOW_ID;
     @Unique
     public long gtnl$maxParallelLong = 1;
 
@@ -525,9 +536,37 @@ public abstract class MixinMTEPurificationUnitBase extends MTEExtendedPowerMulti
         builder.widget(new FakeSyncWidget.BooleanSyncer(() -> gtnl$wirelessMode, val -> gtnl$wirelessMode = val));
     }
 
-    @Inject(method = "createParallelWindow", at = @At("HEAD"), cancellable = true)
-    public void createParallelWindow(EntityPlayer player, CallbackInfoReturnable<ModularWindow> cir) {
-        if (!gtnl$wirelessMode) return;
+    private static final int LONG_PARALLEL_WINDOW_ID = 11;
+
+    @Override
+    public void addUIWidgets(ModularWindow.Builder builder, UIBuildContext buildContext) {
+        builder.widget(new FakeSyncWidget.BooleanSyncer(() -> gtnl$wirelessMode, val -> gtnl$wirelessMode = val));
+
+        buildContext.addSyncedWindow(PARALLEL_WINDOW_ID, this::createParallelWindow);
+        buildContext.addSyncedWindow(LONG_PARALLEL_WINDOW_ID, this::gtnl$createLongParallelWindow);
+
+        builder.widget(new ButtonWidget().setOnClick((clickData, widget) -> {
+            if (!widget.isClient()) {
+                widget.getContext()
+                    .openSyncedWindow(gtnl$wirelessMode ? LONG_PARALLEL_WINDOW_ID : PARALLEL_WINDOW_ID);
+            }
+        })
+            .setPlayClickSound(true)
+            .setBackground(() -> {
+                List<UITexture> ret = new ArrayList<>();
+                ret.add(GTUITextures.BUTTON_STANDARD);
+                ret.add(GTUITextures.OVERLAY_BUTTON_BATCH_MODE_ON);
+                return ret.toArray(new IDrawable[0]);
+            })
+            .addTooltip(translateToLocal("GT5U.tpm.parallelwindow"))
+            .setTooltipShowUpDelay(TOOLTIP_DELAY)
+            .setPos(174, 112)
+            .setSize(16, 16));
+        super.addUIWidgets(builder, buildContext);
+    }
+
+    @Unique
+    public ModularWindow gtnl$createLongParallelWindow(EntityPlayer player) {
         final int WIDTH = 158;
         final int HEIGHT = 52;
         final int PARENT_WIDTH = getGUIWidth();
@@ -560,7 +599,7 @@ public abstract class MixinMTEPurificationUnitBase extends MTEExtendedPowerMulti
                     .attachSyncer(
                         new FakeSyncWidget.LongSyncer(() -> gtnl$maxParallelLong, (val) -> gtnl$maxParallelLong = val),
                         builder));
-        cir.setReturnValue(builder.build());
+        return builder.build();
     }
 
     @Inject(method = "loadNBTData", at = @At("TAIL"))

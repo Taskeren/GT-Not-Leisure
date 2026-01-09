@@ -2363,7 +2363,7 @@ Tooltip_PCBFactory_07=For each machine tier increase, speed +100%, power require
 Tooltip_PCBFactory_08=Enables §cPerfect Overclock§7 when machine tier exceeds 3
 Tooltip_PCBFactory_09=Requires Nanites to increase the machine tier
 Tooltip_PCBFactory_Casing=An Advanced Iridium Plated Machine Casing
-Info_PCBFactory_00=Machine Tier: %s
+Info_PCBFactory_00=Machine Tier: 
 Info_PCBFactory_01=T4 Machine Tier Upgrade
 
 NameLargeElectromagnet=Large Electromagnet Factory

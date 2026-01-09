@@ -28,7 +28,7 @@ public class RocketAssemblerBackend extends RecipeMapBackend {
     }
 
     @Override
-    protected @Nullable GTRecipe modifyFoundRecipe(GTRecipe recipe, ItemStack[] items, FluidStack[] fluids,
+    public @Nullable GTRecipe modifyFoundRecipe(GTRecipe recipe, ItemStack[] items, FluidStack[] fluids,
         @Nullable ItemStack specialSlot) {
         if (recipe.mSpecialItems == null) return super.modifyFoundRecipe(recipe, items, fluids, specialSlot);
         for (ItemStack item : items) {

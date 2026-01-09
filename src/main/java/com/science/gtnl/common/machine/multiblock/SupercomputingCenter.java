@@ -145,7 +145,7 @@ public class SupercomputingCenter extends TTMultiblockBase implements ISurvivalC
     }
 
     @Override
-    protected void parametersInstantiation_EM() {
+    public void parametersInstantiation_EM() {
         Parameters.Group hatch_0 = parametrization.getGroup(0);
         overclock = hatch_0.makeInParameter(0, 1, OC_NAME, OC_STATUS);
         overvolt = hatch_0.makeInParameter(1, 1, OV_NAME, OV_STATUS);
