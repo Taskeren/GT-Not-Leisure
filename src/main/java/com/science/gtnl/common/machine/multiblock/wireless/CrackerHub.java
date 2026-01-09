@@ -149,7 +149,7 @@ public class CrackerHub extends WirelessEnergyMultiMachineBase<CrackerHub> {
             .addElement('L', ofFrame(Materials.Ultimet))
             .addElement('M', ofFrame(Materials.HSSS))
             .addElement('N', ofBlock(sBlockReinforced, 10))
-            .addElement('O', ofBlock(sBlockCasingsSE, 9))
+            .addElement('O', ofBlock(sBlockCasingsDyson, 9))
             .addElement('P', Muffler.newAny(getCasingTextureID(), 16))
             .build();
     }

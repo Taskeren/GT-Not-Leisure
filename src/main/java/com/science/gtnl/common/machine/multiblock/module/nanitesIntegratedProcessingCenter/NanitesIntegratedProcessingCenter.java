@@ -191,7 +191,7 @@ public class NanitesIntegratedProcessingCenter
                             NanitesIntegratedProcessingCenter::getMCoilLevel))))
             .addElement('H', ofBlock(sBlockCasings4, 10))
             .addElement('I', ofBlock(sBlockCasings10, 3))
-            .addElement('J', ofBlock(sBlockCasingsSE, 9))
+            .addElement('J', ofBlock(sBlockCasingsDyson, 9))
             .addElement('K', ofBlock(LanthItemList.SHIELDED_ACCELERATOR_CASING, 0))
             .addElement('L', ofBlock(blockCasings4Misc, 4))
             .addElement('M', ofBlock(sBlockCasings2, 5))
