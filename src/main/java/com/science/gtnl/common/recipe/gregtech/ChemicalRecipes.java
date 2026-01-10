@@ -1,7 +1,10 @@
 package com.science.gtnl.common.recipe.gregtech;
 
 import static gregtech.api.enums.Mods.*;
+import static gregtech.api.util.GTRecipeBuilder.*;
+import static gregtech.api.util.GTRecipeConstants.*;
 
+import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
 
 import com.science.gtnl.api.IRecipePool;
@@ -11,6 +14,7 @@ import com.science.gtnl.utils.recipes.RecipeBuilder;
 
 import bartworks.system.material.WerkstoffLoader;
 import goodgenerator.items.GGMaterial;
+import gregtech.api.enums.GTValues;
 import gregtech.api.enums.Materials;
 import gregtech.api.enums.MaterialsKevlar;
 import gregtech.api.enums.OrePrefixes;
@@ -587,6 +591,16 @@ public class ChemicalRecipes implements IRecipePool {
             .fluidOutputs(Materials.Benzene.getFluid(1000))
             .duration(10)
             .eut(TierEU.RECIPE_IV)
+            .addTo(MCRR);
+
+        GTValues.RA.stdBuilder()
+            .itemInputs(
+                GTOreDictUnificator.get(OrePrefixes.gem, Materials.NetherStar, 2),
+                GTUtility.getIntegratedCircuit(20))
+            .fluidInputs(FluidRegistry.getFluidStack("mobessence", 5_000))
+            .fluidOutputs(new FluidStack(GTPPFluids.GeneticMutagen, 8_000))
+            .duration(30 * SECONDS)
+            .eut(TierEU.RECIPE_HV)
             .addTo(MCRR);
     }
 }
