@@ -3,6 +3,8 @@ package com.science.gtnl.utils.recipes.metadata;
 import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
 
+import net.minecraft.util.StatCollector;
+
 import com.science.gtnl.mixins.late.Gregtech.AccessorRecipeDisplayInfo;
 import com.science.gtnl.utils.recipes.data.CircuitNanitesRecipeData;
 
@@ -25,12 +27,19 @@ public class CircuitNanitesDataMetadata extends RecipeMetadataKey<CircuitNanites
         CircuitNanitesRecipeData data = cast(value, new CircuitNanitesRecipeData());
         AccessorRecipeDisplayInfo displayInfo = (AccessorRecipeDisplayInfo) recipeInfo;
         displayInfo.setYPos(displayInfo.getYPos() - 80);
-        recipeInfo.drawText(String.format("Speed Boost: %.2f", data.speedBoost), 28, 10);
-        recipeInfo.drawText(String.format("EU Modifier: %.2f", data.euModifier), 28, 10);
-        recipeInfo.drawText(String.format("Success Chance: %.2f%%", data.successChance * 100), 28, 10);
-        recipeInfo.drawText(String.format("Failed Chance: %.2f%%", data.failedChance * 100), 28, 10);
-        recipeInfo.drawText(String.format("Output Multiplier: %.2f%%", data.outputMultiplier * 100), 28, 10);
-        recipeInfo.drawText(String.format("Parallel Count: %d", data.parallelCount), 28, 10);
-        recipeInfo.drawText(String.format("Max Tier Skips: %d", data.maxTierSkips), 28, 10);
+        recipeInfo.drawText(StatCollector.translateToLocal("CircuitNanitesDataMetadata.0") + data.speedBoost, 28, 10);
+        recipeInfo.drawText(StatCollector.translateToLocal("CircuitNanitesDataMetadata.1") + data.euModifier, 28, 10);
+        recipeInfo.drawText(
+            StatCollector.translateToLocal("CircuitNanitesDataMetadata.2") + (data.failedChance * 100) + "%",
+            28,
+            10);
+        recipeInfo.drawText(
+            StatCollector.translateToLocal("CircuitNanitesDataMetadata.3") + (data.outputMultiplier * 100) + "%",
+            28,
+            10);
+        recipeInfo
+            .drawText(StatCollector.translateToLocal("CircuitNanitesDataMetadata.4") + data.parallelCount, 28, 10);
+        recipeInfo.drawText(StatCollector.translateToLocal("CircuitNanitesDataMetadata.5") + data.maxTierSkips, 28, 10);
     }
+
 }

@@ -5,14 +5,6 @@ itemGroup.ReAvaritia=Avaritia: Reborn
 StructuralReconstructionPlan=Structural Replacement Plan
 AppliedEnergistics2=Applied Energistics 2
 
-test00=EU Discount Bonus: %s
-test01=Speed Bonus: %s
-test02=Success Rate Bonus: %s
-test03=Failure Rate Bonus: %s
-test04=Parallel: %s
-test05=Output Coefficient: %s
-test06=Allowed Overclocks: %s
-
 Welcome_GTNL_00=Welcome to GT: Science Not Leisure!
 Welcome_GTNL_01=If this is your first time installing the mod, please check the config files carefully.
 Welcome_GTNL_02=This mod adds a large number of machines and new recipes.
@@ -3576,6 +3568,12 @@ Tooltip_ShallowChemicalCoupling_Casing_00=Any Chemical Protection Machine Block
 NameCircuitComponentAssemblyLine=Circuit Component Assembly Line
 CircuitComponentAssemblyLineRecipes=Circuit Component Assembly Line
 gtnl.recipe.CircuitNanitesDataRecipes=Circuit Component Assembly Line Nanites Coefficient
+CircuitNanitesDataMetadata.0=EU Discount Bonus: %s
+CircuitNanitesDataMetadata.1=Speed Bonus: %s
+CircuitNanitesDataMetadata.2=Failure Bonus: %s
+CircuitNanitesDataMetadata.3=Output Coefficient: %s
+CircuitNanitesDataMetadata.4=Parallel: %s
+CircuitNanitesDataMetadata.5=Allowed Tier Skip Count: %s
 gtnl.recipe.CircuitComponentAssemblyLineRecipes=Circuit Component Assembly Line
 Tooltip_CircuitComponentAssemblyLine_00=§c§oHigh-speed circuit production.
 Tooltip_CircuitComponentAssemblyLine_01=§c§oAssembling Circuits at Unimaginable Speeds.

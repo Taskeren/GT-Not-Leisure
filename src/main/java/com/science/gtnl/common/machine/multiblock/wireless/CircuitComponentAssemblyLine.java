@@ -11,32 +11,40 @@ import static gregtech.api.util.GTStructureUtility.*;
 import static gtPlusPlus.core.block.ModBlocks.blockCasings3Misc;
 import static tectech.thing.casing.TTCasingsContainer.sBlockCasingsTT;
 
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.StatCollector;
 import net.minecraftforge.common.util.ForgeDirection;
 
 import org.apache.commons.lang3.tuple.Pair;
+import org.jetbrains.annotations.NotNull;
 
 import com.gtnewhorizon.structurelib.alignment.constructable.ISurvivalConstructable;
 import com.gtnewhorizon.structurelib.structure.IStructureDefinition;
 import com.gtnewhorizon.structurelib.structure.ISurvivalBuildEnvironment;
 import com.gtnewhorizon.structurelib.structure.StructureDefinition;
+import com.science.gtnl.common.machine.hatch.NanitesInputBus;
 import com.science.gtnl.common.machine.multiMachineBase.WirelessEnergyMultiMachineBase;
 import com.science.gtnl.common.material.GTNLRecipeMaps;
 import com.science.gtnl.utils.StructureUtils;
 
 import goodgenerator.loader.Loaders;
 import gregtech.api.enums.Textures;
+import gregtech.api.interfaces.IHatchElement;
 import gregtech.api.interfaces.ITexture;
 import gregtech.api.interfaces.metatileentity.IMetaTileEntity;
 import gregtech.api.interfaces.tileentity.IGregTechTileEntity;
+import gregtech.api.logic.ProcessingLogic;
 import gregtech.api.recipe.RecipeMap;
+import gregtech.api.recipe.check.CheckRecipeResult;
 import gregtech.api.render.TextureFactory;
 import gregtech.api.util.GTUtility;
+import gregtech.api.util.IGTHatchAdder;
 import gregtech.api.util.MultiblockTooltipBuilder;
 import tectech.thing.block.BlockQuantumGlass;
 import tectech.thing.casing.BlockGTCasingsTT;
@@ -51,9 +59,17 @@ public class CircuitComponentAssemblyLine extends WirelessEnergyMultiMachineBase
     private static final int HORIZONTAL_OFF_SET = 0;
     private static final int VERTICAL_OFF_SET = 2;
     private static final int DEPTH_OFF_SET = 0;
-    private float speedup = 1;
+
     public int casingTier;
-    private int runningTickCounter = 0;
+
+    public NanitesInputBus nanitesInputBus;
+
+    public double euDiscount = 1;
+    public double speedBonus = 1;
+    public double failureBonus = 1;
+    public double outputCoefficient = 1;
+    public int nanitesParallel = 1;
+    public int maxTierSkip = 1;
 
     public CircuitComponentAssemblyLine(int aID, String aName, String aNameRegional) {
         super(aID, aName, aNameRegional);
@@ -98,7 +114,8 @@ public class CircuitComponentAssemblyLine extends WirelessEnergyMultiMachineBase
                         OutputBus,
                         Maintenance,
                         Energy.or(ExoticEnergy),
-                        ParallelCon)
+                        ParallelCon,
+                        CustomHatchElement.NanitesInputBus)
                     .buildAndChain(onElementPass(x -> ++x.mCountCasing, ofBlock(sBlockCasingsTT, 3))))
             .addElement('H', ofBlock(sBlockCasingsTT, 7))
             .addElement('I', ofBlock(sBlockCasingsTT, 8))
@@ -130,31 +147,26 @@ public class CircuitComponentAssemblyLine extends WirelessEnergyMultiMachineBase
     }
 
     @Override
-    public void loadNBTData(NBTTagCompound aNBT) {
-        super.loadNBTData(aNBT);
-    }
-
-    @Override
     public ITexture[] getTexture(IGregTechTileEntity aBaseMetaTileEntity, ForgeDirection side, ForgeDirection facing,
         int aColorIndex, boolean aActive, boolean aRedstone) {
         if (side == facing) {
             if (aActive) return new ITexture[] { Textures.BlockIcons.getCasingTextureForId(getCasingTextureID()),
                 TextureFactory.builder()
-                    .addIcon(OVERLAY_FRONT_ELECTRIC_BLAST_FURNACE_ACTIVE)
+                    .addIcon(OVERLAY_FRONT_ASSEMBLY_LINE_ACTIVE)
                     .extFacing()
                     .build(),
                 TextureFactory.builder()
-                    .addIcon(OVERLAY_FRONT_ELECTRIC_BLAST_FURNACE_ACTIVE_GLOW)
+                    .addIcon(OVERLAY_FRONT_ASSEMBLY_LINE_ACTIVE_GLOW)
                     .extFacing()
                     .glow()
                     .build() };
             return new ITexture[] { Textures.BlockIcons.getCasingTextureForId(getCasingTextureID()),
                 TextureFactory.builder()
-                    .addIcon(OVERLAY_FRONT_ELECTRIC_BLAST_FURNACE)
+                    .addIcon(OVERLAY_FRONT_ASSEMBLY_LINE)
                     .extFacing()
                     .build(),
                 TextureFactory.builder()
-                    .addIcon(OVERLAY_FRONT_ELECTRIC_BLAST_FURNACE_GLOW)
+                    .addIcon(OVERLAY_FRONT_ASSEMBLY_LINE_GLOW)
                     .extFacing()
                     .glow()
                     .build() };
@@ -168,44 +180,29 @@ public class CircuitComponentAssemblyLine extends WirelessEnergyMultiMachineBase
     }
 
     @Override
-    public void saveNBTData(NBTTagCompound aNBT) {
-        super.saveNBTData(aNBT);
+    public @NotNull CheckRecipeResult checkProcessing() {
+        return super.checkProcessing();
     }
 
     @Override
-    public double getDurationModifier() {
-        return 1F / speedup;
+    public void setupProcessingLogic(ProcessingLogic logic) {
+        super.setupProcessingLogic(logic);
+        logic.setMaxTierSkips(maxTierSkip);
     }
 
     @Override
     public double getEUtDiscount() {
-        return 0.8 - (mParallelTier / 36.0);
+        return ((wirelessUpgrade ? 0.5 : 1) - (mParallelTier / 50.0)) * euDiscount;
     }
 
     @Override
-    public boolean onRunningTick(ItemStack aStack) {
-        runningTickCounter++;
-        if (runningTickCounter % 10 == 0 && speedup < 10) {
-            runningTickCounter = 0;
-            speedup += 0.15F;
-        }
-        return super.onRunningTick(aStack);
-    }
-
-    @Override
-    public void onPostTick(IGregTechTileEntity aBaseMetaTileEntity, long aTick) {
-        super.onPostTick(aBaseMetaTileEntity, aTick);
-        if (!aBaseMetaTileEntity.isServerSide()) return;
-        if (mMaxProgresstime == 0 && speedup > 1) {
-            if (aTick % 5 == 0) {
-                speedup = (float) Math.max(1, speedup - 0.025);
-            }
-        }
+    public double getDurationModifier() {
+        return (1.0 / (wirelessUpgrade ? 2 : 1) - (Math.max(0, mParallelTier - 1) / 50.0)) * speedBonus;
     }
 
     @Override
     public int getMaxParallelRecipes() {
-        return GTUtility.getTier(this.getMaxInputVoltage()) * 32 + 8;
+        return Math.min(nanitesParallel, super.getMaxParallelRecipes());
     }
 
     @Override
@@ -236,23 +233,67 @@ public class CircuitComponentAssemblyLine extends WirelessEnergyMultiMachineBase
 
     @Override
     public boolean checkMachine(IGregTechTileEntity iGregTechTileEntity, ItemStack aStack) {
-        mParallelTier = 0;
-        mCountCasing = 0;
-        mEnergyHatchTier = 0;
-
         if (!checkPiece(STRUCTURE_PIECE_MAIN, HORIZONTAL_OFF_SET, VERTICAL_OFF_SET, DEPTH_OFF_SET) || !checkHatch()) {
             return false;
         }
-
-        mParallelTier = getParallelTier(aStack);
-        mEnergyHatchTier = checkEnergyHatchTier();
-
+        setupParameters();
         return mCountCasing >= 30;
     }
 
     @Override
     public RecipeMap<?> getRecipeMap() {
         return GTNLRecipeMaps.CircuitComponentAssemblyLineRecipes;
+    }
+
+    public boolean addNanitesInputBusToMachineList(IGregTechTileEntity aTileEntity, int aBaseCasingIndex) {
+        if (aTileEntity == null) return false;
+        IMetaTileEntity aMetaTileEntity = aTileEntity.getMetaTileEntity();
+        if (aMetaTileEntity == null) return false;
+        if (aMetaTileEntity instanceof NanitesInputBus bus) {
+            bus.updateTexture(aBaseCasingIndex);
+            bus.updateCraftingIcon(this.getMachineCraftingIcon());
+            nanitesInputBus = bus;
+            return true;
+        }
+        return false;
+    }
+
+    public enum CustomHatchElement implements IHatchElement<CircuitComponentAssemblyLine> {
+
+        NanitesInputBus("GT5U.MBTT.InputBus", CircuitComponentAssemblyLine::addNanitesInputBusToMachineList,
+            NanitesInputBus.class) {
+
+            @Override
+            public long count(CircuitComponentAssemblyLine t) {
+                return t.nanitesInputBus != null ? 1 : 0;
+            }
+        };
+
+        private final String name;
+        private final List<Class<? extends IMetaTileEntity>> mteClasses;
+        private final IGTHatchAdder<CircuitComponentAssemblyLine> adder;
+
+        @SafeVarargs
+        CustomHatchElement(String name, IGTHatchAdder<CircuitComponentAssemblyLine> adder,
+            Class<? extends IMetaTileEntity>... mteClasses) {
+            this.name = name;
+            this.mteClasses = Collections.unmodifiableList(Arrays.asList(mteClasses));
+            this.adder = adder;
+        }
+
+        @Override
+        public List<? extends Class<? extends IMetaTileEntity>> mteClasses() {
+            return mteClasses;
+        }
+
+        @Override
+        public String getDisplayName() {
+            return GTUtility.translate(name);
+        }
+
+        public IGTHatchAdder<? super CircuitComponentAssemblyLine> adder() {
+            return adder;
+        }
     }
 
 }

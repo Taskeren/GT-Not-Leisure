@@ -20,6 +20,9 @@ import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;
 
+import com.science.gtnl.config.MainConfig;
+import com.science.gtnl.utils.Utils;
+
 import gregtech.api.enums.ItemList;
 import gregtech.api.interfaces.IDataCopyable;
 import gregtech.api.interfaces.ITexture;
@@ -436,10 +439,20 @@ public class SuperCraftingInputProxy extends MTEHatchInputBus implements IDualIn
         }
 
         if (tag.hasKey("superMasterName")) {
-            currenttip.add(EnumChatFormatting.GOLD + tag.getString("superMasterName") + EnumChatFormatting.RESET);
+            currenttip.add(
+                EnumChatFormatting.GOLD
+                    + (MainConfig.enableHatchInterfaceTerminalEnhance
+                        ? Utils.getExtraInterfaceName(tag.getString("superMasterName"))
+                        : tag.getString("superMasterName"))
+                    + EnumChatFormatting.RESET);
         }
         if (tag.hasKey("craftingMasterName")) {
-            currenttip.add(EnumChatFormatting.GOLD + tag.getString("craftingMasterName") + EnumChatFormatting.RESET);
+            currenttip.add(
+                EnumChatFormatting.GOLD
+                    + (MainConfig.enableHatchInterfaceTerminalEnhance
+                        ? Utils.getExtraInterfaceName(tag.getString("craftingMasterName"))
+                        : tag.getString("craftingMasterName"))
+                    + EnumChatFormatting.RESET);
         }
 
         super.getWailaBody(itemStack, currenttip, accessor, config);

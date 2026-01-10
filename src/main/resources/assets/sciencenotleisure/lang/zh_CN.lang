@@ -5,14 +5,6 @@ itemGroup.ReAvaritia=无尽：重生
 StructuralReconstructionPlan=结构代替计划
 AppliedEnergistics2=应用能源2
 
-test00=EU减免加成：%s
-test01=速度加成：%s
-test02=成功率加成：%s
-test03=失败率加成：%s
-test04=并行：%s
-test05=产出系数：%s
-test06=允许升压次数：%s
-
 Welcome_GTNL_00=欢迎来到GT Not Leisure！
 Welcome_GTNL_01=如果你是第一次安装这个模组，请仔细检查配置文件
 Welcome_GTNL_02=本模组添加了大量的机器和新的配方
@@ -3576,6 +3568,12 @@ Tooltip_ShallowChemicalCoupling_Casing_00=任意化学防护机械方块
 NameCircuitComponentAssemblyLine=电路部件装配线
 CircuitComponentAssemblyLineRecipes=电路部件装配线
 gtnl.recipe.CircuitNanitesDataRecipes=电路部件装配线蜂群系数
+CircuitNanitesDataMetadata.0=EU减免：
+CircuitNanitesDataMetadata.1=运行速度：
+CircuitNanitesDataMetadata.2=失败率：
+CircuitNanitesDataMetadata.3=双倍产出几率：
+CircuitNanitesDataMetadata.4=并行：
+CircuitNanitesDataMetadata.5=允许升压次数：
 gtnl.recipe.CircuitComponentAssemblyLineRecipes=电路部件装配线
 Tooltip_CircuitComponentAssemblyLine_00=§c§o完全超越BartWork的电路装配线
 Tooltip_CircuitComponentAssemblyLine_01=§c§o以超乎想象的速度组装你的电路
