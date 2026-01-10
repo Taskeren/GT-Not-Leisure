@@ -112,6 +112,20 @@ public abstract class MixinMTEPurificationPlant extends MTEExtendedPowerMultiBlo
         gtnl$costingEUText = GTUtility.formatNumbers(gtnl$costingEU);
     }
 
+    @Inject(method = "registerLinkedUnit", at = @At("HEAD"))
+    private void gtnl$registerLinkedUnit(CallbackInfo ci) {
+        mLinkedUnits.removeIf(
+            link -> link.metaTileEntity() == null || link.metaTileEntity()
+                .getBaseMetaTileEntity() == null);
+    }
+
+    @Inject(method = "unregisterLinkedUnit", at = @At("HEAD"))
+    private void gtnl$unregisterLinkedUnit(CallbackInfo ci) {
+        mLinkedUnits.removeIf(
+            link -> link.metaTileEntity() == null || link.metaTileEntity()
+                .getBaseMetaTileEntity() == null);
+    }
+
     @Inject(
         method = "startCycle",
         at = @At(
