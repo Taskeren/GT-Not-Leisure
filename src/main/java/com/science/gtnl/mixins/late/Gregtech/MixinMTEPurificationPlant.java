@@ -23,6 +23,8 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
+import com.gtnewhorizons.modularui.api.screen.ModularWindow;
+import com.gtnewhorizons.modularui.api.screen.UIBuildContext;
 import com.llamalad7.mixinextras.sugar.Local;
 import com.science.gtnl.api.mixinHelper.ICostingEUHolder;
 import com.science.gtnl.api.mixinHelper.IWirelessMode;
@@ -122,6 +124,18 @@ public abstract class MixinMTEPurificationPlant extends MTEExtendedPowerMultiBlo
         if (costingEU.signum() > 0) {
             gtnl$costingEU = gtnl$costingEU.add(costingEU);
         }
+    }
+
+    @Inject(
+        method = "addUIWidgets",
+        at = @At(
+            value = "INVOKE",
+            target = "Lcom/gtnewhorizons/modularui/api/screen/ModularWindow$Builder;widget(Lcom/gtnewhorizons/modularui/api/widget/Widget;)Lcom/gtnewhorizons/modularui/api/widget/IWidgetBuilder;",
+            ordinal = 4,
+            shift = At.Shift.BEFORE))
+    private void gtnl$beforePowerSwitchWidget(ModularWindow.Builder builder, UIBuildContext buildContext,
+        CallbackInfo ci) {
+        builder.widget(createStructureUpdateButton(builder));
     }
 
     @Override
