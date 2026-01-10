@@ -253,7 +253,7 @@ public class ComponentAssembler extends MultiMachineBase<ComponentAssembler> imp
             return false;
         }
         setupParameters();
-        return mCountCasing >= 50;
+        return mCountCasing >= 50 && mCasingTier < 8;
     }
 
     @Override
