@@ -81,7 +81,7 @@ public class AdvancedInfiniteDriller extends MultiMachineBase<AdvancedInfiniteDr
     private static final int VERTICAL_OFF_SET = 39;
     private static final int DEPTH_OFF_SET = 0;
 
-    public int excessFuel = 0;
+    public double excessFuel = 0;
     public int drillTier = 0;
     public ArrayList<MTEHeatSensor> sensorHatches = new ArrayList<>();
 
@@ -250,7 +250,7 @@ public class AdvancedInfiniteDriller extends MultiMachineBase<AdvancedInfiniteDr
                             continue;
                         }
 
-                        int amount = 2_000_000 + tVeinRNG.nextInt(100) * 2000 * excessFuel * drillTier;
+                        int amount = (int) (2_000_000 + tVeinRNG.nextInt(100) * 2000 * excessFuel * drillTier);
                         outputFluids.add(new FluidStack(uoFluid.getFluid(), amount));
 
                         needEu += amount / 200;
@@ -268,14 +268,14 @@ public class AdvancedInfiniteDriller extends MultiMachineBase<AdvancedInfiniteDr
     @Override
     public void saveNBTData(NBTTagCompound aNBT) {
         super.saveNBTData(aNBT);
-        aNBT.setInteger("excessFuel", excessFuel);
+        aNBT.setDouble("excessFuel", excessFuel);
     }
 
     @Override
     public void loadNBTData(final NBTTagCompound aNBT) {
         super.loadNBTData(aNBT);
         if (aNBT.hasKey("excessFuel")) {
-            excessFuel = aNBT.getInteger("excessFuel");
+            excessFuel = aNBT.getDouble("excessFuel");
         }
     }
 
@@ -338,13 +338,13 @@ public class AdvancedInfiniteDriller extends MultiMachineBase<AdvancedInfiniteDr
             excessFuel = 300;
         }
 
-        float percent = excessFuel / 100.0f;
-        if (percent > 100.0f) {
-            percent = 100.0f;
+        double percent = excessFuel / 100.0f;
+        if (percent > 100.0d) {
+            percent = 100.0d;
         }
 
         for (MTEHeatSensor hatch : sensorHatches) {
-            hatch.updateRedstoneOutput(percent);
+            hatch.updateRedstoneOutput((float) percent);
         }
 
         endRecipeProcessing();
@@ -412,7 +412,7 @@ public class AdvancedInfiniteDriller extends MultiMachineBase<AdvancedInfiniteDr
     public void getWailaNBTData(EntityPlayerMP player, TileEntity tile, NBTTagCompound tag, World world, int x, int y,
         int z) {
         super.getWailaNBTData(player, tile, tag, world, x, y, z);
-        tag.setInteger("excessFuel", excessFuel);
+        tag.setDouble("excessFuel", excessFuel);
 
     }
 
@@ -424,7 +424,7 @@ public class AdvancedInfiniteDriller extends MultiMachineBase<AdvancedInfiniteDr
         if (tag.hasKey("excessFuel")) {
             currentTip.add(
                 StatCollector
-                    .translateToLocalFormatted("Info_AdvancedInfiniteDriller_00", tag.getInteger("excessFuel")));
+                    .translateToLocalFormatted("Info_AdvancedInfiniteDriller_00", tag.getDouble("excessFuel")));
         }
     }
 
@@ -439,7 +439,7 @@ public class AdvancedInfiniteDriller extends MultiMachineBase<AdvancedInfiniteDr
                     .setDefaultColor(COLOR_TEXT_WHITE.get())
                     .setEnabled(true))
             .widget(
-                new FakeSyncWidget.IntegerSyncer(() -> excessFuel, fuel -> excessFuel = fuel).setSynced(true, false));
+                new FakeSyncWidget.DoubleSyncer(() -> excessFuel, fuel -> excessFuel = fuel).setSynced(true, false));
     }
 
     @Override

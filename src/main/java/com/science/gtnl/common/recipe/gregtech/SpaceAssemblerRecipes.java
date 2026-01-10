@@ -67,10 +67,10 @@ public class SpaceAssemblerRecipes implements IRecipePool {
 
         RecipeBuilder.builder()
             .itemInputs(
-                ItemList.SpaceElevatorModuleMinerT2.get(1),
-                ItemList.SpaceElevatorModuleMinerT2.get(1),
-                ItemList.SpaceElevatorModuleMinerT2.get(1),
-                ItemList.SpaceElevatorModuleMinerT2.get(1),
+                ItemList.SpaceElevatorModuleAssemblerT2.get(1),
+                ItemList.SpaceElevatorModuleAssemblerT2.get(1),
+                ItemList.SpaceElevatorModuleAssemblerT2.get(1),
+                ItemList.SpaceElevatorModuleAssemblerT2.get(1),
                 ItemList.SpaceElevatorBaseCasing.get(16),
                 GTOreDictUnificator.get(OrePrefixes.circuit, Materials.UIV, 16),
                 MaterialsElements.STANDALONE.HYPOGEN.getScrew(32),

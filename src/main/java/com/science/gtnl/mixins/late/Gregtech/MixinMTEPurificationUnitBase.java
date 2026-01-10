@@ -52,6 +52,7 @@ import com.gtnewhorizons.modularui.common.widget.ButtonWidget;
 import com.gtnewhorizons.modularui.common.widget.FakeSyncWidget;
 import com.gtnewhorizons.modularui.common.widget.TextWidget;
 import com.gtnewhorizons.modularui.common.widget.textfield.NumericWidget;
+import com.science.gtnl.api.mixinHelper.ICostingEUHolder;
 import com.science.gtnl.api.mixinHelper.IWirelessMode;
 
 import gregtech.api.gui.modularui.GTUITextures;
@@ -81,7 +82,7 @@ import mcp.mobius.waila.api.IWailaDataAccessor;
 
 @Mixin(value = MTEPurificationUnitBase.class, remap = false)
 public abstract class MixinMTEPurificationUnitBase extends MTEExtendedPowerMultiBlockBase<MixinMTEPurificationUnitBase>
-    implements IWirelessMode {
+    implements IWirelessMode, ICostingEUHolder {
 
     @Shadow
     protected ArrayList<FluidStack> storedFluids;
@@ -138,6 +139,7 @@ public abstract class MixinMTEPurificationUnitBase extends MTEExtendedPowerMulti
     @Unique
     public long gtnl$effectiveParallelLong = 1;
 
+    @Getter
     @Unique
     public BigInteger gtnl$costingEU = BigInteger.ZERO;
 
@@ -605,9 +607,9 @@ public abstract class MixinMTEPurificationUnitBase extends MTEExtendedPowerMulti
 
     @Inject(method = "loadNBTData", at = @At("TAIL"))
     public void loadNBTData(NBTTagCompound aNBT, CallbackInfo ci) {
-        gtnl$wirelessMode = aNBT.getBoolean("wirelessMode");
-        gtnl$maxParallelLong = aNBT.getLong("configuredParallelLong");
-        gtnl$effectiveParallelLong = aNBT.getLong("effectiveParallelLong");
+        if (aNBT.hasKey("wirelessMode")) gtnl$wirelessMode = aNBT.getBoolean("wirelessMode");
+        if (aNBT.hasKey("configuredParallelLong")) gtnl$maxParallelLong = aNBT.getLong("configuredParallelLong");
+        if (aNBT.hasKey("effectiveParallelLong")) gtnl$effectiveParallelLong = aNBT.getLong("effectiveParallelLong");
     }
 
     @Inject(method = "saveNBTData", at = @At("TAIL"))
