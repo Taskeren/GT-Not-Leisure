@@ -1009,6 +1009,7 @@ public class SuperDualInputHatchME extends MTEHatchInputBus
     }
 
     public void refreshItemList() {
+        if (!isActive()) return;
         AENetworkProxy proxy = getProxy();
         try {
             IMEMonitor<IAEItemStack> sg = proxy.getStorage()
@@ -1041,6 +1042,7 @@ public class SuperDualInputHatchME extends MTEHatchInputBus
     }
 
     public void refreshItemListF() {
+        if (!isActive()) return;
         AENetworkProxy proxy = getProxy();
         try {
             IMEMonitor<IAEFluidStack> sg = proxy.getStorage()
@@ -1379,13 +1381,11 @@ public class SuperDualInputHatchME extends MTEHatchInputBus
 
     @Override
     public boolean isPowered() {
-
         return getProxy().isPowered();
     }
 
     @Override
     public boolean isActive() {
-
         return getProxy().isActive();
     }
 

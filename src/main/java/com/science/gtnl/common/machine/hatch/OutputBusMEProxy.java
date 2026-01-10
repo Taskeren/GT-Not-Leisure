@@ -10,7 +10,6 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
-import net.minecraft.world.WorldProvider;
 import net.minecraftforge.common.DimensionManager;
 
 import com.science.gtnl.api.mixinHelper.IOutputME;
@@ -188,18 +187,12 @@ public class OutputBusMEProxy extends MTEHatchOutputBusME {
 
         if (tag.getBoolean("linked")) {
             int dimID = tag.getInteger("masterDim");
-            String dimName = "Unknown";
-            WorldProvider provider = DimensionManager.getProvider(dimID);
-            if (provider != null) dimName = provider.getDimensionName();
 
             currenttip.add(
                 EnumChatFormatting.AQUA + "Linked to Output at "
                     + EnumChatFormatting.WHITE
-                    + "["
-                    + dimName
-                    + " ("
+                    + "[Dim "
                     + dimID
-                    + ")"
                     + "] "
                     + tag.getInteger("masterX")
                     + ", "
