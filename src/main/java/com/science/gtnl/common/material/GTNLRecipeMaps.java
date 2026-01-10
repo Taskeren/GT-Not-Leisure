@@ -321,7 +321,7 @@ public class GTNLRecipeMaps {
 
     public static RecipeMap<RecipeMapBackend> FuelRefiningComplexRecipes = RecipeMapBuilder
         .of("gtnl.recipe.FuelRefiningComplexRecipes")
-        .maxIO(3, 0, 6, 1)
+        .maxIO(4, 0, 8, 1)
         .frontend(GeneralFrontend::new)
         .dontUseProgressBar()
         .neiHandlerInfo(builder -> builder.setDisplayStack(GTNLItemList.FuelRefiningComplex.get(1)))

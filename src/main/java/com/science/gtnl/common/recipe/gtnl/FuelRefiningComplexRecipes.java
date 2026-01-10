@@ -10,7 +10,9 @@ import com.science.gtnl.utils.recipes.RecipeBuilder;
 import com.science.gtnl.utils.recipes.metadata.FuelRefiningMetadata;
 
 import goodgenerator.items.GGMaterial;
+import gregtech.api.enums.ItemList;
 import gregtech.api.enums.Materials;
+import gregtech.api.enums.MaterialsUEVplus;
 import gregtech.api.enums.OrePrefixes;
 import gregtech.api.enums.TierEU;
 import gregtech.api.recipe.RecipeMap;
@@ -286,20 +288,116 @@ public class FuelRefiningComplexRecipes implements IRecipePool {
             .eut(TierEU.RECIPE_IV)
             .addTo(FCR);
 
-        // RecipeBuilder.builder()
-        // .itemInputs(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Carbon, 44L))
-        // .fluidInputs(
-        // Materials.Oxygen.getGas(12000),
-        // Materials.Nitrogen.getGas(8000),
-        // Materials.Naphtha.getFluid(16000),
-        // Materials.Gas.getGas(2000),
-        // Materials.Toluene.getFluid(4000),
-        // Materials.Octane.getFluid(3000))
-        // .fluidOutputs(Materials.GasolinePremium.getFluid(50000))
-        // .duration(1200)
-        // .metadata(COIL_HEAT, 9500)
-        // .metadata(FUEL_REFINING_TIER, 1)
-        // .eut(TierEU.RECIPE_ZPM)
-        // .addTo(FCR);
+        RecipeBuilder.builder()
+            .fluidInputs(
+                GGMaterial.lightNaquadahFuel.getFluidOrGas(2875),
+                GGMaterial.heavyNaquadahFuel.getFluidOrGas(1375),
+                GGMaterial.atomicSeparationCatalyst.getMolten(750),
+                Materials.Duranium.getMolten(144))
+            .fluidOutputs(GGMaterial.naquadahBasedFuelMkI.getFluidOrGas(1250))
+            .duration(100)
+            .metadata(COIL_HEAT, 10800)
+            .metadata(FUEL_REFINING_TIER, 1)
+            .eut(TierEU.RECIPE_UHV)
+            .addTo(FCR);
+
+        RecipeBuilder.builder()
+            .itemInputs(ItemList.Gravistar.get(2))
+            .fluidInputs(
+                GGMaterial.lightNaquadahFuel.getFluidOrGas(2875),
+                GGMaterial.heavyNaquadahFuel.getFluidOrGas(1375),
+                GGMaterial.atomicSeparationCatalyst.getMolten(750),
+                GGMaterial.naquadahGas.getFluidOrGas(5000),
+                Materials.Americium.getPlasma(288))
+            .fluidOutputs(GGMaterial.naquadahBasedFuelMkII.getFluidOrGas(1250))
+            .duration(120)
+            .metadata(COIL_HEAT, 11500)
+            .metadata(FUEL_REFINING_TIER, 1)
+            .eut(TierEU.RECIPE_UEV)
+            .addTo(FCR);
+
+        RecipeBuilder.builder()
+            .itemInputs(GGMaterial.extremelyUnstableNaquadah.get(OrePrefixes.dust, 32))
+            .fluidInputs(
+                GGMaterial.lightNaquadahFuel.getFluidOrGas(11500),
+                GGMaterial.heavyNaquadahFuel.getFluidOrGas(5500),
+                GGMaterial.atomicSeparationCatalyst.getMolten(3000),
+                MaterialsElements.STANDALONE.CHRONOMATIC_GLASS.getFluidStack(5184),
+                GGMaterial.uraniumBasedLiquidFuelExcited.getFluidOrGas(1500),
+                GGMaterial.plutoniumBasedLiquidFuelExcited.getFluidOrGas(750))
+            .fluidOutputs(GGMaterial.naquadahBasedFuelMkIII.getFluidOrGas(1000))
+            .duration(140)
+            .metadata(COIL_HEAT, 12600)
+            .metadata(FUEL_REFINING_TIER, 2)
+            .eut(TierEU.RECIPE_UIV)
+            .addTo(FCR);
+
+        RecipeBuilder.builder()
+            .itemInputs(GTOreDictUnificator.get(OrePrefixes.block, Materials.DraconiumAwakened, 64))
+            .fluidInputs(
+                GGMaterial.lightNaquadahFuel.getFluidOrGas(46000),
+                GGMaterial.heavyNaquadahFuel.getFluidOrGas(22000),
+                GGMaterial.atomicSeparationCatalyst.getMolten(12000),
+                MaterialsElements.STANDALONE.CHRONOMATIC_GLASS.getFluidStack(19440),
+                GGMaterial.orundum.getMolten(9216),
+                MaterialsElements.STANDALONE.HYPOGEN.getFluidStack(480))
+            .fluidOutputs(GGMaterial.naquadahBasedFuelMkIV.getFluidOrGas(1000))
+            .duration(160)
+            .metadata(COIL_HEAT, 13500)
+            .metadata(FUEL_REFINING_TIER, 3)
+            .eut(TierEU.RECIPE_UMV)
+            .addTo(FCR);
+
+        RecipeBuilder.builder()
+            .itemInputs(
+                GTOreDictUnificator.get(OrePrefixes.stick, MaterialsUEVplus.TranscendentMetal, 20),
+                GTOreDictUnificator.get(OrePrefixes.plate, MaterialsUEVplus.HotProtoHalkonite, 16))
+            .fluidInputs(
+                GGMaterial.lightNaquadahFuel.getFluidOrGas(184000),
+                GGMaterial.heavyNaquadahFuel.getFluidOrGas(88000),
+                GGMaterial.atomicSeparationCatalyst.getMolten(48000),
+                Materials.Infinity.getMolten(2304),
+                MaterialsUEVplus.SpaceTime.getMolten(144))
+            .fluidOutputs(GGMaterial.naquadahBasedFuelMkV.getFluidOrGas(1000))
+            .duration(180)
+            .metadata(COIL_HEAT, 13500)
+            .metadata(FUEL_REFINING_TIER, 4)
+            .eut(TierEU.RECIPE_UXV)
+            .addTo(FCR);
+
+        RecipeBuilder.builder()
+            .itemInputs(GTUtility.getIntegratedCircuit(1))
+            .fluidInputs(
+                GGMaterial.lightNaquadahFuel.getFluidOrGas(368000),
+                GGMaterial.heavyNaquadahFuel.getFluidOrGas(176000),
+                GGMaterial.atomicSeparationCatalyst.getMolten(96000),
+                MaterialsElements.STANDALONE.CELESTIAL_TUNGSTEN.getFluidStack(5760),
+                MaterialsUEVplus.Mellion.getMolten(4608),
+                GGMaterial.shirabon.getMolten(288),
+                MaterialsUEVplus.RawStarMatter.getFluid(80))
+            .fluidOutputs(GGMaterial.naquadahBasedFuelMkVI.getFluidOrGas(1500))
+            .duration(200)
+            .metadata(COIL_HEAT, 13500)
+            .metadata(FUEL_REFINING_TIER, 4)
+            .eut(TierEU.RECIPE_MAX)
+            .addTo(FCR);
+
+        RecipeBuilder.builder()
+            .itemInputs(GTUtility.getIntegratedCircuit(2))
+            .fluidInputs(
+                GGMaterial.lightNaquadahFuel.getFluidOrGas(368000),
+                GGMaterial.heavyNaquadahFuel.getFluidOrGas(176000),
+                GGMaterial.atomicSeparationCatalyst.getMolten(96000),
+                MaterialsElements.STANDALONE.CELESTIAL_TUNGSTEN.getFluidStack(5760),
+                MaterialsUEVplus.Mellion.getMolten(4608),
+                GGMaterial.shirabon.getMolten(288),
+                MaterialsUEVplus.RawStarMatter.getFluid(80),
+                MaterialsUEVplus.Universium.getMolten(18))
+            .fluidOutputs(GGMaterial.naquadahBasedFuelMkVI.getFluidOrGas(3750))
+            .duration(100)
+            .metadata(COIL_HEAT, 13500)
+            .metadata(FUEL_REFINING_TIER, 4)
+            .eut(TierEU.RECIPE_MAX)
+            .addTo(FCR);
     }
 }
