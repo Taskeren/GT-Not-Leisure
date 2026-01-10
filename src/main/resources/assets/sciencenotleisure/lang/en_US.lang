@@ -2777,7 +2777,7 @@ Tooltip_BloodSoulSacrificialArray_02=Power cost reduction is replaced by LP cons
 Tooltip_BloodSoulSacrificialArray_03=Directly draws LP from the machine owner's network.
 Tooltip_BloodSoulSacrificialArray_04=Using Amonk’s Blood Orb ignores all LP consumption.
 Tooltip_BloodSoulSacrificialArray_05=Right click on the machine using a wire cutter to turn on and off the falling tower rendering
-Tooltip_BloodSoulSacrificialArray_Casing=Front-left-right Radiant Naquadah Alloy Casing
+Tooltip_BloodSoulSacrificialArray_Casing=Front-left-right Mining Black Plutonium Casing
 BloodSoulSacrificialArray_Render_Enabled=Enabled Falling Tower Render
 BloodSoulSacrificialArray_Render_Disabled=Disabled Falling Tower Render
 
