@@ -7,6 +7,7 @@ import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
@@ -31,6 +32,8 @@ import mcp.mobius.waila.api.IWailaDataAccessor;
 public class OutputBusMEProxy extends MTEHatchOutputBusME {
 
     public MTEHatchOutputBusME master;
+    public int masterX, masterY, masterZ, masterDim;
+    public boolean masterSet = false; // indicate if values of masterX, masterY, masterZ are valid
 
     public OutputBusMEProxy(int aID, String aName, String aNameRegional) {
         super(aID, aName, aNameRegional);
@@ -57,11 +60,19 @@ public class OutputBusMEProxy extends MTEHatchOutputBusME {
     }
 
     @Override
+    public void onPostTick(IGregTechTileEntity aBaseMetaTileEntity, long aTimer) {
+        if (aTimer % 100 == 0 && masterSet && getMaster() == null) {
+            trySetMasterFromCoord(masterX, masterY, masterZ, masterDim);
+        }
+        super.onPostTick(aBaseMetaTileEntity, aTimer);
+    }
+
+    @Override
     public void flushCachedStack() {
-        if (this.master == null) {
+        if (getMaster() == null) {
             super.flushCachedStack();
-        } else if (this.master.canAcceptItem()) {
-            IOutputME master = (IOutputME) this.master;
+        } else if (getMaster().canAcceptItem()) {
+            IOutputME master = (IOutputME) getMaster();
             IOutputME output = (IOutputME) this;
             IItemList<IAEItemStack> masterCache = master.getItemCache();
             IItemList<IAEItemStack> itemCache = output.getItemCache();
@@ -112,42 +123,51 @@ public class OutputBusMEProxy extends MTEHatchOutputBusME {
     @Override
     public void saveNBTData(NBTTagCompound aNBT) {
         super.saveNBTData(aNBT);
-
-        if (master == null) return;
-
-        IGregTechTileEntity tileEntity = master.getBaseMetaTileEntity();
-        if (tileEntity == null) return;
-
-        aNBT.setInteger("masterDim", tileEntity.getWorld().provider.dimensionId);
-        aNBT.setInteger("masterX", tileEntity.getXCoord());
-        aNBT.setInteger("masterY", tileEntity.getYCoord());
-        aNBT.setInteger("masterZ", tileEntity.getZCoord());
+        if (!masterSet) return;
+        NBTTagCompound masterNBT = new NBTTagCompound();
+        masterNBT.setInteger("masterDim", masterDim);
+        masterNBT.setInteger("masterX", masterX);
+        masterNBT.setInteger("masterY", masterY);
+        masterNBT.setInteger("masterZ", masterZ);
+        aNBT.setTag("master", masterNBT);
     }
 
     @Override
     public void loadNBTData(NBTTagCompound aNBT) {
         super.loadNBTData(aNBT);
+        if (!aNBT.hasKey("master")) return;
+        NBTTagCompound masterNBT = aNBT.getCompoundTag("master");
+        masterX = masterNBT.getInteger("masterX");
+        masterY = masterNBT.getInteger("masterY");
+        masterZ = masterNBT.getInteger("masterZ");
+        masterDim = masterNBT.getInteger("masterDim");
+        masterSet = true;
+    }
 
-        if (!aNBT.hasKey("masterDim") || !aNBT.hasKey("masterX")
-            || !aNBT.hasKey("masterY")
-            || !aNBT.hasKey("masterZ")) {
-            return;
+    public MTEHatchOutputBusME getMaster() {
+        if (master == null) return null;
+        if (master.getBaseMetaTileEntity() == null) { // master disappeared
+            master = null;
         }
+        return master;
+    }
 
-        int dim = aNBT.getInteger("masterDim");
-        int x = aNBT.getInteger("masterX");
-        int y = aNBT.getInteger("masterY");
-        int z = aNBT.getInteger("masterZ");
-
+    public MTEHatchOutputBusME trySetMasterFromCoord(int x, int y, int z, int dim) {
         World world = DimensionManager.getWorld(dim);
-        if (world == null) return;
+        if (world == null) return null;
 
-        TileEntity te = GTUtil.getTileEntity(world, x, y, z, true);
+        TileEntity tileEntity = GTUtil.getTileEntity(world, x, y, z, false);
 
-        if (te instanceof IGregTechTileEntity gtTE
-            && gtTE.getMetaTileEntity() instanceof MTEHatchOutputBusME outputBusME) {
-            this.master = outputBusME;
-        }
+        if (tileEntity == null) return null;
+        if (!(tileEntity instanceof IGregTechTileEntity GTTE)) return null;
+        if (!(GTTE.getMetaTileEntity() instanceof MTEHatchOutputBusME newMaster)) return null;
+        if (newMaster instanceof OutputBusMEProxy) return null;
+        if (master != newMaster) master = newMaster;
+        masterX = x;
+        masterY = y;
+        masterZ = z;
+        masterSet = true;
+        return master;
     }
 
     @Override
@@ -155,50 +175,37 @@ public class OutputBusMEProxy extends MTEHatchOutputBusME {
         boolean result = super.pasteCopiedData(player, aNBT);
         if (aNBT == null) return result;
 
-        if (!aNBT.hasKey("masterDim") || !aNBT.hasKey("masterX")
-            || !aNBT.hasKey("masterY")
-            || !aNBT.hasKey("masterZ")) {
-            return result;
-        }
-
-        int dim = aNBT.getInteger("masterDim");
-        int x = aNBT.getInteger("masterX");
-        int y = aNBT.getInteger("masterY");
-        int z = aNBT.getInteger("masterZ");
-
-        World world = DimensionManager.getWorld(dim);
-        if (world == null) return result;
-
-        TileEntity te = GTUtil.getTileEntity(world, x, y, z, true);
-
-        if (te instanceof IGregTechTileEntity gtTE
-            && gtTE.getMetaTileEntity() instanceof MTEHatchOutputBusME outputBusME) {
-            this.master = outputBusME;
+        if (!aNBT.hasKey("master")) return result;
+        NBTTagCompound masterNBT = aNBT.getCompoundTag("master");
+        int x = masterNBT.getInteger("masterX");
+        int y = masterNBT.getInteger("masterY");
+        int z = masterNBT.getInteger("masterZ");
+        int dim = masterNBT.getInteger("masterDim");
+        if (trySetMasterFromCoord(x, y, z, dim) != null) {
+            player.addChatMessage(new ChatComponentText("Link successful"));
             return true;
         }
-
-        return result;
+        player.addChatMessage(new ChatComponentText("Link failed"));
+        return true;
     }
 
     @Override
     public void getWailaBody(ItemStack itemStack, List<String> currenttip, IWailaDataAccessor accessor,
         IWailaConfigHandler config) {
         NBTTagCompound tag = accessor.getNBTData();
-
-        if (tag.getBoolean("linked")) {
-            int dimID = tag.getInteger("masterDim");
-
+        if (tag.hasKey("master")) {
+            NBTTagCompound masterNBT = tag.getCompoundTag("master");
             currenttip.add(
                 EnumChatFormatting.AQUA + "Linked to Output at "
                     + EnumChatFormatting.WHITE
                     + "[Dim "
-                    + dimID
+                    + masterNBT.getInteger("masterDim")
                     + "] "
-                    + tag.getInteger("masterX")
+                    + masterNBT.getInteger("masterX")
                     + ", "
-                    + tag.getInteger("masterY")
+                    + masterNBT.getInteger("masterY")
                     + ", "
-                    + tag.getInteger("masterZ")
+                    + masterNBT.getInteger("masterZ")
                     + EnumChatFormatting.RESET);
         } else {
             currenttip.add(EnumChatFormatting.AQUA + "Unlinked");
@@ -210,16 +217,14 @@ public class OutputBusMEProxy extends MTEHatchOutputBusME {
     @Override
     public void getWailaNBTData(EntityPlayerMP player, TileEntity tile, NBTTagCompound tag, World world, int x, int y,
         int z) {
-        tag.setBoolean("linked", master != null);
 
-        if (master != null) {
-            IGregTechTileEntity te = master.getBaseMetaTileEntity();
-            if (te != null) {
-                tag.setInteger("masterDim", te.getWorld().provider.dimensionId);
-                tag.setInteger("masterX", te.getXCoord());
-                tag.setInteger("masterY", te.getYCoord());
-                tag.setInteger("masterZ", te.getZCoord());
-            }
+        if (masterSet) {
+            NBTTagCompound masterNBT = new NBTTagCompound();
+            masterNBT.setInteger("masterDim", masterDim);
+            masterNBT.setInteger("masterX", masterX);
+            masterNBT.setInteger("masterY", masterY);
+            masterNBT.setInteger("masterZ", masterZ);
+            tag.setTag("master", masterNBT);
         }
 
         super.getWailaNBTData(player, tile, tag, world, x, y, z);

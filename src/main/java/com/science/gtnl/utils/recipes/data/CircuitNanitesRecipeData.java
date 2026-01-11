@@ -1,11 +1,11 @@
 package com.science.gtnl.utils.recipes.data;
 
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Random;
 
 import net.minecraft.item.ItemStack;
 
+import it.unimi.dsi.fastutil.objects.Object2ObjectMap;
+import it.unimi.dsi.fastutil.objects.Object2ObjectOpenHashMap;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -13,7 +13,7 @@ import lombok.Setter;
 @Setter
 public class CircuitNanitesRecipeData implements Comparable<CircuitNanitesRecipeData> {
 
-    public static Map<ItemStack, CircuitNanitesRecipeData> recipeDataMap = new HashMap<>();
+    public static Object2ObjectMap<ItemStack, CircuitNanitesRecipeData> recipeDataMap = new Object2ObjectOpenHashMap<>();
 
     public ItemStack stack;
     public double speedBoost = 1.0, euModifier = 1.0, failedChance = 0, outputMultiplier = 1.0;
