@@ -7,7 +7,6 @@ import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
@@ -181,12 +180,7 @@ public class OutputBusMEProxy extends MTEHatchOutputBusME {
         int y = masterNBT.getInteger("masterY");
         int z = masterNBT.getInteger("masterZ");
         int dim = masterNBT.getInteger("masterDim");
-        if (trySetMasterFromCoord(x, y, z, dim) != null) {
-            player.addChatMessage(new ChatComponentText("Link successful"));
-            return true;
-        }
-        player.addChatMessage(new ChatComponentText("Link failed"));
-        return true;
+        return trySetMasterFromCoord(x, y, z, dim) != null;
     }
 
     @Override
