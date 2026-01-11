@@ -28,6 +28,7 @@ import com.gtnewhorizon.structurelib.structure.StructureDefinition;
 import com.science.gtnl.common.machine.multiMachineBase.WirelessEnergyMultiMachineBase;
 import com.science.gtnl.loader.BlockLoader;
 import com.science.gtnl.utils.StructureUtils;
+import com.science.gtnl.utils.enums.GTNLStructureChannels;
 
 import cpw.mods.fml.common.registry.GameRegistry;
 import goodgenerator.api.recipe.GoodGeneratorRecipeMaps;
@@ -89,6 +90,7 @@ public class NanoAssemblerMarkL extends WirelessEnergyMultiMachineBase<NanoAssem
             .addOutputBus(StatCollector.translateToLocal("Tooltip_NanoAssemblerMarkL_Casing"), 1)
             .addInputHatch(StatCollector.translateToLocal("Tooltip_NanoAssemblerMarkL_Casing"), 1)
             .addEnergyHatch(StatCollector.translateToLocal("Tooltip_NanoAssemblerMarkL_Casing"), 1)
+            .addSubChannelUsage(GTNLStructureChannels.COMPONENT_ASSEMBLY_LINE_CASING)
             .toolTipFinisher();
         return tt;
     }
@@ -124,14 +126,15 @@ public class NanoAssemblerMarkL extends WirelessEnergyMultiMachineBase<NanoAssem
             .addElement('B', ofBlock(sBlockCasings8, 10))
             .addElement(
                 'C',
-                ofBlocksTiered(
-                    (block, meta) -> block == Loaders.componentAssemblylineCasing ? meta : -1,
-                    IntStream.range(0, 13)
-                        .mapToObj(i -> Pair.of(Loaders.componentAssemblylineCasing, i))
-                        .collect(Collectors.toList()),
-                    -2,
-                    (t, meta) -> t.mCasingTier = meta,
-                    t -> t.mCasingTier))
+                GTNLStructureChannels.COMPONENT_ASSEMBLY_LINE_CASING.use(
+                    ofBlocksTiered(
+                        (block, meta) -> block == Loaders.componentAssemblylineCasing ? meta : -1,
+                        IntStream.range(0, 13)
+                            .mapToObj(i -> Pair.of(Loaders.componentAssemblylineCasing, i))
+                            .collect(Collectors.toList()),
+                        -2,
+                        (t, meta) -> t.mCasingTier = meta,
+                        t -> t.mCasingTier)))
             .addElement('D', ofBlock(sBlockCasings9, 11))
             .addElement(
                 'E',

@@ -62,6 +62,7 @@
     "Gregtech.MixinMTEHatchDataAccess",
     "Gregtech.MixinMTEHatchSteamBusOutput",
     "Gregtech.MixinMTELightningRod",
+    "Gregtech.MixinMTEPlasmaForge",
     "Gregtech.MixinMTEPreciseAssembler",
     "Gregtech.MixinMTEMultiBlockBase",
     "Gregtech.MixinMTEMultiBlockBaseRecipeProcessing",

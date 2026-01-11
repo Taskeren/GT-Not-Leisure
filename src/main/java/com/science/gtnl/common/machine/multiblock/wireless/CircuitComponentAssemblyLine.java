@@ -32,6 +32,7 @@ import com.science.gtnl.common.machine.hatch.NanitesInputBus;
 import com.science.gtnl.common.machine.multiMachineBase.WirelessEnergyMultiMachineBase;
 import com.science.gtnl.common.material.GTNLRecipeMaps;
 import com.science.gtnl.utils.StructureUtils;
+import com.science.gtnl.utils.enums.GTNLStructureChannels;
 
 import goodgenerator.loader.Loaders;
 import gregtech.api.enums.Textures;
@@ -91,14 +92,15 @@ public class CircuitComponentAssemblyLine extends WirelessEnergyMultiMachineBase
             .addElement('A', ofBlock(FRF_Coil_1, 0))
             .addElement(
                 'B',
-                ofBlocksTiered(
-                    (block, meta) -> block == Loaders.componentAssemblylineCasing ? meta : -1,
-                    IntStream.range(0, 14)
-                        .mapToObj(i -> Pair.of(Loaders.componentAssemblylineCasing, i))
-                        .collect(Collectors.toList()),
-                    -2,
-                    (t, meta) -> t.casingTier = meta,
-                    t -> t.casingTier))
+                GTNLStructureChannels.COMPONENT_ASSEMBLY_LINE_CASING.use(
+                    ofBlocksTiered(
+                        (block, meta) -> block == Loaders.componentAssemblylineCasing ? meta : -1,
+                        IntStream.range(0, 14)
+                            .mapToObj(i -> Pair.of(Loaders.componentAssemblylineCasing, i))
+                            .collect(Collectors.toList()),
+                        -2,
+                        (t, meta) -> t.casingTier = meta,
+                        t -> t.casingTier)))
             .addElement('C', ofBlock(sBlockCasings2, 5))
             .addElement('D', ofBlock(sBlockCasingsTT, 0))
             .addElement('E', ofBlock(sBlockCasingsTT, 1))
@@ -142,6 +144,7 @@ public class CircuitComponentAssemblyLine extends WirelessEnergyMultiMachineBase
             .addOutputBus(StatCollector.translateToLocal("Tooltip_CircuitComponentAssemblyLine_Casing_00"))
             .addEnergyHatch(StatCollector.translateToLocal("Tooltip_CircuitComponentAssemblyLine_Casing_00"))
             .addMaintenanceHatch(StatCollector.translateToLocal("Tooltip_CircuitComponentAssemblyLine_Casing_00"))
+            .addSubChannelUsage(GTNLStructureChannels.COMPONENT_ASSEMBLY_LINE_CASING)
             .toolTipFinisher();
         return tt;
     }

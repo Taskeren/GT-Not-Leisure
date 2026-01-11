@@ -197,18 +197,15 @@ public class ManaEnergyHatch extends MTEHatchEnergy implements IAddUIWidgets {
         int currentMana = currentManaStack != null ? currentManaStack.amount : 0;
         int capacity = getCapacity();
 
-        if (currentMana != 0) {
-            return new String[] { EnumChatFormatting.BLUE + StatCollector.translateToLocal("Info_ManaEnergyHatch_00")
-                + EnumChatFormatting.RESET
-                + EnumChatFormatting.GREEN
-                + GTUtility.formatNumbers(currentMana)
-                + EnumChatFormatting.RESET
-                + " / "
-                + EnumChatFormatting.YELLOW
-                + GTUtility.formatNumbers(capacity) };
-        }
-
-        return new String[] {};
+        if (currentMana == 0) return new String[] {};
+        return new String[] { EnumChatFormatting.BLUE + StatCollector.translateToLocal("Info_ManaEnergyHatch_00")
+            + EnumChatFormatting.RESET
+            + EnumChatFormatting.GREEN
+            + GTUtility.formatNumbers(currentMana)
+            + EnumChatFormatting.RESET
+            + " / "
+            + EnumChatFormatting.YELLOW
+            + GTUtility.formatNumbers(capacity) };
     }
 
     @Override

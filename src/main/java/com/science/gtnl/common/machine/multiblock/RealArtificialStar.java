@@ -59,6 +59,7 @@ import gregtech.api.render.TextureFactory;
 import gregtech.api.util.GTModHandler;
 import gregtech.api.util.GTUtility;
 import gregtech.api.util.MultiblockTooltipBuilder;
+import gregtech.common.misc.GTStructureChannels;
 import gtnhlanth.common.register.LanthItemList;
 import mcp.mobius.waila.api.IWailaConfigHandler;
 import mcp.mobius.waila.api.IWailaDataAccessor;
@@ -493,8 +494,7 @@ public class RealArtificialStar extends MultiMachineBase<RealArtificialStar> {
             .addShape(STRUCTURE_PIECE_MAIN, transpose(shape))
             .addElement(
                 'A',
-                withChannel(
-                    "tiertimefield",
+                GTStructureChannels.EOH_DILATION.use(
                     ofBlocksTiered(
                         RealArtificialStar::getTierTimeFieldBlockFromBlock,
                         ImmutableList.of(
@@ -522,8 +522,7 @@ public class RealArtificialStar extends MultiMachineBase<RealArtificialStar> {
                     .buildAndChain(sBlockCasings1, 13))
             .addElement(
                 'E',
-                withChannel(
-                    "tierdimensionfield",
+                GTStructureChannels.EOH_COMPRESSION.use(
                     ofBlocksTiered(
                         RealArtificialStar::getTierDimensionFieldBlockFromBlock,
                         ImmutableList.of(
@@ -544,8 +543,7 @@ public class RealArtificialStar extends MultiMachineBase<RealArtificialStar> {
             .addElement('G', ofBlock(sBlockCasings8, 10))
             .addElement(
                 'H',
-                withChannel(
-                    "tierstabilisationfield",
+                GTStructureChannels.EOH_STABILISATION.use(
                     ofBlocksTiered(
                         RealArtificialStar::getTierStabilisationFieldBlockFromBlock,
                         ImmutableList.of(
@@ -628,6 +626,9 @@ public class RealArtificialStar extends MultiMachineBase<RealArtificialStar> {
             .addStructureInfo(StatCollector.translateToLocal("Tooltip_RealArtificialStarInfo_12"))
             .addStructureInfo(StatCollector.translateToLocal("Tooltip_RealArtificialStarInfo_13"))
             .addStructureInfo(StatCollector.translateToLocal("Tooltip_RealArtificialStarInfo_14"))
+            .addSubChannelUsage(GTStructureChannels.EOH_COMPRESSION)
+            .addSubChannelUsage(GTStructureChannels.EOH_DILATION)
+            .addSubChannelUsage(GTStructureChannels.EOH_STABILISATION)
             .toolTipFinisher();
         return tt;
     }

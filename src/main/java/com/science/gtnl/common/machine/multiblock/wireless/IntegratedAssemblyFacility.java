@@ -37,6 +37,7 @@ import com.science.gtnl.common.machine.multiMachineBase.WirelessEnergyMultiMachi
 import com.science.gtnl.loader.BlockLoader;
 import com.science.gtnl.utils.StructureUtils;
 import com.science.gtnl.utils.enums.GTNLItemList;
+import com.science.gtnl.utils.enums.GTNLStructureChannels;
 import com.science.gtnl.utils.recipes.GTNLOverclockCalculator;
 import com.science.gtnl.utils.recipes.GTNLProcessingLogic;
 
@@ -144,6 +145,7 @@ public class IntegratedAssemblyFacility extends WirelessEnergyMultiMachineBase<I
             .addInputHatch(StatCollector.translateToLocal("Tooltip_IntegratedAssemblyFacility_Casing"), 1)
             .addEnergyHatch(StatCollector.translateToLocal("Tooltip_IntegratedAssemblyFacility_Casing"), 1)
             .addSubChannelUsage(GTStructureChannels.BOROGLASS)
+            .addSubChannelUsage(GTNLStructureChannels.COMPONENT_ASSEMBLY_LINE_CASING)
             .toolTipFinisher();
         return tt;
     }
@@ -178,14 +180,15 @@ public class IntegratedAssemblyFacility extends WirelessEnergyMultiMachineBase<I
             .addElement('A', ofBlock(BlockLoader.metaCasing, 4))
             .addElement(
                 'B',
-                ofBlocksTiered(
-                    (block, meta) -> block == Loaders.componentAssemblylineCasing ? meta : -1,
-                    IntStream.range(0, 13)
-                        .mapToObj(i -> Pair.of(Loaders.componentAssemblylineCasing, i))
-                        .collect(Collectors.toList()),
-                    -2,
-                    (t, meta) -> t.mCasingTier = meta,
-                    t -> t.mCasingTier))
+                GTNLStructureChannels.COMPONENT_ASSEMBLY_LINE_CASING.use(
+                    ofBlocksTiered(
+                        (block, meta) -> block == Loaders.componentAssemblylineCasing ? meta : -1,
+                        IntStream.range(0, 13)
+                            .mapToObj(i -> Pair.of(Loaders.componentAssemblylineCasing, i))
+                            .collect(Collectors.toList()),
+                        -2,
+                        (t, meta) -> t.mCasingTier = meta,
+                        t -> t.mCasingTier)))
             .addElement(
                 'C',
                 buildHatchAdder(IntegratedAssemblyFacility.class)

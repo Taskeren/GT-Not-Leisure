@@ -23,6 +23,7 @@ import com.science.gtnl.common.machine.multiMachineBase.MultiMachineBase;
 import com.science.gtnl.common.material.GTNLRecipeMaps;
 import com.science.gtnl.utils.StructureUtils;
 import com.science.gtnl.utils.enums.CommonElements;
+import com.science.gtnl.utils.enums.GTNLStructureChannels;
 
 import crazypants.enderio.EnderIO;
 import gregtech.api.enums.Textures;
@@ -74,6 +75,7 @@ public class GenerationEarthEngine extends MultiMachineBase<GenerationEarthEngin
             .addOutputHatch(StatCollector.translateToLocal("Tooltip_GenerationEarthEngine_Casing"), 1)
             .addEnergyHatch(StatCollector.translateToLocal("Tooltip_GenerationEarthEngine_Casing"), 1)
             .addMaintenanceHatch(StatCollector.translateToLocal("Tooltip_GenerationEarthEngine_Casing"), 1)
+            .addSubChannelUsage(GTNLStructureChannels.STRUCTURE_RENDER)
             .toolTipFinisher();
         return tt;
     }
@@ -140,13 +142,13 @@ public class GenerationEarthEngine extends MultiMachineBase<GenerationEarthEngin
 
     @Override
     public void onPreviewConstruct(@NotNull ItemStack trigger) {
-        if (trigger.stackSize > 1) {
-            buildPiece(STRUCTURE_PIECE_MAIN, trigger, false, HORIZONTAL_OFF_SET, VERTICAL_OFF_SET, DEPTH_OFF_SET);
-        }
+        if (!GTNLStructureChannels.STRUCTURE_RENDER.hasValue(trigger)) return;
+        buildPiece(STRUCTURE_PIECE_MAIN, trigger, false, HORIZONTAL_OFF_SET, VERTICAL_OFF_SET, DEPTH_OFF_SET);
     }
 
     @Override
     public void construct(ItemStack stackSize, boolean hintsOnly) {
+        if (!GTNLStructureChannels.STRUCTURE_RENDER.hasValue(stackSize)) return;
         this.buildPiece(
             STRUCTURE_PIECE_MAIN,
             stackSize,
@@ -159,22 +161,18 @@ public class GenerationEarthEngine extends MultiMachineBase<GenerationEarthEngin
     @Override
     public int survivalConstruct(ItemStack stackSize, int elementBudget, ISurvivalBuildEnvironment env) {
         if (this.mMachine) return -1;
+        if (!GTNLStructureChannels.STRUCTURE_RENDER.hasValue(stackSize)) return -1;
         int realBudget = elementBudget >= 500 ? elementBudget : Math.min(500, elementBudget * 5);
-
-        if (stackSize.stackSize > 1) {
-            return this.survivalBuildPiece(
-                STRUCTURE_PIECE_MAIN,
-                stackSize,
-                HORIZONTAL_OFF_SET,
-                VERTICAL_OFF_SET,
-                DEPTH_OFF_SET,
-                realBudget,
-                env,
-                false,
-                true);
-        } else {
-            return -1;
-        }
+        return this.survivalBuildPiece(
+            STRUCTURE_PIECE_MAIN,
+            stackSize,
+            HORIZONTAL_OFF_SET,
+            VERTICAL_OFF_SET,
+            DEPTH_OFF_SET,
+            realBudget,
+            env,
+            false,
+            true);
     }
 
     public boolean checkMachine(IGregTechTileEntity aBaseMetaTileEntity, ItemStack aStack) {

@@ -28,6 +28,7 @@ import com.gtnewhorizon.structurelib.structure.ISurvivalBuildEnvironment;
 import com.gtnewhorizon.structurelib.structure.StructureDefinition;
 import com.science.gtnl.common.machine.multiMachineBase.MultiMachineBase;
 import com.science.gtnl.utils.StructureUtils;
+import com.science.gtnl.utils.enums.GTNLStructureChannels;
 import com.science.gtnl.utils.recipes.GTNLOverclockCalculator;
 import com.science.gtnl.utils.recipes.GTNLProcessingLogic;
 
@@ -70,14 +71,15 @@ public class ComponentAssembler extends MultiMachineBase<ComponentAssembler> imp
             .addElement('A', chainAllGlasses(-1, (te, t) -> te.mGlassTier = t, te -> te.mGlassTier))
             .addElement(
                 'B',
-                ofBlocksTiered(
-                    (block, meta) -> block == Loaders.componentAssemblylineCasing ? meta : -1,
-                    IntStream.range(0, 8)
-                        .mapToObj(i -> Pair.of(Loaders.componentAssemblylineCasing, i))
-                        .collect(Collectors.toList()),
-                    -2,
-                    (t, meta) -> t.mCasingTier = meta,
-                    t -> t.mCasingTier))
+                GTNLStructureChannels.COMPONENT_ASSEMBLY_LINE_CASING.use(
+                    ofBlocksTiered(
+                        (block, meta) -> block == Loaders.componentAssemblylineCasing ? meta : -1,
+                        IntStream.range(0, 8)
+                            .mapToObj(i -> Pair.of(Loaders.componentAssemblylineCasing, i))
+                            .collect(Collectors.toList()),
+                        -2,
+                        (t, meta) -> t.mCasingTier = meta,
+                        t -> t.mCasingTier)))
             .addElement(
                 'C',
                 buildHatchAdder(ComponentAssembler.class)
@@ -142,6 +144,7 @@ public class ComponentAssembler extends MultiMachineBase<ComponentAssembler> imp
             .addMaintenanceHatch(StatCollector.translateToLocal("Tooltip_ComponentAssembler_Casing"))
             .addInputHatch(StatCollector.translateToLocal("Tooltip_ComponentAssembler_Casing"))
             .addSubChannelUsage(GTStructureChannels.BOROGLASS)
+            .addSubChannelUsage(GTNLStructureChannels.COMPONENT_ASSEMBLY_LINE_CASING)
             .toolTipFinisher();
         return tt;
     }

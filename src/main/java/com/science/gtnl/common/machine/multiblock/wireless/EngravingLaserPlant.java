@@ -37,6 +37,7 @@ import com.science.gtnl.common.machine.multiMachineBase.WirelessEnergyMultiMachi
 import com.science.gtnl.common.material.GTNLRecipeMaps;
 import com.science.gtnl.loader.BlockLoader;
 import com.science.gtnl.utils.StructureUtils;
+import com.science.gtnl.utils.enums.GTNLStructureChannels;
 import com.science.gtnl.utils.recipes.GTNLOverclockCalculator;
 import com.science.gtnl.utils.recipes.GTNLProcessingLogic;
 
@@ -130,6 +131,7 @@ public class EngravingLaserPlant extends WirelessEnergyMultiMachineBase<Engravin
             .addOutputHatch(StatCollector.translateToLocal("Tooltip_EngravingLaserPlant_Casing"), 1)
             .addEnergyHatch(StatCollector.translateToLocal("Tooltip_EngravingLaserPlant_Casing"), 1)
             .addSubChannelUsage(GTStructureChannels.BOROGLASS)
+            .addSubChannelUsage(GTNLStructureChannels.COMPONENT_ASSEMBLY_LINE_CASING)
             .toolTipFinisher();
         return tt;
     }
@@ -185,14 +187,15 @@ public class EngravingLaserPlant extends WirelessEnergyMultiMachineBase<Engravin
             .addElement('I', ofBlock(compactFusionCoil, 2))
             .addElement(
                 'J',
-                ofBlocksTiered(
-                    (block, meta) -> block == Loaders.componentAssemblylineCasing ? meta : -1,
-                    IntStream.range(0, 13)
-                        .mapToObj(i -> Pair.of(Loaders.componentAssemblylineCasing, i))
-                        .collect(Collectors.toList()),
-                    -2,
-                    (t, meta) -> t.mCasingTier = meta,
-                    t -> t.mCasingTier))
+                GTNLStructureChannels.COMPONENT_ASSEMBLY_LINE_CASING.use(
+                    ofBlocksTiered(
+                        (block, meta) -> block == Loaders.componentAssemblylineCasing ? meta : -1,
+                        IntStream.range(0, 13)
+                            .mapToObj(i -> Pair.of(Loaders.componentAssemblylineCasing, i))
+                            .collect(Collectors.toList()),
+                        -2,
+                        (t, meta) -> t.mCasingTier = meta,
+                        t -> t.mCasingTier)))
             .addElement('K', ofBlock(sBlockCasings10, 11))
             .addElement('L', chainAllGlasses(-1, (te, t) -> te.mGlassTier = t, te -> te.mGlassTier))
             .addElement('M', ofFrame(Materials.Neutronium))

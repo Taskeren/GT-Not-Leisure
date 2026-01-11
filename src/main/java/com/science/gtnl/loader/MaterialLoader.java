@@ -5,6 +5,7 @@ import static com.science.gtnl.utils.CardboardBoxUtils.*;
 import net.blay09.mods.craftingtweaks.api.CraftingTweaksAPI;
 import net.blay09.mods.craftingtweaks.api.SimpleTweakProvider;
 import net.minecraft.init.Blocks;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumFacing;
 import net.minecraftforge.oredict.OreDictionary;
 
@@ -24,11 +25,13 @@ import com.science.gtnl.config.MainConfig;
 import com.science.gtnl.container.portableWorkbench.ContainerPortableAdvancedWorkbench;
 import com.science.gtnl.container.portableWorkbench.ContainerPortableAvaritiaddonsChest;
 import com.science.gtnl.container.portableWorkbench.ContainerPortableChest;
+import com.science.gtnl.utils.enums.GTNLStructureChannels;
 import com.science.gtnl.utils.enums.ModList;
 import com.science.gtnl.utils.machine.greenHouseManager.GreenHouseBucket;
 
 import bartworks.API.WerkstoffAdderRegistry;
 import cpw.mods.fml.common.Optional;
+import goodgenerator.loader.Loaders;
 import gregtech.api.enums.Mods;
 import gregtech.api.enums.OrePrefixes;
 import gregtech.api.util.GTModHandler;
@@ -63,6 +66,13 @@ public class MaterialLoader {
         MachineLoader.registerGlasses();
         WailaLoader.register();
         TickrateAPI.changeTickrate(MainConfig.defaultTickrate);
+
+        GTNLStructureChannels.register();
+
+        for (int i = 0; i < 14; i++) {
+            GTNLStructureChannels.COMPONENT_ASSEMBLY_LINE_CASING
+                .registerAsIndicator(new ItemStack(Loaders.componentAssemblylineCasing, 1, i), i + 1);
+        }
     }
 
     public static void loadPostInit() {

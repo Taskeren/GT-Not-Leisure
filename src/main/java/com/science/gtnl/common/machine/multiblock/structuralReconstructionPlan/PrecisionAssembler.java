@@ -29,7 +29,6 @@ import com.gtnewhorizon.structurelib.alignment.constructable.ISurvivalConstructa
 import com.gtnewhorizon.structurelib.structure.IStructureDefinition;
 import com.gtnewhorizon.structurelib.structure.ISurvivalBuildEnvironment;
 import com.gtnewhorizon.structurelib.structure.StructureDefinition;
-import com.gtnewhorizon.structurelib.structure.StructureUtility;
 import com.science.gtnl.common.machine.multiMachineBase.MultiMachineBase;
 import com.science.gtnl.utils.StructureUtils;
 import com.science.gtnl.utils.recipes.GTNLOverclockCalculator;
@@ -166,8 +165,7 @@ public class PrecisionAssembler extends MultiMachineBase<PrecisionAssembler> imp
             .addElement('A', chainAllGlasses(-1, (te, t) -> te.mGlassTier = t, te -> te.mGlassTier))
             .addElement(
                 'B',
-                StructureUtility.withChannel(
-                    "machine_casing",
+                GTStructureChannels.TIER_MACHINE_CASING.use(
                     ofBlocksTiered(
                         PrecisionAssembler::getMachineTier,
                         ImmutableList.of(
@@ -194,8 +192,7 @@ public class PrecisionAssembler extends MultiMachineBase<PrecisionAssembler> imp
                         .buildAndChain(
                             onElementPass(
                                 x -> ++x.mCountCasing,
-                                StructureUtility.withChannel(
-                                    "unit_casing",
+                                GTStructureChannels.PRASS_UNIT_CASING.use(
                                     ofBlocksTiered(
                                         PrecisionAssembler::getCasingTier,
                                         ImmutableList.of(

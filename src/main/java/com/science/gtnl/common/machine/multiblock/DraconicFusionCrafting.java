@@ -39,6 +39,7 @@ import gregtech.api.recipe.check.CheckRecipeResultRegistry;
 import gregtech.api.render.TextureFactory;
 import gregtech.api.util.GTRecipe;
 import gregtech.api.util.MultiblockTooltipBuilder;
+import gregtech.common.misc.GTStructureChannels;
 import kubatech.loaders.BlockLoader;
 import kubatech.loaders.DEFCRecipes;
 import tectech.thing.casing.TTCasingsContainer;
@@ -111,6 +112,7 @@ public class DraconicFusionCrafting extends GTMMultiMachineBase<DraconicFusionCr
             .addOutputBus(StatCollector.translateToLocal("Tooltip_DraconicFusionCrafting_Casing"))
             .addEnergyHatch(StatCollector.translateToLocal("Tooltip_DraconicFusionCrafting_Casing"))
             .addMaintenanceHatch(StatCollector.translateToLocal("Tooltip_DraconicFusionCrafting_Casing"))
+            .addSubChannelUsage(GTStructureChannels.TIER_MACHINE_CASING)
             .toolTipFinisher();
         return tt;
     }
@@ -136,8 +138,7 @@ public class DraconicFusionCrafting extends GTMMultiMachineBase<DraconicFusionCr
                     .buildAndChain(onElementPass(x -> ++x.mCountCasing, ofBlock(sBlockCasings10, 12))))
             .addElement(
                 'D',
-                withChannel(
-                    "tiercasing",
+                GTStructureChannels.TIER_MACHINE_CASING.use(
                     ofBlocksTiered(
                         DraconicFusionCrafting::getTierCasingFromBlock,
                         ImmutableList.of(

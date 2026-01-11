@@ -26,11 +26,6 @@ import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;
 
-import org.apache.commons.lang3.tuple.Pair;
-import org.jetbrains.annotations.NotNull;
-
-import com.google.common.collect.ImmutableList;
-import com.gtnewhorizon.structurelib.alignment.constructable.ChannelDataAccessor;
 import com.gtnewhorizon.structurelib.structure.IStructureDefinition;
 import com.gtnewhorizon.structurelib.structure.ISurvivalBuildEnvironment;
 import com.gtnewhorizon.structurelib.structure.StructureDefinition;
@@ -45,7 +40,6 @@ import goodgenerator.loader.Loaders;
 import gregtech.api.enums.Materials;
 import gregtech.api.enums.Textures;
 import gregtech.api.gui.modularui.GTUITextures;
-import gregtech.api.interfaces.INEIPreviewModifier;
 import gregtech.api.interfaces.ITexture;
 import gregtech.api.interfaces.metatileentity.IMetaTileEntity;
 import gregtech.api.interfaces.tileentity.IGregTechTileEntity;
@@ -57,8 +51,7 @@ import gregtech.api.util.MultiblockTooltipBuilder;
 import gtnhlanth.common.register.LanthItemList;
 import tectech.thing.block.BlockQuantumGlass;
 
-public class NanoPhagocytosisPlant extends WirelessEnergyMultiMachineBase<NanoPhagocytosisPlant>
-    implements INEIPreviewModifier {
+public class NanoPhagocytosisPlant extends WirelessEnergyMultiMachineBase<NanoPhagocytosisPlant> {
 
     private static final int HORIZONTAL_OFF_SET = 10;
     private static final int VERTICAL_OFF_SET = 22;
@@ -97,7 +90,6 @@ public class NanoPhagocytosisPlant extends WirelessEnergyMultiMachineBase<NanoPh
     private static final int MACHINEMODE_MACERATOR = 0;
     private static final int MACHINEMODE_ISAMILL = 1;
 
-    public boolean neiEnableRender;
     public boolean enableRender = true;
     public boolean isRenderActive;
 
@@ -173,16 +165,7 @@ public class NanoPhagocytosisPlant extends WirelessEnergyMultiMachineBase<NanoPh
             .addShape(STRUCTURE_PIECE_MAIN_RING_ONE_AIR, transpose(shapeRingOneAir))
             .addShape(STRUCTURE_PIECE_MAIN_RING_TWO_AIR, transpose(shapeRingTwoAir))
             .addShape(STRUCTURE_PIECE_MAIN_RING_THREE_AIR, transpose(shapeRingThreeAir))
-            .addElement(
-                'A',
-                withChannel(
-                    "enableRender",
-                    ofBlocksTiered(
-                        (block, meta) -> block instanceof BlockQuantumGlass ? 1 : null,
-                        ImmutableList.of(Pair.of(BlockQuantumGlass.INSTANCE, 0)),
-                        -1,
-                        (t, m) -> {},
-                        t -> -1)))
+            .addElement('A', ofBlock(BlockQuantumGlass.INSTANCE, 0))
             .addElement('B', ofBlock(BlockLoader.metaCasing, 2))
             .addElement('C', ofBlock(BlockLoader.metaCasing, 4))
             .addElement('D', ofBlock(BlockLoader.metaCasing, 18))
@@ -220,10 +203,6 @@ public class NanoPhagocytosisPlant extends WirelessEnergyMultiMachineBase<NanoPh
 
     @Override
     public void construct(ItemStack stackSize, boolean hintsOnly) {
-        if (ChannelDataAccessor.hasSubChannel(stackSize, "enableRender")
-            && ChannelDataAccessor.getChannelData(stackSize, "enableRender") > 0) {
-            neiEnableRender = true;
-        }
         this.buildPiece(
             STRUCTURE_PIECE_MAIN,
             stackSize,
@@ -503,7 +482,7 @@ public class NanoPhagocytosisPlant extends WirelessEnergyMultiMachineBase<NanoPh
                     return false;
                 }
 
-        if (!isRenderActive && enableRender && mTotalRunTime > 0 || neiEnableRender) {
+        if (!isRenderActive && enableRender && mTotalRunTime > 0) {
             createRenderer();
         }
 
@@ -595,21 +574,5 @@ public class NanoPhagocytosisPlant extends WirelessEnergyMultiMachineBase<NanoPh
         super.loadNBTData(aNBT);
         isRenderActive = aNBT.getBoolean("isRenderActive");
         enableRender = aNBT.getBoolean("enableRender");
-    }
-
-    @Override
-    public void onPreviewConstruct(@NotNull ItemStack stackSize) {
-        if (ChannelDataAccessor.hasSubChannel(stackSize, "enableRender")
-            && ChannelDataAccessor.getChannelData(stackSize, "enableRender") > 0) {
-            neiEnableRender = true;
-        }
-    }
-
-    @Override
-    public void onPreviewStructureComplete(@NotNull ItemStack stackSize) {
-        if (ChannelDataAccessor.hasSubChannel(stackSize, "enableRender")
-            && ChannelDataAccessor.getChannelData(stackSize, "enableRender") > 0) {
-            neiEnableRender = true;
-        }
     }
 }

@@ -16,12 +16,8 @@ import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;
 
-import org.apache.commons.lang3.tuple.Pair;
-
 import com.dreammaster.gthandler.CustomItemList;
-import com.google.common.collect.ImmutableList;
 import com.gtnewhorizon.structurelib.alignment.IAlignmentLimits;
-import com.gtnewhorizon.structurelib.alignment.constructable.ChannelDataAccessor;
 import com.gtnewhorizon.structurelib.alignment.constructable.ISurvivalConstructable;
 import com.gtnewhorizon.structurelib.structure.IStructureDefinition;
 import com.gtnewhorizon.structurelib.structure.ISurvivalBuildEnvironment;
@@ -30,6 +26,7 @@ import com.science.gtnl.common.machine.multiMachineBase.GTMMultiMachineBase;
 import com.science.gtnl.common.material.GTNLRecipeMaps;
 import com.science.gtnl.loader.BlockLoader;
 import com.science.gtnl.utils.StructureUtils;
+import com.science.gtnl.utils.enums.GTNLStructureChannels;
 
 import cpw.mods.fml.common.registry.GameRegistry;
 import goodgenerator.loader.Loaders;
@@ -137,6 +134,7 @@ public class LibraryOfRuina extends GTMMultiMachineBase<LibraryOfRuina> implemen
             .addOutputBus(StatCollector.translateToLocal("Tooltip_LibraryOfRuina_Casing"))
             .addEnergyHatch(StatCollector.translateToLocal("Tooltip_LibraryOfRuina_Casing"))
             .addMaintenanceHatch(StatCollector.translateToLocal("Tooltip_LibraryOfRuina_Casing"))
+            .addSubChannelUsage(GTNLStructureChannels.STRUCTURE_RENDER)
             .toolTipFinisher();
         return tt;
     }
@@ -145,16 +143,7 @@ public class LibraryOfRuina extends GTMMultiMachineBase<LibraryOfRuina> implemen
     public IStructureDefinition<LibraryOfRuina> getStructureDefinition() {
         return StructureDefinition.<LibraryOfRuina>builder()
             .addShape(STRUCTURE_PIECE_MAIN, transpose(shape))
-            .addElement(
-                'A',
-                withChannel(
-                    "enableRender",
-                    ofBlocksTiered(
-                        (block, meta) -> block == Loaders.gravityStabilizationCasing ? 1 : null,
-                        ImmutableList.of(Pair.of(Loaders.gravityStabilizationCasing, 0)),
-                        -1,
-                        (t, m) -> {},
-                        t -> -1)))
+            .addElement('A', ofBlock(Loaders.gravityStabilizationCasing, 0))
             .addElement('B', ofBlock(BlockLoader.metaCasing, 13))
             .addElement('C', ofBlock(sBlockCasingsSE, 1))
             .addElement(
@@ -187,31 +176,27 @@ public class LibraryOfRuina extends GTMMultiMachineBase<LibraryOfRuina> implemen
 
     @Override
     public void construct(ItemStack stackSize, boolean hintsOnly) {
-        if ((ChannelDataAccessor.hasSubChannel(stackSize, "enableRender")
-            && ChannelDataAccessor.getChannelData(stackSize, "enableRender") > 0) || stackSize.stackSize > 1) {
-            buildPiece(STRUCTURE_PIECE_MAIN, stackSize, hintsOnly, HORIZONTAL_OFF_SET, VERTICAL_OFF_SET, DEPTH_OFF_SET);
-        }
+        if (!GTNLStructureChannels.STRUCTURE_RENDER.hasValue(stackSize)) return;
+        buildPiece(STRUCTURE_PIECE_MAIN, stackSize, hintsOnly, HORIZONTAL_OFF_SET, VERTICAL_OFF_SET, DEPTH_OFF_SET);
     }
 
     @Override
     public int survivalConstruct(ItemStack stackSize, int elementBudget, ISurvivalBuildEnvironment env) {
         if (this.mMachine) return -1;
-        if ((ChannelDataAccessor.hasSubChannel(stackSize, "enableRender")
-            && ChannelDataAccessor.getChannelData(stackSize, "enableRender") > 0) || stackSize.stackSize > 1) {
-            int realBudget = elementBudget >= 500 ? elementBudget : Math.min(500, elementBudget * 5);
+        if (!GTNLStructureChannels.STRUCTURE_RENDER.hasValue(stackSize)) return -1;
 
-            return this.survivalBuildPiece(
-                STRUCTURE_PIECE_MAIN,
-                stackSize,
-                HORIZONTAL_OFF_SET,
-                VERTICAL_OFF_SET,
-                DEPTH_OFF_SET,
-                realBudget,
-                env,
-                false,
-                true);
-        }
-        return 0;
+        int realBudget = elementBudget >= 500 ? elementBudget : Math.min(500, elementBudget * 5);
+
+        return this.survivalBuildPiece(
+            STRUCTURE_PIECE_MAIN,
+            stackSize,
+            HORIZONTAL_OFF_SET,
+            VERTICAL_OFF_SET,
+            DEPTH_OFF_SET,
+            realBudget,
+            env,
+            false,
+            true);
     }
 
     @Override

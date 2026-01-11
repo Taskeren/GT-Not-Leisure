@@ -211,6 +211,9 @@ nei.bookmark.ae_no_craft=此物品无对应合成
 
 error.rc.cpu=§6这个CPU正在工作！
 
+channels.sciencenotleisure.structure_render=决定是否应该渲染并放置该结构，防止结构过大引起的卡顿。
+channels.sciencenotleisure.component_casing=决定部件装配线外壳等级。最低为§6部件装配线外壳(LV)§r等级1，最高为§6部件装配线外壳(MAX)§r等级14。
+
 death.attack.damage.gtnl.crushing=%1$s 被绞碎了
 death.attack.damage.gtnl.infinity=%1$s 被抹杀了存在
 death.attack.damage.gtnl.portalExplode=%1$s 被精灵传送法阵反噬了
@@ -230,6 +233,8 @@ CleanroomMetadata.2=需要绝对洁净环境
 HatchCustomFluid_00=为多方块机器输入流体
 HatchCustomFluid_01=容量：
 HatchCustomFluid_02=允许的流体：
+
+Info_PlasmaForge_00=§b已启用衰减阻挡
 
 achievement.gtnl.welcome=GT不再业余
 achievement.gtnl.welcome.desc=由此开始
@@ -607,11 +612,11 @@ Tooltip_VoidCover_03=可通过按钮切换销毁输入输出槽
 Info_VoidCover_00=按下销毁输入槽，松开销毁输出槽
 
 PipelessSteamCover=无管蒸汽覆盖板
-Tooltip_WirelessSteamCover_00=§b§o你忆起梦中那片无形的蒸汽之海……
-Tooltip_WirelessSteamCover_01=§b§o无需管道，蒸汽仿佛顺着空气本身流淌.
-Tooltip_WirelessSteamCover_02=§b§o你不知道它如何做到，只知道它正将水的力量尽数传递给你.
-Tooltip_WirelessSteamCover_03=将蒸汽存储于全局网络中，上限为2^(2^31)L.
-Tooltip_WirelessSteamCover_04=不连接管道，此覆盖板可以从网络中抽取蒸汽.
+Tooltip_PipelessSteamCover_00=§b§o你忆起梦中那片无形的蒸汽之海……
+Tooltip_PipelessSteamCover_01=§b§o无需管道，蒸汽仿佛顺着空气本身流淌.
+Tooltip_PipelessSteamCover_02=§b§o你不知道它如何做到，只知道它正将水的力量尽数传递给你.
+Tooltip_PipelessSteamCover_03=将蒸汽存储于全局网络中，上限为2^(2^31)L.
+Tooltip_PipelessSteamCover_04=不连接管道，此覆盖板可以从网络中抽取蒸汽.
 Info_PipelessSteamCover_00=切换到 %s
 Info_PipelessSteamCover_01=蒸汽类型
 
@@ -623,8 +628,8 @@ PipelessJetstreamHatch=无管喷流仓
 Tooltip_PipelessJetstreamHatch_00=§b§o你梦中回忆起"无线能源仓"，却不记得有这种力量.
 Tooltip_PipelessJetstreamHatch_01=§b§o通过利用强大的除湿能力，你发现了方法，
 Tooltip_PipelessJetstreamHatch_02=§b§o能将水的能量发挥到前所未有的高度……
-Tooltip_WirelessSteamEnergyHatch_00=将蒸汽存储于全局网络中，上限为2^(2^31)L.
-Tooltip_WirelessSteamEnergyHatch_01=不连接管道，此方块可以从网络中抽取蒸汽.
+Tooltip_PipelessSteamEnergyHatch_00=将蒸汽存储于全局网络中，上限为2^(2^31)L.
+Tooltip_PipelessSteamEnergyHatch_01=不连接管道，此方块可以从网络中抽取蒸汽.
 
 PipelessSteamVent=无管蒸汽排气口
 Tooltip_PipelessSteamVent_00=§b§o梦中你记起了什么"无线动力仓"，大概是这么叫的.
@@ -1383,6 +1388,9 @@ item.MetaItem.123.name=异星晶圆
 item.MetaItem.124.name=异星芯片
 item.MetaItem.125.name=异星RAM晶圆
 item.MetaItem.126.name=破碎奇点
+item.MetaItem.127.name=超维记忆矩阵
+Tooltip_TransdimensionalMnemonicMatrix_00=支持跨维度记忆稳定的设备。
+Tooltip_TransdimensionalMnemonicMatrix_01=在DTPF上阻挡折扣衰减。
 
 item.SuspiciousStew.name=迷之炖菜
 

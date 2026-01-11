@@ -26,6 +26,7 @@ import com.science.gtnl.common.machine.multiMachineBase.MultiMachineBase;
 import com.science.gtnl.common.material.GTNLRecipeMaps;
 import com.science.gtnl.loader.BlockLoader;
 import com.science.gtnl.utils.StructureUtils;
+import com.science.gtnl.utils.enums.GTNLStructureChannels;
 
 import gregtech.api.enums.Textures;
 import gregtech.api.interfaces.INEIPreviewModifier;
@@ -35,6 +36,7 @@ import gregtech.api.interfaces.tileentity.IGregTechTileEntity;
 import gregtech.api.recipe.RecipeMap;
 import gregtech.api.render.TextureFactory;
 import gregtech.api.util.MultiblockTooltipBuilder;
+import gregtech.common.misc.GTStructureChannels;
 
 public class LapotronChip extends MultiMachineBase<LapotronChip>
     implements ISurvivalConstructable, INEIPreviewModifier {
@@ -77,6 +79,10 @@ public class LapotronChip extends MultiMachineBase<LapotronChip>
             .addOutputHatch(StatCollector.translateToLocal("Tooltip_LapotronChip_Casing"), 1)
             .addEnergyHatch(StatCollector.translateToLocal("Tooltip_LapotronChip_Casing"), 1)
             .addMaintenanceHatch(StatCollector.translateToLocal("Tooltip_LapotronChip_Casing"), 1)
+            .addSubChannelUsage(GTStructureChannels.TIER_MACHINE_CASING)
+            .addSubChannelUsage(GTStructureChannels.STRUCTURE_HEIGHT)
+            .addSubChannelUsage(GTStructureChannels.STRUCTURE_LENGTH)
+            .addSubChannelUsage(GTNLStructureChannels.STRUCTURE_RENDER)
             .toolTipFinisher();
         return tt;
     }
@@ -111,8 +117,7 @@ public class LapotronChip extends MultiMachineBase<LapotronChip>
             .addElement('A', ofBlockAnyMeta(Blocks.iron_block))
             .addElement(
                 'B',
-                withChannel(
-                    "tierLapisCaelestis",
+                GTStructureChannels.TIER_MACHINE_CASING.use(
                     ofBlocksTiered(
                         LapotronChip::getLapisCaelestisTier,
                         ExtraUtilities.isModLoaded() ? getGreenScreenVariants() : getGlass(),
@@ -131,8 +136,7 @@ public class LapotronChip extends MultiMachineBase<LapotronChip>
             .addElement('F', ofBlock(BlockLoader.metaBlockGlow, 0))
             .addElement(
                 'G',
-                withChannel(
-                    "tierGlass1",
+                GTStructureChannels.STRUCTURE_HEIGHT.use(
                     ofBlocksTiered(
                         LapotronChip::getTierGlass1,
                         getGlass(),
@@ -141,8 +145,7 @@ public class LapotronChip extends MultiMachineBase<LapotronChip>
                         t -> t.tierGlass1)))
             .addElement(
                 'H',
-                withChannel(
-                    "tierGlass2",
+                GTStructureChannels.STRUCTURE_LENGTH.use(
                     ofBlocksTiered(
                         LapotronChip::getTierGlass2,
                         getGlass(),
@@ -199,13 +202,13 @@ public class LapotronChip extends MultiMachineBase<LapotronChip>
 
     @Override
     public void onPreviewConstruct(@NotNull ItemStack trigger) {
-        if (trigger.stackSize > 1) {
-            buildPiece(STRUCTURE_PIECE_MAIN, trigger, false, HORIZONTAL_OFF_SET, VERTICAL_OFF_SET, DEPTH_OFF_SET);
-        }
+        if (!GTNLStructureChannels.STRUCTURE_RENDER.hasValue(trigger)) return;
+        buildPiece(STRUCTURE_PIECE_MAIN, trigger, false, HORIZONTAL_OFF_SET, VERTICAL_OFF_SET, DEPTH_OFF_SET);
     }
 
     @Override
     public void construct(ItemStack stackSize, boolean hintsOnly) {
+        if (!GTNLStructureChannels.STRUCTURE_RENDER.hasValue(stackSize)) return;
         this.buildPiece(
             STRUCTURE_PIECE_MAIN,
             stackSize,
@@ -217,7 +220,17 @@ public class LapotronChip extends MultiMachineBase<LapotronChip>
 
     @Override
     public int survivalConstruct(ItemStack stackSize, int elementBudget, ISurvivalBuildEnvironment env) {
-        return -1;
+        if (!GTNLStructureChannels.STRUCTURE_RENDER.hasValue(stackSize)) return -1;
+        return this.survivalBuildPiece(
+            STRUCTURE_PIECE_MAIN,
+            stackSize,
+            HORIZONTAL_OFF_SET,
+            VERTICAL_OFF_SET,
+            DEPTH_OFF_SET,
+            elementBudget,
+            env,
+            false,
+            true);
     }
 
     @Override

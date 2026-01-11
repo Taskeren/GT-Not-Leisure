@@ -211,6 +211,9 @@ nei.bookmark.ae_no_craft=This item has no corresponding crafting
 
 error.rc.cpu=§6The CPU is working!
 
+channels.sciencenotleisure.structure_render=Decides whether the structure should be rendered and placed, preventing lag caused by excessively large structures.
+channels.sciencenotleisure.component_casing=Decides the tier of component assemblyline casing. Starts at §6LV§r at value 1 and ends at §6MAX§r at value 14.
+
 death.attack.damage.gtnl.crushing=%1$s was crushed to death
 death.attack.damage.gtnl.infinity=%1$s was excised from existence
 death.attack.damage.gtnl.portalExplode=%1$s was backlashed by the Alfheim Teleportation Array.
@@ -230,6 +233,8 @@ CleanroomMetadata.2=Requires Absolute Cleaning Environment
 HatchCustomFluid_00=Input fluids for multiblock machines
 HatchCustomFluid_01=Capacity: 
 HatchCustomFluid_02=Allowed fluids:
+
+Info_PlasmaForge_00=§bDecay Blocking Enabled
 
 achievement.gtnl.welcome=GT: Science Not Leisure
 achievement.gtnl.welcome.desc=This is where it begins
@@ -1383,6 +1388,9 @@ item.MetaItem.123.name=Exotic Wafer
 item.MetaItem.124.name=Exotic Chip
 item.MetaItem.125.name=Exotic RAM Wafer
 item.MetaItem.126.name=Shattered Singularity
+item.MetaItem.127.name=Transdimensional Mnemonic Matrix
+Tooltip_TransdimensionalMnemonicMatrix_00=Device supporting transdimensional mnemonic stabilization.
+Tooltip_TransdimensionalMnemonicMatrix_01=Prevents discount decay on the DTPF.
 
 item.SuspiciousStew.name=Suspicious Stew
 

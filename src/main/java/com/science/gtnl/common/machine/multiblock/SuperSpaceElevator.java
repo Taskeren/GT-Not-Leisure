@@ -70,6 +70,7 @@ import gregtech.api.util.GTUtility;
 import gregtech.api.util.HatchElementBuilder;
 import gregtech.api.util.IGTHatchAdder;
 import gregtech.api.util.MultiblockTooltipBuilder;
+import gregtech.common.misc.GTStructureChannels;
 import gregtech.common.misc.spaceprojects.SpaceProjectManager;
 import gtnhintergalactic.config.IGConfig;
 import gtnhintergalactic.gui.IG_UITextures;
@@ -153,6 +154,8 @@ public class SuperSpaceElevator extends TTMultiblockBase
             .beginStructureBlock(65, 53, 65, true)
             .addEnergyHatch(StatCollector.translateToLocal("Tooltip_SuperSpaceElevator_Casing"))
             .addDynamoHatch(StatCollector.translateToLocal("Tooltip_SuperSpaceElevator_Casing"))
+            .addSubChannelUsage(GTStructureChannels.TIER_MACHINE_CASING)
+            .addSubChannelUsage(GTStructureChannels.STRUCTURE_HEIGHT)
             .toolTipFinisher();
         return tt;
     }
@@ -244,8 +247,7 @@ public class SuperSpaceElevator extends TTMultiblockBase
             .addElement('C', ofBlock(sBlockCasingsTT, 0))
             .addElement(
                 'D',
-                withChannel(
-                    "motor",
+                GTStructureChannels.TIER_MACHINE_CASING.use(
                     StructureUtility.ofBlocksTiered(
                         ElevatorUtil.motorTierConverter(),
                         ElevatorUtil.getMotorTiers(),
@@ -319,7 +321,7 @@ public class SuperSpaceElevator extends TTMultiblockBase
             STRUCTURE_PIECE_MAIN_VERT_OFFSET,
             STRUCTURE_PIECE_MAIN_DEPTH_OFFSET);
 
-        int tTier = Math.min(stackSize.stackSize, 5);
+        int tTier = GTStructureChannels.STRUCTURE_HEIGHT.getValueClamped(stackSize, 0, 5);
         for (int i = 0; i < tTier; i++) {
             this.buildPiece(
                 STRUCTURE_PIECE_EXTENDED,
@@ -335,7 +337,7 @@ public class SuperSpaceElevator extends TTMultiblockBase
     public int survivalConstruct(ItemStack stackSize, int elementBudget, ISurvivalBuildEnvironment env) {
         if (this.mMachine) return -1;
 
-        int tTier = Math.min(stackSize.stackSize, 5);
+        int tTier = GTStructureChannels.STRUCTURE_HEIGHT.getValueClamped(stackSize, 0, 5);
 
         int built;
 
