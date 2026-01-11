@@ -2246,7 +2246,7 @@ Tooltip_GrandAssemblyLine_10=安装UIV及以上的并行控制核心解锁§c无
 Tooltip_GrandAssemblyLine_11=安装UMV及以上的并行控制核心将额外提供500%的耗电减免和1900%的加速(乘算叠加)
 Tooltip_GrandAssemblyLine_12=安装UMV及以上的并行控制核心且未不安装能源仓将自动进入无线模式
 Tooltip_GrandAssemblyLine_Casing=任意进阶电子计算机械方块或防爆玻璃
-Info_GrandAssemblyLine_00=设置配方最小时间
+Info_GrandAssemblyLine_00=设置超频允许最小时间
 
 NamePrecisionAssembler=精密组装机
 PreciseAssemblerRecipeType=组装机 / 精密组装机

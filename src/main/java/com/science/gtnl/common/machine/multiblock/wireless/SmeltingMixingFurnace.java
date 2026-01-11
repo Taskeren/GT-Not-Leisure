@@ -14,15 +14,24 @@ import static gtPlusPlus.core.block.ModBlocks.*;
 import static kubatech.loaders.BlockLoader.defcCasingBlock;
 import static tectech.thing.casing.TTCasingsContainer.sBlockCasingsTT;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.List;
+import java.util.stream.Stream;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.StatCollector;
+import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;
+import net.minecraftforge.fluids.FluidStack;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -33,12 +42,15 @@ import com.science.gtnl.common.machine.multiMachineBase.WirelessEnergyMultiMachi
 import com.science.gtnl.common.material.GTNLRecipeMaps;
 import com.science.gtnl.loader.BlockLoader;
 import com.science.gtnl.utils.StructureUtils;
+import com.science.gtnl.utils.enums.GTNLItemList;
 import com.science.gtnl.utils.recipes.GTNLOverclockCalculator;
+import com.science.gtnl.utils.recipes.GTNLParallelHelper;
 import com.science.gtnl.utils.recipes.GTNLProcessingLogic;
 
 import bartworks.common.loaders.ItemRegistry;
 import gregtech.api.enums.ItemList;
 import gregtech.api.enums.Materials;
+import gregtech.api.enums.MaterialsUEVplus;
 import gregtech.api.enums.Textures;
 import gregtech.api.gui.modularui.GTUITextures;
 import gregtech.api.interfaces.ITexture;
@@ -53,9 +65,18 @@ import gregtech.api.render.TextureFactory;
 import gregtech.api.util.GTRecipe;
 import gregtech.api.util.GTUtility;
 import gregtech.api.util.MultiblockTooltipBuilder;
+import gtPlusPlus.core.util.minecraft.ItemUtils;
+import mcp.mobius.waila.api.IWailaConfigHandler;
+import mcp.mobius.waila.api.IWailaDataAccessor;
 import tectech.thing.casing.BlockGTCasingsTT;
 
 public class SmeltingMixingFurnace extends WirelessEnergyMultiMachineBase<SmeltingMixingFurnace> {
+
+    public static final FluidStack[] valid_fuels = { MaterialsUEVplus.ExcitedDTCC.getFluid(1L),
+        MaterialsUEVplus.ExcitedDTPC.getFluid(1L), MaterialsUEVplus.ExcitedDTRC.getFluid(1L),
+        MaterialsUEVplus.ExcitedDTEC.getFluid(1L), MaterialsUEVplus.ExcitedDTSC.getFluid(1L) };
+
+    public static final ItemStack martix = ItemList.Transdimensional_Alignment_Matrix.get(1);
 
     private static final int HORIZONTAL_OFF_SET = 8;
     private static final int VERTICAL_OFF_SET = 14;
@@ -65,8 +86,7 @@ public class SmeltingMixingFurnace extends WirelessEnergyMultiMachineBase<Smelti
     private static final String[][] shape = StructureUtils.readStructureFromFile(SMF_STRUCTURE_FILE_PATH);
     public static final int MACHINEMODE_SMF = 0;
     public static final int MACHINEMODE_DTPF = 1;
-    public GTRecipe lastRecipeToBuffer;
-    public boolean hasRequiredItem = false;
+    public boolean enableMnemonic = false;
 
     public SmeltingMixingFurnace(String aName) {
         super(aName);
@@ -208,6 +228,37 @@ public class SmeltingMixingFurnace extends WirelessEnergyMultiMachineBase<Smelti
     }
 
     @Override
+    public boolean onRightclick(IGregTechTileEntity aBaseMetaTileEntity, EntityPlayer aPlayer) {
+        if (!enableMnemonic) {
+            ItemStack heldItem = aPlayer.getHeldItem();
+            if (GTUtility.areStacksEqual(heldItem, GTNLItemList.TransdimensionalMnemonicMatrix.get(1), true)) {
+                aPlayer.setCurrentItemOrArmor(0, ItemUtils.depleteStack(heldItem, 1));
+                enableMnemonic = true;
+                return true;
+            }
+        }
+        return super.onRightclick(aBaseMetaTileEntity, aPlayer);
+    }
+
+    @Override
+    public void setItemNBT(NBTTagCompound aNBT) {
+        super.setItemNBT(aNBT);
+        aNBT.setBoolean("enableMnemonic", enableMnemonic);
+    }
+
+    @Override
+    public void saveNBTData(NBTTagCompound aNBT) {
+        super.saveNBTData(aNBT);
+        aNBT.setBoolean("enableMnemonic", enableMnemonic);
+    }
+
+    @Override
+    public void loadNBTData(NBTTagCompound aNBT) {
+        super.loadNBTData(aNBT);
+        enableMnemonic = aNBT.getBoolean("enableMnemonic");
+    }
+
+    @Override
     public RecipeMap<?> getRecipeMap() {
         return (machineMode == MACHINEMODE_SMF) ? GTNLRecipeMaps.SmeltingMixingFurnaceRecipes
             : RecipeMaps.plasmaForgeRecipes;
@@ -222,18 +273,8 @@ public class SmeltingMixingFurnace extends WirelessEnergyMultiMachineBase<Smelti
     @Nonnull
     @Override
     public CheckRecipeResult checkProcessing() {
-        hasRequiredItem = false;
-
         if (this.getRecipeMap() == RecipeMaps.plasmaForgeRecipes) {
-            ItemStack requiredItem = ItemList.Transdimensional_Alignment_Matrix.get(1);
-            ItemStack item = getControllerSlot();
-            if (item != null && item.isItemEqual(requiredItem)) {
-                hasRequiredItem = true;
-            }
-
-            if (!hasRequiredItem) {
-                return CheckRecipeResultRegistry.NO_RECIPE;
-            }
+            if (!GTUtility.areStacksEqual(martix, getControllerSlot())) return CheckRecipeResultRegistry.NO_RECIPE;
         }
         return super.checkProcessing();
     }
@@ -241,6 +282,33 @@ public class SmeltingMixingFurnace extends WirelessEnergyMultiMachineBase<Smelti
     @Override
     public ProcessingLogic createProcessingLogic() {
         return new GTNLProcessingLogic() {
+
+            @Nonnull
+            @Override
+            public Stream<GTRecipe> findRecipeMatches(@Nullable RecipeMap<?> map) {
+                if (map == null) return Stream.empty();
+                if (!enableMnemonic || map != RecipeMaps.plasmaForgeRecipes) return super.findRecipeMatches(map);
+
+                // Allow recipes to start without having 100% of the catalyst required, aka discount > 0%
+                FluidStack[] queryFluids = new FluidStack[inputFluids.length];
+                for (int i = 0; i < inputFluids.length; i++) {
+                    queryFluids[i] = new FluidStack(inputFluids[i].getFluid(), inputFluids[i].amount);
+                    for (FluidStack fuel : valid_fuels) {
+                        if (queryFluids[i].isFluidEqual(fuel)) {
+                            queryFluids[i].amount = (int) Math
+                                .min(Math.round(queryFluids[i].amount * 2d), Integer.MAX_VALUE);
+                            break;
+                        }
+                    }
+                }
+
+                return map.findRecipeQuery()
+                    .items(inputItems)
+                    .fluids(queryFluids)
+                    .specialSlot(specialSlotItem)
+                    .cachedRecipe(lastRecipe)
+                    .findAll();
+            }
 
             @NotNull
             @Override
@@ -252,14 +320,36 @@ public class SmeltingMixingFurnace extends WirelessEnergyMultiMachineBase<Smelti
                 return super.validateRecipe(recipe);
             }
 
+            @NotNull
+            @Override
+            public GTNLParallelHelper createParallelHelper(@Nonnull GTRecipe recipe) {
+                return super.createParallelHelper(recipeAfterAdjustments(recipe));
+            }
+
             @Nonnull
             @Override
             public GTNLOverclockCalculator createOverclockCalculator(@Nonnull GTRecipe recipe) {
-                return super.createOverclockCalculator(recipe).setExtraDurationModifier(mConfigSpeedBoost)
+                return super.createOverclockCalculator(recipeAfterAdjustments(recipe))
+                    .setExtraDurationModifier(mConfigSpeedBoost)
                     .setEUtDiscount(getEUtDiscount())
                     .setDurationModifier(getDurationModifier());
             }
         }.setMaxParallelSupplier(this::getTrueParallel);
+    }
+
+    @Nonnull
+    public GTRecipe recipeAfterAdjustments(@Nonnull GTRecipe recipe) {
+        if (!enableMnemonic) return recipe;
+        GTRecipe tRecipe = recipe.copy();
+        for (int i = 0; i < recipe.mFluidInputs.length; i++) {
+            for (FluidStack fuel : valid_fuels) {
+                if (tRecipe.mFluidInputs[i].isFluidEqual(fuel)) {
+                    tRecipe.mFluidInputs[i].amount = (int) Math.round(tRecipe.mFluidInputs[i].amount * 0.5);
+                    return tRecipe;
+                }
+            }
+        }
+        return tRecipe;
     }
 
     @Override
@@ -292,6 +382,31 @@ public class SmeltingMixingFurnace extends WirelessEnergyMultiMachineBase<Smelti
     }
 
     @Override
+    public String[] getInfoData() {
+        if (!enableMnemonic) return super.getInfoData();
+        String[] original = super.getInfoData();
+        List<String> list = new ArrayList<>(Arrays.asList(original));
+        list.add(StatCollector.translateToLocal("Info_PlasmaForge_00"));
+        return list.toArray(new String[0]);
+    }
+
+    @Override
+    public void getWailaBody(ItemStack itemStack, List<String> currentTip, IWailaDataAccessor accessor,
+        IWailaConfigHandler config) {
+        super.getWailaBody(itemStack, currentTip, accessor, config);
+        NBTTagCompound tag = accessor.getNBTData();
+        if (!tag.getBoolean("enableMnemonic")) return;
+        currentTip.add(StatCollector.translateToLocal("Info_PlasmaForge_00"));
+    }
+
+    @Override
+    public void getWailaNBTData(EntityPlayerMP player, TileEntity tile, NBTTagCompound tag, World world, int x, int y,
+        int z) {
+        super.getWailaNBTData(player, tile, tag, world, x, y, z);
+        tag.setBoolean("enableMnemonic", enableMnemonic);
+    }
+
+    @Override
     public void setMachineModeIcons() {
         machineModeIcons.add(GTUITextures.OVERLAY_BUTTON_MACHINEMODE_LPF_METAL);
         machineModeIcons.add(GTUITextures.OVERLAY_BUTTON_MACHINEMODE_LPF_FLUID);
@@ -314,22 +429,6 @@ public class SmeltingMixingFurnace extends WirelessEnergyMultiMachineBase<Smelti
     @Override
     public boolean supportsMachineModeSwitch() {
         return true;
-    }
-
-    @Override
-    public String[] getInfoData() {
-        final String running = (this.mMaxProgresstime > 0 ? "Machine running" : "Machine stopped");
-        final String maintenance = (this.getIdealStatus() == this.getRepairStatus() ? "No Maintenance issues"
-            : "Needs Maintenance");
-        String tSpecialText;
-
-        if (lastRecipeToBuffer != null && lastRecipeToBuffer.mOutputs[0].getDisplayName() != null) {
-            tSpecialText = "Currently processing: " + lastRecipeToBuffer.mOutputs[0].getDisplayName();
-        } else {
-            tSpecialText = "Currently processing: Nothing";
-        }
-
-        return new String[] { "Industrial Cutting Factory", running, maintenance, tSpecialText };
     }
 
 }

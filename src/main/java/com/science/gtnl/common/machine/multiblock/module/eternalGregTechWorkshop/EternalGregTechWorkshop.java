@@ -557,7 +557,7 @@ public class EternalGregTechWorkshop extends MultiMachineBase<EternalGregTechWor
     public void onPreviewConstruct(@NotNull ItemStack trigger) {
         this.buildPiece(STRUCTURE_PIECE_MAIN, trigger, false, HORIZONTAL_OFF_SET, VERTICAL_OFF_SET, DEPTH_OFF_SET);
 
-        int count = GTStructureChannels.STRUCTURE_HEIGHT.getValueClamped(trigger, 0, 64);
+        int count = GTStructureChannels.STRUCTURE_HEIGHT.getValueClamped(trigger, 1, 64);
 
         for (int i = 0; i < count; i++) {
 
@@ -615,7 +615,7 @@ public class EternalGregTechWorkshop extends MultiMachineBase<EternalGregTechWor
 
     @Override
     public void construct(ItemStack stackSize, boolean hintsOnly) {
-        int count = GTStructureChannels.STRUCTURE_HEIGHT.getValueClamped(stackSize, 0, 64);
+        int count = GTStructureChannels.STRUCTURE_HEIGHT.getValueClamped(stackSize, 1, 64);
 
         this.buildPiece(
             STRUCTURE_PIECE_MAIN,
@@ -683,7 +683,7 @@ public class EternalGregTechWorkshop extends MultiMachineBase<EternalGregTechWor
     public int survivalConstruct(ItemStack stackSize, int elementBudget, ISurvivalBuildEnvironment env) {
         if (this.mMachine) return -1;
 
-        int count = GTStructureChannels.STRUCTURE_HEIGHT.getValueClamped(stackSize, 0, 64);
+        int count = GTStructureChannels.STRUCTURE_HEIGHT.getValueClamped(stackSize, 1, 64);
         int built;
 
         built = this.survivalBuildPiece(

@@ -54,7 +54,6 @@ public class ChemicalRecipes implements IRecipePool {
                 GTNLMaterials.CrudeHexanitrohexaazaisowurtzitane.get(OrePrefixes.dust, 36),
                 GTOreDictUnificator.get(OrePrefixes.dust, Materials.Palladium, 0))
             .fluidInputs(Materials.Ammonia.getGas(1000), GTNLMaterials.Ethanolamine.getFluidOrGas(1000))
-            .itemOutputs()
             .fluidOutputs(GTNLMaterials.Ethylenediamine.getFluidOrGas(1000), Materials.Water.getFluid(1000))
             .duration(180)
             .eut(120)
@@ -81,9 +80,7 @@ public class ChemicalRecipes implements IRecipePool {
             .addTo(MCRR);
 
         RecipeBuilder.builder()
-            .itemInputs()
             .fluidInputs(new FluidStack(GTPPFluids.BoricAcid, 1000), Materials.HydrofluoricAcid.getFluid(4000))
-            .itemOutputs()
             .fluidOutputs(GTNLMaterials.FluoroboricAcide.getFluidOrGas(1000), Materials.Water.getFluid(13000))
             .duration(150)
             .eut(120)
@@ -143,7 +140,6 @@ public class ChemicalRecipes implements IRecipePool {
             .addTo(MCRR);
 
         RecipeBuilder.builder()
-            .itemInputs()
             .fluidInputs(
                 GTNLMaterials.BoronFluoride.getFluidOrGas(2000),
                 Materials.HydrofluoricAcid.getFluid(2000),
@@ -356,7 +352,6 @@ public class ChemicalRecipes implements IRecipePool {
         RecipeBuilder.builder()
             .itemInputs(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Bismuth, 0))
             .fluidInputs(Materials.Oxygen.getGas(7000), Materials.Butane.getGas(1000))
-            .itemOutputs()
             .fluidOutputs(Materials.Water.getFluid(4000), GTNLMaterials.MaleicAnhydride.getFluidOrGas(1000))
             .duration(280)
             .eut(480)
@@ -365,7 +360,6 @@ public class ChemicalRecipes implements IRecipePool {
         RecipeBuilder.builder()
             .itemInputs(GTNLMaterials.PyromelliticDianhydride.get(OrePrefixes.dust, 18))
             .fluidInputs(GTNLMaterials.Oxydianiline.getFluidOrGas(1000))
-            .itemOutputs()
             .fluidOutputs(GTNLMaterials.PloyamicAcid.getFluidOrGas(1000))
             .duration(400)
             .eut(122880)
@@ -374,7 +368,6 @@ public class ChemicalRecipes implements IRecipePool {
         RecipeBuilder.builder()
             .itemInputs(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Tin, 0))
             .fluidInputs(new FluidStack(GTPPFluids.Aniline, 2000), Materials.Phenol.getFluid(1000))
-            .itemOutputs()
             .fluidOutputs(GTNLMaterials.Oxydianiline.getFluidOrGas(1000), Materials.Methane.getGas(2000))
             .duration(150)
             .eut(120)
@@ -510,7 +503,6 @@ public class ChemicalRecipes implements IRecipePool {
             .addTo(UC);
 
         RecipeBuilder.builder()
-            .itemInputs()
             .fluidInputs(
                 Materials.NitricAcid.getFluid(3000),
                 Materials.Benzene.getFluid(1000),

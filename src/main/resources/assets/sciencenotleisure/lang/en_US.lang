@@ -2246,7 +2246,7 @@ Tooltip_GrandAssemblyLine_10=Install parallel control cores of UIV or above to u
 Tooltip_GrandAssemblyLine_11=Install parallel control cores of UMV or above to provide an additional 500% power consumption reduction and 1900% acceleration (multiplied cumulatively)
 Tooltip_GrandAssemblyLine_12=Installing a parallel control core of UMV tier or higher without an energy hatch will automatically activate wireless mode
 Tooltip_GrandAssemblyLine_Casing=Any advanced electronic computing machinery block or explosion-proof glass
-Info_GrandAssemblyLine_00=Set recipe min time
+Info_GrandAssemblyLine_00=Set overclock allow min time
 
 NamePrecisionAssembler=Precision Assembler
 PreciseAssemblerRecipeType=Assembler / Precision Assembler
