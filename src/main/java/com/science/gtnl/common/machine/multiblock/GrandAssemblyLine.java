@@ -459,19 +459,20 @@ public class GrandAssemblyLine extends GTMMultiMachineBase<GrandAssemblyLine> im
         double currentParallel = maxParallel;
 
         for (int i = 0; i < recipe.mInputs.length; i++) {
-            ItemStack mainRequirement = recipe.mInputs[i];
+            ItemStack mainReq = recipe.mInputs[i];
+            if (mainReq == null || mainReq.stackSize <= 0) continue;
             ItemStack[] alts = recipe.mOreDictAlt[i];
 
             long maxParallelForThisSlot = 0;
 
-            long mainAvailable = availableMap.getOrDefault(GTUtility.ItemId.createNoCopy(mainRequirement), 0L);
-            maxParallelForThisSlot = Math.max(maxParallelForThisSlot, mainAvailable / mainRequirement.stackSize);
+            long mainAvailable = availableMap.getOrDefault(GTUtility.ItemId.createNoCopy(mainReq), 1L);
+            maxParallelForThisSlot = Math.max(maxParallelForThisSlot, mainAvailable / mainReq.stackSize);
 
             if (maxParallelForThisSlot == 0 && alts != null) {
                 for (ItemStack alt : alts) {
-                    if (alt == null) continue;
                     if (maxParallelForThisSlot != 0) break;
-                    long altAvailable = availableMap.getOrDefault(GTUtility.ItemId.createNoCopy(alt), 0L);
+                    if (alt == null || alt.stackSize <= 0) continue;
+                    long altAvailable = availableMap.getOrDefault(GTUtility.ItemId.createNoCopy(alt), 1L);
                     maxParallelForThisSlot = Math.max(maxParallelForThisSlot, altAvailable / alt.stackSize);
                 }
             }
@@ -489,7 +490,7 @@ public class GrandAssemblyLine extends GTMMultiMachineBase<GrandAssemblyLine> im
 
         for (FluidStack req : recipeFluids) {
             if (req == null) continue;
-            long available = availableMap.getOrDefault(req.getFluid(), 0L);
+            long available = availableMap.getOrDefault(req.getFluid(), 1L);
             if (available < req.amount) return 0;
             currentParallel = Math.min(currentParallel, (double) available / req.amount);
         }
@@ -503,17 +504,18 @@ public class GrandAssemblyLine extends GTMMultiMachineBase<GrandAssemblyLine> im
 
         for (int i = 0; i < recipe.mInputs.length; i++) {
             ItemStack mainReq = recipe.mInputs[i];
+            if (mainReq == null || mainReq.stackSize <= 0) continue;
             ItemStack[] alts = recipe.mOreDictAlt[i];
 
             ItemStack chosenStack = mainReq;
-            long maxPossible = (availableMap.getOrDefault(GTUtility.ItemId.createNoCopy(mainReq), 0L))
+            long maxPossible = (availableMap.getOrDefault(GTUtility.ItemId.createNoCopy(mainReq), 1L))
                 / mainReq.stackSize;
 
             if (maxPossible == 0 && alts != null) {
                 for (ItemStack alt : alts) {
                     if (maxPossible != 0) break;
-                    if (alt == null) continue;
-                    maxPossible = (availableMap.getOrDefault(GTUtility.ItemId.createNoCopy(alt), 0L)) / alt.stackSize;
+                    if (alt == null || alt.stackSize <= 0) continue;
+                    maxPossible = (availableMap.getOrDefault(GTUtility.ItemId.createNoCopy(alt), 1L)) / alt.stackSize;
                     chosenStack = alt;
                 }
             }
