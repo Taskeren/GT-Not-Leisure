@@ -245,9 +245,20 @@ public class SuperCraftingInputHatchME extends MTEHatchInputBus implements IConf
             }
         }
 
+        public boolean isManualItemEmpty() {
+            int base = MAX_INV_COUNT + this.slotIndex * 9;
+
+            for (int i = 0; i < 9; i++) {
+                if (parentMTE.getRealInventory()[base + i] != null) {
+                    return false;
+                }
+            }
+            return true;
+        }
+
         public boolean isItemEmpty() {
             updateSlotItems();
-            return itemInventory.isEmpty();
+            return itemInventory.isEmpty() && isManualItemEmpty();
         }
 
         public boolean isFluidEmpty() {
