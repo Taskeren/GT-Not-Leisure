@@ -42,8 +42,8 @@ public abstract class MixinMTEHatchCraftingInputSlave extends MTEHatchInputBus
             currenttip.add(
                 EnumChatFormatting.GOLD
                     + (MainConfig.enableHatchInterfaceTerminalEnhance
-                        ? Utils.getExtraInterfaceName(tag.getString("name"))
-                        : tag.getString("name"))
+                        ? Utils.getExtraInterfaceName(tag.getString("masterName"))
+                        : tag.getString("masterName"))
                     + EnumChatFormatting.RESET);
         }
 

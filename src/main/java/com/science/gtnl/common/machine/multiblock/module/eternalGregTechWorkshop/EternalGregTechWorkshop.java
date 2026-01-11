@@ -555,7 +555,9 @@ public class EternalGregTechWorkshop extends MultiMachineBase<EternalGregTechWor
     public void onPreviewConstruct(@NotNull ItemStack trigger) {
         this.buildPiece(STRUCTURE_PIECE_MAIN, trigger, false, HORIZONTAL_OFF_SET, VERTICAL_OFF_SET, DEPTH_OFF_SET);
 
-        for (int i = 0; i < trigger.stackSize; i++) {
+        int count = Math.min(trigger.stackSize, 100);
+
+        for (int i = 0; i < count; i++) {
 
             this.buildPiece(
                 STRUCTURE_PIECE_MAIN_UP,
@@ -573,7 +575,7 @@ public class EternalGregTechWorkshop extends MultiMachineBase<EternalGregTechWor
                 VERTICAL_OFF_SET_DOWN - i * 22,
                 DEPTH_OFF_SET_DOWN);
 
-            if (trigger.stackSize > 1) {
+            if (count > 1) {
                 this.buildPiece(
                     STRUCTURE_PIECE_MAIN_EXTRA,
                     trigger,
@@ -597,7 +599,7 @@ public class EternalGregTechWorkshop extends MultiMachineBase<EternalGregTechWor
             trigger,
             false,
             HORIZONTAL_OFF_SET_TOP,
-            VERTICAL_OFF_SET_TOP + (trigger.stackSize - 1) * 22,
+            VERTICAL_OFF_SET_TOP + (count - 1) * 22,
             DEPTH_OFF_SET_TOP);
 
         this.buildPiece(
@@ -605,12 +607,13 @@ public class EternalGregTechWorkshop extends MultiMachineBase<EternalGregTechWor
             trigger,
             false,
             HORIZONTAL_OFF_SET_BOTTOM,
-            VERTICAL_OFF_SET_BOTTOM - (trigger.stackSize - 1) * 22,
+            VERTICAL_OFF_SET_BOTTOM - (count - 1) * 22,
             DEPTH_OFF_SET_BOTTOM);
     }
 
     @Override
     public void construct(ItemStack stackSize, boolean hintsOnly) {
+        int count = Math.min(stackSize.stackSize, 100);
 
         this.buildPiece(
             STRUCTURE_PIECE_MAIN,
@@ -620,7 +623,7 @@ public class EternalGregTechWorkshop extends MultiMachineBase<EternalGregTechWor
             VERTICAL_OFF_SET,
             DEPTH_OFF_SET);
 
-        for (int i = 0; i < stackSize.stackSize; i++) {
+        for (int i = 0; i < count; i++) {
 
             this.buildPiece(
                 STRUCTURE_PIECE_MAIN_UP,
@@ -638,7 +641,7 @@ public class EternalGregTechWorkshop extends MultiMachineBase<EternalGregTechWor
                 VERTICAL_OFF_SET_DOWN - i * 22,
                 DEPTH_OFF_SET_DOWN);
 
-            if (stackSize.stackSize > 1) {
+            if (count > 1) {
                 this.buildPiece(
                     STRUCTURE_PIECE_MAIN_EXTRA,
                     stackSize,
@@ -662,7 +665,7 @@ public class EternalGregTechWorkshop extends MultiMachineBase<EternalGregTechWor
             stackSize,
             hintsOnly,
             HORIZONTAL_OFF_SET_TOP,
-            VERTICAL_OFF_SET_TOP + (stackSize.stackSize - 1) * 22,
+            VERTICAL_OFF_SET_TOP + (count - 1) * 22,
             DEPTH_OFF_SET_TOP);
 
         this.buildPiece(
@@ -670,7 +673,7 @@ public class EternalGregTechWorkshop extends MultiMachineBase<EternalGregTechWor
             stackSize,
             hintsOnly,
             HORIZONTAL_OFF_SET_BOTTOM,
-            VERTICAL_OFF_SET_BOTTOM - (stackSize.stackSize - 1) * 22,
+            VERTICAL_OFF_SET_BOTTOM - (count - 1) * 22,
             DEPTH_OFF_SET_BOTTOM);
     }
 
@@ -678,6 +681,7 @@ public class EternalGregTechWorkshop extends MultiMachineBase<EternalGregTechWor
     public int survivalConstruct(ItemStack stackSize, int elementBudget, ISurvivalBuildEnvironment env) {
         if (this.mMachine) return -1;
 
+        int count = Math.min(stackSize.stackSize, 100);
         int built;
 
         built = this.survivalBuildPiece(
@@ -693,7 +697,7 @@ public class EternalGregTechWorkshop extends MultiMachineBase<EternalGregTechWor
 
         if (built >= 0) return built;
 
-        for (int i = 0; i < stackSize.stackSize; i++) {
+        for (int i = 0; i < count; i++) {
             built = this.survivalBuildPiece(
                 STRUCTURE_PIECE_MAIN_UP,
                 stackSize,
@@ -720,7 +724,7 @@ public class EternalGregTechWorkshop extends MultiMachineBase<EternalGregTechWor
 
             if (built >= 0) return built;
 
-            if (stackSize.stackSize > 1) {
+            if (count > 1) {
                 built = this.survivalBuildPiece(
                     STRUCTURE_PIECE_MAIN_EXTRA,
                     stackSize,
@@ -753,7 +757,7 @@ public class EternalGregTechWorkshop extends MultiMachineBase<EternalGregTechWor
             STRUCTURE_PIECE_MAIN_TOP,
             stackSize,
             HORIZONTAL_OFF_SET_TOP,
-            VERTICAL_OFF_SET_TOP + (stackSize.stackSize - 1) * 22,
+            VERTICAL_OFF_SET_TOP + (count - 1) * 22,
             DEPTH_OFF_SET_TOP,
             elementBudget,
             env,
@@ -766,7 +770,7 @@ public class EternalGregTechWorkshop extends MultiMachineBase<EternalGregTechWor
             STRUCTURE_PIECE_MAIN_BOTTOM,
             stackSize,
             HORIZONTAL_OFF_SET_BOTTOM,
-            VERTICAL_OFF_SET_BOTTOM - (stackSize.stackSize - 1) * 22,
+            VERTICAL_OFF_SET_BOTTOM - (count - 1) * 22,
             DEPTH_OFF_SET_BOTTOM,
             elementBudget,
             env,
