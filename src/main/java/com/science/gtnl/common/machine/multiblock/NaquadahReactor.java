@@ -190,10 +190,9 @@ public abstract class NaquadahReactor<T extends NaquadahReactor<T>> extends Mult
             startRecipeProcessing();
 
             if (!depleteInput(getExtraGas())) {
-                doExplosion(lEUt);
                 stopMachine(ShutDownReasonRegistry.NONE);
                 endRecipeProcessing();
-                return false;
+                return true;
             }
 
             endRecipeProcessing();
