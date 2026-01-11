@@ -16,7 +16,10 @@ import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;
 
+import org.apache.commons.lang3.tuple.Pair;
+
 import com.dreammaster.gthandler.CustomItemList;
+import com.google.common.collect.ImmutableList;
 import com.gtnewhorizon.structurelib.alignment.IAlignmentLimits;
 import com.gtnewhorizon.structurelib.alignment.constructable.ISurvivalConstructable;
 import com.gtnewhorizon.structurelib.structure.IStructureDefinition;
@@ -143,7 +146,15 @@ public class LibraryOfRuina extends GTMMultiMachineBase<LibraryOfRuina> implemen
     public IStructureDefinition<LibraryOfRuina> getStructureDefinition() {
         return StructureDefinition.<LibraryOfRuina>builder()
             .addShape(STRUCTURE_PIECE_MAIN, transpose(shape))
-            .addElement('A', ofBlock(Loaders.gravityStabilizationCasing, 0))
+            .addElement(
+                'A',
+                GTNLStructureChannels.STRUCTURE_RENDER.use(
+                    ofBlocksTiered(
+                        (block, meta) -> block == Loaders.gravityStabilizationCasing ? 1 : null,
+                        ImmutableList.of(Pair.of(Loaders.gravityStabilizationCasing, 0)),
+                        -1,
+                        (t, m) -> {},
+                        t -> -1)))
             .addElement('B', ofBlock(BlockLoader.metaCasing, 13))
             .addElement('C', ofBlock(sBlockCasingsSE, 1))
             .addElement(
