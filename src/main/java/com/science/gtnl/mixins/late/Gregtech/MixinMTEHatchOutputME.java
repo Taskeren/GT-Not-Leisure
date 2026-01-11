@@ -101,11 +101,13 @@ public abstract class MixinMTEHatchOutputME extends MTEHatchOutput implements IO
             tag = new NBTTagCompound();
         }
 
-        tag.setInteger("masterX", tileEntity.getXCoord());
-        tag.setInteger("masterY", tileEntity.getYCoord());
-        tag.setInteger("masterZ", tileEntity.getZCoord());
+        NBTTagCompound masterNBT = new NBTTagCompound();
+        masterNBT.setInteger("masterX", tileEntity.getXCoord());
+        masterNBT.setInteger("masterY", tileEntity.getYCoord());
+        masterNBT.setInteger("masterZ", tileEntity.getZCoord());
+        masterNBT.setInteger("masterDim", tileEntity.getWorld().provider.dimensionId);
 
-        tag.setInteger("masterDim", tileEntity.getWorld().provider.dimensionId);
+        tag.setTag("master", masterNBT);
 
         cir.setReturnValue(tag);
     }
