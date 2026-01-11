@@ -889,6 +889,7 @@ Tooltip_LootBagRedemption_01=Automatically extract items from loot bags
 Tooltip_LootBagRedemption_02=Includes a built-in trash loot filter
 Tooltip_LootBagRedemption_03=Place an item in the special slot to guarantee it drops
 Tooltip_LootBagRedemption_04=Consumes 4 Technician Coins per operation
+Tooltip_LootBagRedemption_05=Gain extra amount of guaranteed drop from higher level loot bags (multiplied by 3 per level above)
 
 GasCollectorLV=Basic Gas Collector
 GasCollectorMV=Advanced Gas Collector

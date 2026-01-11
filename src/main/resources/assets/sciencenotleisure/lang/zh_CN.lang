@@ -889,6 +889,7 @@ Tooltip_LootBagRedemption_01=自动化抽取战利品袋
 Tooltip_LootBagRedemption_02=自带过滤垃圾战利品池
 Tooltip_LootBagRedemption_03=在特殊槽放入物品指定必定产出的物品
 Tooltip_LootBagRedemption_04=每次运行需要消耗4个技术员币
+Tooltip_LootBagRedemption_05=会从更高级的战利品袋里获得额外的自定奖励（每高一级额外获得3倍）
 
 GasCollectorLV=基础集气室
 GasCollectorMV=进阶集气室

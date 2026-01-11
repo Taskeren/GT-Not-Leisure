@@ -48,7 +48,8 @@ public class LootBagRedemption extends MTEBasicMachine {
                 StatCollector.translateToLocal("Tooltip_LootBagRedemption_01"),
                 StatCollector.translateToLocal("Tooltip_LootBagRedemption_02"),
                 StatCollector.translateToLocal("Tooltip_LootBagRedemption_03"),
-                StatCollector.translateToLocal("Tooltip_LootBagRedemption_04") },
+                StatCollector.translateToLocal("Tooltip_LootBagRedemption_04"),
+                StatCollector.translateToLocal("Tooltip_LootBagRedemption_05") },
             2,
             9,
             TextureFactory.of(
