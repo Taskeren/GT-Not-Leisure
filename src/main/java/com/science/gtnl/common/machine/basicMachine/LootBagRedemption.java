@@ -1,15 +1,18 @@
 package com.science.gtnl.common.machine.basicMachine;
 
-import static gregtech.api.enums.GTValues.*;
+import static gregtech.api.enums.GTValues.V;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Random;
 
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.StatCollector;
 
 import com.dreammaster.gthandler.CustomItemList;
+import com.google.common.collect.Sets;
 import com.gtnewhorizons.modularui.api.screen.ModularWindow;
 import com.gtnewhorizons.modularui.common.widget.DrawableWidget;
 import com.science.gtnl.mixins.late.EnhancedLootBags.AccessorItemLootBag;
@@ -27,7 +30,9 @@ import gregtech.api.interfaces.tileentity.IGregTechTileEntity;
 import gregtech.api.metatileentity.implementations.MTEBasicMachine;
 import gregtech.api.render.TextureFactory;
 import gregtech.api.util.GTUtility;
+import lombok.extern.log4j.Log4j2;
 
+@Log4j2
 public class LootBagRedemption extends MTEBasicMachine {
 
     public static final Random random = new Random();
@@ -43,7 +48,8 @@ public class LootBagRedemption extends MTEBasicMachine {
                 StatCollector.translateToLocal("Tooltip_LootBagRedemption_01"),
                 StatCollector.translateToLocal("Tooltip_LootBagRedemption_02"),
                 StatCollector.translateToLocal("Tooltip_LootBagRedemption_03"),
-                StatCollector.translateToLocal("Tooltip_LootBagRedemption_04") },
+                StatCollector.translateToLocal("Tooltip_LootBagRedemption_04"),
+                StatCollector.translateToLocal("Tooltip_LootBagRedemption_05") },
             2,
             9,
             TextureFactory.of(
@@ -119,25 +125,24 @@ public class LootBagRedemption extends MTEBasicMachine {
         ItemStack slotB = getInputAt(1);
         if (slotA == null && slotB == null) return 0;
 
-        ItemStack lootBagStack = null;
-        ItemStack coinStack = null;
-
+        ItemStack lootBagStack;
+        ItemStack coinStack;
         if (slotA != null && slotA.getItem() instanceof ItemLootBag) {
             lootBagStack = slotA;
         } else if (slotB != null && slotB.getItem() instanceof ItemLootBag) {
             lootBagStack = slotB;
+        } else {
+            return 0;
         }
-
         if (slotA != null && GTUtility.areStacksEqual(slotA, CustomItemList.CoinTechnician.get(1))) {
             coinStack = slotA;
         } else if (slotB != null && GTUtility.areStacksEqual(slotB, CustomItemList.CoinTechnician.get(1))) {
             coinStack = slotB;
+        } else {
+            return 0;
         }
 
-        if (lootBagStack == null || coinStack == null) return 0;
-
-        ItemLootBag lootBag = (ItemLootBag) lootBagStack.getItem();
-        LootGroupsHandler lootGroupsHandler = ((AccessorItemLootBag) lootBag).getLGHandler();
+        LootGroupsHandler lootGroupsHandler = ((AccessorItemLootBag) lootBagStack.getItem()).getLGHandler();
         if (lootGroupsHandler == null) return 0;
 
         ItemStack specialItem = getSpecialSlot();
@@ -150,23 +155,17 @@ public class LootBagRedemption extends MTEBasicMachine {
         boolean specialItemFound = false;
 
         if (specialItem != null) {
-            for (LootGroups.LootGroup.Drop drop : tGrp.getDrops()) {
-                ItemStack dropStack = drop.getItemStack(1);
-                if (dropStack != null && GTUtility.areStacksEqual(dropStack, specialItem, true)) {
-                    specialItemFound = true;
-                    int maxAmount = drop.getAmount();
-                    ItemStack specialDropStack = drop.getItemStack(maxAmount);
-                    if (specialDropStack != null) {
-                        while (specialDropStack.stackSize > specialDropStack.getMaxStackSize()) {
-                            resultItems.add(specialDropStack.splitStack(specialDropStack.getMaxStackSize()));
-                        }
-                        resultItems.add(specialDropStack);
-                    }
-                    break;
+            ItemStack targetLootDrop = getTargetLootDrop(lootBagStack, specialItem);
+            if (targetLootDrop != null) {
+                specialItemFound = true;
+                while (targetLootDrop.stackSize > targetLootDrop.getMaxStackSize()) {
+                    resultItems.add(targetLootDrop.splitStack(targetLootDrop.getMaxStackSize()));
                 }
+                resultItems.add(targetLootDrop);
             }
         }
 
+        // expected count of items to reward
         int itemsToDropCount = tGrp.getMinItems();
         if (tGrp.getMaxItems() > tGrp.getMinItems()) {
             itemsToDropCount = random.nextInt(tGrp.getMaxItems() - tGrp.getMinItems() + 1) + tGrp.getMinItems();
@@ -257,5 +256,62 @@ public class LootBagRedemption extends MTEBasicMachine {
     @Override
     public boolean hasEnoughEnergyToCheckRecipe() {
         return getBaseMetaTileEntity().getStoredEU() > TierEU.RECIPE_LV;
+    }
+
+    private static final int BONUS_MUL_PER_LEVEL = 3;
+
+    /**
+     * Find the target loot drop in the bag.
+     * <p>
+     * The result can be {@code null} if the target wasn't found in the loot bag and its chain. And the amount of the
+     * result can be more than 64 because of level bonus.
+     *
+     * @param lootBagItemStack the loot bag item
+     * @param targetItemStack  the target item to get
+     * @return the reward item
+     */
+    public static ItemStack getTargetLootDrop(ItemStack lootBagItemStack, ItemStack targetItemStack) {
+        Item lootBagItem = lootBagItemStack.getItem();
+        assert lootBagItem instanceof ItemLootBag;
+
+        LootGroupsHandler lgHandler = ((AccessorItemLootBag) lootBagItem).getLGHandler();
+        int bagId = lootBagItemStack.getItemDamage();
+
+        int depth = 0;
+        LootGroups.LootGroup group = lgHandler.getGroupByID(bagId);
+        // visited groups will be added to this set, so we can ensure that we won't drop into a dead loop.
+        HashSet<LootGroups.LootGroup> visited = Sets.newHashSet();
+        do {
+            if (!visited.add(group)) {
+                // oops, the group has already been searched, there's a circle in the reference chain!
+                log.warn("Unexpected state, LootGroup {} has a loop reference chain.", group.getGroupID());
+                return null;
+            }
+            for (LootGroups.LootGroup.Drop drop : group.getDrops()) {
+                ItemStack rewardItemStack = drop.getItemStack();
+                if (GTUtility.areStacksEqual(targetItemStack, rewardItemStack, true)) {
+                    // grant bonus rewards for using a higher level loot bag.
+                    // for example, if we will give 2x FOO in LV bag,
+                    // we're expected to reward 6x (2 x 3¹) FOO in MV bag, and 18x (2 x 3²) in HV bag.
+                    rewardItemStack.stackSize = (int) (drop.getAmount() * Math.pow(BONUS_MUL_PER_LEVEL, depth));
+                    return rewardItemStack;
+                }
+            }
+            // we've iterated all drops, but not found the target, so we try to find it in the lower level group.
+            if (group.getCombineWithTrash()) { // the group has a trash (lower level) group
+                LootGroups.LootGroup trash = lgHandler.getGroupByID(group.getTrashGroup());
+                if (trash == null) { // a trash group is expected, but it's not valid
+                    log.warn(
+                        "Unexpected state, LootGroup {} has an invalid trash group reference {}",
+                        group.getGroupID(),
+                        group.getTrashGroup());
+                    return null;
+                }
+                group = trash;
+                depth++;
+            } else { // nope, we've iterated all but still not got what we wanted. :(
+                return null;
+            }
+        } while (true);
     }
 }
