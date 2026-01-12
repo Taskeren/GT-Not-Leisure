@@ -35,7 +35,7 @@ public abstract class MixinGodForgeMath {
 
     @ModifyConstant(
         method = "calculateMaxParallelForModules(Ltectech/thing/metaTileEntity/multi/godforge/MTEBaseModule;Ltectech/thing/metaTileEntity/multi/godforge/MTEForgeOfGods;I)V",
-        constant = @Constant(intValue = 0))
+        constant = @Constant(intValue = 0, ordinal = 0))
     private static int onCalculateMaxParallelForModules(int constant, MTEBaseModule module, MTEForgeOfGods godforge,
         int fuelFactor) {
         if (module instanceof FOGAlloySmelterModule) {
