@@ -13,6 +13,7 @@ import gregtech.api.enums.TierEU;
 import gregtech.api.recipe.RecipeMap;
 import gregtech.api.recipe.RecipeMaps;
 import gtPlusPlus.core.material.MaterialsElements;
+import gtnhlanth.common.register.WerkstoffMaterialPool;
 
 public class FusionReactorRecipes implements IRecipePool {
 
@@ -42,6 +43,14 @@ public class FusionReactorRecipes implements IRecipePool {
             .duration(64)
             .eut(TierEU.RECIPE_LuV)
             .metadata(FUSION_THRESHOLD, 300000000L)
+            .addTo(fR);
+
+        RecipeBuilder.builder()
+            .fluidInputs(Materials.Antimony.getMolten(144), Materials.Helium.getGas(1000))
+            .fluidOutputs(WerkstoffMaterialPool.Iodine.getFluidOrGas(1000))
+            .duration(32)
+            .eut(TierEU.RECIPE_LuV)
+            .metadata(FUSION_THRESHOLD, 200000000L)
             .addTo(fR);
 
         RecipeBuilder.builder()

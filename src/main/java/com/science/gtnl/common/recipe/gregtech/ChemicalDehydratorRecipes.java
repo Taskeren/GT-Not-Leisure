@@ -1,7 +1,5 @@
 package com.science.gtnl.common.recipe.gregtech;
 
-import gregtech.api.enums.ConfigCategories;
-import gtnhlanth.GTNHLanthanides;
 import net.minecraftforge.fluids.FluidStack;
 
 import com.science.gtnl.api.IRecipePool;
@@ -119,11 +117,11 @@ public class ChemicalDehydratorRecipes implements IRecipePool {
         RecipeBuilder.builder()
             .fluidInputs(WerkstoffMaterialPool.SeaweedByproducts.getFluidOrGas(1000))
             .itemOutputs(
-                GTOreDictUnificator.get(OrePrefixes.dust,Materials.Carbon,2),
-                GTOreDictUnificator.get(OrePrefixes.dust,Materials.Potassium,1),
-                GTOreDictUnificator.get(OrePrefixes.dust,Materials.Calcium,1))
+                GTOreDictUnificator.get(OrePrefixes.dust, Materials.Carbon, 2),
+                GTOreDictUnificator.get(OrePrefixes.dust, Materials.Potassium, 1),
+                GTOreDictUnificator.get(OrePrefixes.dust, Materials.Calcium, 1))
             .fluidOutputs(Materials.SulfuricAcid.getFluid(400))
-            .outputChances(10000,10000)
+            .outputChances(10000, 10000)
             .duration(200)
             .eut(480)
             .addTo(CDNCR)
