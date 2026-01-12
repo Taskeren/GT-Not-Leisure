@@ -56,11 +56,6 @@ public abstract class GTMMultiMachineBase<T extends GTMMultiMachineBase<T>> exte
     }
 
     @Override
-    public boolean getAmperageOC() {
-        return true;
-    }
-
-    @Override
     public double getEUtDiscount() {
         return 0.8 - (mParallelTier / 50.0);
     }

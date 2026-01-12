@@ -3374,7 +3374,8 @@ public class AssemblerRecipes implements IRecipePool {
             .itemOutputs(ItemList.Hatch_Maintenance.get(1))
             .duration(100)
             .eut(TierEU.RECIPE_LV)
-            .addTo(As);
+            .addTo(As)
+            .addTo(HOR);
 
         loadLamp();
         loadWirelessHatch();

@@ -12,9 +12,11 @@ import com.dreammaster.gthandler.CustomItemList;
 import com.dreammaster.item.NHItemList;
 import com.science.gtnl.api.IRecipePool;
 import com.science.gtnl.common.material.GTNLMaterials;
+import com.science.gtnl.common.material.GTNLRecipeMaps;
 import com.science.gtnl.config.MainConfig;
 import com.science.gtnl.utils.enums.GTNLItemList;
 import com.science.gtnl.utils.item.ItemUtils;
+import com.science.gtnl.utils.recipes.RecipeBuilder;
 
 import gregtech.api.enums.ItemList;
 import gregtech.api.enums.Materials;
@@ -23,6 +25,7 @@ import gregtech.api.enums.MaterialsUEVplus;
 import gregtech.api.enums.OrePrefixes;
 import gregtech.api.enums.ToolDictNames;
 import gregtech.api.metatileentity.implementations.MTEBasicMachineWithRecipe;
+import gregtech.api.recipe.RecipeMap;
 import gregtech.api.util.GTModHandler;
 import gregtech.api.util.GTOreDictUnificator;
 import gtPlusPlus.core.material.MaterialsAlloy;
@@ -37,6 +40,8 @@ public class CraftingTableRecipes implements IRecipePool {
     public static long recipeFlags = GTModHandler.RecipeBits.MIRRORED | GTModHandler.RecipeBits.KEEPNBT
         | GTModHandler.RecipeBits.BUFFERED
         | GTModHandler.RecipeBits.DISMANTLEABLE;
+
+    public RecipeMap<?> HOR = GTNLRecipeMaps.HardOverrideRecipes;
 
     @Override
     public void loadRecipes() {
@@ -1302,6 +1307,17 @@ public class CraftingTableRecipes implements IRecipePool {
     }
 
     public void loadExtraRecipe() {
+        RecipeBuilder.builder()
+            .itemInputs(
+                GTOreDictUnificator.get(OrePrefixes.circuit, Materials.HV, 4L),
+                ItemList.Hatch_Maintenance.get(2),
+                ItemList.Robot_Arm_HV.get(2),
+                ItemList.Hull_HV.get(1L))
+            .itemOutputs(tectech.thing.CustomItemList.hatch_CreativeMaintenance.get(1))
+            .duration(0)
+            .eut(0)
+            .addTo(HOR);
+
         GTModHandler.addCraftingRecipe(
             tectech.thing.CustomItemList.hatch_CreativeMaintenance.get(1),
             recipeFlags,

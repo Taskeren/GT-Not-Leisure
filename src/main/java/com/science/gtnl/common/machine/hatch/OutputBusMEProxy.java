@@ -165,6 +165,7 @@ public class OutputBusMEProxy extends MTEHatchOutputBusME {
         masterX = x;
         masterY = y;
         masterZ = z;
+        masterDim = dim;
         masterSet = true;
         return master;
     }
