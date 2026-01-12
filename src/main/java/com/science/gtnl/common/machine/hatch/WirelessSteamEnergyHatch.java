@@ -118,8 +118,6 @@ public class WirelessSteamEnergyHatch extends CustomFluidHatch {
     @Override
     public void onFirstTick(IGregTechTileEntity aBaseMetaTileEntity) {
         super.onFirstTick(aBaseMetaTileEntity);
-        if (!aBaseMetaTileEntity.isServerSide()) return;
-
         ownerUUID = aBaseMetaTileEntity.getOwnerUuid();
 
         SpaceProjectManager.checkOrCreateTeam(ownerUUID);
