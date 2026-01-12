@@ -2232,6 +2232,7 @@ Info_NaquadahReactor_01=Extra Gas Boost
 
 NameGrandAssemblyLine=Grand Assembly Line
 GrandAssemblyLineRecipeType=Disordered Assembly Line
+gtnl.recipe.GrandAssemblyLineSpecialRecipes=Assembly Line Conflict Detection
 gtnl.recipe.GrandAssemblyLineRecipes=Disordered Assembly Line
 Tooltip_GrandAssemblyLine_00=§r§lMakes Henry Ford look like a joke.
 Tooltip_GrandAssemblyLine_01=§rAssembles hardware at an astonishing speed.

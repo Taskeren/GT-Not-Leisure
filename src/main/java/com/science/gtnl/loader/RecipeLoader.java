@@ -30,6 +30,8 @@ import com.science.gtnl.common.recipe.gregtech.ChemicalBathRecipes;
 import com.science.gtnl.common.recipe.gregtech.ChemicalDehydratorRecipes;
 import com.science.gtnl.common.recipe.gregtech.ChemicalPlantRecipes;
 import com.science.gtnl.common.recipe.gregtech.ChemicalRecipes;
+import com.science.gtnl.common.recipe.gregtech.CircuitAssemblerConvertRecipes;
+import com.science.gtnl.common.recipe.gregtech.CircuitAssemblyLineRecipes;
 import com.science.gtnl.common.recipe.gregtech.CompressorRecipes;
 import com.science.gtnl.common.recipe.gregtech.CrackingRecipes;
 import com.science.gtnl.common.recipe.gregtech.CuttingRecipes;
@@ -62,8 +64,6 @@ import com.science.gtnl.common.recipe.gregtech.TargetChamberRecipes;
 import com.science.gtnl.common.recipe.gregtech.TranscendentPlasmaMixerRecipes;
 import com.science.gtnl.common.recipe.gregtech.VacuumFreezerRecipes;
 import com.science.gtnl.common.recipe.gregtech.VacuumFurnaceRecipes;
-import com.science.gtnl.common.recipe.gregtech.serverStart.CircuitAssemblerConvertRecipes;
-import com.science.gtnl.common.recipe.gregtech.serverStart.CircuitAssemblyLineRecipes;
 import com.science.gtnl.common.recipe.gtnl.AdvancedCircuitAssemblyLineRecipes;
 import com.science.gtnl.common.recipe.gtnl.AlchemicChemistrySetRecipes;
 import com.science.gtnl.common.recipe.gtnl.BloodDemonInjectionRecipes;
@@ -81,6 +81,7 @@ import com.science.gtnl.common.recipe.gtnl.FallingTowerRecipes;
 import com.science.gtnl.common.recipe.gtnl.FishingGroundRecipes;
 import com.science.gtnl.common.recipe.gtnl.FuelRefiningComplexRecipes;
 import com.science.gtnl.common.recipe.gtnl.GasCollectorRecipes;
+import com.science.gtnl.common.recipe.gtnl.GrandAssemblyLineSpecialRecipes;
 import com.science.gtnl.common.recipe.gtnl.IndustrialRockCrusherRecipes;
 import com.science.gtnl.common.recipe.gtnl.InfernalCokeRecipes;
 import com.science.gtnl.common.recipe.gtnl.InfusionCraftingRecipes;
@@ -153,7 +154,8 @@ public class RecipeLoader {
             RemoveRecipes.removeCircuitAssemblerRecipes();
         }
 
-        IRecipePool[] recipePools = new IRecipePool[] { new CircuitAssemblerConvertRecipes() };
+        IRecipePool[] recipePools = new IRecipePool[] { new CircuitAssemblerConvertRecipes(),
+            new GrandAssemblyLineSpecialRecipes() };
 
         for (IRecipePool recipePool : recipePools) {
             recipePool.loadRecipes();
@@ -176,7 +178,7 @@ public class RecipeLoader {
         CrackRecipeAdder.reAddBlastRecipe(GTNLMaterials.Germaniumtungstennitride, 800, 30720, 8200, true);
 
         if (MainConfig.enableChamberRecipesBuff) {
-            registerBuffTargetChamberRecipe();
+            loadBuffTargetChamberRecipe();
         }
 
         IRecipePool[] recipePools = new IRecipePool[] { new BotaniaManaInfusionRecipes(), new TCRecipePool(),
@@ -276,7 +278,7 @@ public class RecipeLoader {
         }
     }
 
-    public static void registerBuffTargetChamberRecipe() {
+    public static void loadBuffTargetChamberRecipe() {
         Collection<GTRecipe> targetChamberRecipe = LanthanidesRecipeMaps.targetChamberRecipes.getAllRecipes();
         LanthanidesRecipeMaps.targetChamberRecipes.getBackend()
             .clearRecipes();
@@ -332,16 +334,16 @@ public class RecipeLoader {
 
     public static void loadVillageTrade() {
         for (int id = 0; id < 5; id++) {
-            registerTradeForVillager(id);
+            loadTradeForVillager(id);
         }
 
         // for (int id : VillagerRegistry.getRegisteredVillagers()) {
-        // registerTradeForVillager(id);
+        // loadTradeForVillager(id);
         // }
     }
 
     @SuppressWarnings("unchecked")
-    public static void registerTradeForVillager(int villagerId) {
+    public static void loadTradeForVillager(int villagerId) {
         VillagerRegistry.instance()
             .registerVillageTradeHandler(villagerId, (villager, recipeList, random) -> {
                 recipeList.add(

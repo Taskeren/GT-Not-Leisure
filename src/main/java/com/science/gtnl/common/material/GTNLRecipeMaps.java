@@ -311,14 +311,6 @@ public class GTNLRecipeMaps {
         .neiHandlerInfo(builder -> builder.setDisplayStack(GTNLItemList.DecayHastener.get(1)))
         .build();
 
-    public static RecipeMap<RecipeMapBackend> GrandAssemblyLineRecipes = RecipeMapBuilder
-        .of("gtnl.recipe.GrandAssemblyLineRecipes")
-        .maxIO(16, 1, 4, 0)
-        .progressBar(GTUITextures.PROGRESSBAR_ARROW_MULTIPLE)
-        .frontend(GTNLLogoFrontend::new)
-        .neiHandlerInfo(builder -> builder.setDisplayStack(GTNLItemList.GrandAssemblyLine.get(1)))
-        .build();
-
     public static RecipeMap<RecipeMapBackend> FuelRefiningComplexRecipes = RecipeMapBuilder
         .of("gtnl.recipe.FuelRefiningComplexRecipes")
         .maxIO(4, 0, 8, 1)
@@ -479,13 +471,6 @@ public class GTNLRecipeMaps {
         .progressBarSteam(GTUITextures.PROGRESSBAR_EXTRACT_STEAM)
         .frontend(SteamLogoFrontend::new)
         .neiHandlerInfo(builder -> builder.setDisplayStack(GTNLItemList.SteamRockBreaker.get(1)))
-        .build();
-
-    public static final RecipeMap<RecipeMapBackend> ConvertToCircuitAssembler = RecipeMapBuilder
-        .of("gtnl.recipe.ConvertToCircuitAssembler")
-        .frontend(GTNLLogoFrontend::new)
-        .maxIO(6, 1, 1, 0)
-        .disableRegisterNEI()
         .build();
 
     public static final RecipeMap<RecipeMapBackend> ExtremeExtremeEntityCrusherRecipes = RecipeMapBuilder
@@ -653,10 +638,25 @@ public class GTNLRecipeMaps {
         .neiHandlerInfo(builder -> builder.setDisplayStack(GTNLItemList.EngravingLaserPlant.get(1)))
         .build();
 
+    public static final RecipeMap<RecipeMapBackend> GrandAssemblyLineSpecialRecipes = RecipeMapBuilder
+        .of("gtnl.recipe.GrandAssemblyLineSpecialRecipes")
+        .maxIO(1, 1, 0, 0)
+        .frontend(GTNLLogoFrontend::new)
+        .progressBar(GTUITextures.PROGRESSBAR_ARROW_MULTIPLE)
+        .neiHandlerInfo(builder -> builder.setDisplayStack(GTNLItemList.GrandAssemblyLine.get(1)))
+        .build();
+
     public static final RecipeMap<RecipeMapBackend> HardOverrideRecipes = RecipeMapBuilder
         .of("gtnl.recipe.HardOverrideRecipes")
         .maxIO(16, 16, 16, 16)
         .dontUseProgressBar()
+        .disableRegisterNEI()
+        .build();
+
+    public static final RecipeMap<RecipeMapBackend> ConvertToCircuitAssembler = RecipeMapBuilder
+        .of("gtnl.recipe.ConvertToCircuitAssembler")
+        .frontend(GTNLLogoFrontend::new)
+        .maxIO(6, 1, 1, 0)
         .disableRegisterNEI()
         .build();
 }

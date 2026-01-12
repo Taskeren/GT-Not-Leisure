@@ -1,4 +1,4 @@
-package com.science.gtnl.common.recipe.gregtech.serverStart;
+package com.science.gtnl.common.recipe.gregtech;
 
 import static gregtech.api.enums.Mods.*;
 import static gregtech.api.util.GTRecipeBuilder.*;

@@ -1,4 +1,4 @@
-package com.science.gtnl.common.recipe.gregtech.serverStart;
+package com.science.gtnl.common.recipe.gregtech;
 
 import java.util.HashSet;
 

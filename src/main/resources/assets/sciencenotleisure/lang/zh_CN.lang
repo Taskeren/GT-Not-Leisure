@@ -2232,7 +2232,7 @@ Info_NaquadahReactor_01=使用额外气体加速
 
 NameGrandAssemblyLine=大型装配线
 GrandAssemblyLineRecipeType=无序装配线
-gtnl.recipe.GrandAssemblyLineRecipes=无序装配线
+gtnl.recipe.GrandAssemblyLineSpecialRecipes=装配线防冲突识别
 Tooltip_GrandAssemblyLine_00=§r§l让亨利·福特也黯然失色。
 Tooltip_GrandAssemblyLine_01=§r以惊人的速度组装硬件。
 Tooltip_GrandAssemblyLine_02=不再需要按顺序输入物品

@@ -1153,7 +1153,9 @@ public class SuperCraftingInputHatchME extends MTEHatchInputBus implements IConf
                         : tag.getString("name"))
                     + EnumChatFormatting.RESET);
         }
-        currenttip.add(StatCollector.translateToLocal("Info_ShowPattern_" + (showPattern ? "Enabled" : "Disabled")));
+        currenttip.add(
+            StatCollector
+                .translateToLocal("Info_ShowPattern_" + (tag.getBoolean("showPattern") ? "Enabled" : "Disabled")));
         if (tag.hasKey("inventory")) {
             NBTTagList inventory = tag.getTagList("inventory", Constants.NBT.TAG_COMPOUND);
             for (int i = 0; i < inventory.tagCount(); ++i) {
@@ -1173,6 +1175,7 @@ public class SuperCraftingInputHatchME extends MTEHatchInputBus implements IConf
     @Override
     public void getWailaNBTData(EntityPlayerMP player, TileEntity tile, NBTTagCompound tag, World world, int x, int y,
         int z) {
+        super.getWailaNBTData(player, tile, tag, world, x, y, z);
         tag.setBoolean("showPattern", showPattern);
         NBTTagList inventory = new NBTTagList();
 
@@ -1207,8 +1210,6 @@ public class SuperCraftingInputHatchME extends MTEHatchInputBus implements IConf
         if (!Objects.equals(getName(), getLocalName())) {
             tag.setString("name", getName());
         }
-
-        super.getWailaNBTData(player, tile, tag, world, x, y, z);
     }
 
     @Override

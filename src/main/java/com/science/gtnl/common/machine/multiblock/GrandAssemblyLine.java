@@ -98,6 +98,8 @@ import gregtech.api.util.ParallelHelper;
 import gregtech.api.util.VoidProtectionHelper;
 import gregtech.common.tileentities.machines.IDualInputHatch;
 import gregtech.common.tileentities.machines.IDualInputInventory;
+import it.unimi.dsi.fastutil.objects.Object2IntMap;
+import it.unimi.dsi.fastutil.objects.Object2IntOpenHashMap;
 import it.unimi.dsi.fastutil.objects.Object2LongOpenHashMap;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import mcp.mobius.waila.api.IWailaConfigHandler;
@@ -105,6 +107,8 @@ import mcp.mobius.waila.api.IWailaDataAccessor;
 import tectech.thing.casing.BlockGTCasingsTT;
 
 public class GrandAssemblyLine extends GTMMultiMachineBase<GrandAssemblyLine> implements ISurvivalConstructable {
+
+    public static Object2IntMap<GTUtility.ItemId> specialRecipe = new Object2IntOpenHashMap<>();
 
     public static int PARALLEL_WINDOW_ID = 10;
     private static final String STRUCTURE_PIECE_MAIN = "main";
@@ -192,7 +196,7 @@ public class GrandAssemblyLine extends GTMMultiMachineBase<GrandAssemblyLine> im
     @Nonnull
     @Override
     public Collection<RecipeMap<?>> getAvailableRecipeMaps() {
-        return Arrays.asList(RecipeMaps.assemblylineVisualRecipes, GTNLRecipeMaps.GrandAssemblyLineRecipes);
+        return Arrays.asList(RecipeMaps.assemblylineVisualRecipes, GTNLRecipeMaps.GrandAssemblyLineSpecialRecipes);
     }
 
     @Override
@@ -263,6 +267,14 @@ public class GrandAssemblyLine extends GTMMultiMachineBase<GrandAssemblyLine> im
 
             for (GTRecipe.RecipeAssemblyLine oldRecipe : validRecipes) {
                 GTRecipe.RecipeAssemblyLine recipe = copyRecipe(oldRecipe);
+                int circuit = specialRecipe.getOrDefault(GTUtility.ItemId.create(recipe.mOutput), -1);
+                if (circuit != -1) {
+                    ItemStack[] inputsArray = recipe.mInputs;
+                    ItemStack[] newInputsArray = new ItemStack[inputsArray.length + 1];
+                    System.arraycopy(inputsArray, 0, newInputsArray, 0, inputsArray.length);
+                    newInputsArray[inputsArray.length] = GTUtility.getIntegratedCircuit(circuit);
+                    recipe.mInputs = newInputsArray;
+                }
 
                 int localMax = remainingGlobalParallel;
 
