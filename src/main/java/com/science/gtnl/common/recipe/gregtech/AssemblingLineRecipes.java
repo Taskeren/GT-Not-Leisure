@@ -2383,7 +2383,7 @@ public class AssemblingLineRecipes implements IRecipePool {
                 GTOreDictUnificator.get(OrePrefixes.plateDouble, Materials.Infinity, 4),
                 MaterialsElements.STANDALONE.HYPOGEN.getPlateDouble(4),
                 GGMaterial.extremelyUnstableNaquadah.get(OrePrefixes.nanite, 16),
-                GTOreDictUnificator.get(OrePrefixes.gearGt, Materials.NaquadahEnriched, 8),
+                GTOreDictUnificator.get(OrePrefixes.gearGt, Materials.NaquadahAlloy, 8),
                 GTOreDictUnificator.get(OrePrefixes.screw, Materials.NaquadahEnriched, 32), ItemList.ZPM2.get(1) },
             new FluidStack[] { MaterialsAlloy.INDALLOY_140.getFluidStack(1296),
                 Materials.SolderingAlloy.getMolten(1296), MaterialMisc.MUTATED_LIVING_SOLDER.getFluidStack(864),
