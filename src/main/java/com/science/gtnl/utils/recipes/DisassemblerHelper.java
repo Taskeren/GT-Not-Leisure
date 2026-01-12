@@ -428,6 +428,8 @@ public class DisassemblerHelper {
                 }
             }
 
+            outputs.removeIf(stack -> stack == null || stack.stackSize <= 0);
+
             RecipeBuilder.builder()
                 .itemInputs(input)
                 .itemOutputs(outputs.toArray(new ItemStack[0]))

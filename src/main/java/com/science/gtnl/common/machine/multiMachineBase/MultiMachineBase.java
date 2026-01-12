@@ -371,7 +371,7 @@ public abstract class MultiMachineBase<T extends MultiMachineBase<T>> extends MT
 
     @ApiStatus.OverrideOnly
     public boolean getAmperageOC() {
-        return false;
+        return true;
     }
 
     @ApiStatus.OverrideOnly
