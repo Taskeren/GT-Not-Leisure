@@ -52,6 +52,7 @@ import com.gtnewhorizons.modularui.common.widget.ButtonWidget;
 import com.gtnewhorizons.modularui.common.widget.FakeSyncWidget;
 import com.gtnewhorizons.modularui.common.widget.TextWidget;
 import com.gtnewhorizons.modularui.common.widget.textfield.NumericWidget;
+import com.llamalad7.mixinextras.sugar.Local;
 import com.science.gtnl.api.mixinHelper.ICostingEUHolder;
 import com.science.gtnl.api.mixinHelper.IWirelessMode;
 
@@ -619,6 +620,27 @@ public abstract class MixinMTEPurificationUnitBase extends MTEExtendedPowerMulti
         aNBT.setLong("effectiveParallelLong", gtnl$effectiveParallelLong);
     }
 
+    @Inject(method = "getInfoData", at = @At("TAIL"))
+    public void getInfoData(CallbackInfoReturnable<String[]> cir, @Local(name = "ret") ArrayList<String> ret) {
+        ret.add(
+            StatCollector.translateToLocalFormatted(
+                "GT5U.infodata.parallel.current",
+                "" + EnumChatFormatting.YELLOW
+                    + (this.gtnl$wirelessMode ? this.gtnl$effectiveParallelLong : this.effectiveParallel)
+                    + "(Long)"));
+        if (gtnl$wirelessMode) {
+            ret.add(EnumChatFormatting.LIGHT_PURPLE + StatCollector.translateToLocal("Waila_WirelessMode"));
+            ret.add(
+                EnumChatFormatting.AQUA + StatCollector.translateToLocal("Waila_CurrentEuCost")
+                    + EnumChatFormatting.RESET
+                    + ": "
+                    + EnumChatFormatting.GOLD
+                    + gtnl$costingEUText
+                    + EnumChatFormatting.RESET
+                    + " EU");
+        }
+    }
+
     @Override
     public String[] getInfoData() {
         List<String> ret = Arrays.asList(super.getInfoData());
@@ -642,22 +664,6 @@ public abstract class MixinMTEPurificationUnitBase extends MTEExtendedPowerMulti
             }
 
         } else ret.add(StatCollector.translateToLocal("GT5U.infodata.purification_unit_base.not_linked"));
-        ret.add(
-            StatCollector.translateToLocalFormatted(
-                "GT5U.infodata.parallel.current",
-                "" + EnumChatFormatting.YELLOW
-                    + (this.gtnl$wirelessMode ? this.gtnl$effectiveParallelLong : this.effectiveParallel)));
-        if (gtnl$wirelessMode) {
-            ret.add(EnumChatFormatting.LIGHT_PURPLE + StatCollector.translateToLocal("Waila_WirelessMode"));
-            ret.add(
-                EnumChatFormatting.AQUA + StatCollector.translateToLocal("Waila_CurrentEuCost")
-                    + EnumChatFormatting.RESET
-                    + ": "
-                    + EnumChatFormatting.GOLD
-                    + gtnl$costingEUText
-                    + EnumChatFormatting.RESET
-                    + " EU");
-        }
         return ret.toArray(new String[0]);
     }
 
