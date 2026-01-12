@@ -37,6 +37,14 @@ public class FusionReactorRecipes implements IRecipePool {
             .addTo(fR);
 
         RecipeBuilder.builder()
+            .fluidInputs(Materials.Silicon.getMolten(144), Materials.Argon.getGas(1000))
+            .fluidOutputs(MaterialsElements.getInstance().GERMANIUM.getFluidStack(144))
+            .duration(64)
+            .eut(TierEU.RECIPE_LuV)
+            .metadata(FUSION_THRESHOLD, 300000000L)
+            .addTo(fR);
+
+        RecipeBuilder.builder()
             .fluidInputs(
                 Materials.Arsenic.getMolten(32),
                 new FluidStack(MaterialsElements.getInstance().RUTHENIUM.getFluid(), 16))
