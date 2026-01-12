@@ -639,8 +639,8 @@ PipelessJetstreamVent=Pipeless Jetstream Vent
 Tooltip_PipelessJetstreamVent_00=§b§oYou have heard whispers of a 'Steamgate' mechanism. While the details of
 Tooltip_PipelessJetstreamVent_01=§b§osuch an elusive device remain obscure in your research, one thing is certain:
 Tooltip_PipelessJetstreamVent_02=§b§oyou will need a massive amount of steam, and this pipeless vent is the key...
-Tooltip_WirelessSteamDynamoHatch_00=Stores steam globally in a network, up to 2^(2^31) L.
-Tooltip_WirelessSteamDynamoHatch_01=Does not connect to wires. This block accepts Stam into the network.
+Tooltip_PipelessSteamDynamoHatch_00=Stores steam globally in a network, up to 2^(2^31) L.
+Tooltip_PipelessSteamDynamoHatch_01=Does not connect to wires. This block accepts Stam into the network.
 
 ManaTank=Mana Tank
 Tooltip_ManaTank_00=Extract mana from nearby mana pools

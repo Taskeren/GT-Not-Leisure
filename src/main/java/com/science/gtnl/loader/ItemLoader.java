@@ -601,11 +601,11 @@ public class ItemLoader {
         GTNLItemList.PipelessSteamCover.set(
             MetaItemAdder.initItem(
                 103,
-                new String[] { StatCollector.translateToLocal("Tooltip_WirelessSteamCover_00"),
-                    StatCollector.translateToLocal("Tooltip_WirelessSteamCover_01"),
-                    StatCollector.translateToLocal("Tooltip_WirelessSteamCover_02"),
-                    StatCollector.translateToLocal("Tooltip_WirelessSteamCover_03"),
-                    StatCollector.translateToLocal("Tooltip_WirelessSteamCover_04") }));
+                new String[] { StatCollector.translateToLocal("Tooltip_PipelessSteamCover_00"),
+                    StatCollector.translateToLocal("Tooltip_PipelessSteamCover_01"),
+                    StatCollector.translateToLocal("Tooltip_PipelessSteamCover_02"),
+                    StatCollector.translateToLocal("Tooltip_PipelessSteamCover_03"),
+                    StatCollector.translateToLocal("Tooltip_PipelessSteamCover_04") }));
         GTNLItemList.IronTurbine.set(
             MetaItemAdder.initItem(104, new String[] { StatCollector.translateToLocal("Tooltip_IronTurbine_00") }));
         GTNLItemList.BronzeTurbine.set(

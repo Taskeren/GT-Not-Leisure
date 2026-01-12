@@ -639,8 +639,8 @@ PipelessJetstreamVent=无管喷流排气口
 Tooltip_PipelessJetstreamVent_00=§b§o你曾听说过一种名为"蒸汽之门"的装置，研究中你仍不明其意.
 Tooltip_PipelessJetstreamVent_01=§b§o这东西神秘而宏伟，你尚不清楚要付出多少才能造出它.
 Tooltip_PipelessJetstreamVent_02=§b§o但可以肯定的是，你将需要大量蒸汽，而这个排气口是关键所在……
-Tooltip_WirelessSteamDynamoHatch_00=将蒸汽存储于全局网络中，上限为2^(2^31)L.
-Tooltip_WirelessSteamDynamoHatch_01=不连接管道，此方块可以为网络接收蒸汽.
+Tooltip_PipelessSteamDynamoHatch_00=将蒸汽存储于全局网络中，上限为2^(2^31)L.
+Tooltip_PipelessSteamDynamoHatch_01=不连接管道，此方块可以为网络接收蒸汽.
 
 ManaTank=魔力缸
 Tooltip_ManaTank_00=可以从附近的魔力池和魔力花抽取魔力

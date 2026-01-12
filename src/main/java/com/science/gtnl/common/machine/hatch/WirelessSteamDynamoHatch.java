@@ -142,8 +142,8 @@ public class WirelessSteamDynamoHatch extends MTEHatchOutput implements IFluidSt
     public String[] getDescription() {
         ArrayList<String> desc = new ArrayList<>();
 
-        desc.add(StatCollector.translateToLocal("Tooltip_WirelessSteamDynamoHatch_00"));
-        desc.add(StatCollector.translateToLocal("Tooltip_WirelessSteamDynamoHatch_01"));
+        desc.add(StatCollector.translateToLocal("Tooltip_PipelessSteamDynamoHatch_00"));
+        desc.add(StatCollector.translateToLocal("Tooltip_PipelessSteamDynamoHatch_01"));
         desc.add(StatCollector.translateToLocal("HatchCustomFluid_01") + getCapacity() + "L");
         if (mTier == 0) {
             desc.add(StatCollector.translateToLocal("Tooltip_PipelessSteamVent_00"));

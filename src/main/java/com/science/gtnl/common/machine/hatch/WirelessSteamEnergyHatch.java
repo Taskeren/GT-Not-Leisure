@@ -73,8 +73,8 @@ public class WirelessSteamEnergyHatch extends CustomFluidHatch {
     public String[] getDescription() {
         ArrayList<String> desc = new ArrayList<>();
 
-        desc.add(StatCollector.translateToLocal("Tooltip_WirelessSteamEnergyHatch_00"));
-        desc.add(StatCollector.translateToLocal("Tooltip_WirelessSteamEnergyHatch_01"));
+        desc.add(StatCollector.translateToLocal("Tooltip_PipelessSteamEnergyHatch_00"));
+        desc.add(StatCollector.translateToLocal("Tooltip_PipelessSteamEnergyHatch_01"));
         desc.add(StatCollector.translateToLocal("HatchCustomFluid_01") + getCapacity() + "L");
         if (mTier == 0) {
             desc.add(StatCollector.translateToLocal("Tooltip_PipelessSteamHatch_00"));
