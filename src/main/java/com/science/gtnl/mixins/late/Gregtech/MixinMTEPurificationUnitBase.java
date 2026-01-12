@@ -641,32 +641,6 @@ public abstract class MixinMTEPurificationUnitBase extends MTEExtendedPowerMulti
         }
     }
 
-    @Override
-    public String[] getInfoData() {
-        List<String> ret = Arrays.asList(super.getInfoData());
-        // If this purification unit is linked to a controller, add this info to the scanner output.
-        if (getController() != null) {
-            ret.add(
-                StatCollector.translateToLocalFormatted(
-                    "GT5U.infodata.purification_unit_base.linked_at",
-                    controllerX,
-                    controllerY,
-                    controllerZ));
-
-            // If recipe is running, display success chance
-            if (this.mMaxProgresstime != 0) {
-                ret.add(
-                    StatCollector.translateToLocalFormatted(
-                        "GT5U.infodata.purification_unit_base.success_chance",
-                        EnumChatFormatting.YELLOW + GTUtility.formatNumbers(this.calculateFinalSuccessChance())
-                            + "%"
-                            + EnumChatFormatting.RESET));
-            }
-
-        } else ret.add(StatCollector.translateToLocal("GT5U.infodata.purification_unit_base.not_linked"));
-        return ret.toArray(new String[0]);
-    }
-
     @Inject(method = "getWailaBody", at = @At("HEAD"))
     public void getWailaBody(ItemStack itemStack, List<String> currenttip, IWailaDataAccessor accessor,
         IWailaConfigHandler config, CallbackInfo ci) {
