@@ -208,7 +208,7 @@ public class PetrochemicalPlant extends MultiMachineBase<PetrochemicalPlant> imp
 
     @Override
     public int getMaxParallelRecipes() {
-        return getMCoilLevel().getTier() * 16;
+        return getMCoilLevel().getTier() * 40;
     }
 
     @Nonnull
@@ -237,7 +237,7 @@ public class PetrochemicalPlant extends MultiMachineBase<PetrochemicalPlant> imp
                 if (itemStack != null) {
                     itemStack.stackSize *= (getMCoilLevel().getTier() + 1)
                         * GTUtility.getTier(this.getMaxInputVoltage())
-                        * 10;
+                        * 6;
                 }
             }
         }
@@ -252,7 +252,7 @@ public class PetrochemicalPlant extends MultiMachineBase<PetrochemicalPlant> imp
                 if (fluidStack != null) {
                     long totalAmount = (long) fluidStack.amount * (getMCoilLevel().getTier() + 1)
                         * GTUtility.getTier(this.getMaxInputVoltage())
-                        * 10;
+                        * 6;
 
                     while (totalAmount > 0) {
                         int stackSize = (int) Math.min(totalAmount, Integer.MAX_VALUE);
