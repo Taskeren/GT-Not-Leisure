@@ -181,6 +181,19 @@ public class OutputHatchMEProxy extends MTEHatchOutputME {
     }
 
     @Override
+    public NBTTagCompound getCopiedData(EntityPlayer player) {
+        NBTTagCompound tag = super.getCopiedData(player);
+        if (!masterSet) return tag;
+        NBTTagCompound masterNBT = new NBTTagCompound();
+        masterNBT.setInteger("masterDim", masterDim);
+        masterNBT.setInteger("masterX", masterX);
+        masterNBT.setInteger("masterY", masterY);
+        masterNBT.setInteger("masterZ", masterZ);
+        tag.setTag("master", masterNBT);
+        return tag;
+    }
+
+    @Override
     public boolean pasteCopiedData(EntityPlayer player, NBTTagCompound aNBT) {
         boolean result = super.pasteCopiedData(player, aNBT);
         if (aNBT == null) return result;

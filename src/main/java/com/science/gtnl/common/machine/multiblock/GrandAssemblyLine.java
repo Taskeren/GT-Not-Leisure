@@ -610,6 +610,7 @@ public class GrandAssemblyLine extends GTMMultiMachineBase<GrandAssemblyLine> im
                     invItems[i] = null;
                 }
             }
+            if (remaining <= 0) break;
         }
     }
 
