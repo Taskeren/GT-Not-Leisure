@@ -3392,8 +3392,7 @@ Tooltip_BlazeBlastFurnace_03=需每秒提供10x配方电压等级^2的熔融烈�
 Tooltip_BlazeBlastFurnace_04=放入炽骨立方后消耗乘以4倍
 Tooltip_BlazeBlastFurnace_05=超过MV后的每一级电压，都会将温度提高100K
 Tooltip_BlazeBlastFurnace_Casing_00=任意冶炼炉机械方块
-Tooltip_BlazeBlastFurnace_Casing_01=回收气体，任意炽焱高炉机械方块
-Tooltip_BlazeBlastFurnace_Casing_02=顶部中心炽焱高炉机械方块
+Tooltip_BlazeBlastFurnace_Casing_01=顶部中心炽焱高炉机械方块
 
 NameColdIceFreezer=寒冰冷冻机
 FluidIceInputHatch=碎冰输入仓

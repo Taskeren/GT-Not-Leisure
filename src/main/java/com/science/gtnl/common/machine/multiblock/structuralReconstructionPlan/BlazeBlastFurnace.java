@@ -100,9 +100,8 @@ public class BlazeBlastFurnace extends MultiMachineBase<BlazeBlastFurnace> imple
             .addOutputBus(StatCollector.translateToLocal("Tooltip_BlazeBlastFurnace_Casing_00"), 1)
             .addInputHatch(StatCollector.translateToLocal("Tooltip_BlazeBlastFurnace_Casing_00"), 1)
             .addOutputHatch(StatCollector.translateToLocal("Tooltip_BlazeBlastFurnace_Casing_00"), 1)
-            .addOutputHatch(StatCollector.translateToLocal("Tooltip_BlazeBlastFurnace_Casing_01"), 1)
             .addEnergyHatch(StatCollector.translateToLocal("Tooltip_BlazeBlastFurnace_Casing_00"), 1)
-            .addMufflerHatch(StatCollector.translateToLocal("Tooltip_BlazeBlastFurnace_Casing_02"), 1)
+            .addMufflerHatch(StatCollector.translateToLocal("Tooltip_BlazeBlastFurnace_Casing_01"), 1)
             .addMaintenanceHatch(StatCollector.translateToLocal("Tooltip_BlazeBlastFurnace_Casing_00"), 1)
             .addOtherStructurePart(
                 StatCollector.translateToLocal("FluidBlazeInputHatch"),
