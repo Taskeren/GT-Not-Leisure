@@ -6,11 +6,15 @@ import net.minecraftforge.fluids.FluidStack;
 
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.ModifyVariable;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-import com.google.common.collect.Lists;
 import com.llamalad7.mixinextras.sugar.Local;
+import com.llamalad7.mixinextras.sugar.Share;
+import com.llamalad7.mixinextras.sugar.ref.LocalRef;
 
+import gregtech.api.interfaces.tileentity.IGregTechTileEntity;
 import gregtech.common.tileentities.machines.IDualInputHatch;
 import gregtech.common.tileentities.machines.IDualInputInventory;
 import gregtech.common.tileentities.machines.multi.purification.MTEPurificationUnitBaryonicPerfection;
@@ -24,8 +28,22 @@ public abstract class MixinMTEPurificationUnitBaryonicPerfection
         super(aID, aName, aNameRegional);
     }
 
-    @ModifyVariable(method = "runMachine", at = @At("STORE"), ordinal = 0)
-    private boolean redirectDrainedInitialization(boolean original, @Local(name = "inputCost") FluidStack inputCost) {
+    @Inject(
+        method = "runMachine",
+        at = @At(value = "INVOKE", target = "Ljava/util/ArrayList;iterator()Ljava/util/Iterator;", ordinal = 1))
+    private void captureInputCost(IGregTechTileEntity aBaseMetaTileEntity, long aTick, CallbackInfo ci,
+        @Share("sharedInputCost") LocalRef<FluidStack> sharedInputCostRef,
+        @Local(name = "inputCost") FluidStack inputCost) {
+        sharedInputCostRef.set(inputCost);
+    }
+
+    @ModifyVariable(method = "runMachine", at = @At(value = "LOAD", ordinal = 0), ordinal = 0)
+    private boolean syncDrainedStatus(boolean original,
+        @Share("sharedInputCost") LocalRef<FluidStack> sharedInputCostRef) {
+        if (original) return true;
+
+        FluidStack inputCost = sharedInputCostRef.get();
+        if (inputCost == null) return false;
 
         for (IDualInputHatch tHatch : this.mDualInputHatches) {
             if (!tHatch.supportsFluids()) continue;
@@ -33,17 +51,15 @@ public abstract class MixinMTEPurificationUnitBaryonicPerfection
             Optional<IDualInputInventory> inventoryOpt = tHatch.getFirstNonEmptyInventory();
             if (inventoryOpt.isPresent()) {
                 IDualInputInventory inventory = inventoryOpt.get();
-                for (FluidStack stored : Lists.newArrayList(inventory.getFluidInputs())) {
-                    if (stored != null && stored.amount > 0
-                        && stored.isFluidEqual(inputCost)
-                        && stored.amount >= inputCost.amount) {
+                for (FluidStack stored : inventory.getFluidInputs()) {
+                    if (stored != null && stored.amount >= inputCost.amount && stored.isFluidEqual(inputCost)) {
                         stored.amount -= inputCost.amount;
                         return true;
                     }
                 }
             }
         }
+
         return false;
     }
-
 }
