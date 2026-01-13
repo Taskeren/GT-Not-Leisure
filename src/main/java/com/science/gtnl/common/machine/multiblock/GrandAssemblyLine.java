@@ -91,6 +91,7 @@ import gregtech.api.recipe.check.CheckRecipeResultRegistry;
 import gregtech.api.render.TextureFactory;
 import gregtech.api.util.AssemblyLineUtils;
 import gregtech.api.util.GTRecipe;
+import gregtech.api.util.GTRecipeBuilder;
 import gregtech.api.util.GTUtility;
 import gregtech.api.util.IGTHatchAdder;
 import gregtech.api.util.MultiblockTooltipBuilder;
@@ -482,7 +483,9 @@ public class GrandAssemblyLine extends GTMMultiMachineBase<GrandAssemblyLine> im
         if (inputs == null) return itemMap;
         for (ItemStack is : inputs) {
             if (is == null || is.stackSize <= 0) continue;
+
             itemMap.merge(GTUtility.ItemId.createNoCopy(is), is.stackSize, Long::sum);
+            itemMap.merge(GTUtility.ItemId.createAsWildcard(is), is.stackSize, Long::sum);
         }
         return itemMap;
     }
@@ -507,19 +510,27 @@ public class GrandAssemblyLine extends GTMMultiMachineBase<GrandAssemblyLine> im
         for (int i = 0; i < recipe.mInputs.length; i++) {
             ItemStack mainReq = recipe.mInputs[i];
             if (mainReq == null || mainReq.stackSize <= 0) continue;
-            ItemStack[] alts = recipe.mOreDictAlt[i];
 
-            long maxParallelForThisSlot = 0;
+            GTUtility.ItemId searchKey = (mainReq.getItemDamage() == GTRecipeBuilder.WILDCARD)
+                ? GTUtility.ItemId.createAsWildcard(mainReq)
+                : GTUtility.ItemId.createNoCopy(mainReq);
 
-            long mainAvailable = availableMap.getOrDefault(GTUtility.ItemId.createNoCopy(mainReq), 1L);
-            maxParallelForThisSlot = Math.max(maxParallelForThisSlot, mainAvailable / mainReq.stackSize);
+            long mainAvailable = availableMap.getOrDefault(searchKey, 0L);
+            long maxParallelForThisSlot = mainAvailable / mainReq.stackSize;
 
-            if (maxParallelForThisSlot == 0 && alts != null) {
-                for (ItemStack alt : alts) {
-                    if (maxParallelForThisSlot != 0) break;
+            if (maxParallelForThisSlot == 0 && recipe.mOreDictAlt != null && recipe.mOreDictAlt[i] != null) {
+                for (ItemStack alt : recipe.mOreDictAlt[i]) {
                     if (alt == null || alt.stackSize <= 0) continue;
-                    long altAvailable = availableMap.getOrDefault(GTUtility.ItemId.createNoCopy(alt), 1L);
-                    maxParallelForThisSlot = Math.max(maxParallelForThisSlot, altAvailable / alt.stackSize);
+
+                    GTUtility.ItemId altSearchKey = (alt.getItemDamage() == GTRecipeBuilder.WILDCARD)
+                        ? GTUtility.ItemId.createAsWildcard(alt)
+                        : GTUtility.ItemId.createNoCopy(alt);
+
+                    long altAvailable = availableMap.getOrDefault(altSearchKey, 0L);
+                    if (altAvailable > 0) {
+                        maxParallelForThisSlot = altAvailable / alt.stackSize;
+                        break;
+                    }
                 }
             }
 
@@ -536,7 +547,7 @@ public class GrandAssemblyLine extends GTMMultiMachineBase<GrandAssemblyLine> im
 
         for (FluidStack req : recipeFluids) {
             if (req == null) continue;
-            long available = availableMap.getOrDefault(req.getFluid(), 1L);
+            long available = availableMap.getOrDefault(req.getFluid(), 0L);
             if (available < req.amount) return 0;
             currentParallel = Math.min(currentParallel, (double) available / req.amount);
         }
@@ -551,36 +562,55 @@ public class GrandAssemblyLine extends GTMMultiMachineBase<GrandAssemblyLine> im
         for (int i = 0; i < recipe.mInputs.length; i++) {
             ItemStack mainReq = recipe.mInputs[i];
             if (mainReq == null || mainReq.stackSize <= 0) continue;
-            ItemStack[] alts = recipe.mOreDictAlt[i];
 
             ItemStack chosenStack = mainReq;
-            long maxPossible = (availableMap.getOrDefault(GTUtility.ItemId.createNoCopy(mainReq), 1L))
-                / mainReq.stackSize;
 
-            if (maxPossible == 0 && alts != null) {
-                for (ItemStack alt : alts) {
-                    if (maxPossible != 0) break;
+            GTUtility.ItemId mainSearchKey = (mainReq.getItemDamage() == GTRecipeBuilder.WILDCARD)
+                ? GTUtility.ItemId.createAsWildcard(mainReq)
+                : GTUtility.ItemId.createNoCopy(mainReq);
+
+            long mainAvailable = availableMap.getOrDefault(mainSearchKey, 0L);
+            long maxPossible = mainAvailable / mainReq.stackSize;
+
+            if (maxPossible == 0 && recipe.mOreDictAlt != null && recipe.mOreDictAlt[i] != null) {
+                for (ItemStack alt : recipe.mOreDictAlt[i]) {
                     if (alt == null || alt.stackSize <= 0) continue;
-                    maxPossible = (availableMap.getOrDefault(GTUtility.ItemId.createNoCopy(alt), 1L)) / alt.stackSize;
-                    chosenStack = alt;
+
+                    GTUtility.ItemId altSearchKey = (alt.getItemDamage() == GTRecipeBuilder.WILDCARD)
+                        ? GTUtility.ItemId.createAsWildcard(alt)
+                        : GTUtility.ItemId.createNoCopy(alt);
+
+                    long altAvailable = availableMap.getOrDefault(altSearchKey, 0L);
+                    if (altAvailable >= (long) alt.stackSize) {
+                        maxPossible = altAvailable / alt.stackSize;
+                        chosenStack = alt;
+                        break;
+                    }
                 }
             }
 
-            long totalToConsume = (long) chosenStack.stackSize * parallel;
-            depleteFromRequirement(chosenStack, totalToConsume, invItems);
+            if (maxPossible > 0) {
+                long totalToConsume = (long) chosenStack.stackSize * parallel;
+                depleteFromRequirement(chosenStack, totalToConsume, invItems);
+            }
         }
     }
 
     public void depleteFromRequirement(ItemStack requirement, long amountToConsume, ItemStack[] invItems) {
-        for (ItemStack slot : invItems) {
-            if (slot == null || amountToConsume <= 0) continue;
+        long remaining = amountToConsume;
 
-            if (GTUtility.areStacksEqual(requirement, slot)) {
-                int canTake = (int) Math.min(slot.stackSize, amountToConsume);
-                slot.stackSize -= canTake;
-                amountToConsume -= canTake;
+        for (int i = 0; i < invItems.length && remaining > 0; i++) {
+            ItemStack invStack = invItems[i];
+            if (invStack == null || invStack.stackSize <= 0) continue;
+            if (GTUtility.areStacksEqual(requirement, invStack)) {
+                long toSubtract = Math.min(remaining, invStack.stackSize);
+                invStack.stackSize -= (int) toSubtract;
+                remaining -= toSubtract;
+                if (invStack.stackSize <= 0) {
+                    invItems[i] = null;
+                }
             }
-            if (amountToConsume <= 0) break;
+            if (remaining <= 0) break;
         }
     }
 

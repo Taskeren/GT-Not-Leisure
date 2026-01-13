@@ -8,64 +8,70 @@ import cpw.mods.fml.common.Loader;
 
 public enum ModList {
 
-    ScienceNotLeisure(ModIds.SCIENCENOTLEISURE, Names.SCIENCENOTLEISURE),
-    TakoTech(ModIds.TAKOTECH, Names.TAKOTECH),
-    EyeOfHarmonyBuffer(ModIds.EYEOFHARMONYBUFFER, Names.EYEOFHARMONYBUFFER),
-    ProgrammableHatches(ModIds.PROGRAMMABLEHATCHES, Names.PROGRAMMABLEHATCHES),
-    TwistSpaceTechnology(ModIds.TWISTSPACETECHNOLOGY, Names.TWISTSPACETECHNOLOGY),
-    BoxPlusPlus(ModIds.BOXPLUSPLUS, Names.BOXPLUSPLUS),
-    NHUtilities(ModIds.NHUTILITIES, Names.NHUTILITIES),
-    AE2Thing(ModIds.AE2THING, Names.AE2THING),
-    QzMiner(ModIds.QZMINER, Names.QZMINER),
-    OTHTechnology(ModIds.OTHTECHNOLOGY, Names.OTHTECHNOLOGY),
+    ScienceNotLeisure(ModIds.SCIENCE_NOT_LEISURE, Names.SCIENCE_NOT_LEISURE),
+    TakoTech(ModIds.TAKO_TECH, Names.TAKO_TECH),
+    EyeOfHarmonyBuffer(ModIds.EYE_OF_HARMONY_BUFFER, Names.EYE_OF_HARMONY_BUFFER),
+    ProgrammableHatches(ModIds.PROGRAMMABLE_HATCHES, Names.PROGRAMMABLE_HATCHES),
+    TwistSpaceTechnology(ModIds.TWIST_SPACE_TECHNOLOGY, Names.TWIST_SPACE_TECHNOLOGY),
+    BoxPlusPlus(ModIds.BOX_PLUS_PLUS, Names.BOX_PLUS_PLUS),
+    NHUtilities(ModIds.NH_UTILITIES, Names.NH_UTILITIES),
+    AE2Thing(ModIds.AE2_THING, Names.AE2_THING),
+    QzMiner(ModIds.QZ_MINER, Names.QZ_MINER),
+    OTHTechnology(ModIds.OTH_TECHNOLOGY, Names.OTH_TECHNOLOGY),
     Baubles(ModIds.BAUBLES, Names.BAUBLES),
-    Overpowered(ModIds.OVERPOWERED, Names.OVERPOWERED),
-    ThinkTech(ModIds.THINKTECH, Names.THINKTECH),
-    VMTweak(ModIds.VMTTWEAK, Names.VMTTWEAK),
-    ReAvaritia(ModIds.REAVARITIA, Names.REAVARITIA),
+    Overpowered(ModIds.OVER_POWERED, Names.OVER_POWERED),
+    ThinkTech(ModIds.THINK_TECH, Names.THINK_TECH),
+    VMTweak(ModIds.VMT_TWEAK, Names.VMT_TWEAK),
+    ReAvaritia(ModIds.RE_AVARITIA, Names.RE_AVARITIA),
     Sudoku(ModIds.SUDOKU, Names.SUDOKU),
-    GiveCount(ModIds.GIVECOUNT, Names.GIVECOUNT);
+    GiveCount(ModIds.GIVE_COUNT, Names.GIVECOUNT),
+    ChromaticTooltips(ModIds.CHROMATIC_TOOLTIPS, Names.CHROMATIC_TOOLTIPS),
+    ChromaticTooltipsCompat(ModIds.CHROMATIC_TOOLTIPS_COMPAT, Names.CHROMATIC_TOOLTIPS_COMPAT);
 
     public static class ModIds {
 
-        public static final String SCIENCENOTLEISURE = "sciencenotleisure";
-        public static final String EYEOFHARMONYBUFFER = "eyeofharmonybuffer";
-        public static final String PROGRAMMABLEHATCHES = "programmablehatches";
-        public static final String TWISTSPACETECHNOLOGY = "TwistSpaceTechnology";
-        public static final String BOXPLUSPLUS = "boxplusplus";
-        public static final String NHUTILITIES = "NHUtilities";
-        public static final String AE2THING = "ae2thing";
-        public static final String QZMINER = "qz_miner";
-        public static final String OTHTECHNOLOGY = "123Technology";
+        public static final String SCIENCE_NOT_LEISURE = "sciencenotleisure";
+        public static final String EYE_OF_HARMONY_BUFFER = "eyeofharmonybuffer";
+        public static final String PROGRAMMABLE_HATCHES = "programmablehatches";
+        public static final String TWIST_SPACE_TECHNOLOGY = "TwistSpaceTechnology";
+        public static final String BOX_PLUS_PLUS = "boxplusplus";
+        public static final String NH_UTILITIES = "NHUtilities";
+        public static final String AE2_THING = "ae2thing";
+        public static final String QZ_MINER = "qz_miner";
+        public static final String OTH_TECHNOLOGY = "123Technology";
         public static final String BAUBLES = "Baubles";
-        public static final String OVERPOWERED = "Overpowered";
-        public static final String THINKTECH = "thinktech";
-        public static final String VMTTWEAK = "vmtweak";
-        public static final String GIVECOUNT = "givecount";
-        public static final String REAVARITIA = "reavaritia";
+        public static final String OVER_POWERED = "Overpowered";
+        public static final String THINK_TECH = "thinktech";
+        public static final String VMT_TWEAK = "vmtweak";
+        public static final String GIVE_COUNT = "givecount";
+        public static final String RE_AVARITIA = "reavaritia";
         public static final String SUDOKU = "sudoku";
-        public static final String TAKOTECH = "TakoTech";
+        public static final String TAKO_TECH = "TakoTech";
+        public static final String CHROMATIC_TOOLTIPS = "chromatictooltips";
+        public static final String CHROMATIC_TOOLTIPS_COMPAT = "chromatictooltipscompat";
     }
 
     public static class Names {
 
-        public static final String SCIENCENOTLEISURE = "ScienceNotLeisure";
-        public static final String EYEOFHARMONYBUFFER = "EyeOfHarmonyBuffer";
-        public static final String PROGRAMMABLEHATCHES = "ProgrammableHatches";
-        public static final String TWISTSPACETECHNOLOGY = "TwistSpaceTechnology";
-        public static final String BOXPLUSPLUS = "BoxPlusPlus";
-        public static final String NHUTILITIES = "NH-Utilities";
-        public static final String AE2THING = "AE2Things";
-        public static final String QZMINER = "QzMiner";
-        public static final String OTHTECHNOLOGY = "123Technology";
+        public static final String SCIENCE_NOT_LEISURE = "ScienceNotLeisure";
+        public static final String EYE_OF_HARMONY_BUFFER = "EyeOfHarmonyBuffer";
+        public static final String PROGRAMMABLE_HATCHES = "ProgrammableHatches";
+        public static final String TWIST_SPACE_TECHNOLOGY = "TwistSpaceTechnology";
+        public static final String BOX_PLUS_PLUS = "BoxPlusPlus";
+        public static final String NH_UTILITIES = "NH-Utilities";
+        public static final String AE2_THING = "AE2Things";
+        public static final String QZ_MINER = "QzMiner";
+        public static final String OTH_TECHNOLOGY = "123Technology";
         public static final String BAUBLES = "Baubles";
-        public static final String OVERPOWERED = "Overpowered";
-        public static final String THINKTECH = "ThinkTech";
-        public static final String VMTTWEAK = "VoidMinerTweak";
+        public static final String OVER_POWERED = "Overpowered";
+        public static final String THINK_TECH = "ThinkTech";
+        public static final String VMT_TWEAK = "VoidMinerTweak";
         public static final String GIVECOUNT = "GiveCount";
-        public static final String REAVARITIA = "ReAvaritia";
+        public static final String RE_AVARITIA = "ReAvaritia";
         public static final String SUDOKU = "Sudoku";
-        public static final String TAKOTECH = "TakoTech";
+        public static final String TAKO_TECH = "TakoTech";
+        public static final String CHROMATIC_TOOLTIPS = "ChromaticTooltips";
+        public static final String CHROMATIC_TOOLTIPS_COMPAT = "ChromaticTooltipsCompat";
     }
 
     public final String ID;

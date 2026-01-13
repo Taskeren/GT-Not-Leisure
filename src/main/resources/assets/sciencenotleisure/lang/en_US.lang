@@ -3393,8 +3393,7 @@ Tooltip_BlazeBlastFurnace_03=Requires 10x recipe voltage level^2 of Molten Blaze
 Tooltip_BlazeBlastFurnace_04=Placing into the Blaze Cube, consumption multiplied by 4
 Tooltip_BlazeBlastFurnace_05=Each voltage level above MV increases temperature by 100K.
 Tooltip_BlazeBlastFurnace_Casing_00=Any Blast Furnace Machine Block
-Tooltip_BlazeBlastFurnace_Casing_01=Recovers gas, any Blazing Blast Furnace Machine Block.
-Tooltip_BlazeBlastFurnace_Casing_02=Top center Blazing Blast Furnace Machine Block
+Tooltip_BlazeBlastFurnace_Casing_01=Top center Blazing Blast Furnace Machine Block
 
 NameColdIceFreezer=Cold Ice Freezer
 FluidIceInputHatch=Ice Input Hatch

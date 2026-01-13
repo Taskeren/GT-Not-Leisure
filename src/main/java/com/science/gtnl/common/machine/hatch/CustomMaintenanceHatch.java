@@ -19,6 +19,7 @@ import com.science.gtnl.utils.item.ItemUtils;
 
 import gregtech.api.gui.modularui.GTUIInfos;
 import gregtech.api.gui.modularui.GTUITextures;
+import gregtech.api.interfaces.IDataCopyable;
 import gregtech.api.interfaces.ITexture;
 import gregtech.api.interfaces.modularui.IAddGregtechLogo;
 import gregtech.api.interfaces.tileentity.IGregTechTileEntity;
@@ -28,7 +29,10 @@ import gregtech.api.render.TextureFactory;
 import lombok.Getter;
 import lombok.Setter;
 
-public class CustomMaintenanceHatch extends MTEHatchMaintenance implements IConfigurationMaintenance, IAddGregtechLogo {
+public class CustomMaintenanceHatch extends MTEHatchMaintenance
+    implements IConfigurationMaintenance, IAddGregtechLogo, IDataCopyable {
+
+    public static final String COPIED_DATA_IDENTIFIER = "customMaintenanceHatch";
 
     public int mMinConfigTime;
     public int mMaxConfigTime;
@@ -182,6 +186,25 @@ public class CustomMaintenanceHatch extends MTEHatchMaintenance implements IConf
         mConfigTime = aNBT.getInteger("mConfigTime");
         mMinConfigTime = aNBT.getInteger("mMinConfigTime");
         mMaxConfigTime = aNBT.getInteger("mMaxConfigTime");
+    }
+
+    @Override
+    public String getCopiedDataIdentifier(EntityPlayer player) {
+        return COPIED_DATA_IDENTIFIER;
+    }
+
+    @Override
+    public NBTTagCompound getCopiedData(EntityPlayer player) {
+        NBTTagCompound tag = new NBTTagCompound();
+        tag.setInteger("mConfigTime", mConfigTime);
+        return tag;
+    }
+
+    @Override
+    public boolean pasteCopiedData(EntityPlayer player, NBTTagCompound aNBT) {
+        if (!aNBT.hasKey("mConfigTime")) return false;
+        mConfigTime = aNBT.getInteger("mConfigTime");
+        return true;
     }
 
     @Override

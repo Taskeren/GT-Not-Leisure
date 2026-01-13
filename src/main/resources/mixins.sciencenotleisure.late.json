@@ -50,6 +50,7 @@
     "Gregtech.MixinGTShapedRecipe",
     "Gregtech.MixinGTShapelessRecipe",
     "Gregtech.MixinGTUtility",
+    "Gregtech.MixinGTUtil",
     "Gregtech.MixinMTEBetterJukebox",
     "Gregtech.MixinMTEForgeOfGods",
     "Gregtech.MixinMTEHatch",

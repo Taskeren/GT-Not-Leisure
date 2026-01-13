@@ -33,19 +33,16 @@ import gregtech.api.render.TextureFactory;
 import gregtech.common.tileentities.machines.IDualInputHatch;
 import gregtech.common.tileentities.machines.IDualInputInventory;
 import gregtech.common.tileentities.machines.MTEHatchCraftingInputME;
+import gregtech.common.tileentities.machines.MTEHatchCraftingInputSlave;
 import mcp.mobius.waila.api.IWailaConfigHandler;
 import mcp.mobius.waila.api.IWailaDataAccessor;
 
 public class SuperCraftingInputProxy extends MTEHatchInputBus implements IDualInputHatch, IDataCopyable {
 
-    // 原有Super类型变量
-    public static final String COPIED_DATA_IDENTIFIER_SUPER = "superCraftingInputProxy";
     private SuperCraftingInputHatchME masterSuper;
     private int masterSuperX, masterSuperY, masterSuperZ;
     private boolean masterSuperSet = false;
 
-    // 新增Crafting类型变量
-    public static final String COPIED_DATA_IDENTIFIER_CRAFTING = "craftingInputProxy";
     private MTEHatchCraftingInputME craftingMaster;
     private int craftingMasterX, craftingMasterY, craftingMasterZ;
     private boolean craftingMasterSet = false;
@@ -360,55 +357,49 @@ public class SuperCraftingInputProxy extends MTEHatchInputBus implements IDualIn
         return false;
     }
 
-    // 数据复制分开处理两种类型
     @Override
     public String getCopiedDataIdentifier(EntityPlayer player) {
-        return COPIED_DATA_IDENTIFIER_SUPER; // 保持原有标识符不变
+        return MTEHatchCraftingInputSlave.COPIED_DATA_IDENTIFIER;
     }
 
     @Override
     public boolean pasteCopiedData(EntityPlayer player, NBTTagCompound nbt) {
-        if (nbt == null) return false;
+        if (nbt == null || !nbt.hasKey("dataType") || !nbt.hasKey("dataPayload")) {
+            return false;
+        }
 
-        // 处理原有Super类型
-        if (COPIED_DATA_IDENTIFIER_SUPER.equals(nbt.getString("typeSuper")) && nbt.hasKey("masterSuper")) {
-            NBTTagCompound masterNBT = nbt.getCompoundTag("masterSuper");
-            return trySetSuperMasterFromCoord(
-                masterNBT.getInteger("xSuper"),
-                masterNBT.getInteger("ySuper"),
-                masterNBT.getInteger("zSuper")) != null;
-        }
-        // 处理新增Crafting类型
-        if (COPIED_DATA_IDENTIFIER_CRAFTING.equals(nbt.getString("type")) && nbt.hasKey("master")) {
-            NBTTagCompound masterNBT = nbt.getCompoundTag("master");
-            return trySetCraftingMasterFromCoord(
-                masterNBT.getInteger("x"),
-                masterNBT.getInteger("y"),
-                masterNBT.getInteger("z")) != null;
-        }
-        return false;
+        String type = nbt.getString("dataType");
+        NBTTagCompound data = nbt.getCompoundTag("dataPayload");
+
+        return switch (type) {
+            case "SUPER" -> trySetSuperMasterFromCoord(data.getInteger("x"), data.getInteger("y"), data.getInteger("z"))
+                != null;
+            case "CRAFTING" -> trySetCraftingMasterFromCoord(
+                data.getInteger("x"),
+                data.getInteger("y"),
+                data.getInteger("z")) != null;
+            default -> false;
+        };
     }
 
     @Override
     public NBTTagCompound getCopiedData(EntityPlayer player) {
         NBTTagCompound tag = new NBTTagCompound();
-        // 优先复制Super类型数据
+
         if (masterSuperSet) {
-            tag.setString("typeSuper", COPIED_DATA_IDENTIFIER_SUPER);
-            NBTTagCompound masterNBT = new NBTTagCompound();
-            masterNBT.setInteger("xSuper", masterSuperX);
-            masterNBT.setInteger("ySuper", masterSuperY);
-            masterNBT.setInteger("zSuper", masterSuperZ);
-            tag.setTag("masterSuper", masterNBT);
-        }
-        // 其次复制Crafting类型数据
-        else if (craftingMasterSet) {
-            tag.setString("type", COPIED_DATA_IDENTIFIER_CRAFTING);
-            NBTTagCompound masterNBT = new NBTTagCompound();
-            masterNBT.setInteger("x", craftingMasterX);
-            masterNBT.setInteger("y", craftingMasterY);
-            masterNBT.setInteger("z", craftingMasterZ);
-            tag.setTag("master", masterNBT);
+            tag.setString("dataType", "SUPER");
+            NBTTagCompound data = new NBTTagCompound();
+            data.setInteger("x", masterSuperX);
+            data.setInteger("y", masterSuperY);
+            data.setInteger("z", masterSuperZ);
+            tag.setTag("dataPayload", data);
+        } else if (craftingMasterSet) {
+            tag.setString("dataType", "CRAFTING");
+            NBTTagCompound data = new NBTTagCompound();
+            data.setInteger("x", craftingMasterX);
+            data.setInteger("y", craftingMasterY);
+            data.setInteger("z", craftingMasterZ);
+            tag.setTag("dataPayload", data);
         }
         return tag;
     }
